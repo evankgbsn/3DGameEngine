@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Renderer">
+      <UniqueIdentifier>{cf329570-e7b1-475b-b42b-c07224a17338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{74499cf3-cd22-48f6-a1a1-451d58b7075e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Windows">
+      <UniqueIdentifier>{bc3194ba-8760-4fbc-bd5c-f9a8d656bbf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Shaders">
+      <UniqueIdentifier>{5e09b982-d548-4a9c-bde6-aeddc3bb8d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Shaders\GLSL">
+      <UniqueIdentifier>{9977abef-4ab2-4da9-8687-478992819902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\GraphicsObject">
+      <UniqueIdentifier>{c87d2fe1-2d03-4359-bf3c-bda031f726ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Model">
+      <UniqueIdentifier>{634b4da7-3220-4220-abea-e1507891345e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Animation">
+      <UniqueIdentifier>{963214e2-5aba-477c-903b-96c890cc4109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{751bd65d-1ef4-4689-b390-fe0be3486450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math\SAT">
+      <UniqueIdentifier>{6c1e39a2-34cc-4908-a00f-d2ce6f9b4cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math\Shapes">
+      <UniqueIdentifier>{c99331fb-ad1c-428c-a755-c866635defeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Camera">
+      <UniqueIdentifier>{d3743231-db8c-4176-9475-8bdd7675f0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Texture">
+      <UniqueIdentifier>{7f73b797-cd66-4e79-a981-ab85208d7cce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Time">
+      <UniqueIdentifier>{417693ef-b507-4fd7-a36f-263c13197d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{076a2b10-6a01-48b4-a87a-1caf82fbe15f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Logger.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Window\Window.cpp">
+      <Filter>Source Files\Renderer\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Window\WindowManager.cpp">
+      <Filter>Source Files\Renderer\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Shader\Shader.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Shader\ShaderManager.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GraphicsObjectManager.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Model\Model.cpp">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Model\ModelManager.cpp">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Model\Vertex.cpp">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\Animation.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\Armature.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\BakedAnimation.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\Clip.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\Pose.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\Track.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Animation\TransformTrack.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GraphicsObject.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\BezierSpline.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\HermiteSpline.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Math.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\SAT\Interval2D.cpp">
+      <Filter>Source Files\Math\SAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\SAT\Interval3D.cpp">
+      <Filter>Source Files\Math\SAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\AxisAlignedBoundingBox.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Circle.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\LineSegment.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\LineSegment3D.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\OrientedBoundingBox.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\OrientedRectangle.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Plane.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Ray.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Rectangle.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Sphere.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Shapes\Triangle.cpp">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Camera\Camera.cpp">
+      <Filter>Source Files\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Camera\CameraManager.cpp">
+      <Filter>Source Files\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture\Texture.cpp">
+      <Filter>Source Files\Renderer\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture\TextureManager.cpp">
+      <Filter>Source Files\Renderer\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GO3D.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\TimeManager.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Source Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Logger.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Window\Window.h">
+      <Filter>Source Files\Renderer\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Window\WindowManager.h">
+      <Filter>Source Files\Renderer\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\SingletonHelpers.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Shader\Shader.h">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Shader\ShaderManager.h">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\OpenGLDebug.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GraphicsObjectManager.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GraphicsObject.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Model\Model.h">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Model\ModelManager.h">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Model\Vertex.h">
+      <Filter>Source Files\Renderer\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Animation.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Armature.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\BakedAnimation.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Clip.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Frame.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Pose.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\Track.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\TransformTrack.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOColored.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\BezierSpline.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\HermiteSpline.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\SAT\Interval2D.h">
+      <Filter>Source Files\Math\SAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\SAT\Interval3D.h">
+      <Filter>Source Files\Math\SAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\AxisAlignedBoundingBox.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Circle.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\LineSegment.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\LineSegment3D.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\OrientedBoundingBox.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\OrientedRectangle.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Plane.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Ray.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Rectangle.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Sphere.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Shapes\Triangle.h">
+      <Filter>Source Files\Math\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Camera\Camera.h">
+      <Filter>Source Files\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Camera\CameraManager.h">
+      <Filter>Source Files\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture\Texture.h">
+      <Filter>Source Files\Renderer\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture\TextureManager.h">
+      <Filter>Source Files\Renderer\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GO3D.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Time\TimeManager.h">
+      <Filter>Source Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputManager.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Renderer\Shader\GLSL\Colored.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Colored.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredStatic.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredStatic.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Gooch.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Gooch.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedAnimated.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedAnimated.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedStatic.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedStatic.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Textured.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Textured.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+  </ItemGroup>
+</Project>

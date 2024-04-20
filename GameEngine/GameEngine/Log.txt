@@ -1,0 +1,9 @@
+Success: Initialized GLFW
+Success: Initialized Renderer
+Success: Initialized GLFW
+Success: Initialized Renderer
+Success: Terminated Renderer
+Success: Initialized GLFW
+Success: Initialized Renderer
+Success: Terminated GLFW
+Success: Terminated Renderer

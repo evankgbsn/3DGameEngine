@@ -1,0 +1,146 @@
+Success: Initialized GLFW
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Error: Calling Engine::Terminate() before Engine::Initialize()
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated GLFW
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized Engine
+Success: Terminated WindowManager
+Success: Terminated GLFW
+Success: Terminated Renderer
+Success: Terminated Engine
