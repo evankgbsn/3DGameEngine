@@ -18,3 +18,8 @@ GraphicsObject::GraphicsObject(Model* const m) :
 GraphicsObject::~GraphicsObject()
 {
 }
+
+const Model* const GraphicsObject::GetModel() const
+{
+	return model;
+}

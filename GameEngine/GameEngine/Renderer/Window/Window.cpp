@@ -44,6 +44,7 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 	else
 	{
 		glfwMakeContextCurrent(glfwWindow);
+		glfwSwapInterval(0);
 		InitializeGLEW();
 	}
 }

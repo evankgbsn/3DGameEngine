@@ -10,6 +10,8 @@ class GraphicsObject
 
 public:
 
+	const Model* const GetModel() const;
+
 	bool IsDisabled() const;
 
 protected:
@@ -21,6 +23,7 @@ protected:
 	virtual ~GraphicsObject();
 
 	virtual void Update() = 0;
+
 
 	Model* model;
 

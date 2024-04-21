@@ -13,6 +13,8 @@ class GOColored;
 class GOTextured;
 class GOColoredAnimated;
 class GOTexturedAnimated;
+class GOTexturedLit;
+class GOTexturedAnimatedLit;
 
 class GraphicsObjectManager
 {
@@ -22,9 +24,13 @@ public:
 
 	static GOTextured* const Create3DGOTextured(Model* const model, Texture* const texture);
 
-	static GOColoredAnimated* const Create3DGOColoredAnimated(Model* const model, const glm::vec4& initialColor);
+	static GOColoredAnimated* const CreateGO3DColoredAnimated(Model* const model, const glm::vec4& initialColor);
 
-	static GOTexturedAnimated* const Create3DGOTexturedAnimated(Model* const model, Texture* const texture);
+	static GOTexturedAnimated* const CreateGO3DTexturedAnimated(Model* const model, Texture* const texture);
+
+	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const texture);
+
+	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const texture);
 
 	static void Disable(GraphicsObject* const go);
 

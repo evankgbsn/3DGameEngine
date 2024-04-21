@@ -1,0 +1,54 @@
+#version 460 core
+
+//--------------------------------------------------
+// Model, View, Projection Uniform Buffer Object
+//--------------------------------------------------
+
+layout(std140, binding = 0) uniform MVP 
+{
+    mat4 model;
+    mat4 view;
+    mat4 projection;
+} mvp;
+
+//--------------------------------------------------
+// Animation Data Uniform Buffer Object
+//--------------------------------------------------
+
+layout(std140, binding = 1) uniform AnimData
+{
+    mat4 pose[120];
+    mat4 invBindPose[120];
+} anim;
+
+//--------------------------------------------------
+// Vertex Buffer Data
+//--------------------------------------------------
+
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec3 inNormal;
+layout(location = 2) in vec2 inUV;
+layout(location = 3) in vec4 inWeights;
+layout(location = 4) in ivec4 inJoints;
+
+//--------------------------------------------------
+// Data Sent to Fragment Shader
+//--------------------------------------------------
+
+layout(location = 5) out vec2 outUV;
+layout(location = 6) out vec4 outNormal;
+layout(location = 7) out vec4 outPosition;
+
+void main(void) 
+{
+     mat4 skin = (anim.pose[inJoints.x] * anim.invBindPose[inJoints.x]) * inWeights.x;
+     skin += (anim.pose[inJoints.y] * anim.invBindPose[inJoints.y]) * inWeights.y;
+     skin += (anim.pose[inJoints.z] * anim.invBindPose[inJoints.z]) * inWeights.z;
+     skin += (anim.pose[inJoints.w] * anim.invBindPose[inJoints.w]) * inWeights.w;
+
+     gl_Position = mvp.projection * mvp.view * mvp.model * skin * vec4(inPosition, 1.0);
+
+     outUV = inUV;
+     outNormal = mvp.model * skin * vec4(inNormal, 0.0f);
+     outPosition = mvp.model * skin * vec4(inPosition, 1.0f);
+}

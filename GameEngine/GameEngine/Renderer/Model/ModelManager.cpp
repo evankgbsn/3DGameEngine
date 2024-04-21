@@ -125,5 +125,8 @@ void ModelManager::LoadDefaultModels()
 
 	models.insert(std::make_pair(std::string("Null"), new Model(nullVertices, nullIndices)));
 
-	LoadModel("Character", "Assets/Model/Woman.gltf");
+	LoadModel("Woman", "Assets/Model/Woman.gltf");
+	LoadModel("Cube", "Assets/Model/Cube.gltf");
+	LoadModel("Sphere", "Assets/Model/Sphere.gltf");
+	LoadModel("Character", "Assets/Model/Character.gltf");
 }

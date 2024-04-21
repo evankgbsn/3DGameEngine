@@ -4,6 +4,9 @@
 #include <functional>
 
 class WindowManager;
+class AnimatedCollider;
+class GOTexturedLit;
+class GO3DAnimated;
 
 class Engine
 {
@@ -39,6 +42,11 @@ private:
 	std::function<void(int keyCode)>* spacePress;
 	std::function<void(int keyCode)>* iPress;
 	std::function<void(int keyCode)>* jPress;
+
+	GO3DAnimated* character;
+	GOTexturedLit* box;
+
+	AnimatedCollider* collider;
 };
 
 #endif // ENGINE_H

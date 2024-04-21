@@ -5,6 +5,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GL/glew.h>
 
 class Model;
 
@@ -85,6 +86,15 @@ public:
 		return transformation = translation * scale * rotation;
 	};
 
+	enum class Mode
+	{
+		FILL = GL_FILL,
+		LINE = GL_LINE,
+		POINT = GL_POINT
+	};
+
+	void SetDrawMode(Mode m);
+
 protected:
 
 	friend class GraphicsObjectManager;
@@ -121,6 +131,8 @@ private:
 	GO3D& operator=(GO3D&&) = delete;
 
 	unsigned int mvpBuffer;
+
+	Mode drawMode;
 };
 
 #endif // GO3D_H

@@ -5,11 +5,16 @@
 #include "Time/TimeManager.h"
 #include "Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "Renderer/GraphicsObjects/GOTexturedAnimated.h"
+#include "Renderer/GraphicsObjects/GOTexturedAnimatedLit.h"
+#include "Renderer/GraphicsObjects/GOTextured.h"
+#include "Renderer/GraphicsObjects/GOTexturedLit.h"
 #include "Renderer/Model/ModelManager.h"
 #include "Renderer/Texture/TextureManager.h";
 #include "Input/InputManager.h"
 #include "Renderer/Camera/CameraManager.h"
 #include "Renderer/Camera/Camera.h"
+#include "Collision/AnimatedCollider.h"
+#include "Renderer/Light/LightManager.h"
 
 Engine* Engine::instance = nullptr;
 
@@ -25,6 +30,11 @@ void Engine::Run()
 		TimeManager::RecordUpdateTime();
 		Renderer::Update();
 		InputManager::Update();
+
+		instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+		instance->character->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+
+		instance->collider->Update();
 	}
 }
 
@@ -45,13 +55,23 @@ Engine::Engine()
 	InputManager::Initialize();
 	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
 
+	TextureManager::LoadTexture("./Assets/Texture/container2.png", "Crate");
+	
+	LightManager::CreateDirectionalLight({2.0f, 2.0f, 2.0f, 2.0f}, {0.5f, 0.5f, 0.5f, 0.0f});
+	LightManager::SetAmbientIntensity(0.2f);
+	LightManager::CreatePointLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { 3.0f, 4.0f, 1.5f });
 
-	GraphicsObjectManager::Create3DGOTexturedAnimated(ModelManager::GetModel("Character"), TextureManager::GetTexture("Woman"));
-	GOTexturedAnimated* go = GraphicsObjectManager::Create3DGOTexturedAnimated(ModelManager::GetModel("Character"), TextureManager::GetTexture("Woman"));
-	GOTexturedAnimated* go3 = GraphicsObjectManager::Create3DGOTexturedAnimated(ModelManager::GetModel("Character"), TextureManager::GetTexture("Woman"));
-	go->SetTranslation({ 5.0f, 0.0f, 0.0f });
+	box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"));
 
-	float cameraSpeed = 0.1f;
+	TextureManager::LoadTexture("./Assets/Texture/grey.png", "Grey");
+
+	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"));
+
+	character->SetClip(3);
+
+	collider = new AnimatedCollider(character);
+
+	float cameraSpeed = 0.01f;
 	wPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
@@ -75,7 +95,7 @@ Engine::Engine()
 			cam.Translate(cam.GetRightVector() * cameraSpeed);
 		});
 
-	float rotSpeed = 0.01f;
+	float rotSpeed = 0.001f;
 	qPress = new std::function<void(int)>([rotSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
@@ -111,14 +131,16 @@ Engine::Engine()
 			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed);
 		});
 	
-	iPress = new std::function<void(int)>([go](int keycode)
+	iPress = new std::function<void(int)>([](int keycode)
 		{
-			GraphicsObjectManager::Disable(go);
+			instance->character->SetDrawMode(GO3D::Mode::LINE);
+			//GraphicsObjectManager::Disable(go);
 		});
 
-	jPress = new std::function<void(int)>([go](int keycode)
+	jPress = new std::function<void(int)>([](int keycode)
 		{
-			GraphicsObjectManager::Enable(go);
+			//GraphicsObjectManager::Enable(go);
+			instance->character->SetDrawMode(GO3D::Mode::FILL);
 		});
 
 
@@ -141,6 +163,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	delete collider;
 	delete ctrPress;
 	delete spacePress;
 	delete ePress;

@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{076a2b10-6a01-48b4-a87a-1caf82fbe15f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{a2670b12-d121-4184-aabe-5ee30fa9825f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Light">
+      <UniqueIdentifier>{c4b81ddd-993d-42bc-8943-d58fd1bfc460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -200,6 +206,39 @@
     </ClCompile>
     <ClCompile Include="Input\InputManager.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\AnimatedCollider.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Collider.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\SphereWithVisualization.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedLit.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Light\LightManager.cpp">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Light\DirectionalLight.cpp">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Light\Light.cpp">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Light\PointLight.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +392,39 @@
     <ClInclude Include="Input\InputManager.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Collision\AnimatedCollider.h">
+      <Filter>Source Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\Collider.h">
+      <Filter>Source Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h">
+      <Filter>Source Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\SphereWithVisualization.h">
+      <Filter>Source Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedLit.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light\LightManager.h">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light\Light.h">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light\DirectionalLight.h">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light\PointLight.h">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -379,10 +451,10 @@
     <None Include="Renderer\Shader\GLSL\Gooch.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.frag">
+    <None Include="Renderer\Shader\GLSL\TexturedLit.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.vert">
+    <None Include="Renderer\Shader\GLSL\TexturedLit.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\TexturedAnimated.frag">
@@ -401,6 +473,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\Textured.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

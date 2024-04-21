@@ -1,12 +1,12 @@
 #ifndef GOTEXTUREDANIMATED_H
 #define GOTEXTUREDANIMATED_H
 
-#include "GO3D.h"
+#include "GO3DAnimated.h"
 
 class Texture;
 class Animation;
 
-class GOTexturedAnimated : public GO3D
+class GOTexturedAnimated : public GO3DAnimated
 {
 
 public:
@@ -26,16 +26,6 @@ private:
 	GOTexturedAnimated(GOTexturedAnimated&&) = delete;
 
 	GOTexturedAnimated& operator=(GOTexturedAnimated&&) = delete;
-
-	struct AnimationData
-	{
-		glm::mat4 pose[120];
-		glm::mat4 invBindPose[120];
-	} animationData;
-
-	unsigned int animationBuffer;
-
-	Animation* animation;
 
 	Texture* texture;
 

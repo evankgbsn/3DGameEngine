@@ -6,6 +6,7 @@
 #include "../Model/ModelManager.h"
 #include "../Texture/TextureManager.h"
 #include "../GraphicsObjects/GraphicsObjectManager.h"
+#include "../Light/LightManager.h"
 
 WindowManager* WindowManager::instance = nullptr;
 
@@ -53,6 +54,7 @@ void WindowManager::CreateWindow(unsigned int width, unsigned int height, const 
 				ShaderManager::Initialize();
 				ModelManager::Initialize();
 				TextureManager::Initialize();
+				LightManager::Initialize();
 				GraphicsObjectManager::Initialize();
 			}
 		}
@@ -105,6 +107,8 @@ WindowManager::WindowManager() :
 
 WindowManager::~WindowManager()
 {
+	GraphicsObjectManager::Terminate();
+	LightManager::Terminate();
 	TextureManager::Terminate();
 	ModelManager::Terminate();
 	ShaderManager::Terminate();

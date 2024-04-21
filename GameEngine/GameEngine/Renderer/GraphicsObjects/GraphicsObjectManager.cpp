@@ -6,6 +6,8 @@
 #include "GOTextured.h"
 #include "GOColoredAnimated.h"
 #include "GOTexturedAnimated.h"
+#include "GOTexturedLit.h"
+#include "GOTexturedAnimatedLit.h"
 #include "../../Utils/Logger.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
@@ -88,7 +90,7 @@ GOTextured* const GraphicsObjectManager::Create3DGOTextured(Model* const model, 
 	return result;
 }
 
-GOColoredAnimated* const GraphicsObjectManager::Create3DGOColoredAnimated(Model* const model, const glm::vec4& initialColor)
+GOColoredAnimated* const GraphicsObjectManager::CreateGO3DColoredAnimated(Model* const model, const glm::vec4& initialColor)
 {
 	GOColoredAnimated* result = nullptr;
 
@@ -105,13 +107,47 @@ GOColoredAnimated* const GraphicsObjectManager::Create3DGOColoredAnimated(Model*
 	return result;
 }
 
-GOTexturedAnimated* const GraphicsObjectManager::Create3DGOTexturedAnimated(Model* const model, Texture* const texture)
+GOTexturedAnimated* const GraphicsObjectManager::CreateGO3DTexturedAnimated(Model* const model, Texture* const texture)
 {
 	GOTexturedAnimated* result = nullptr;
 
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimated(model, texture));
+		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGO3DColored() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
+GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const model, Texture* const texture)
+{
+	GOTexturedLit* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, texture));
+		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGO3DColored() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
+GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const texture)
+{
+	GOTexturedAnimatedLit* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, texture));
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else

@@ -4,7 +4,10 @@
 #include "../Camera/Camera.h"
 #include "../Model/Model.h"
 
-#include <GL/glew.h>
+void GO3D::SetDrawMode(Mode m)
+{
+	drawMode = m;
+}
 
 GO3D::GO3D(Model* const model) :
 	GraphicsObject(model),
@@ -13,7 +16,8 @@ GO3D::GO3D(Model* const model) :
 	translation(glm::mat4(1.0f)),
 	rotation(glm::mat4(1.0f)),
 	scale(glm::mat4(1.0f)),
-	transformation(glm::mat4(1.0f))
+	transformation(glm::mat4(1.0f)),
+	drawMode(Mode::FILL)
 {
 	glCreateBuffers(1, &mvpBuffer);
 	glNamedBufferStorage(mvpBuffer, sizeof(mvp), &mvp, GL_DYNAMIC_STORAGE_BIT);
@@ -33,10 +37,10 @@ void GO3D::Update()
 	const Camera& cam = CameraManager::GetActiveCamera();
 	mvp.view = cam.GetView();
 	mvp.projection = cam.GetProjection();
-	mvp.model = GetTransform();
+	mvp.model = translation * rotation * scale;
 
 	glNamedBufferSubData(mvpBuffer, 0, sizeof(MVP), &mvp);
 
+	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)drawMode);
 	glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
-
 }

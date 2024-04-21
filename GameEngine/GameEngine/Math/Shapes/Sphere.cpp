@@ -92,6 +92,11 @@ float Sphere::GetRadius() const
 	return radius;
 }
 
+void Sphere::SetRadius(float newRadius)
+{
+	radius = newRadius;
+}
+
 void Sphere::SetOrigin(const glm::vec3& newOrigin)
 {
 	origin = newOrigin;

@@ -10,7 +10,7 @@ GOColored::GOColored(Model* const model, const glm::vec4& initialColor) :
 	colorBuffer(0)
 {
 	glCreateBuffers(1, &colorBuffer);
-	glNamedBufferStorage(colorBuffer, sizeof(color), &color, GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(colorBuffer, sizeof(glm::vec4), &color, GL_DYNAMIC_STORAGE_BIT);
 }
 
 GOColored::~GOColored()
@@ -21,9 +21,7 @@ GOColored::~GOColored()
 void GOColored::SetColor(const glm::vec4& c)
 {
 	color = c;
-
-	glBindBufferBase(GL_UNIFORM_BUFFER, 1, colorBuffer);
-	glNamedBufferSubData(colorBuffer, 0, sizeof(color), &color);
+	glNamedBufferSubData(colorBuffer, 0, sizeof(glm::vec4), &color);
 }
 
 const glm::vec4& GOColored::GetColor() const
@@ -33,10 +31,12 @@ const glm::vec4& GOColored::GetColor() const
 
 void GOColored::Update()
 {
-	ShaderManager::StartShaderUsage("Test");
+	ShaderManager::StartShaderUsage("Colored");
 
+	glBindBufferBase(GL_UNIFORM_BUFFER, 1, colorBuffer);
+	
 	GO3D::Update();
 
-	ShaderManager::EndShaderUsage("Test");
+	ShaderManager::EndShaderUsage("Colored");
 
 }

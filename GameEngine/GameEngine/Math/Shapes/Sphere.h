@@ -27,6 +27,8 @@ public:
 
 	float GetRadius() const;
 
+	void SetRadius(float newRadius);
+
 	void SetOrigin(const glm::vec3& newOrigin);
 
 	void Transform(const glm::mat4& transform);

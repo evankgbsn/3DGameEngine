@@ -165,6 +165,10 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collision\AnimatedCollider.cpp" />
+    <ClCompile Include="Collision\Collider.cpp" />
+    <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp" />
+    <ClCompile Include="Collision\SphereWithVisualization.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Math\BezierSpline.cpp" />
@@ -194,12 +198,19 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Camera\Camera.cpp" />
     <ClCompile Include="Renderer\Camera\CameraManager.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GO3D.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedLit.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GraphicsObject.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GraphicsObjectManager.cpp" />
+    <ClCompile Include="Renderer\Light\DirectionalLight.cpp" />
+    <ClCompile Include="Renderer\Light\Light.cpp" />
+    <ClCompile Include="Renderer\Light\LightManager.cpp" />
+    <ClCompile Include="Renderer\Light\PointLight.cpp" />
     <ClCompile Include="Renderer\Model\Model.cpp" />
     <ClCompile Include="Renderer\Model\ModelManager.cpp" />
     <ClCompile Include="Renderer\Model\Vertex.cpp" />
@@ -214,6 +225,10 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collision\AnimatedCollider.h" />
+    <ClInclude Include="Collision\Collider.h" />
+    <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h" />
+    <ClInclude Include="Collision\SphereWithVisualization.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Math\BezierSpline.h" />
@@ -244,12 +259,19 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Camera\Camera.h" />
     <ClInclude Include="Renderer\Camera\CameraManager.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GO3D.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedLit.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GraphicsObject.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GraphicsObjectManager.h" />
+    <ClInclude Include="Renderer\Light\DirectionalLight.h" />
+    <ClInclude Include="Renderer\Light\Light.h" />
+    <ClInclude Include="Renderer\Light\LightManager.h" />
+    <ClInclude Include="Renderer\Light\PointLight.h" />
     <ClInclude Include="Renderer\Model\Model.h" />
     <ClInclude Include="Renderer\Model\ModelManager.h" />
     <ClInclude Include="Renderer\Model\Vertex.h" />
@@ -272,8 +294,10 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\ColoredStatic.vert" />
     <None Include="Renderer\Shader\GLSL\Gooch.frag" />
     <None Include="Renderer\Shader\GLSL\Gooch.vert" />
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.frag" />
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.vert" />
+    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag" />
+    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.vert" />
+    <None Include="Renderer\Shader\GLSL\TexturedLit.frag" />
+    <None Include="Renderer\Shader\GLSL\TexturedLit.vert" />
     <None Include="Renderer\Shader\GLSL\Colored.frag" />
     <None Include="Renderer\Shader\GLSL\Colored.vert" />
     <None Include="Renderer\Shader\GLSL\Textured.frag" />
