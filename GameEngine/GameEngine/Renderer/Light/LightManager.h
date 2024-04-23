@@ -26,11 +26,15 @@ public:
 
 	static PointLight* const CreatePointLight(const glm::vec4& initialColor, const glm::vec3& position);
 
+	static SpotLight* const CreateSpotLight(const glm::vec4& initialColor, const glm::vec3& initialPosition, const glm::vec3& initialDirection);
+
 	static std::vector<PointLight*> GetPointLights(const glm::vec3& fromPosition, float maxDistance, float maxLights);
 
 	static std::vector<PointLight*> GetPointLightsAtIndices(const std::vector<unsigned int>& indices);
 	
 	static std::vector<SpotLight*> GetSpotLights(const glm::vec3& fromPosition, float maxDistance, float maxLights);
+
+	static std::vector<SpotLight*> GetSpotLightsAtIndices(const std::vector<unsigned int>& indices);
 
 	static std::vector<DirectionalLight*> GetDirectionalLights(float maxLights);
 

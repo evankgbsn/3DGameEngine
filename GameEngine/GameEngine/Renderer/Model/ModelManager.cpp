@@ -94,7 +94,7 @@ ModelManager::~ModelManager()
 
 void ModelManager::LoadDefaultModels()
 {
-	models.insert(std::make_pair(std::string("DefaultRectangle"), new Model()));
+	models.insert(std::make_pair(std::string("Rectangle"), new Model()));
 
 
 	// Default rectangle.
@@ -129,4 +129,6 @@ void ModelManager::LoadDefaultModels()
 	LoadModel("Cube", "Assets/Model/Cube.gltf");
 	LoadModel("Sphere", "Assets/Model/Sphere.gltf");
 	LoadModel("Character", "Assets/Model/Character.gltf");
+	LoadModel("LargePlane", "Assets/Model/LargePlane.gltf");
+	LoadModel("Tree", "Assets/Model/Tree.gltf");
 }

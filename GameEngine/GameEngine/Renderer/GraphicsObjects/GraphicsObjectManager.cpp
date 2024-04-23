@@ -124,13 +124,13 @@ GOTexturedAnimated* const GraphicsObjectManager::CreateGO3DTexturedAnimated(Mode
 	return result;
 }
 
-GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const model, Texture* const texture)
+GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap)
 {
 	GOTexturedLit* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, texture));
+		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, diffuseMap, specularMap));
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
@@ -141,13 +141,13 @@ GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const m
 	return result;
 }
 
-GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const texture)
+GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap)
 {
 	GOTexturedAnimatedLit* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, texture));
+		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, diffuseMap, specularMap));
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else

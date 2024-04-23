@@ -28,9 +28,9 @@ public:
 
 	static GOTexturedAnimated* const CreateGO3DTexturedAnimated(Model* const model, Texture* const texture);
 
-	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const texture);
+	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 
-	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const texture);
+	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 
 	static void Disable(GraphicsObject* const go);
 

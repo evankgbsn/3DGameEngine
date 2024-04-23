@@ -2,16 +2,17 @@
 #define GOTEXTUREDANIMATEDLIT_H
 
 #include "GO3DAnimated.h"
+#include "GOLit.h"
 
 class Texture;
 class Animation;
 
-class GOTexturedAnimatedLit : public GO3DAnimated
+class GOTexturedAnimatedLit : public GO3DAnimated, public GOLit
 {
 
 public:
 
-	GOTexturedAnimatedLit(Model* const model, Texture* const texture);
+	GOTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular);
 
 	~GOTexturedAnimatedLit();
 
@@ -27,29 +28,6 @@ private:
 
 	GOTexturedAnimatedLit& operator=(GOTexturedAnimatedLit&&) = delete;
 
-	Texture* texture;
-
-	struct DirectionalLightUBO
-	{
-		glm::vec4 color;
-		glm::vec4 direction;
-	} directionalLight;
-
-	unsigned int directionalLightBuffer;
-	
-	struct PointLightUBO
-	{
-		glm::vec4 color;
-		glm::vec4 position;
-	} pointLight;
-
-	unsigned int pointLightBuffer;
-
-	float ambientLight;
-
-	unsigned int ambientLightBuffer;
-
-	unsigned int viewPositionBuffer;
 };
 
 #endif // GOTEXTUREDANIMATEDLIT_H

@@ -237,8 +237,14 @@
     <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\Light\PointLight.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Light\SpotLight.cpp">
+      <Filter>Source Files\Renderer\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,6 +431,12 @@
     <ClInclude Include="Renderer\Light\PointLight.h">
       <Filter>Source Files\Renderer\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOLit.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light\SpotLight.h">
+      <Filter>Source Files\Renderer\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -439,18 +451,6 @@
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\Gooch.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\Gooch.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
     <None Include="Renderer\Shader\GLSL\TexturedLit.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
@@ -461,12 +461,6 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\TexturedAnimated.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\TexturedStatic.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\TexturedStatic.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\Textured.vert">

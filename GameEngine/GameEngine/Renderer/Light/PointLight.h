@@ -14,6 +14,20 @@ public:
 
 	const glm::vec3& GetPosition() const;
 
+	const float& GetConstant() const;
+
+	const float& GetLinear() const;
+
+	const float& GetQuadratic() const;
+
+	void SetPosition(const glm::vec3& newPosition);
+
+	void SetConstant(const float& newConstant);
+
+	void SetLinear(const float& newLinear);
+
+	void SetQuadratic(const float& newQuadratic);
+
 protected:
 
 private:
@@ -29,6 +43,12 @@ private:
 	PointLight& operator=(PointLight&&) = delete;
 
 	glm::vec3 position;
+
+	float constant;
+
+	float linear;
+
+	float quadratic;
 
 };
 

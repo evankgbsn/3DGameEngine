@@ -10,27 +10,49 @@ layout(std140, binding = 2) uniform DirectionalLightUBO
 	vec4 direction;
 } directionalLight;
 
-layout(std140, binding = 3) uniform AmbientStrengthUBO
+layout(std140, binding = 3) uniform AmbientUBO
 {
-	float strength;
-} ambientStrength;
+	vec4 color;
+} ambient;
 
 layout(std140, binding = 4) uniform PointLightUBO
 {
 	vec4 color;
 	vec4 position;
+	float constant;
+	float linear;
+	float quadratic;
 } pointLight;
 
-layout(std140, binding = 5) uniform ViewPositionUBO
+layout(std140, binding = 5) uniform SpotLight
+{
+	vec4 color;
+	vec4 position;
+	vec4 direction;
+	float cutoff;
+	float outerCutoff;
+	float constant;
+	float linear;
+	float quadratic;
+} spotLight;
+
+layout(std140, binding = 6) uniform ViewPositionUBO
 {
 	vec4 position;
 } viewPosition;
+
+layout(std140, binding = 7) uniform MaterialUBO
+{
+	float shine;
+} material;
+
 
 //--------------------------------------------------
 // Image Texture Data Samplers
 //--------------------------------------------------
 
-layout(binding = 0) uniform sampler2D sampler;
+layout(binding = 0) uniform sampler2D diffuseSampler;
+layout(binding = 1) uniform sampler2D specularSampler;
 
 //--------------------------------------------------
 // Data Sent from Vertex Shader
@@ -48,20 +70,68 @@ out vec4 color;
 
 void main(void)
 {
-	float ambientStr = ambientStrength.strength;
-    vec4 ambient = ambientStr * directionalLight.color;
+	// Ambient Light
+    vec4 ambientLightColor = ambient.color * texture(diffuseSampler, inUV);
 
-	vec3 normal = normalize(pointLight.position - inPosition).xyz;
+	// Directional Light
+	float diff = max(dot(inNormal.xyz, normalize(-directionalLight.direction.xyz)), 0.0f);
+	vec4 diffuseLight = directionalLight.color * (diff * texture(diffuseSampler, inUV));
 
-	float diffuse = max(dot(inNormal.xyz, normal), 0.0f);
-	vec4 lightIntensity = directionalLight.color * diffuse;
-
-	float specularStr = 0.5f;
 	vec3 viewDir = normalize(viewPosition.position - inPosition).xyz;
-	vec3 reflectDir = reflect(-normal, inNormal.xyz);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 64);
-	vec3 specular = specularStr * spec * directionalLight.color.xyz;
+	vec3 reflectDir = reflect(directionalLight.direction.xyz, inNormal.xyz);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
+	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * directionalLight.color.xyz;
 
-	color = texture(sampler, inUV) * (lightIntensity + ambient + vec4(specular, 1.0f));
+	vec4 directionalLightColor = (diffuseLight + vec4(specularLight, 1.0f));
+
+	// Point Light
+	vec3 normal = normalize(pointLight.position - inPosition).xyz;
+	diff = max(dot(inNormal.xyz, normal), 0.0f);
+	diffuseLight = pointLight.color * (diff * texture(diffuseSampler, inUV));
+
+	viewDir = normalize(viewPosition.position - inPosition).xyz;
+	reflectDir = reflect(-normal, inNormal.xyz);
+	spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
+	specularLight = texture(specularSampler, inUV).xyz * spec * pointLight.color.xyz;
+
+	float distance = length(pointLight.position - inPosition);
+	float attenuation = 1.0 / (pointLight.constant + pointLight.linear * distance + pointLight.quadratic * (distance * distance));  
+
+	diffuseLight *= attenuation;
+	specularLight *= attenuation;
+
+	vec4 pointLightColor = (diffuseLight + vec4(specularLight, 1.0f));
+
+	// Spot Light
+	float theta = dot(normalize(spotLight.position - inPosition), -spotLight.direction);
+	float epsilon = spotLight.cutoff - spotLight.outerCutoff;
+	float fadeIntensity = clamp((theta - spotLight.outerCutoff)/ epsilon, 0.0f, 1.0f);
+	
+	if (theta > spotLight.outerCutoff)
+	{
+		normal = normalize(spotLight.position - inPosition).xyz;
+		diff = max(dot(inNormal.xyz, normal), 0.0f);
+		diffuseLight = spotLight.color * (diff * texture(diffuseSampler, inUV));
+
+		viewDir = normalize(viewPosition.position - inPosition).xyz;
+		reflectDir = reflect(-normal, inNormal.xyz);
+		spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
+		specularLight = texture(specularSampler, inUV).xyz * spec * spotLight.color.xyz;
+
+		distance = length(spotLight.position - inPosition);
+		attenuation = 1.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));  
+
+		diffuseLight *= attenuation;
+		specularLight *= attenuation;
+
+		diffuseLight *= fadeIntensity;
+		specularLight *= fadeIntensity;
+
+	}
+
+	vec4 spotLightColor = (diffuseLight + vec4(specularLight, 1.0f));
+	
+	color = directionalLightColor + pointLightColor + spotLightColor + ambientLightColor;
 };
+
 

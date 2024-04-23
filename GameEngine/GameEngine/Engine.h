@@ -6,7 +6,7 @@
 class WindowManager;
 class AnimatedCollider;
 class GOTexturedLit;
-class GO3DAnimated;
+class GOTexturedAnimatedLit;
 
 class Engine
 {
@@ -43,7 +43,7 @@ private:
 	std::function<void(int keyCode)>* iPress;
 	std::function<void(int keyCode)>* jPress;
 
-	GO3DAnimated* character;
+	GOTexturedAnimatedLit* character;
 	GOTexturedLit* box;
 
 	AnimatedCollider* collider;

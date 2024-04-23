@@ -3,6 +3,7 @@
 #include "../../Utils/SingletonHelpers.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 
 LightManager* LightManager::instance = nullptr;
 
@@ -72,6 +73,21 @@ PointLight* const LightManager::CreatePointLight(const glm::vec4& initialColor, 
 	}
 }
 
+SpotLight* const LightManager::CreateSpotLight(const glm::vec4& initialColor, const glm::vec3& initialPosition, const glm::vec3& initialDirection)
+{
+	if (instance != nullptr)
+	{
+		SpotLight* spotLight = new SpotLight(initialColor, initialPosition, initialDirection);
+		instance->spotLights.push_back(spotLight);
+		return spotLight;
+	}
+	else
+	{
+		Logger::Log("Calling LightMananger::CreateSpotLight() before LightManager::Initialize().", Logger::Category::Error);
+		return nullptr;
+	}
+}
+
 std::vector<PointLight*> LightManager::GetPointLights(const glm::vec3& fromPosition, float maxDistance, float maxLights)
 {
 	return std::vector<PointLight*>();
@@ -102,6 +118,28 @@ std::vector<PointLight*> LightManager::GetPointLightsAtIndices(const std::vector
 std::vector<SpotLight*> LightManager::GetSpotLights(const glm::vec3& fromPosition, float maxDistance, float maxLights)
 {
 	return std::vector<SpotLight*>();
+}
+
+std::vector<SpotLight*> LightManager::GetSpotLightsAtIndices(const std::vector<unsigned int>& indices)
+{
+	std::vector<SpotLight*> result = std::vector<SpotLight*>();
+
+	if (instance != nullptr)
+	{
+		for (unsigned int index : indices)
+		{
+			if (instance->spotLights.size() > index)
+			{
+				result.push_back(instance->spotLights[index]);
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::GetSpotLightsAtIndices() before LightManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
 }
 
 std::vector<DirectionalLight*> LightManager::GetDirectionalLights(float maxLights)

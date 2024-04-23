@@ -45,7 +45,19 @@ void AnimatedCollider::InitializeOBBs()
 			}
 		}
 
-		jointsVertices[jointNames[vert.GetInfluences()[jointWithMostInfluence]]].push_back(vert);
+		float threshhold = 0.05f;
+
+		if(vert.GetWeights()[0] > threshhold)
+			jointsVertices[jointNames[vert.GetInfluences()[0]]].push_back(vert);
+		
+		if (vert.GetWeights()[1] > threshhold)
+			jointsVertices[jointNames[vert.GetInfluences()[1]]].push_back(vert);
+		
+		if (vert.GetWeights()[2] > threshhold)
+			jointsVertices[jointNames[vert.GetInfluences()[2]]].push_back(vert);
+
+		if (vert.GetWeights()[3] > threshhold)
+			jointsVertices[jointNames[vert.GetInfluences()[3]]].push_back(vert);
 	}
 
 	obbs.resize(jointNames.size());

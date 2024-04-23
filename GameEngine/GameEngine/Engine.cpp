@@ -15,6 +15,8 @@
 #include "Renderer/Camera/Camera.h"
 #include "Collision/AnimatedCollider.h"
 #include "Renderer/Light/LightManager.h"
+#include "Collision/OrientedBoundingBoxWithVisualization.h"
+#include "Renderer/Model/Model.h"
 
 Engine* Engine::instance = nullptr;
 
@@ -31,10 +33,12 @@ void Engine::Run()
 		Renderer::Update();
 		InputManager::Update();
 
-		instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+		//instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+		//instance->box->Rotate(0.01f, { 1.0f, 0.0f, 0.0f });
 		instance->character->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
-
+		static OrientedBoundingBoxWithVisualization* obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 		instance->collider->Update();
+		instance->collider->Intersect(*obb);
 	}
 }
 
@@ -56,18 +60,40 @@ Engine::Engine()
 	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
 
 	TextureManager::LoadTexture("./Assets/Texture/container2.png", "Crate");
+	TextureManager::LoadTexture("./Assets/Texture/container2_specular.png", "CrateSpecular");
 	
-	LightManager::CreateDirectionalLight({2.0f, 2.0f, 2.0f, 2.0f}, {0.5f, 0.5f, 0.5f, 0.0f});
+	LightManager::CreateDirectionalLight({0.0f, 0.0f, 0.0f, 0.0f}, {-0.5f, -0.5f, 0.5f, 0.0f});
 	LightManager::SetAmbientIntensity(0.2f);
-	LightManager::CreatePointLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { 3.0f, 4.0f, 1.5f });
+	LightManager::CreatePointLight({ 5.0f, 5.0f, 5.0f, 5.0f }, { -1.0f, 4.0f, 4.5f });
+	LightManager::CreateSpotLight({2.0f, 2.0f, 2.0f, 2.0f}, {10.0f, 15.0f, 10.0f}, {0.0f, -1.0f, 0.0f});
 
-	box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"));
+	float count = 10;
+	float dist = 5.0f;
+
+	for (unsigned int i = 0; i < count; ++i)
+	{
+		for (unsigned int j = 0; j < count; ++j)
+		{
+			box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
+			box->SetShine(32.0f);
+			box->SetTranslation({ dist * i, 0.0f, dist * j });
+		}
+	}
 
 	TextureManager::LoadTexture("./Assets/Texture/grey.png", "Grey");
+	GOTexturedLit* largePlane = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	largePlane->Translate({ 0.0f, -0.5f, 0.0f });
+	largePlane->SetShine(32.0f);
 
-	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"));
+	GOTexturedLit* tree = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	tree->Scale({ 2.0f, 2.0f, 2.0f });
 
-	character->SetClip(3);
+	tree->SetTranslation({ 10.5f, 0.0f, 10.5f });
+
+	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Grey"));
+	character->SetShine(32.0f);
+	character->SetClip(7);
+	character->Translate({ 0.0f, -0.5f, 0.0f });
 
 	collider = new AnimatedCollider(character);
 

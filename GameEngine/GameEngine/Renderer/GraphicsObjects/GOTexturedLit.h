@@ -2,15 +2,16 @@
 #define GOTEXTUREDLIT_H
 
 #include "GO3D.h"
+#include "GOLit.h"
 
 class Model;
 class Texture;
 
-class GOTexturedLit : public GO3D
+class GOTexturedLit : public GO3D, public GOLit
 {
 public:
 
-	GOTexturedLit(Model* const model, Texture* const texture);
+	GOTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap);
 
 	~GOTexturedLit();
 
@@ -29,26 +30,6 @@ private:
 	GOTexturedLit(GOTexturedLit&&) = delete;
 
 	GOTexturedLit& operator=(GOTexturedLit&&) = delete;
-
-	Texture* texture;
-
-	struct DirectionalLightUBO {
-		glm::vec4 color;
-		glm::vec4 direction;
-	} directionalLight;
-
-	unsigned int directionalLightBuffer;
-
-	struct PointLightUBO {
-		glm::vec4 color;
-		glm::vec4 position;
-	} pointLight;
-
-	unsigned int pointLightBuffer;
-
-	float ambientStrength;
-
-	unsigned int ambientStrengthBuffer;
 
 };
 

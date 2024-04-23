@@ -201,6 +201,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.cpp" />
@@ -211,6 +212,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Light\Light.cpp" />
     <ClCompile Include="Renderer\Light\LightManager.cpp" />
     <ClCompile Include="Renderer\Light\PointLight.cpp" />
+    <ClCompile Include="Renderer\Light\SpotLight.cpp" />
     <ClCompile Include="Renderer\Model\Model.cpp" />
     <ClCompile Include="Renderer\Model\ModelManager.cpp" />
     <ClCompile Include="Renderer\Model\Vertex.cpp" />
@@ -262,6 +264,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOLit.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.h" />
@@ -272,6 +275,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Light\Light.h" />
     <ClInclude Include="Renderer\Light\LightManager.h" />
     <ClInclude Include="Renderer\Light\PointLight.h" />
+    <ClInclude Include="Renderer\Light\SpotLight.h" />
     <ClInclude Include="Renderer\Model\Model.h" />
     <ClInclude Include="Renderer\Model\ModelManager.h" />
     <ClInclude Include="Renderer\Model\Vertex.h" />
@@ -290,10 +294,6 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert" />
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.frag" />
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.vert" />
-    <None Include="Renderer\Shader\GLSL\Gooch.frag" />
-    <None Include="Renderer\Shader\GLSL\Gooch.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedLit.frag" />
@@ -304,8 +304,6 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\Textured.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimated.frag" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimated.vert" />
-    <None Include="Renderer\Shader\GLSL\TexturedStatic.frag" />
-    <None Include="Renderer\Shader\GLSL\TexturedStatic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
