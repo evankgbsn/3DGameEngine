@@ -5,6 +5,8 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 
+#include <algorithm>
+
 LightManager* LightManager::instance = nullptr;
 
 void LightManager::Initialize()
@@ -90,7 +92,46 @@ SpotLight* const LightManager::CreateSpotLight(const glm::vec4& initialColor, co
 
 std::vector<PointLight*> LightManager::GetPointLights(const glm::vec3& fromPosition, float maxDistance, float maxLights)
 {
-	return std::vector<PointLight*>();
+	std::vector<PointLight*> lights;
+
+	if (instance != nullptr)
+	{
+		for (PointLight* pLight : instance->pointLights)
+		{
+			float distance = glm::length(fromPosition - pLight->GetPosition());
+
+			if (distance < maxDistance)
+			{
+				if(lights.size() < maxLights)
+					lights.push_back(pLight);
+				else
+				{
+					std::sort(lights.begin(), lights.end(), [fromPosition](PointLight* a, PointLight* b) -> bool
+						{
+							float distanceA = glm::length(a->GetPosition() - fromPosition);
+							float distanceB = glm::length(b->GetPosition() - fromPosition);
+
+							return distanceA < distanceB;
+						});
+					return lights;
+				}
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::GetPointLights() before LightManager::Initialize()", Logger::Category::Error);
+	}
+
+	std::sort(lights.begin(), lights.end(), [fromPosition](PointLight* a, PointLight* b) -> bool 
+		{
+			float distanceA = glm::length(a->GetPosition() - fromPosition);
+			float distanceB = glm::length(b->GetPosition() - fromPosition);
+
+			return distanceA < distanceB;
+		});
+	
+	return lights;
 }
 
 std::vector<PointLight*> LightManager::GetPointLightsAtIndices(const std::vector<unsigned int>& indices)
@@ -117,7 +158,36 @@ std::vector<PointLight*> LightManager::GetPointLightsAtIndices(const std::vector
 
 std::vector<SpotLight*> LightManager::GetSpotLights(const glm::vec3& fromPosition, float maxDistance, float maxLights)
 {
-	return std::vector<SpotLight*>();
+	std::vector<SpotLight*> lights;
+
+	if (instance != nullptr)
+	{
+		for (SpotLight* pLight : instance->spotLights)
+		{
+			float distance = glm::length(fromPosition - pLight->GetPosition());
+
+			if (distance < maxDistance)
+			{
+				lights.push_back(pLight);
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::GetSpotLights() before LightManager::Initialize()", Logger::Category::Error);
+	}
+
+	std::sort(lights.begin(), lights.end(), [fromPosition](SpotLight* a, SpotLight* b) -> bool
+		{
+			float distanceA = glm::dot(a->GetPosition() - fromPosition, a->GetPosition() - fromPosition);
+			float distanceB = glm::dot(b->GetPosition() - fromPosition, b->GetPosition() - fromPosition);
+
+			return distanceA < distanceB;
+		});
+
+	lights = std::vector<SpotLight*>(lights.begin(), lights.begin() + (((int)maxLights < lights.size()) ? (int)maxLights : lights.size()));
+
+	return lights;
 }
 
 std::vector<SpotLight*> LightManager::GetSpotLightsAtIndices(const std::vector<unsigned int>& indices)

@@ -42,6 +42,7 @@ private:
 	std::function<void(int keyCode)>* spacePress;
 	std::function<void(int keyCode)>* iPress;
 	std::function<void(int keyCode)>* jPress;
+	std::function<void(int keyCode)>* escPress;
 
 	GOTexturedAnimatedLit* character;
 	GOTexturedLit* box;

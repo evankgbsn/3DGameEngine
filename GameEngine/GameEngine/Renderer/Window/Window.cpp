@@ -164,3 +164,8 @@ int Window::GetKey(int keyCode, bool clearFrameKeyStates) const
 		return keyStatesForThisFrame[keyCode] = getKeyResult;
 	}
 }
+
+GLFWwindow* Window::GetGLFWwindow() const
+{
+	return glfwWindow;
+}

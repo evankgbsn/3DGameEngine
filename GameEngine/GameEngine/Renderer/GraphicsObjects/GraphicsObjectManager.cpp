@@ -9,6 +9,8 @@
 #include "GOTexturedLit.h"
 #include "GOTexturedAnimatedLit.h"
 #include "../../Utils/Logger.h"
+#include "../Shader/ShaderManager.h"
+#include "../Window/WindowManager.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
@@ -16,6 +18,26 @@ void GraphicsObjectManager::Update()
 {
 	if (instance != nullptr)
 	{
+		GLint maxTextureSize;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+
+		glViewport(0, 0, maxTextureSize, maxTextureSize);
+		glBindFramebuffer(GL_FRAMEBUFFER, ShaderManager::GetShadowMapFramebuffer());
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glCullFace(GL_FRONT);
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		{
+			if (graphicsObject != nullptr)
+			{
+				graphicsObject->RenderToShadowMap();
+			}
+		}
+
+		glViewport(0, 0, WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glCullFace(GL_BACK);
+		
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
 			if (graphicsObject != nullptr)

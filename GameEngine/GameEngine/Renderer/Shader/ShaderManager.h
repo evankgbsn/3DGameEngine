@@ -27,6 +27,10 @@ private:
 
 	friend class WindowManager;
 
+	friend class GraphicsObjectManager;
+
+	friend class GOTexturedLit;
+
 	friend class Renderer;
 
 	friend class Shader;
@@ -38,6 +42,10 @@ private:
 	static void Terminate();
 
 	static unsigned int GetVAO();
+
+	static unsigned int GetShadowMapFramebuffer();
+
+	static unsigned int GetShadowMapTexture();
 
 	ShaderManager();
 
@@ -55,6 +63,10 @@ private:
 
 	void CreateVAO();
 
+	void CreateShadowMapFramebuffer();
+
+	void DestroyShadowMapFramebuffer();
+
 	void DestroyVAO();
 
 	static ShaderManager* instance;
@@ -67,6 +79,9 @@ private:
 
 	GLDebug* debugInfo;
 
+	unsigned int shadowMapFramebuffer;
+
+	unsigned int shadowMapFramebufferDepthBufferTexture;
 	
 };
 

@@ -65,20 +65,22 @@ public:
 	virtual void SetTransform(const glm::mat4& newTransform)
 	{
 		translation = glm::translate(glm::mat4(1.0f), glm::vec3(newTransform[3]));
-
+		
 		float scaleX = glm::length(newTransform[0]);
 		float scaleY = glm::length(newTransform[1]);
 		float scaleZ = glm::length(newTransform[2]);
-
+		
 		scale[0] = glm::vec4(scaleX, 0.0f, 0.0f, 0.0f);
 		scale[1] = glm::vec4(0.0f, scaleY, 0.0f, 0.0f);
 		scale[2] = glm::vec4(0.0f, 0.0f, scaleZ, 0.0f);
-
+		
 		rotation = glm::mat4(1.0f);
-
+		
 		rotation[0] = newTransform[0] / scaleX;
 		rotation[1] = newTransform[1] / scaleY;
 		rotation[2] = newTransform[2] / scaleZ;
+
+		transformation = newTransform;
 	};
 
 	virtual const glm::mat4& GetTransform()
@@ -120,19 +122,20 @@ protected:
 
 	glm::mat4 transformation;
 
+	Mode drawMode;
+
+	unsigned int mvpBuffer;
+
 private:
 
 	GO3D(const GO3D&) = delete;
 
 	GO3D& operator=(const GO3D&) = delete;
-
-	GO3D(GO3D&&) = delete;
 	
+	GO3D(GO3D&&) = delete;
+
 	GO3D& operator=(GO3D&&) = delete;
 
-	unsigned int mvpBuffer;
-
-	Mode drawMode;
 };
 
 #endif // GO3D_H

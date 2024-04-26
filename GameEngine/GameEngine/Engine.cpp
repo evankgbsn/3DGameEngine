@@ -9,14 +9,18 @@
 #include "Renderer/GraphicsObjects/GOTextured.h"
 #include "Renderer/GraphicsObjects/GOTexturedLit.h"
 #include "Renderer/Model/ModelManager.h"
-#include "Renderer/Texture/TextureManager.h";
+#include "Renderer/Texture/TextureManager.h"
 #include "Input/InputManager.h"
 #include "Renderer/Camera/CameraManager.h"
 #include "Renderer/Camera/Camera.h"
+#include "Renderer/Window/WindowManager.h"
+#include "Renderer/Window/Window.h"
 #include "Collision/AnimatedCollider.h"
 #include "Renderer/Light/LightManager.h"
 #include "Collision/OrientedBoundingBoxWithVisualization.h"
 #include "Renderer/Model/Model.h"
+
+#include <GLFW/glfw3.h>
 
 Engine* Engine::instance = nullptr;
 
@@ -33,12 +37,33 @@ void Engine::Run()
 		Renderer::Update();
 		InputManager::Update();
 
-		//instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
-		//instance->box->Rotate(0.01f, { 1.0f, 0.0f, 0.0f });
+		instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+		instance->box->Rotate(0.01f, { 1.0f, 0.0f, 0.0f });
 		instance->character->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
+		instance->character->Translate({ 0.0001, 0.0f, 0.0f });
 		static OrientedBoundingBoxWithVisualization* obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 		instance->collider->Update();
 		instance->collider->Intersect(*obb);
+
+		double xpos, ypos;
+		glfwGetCursorPos(WindowManager::GetWindow("Engine")->GetGLFWwindow(), &xpos, &ypos);
+		static double prevx, prevy;
+
+		Camera& cam = CameraManager::GetActiveCamera();
+
+		float xspeed = 0.0005f;
+		float yspeed = 0.0005f;
+		if (xpos != prevx)
+		{
+			cam.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(xpos - prevx));
+		}
+		if (ypos != prevy)
+		{
+			cam.Rotate(cam.GetRightVector(), yspeed * (float)-(ypos - prevy));
+		}
+
+		prevx = xpos;
+		prevy = ypos;
 	}
 }
 
@@ -54,21 +79,31 @@ WindowManager* Engine::GetWindowManager()
 
 Engine::Engine()
 {
+
 	TimeManager::Initialize();
 	Renderer::Initialize();
 	InputManager::Initialize();
 	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
+	glfwSetInputMode(WindowManager::GetWindow("Engine")->GetGLFWwindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+	TextureManager::LoadTexture("./Assets/Texture/grey.png", "Grey");
 	TextureManager::LoadTexture("./Assets/Texture/container2.png", "Crate");
 	TextureManager::LoadTexture("./Assets/Texture/container2_specular.png", "CrateSpecular");
 	
-	LightManager::CreateDirectionalLight({0.0f, 0.0f, 0.0f, 0.0f}, {-0.5f, -0.5f, 0.5f, 0.0f});
-	LightManager::SetAmbientIntensity(0.2f);
-	LightManager::CreatePointLight({ 5.0f, 5.0f, 5.0f, 5.0f }, { -1.0f, 4.0f, 4.5f });
-	LightManager::CreateSpotLight({2.0f, 2.0f, 2.0f, 2.0f}, {10.0f, 15.0f, 10.0f}, {0.0f, -1.0f, 0.0f});
+	LightManager::CreateDirectionalLight({0.30f, 0.30f, 0.30f, 1.0f}, {-0.5f, -0.5f, 0.5f, 0.0f});
+	LightManager::SetAmbientIntensity(0.02f);
+	//LightManager::CreatePointLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { -1.0f, 4.0f, 4.5f });
+
 
 	float count = 10;
 	float dist = 5.0f;
+	for (int i = 0; i < count; ++i)
+	{
+		for (int j = 0; j < count; ++j)
+		{
+			LightManager::CreateSpotLight({ 5.0f, 5.0f, 5.0f, 0.0f }, { dist * i, 5.0f, dist * j }, { 0.0f, -1.0f, 0.3f });
+		}
+	}
 
 	for (unsigned int i = 0; i < count; ++i)
 	{
@@ -76,49 +111,48 @@ Engine::Engine()
 		{
 			box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
 			box->SetShine(32.0f);
-			box->SetTranslation({ dist * i, 0.0f, dist * j });
+			box->SetTranslation({ dist * i, 0.5f, dist * j });
 		}
 	}
 
-	TextureManager::LoadTexture("./Assets/Texture/grey.png", "Grey");
-	GOTexturedLit* largePlane = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
-	largePlane->Translate({ 0.0f, -0.5f, 0.0f });
-	largePlane->SetShine(32.0f);
-
-	GOTexturedLit* tree = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
-	tree->Scale({ 2.0f, 2.0f, 2.0f });
-
-	tree->SetTranslation({ 10.5f, 0.0f, 10.5f });
-
-	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Grey"));
+	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("CrateSpecular"));
 	character->SetShine(32.0f);
 	character->SetClip(7);
 	character->Translate({ 0.0f, -0.5f, 0.0f });
 
+	GOTexturedLit* largePlane = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	largePlane->Translate({ 0.0f, -0.5f, 0.0f });
+	largePlane->SetShine(32.0f);
+
+	GOTexturedLit* tree = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("Grey"));
+	tree->Scale({ 2.0f, 2.0f, 2.0f });
+
+	tree->SetTranslation({ 10.5f, 0.0f, 10.5f });
+
 	collider = new AnimatedCollider(character);
 
-	float cameraSpeed = 0.01f;
+	float cameraSpeed = 5.0f;
 	wPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * cameraSpeed);
+			cam.Translate(cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	aPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * -cameraSpeed);
+			cam.Translate(cam.GetRightVector() * -cameraSpeed * TimeManager::DeltaTime());
 		});
 	sPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * -cameraSpeed);
+			cam.Translate(cam.GetForwardVector() * -cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	dPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * cameraSpeed);
+			cam.Translate(cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	float rotSpeed = 0.001f;
@@ -148,13 +182,13 @@ Engine::Engine()
 	ctrPress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -cameraSpeed);
+			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	spacePress = new std::function<void(int)>([cameraSpeed](int keycode)
 		{
 			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed);
+			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed * TimeManager::DeltaTime());
 		});
 	
 	iPress = new std::function<void(int)>([](int keycode)
@@ -167,6 +201,21 @@ Engine::Engine()
 		{
 			//GraphicsObjectManager::Enable(go);
 			instance->character->SetDrawMode(GO3D::Mode::FILL);
+		});
+
+	escPress = new std::function<void(int)>([](int keycode)
+		{
+			static bool toggle = false;
+			if (toggle)
+			{
+				glfwSetInputMode(WindowManager::GetWindow("Engine")->GetGLFWwindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			}
+			else
+			{
+				glfwSetInputMode(WindowManager::GetWindow("Engine")->GetGLFWwindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
+
+			toggle = !toggle;
 		});
 
 
@@ -182,9 +231,7 @@ Engine::Engine()
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_SPACE, spacePress, "camMovement");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_I, iPress, "camMovement");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_J, jPress, "camMovement");
-
-
-
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, escPress, "hiddenCursor");
 }
 
 Engine::~Engine()

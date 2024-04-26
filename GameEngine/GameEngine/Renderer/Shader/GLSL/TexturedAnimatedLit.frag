@@ -4,27 +4,29 @@
 // Uniform buffer
 //--------------------------------------------------
 
-layout(std140, binding = 2) uniform DirectionalLightUBO
+struct DirectionalLight
 {
 	vec4 color;
 	vec4 direction;
-} directionalLight;
+	bool lightOn;
+};
 
-layout(std140, binding = 3) uniform AmbientUBO
+struct Ambient
 {
 	vec4 color;
-} ambient;
+};
 
-layout(std140, binding = 4) uniform PointLightUBO
+struct PointLight
 {
 	vec4 color;
 	vec4 position;
 	float constant;
 	float linear;
 	float quadratic;
-} pointLight;
+	bool lightOn;
+};
 
-layout(std140, binding = 5) uniform SpotLight
+struct SpotLight
 {
 	vec4 color;
 	vec4 position;
@@ -34,17 +36,30 @@ layout(std140, binding = 5) uniform SpotLight
 	float constant;
 	float linear;
 	float quadratic;
-} spotLight;
+	bool lightOn;
+};
 
-layout(std140, binding = 6) uniform ViewPositionUBO
-{
-	vec4 position;
-} viewPosition;
-
-layout(std140, binding = 7) uniform MaterialUBO
+struct Material
 {
 	float shine;
-} material;
+};
+
+struct ViewPosition
+{
+	vec4 position;
+};
+
+layout(std140, binding = 2) uniform DirectionalLightUBO { DirectionalLight light[20]; } directionalLight;
+
+layout(std140, binding = 3) uniform AmbientUBO { Ambient light; } ambient;
+
+layout(std140, binding = 4) uniform PointLightUBO { PointLight light[20]; } pointLight;
+
+layout(std140, binding = 5) uniform SpotLightUBO { SpotLight light[20]; } spotLight;
+
+layout(std140, binding = 6) uniform ViewPositionUBO { ViewPosition pos; } viewPosition;
+
+layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
 
 //--------------------------------------------------
@@ -68,70 +83,105 @@ layout(location = 7) in vec4 inPosition;
 
 out vec4 color;
 
+vec4 CalcAmbientLight(Ambient light);
+vec4 CalcDirectionalLight(DirectionalLight light);
+vec4 CalcPointLight(PointLight light);
+vec4 CalcSpotLight(SpotLight light);
+
 void main(void)
 {
-	// Ambient Light
-    vec4 ambientLightColor = ambient.color * texture(diffuseSampler, inUV);
+	for(int i = 0; i < 20; ++i)
+	{
+		if(directionalLight.light[i].lightOn)
+		{
+			color += CalcDirectionalLight(directionalLight.light[i]);
+		}
 
-	// Directional Light
-	float diff = max(dot(inNormal.xyz, normalize(-directionalLight.direction.xyz)), 0.0f);
-	vec4 diffuseLight = directionalLight.color * (diff * texture(diffuseSampler, inUV));
+		if(pointLight.light[i].lightOn)
+		{
+			color += CalcPointLight(pointLight.light[i]);
+		}
 
-	vec3 viewDir = normalize(viewPosition.position - inPosition).xyz;
-	vec3 reflectDir = reflect(directionalLight.direction.xyz, inNormal.xyz);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
-	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * directionalLight.color.xyz;
+		if(spotLight.light[i].lightOn)
+		{
+			color += CalcSpotLight(spotLight.light[i]);
+		}
+	}
 
-	vec4 directionalLightColor = (diffuseLight + vec4(specularLight, 1.0f));
+	color += CalcAmbientLight(ambient.light);
+};
 
+vec4 CalcAmbientLight(Ambient light)
+{
+	return light.color * texture(diffuseSampler, inUV);
+}
+
+vec4 CalcDirectionalLight(DirectionalLight light)
+{
+	float diff = max(dot(inNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
+	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
+
+	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
+	vec3 reflectDir = reflect(light.direction.xyz, inNormal.xyz);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
+	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
+
+	return diffuseLight + vec4(specularLight, 1.0f);
+}
+
+vec4 CalcPointLight(PointLight light)
+{
 	// Point Light
-	vec3 normal = normalize(pointLight.position - inPosition).xyz;
-	diff = max(dot(inNormal.xyz, normal), 0.0f);
-	diffuseLight = pointLight.color * (diff * texture(diffuseSampler, inUV));
+	vec3 normal = normalize(light.position - inPosition).xyz;
+	float diff = max(dot(inNormal.xyz, normal), 0.0f);
+	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
 
-	viewDir = normalize(viewPosition.position - inPosition).xyz;
-	reflectDir = reflect(-normal, inNormal.xyz);
-	spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
-	specularLight = texture(specularSampler, inUV).xyz * spec * pointLight.color.xyz;
+	vec3 lightDir = normalize(light.position - inPosition).xyz;
+	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
+	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
-	float distance = length(pointLight.position - inPosition);
-	float attenuation = 1.0 / (pointLight.constant + pointLight.linear * distance + pointLight.quadratic * (distance * distance));  
+	float distance = length(light.position - inPosition);
+	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
 
 	diffuseLight *= attenuation;
 	specularLight *= attenuation;
 
-	vec4 pointLightColor = (diffuseLight + vec4(specularLight, 1.0f));
+	return diffuseLight + vec4(specularLight, 1.0f);
+}
 
-	// Spot Light
-	float theta = dot(normalize(spotLight.position - inPosition), -spotLight.direction);
-	float epsilon = spotLight.cutoff - spotLight.outerCutoff;
-	float fadeIntensity = clamp((theta - spotLight.outerCutoff)/ epsilon, 0.0f, 1.0f);
+vec4 CalcSpotLight(SpotLight light)
+{
+	float theta = dot(normalize(light.position - inPosition), -light.direction);
+	float epsilon = light.cutoff - light.outerCutoff;
+	float fadeIntensity = clamp((theta - light.outerCutoff)/ epsilon, 0.0f, 1.0f);
 	
-	if (theta > spotLight.outerCutoff)
+	vec4 lightColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	if (theta > light.outerCutoff)
 	{
-		normal = normalize(spotLight.position - inPosition).xyz;
-		diff = max(dot(inNormal.xyz, normal), 0.0f);
-		diffuseLight = spotLight.color * (diff * texture(diffuseSampler, inUV));
+		vec3 normal = normalize(light.position - inPosition).xyz;
+		float diff = max(dot(inNormal.xyz, normalize(light.position - inPosition).xyz), 0.0f);
+		vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
 
-		viewDir = normalize(viewPosition.position - inPosition).xyz;
-		reflectDir = reflect(-normal, inNormal.xyz);
-		spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shine);
-		specularLight = texture(specularSampler, inUV).xyz * spec * spotLight.color.xyz;
+		vec3 lightDir = normalize(light.position - inPosition).xyz;
+		vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
+		vec3 halfwayDir = normalize(lightDir + viewDir);
+		float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
+		vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
-		distance = length(spotLight.position - inPosition);
-		attenuation = 1.0 / (spotLight.constant + spotLight.linear * distance + spotLight.quadratic * (distance * distance));  
+		float distance = length(light.position - inPosition);
+		float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
 
 		diffuseLight *= attenuation;
 		specularLight *= attenuation;
 
 		diffuseLight *= fadeIntensity;
 		specularLight *= fadeIntensity;
-
+		
+		lightColor = (diffuseLight + vec4(specularLight, 1.0f));
 	}
 
-	vec4 spotLightColor = (diffuseLight + vec4(specularLight, 1.0f));
-	
-	color = directionalLightColor + pointLightColor + spotLightColor + ambientLightColor;
-};
-
-
+	return lightColor;
+}

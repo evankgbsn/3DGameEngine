@@ -3,6 +3,9 @@
 #include "../../Utils/SingletonHelpers.h"
 #include "Shader.h"
 #include "../../Utils/OpenGLDebug.h"
+#include "../Camera/Camera.h"
+#include "../Camera/CameraManager.h"
+#include "../Window/WindowManager.h"
 
 #include <GLFW/glfw3.h>
 
@@ -87,10 +90,12 @@ ShaderManager::ShaderManager()
 	debugInfo = new GLDebug();
 	LoadShadersFromShaderDirectory();
 	CreateVAO();
+	CreateShadowMapFramebuffer();
 }
 
 ShaderManager::~ShaderManager()
 {
+	DestroyShadowMapFramebuffer();
 	DestroyVAO();
 	delete debugInfo;
 }
@@ -182,7 +187,44 @@ void ShaderManager::CreateVAO()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
+	glEnable(GL_FRAMEBUFFER_SRGB);
+}
 
+void ShaderManager::CreateShadowMapFramebuffer()
+{
+	glCreateFramebuffers(1, &shadowMapFramebuffer);
+	glCreateTextures(GL_TEXTURE_2D, 1, &shadowMapFramebufferDepthBufferTexture);
+	glBindTexture(GL_TEXTURE_2D, shadowMapFramebufferDepthBufferTexture);
+
+	GLint maxTextureSize;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, maxTextureSize, maxTextureSize, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMapFramebufferDepthBufferTexture, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	Camera& depthOrtho = CameraManager::CreateCamera(Camera::Type::ORTHOGRAPHIC, "ShadowMapDepth", WindowManager::GetWindow("Engine"));
+	depthOrtho.SetNear(1.0f);
+	depthOrtho.SetFar(7.5f);
+	depthOrtho.SetPosition({ 50.f, 50.f, -50.f });
+	depthOrtho.SetTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+}
+
+void ShaderManager::DestroyShadowMapFramebuffer()
+{
+	glDeleteTextures(1, &shadowMapFramebufferDepthBufferTexture);
+	glDeleteFramebuffers(1, &shadowMapFramebuffer);
 }
 
 void ShaderManager::DestroyVAO()
@@ -193,4 +235,14 @@ void ShaderManager::DestroyVAO()
 unsigned int ShaderManager::GetVAO()
 {
 	return instance->vertexArrayObject;
+}
+
+unsigned int ShaderManager::GetShadowMapFramebuffer()
+{
+	return instance->shadowMapFramebuffer;
+}
+
+unsigned int ShaderManager::GetShadowMapTexture()
+{
+	return instance->shadowMapFramebufferDepthBufferTexture;
 }

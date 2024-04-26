@@ -9,8 +9,9 @@ const glm::vec4& Light::GetColor() const
 
 Light::Light(const glm::vec4& c) :
 	color(c),
-	collider(new SphereWithVisualization(0.1f))
+	collider()
 {
+	collider = new SphereWithVisualization(0.1f);
 	collider->SetColor({ 1.0f, 1.0f, 0.0f });
 }
 

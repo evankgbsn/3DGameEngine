@@ -21,6 +21,8 @@ public:
 
 	int GetKey(int keyCode, bool clearFrameKeyStates = false) const;
 
+	GLFWwindow* GetGLFWwindow() const;
+
 
 private:
 

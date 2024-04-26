@@ -19,6 +19,11 @@ GraphicsObject::~GraphicsObject()
 {
 }
 
+void GraphicsObject::RenderToShadowMap()
+{
+
+}
+
 const Model* const GraphicsObject::GetModel() const
 {
 	return model;

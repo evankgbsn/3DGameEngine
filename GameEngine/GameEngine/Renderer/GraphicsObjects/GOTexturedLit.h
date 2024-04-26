@@ -17,6 +17,8 @@ public:
 
 	void Update() override;
 
+	void RenderToShadowMap() override;
+
 protected:
 
 private:
@@ -30,6 +32,8 @@ private:
 	GOTexturedLit(GOTexturedLit&&) = delete;
 
 	GOTexturedLit& operator=(GOTexturedLit&&) = delete;
+
+	unsigned int lightSpaceMatrixBuffer;
 
 };
 
