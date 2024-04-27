@@ -296,6 +296,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Utils\SingletonHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.frag" />
+    <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.vert" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.frag" />

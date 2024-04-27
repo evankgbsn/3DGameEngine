@@ -31,6 +31,8 @@ private:
 
 	friend class GOTexturedLit;
 
+	friend class GOTexturedAnimatedLit;
+
 	friend class Renderer;
 
 	friend class Shader;

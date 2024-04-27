@@ -21,7 +21,7 @@ void GraphicsObjectManager::Update()
 		GLint maxTextureSize;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
 
-		glViewport(0, 0, maxTextureSize, maxTextureSize);
+		glViewport(0, 0, 8184, 8184);
 		glBindFramebuffer(GL_FRAMEBUFFER, ShaderManager::GetShadowMapFramebuffer());
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glCullFace(GL_FRONT);

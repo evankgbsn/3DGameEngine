@@ -21,6 +21,11 @@ layout(std140, binding = 1) uniform AnimData
     mat4 invBindPose[120];
 } anim;
 
+layout(std140, binding = 8) uniform LightSpcaeMatrixUBO
+{
+    mat4 matrix;
+} lightSpaceMatrix;
+
 //--------------------------------------------------
 // Vertex Buffer Data
 //--------------------------------------------------
@@ -38,6 +43,7 @@ layout(location = 4) in ivec4 inJoints;
 layout(location = 5) out vec2 outUV;
 layout(location = 6) out vec4 outNormal;
 layout(location = 7) out vec4 outPosition;
+layout(location = 8) out vec4 outLightSpacePosition;
 
 void main(void) 
 {
@@ -51,4 +57,5 @@ void main(void)
      outUV = inUV;
      outNormal = mvp.model * skin * vec4(inNormal, 0.0f);
      outPosition = mvp.model * skin * vec4(inPosition, 1.0f);
+     outLightSpacePosition = lightSpaceMatrix.matrix * mvp.model * skin * vec4(inPosition, 1.0f);
 }

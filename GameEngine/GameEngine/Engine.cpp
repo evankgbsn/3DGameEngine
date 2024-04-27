@@ -39,8 +39,6 @@ void Engine::Run()
 
 		instance->box->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
 		instance->box->Rotate(0.01f, { 1.0f, 0.0f, 0.0f });
-		instance->character->Rotate(0.01f, { 0.0f, 1.0f, 0.0f });
-		instance->character->Translate({ 0.0001, 0.0f, 0.0f });
 		static OrientedBoundingBoxWithVisualization* obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 		instance->collider->Update();
 		instance->collider->Intersect(*obb);
@@ -90,9 +88,9 @@ Engine::Engine()
 	TextureManager::LoadTexture("./Assets/Texture/container2.png", "Crate");
 	TextureManager::LoadTexture("./Assets/Texture/container2_specular.png", "CrateSpecular");
 	
-	LightManager::CreateDirectionalLight({0.30f, 0.30f, 0.30f, 1.0f}, {-0.5f, -0.5f, 0.5f, 0.0f});
+	LightManager::CreateDirectionalLight({1.0f, 1.0f, 1.0f, 1.0f}, {-0.5f, -0.5f, 0.5f, 0.0f});
 	LightManager::SetAmbientIntensity(0.02f);
-	//LightManager::CreatePointLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { -1.0f, 4.0f, 4.5f });
+	LightManager::CreatePointLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { -1.0f, 4.0f, 4.5f });
 
 
 	float count = 10;
@@ -101,13 +99,13 @@ Engine::Engine()
 	{
 		for (int j = 0; j < count; ++j)
 		{
-			LightManager::CreateSpotLight({ 5.0f, 5.0f, 5.0f, 0.0f }, { dist * i, 5.0f, dist * j }, { 0.0f, -1.0f, 0.3f });
+			//LightManager::CreateSpotLight({ 5.0f, 5.0f, 5.0f, 0.0f }, { dist * i, 5.0f, dist * j }, { 0.0f, -1.0f, 0.3f });
 		}
 	}
 
-	for (unsigned int i = 0; i < count; ++i)
+	for (unsigned int i = 4; i < count; ++i)
 	{
-		for (unsigned int j = 0; j < count; ++j)
+		for (unsigned int j = 4; j < count; ++j)
 		{
 			box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
 			box->SetShine(32.0f);
@@ -115,9 +113,12 @@ Engine::Engine()
 		}
 	}
 
-	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("CrateSpecular"));
+	ModelManager::LoadModel("Worrior", "Assets/Model/Worrior.gltf");
+	ModelManager::LoadModel("Biker", "Assets/Model/Biker.gltf");
+
+	character = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Biker"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("CrateSpecular"));
 	character->SetShine(32.0f);
-	character->SetClip(7);
+	character->SetClip(0);
 	character->Translate({ 0.0f, -0.5f, 0.0f });
 
 	GOTexturedLit* largePlane = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
@@ -127,7 +128,7 @@ Engine::Engine()
 	GOTexturedLit* tree = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("Grey"));
 	tree->Scale({ 2.0f, 2.0f, 2.0f });
 
-	tree->SetTranslation({ 10.5f, 0.0f, 10.5f });
+	tree->SetTranslation({ 10.5f, -1.0f, 10.5f });
 
 	collider = new AnimatedCollider(character);
 

@@ -18,6 +18,8 @@ public:
 
 	void Update() override;
 
+	void RenderToShadowMap() override;
+
 private:
 
 	GOTexturedAnimatedLit(const GOTexturedAnimatedLit&) = delete;
@@ -27,6 +29,8 @@ private:
 	GOTexturedAnimatedLit(GOTexturedAnimatedLit&&) = delete;
 
 	GOTexturedAnimatedLit& operator=(GOTexturedAnimatedLit&&) = delete;
+
+	unsigned int lightSpaceMatrixBuffer;
 
 };
 

@@ -23,6 +23,16 @@ protected:
 
 	virtual ~GO3DAnimated();
 
+	struct AnimationData
+	{
+		glm::mat4 pose[120];
+		glm::mat4 invBindPose[120];
+	} animationData;
+
+	unsigned int animationBuffer;
+
+	Animation* animation;
+
 private:
 
 	GO3DAnimated(const GO3DAnimated&) = delete;
@@ -32,16 +42,6 @@ private:
 	GO3DAnimated(GO3DAnimated&&) = delete;
 
 	GO3DAnimated& operator=(GO3DAnimated&&) = delete;
-
-	Animation* animation;
-
-	struct AnimationData
-	{
-		glm::mat4 pose[120];
-		glm::mat4 invBindPose[120];
-	} animationData;
-
-	unsigned int animationBuffer;
 
 };
 
