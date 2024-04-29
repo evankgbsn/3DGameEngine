@@ -1,6 +1,12 @@
 #include "Collider.h"
 
-Collider::Collider()
+bool Collider::Visible() const
+{
+	return visible;
+}
+
+Collider::Collider() :
+	visible(true)
 {
 }
 

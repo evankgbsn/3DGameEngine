@@ -22,6 +22,8 @@ public:
 	bool PointOnPlane(const glm::vec3& point) const;
 
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;
+	
+	bool PlaneIntersect(const Plane& plane) const;
 
 private:
 

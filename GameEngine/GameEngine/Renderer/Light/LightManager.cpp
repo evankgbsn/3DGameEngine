@@ -102,19 +102,7 @@ std::vector<PointLight*> LightManager::GetPointLights(const glm::vec3& fromPosit
 
 			if (distance < maxDistance)
 			{
-				if(lights.size() < maxLights)
-					lights.push_back(pLight);
-				else
-				{
-					std::sort(lights.begin(), lights.end(), [fromPosition](PointLight* a, PointLight* b) -> bool
-						{
-							float distanceA = glm::length(a->GetPosition() - fromPosition);
-							float distanceB = glm::length(b->GetPosition() - fromPosition);
-
-							return distanceA < distanceB;
-						});
-					return lights;
-				}
+				lights.push_back(pLight);
 			}
 		}
 	}
@@ -123,14 +111,16 @@ std::vector<PointLight*> LightManager::GetPointLights(const glm::vec3& fromPosit
 		Logger::Log("Calling LightManager::GetPointLights() before LightManager::Initialize()", Logger::Category::Error);
 	}
 
-	std::sort(lights.begin(), lights.end(), [fromPosition](PointLight* a, PointLight* b) -> bool 
+	std::sort(lights.begin(), lights.end(), [fromPosition](PointLight* a, PointLight* b) -> bool
 		{
-			float distanceA = glm::length(a->GetPosition() - fromPosition);
-			float distanceB = glm::length(b->GetPosition() - fromPosition);
+			float distanceA = glm::dot(a->GetPosition() - fromPosition, a->GetPosition() - fromPosition);
+			float distanceB = glm::dot(b->GetPosition() - fromPosition, b->GetPosition() - fromPosition);
 
 			return distanceA < distanceB;
 		});
-	
+
+	lights = std::vector<PointLight*>(lights.begin(), lights.begin() + (((int)maxLights < lights.size()) ? (int)maxLights : lights.size()));
+
 	return lights;
 }
 

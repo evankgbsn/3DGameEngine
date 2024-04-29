@@ -7,7 +7,3 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 }
-
-void GameObject::Update()
-{
-}

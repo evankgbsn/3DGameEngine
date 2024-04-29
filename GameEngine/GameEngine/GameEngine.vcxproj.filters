@@ -70,6 +70,9 @@
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{ddc3ceb2-9121-4d62-ba6d-4015c127ea9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObject\Component">
+      <UniqueIdentifier>{06bc2b1d-7e0a-4681-bd74-014ce3edfb22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -257,6 +260,12 @@
     </ClCompile>
     <ClCompile Include="Scene\Scene.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\Component.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +464,12 @@
     <ClInclude Include="GameObject\GameObject.h">
       <Filter>Source Files\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>Source Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\Component.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -503,6 +518,15 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.geo">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

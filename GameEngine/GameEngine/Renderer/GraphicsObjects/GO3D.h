@@ -79,8 +79,6 @@ public:
 		rotation[0] = newTransform[0] / scaleX;
 		rotation[1] = newTransform[1] / scaleY;
 		rotation[2] = newTransform[2] / scaleZ;
-
-		transformation = newTransform;
 	};
 
 	virtual const glm::mat4& GetTransform()

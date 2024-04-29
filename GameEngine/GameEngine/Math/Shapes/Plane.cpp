@@ -35,3 +35,9 @@ glm::vec3 Plane::ClosestPoint(const glm::vec3& point) const
 {
     return point - normal * PlaneEquation(point);
 }
+
+bool Plane::PlaneIntersect(const Plane& plane) const
+{
+    glm::vec3 zeroVec = glm::cross(normal, plane.normal);
+    return glm::dot(zeroVec, zeroVec) != 0.0f;
+}

@@ -59,7 +59,36 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 	return instance->models[name] = new Model(vertices, indices);
 }
 
-Model* const ModelManager::GetModel(std::string modelName)
+void ModelManager::UnloadModel(const std::string& name)
+{
+	if (instance == nullptr)
+	{
+		Logger::LogAndThrow(std::string("Calling ModelManager::UnloadModel() before ModelManager::Initialize()."));
+		return;
+	}
+
+	if (instance->models.find(name) == instance->models.end())
+	{
+		Logger::Log(std::string("Cannot unload model with name ") + name + std::string(". a model with this name has not been loaded."), Logger::Category::Warning);
+		return;
+	}
+
+	delete instance->models[name];
+	instance->models.erase(instance->models.find(name));
+}
+
+bool ModelManager::ModelLoaded(const std::string& name)
+{
+	if (instance == nullptr)
+	{
+		Logger::LogAndThrow(std::string("Calling ModelManager::ModelLoaded() before ModelManager::Initialize()."));
+		return false;
+	}
+
+	return instance->models.find(name) != instance->models.end();
+}
+
+Model* const ModelManager::GetModel(const std::string& modelName)
 {
 	if (instance == nullptr)
 	{
@@ -125,10 +154,5 @@ void ModelManager::LoadDefaultModels()
 
 	models.insert(std::make_pair(std::string("Null"), new Model(nullVertices, nullIndices)));
 
-	LoadModel("Woman", "Assets/Model/Woman.gltf");
-	LoadModel("Cube", "Assets/Model/Cube.gltf");
 	LoadModel("Sphere", "Assets/Model/Sphere.gltf");
-	LoadModel("Character", "Assets/Model/Character.gltf");
-	LoadModel("LargePlane", "Assets/Model/LargePlane.gltf");
-	LoadModel("Tree", "Assets/Model/Tree.gltf");
 }

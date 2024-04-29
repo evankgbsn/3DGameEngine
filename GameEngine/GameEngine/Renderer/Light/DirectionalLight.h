@@ -13,6 +13,8 @@ public:
 
 	const glm::vec4& GetDirection() const;
 
+	void SetDirection(const glm::vec4& newDirection);
+
 private:
 
 	DirectionalLight(const DirectionalLight&) = delete;

@@ -14,3 +14,8 @@ const glm::vec4& DirectionalLight::GetDirection() const
 {
 	return direction;
 }
+
+void DirectionalLight::SetDirection(const glm::vec4& newDirection)
+{
+	direction = newDirection;
+}

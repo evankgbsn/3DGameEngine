@@ -97,6 +97,19 @@ void TextureManager::UnloadTexture(const std::string& name)
 	}
 }
 
+bool TextureManager::TextureLoaded(const std::string& name)
+{
+	if (instance != nullptr)
+	{
+		return instance->textures.find(name) != instance->textures.end();
+	}
+	else
+	{
+		Logger::Log(std::string("Calling TextureManager::TextureLoaded() before TextureManager::Initialize()."), Logger::Category::Warning);
+		return false;
+	}
+}
+
 TextureManager::TextureManager() :
 	textures(std::unordered_map<std::string, Texture*>())
 {

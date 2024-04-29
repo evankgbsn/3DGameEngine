@@ -38,3 +38,18 @@ void Animation::SetSpeed(float newSpeed)
 {
 	speed = newSpeed;
 }
+
+float Animation::GetSpeed() const
+{
+	return speed;
+}
+
+unsigned int Animation::GetFrame() const
+{
+	return index;
+}
+
+void Animation::SetFrame(unsigned int frameIndex)
+{
+	index = frameIndex;
+}

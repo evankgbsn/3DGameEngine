@@ -170,6 +170,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\SphereWithVisualization.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="GameObject\Component\Component.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Math\BezierSpline.cpp" />
@@ -225,6 +226,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Window\Window.cpp" />
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Time\TimeManager.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
@@ -234,6 +236,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\SphereWithVisualization.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="GameObject\Component\Component.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Math\BezierSpline.h" />
@@ -290,6 +293,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Window\Window.h" />
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Time\TimeManager.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\OpenGLDebug.h" />
@@ -300,6 +304,9 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.vert" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert" />
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.frag" />
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.geo" />
+    <None Include="Renderer\Shader\GLSL\PointLightShadow.vert" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.frag" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag" />

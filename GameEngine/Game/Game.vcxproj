@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,7 +134,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObjects\Boxes.cpp" />
+    <ClCompile Include="GameObjects\Character.cpp" />
+    <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp" />
+    <ClCompile Include="GameObjects\FreeCamera.cpp" />
+    <ClCompile Include="GameObjects\LargePlane.cpp" />
+    <ClCompile Include="GameObjects\LightArray.cpp" />
+    <ClCompile Include="GameObjects\Tree.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scenes\MainScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjects\Boxes.h" />
+    <ClInclude Include="GameObjects\Character.h" />
+    <ClInclude Include="GameObjects\DirectionalLightGameObject.h" />
+    <ClInclude Include="GameObjects\FreeCamera.h" />
+    <ClInclude Include="GameObjects\LightArray.h" />
+    <ClInclude Include="GameObjects\LargePlane.h" />
+    <ClInclude Include="GameObjects\Tree.h" />
+    <ClInclude Include="Scenes\MainScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

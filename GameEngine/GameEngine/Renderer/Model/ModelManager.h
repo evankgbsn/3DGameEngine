@@ -19,7 +19,11 @@ public:
 
 	static Model* const LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
-	static Model* const GetModel(std::string ModelName);
+	static void UnloadModel(const std::string& name);
+
+	static Model* const GetModel(const std::string& name);
+
+	static bool ModelLoaded(const std::string& name);
 
 private:
 

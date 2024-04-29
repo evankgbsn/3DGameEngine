@@ -8,6 +8,7 @@
 #include <string>
 
 class GO3DAnimated;
+class GOColoredAnimated;
 class ColoredStaticGraphicsObject;
 class OrientedBoundingBoxWithVisualization;
 class OrientedBoundingBox;
@@ -33,6 +34,8 @@ private:
 
 	void InitializeSphere();
 
+	void InitializeMeshColliderVisualization();
+
 	AnimatedCollider() = delete;
 
 	AnimatedCollider(const AnimatedCollider&) = delete;
@@ -48,6 +51,8 @@ private:
 	SphereWithVisualization* sphere;
 
 	std::vector<OrientedBoundingBoxWithVisualization*> obbs;
+
+	GOColoredAnimated* meshColliderVisualization;
 
 
 

@@ -6,6 +6,7 @@
 #include <vector>
 
 class Vertex;
+class Plane;
 
 class OrientedBoundingBox
 {
@@ -36,6 +37,8 @@ public:
 	bool PointIntersect(const glm::vec3& point) const;
 
 	bool OrientedBoundingBoxIntersect(const OrientedBoundingBox& other) const;
+
+	bool PlaneIntersect(const Plane& plane) const;
 
 	void SizeToMesh(const std::vector<Vertex>& vertices);
 

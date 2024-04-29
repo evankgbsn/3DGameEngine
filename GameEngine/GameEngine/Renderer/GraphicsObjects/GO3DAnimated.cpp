@@ -26,12 +26,39 @@ void GO3DAnimated::SetClip(unsigned int clipIndex)
 {
 	delete animation;
 	animation = new Animation(model->GetBakedAnimation(clipIndex));
+	clip = clipIndex;
+}
+
+unsigned int GO3DAnimated::GetClip() const
+{
+	return clip;
+}
+
+unsigned int GO3DAnimated::GetFrame() const
+{
+	return animation->GetFrame();
+}
+
+void GO3DAnimated::SetFrame(unsigned int frameIndex)
+{
+	animation->SetFrame(frameIndex);
+}
+
+float GO3DAnimated::GetSpeed() const
+{
+	return animation->GetSpeed();
+}
+
+void GO3DAnimated::SetSpeed(float speed)
+{
+	animation->SetSpeed(speed);
 }
 
 GO3DAnimated::GO3DAnimated(Model* const model) :
 	GO3D(model),
 	animationData(),
-	animationBuffer()
+	animationBuffer(),
+	clip(0)
 {
 	glCreateBuffers(1, &animationBuffer);
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);

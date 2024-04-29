@@ -8,15 +8,12 @@
 #include <GL/glew.h>
 
 GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor) :
-	GO3D(model),
+	GO3DAnimated(model),
 	color(initialColor),
-	colorBuffer(),
-	animationData(),
-	animationBuffer(),
-	animation(nullptr)
+	colorBuffer()
 {
 	glCreateBuffers(1, &colorBuffer);
-	glNamedBufferStorage(colorBuffer, sizeof(color), &color, GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(colorBuffer, sizeof(color), &initialColor, GL_DYNAMIC_STORAGE_BIT);
 
 	glCreateBuffers(1, &animationBuffer);
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
@@ -35,24 +32,27 @@ GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor)
 GOColoredAnimated::~GOColoredAnimated()
 {
 	glDeleteBuffers(1, &colorBuffer);
-	glDeleteBuffers(1, &animationBuffer);
-	delete animation;
 }
 
 void GOColoredAnimated::Update()
 {
 	ShaderManager::StartShaderUsage("ColoredAnimated");
 
-	animation->Update(animationData.pose);
-
-	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
-
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, colorBuffer);
-
-	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
 	glNamedBufferSubData(colorBuffer, 0, sizeof(glm::vec4), &color);
 
+	GO3DAnimated::Update();
 	GO3D::Update();
 
 	ShaderManager::EndShaderUsage("ColoredAnimated");
+}
+
+const glm::vec4& GOColoredAnimated::GetColor() const
+{
+	return color;
+}
+
+void GOColoredAnimated::SetColor(const glm::vec4& newColor)
+{
+	color = newColor;
 }

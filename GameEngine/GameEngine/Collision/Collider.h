@@ -5,6 +5,8 @@ class Collider
 {
 public:
 	
+	bool Visible() const;
+
 protected:
 
 	Collider();
@@ -14,6 +16,8 @@ protected:
 	virtual void Update() = 0;
 
 	virtual void ToggleVisibility() = 0;
+
+	bool visible;
 
 private:
 

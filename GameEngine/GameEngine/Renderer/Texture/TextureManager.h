@@ -21,6 +21,8 @@ public:
 
 	static void UnloadTexture(const std::string& name);
 
+	static bool TextureLoaded(const std::string& name);
+
 private:
 
 	TextureManager();

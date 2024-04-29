@@ -29,25 +29,6 @@ private:
 	~Engine();
 
 	static Engine* instance;
-
-	std::function<void(int keyCode)>* wPress;
-	std::function<void(int keyCode)>* aPress;
-	std::function<void(int keyCode)>* sPress;
-	std::function<void(int keyCode)>* dPress;
-	std::function<void(int keyCode)>* qPress;
-	std::function<void(int keyCode)>* ePress;
-	std::function<void(int keyCode)>* zPress;
-	std::function<void(int keyCode)>* cPress;
-	std::function<void(int keyCode)>* ctrPress;
-	std::function<void(int keyCode)>* spacePress;
-	std::function<void(int keyCode)>* iPress;
-	std::function<void(int keyCode)>* jPress;
-	std::function<void(int keyCode)>* escPress;
-
-	GOTexturedAnimatedLit* character;
-	GOTexturedLit* box;
-
-	AnimatedCollider* collider;
 };
 
 #endif // ENGINE_H

@@ -59,7 +59,12 @@ void OrientedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor)
 
 void OrientedBoundingBoxWithVisualization::CreateGraphics()
 {
-	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Cube"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
+	{
+		ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
+	}
+
+	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("OrientedBoundingBox"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	graphics->SetDrawMode(GO3D::Mode::LINE);
 	graphics->SetScale(GetSize());
 	graphics->SetTranslation(GetOffset());

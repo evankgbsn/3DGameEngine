@@ -1,19 +1,32 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <unordered_map>
+#include <string>
+
+class Component;
+
 class GameObject
 {
 public:
 
-	GameObject();
-
-	~GameObject();
-
-	virtual void Update();
-
 protected:
 
+	friend class Scene;
 
+	GameObject();
+
+	virtual ~GameObject();
+
+	virtual void Initialize() = 0;
+
+	virtual void Terminate() = 0;
+
+	virtual void Update() = 0;
+
+	virtual void Load() = 0;
+
+	virtual void Unload() = 0;
 
 private:
 
@@ -24,6 +37,8 @@ private:
 	GameObject(GameObject&&) = delete;
 
 	GameObject& operator=(GameObject&&) = delete;
+
+	std::unordered_map<std::string, Component*> components;
 
 };
 

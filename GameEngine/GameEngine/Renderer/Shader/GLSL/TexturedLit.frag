@@ -90,6 +90,7 @@ vec4 CalcDirectionalLight(DirectionalLight light);
 vec4 CalcPointLight(PointLight light);
 vec4 CalcSpotLight(SpotLight light);
 float CalcShadow();
+float CalcPointShadow();
 
 void main(void)
 {

@@ -6,12 +6,15 @@
 #include "../Renderer/Model/Model.h"
 #include "../Renderer/Model/Vertex.h"
 #include "../Renderer/Animation/Armature.h"
+#include "../Renderer/GraphicsObjects/GOColoredAnimated.h"
+#include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 
 AnimatedCollider::AnimatedCollider(GO3DAnimated* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
 {
 	//InitializeSphere();
 	InitializeOBBs();
+	InitializeMeshColliderVisualization();
 }
 
 AnimatedCollider::~AnimatedCollider()
@@ -81,6 +84,16 @@ void AnimatedCollider::InitializeSphere()
 	sphere = new SphereWithVisualization(wrapedGraphics);
 }
 
+void AnimatedCollider::InitializeMeshColliderVisualization()
+{
+	meshColliderVisualization = GraphicsObjectManager::CreateGO3DColoredAnimated(const_cast<Model* const>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	meshColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
+	meshColliderVisualization->SetClip(wrapedGraphics->GetClip());
+	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
+	meshColliderVisualization->SetFrame(wrapedGraphics->GetFrame());
+	meshColliderVisualization->SetSpeed(wrapedGraphics->GetSpeed());
+}
+
 void AnimatedCollider::ToggleVisibility()
 {
 	for (const auto& obb : obbs)
@@ -88,6 +101,20 @@ void AnimatedCollider::ToggleVisibility()
 		if(obb != nullptr)
 			obb->ToggleVisibility();
 	}
+
+	if (visible)
+	{
+		GraphicsObjectManager::Disable(meshColliderVisualization);
+	}
+	else
+	{
+		GraphicsObjectManager::Enable(meshColliderVisualization);
+		meshColliderVisualization->SetFrame(wrapedGraphics->GetFrame());
+		meshColliderVisualization->SetSpeed(wrapedGraphics->GetSpeed());
+	}
+		
+
+	visible = !visible;
 }
 
 void AnimatedCollider::Update()

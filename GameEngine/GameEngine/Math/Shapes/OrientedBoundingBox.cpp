@@ -2,6 +2,7 @@
 
 #include "../SAT/Interval3D.h"
 #include "../../Renderer/Model/Vertex.h"
+#include "Plane.h"
 
 OrientedBoundingBox::OrientedBoundingBox(const glm::vec3& initialOrigin, const glm::vec3& initialSize, const glm::mat4& initialOrientation) :
     origin(initialOrigin),
@@ -94,6 +95,22 @@ bool OrientedBoundingBox::OrientedBoundingBoxIntersect(const OrientedBoundingBox
     }
 
     return true;
+}
+
+bool OrientedBoundingBox::PlaneIntersect(const Plane& plane) const
+{
+    const glm::mat4& rot = orientation;
+    const glm::vec3& normal = plane.GetNormal();
+
+
+    float pLen = size.x * fabsf(glm::dot(normal, glm::vec3(rot[0]))) +
+                 size.y * fabsf(glm::dot(normal, glm::vec3(rot[1]))) +
+                 size.z * fabsf(glm::dot(normal, glm::vec3(rot[2])));
+
+    float dot = glm::dot(normal, origin);
+    float dist = dot - plane.GetDistance();
+
+    return fabsf(dist) <= pLen;
 }
 
 void OrientedBoundingBox::SizeToMesh(const std::vector<Vertex>& verts)

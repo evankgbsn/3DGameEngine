@@ -23,6 +23,10 @@ public:
 
 	GLFWwindow* GetGLFWwindow() const;
 
+	void DisableCursor() const;
+
+	void EnableCursor() const;
+
 
 private:
 

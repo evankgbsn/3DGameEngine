@@ -17,6 +17,17 @@ public:
 
 	void SetClip(unsigned int clipIndex);
 
+	unsigned int GetClip() const;
+
+	unsigned int GetFrame() const;
+
+	void SetFrame(unsigned int frameIndex);
+
+	float GetSpeed() const;
+
+	void SetSpeed(float speed);
+
+
 protected:
 
 	GO3DAnimated(Model* const model);
@@ -42,6 +53,8 @@ private:
 	GO3DAnimated(GO3DAnimated&&) = delete;
 
 	GO3DAnimated& operator=(GO3DAnimated&&) = delete;
+
+	unsigned int clip;
 
 };
 

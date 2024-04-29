@@ -28,6 +28,12 @@ public:
 
 	void SetSpeed(float newSpeed);
 
+	float GetSpeed() const;
+
+	unsigned int GetFrame() const;
+
+	void SetFrame(unsigned int frameIndex);
+
 private:
 
 	float frameTimeAdvance;

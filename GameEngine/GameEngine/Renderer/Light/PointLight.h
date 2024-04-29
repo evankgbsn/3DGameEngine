@@ -3,6 +3,8 @@
 
 #include "Light.h"
 
+#include <vector>
+
 class PointLight : public Light
 {
 
@@ -49,6 +51,12 @@ private:
 	float linear;
 
 	float quadratic;
+
+	unsigned int depthCubeMap;
+
+	float farPlane;
+
+	std::vector<glm::mat4> shadowTransforms;
 
 };
 

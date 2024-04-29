@@ -169,3 +169,13 @@ GLFWwindow* Window::GetGLFWwindow() const
 {
 	return glfwWindow;
 }
+
+void Window::DisableCursor() const
+{
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void Window::EnableCursor() const
+{
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}

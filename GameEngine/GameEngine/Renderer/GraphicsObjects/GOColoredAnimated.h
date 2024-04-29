@@ -1,13 +1,13 @@
 #ifndef GOCOLOREDANIMATED_H
 #define GOCOLOREDANIMATED_H
 
-#include "GO3D.h"
+#include "GO3DAnimated.h"
 
 #include <glm/glm.hpp>
 
 class Animation;
 
-class GOColoredAnimated : public GO3D
+class GOColoredAnimated : public GO3DAnimated
 {
 public:
 
@@ -16,6 +16,10 @@ public:
 	~GOColoredAnimated();
 
 	void Update() override;
+
+	const glm::vec4& GetColor() const;
+
+	void SetColor(const glm::vec4& newColor);
 
 protected:
 
@@ -32,16 +36,6 @@ private:
 	glm::vec4 color;
 
 	unsigned int colorBuffer;
-
-	struct AnimationData
-	{
-		glm::mat4 pose[120];
-		glm::mat4 invBindPose[120];
-	} animationData;
-
-	unsigned int animationBuffer;
-
-	Animation* animation;
 };
 
 #endif // GOCOLOREDANIMATED_H

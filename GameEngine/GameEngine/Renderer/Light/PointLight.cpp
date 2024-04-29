@@ -1,15 +1,20 @@
 #include "PointLight.h"
 
 #include "../../Collision/SphereWithVisualization.h"
+#include "../Shader/ShaderManager.h"
+
 
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <gl/glew.h>
 
 PointLight::PointLight(const glm::vec4& initialColor, const glm::vec3& initialPosition) :
 	Light(initialColor),
 	position(initialPosition),
 	constant(1.0f),
 	linear(0.09f),
-	quadratic(0.032f)
+	quadratic(0.032f),
+	farPlane(25.0f)
 {
 	glm::mat4 transform(1.0f);
 	transform = glm::translate(transform, position);
