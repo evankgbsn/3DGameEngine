@@ -23,6 +23,7 @@ void LargePlane::Initialize()
 
 void LargePlane::Terminate()
 {
+	GraphicsObjectManager::Delete(graphics);
 }
 
 void LargePlane::Update()

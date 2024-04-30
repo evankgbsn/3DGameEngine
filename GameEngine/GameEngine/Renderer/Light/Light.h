@@ -16,7 +16,7 @@ protected:
 
 	Light(const glm::vec4& color);
 
-	~Light();
+	virtual ~Light();
 
 	SphereWithVisualization* collider;
 

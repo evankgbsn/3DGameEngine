@@ -50,6 +50,16 @@ DirectionalLight* const LightManager::CreateDirectionalLight(const glm::vec4& in
 	if (instance != nullptr)
 	{
 		DirectionalLight* dLight = new DirectionalLight(initialColor, initialDirection);
+
+		for (unsigned int i = 0; i < instance->directionalLights.size(); ++i)
+		{
+			if (!IsValid(instance->directionalLights[i]))
+			{
+				instance->directionalLights[i] = dLight;
+				return dLight;
+			}
+		}
+
 		instance->directionalLights.push_back(dLight);
 		return dLight;
 	}
@@ -64,9 +74,19 @@ PointLight* const LightManager::CreatePointLight(const glm::vec4& initialColor, 
 {
 	if (instance != nullptr)
 	{
-		PointLight* dLight = new PointLight(initialColor, position);
-		instance->pointLights.push_back(dLight);
-		return dLight;
+		PointLight* pLight = new PointLight(initialColor, position);
+
+		for (unsigned int i = 0; i < instance->pointLights.size(); ++i)
+		{
+			if (!IsValid(instance->pointLights[i]))
+			{
+				instance->pointLights[i] = pLight;
+				return pLight;
+			}
+		}
+
+		instance->pointLights.push_back(pLight);
+		return pLight;
 	}
 	else
 	{
@@ -80,6 +100,16 @@ SpotLight* const LightManager::CreateSpotLight(const glm::vec4& initialColor, co
 	if (instance != nullptr)
 	{
 		SpotLight* spotLight = new SpotLight(initialColor, initialPosition, initialDirection);
+
+		for (unsigned int i = 0; i < instance->spotLights.size(); ++i)
+		{
+			if (!IsValid(instance->spotLights[i]))
+			{
+				instance->spotLights[i] = spotLight;
+				return spotLight;
+			}
+		}
+
 		instance->spotLights.push_back(spotLight);
 		return spotLight;
 	}
@@ -98,11 +128,14 @@ std::vector<PointLight*> LightManager::GetPointLights(const glm::vec3& fromPosit
 	{
 		for (PointLight* pLight : instance->pointLights)
 		{
-			float distance = glm::length(fromPosition - pLight->GetPosition());
-
-			if (distance < maxDistance)
+			if (IsValid(pLight))
 			{
-				lights.push_back(pLight);
+				float distance = glm::length(fromPosition - pLight->GetPosition());
+
+				if (distance < maxDistance)
+				{
+					lights.push_back(pLight);
+				}
 			}
 		}
 	}
@@ -154,11 +187,14 @@ std::vector<SpotLight*> LightManager::GetSpotLights(const glm::vec3& fromPositio
 	{
 		for (SpotLight* pLight : instance->spotLights)
 		{
-			float distance = glm::length(fromPosition - pLight->GetPosition());
-
-			if (distance < maxDistance)
+			if (IsValid(pLight))
 			{
-				lights.push_back(pLight);
+				float distance = glm::length(fromPosition - pLight->GetPosition());
+
+				if (distance < maxDistance)
+				{
+					lights.push_back(pLight);
+				}
 			}
 		}
 	}
@@ -208,16 +244,10 @@ std::vector<DirectionalLight*> LightManager::GetDirectionalLights(float maxLight
 
 	if (instance != nullptr)
 	{
-		if (instance->directionalLights.size() < maxLights)
+		for(unsigned int i = 0; i < maxLights && i < instance->directionalLights.size(); i++)
 		{
-			result = instance->directionalLights;
-		}
-		else
-		{
-			for (unsigned int i = 0; i < maxLights; i++)
-			{
+			if (IsValid(instance->directionalLights[i]))
 				result.push_back(instance->directionalLights[i]);
-			}
 		}
 	}
 
@@ -246,6 +276,63 @@ std::vector<DirectionalLight*> LightManager::GetDirectionalLightsAtIndices(const
 	return result;
 }
 
+void LightManager::Delete(DirectionalLight* light)
+{
+	if (instance != nullptr)
+	{
+		for (unsigned int i = 0; i < instance->directionalLights.size(); ++i)
+		{
+			if (instance->directionalLights[i] == light)
+			{
+				delete light;
+				instance->directionalLights[i] = (DirectionalLight*)UINT_MAX;
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::Delete(DirectionalLight*) before LightManager::Initialize()", Logger::Category::Warning);
+	}
+}
+
+void LightManager::Delete(PointLight* light)
+{
+	if (instance != nullptr)
+	{
+		for (unsigned int i = 0; i < instance->pointLights.size(); ++i)
+		{
+			if (instance->pointLights[i] == light)
+			{
+				delete light;
+				instance->pointLights[i] = (PointLight*)UINT_MAX;
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::Delete(PointLight*) before LightManager::Initialize()", Logger::Category::Warning);
+	}
+}
+
+void LightManager::Delete(SpotLight* light)
+{
+	if (instance != nullptr)
+	{
+		for (unsigned int i = 0; i < instance->spotLights.size(); ++i)
+		{
+			if (instance->spotLights[i] == light)
+			{
+				delete light;
+				instance->spotLights[i] = (SpotLight*)UINT_MAX;
+			}
+		}
+	}
+	else
+	{
+		Logger::Log("Calling LightManager::Delete(SpotLight*) before LightManager::Initialize()", Logger::Category::Warning);
+	}
+}
+
 LightManager::LightManager() :
 	directionalLights(std::vector<DirectionalLight*>()),
 	pointLights(std::vector<PointLight*>()),
@@ -257,6 +344,29 @@ LightManager::~LightManager()
 {
 	for (DirectionalLight* light : directionalLights)
 	{
-		delete light;
+		if(IsValid(light))
+			delete light;
 	}
+
+	for (PointLight* light : pointLights)
+	{
+		if (IsValid(light))
+			delete light;
+	}
+	
+	for (SpotLight* light : spotLights)
+	{
+		if (IsValid(light))
+			delete light;
+	}
+
+}
+
+bool LightManager::IsValid(Light* light)
+{
+	if (instance != nullptr)
+	{
+		return light != nullptr && light != (Light*)UINT_MAX;
+	}
+	return false;
 }

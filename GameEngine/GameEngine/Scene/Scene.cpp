@@ -34,8 +34,8 @@ void Scene::Load()
 
 void Scene::Unload()
 {
-	Terminate();
 	TerminateObjects();
+	Terminate();
 }
 
 void Scene::Update()

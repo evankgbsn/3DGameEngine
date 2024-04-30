@@ -39,8 +39,6 @@ void Engine::Run()
 		Renderer::Update();
 		InputManager::Update();
 		SceneManager::Update();
-
-		
 	}
 }
 

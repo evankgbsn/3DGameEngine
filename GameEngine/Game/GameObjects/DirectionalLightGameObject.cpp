@@ -2,6 +2,7 @@
 
 #include "GameEngine/Renderer/Light/LightManager.h"
 #include "GameEngine/Renderer/Light/DirectionalLight.h"
+#include "GameEngine/Time/TimeManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -22,14 +23,15 @@ void DirectionalLightGameObject::Initialize()
 
 void DirectionalLightGameObject::Terminate()
 {
+	LightManager::Delete(light);
 }
 
 void DirectionalLightGameObject::Update()
 {
 	glm::mat4 rot(1.0f);
-	static float rotationAngle = 0.0001f;
+	static float rotationAngle = 0.01f;
 
-	rot = glm::rotate(rot, rotationAngle, glm::vec3(1.0f, 0.0f, 0.0f));
+	rot = glm::rotate(rot, rotationAngle * TimeManager::DeltaTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	light->SetDirection(rot * light->GetDirection());
 }

@@ -12,7 +12,7 @@
 AnimatedCollider::AnimatedCollider(GO3DAnimated* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
 {
-	//InitializeSphere();
+	InitializeSphere();
 	InitializeOBBs();
 	InitializeMeshColliderVisualization();
 }
@@ -23,6 +23,9 @@ AnimatedCollider::~AnimatedCollider()
 	{
 		delete obb;
 	}
+
+	GraphicsObjectManager::Delete(meshColliderVisualization);
+	delete sphere;
 }
 
 void AnimatedCollider::InitializeOBBs()
@@ -127,7 +130,7 @@ void AnimatedCollider::Update()
 		i++;
 	}
 
-	//sphere->Update(wrapedGraphics->GetTransform());
+	sphere->Update(wrapedGraphics->GetTransform());
 }
 
 bool AnimatedCollider::Intersect(const OrientedBoundingBox& other) const

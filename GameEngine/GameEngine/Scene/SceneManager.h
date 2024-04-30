@@ -23,6 +23,8 @@ public:
 
 	static void UnloadScene(const std::string& sceneName);
 
+	static bool SceneLoaded(const std::string& sceneName);
+
 private:
 
 	friend class SingletonHelpers;

@@ -48,6 +48,9 @@
     <ClCompile Include="GameObjects\LightArray.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\Subscene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\MainScene.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\LargePlane.h">
       <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Subscene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@ SphereWithVisualization::SphereWithVisualization(float radius) :
 
 SphereWithVisualization::~SphereWithVisualization()
 {
+	GraphicsObjectManager::Delete(graphics);
 }
 
 void SphereWithVisualization::Update(const glm::mat4& transformation)

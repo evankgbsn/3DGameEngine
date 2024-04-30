@@ -8,6 +8,7 @@
 class DirectionalLight;
 class PointLight;
 class SpotLight;
+class Light;
 
 class LightManager
 {
@@ -40,6 +41,12 @@ public:
 
 	static std::vector<DirectionalLight*> GetDirectionalLightsAtIndices(const std::vector<unsigned int>& indices);
 
+	static void Delete(DirectionalLight* light);
+
+	static void Delete(PointLight* light);
+
+	static void Delete(SpotLight* light);
+
 private:
 
 	friend class SingletonHelpers;
@@ -55,6 +62,8 @@ private:
 	LightManager(LightManager&&) = delete;
 
 	LightManager& operator=(LightManager&&) = delete;
+
+	static bool IsValid(Light* light);
 
 	static LightManager* instance;
 

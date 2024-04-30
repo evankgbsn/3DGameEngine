@@ -29,6 +29,12 @@ void LightArray::Initialize()
 
 void LightArray::Terminate()
 {
+	for (SpotLight* spotLight : spotLights)
+	{
+		LightManager::Delete(spotLight);
+	}
+
+	LightManager::Delete(pointLight);
 }
 
 void LightArray::Update()

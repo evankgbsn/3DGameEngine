@@ -17,4 +17,5 @@ Light::Light(const glm::vec4& c) :
 
 Light::~Light()
 {
+	delete collider;
 }

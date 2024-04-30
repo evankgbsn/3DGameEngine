@@ -85,6 +85,20 @@ void SceneManager::UnloadScene(const std::string& sceneName)
 	}
 }
 
+bool SceneManager::SceneLoaded(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		return instance->loadedScenes.find(sceneName) != instance->loadedScenes.end();
+	}
+	else
+	{
+		Logger::Log("Calling SceneManager::SceneLoaded() before SceneManager::Initialize()", Logger::Category::Warning);
+	}
+
+	return false;
+}
+
 SceneManager::SceneManager()
 {
 }

@@ -2,13 +2,13 @@
 
 layout(std140, binding = 1) uniform Color
 {
-	vec4 color;
+	vec4 c;
 } colorUniform;
 
 out vec4 color;
 
 void main(void)
 {
-	color = colorUniform.color;
+	color = colorUniform.c;
 }
 

@@ -20,7 +20,7 @@ OrientedBoundingBoxWithVisualization::OrientedBoundingBoxWithVisualization(const
 
 OrientedBoundingBoxWithVisualization::~OrientedBoundingBoxWithVisualization()
 {
-
+	GraphicsObjectManager::Delete(graphics);
 }
 
 void OrientedBoundingBoxWithVisualization::Update(const glm::mat4& transform)

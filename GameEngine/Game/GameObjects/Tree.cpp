@@ -29,6 +29,8 @@ void Tree::Initialize()
 
 void Tree::Terminate()
 {
+	GraphicsObjectManager::Delete(graphics);
+	GraphicsObjectManager::Delete(fakeCollider);
 }
 
 void Tree::Update()
@@ -63,11 +65,11 @@ void Tree::Unload()
 
 	if (TextureManager::TextureLoaded("CrateTree"))
 	{
-		TextureManager::UnloadTexture("Assets/Texture/container2.png");
+		TextureManager::UnloadTexture("CrateTree");
 	}
 
 	if (TextureManager::TextureLoaded("GreyTree"))
 	{
-		TextureManager::UnloadTexture("Assets/Texture/Grey.png");
+		TextureManager::UnloadTexture("GreyTree");
 	}
 }

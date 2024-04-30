@@ -143,6 +143,7 @@
     <ClCompile Include="GameObjects\Tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\MainScene.cpp" />
+    <ClCompile Include="Scenes\Subscene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Boxes.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="GameObjects\LargePlane.h" />
     <ClInclude Include="GameObjects\Tree.h" />
     <ClInclude Include="Scenes\MainScene.h" />
+    <ClInclude Include="Scenes\Subscene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

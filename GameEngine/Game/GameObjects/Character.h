@@ -7,6 +7,7 @@
 
 class GOTexturedAnimatedLit;
 class AnimatedCollider;
+class OrientedBoundingBoxWithVisualization;
 
 class Character : public GameObject
 {
@@ -40,6 +41,8 @@ private:
 	GOTexturedAnimatedLit* graphics;
 
 	AnimatedCollider* collider;
+
+	OrientedBoundingBoxWithVisualization* obb;
 
 	std::function<void(int)>* toggleColliderVisibility;
 

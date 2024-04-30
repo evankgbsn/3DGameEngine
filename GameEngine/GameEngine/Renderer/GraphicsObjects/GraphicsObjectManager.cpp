@@ -21,14 +21,14 @@ void GraphicsObjectManager::Update()
 		GLint maxTextureSize;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
 
-		glViewport(0, 0, maxTextureSize, maxTextureSize);
+		glViewport(0, 0, 8184, 8184);
 		glBindFramebuffer(GL_FRAMEBUFFER, ShaderManager::GetShadowMapFramebuffer());
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glCullFace(GL_FRONT);
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (graphicsObject != nullptr)
+			if (IsValid(graphicsObject))
 			{
 				graphicsObject->RenderToShadowMap();
 			}
@@ -40,7 +40,7 @@ void GraphicsObjectManager::Update()
 		
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (graphicsObject != nullptr)
+			if (IsValid(graphicsObject))
 			{
 				graphicsObject->Update();
 			}
@@ -209,6 +209,24 @@ void GraphicsObjectManager::Enable(GraphicsObject* const go)
 	}
 }
 
+void GraphicsObjectManager::Delete(GraphicsObject* const go)
+{
+	if (instance != nullptr)
+	{
+		for (unsigned int i = 0; i < instance->graphicsObjects3D.size(); ++i)
+		{
+			if (instance->graphicsObjects3D[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->graphicsObjects3D[i] = (GraphicsObject*)UINT_MAX;
+				}
+			}
+		}
+	}
+}
+
 GraphicsObjectManager::GraphicsObjectManager() :
 	graphicsObjects3D(std::vector<GraphicsObject*>())
 {
@@ -218,6 +236,14 @@ GraphicsObjectManager::~GraphicsObjectManager()
 {
 	for (GraphicsObject* graphicsObject : graphicsObjects3D)
 	{
-		delete graphicsObject;
+		if (IsValid(graphicsObject))
+		{
+			delete graphicsObject;
+		}
 	}
+}
+
+bool GraphicsObjectManager::IsValid(GraphicsObject* graphicsObject)
+{
+	return graphicsObject != nullptr && graphicsObject != (GraphicsObject*)UINT_MAX;
 }

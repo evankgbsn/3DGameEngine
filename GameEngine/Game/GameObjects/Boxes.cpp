@@ -20,10 +20,9 @@ void Boxes::Initialize()
 {
 	float count = 10;
 	float dist = 5.0f;
-	boxes.reserve(count * count);
-	for (unsigned int i = 3; i < count; ++i)
+	for (unsigned int i = 0; i < count; ++i)
 	{
-		for (unsigned int j = 3; j < count; ++j)
+		for (unsigned int j = 0; j < count; ++j)
 		{
 			GOTexturedLit* box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
 			box->SetShine(32.0f);
@@ -40,8 +39,16 @@ void Boxes::Terminate()
 {
 	for (GOTexturedLit* box : boxes)
 	{
-		GraphicsObjectManager::Disable(box);
+		GraphicsObjectManager::Delete(box);
 	}
+
+	for (OrientedBoundingBoxWithVisualization* obb : obbs)
+	{
+		delete obb;
+	}
+
+	obbs.clear();
+	boxes.clear();
 }
 
 void Boxes::Update()
@@ -53,7 +60,6 @@ void Boxes::Update()
 	{
 		box->Rotate(rotationSpeed * TimeManager::DeltaTime(), { 0.0f, 1.0f, 0.0f });
 		box->Rotate(rotationSpeed * TimeManager::DeltaTime(), { 1.0f, 0.0f, 0.0f });
-
 		obbs[i]->Update(box->GetTransform());
 		i++;
 	}

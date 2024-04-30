@@ -35,7 +35,9 @@ void GOTexturedLit::Update()
 	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
 	position.y = 10.0f;
 	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 lightDirection = LightManager::GetDirectionalLights(1)[0]->GetDirection();
+
+	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
+	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
 
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
@@ -66,7 +68,9 @@ void GOTexturedLit::RenderToShadowMap()
 	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
 	position.y = 10.0f;
 	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 lightDirection = LightManager::GetDirectionalLights(1)[0]->GetDirection();
+
+	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
+	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
 	
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,

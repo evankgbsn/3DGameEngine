@@ -46,11 +46,13 @@ private:
 
 	Tree* tree;
 
-	Boxes* boxes;
-
 	LargePlane* groundPlane;
 
 	FreeCamera* cam;
+
+	std::function<void(int)>* loadSub;
+
+	std::function<void(int)>* unloadSub;
 
 };
 

@@ -36,6 +36,8 @@ public:
 
 	static void Enable(GraphicsObject* const go);
 
+	static void Delete(GraphicsObject* const go);
+
 private:
 
 	friend class WindowManager;
@@ -59,6 +61,8 @@ private:
 	GraphicsObjectManager(GraphicsObjectManager&&) = delete;
 
 	GraphicsObjectManager& operator=(GraphicsObjectManager&&) = delete;
+
+	static bool IsValid(GraphicsObject* obj);
 
 	static GraphicsObjectManager* instance;
 
