@@ -267,6 +267,45 @@
     <ClCompile Include="GameObject\Component\Component.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectTextured.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObject3DComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectColored.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLit.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimated.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\DirectionalLightComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectColoredAnimated.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\PointLightComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\SpotLightComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\CameraComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\AmbientLight.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\AnimatedColliderComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -468,6 +507,45 @@
       <Filter>Source Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Component\Component.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectTextured.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObject3DComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLit.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectColored.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimated.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectColoredAnimated.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\DirectionalLightComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\PointLightComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\SpotLightComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\CameraComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\AmbientLight.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\AnimatedColliderComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>

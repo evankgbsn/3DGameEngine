@@ -7,6 +7,7 @@ class WindowManager;
 class AnimatedCollider;
 class GOTexturedLit;
 class GOTexturedAnimatedLit;
+class Window;
 
 class Engine
 {
@@ -19,6 +20,8 @@ public:
 	static void Terminate();
 
 	static WindowManager* GetWindowManager();
+
+	static Window* GetWindow();
 
 private:
 

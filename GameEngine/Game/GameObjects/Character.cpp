@@ -2,6 +2,7 @@
 
 #include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "GameEngine/Renderer/GraphicsObjects/GOTexturedAnimatedLit.h"
+#include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -58,6 +59,11 @@ void Character::Update()
 
 void Character::Load()
 {
+	if (!ModelManager::ModelLoaded("Home"))
+	{
+		ModelManager::LoadModel("Home", "Assets/Model/HomeModel.gltf");
+	}
+
 	if (!TextureManager::TextureLoaded("Woman"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Woman.png", "Woman");
@@ -77,6 +83,11 @@ void Character::Load()
 
 void Character::Unload()
 {
+	if (ModelManager::ModelLoaded("Home"))
+	{
+		ModelManager::UnloadModel("Home");
+	}
+
 	if (TextureManager::TextureLoaded("Woman"))
 	{
 		TextureManager::UnloadTexture("Woman");

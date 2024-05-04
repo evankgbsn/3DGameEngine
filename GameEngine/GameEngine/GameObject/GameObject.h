@@ -28,6 +28,10 @@ protected:
 
 	virtual void Unload() = 0;
 
+	void AddComponent(Component* component);
+
+	void RemoveComponent(Component* component);
+
 private:
 
 	GameObject(const GameObject*) = delete;

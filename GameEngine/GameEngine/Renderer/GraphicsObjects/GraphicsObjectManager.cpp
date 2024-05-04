@@ -220,7 +220,7 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				if (go != nullptr)
 				{
 					delete go;
-					instance->graphicsObjects3D[i] = (GraphicsObject*)UINT_MAX;
+					instance->graphicsObjects3D[i] = (GraphicsObject*)ULLONG_MAX;
 				}
 			}
 		}
@@ -245,5 +245,5 @@ GraphicsObjectManager::~GraphicsObjectManager()
 
 bool GraphicsObjectManager::IsValid(GraphicsObject* graphicsObject)
 {
-	return graphicsObject != nullptr && graphicsObject != (GraphicsObject*)UINT_MAX;
+	return graphicsObject != nullptr && graphicsObject != (GraphicsObject*)ULLONG_MAX;
 }

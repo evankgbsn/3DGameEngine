@@ -285,7 +285,7 @@ void LightManager::Delete(DirectionalLight* light)
 			if (instance->directionalLights[i] == light)
 			{
 				delete light;
-				instance->directionalLights[i] = (DirectionalLight*)UINT_MAX;
+				instance->directionalLights[i] = (DirectionalLight*)ULLONG_MAX;
 			}
 		}
 	}
@@ -304,7 +304,7 @@ void LightManager::Delete(PointLight* light)
 			if (instance->pointLights[i] == light)
 			{
 				delete light;
-				instance->pointLights[i] = (PointLight*)UINT_MAX;
+				instance->pointLights[i] = (PointLight*)ULLONG_MAX;
 			}
 		}
 	}
@@ -323,7 +323,7 @@ void LightManager::Delete(SpotLight* light)
 			if (instance->spotLights[i] == light)
 			{
 				delete light;
-				instance->spotLights[i] = (SpotLight*)UINT_MAX;
+				instance->spotLights[i] = (SpotLight*)ULLONG_MAX;
 			}
 		}
 	}
@@ -366,7 +366,7 @@ bool LightManager::IsValid(Light* light)
 {
 	if (instance != nullptr)
 	{
-		return light != nullptr && light != (Light*)UINT_MAX;
+		return light != nullptr && light != (Light*)ULLONG_MAX;
 	}
 	return false;
 }

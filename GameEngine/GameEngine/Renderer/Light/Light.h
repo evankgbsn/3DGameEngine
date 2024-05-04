@@ -12,6 +12,8 @@ public:
 
 	const glm::vec4& GetColor() const;
 
+	void SetColor(const glm::vec4& newColor);
+
 protected:
 
 	Light(const glm::vec4& color);

@@ -8,6 +8,7 @@
 class GOTexturedAnimatedLit;
 class AnimatedCollider;
 class OrientedBoundingBoxWithVisualization;
+class GOTexturedLit;
 
 class Character : public GameObject
 {
@@ -39,6 +40,8 @@ private:
 	void Unload() override;
 
 	GOTexturedAnimatedLit* graphics;
+
+	GOTexturedLit* homeGraphics;
 
 	AnimatedCollider* collider;
 
