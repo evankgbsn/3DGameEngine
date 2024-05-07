@@ -4,6 +4,7 @@
 #include "OrientedBoundingBox.h"
 #include "Plane.h"
 #include "../SAT/Interval3D.h"
+#include "Ray.h"
 
 AxisAlignedBoundingBox::AxisAlignedBoundingBox(const glm::vec3& initialOrigin, const glm::vec3& initialSize) :
 	origin(initialOrigin),
@@ -131,6 +132,48 @@ bool AxisAlignedBoundingBox::PlaneIntersect(const Plane& plane) const
 	float dist = dot - plane.GetDistance();
 
 	return fabsf(dist) <= pLen;
+}
+
+float AxisAlignedBoundingBox::RayIntersect(const Ray& ray) const
+{
+	glm::vec3 min = GetMin();
+	glm::vec3 max = GetMax();
+
+	const glm::vec3& rayOrigin = ray.GetOrigin();
+	const glm::vec3& rayDirection = ray.GetDirection();
+
+	float t1 = (min.x - rayOrigin.x) / rayDirection.x;
+	float t2 = (max.x - rayOrigin.x) / rayDirection.x;
+	float t3 = (min.y - rayOrigin.y) / rayDirection.y;
+	float t4 = (max.y - rayOrigin.y) / rayDirection.y;
+	float t5 = (min.z - rayOrigin.z) / rayDirection.z;
+	float t6 = (max.z = rayOrigin.z) / rayDirection.z;
+
+	// Find the largest minimum value.
+	float tmin = fmaxf(fmaxf(fminf(t1, t2), fminf(t3, t4)), fminf(t5, t6));
+
+	// Find the smallest maximum value.
+	float tmax = fminf(fminf(fmaxf(t1, t2), fmaxf(t3, t4)), fmaxf(t5, t6));
+
+	// AABB is behind the Ray.
+	if (tmax < 0.0f)
+	{
+		return -1.0f;
+	}
+
+	// No intersection.
+	if (tmin > tmax)
+	{
+		return -1.0f;
+	}
+
+	// Ray origin within the AABB
+	if (tmin < 0.0f)
+	{
+		return tmax;
+	}
+
+	return tmin;
 }
 
 glm::vec3 AxisAlignedBoundingBox::ClosestPoint(const glm::vec3& point) const

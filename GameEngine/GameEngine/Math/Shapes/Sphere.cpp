@@ -3,6 +3,7 @@
 #include "AxisAlignedBoundingBox.h"
 #include "OrientedBoundingBox.h"
 #include "Plane.h"
+#include "Ray.h"
 #include "../../Renderer/Model/Vertex.h"
 
 Sphere::Sphere(const glm::vec3& initialOrigin, float initialRadius) :
@@ -155,6 +156,32 @@ bool Sphere::PlaneIntersect(const Plane& plane) const
 	float lengthSq = glm::dot(distance, distance);
 
 	return lengthSq <= radius * radius;
+}
+
+float Sphere::RayIntersect(const Ray& ray) const
+{
+	glm::vec3 e = origin - ray.GetOrigin();
+
+	float rSq = radius * radius;
+
+	float eSq = glm::dot(e, e);
+
+	float a = glm::dot(e, ray.GetDirection());
+
+	float bSq = eSq = -(a * a);
+
+	float f = sqrt(rSq - bSq);
+
+	if (rSq - (eSq - (a * a)) < 0.0f)
+	{
+		return -1.0f;
+	}
+	else if (eSq < rSq)
+	{
+		return a + f;
+	}
+
+	return a - f;
 }
 
 glm::vec3 Sphere::ClosestPoint(const glm::vec3& point) const

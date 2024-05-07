@@ -4,15 +4,29 @@
 #include "Component.h"
 
 class AnimatedCollider;
+class OrientedBoundingBox;
+class GraphicsObjectTexturedAnimated;
+class GraphicsObjectTexturedAnimatedLit;
+class GraphicsObjectColoredAnimated;
 
 class AnimatedColliderComponent : public Component
 {
 
 public:
 
-	AnimatedColliderComponent();
+	AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject);
+
+	AnimatedColliderComponent(GraphicsObjectTexturedAnimatedLit* const graphicsObject);
+
+	AnimatedColliderComponent(GraphicsObjectColoredAnimated* const graphicsObject);
 
 	~AnimatedColliderComponent();
+
+	void Update() override;
+
+	void ToggleVisibility();
+
+	bool Intersect(const OrientedBoundingBox& other) const;
 
 private:
 

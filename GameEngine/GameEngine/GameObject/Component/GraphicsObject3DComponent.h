@@ -18,6 +18,8 @@ public:
 
 	glm::vec3 GetScale() const;
 
+	glm::mat4 GetTransform() const;
+
 	void SetPosition(const glm::vec3& position);
 
 	void SetRotation(const glm::mat4& rotation);
@@ -31,6 +33,8 @@ public:
 	void Translate(const glm::vec3& translation);
 
 	virtual void Update() override;
+
+	GO3D* const GetGraphics();
 
 protected:
 

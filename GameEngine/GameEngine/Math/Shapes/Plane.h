@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+class Ray;
+
 class Plane
 {
 
@@ -24,6 +26,8 @@ public:
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;
 	
 	bool PlaneIntersect(const Plane& plane) const;
+
+	float RayIntersect(const Ray& ray) const;
 
 private:
 

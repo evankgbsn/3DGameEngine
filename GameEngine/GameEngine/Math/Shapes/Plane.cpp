@@ -1,5 +1,7 @@
 #include "Plane.h"
 
+#include "Ray.h"
+
 Plane::Plane(const glm::vec3& initialNormal, float initialDistanceFromOrigin) :
     normal(initialNormal),
     distance(initialDistanceFromOrigin)
@@ -40,4 +42,24 @@ bool Plane::PlaneIntersect(const Plane& plane) const
 {
     glm::vec3 zeroVec = glm::cross(normal, plane.normal);
     return glm::dot(zeroVec, zeroVec) != 0.0f;
+}
+
+float Plane::RayIntersect(const Ray& ray) const
+{
+    float nd = glm::dot(ray.GetDirection(), normal);
+    float pn = glm::dot(ray.GetOrigin(), normal);
+
+    if (nd >= 0.0f)
+    {
+        return -1.0f;
+    }
+
+    float t = (distance - pn) / nd;
+
+    if (t >= 0.0f)
+    {
+        return t;
+    }
+
+    return -1.0f;
 }

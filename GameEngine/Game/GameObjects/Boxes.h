@@ -5,7 +5,7 @@
 
 #include <vector>
 
-class GOTexturedLit;
+class GraphicsObjectTexturedLit;
 class OrientedBoundingBoxWithVisualization;
 
 class Boxes : public GameObject
@@ -37,7 +37,7 @@ private:
 
 	void Unload() override;
 
-	std::vector<GOTexturedLit*> boxes;
+	std::vector<GraphicsObjectTexturedLit*> boxes;
 
 	std::vector<OrientedBoundingBoxWithVisualization*> obbs;
 

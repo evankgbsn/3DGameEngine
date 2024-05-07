@@ -6,6 +6,7 @@
 class Sphere;
 class OrientedBoundingBox;
 class Plane;
+class Ray;
 
 class AxisAlignedBoundingBox
 {
@@ -36,6 +37,8 @@ public:
 	bool OrientedBoundingBoxIntersect(const OrientedBoundingBox& obb) const;
 
 	bool PlaneIntersect(const Plane& plane) const;
+
+	float RayIntersect(const Ray& ray) const;
 
 private:
 

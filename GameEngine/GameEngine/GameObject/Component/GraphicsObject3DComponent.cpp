@@ -28,6 +28,11 @@ glm::vec3 GraphicsObject3DComponent::GetScale() const
 	return graphics->GetScale();
 }
 
+glm::mat4 GraphicsObject3DComponent::GetTransform() const
+{
+	return graphics->GetTransform();
+}
+
 void GraphicsObject3DComponent::SetPosition(const glm::vec3& position)
 {
 	graphics->SetTranslation(position);
@@ -60,4 +65,9 @@ void GraphicsObject3DComponent::Translate(const glm::vec3& translation)
 
 void GraphicsObject3DComponent::Update()
 {
+}
+
+GO3D* const GraphicsObject3DComponent::GetGraphics()
+{
+	return graphics;
 }

@@ -150,8 +150,8 @@
     <ClInclude Include="GameObjects\Character.h" />
     <ClInclude Include="GameObjects\DirectionalLightGameObject.h" />
     <ClInclude Include="GameObjects\FreeCamera.h" />
-    <ClInclude Include="GameObjects\LightArray.h" />
     <ClInclude Include="GameObjects\LargePlane.h" />
+    <ClInclude Include="GameObjects\LightArray.h" />
     <ClInclude Include="GameObjects\Tree.h" />
     <ClInclude Include="Scenes\MainScene.h" />
     <ClInclude Include="Scenes\Subscene.h" />

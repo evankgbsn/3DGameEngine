@@ -12,7 +12,7 @@ class DirectionalLightComponent : public Component
 
 public:
 
-	DirectionalLightComponent(const glm::vec3& initialDirection = glm::vec3(0.5f, 0.5f, 0.5f), const glm::vec3& colorIntensity = glm::vec3(1.0f, 1.0f, 1.0f));
+	DirectionalLightComponent(const glm::vec3& initialDirection, const glm::vec3& colorIntensity);
 
 	~DirectionalLightComponent();
 
@@ -23,6 +23,8 @@ public:
 	void SetDirection(const glm::vec3& newDirection);
 
 	void SetColor(const glm::vec3& newColor);
+
+	void Update() override;
 
 private:
 

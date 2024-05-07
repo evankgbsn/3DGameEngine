@@ -1,12 +1,13 @@
 #include "Boxes.h"
 
-#include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Collision/OrientedBoundingBoxWithVisualization.h"	
 #include "GameEngine/Renderer/Model/Model.h"
+
+#include "GameEngine/GameObject/Component/DirectionalLightComponent.h"
 
 Boxes::Boxes()
 {
@@ -24,22 +25,21 @@ void Boxes::Initialize()
 	{
 		for (unsigned int j = 0; j < count; ++j)
 		{
-			GOTexturedLit* box = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
+			GraphicsObjectTexturedLit* box = new GraphicsObjectTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpecular"));
 			box->SetShine(32.0f);
-			box->SetTranslation({ dist * i, 1.5f, dist * j });
+			box->SetPosition({ dist * i, 1.5f, dist * j });
 			boxes.push_back(box);
 			obbs.push_back(new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Cube")->GetVertices()));
-
-			
+			AddComponent(box, std::string("Box") + std::to_string(i+j));
 		}
 	}
 }
 
 void Boxes::Terminate()
 {
-	for (GOTexturedLit* box : boxes)
+	for (GraphicsObjectTexturedLit* box : boxes)
 	{
-		GraphicsObjectManager::Delete(box);
+		delete box;
 	}
 
 	for (OrientedBoundingBoxWithVisualization* obb : obbs)
@@ -56,7 +56,7 @@ void Boxes::Update()
 	float rotationSpeed = 10.0f;
 
 	unsigned int i = 0;
-	for (GOTexturedLit* box : boxes)
+	for (GraphicsObjectTexturedLit* box : boxes)
 	{
 		box->Rotate(rotationSpeed * TimeManager::DeltaTime(), { 0.0f, 1.0f, 0.0f });
 		box->Rotate(rotationSpeed * TimeManager::DeltaTime(), { 1.0f, 0.0f, 0.0f });

@@ -28,9 +28,9 @@ protected:
 
 	virtual void Unload() = 0;
 
-	void AddComponent(Component* component);
+	void AddComponent(Component* component, const std::string name);
 
-	void RemoveComponent(Component* component);
+	void RemoveComponent(const std::string& name);
 
 private:
 

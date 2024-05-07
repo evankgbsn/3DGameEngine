@@ -3,6 +3,9 @@
 #include "../SAT/Interval3D.h"
 #include "../../Renderer/Model/Vertex.h"
 #include "Plane.h"
+#include "Ray.h"
+
+#include <glm/gtc/matrix_access.hpp>
 
 OrientedBoundingBox::OrientedBoundingBox(const glm::vec3& initialOrigin, const glm::vec3& initialSize, const glm::mat4& initialOrientation) :
     origin(initialOrigin),
@@ -111,6 +114,67 @@ bool OrientedBoundingBox::PlaneIntersect(const Plane& plane) const
     float dist = dot - plane.GetDistance();
 
     return fabsf(dist) <= pLen;
+}
+
+float OrientedBoundingBox::RayIntersect(const Ray& ray) const
+{
+    const glm::vec3& s = GetSize();
+    const glm::mat4& o = GetOrientation();
+
+    glm::vec3 p = origin - ray.GetOrigin();
+    const glm::vec3& rayDirection = ray.GetDirection();
+
+    glm::vec3 f = glm::vec3( glm::dot(glm::vec3(glm::column(o, 0)), rayDirection), 
+                             glm::dot(glm::vec3(glm::column(o, 1)), rayDirection),
+                             glm::dot(glm::vec3(glm::column(o, 2)), rayDirection));
+
+    glm::vec3 e = glm::vec3(glm::dot(glm::vec3(glm::column(o, 0)), p),
+                            glm::dot(glm::vec3(glm::column(o, 1)), p),
+                            glm::dot(glm::vec3(glm::column(o, 2)), p));
+
+    float t[6] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+    for (unsigned int i = 0; i < 3; ++i)
+    {
+        if (abs(f[i]) < 0.000001f)
+        {
+            if (-e[i] - s[i] > 0.0f || -e[i] + s[i] < 0.0f)
+            {
+                return -1;
+            }
+
+            f[i] = 0.000001f;
+        }
+
+        t[i * 2 + 0] = (e[i] + s[i]) / f[i]; // min
+        t[i * 2 + 1] = (e[i] - s[i]) / f[i]; // max
+    }
+
+    // Find the largest minimum value.
+    float tmin = fmaxf(fmaxf(fminf(t[0], t[1]), fminf(t[2], t[3])), fminf(t[4], t[5]));
+
+    // Find the smallest maximum value.
+    float tmax = fminf(fminf(fmaxf(t[0], t[1]), fmaxf(t[2], t[3])), fmaxf(t[4], t[5]));
+
+    // AABB is behind the Ray.
+    if (tmax < 0.0f)
+    {
+        return -1.0f;
+    }
+
+    // No intersection.
+    if (tmin > tmax)
+    {
+        return -1.0f;
+    }
+
+    // Ray origin within the AABB
+    if (tmin < 0.0f)
+    {
+        return tmax;
+    }
+
+    return tmin;
 }
 
 void OrientedBoundingBox::SizeToMesh(const std::vector<Vertex>& verts)

@@ -7,6 +7,7 @@
 
 class Vertex;
 class Plane;
+class Ray;
 
 class OrientedBoundingBox
 {
@@ -39,6 +40,8 @@ public:
 	bool OrientedBoundingBoxIntersect(const OrientedBoundingBox& other) const;
 
 	bool PlaneIntersect(const Plane& plane) const;
+
+	float RayIntersect(const Ray& ray) const;
 
 	void SizeToMesh(const std::vector<Vertex>& vertices);
 

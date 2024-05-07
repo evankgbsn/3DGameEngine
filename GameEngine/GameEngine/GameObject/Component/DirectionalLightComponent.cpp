@@ -28,6 +28,10 @@ void DirectionalLightComponent::SetDirection(const glm::vec3& newDirection)
 	light->SetDirection(glm::vec4(newDirection, 1.0f));
 }
 
+void DirectionalLightComponent::Update()
+{
+}
+
 void DirectionalLightComponent::SetColor(const glm::vec3& newColor)
 {
 	light->SetColor(glm::vec4(newColor, 1.0f));
