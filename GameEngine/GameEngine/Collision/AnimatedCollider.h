@@ -13,6 +13,7 @@ class ColoredStaticGraphicsObject;
 class OrientedBoundingBoxWithVisualization;
 class OrientedBoundingBox;
 class SphereWithVisualization;
+class LineSegment3D;
 
 class AnimatedCollider : public Collider
 {
@@ -27,6 +28,8 @@ public:
 	void ToggleVisibility() override;
 
 	bool Intersect(const OrientedBoundingBox& other) const;
+
+	bool Intersect(const LineSegment3D& other) const;
 
 private:
 

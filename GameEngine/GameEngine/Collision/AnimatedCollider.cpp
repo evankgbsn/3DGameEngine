@@ -8,6 +8,7 @@
 #include "../Renderer/Animation/Armature.h"
 #include "../Renderer/GraphicsObjects/GOColoredAnimated.h"
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "../Math/Shapes/LineSegment3D.h"
 
 AnimatedCollider::AnimatedCollider(GO3DAnimated* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
@@ -154,4 +155,29 @@ bool AnimatedCollider::Intersect(const OrientedBoundingBox& other) const
 	}
 
 	return intersect;
+}
+
+bool AnimatedCollider::Intersect(const LineSegment3D& other) const
+{
+
+	bool intersect = false;
+	for (OrientedBoundingBoxWithVisualization* const obb : obbs)
+	{
+		if (obb != nullptr)
+		{
+			if (obb->LineIntersect(other))
+			{
+				obb->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+				intersect = true;
+			}
+			else
+			{
+				obb->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+			}
+
+		}
+	}
+
+	return intersect;
+	return false;
 }
