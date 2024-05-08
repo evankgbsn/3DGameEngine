@@ -216,6 +216,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
@@ -296,6 +297,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLit.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />

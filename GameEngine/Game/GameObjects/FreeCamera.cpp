@@ -51,7 +51,8 @@ void FreeCamera::Terminate()
 
 void FreeCamera::Update()
 {
-	glm::vec2 cursorPos = WindowManager::GetWindow("Engine")->GetCursorPosition();
+	Window* window = WindowManager::GetWindow("Engine");
+	glm::vec2 cursorPos = window->GetCursorPosition();
 	static glm::vec2 prevPos;
 
 	Camera& cam = CameraManager::GetActiveCamera();

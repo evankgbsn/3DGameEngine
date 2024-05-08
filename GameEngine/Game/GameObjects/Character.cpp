@@ -10,6 +10,12 @@
 #include "GameEngine/Collision/OrientedBoundingBoxWithVisualization.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Renderer/Window/WindowManager.h"
+#include "GameEngine/Renderer/Camera/CameraManager.h"
+#include "GameEngine/Renderer/Camera/Camera.h"
+
+#include "GameEngine/Math/Shapes/LineSegment3D.h"
+
 
 Character::Character() :
 	graphics(nullptr),
@@ -21,10 +27,38 @@ Character::Character() :
 			collider->ToggleVisibility();
 		});
 
+
+	castLine = new std::function<void(int)>([this](int keyCode)
+		{
+			// Screen space to world space for object picking.
+			Window* window = WindowManager::GetWindow("Engine");
+			Camera& cam = CameraManager::GetActiveCamera();
+			glm::vec2 cursorPos = window->GetCursorPosition();
+			glm::mat4 invPersp = glm::inverse(cam.GetProjection());
+			glm::mat4 invView = glm::inverse(cam.GetView());
+			glm::mat4 screenToNDC(
+				glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
+				glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
+				glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+				glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
+			);
+			screenToNDC = glm::inverse(screenToNDC);
+
+			glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
+			x = screenToNDC * x;
+			x = invPersp * x;
+			x = invView * x;
+			x /= x.w;
+
+			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, {0.0f, 0.0f, 1.0f, 1.0f});
+			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
+		});
 }
 
 Character::~Character()
 {
+	delete toggleColliderVisibility;
+	delete castLine;
 }
 
 void Character::Initialize()
@@ -37,6 +71,7 @@ void Character::Initialize()
 	collider = new AnimatedCollider(graphics);
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, castLine, "CastLineFromCamera");
 
 	obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 }
@@ -44,6 +79,7 @@ void Character::Initialize()
 void Character::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_B, "CastLineFromCamera");
 
 	delete collider;
 	delete obb;
@@ -55,6 +91,9 @@ void Character::Update()
 {
 	collider->Update();
 	collider->Intersect(*obb);
+
+	
+
 }
 
 void Character::Load()

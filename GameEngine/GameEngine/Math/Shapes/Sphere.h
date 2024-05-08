@@ -10,6 +10,7 @@ class OrientedBoundingBox;
 class Plane;
 class Vertex;
 class Ray;
+class LineSegment3D;
 
 class Sphere
 {
@@ -45,6 +46,8 @@ public:
 	bool PlaneIntersect(const Plane& plane) const;
 
 	float RayIntersect(const Ray& ray) const;
+
+	bool LineSegmentIntersect(const LineSegment3D& line) const;
 
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;
 

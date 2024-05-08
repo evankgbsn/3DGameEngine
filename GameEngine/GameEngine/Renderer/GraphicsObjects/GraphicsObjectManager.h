@@ -15,6 +15,7 @@ class GOColoredAnimated;
 class GOTexturedAnimated;
 class GOTexturedLit;
 class GOTexturedAnimatedLit;
+class GOLineColored;
 
 class GraphicsObjectManager
 {
@@ -31,6 +32,8 @@ public:
 	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 
 	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
+
+	static GOLineColored* const CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 
 	static void Disable(GraphicsObject* const go);
 

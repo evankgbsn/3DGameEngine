@@ -8,6 +8,7 @@
 #include "GOTexturedAnimated.h"
 #include "GOTexturedLit.h"
 #include "GOTexturedAnimatedLit.h"
+#include "GOLineColored.h"
 #include "../../Utils/Logger.h"
 #include "../Shader/ShaderManager.h"
 #include "../Window/WindowManager.h"
@@ -170,6 +171,23 @@ GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLi
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, diffuseMap, specularMap));
+		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGO3DColored() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
+GOLineColored* const GraphicsObjectManager::CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color)
+{
+	GOLineColored* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects3D.push_back(result = new GOLineColored(start, end, color));
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else

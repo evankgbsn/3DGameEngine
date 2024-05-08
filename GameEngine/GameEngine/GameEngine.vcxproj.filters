@@ -306,6 +306,9 @@
     <ClCompile Include="GameObject\Component\AnimatedColliderComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Component\AnimatedColliderComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

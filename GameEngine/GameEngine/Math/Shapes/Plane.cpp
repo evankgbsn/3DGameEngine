@@ -1,6 +1,7 @@
 #include "Plane.h"
 
 #include "Ray.h"
+#include "LineSegment3D.h"
 
 Plane::Plane(const glm::vec3& initialNormal, float initialDistanceFromOrigin) :
     normal(initialNormal),
@@ -62,4 +63,16 @@ float Plane::RayIntersect(const Ray& ray) const
     }
 
     return -1.0f;
+}
+
+bool Plane::LineIntersect(const LineSegment3D& line) const
+{
+    glm::vec3 ab = line.GetEnd() - line.GetStart();
+
+    float nA = glm::dot(normal, line.GetStart());
+    float nAB = glm::dot(normal, ab);
+
+    float t = (distance - nA) / nAB;
+
+    return t >= 0.0f && t <= 1.0f;
 }

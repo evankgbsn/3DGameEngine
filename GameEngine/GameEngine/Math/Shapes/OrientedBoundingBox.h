@@ -8,6 +8,7 @@
 class Vertex;
 class Plane;
 class Ray;
+class LineSegment3D;
 
 class OrientedBoundingBox
 {
@@ -42,6 +43,8 @@ public:
 	bool PlaneIntersect(const Plane& plane) const;
 
 	float RayIntersect(const Ray& ray) const;
+
+	bool LineIntersect(const LineSegment3D& line) const;
 
 	void SizeToMesh(const std::vector<Vertex>& vertices);
 

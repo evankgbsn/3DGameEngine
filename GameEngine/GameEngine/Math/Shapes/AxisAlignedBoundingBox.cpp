@@ -5,6 +5,7 @@
 #include "Plane.h"
 #include "../SAT/Interval3D.h"
 #include "Ray.h"
+#include "LineSegment3D.h"
 
 AxisAlignedBoundingBox::AxisAlignedBoundingBox(const glm::vec3& initialOrigin, const glm::vec3& initialSize) :
 	origin(initialOrigin),
@@ -174,6 +175,15 @@ float AxisAlignedBoundingBox::RayIntersect(const Ray& ray) const
 	}
 
 	return tmin;
+}
+
+bool AxisAlignedBoundingBox::LineIntersect(const LineSegment3D& line) const
+{
+	Ray ray(line.GetStart(), glm::normalize(line.GetEnd() - line.GetStart()));
+
+	float t = RayIntersect(ray);
+
+	return t >= 0 && t * t <= line.GetLengthSq();
 }
 
 glm::vec3 AxisAlignedBoundingBox::ClosestPoint(const glm::vec3& point) const

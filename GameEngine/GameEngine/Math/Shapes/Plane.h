@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 class Ray;
+class LineSegment3D;
 
 class Plane
 {
@@ -28,6 +29,8 @@ public:
 	bool PlaneIntersect(const Plane& plane) const;
 
 	float RayIntersect(const Ray& ray) const;
+
+	bool LineIntersect(const LineSegment3D& line) const;
 
 private:
 

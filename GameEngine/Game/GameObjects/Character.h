@@ -49,6 +49,8 @@ private:
 
 	std::function<void(int)>* toggleColliderVisibility;
 
+	std::function<void(int)>* castLine;
+
 };
 
 #endif // CHARACTER_H

@@ -21,6 +21,16 @@ float LineSegment3D::GetLengthSq() const
 	return glm::dot(vect, vect);
 }
 
+const glm::vec3& LineSegment3D::GetStart() const
+{
+	return start;
+}
+
+const glm::vec3& LineSegment3D::GetEnd() const
+{
+	return end;
+}
+
 bool LineSegment3D::PointIntersect(const glm::vec3& point) const
 {
 	glm::vec3 closest = ClosestPoint(point);

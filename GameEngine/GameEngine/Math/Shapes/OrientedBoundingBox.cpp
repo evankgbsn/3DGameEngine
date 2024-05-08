@@ -4,6 +4,7 @@
 #include "../../Renderer/Model/Vertex.h"
 #include "Plane.h"
 #include "Ray.h"
+#include "LineSegment3D.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -175,6 +176,14 @@ float OrientedBoundingBox::RayIntersect(const Ray& ray) const
     }
 
     return tmin;
+}
+
+bool OrientedBoundingBox::LineIntersect(const LineSegment3D& line) const
+{
+    Ray ray(line.GetStart(), glm::normalize(line.GetEnd() - line.GetStart()));
+    float t = RayIntersect(ray);
+
+    return t >= 0 && t * t <= line.GetLengthSq();
 }
 
 void OrientedBoundingBox::SizeToMesh(const std::vector<Vertex>& verts)

@@ -4,6 +4,7 @@
 #include "OrientedBoundingBox.h"
 #include "Plane.h"
 #include "Ray.h"
+#include "LineSegment3D.h"
 #include "../../Renderer/Model/Vertex.h"
 
 Sphere::Sphere(const glm::vec3& initialOrigin, float initialRadius) :
@@ -182,6 +183,15 @@ float Sphere::RayIntersect(const Ray& ray) const
 	}
 
 	return a - f;
+}
+
+bool Sphere::LineSegmentIntersect(const LineSegment3D& line) const
+{
+	glm::vec3 closest = line.ClosestPoint(origin);
+
+	float distanceSq = glm::dot(origin - closest, origin - closest);
+
+	return distanceSq <= radius * radius;
 }
 
 glm::vec3 Sphere::ClosestPoint(const glm::vec3& point) const

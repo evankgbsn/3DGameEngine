@@ -15,6 +15,10 @@ public:
 
 	float GetLengthSq() const;
 
+	const glm::vec3& GetStart() const;
+
+	const glm::vec3& GetEnd() const;
+
 	bool PointIntersect(const glm::vec3& point) const;
 
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;

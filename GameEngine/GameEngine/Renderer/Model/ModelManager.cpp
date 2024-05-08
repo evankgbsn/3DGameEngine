@@ -50,7 +50,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 		return nullptr;
 	}
 
-	if (instance->models.find(name) == instance->models.end())
+	if (instance->models.find(name) != instance->models.end())
 	{
 		Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
 		return nullptr;
