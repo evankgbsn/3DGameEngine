@@ -2,6 +2,7 @@
 
 #include "../Shapes/AxisAlignedBoundingBox.h"
 #include "../Shapes/OrientedBoundingBox.h"
+#include "../Shapes/Triangle.h"
 
 Interval3D::Interval3D(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis)
 {
@@ -56,6 +57,21 @@ Interval3D::Interval3D(const OrientedBoundingBox& obb, const glm::vec3& axis)
 		max = (projection > max) ? projection : max;
 	}
 	
+}
+
+Interval3D::Interval3D(const Triangle& tri, const glm::vec3& axis)
+{
+	const glm::vec3 triPoint[3] = {tri.GetPoint0(), tri.GetPoint1(), tri.GetPoint2()};
+
+	min = glm::dot(axis, triPoint[0]);
+	max = min;
+
+	for (unsigned int i = 0; i < 3; ++i)
+	{
+		float value = glm::dot(axis, triPoint[i]);
+		min = fminf(min, value);
+		max = fmaxf(max, value);
+	}
 }
 
 Interval3D::~Interval3D()

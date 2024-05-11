@@ -5,6 +5,7 @@
 
 class AxisAlignedBoundingBox;
 class OrientedBoundingBox;
+class Triangle;
 
 class Interval3D
 {
@@ -14,6 +15,8 @@ public:
 	Interval3D(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis);
 
 	Interval3D(const OrientedBoundingBox& obb, const glm::vec3& axis);
+
+	Interval3D(const Triangle&, const glm::vec3& axis);
 
 	~Interval3D();
 

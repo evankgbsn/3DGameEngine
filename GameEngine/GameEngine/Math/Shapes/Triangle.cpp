@@ -3,6 +3,10 @@
 #include "Plane.h"
 #include "LineSegment3D.h"
 #include "Sphere.h"
+#include "../SAT/Interval3D.h"
+#include "OrientedBoundingBox.h"
+
+#include <glm/gtc/matrix_access.hpp>
 
 Triangle::~Triangle()
 {
@@ -50,6 +54,102 @@ bool Triangle::SphereIntersect(const Sphere& sphere) const
 	glm::vec3 closest = ClosestPoint(sphere.GetOrigin());
 	float magSq = glm::dot(closest - sphere.GetOrigin(), closest - sphere.GetOrigin());
 	return magSq <= sphere.GetRadius() * sphere.GetRadius();
+}
+
+bool Triangle::AxisAlignedBoundingBoxIntersect(const AxisAlignedBoundingBox& aabb) const
+{
+	glm::vec3 f0 = point1 - point0;
+	glm::vec3 f1 = point2 - point1;
+	glm::vec3 f2 = point0 - point2;
+
+	glm::vec3 u0(1.0f, 0.0f, 0.0f);
+	glm::vec3 u1(0.0f, 1.0f, 0.0f);
+	glm::vec3 u2(0.0f, 0.0f, 1.0f);
+
+	glm::vec3 test[13] = {
+		u0, u1, u2, 
+		glm::cross(f0, f1), 
+		glm::cross(u0, f0), glm::cross(u0, f1), glm::cross(u0, f2),
+		glm::cross(u1, f0), glm::cross(u1, f1), glm::cross(u1, f2),
+		glm::cross(u2, f0), glm::cross(u2, f1), glm::cross(u2, f2)
+	};
+
+	for (unsigned int i = 0; i < 13; ++i)
+	{
+		if (!OverlapOnAxis(aabb, test[i]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Triangle::OrientedBoundingBoxIntersect(const OrientedBoundingBox& obb) const
+{
+	glm::vec3 f0 = point1 - point0;
+	glm::vec3 f1 = point2 - point1;
+	glm::vec3 f2 = point0 - point2;
+
+	glm::vec3 u0(glm::column(obb.GetOrientation(), 0));
+	glm::vec3 u1(glm::column(obb.GetOrientation(), 1));
+	glm::vec3 u2(glm::column(obb.GetOrientation(), 2));
+
+	glm::vec3 test[13] = {
+		u0, u1, u2,
+		glm::cross(f0, f1),
+		glm::cross(u0, f0), glm::cross(u0, f1), glm::cross(u0, f2),
+		glm::cross(u1, f0), glm::cross(u1, f1), glm::cross(u1, f2),
+		glm::cross(u2, f0), glm::cross(u2, f1), glm::cross(u2, f2)
+	};
+
+	for (unsigned int i = 0; i < 13; ++i)
+	{
+		if (!OverlapOnAxis(obb, test[i]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Triangle::PlaneIntersect(const Plane& plane) const
+{
+	float side1 = plane.PlaneEquation(point0);
+	float side2 = plane.PlaneEquation(point1);
+	float side3 = plane.PlaneEquation(point2);
+
+	if (abs(side1) <= 0.00001f && abs(side2) <= 0.00001f && abs(side3) <= 0.00001f)
+	{
+		return true;
+	}
+
+	if (side1 > 0.00001f && side2 > 0.00001f && side3 > 0.00001f)
+	{
+		return false;
+	}
+
+	if (side1 < 0.0f && side2 < 0.0f && side3 < 0.0f)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Triangle::OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const
+{
+	Interval3D a(aabb, axis);
+	Interval3D b(*this, axis);
+	return ((b.GetMin() <= a.GetMax()) && a.GetMin() <= b.GetMax());
+}
+
+bool Triangle::OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const
+{
+	Interval3D a(obb, axis);
+	Interval3D b(*this, axis);
+	return ((b.GetMin() <= a.GetMax()) && a.GetMin() <= b.GetMax());
 }
 
 Plane Triangle::ConstructPlane() const

@@ -5,6 +5,8 @@
 
 class Plane;
 class Sphere;
+class AxisAlignedBoundingBox;
+class OrientedBoundingBox;
 
 class Triangle
 {
@@ -28,7 +30,17 @@ public:
 
 	bool SphereIntersect(const Sphere& sphere) const;
 
+	bool AxisAlignedBoundingBoxIntersect(const AxisAlignedBoundingBox& aabb) const;
+
+	bool OrientedBoundingBoxIntersect(const OrientedBoundingBox& obb) const;
+
+	bool PlaneIntersect(const Plane& plane) const;
+
 private:
+
+	bool OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const;
+
+	bool OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const;
 
 	Triangle(const Triangle&) = delete;
 
