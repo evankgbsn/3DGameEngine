@@ -117,8 +117,6 @@ bool Window::GetCursorMoved(glm::vec2& outNewPosition) const
 
 int Window::GetKey(int keyCode, bool clearFrameKeyStates) const
 {
-
-
 	static std::unordered_set<int> pressedKeys = {};
 	static std::unordered_set<int> releasedKeys = {};
 
@@ -162,6 +160,54 @@ int Window::GetKey(int keyCode, bool clearFrameKeyStates) const
 		}
 
 		return keyStatesForThisFrame[keyCode] = getKeyResult;
+	}
+}
+
+int Window::GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates) const
+{
+	static std::unordered_set<int> pressedButtons = {};
+	static std::unordered_set<int> releasedButtons = {};
+
+	static std::unordered_map<int, int> mouseButtonStatesForThisFrame;
+
+	if (clearFrameMouseButtonStates)
+	{
+		mouseButtonStatesForThisFrame.clear();
+		return -1;
+	}
+
+	if (mouseButtonStatesForThisFrame.find(mouseButton) != mouseButtonStatesForThisFrame.end())
+	{
+		return mouseButtonStatesForThisFrame[mouseButton];
+	}
+	else
+	{
+		int getMouseButtonResult = glfwGetMouseButton(glfwWindow, mouseButton);
+
+		if (getMouseButtonResult == KEY_PRESS)
+		{
+
+			if (!pressedButtons.contains(mouseButton))
+				pressedButtons.insert(mouseButton);
+
+			if (releasedButtons.contains(mouseButton))
+				releasedButtons.erase(releasedButtons.find(mouseButton));
+			else
+				getMouseButtonResult = KEY_PRESSED;
+
+		}
+		else if (getMouseButtonResult == KEY_RELEASE)
+		{
+			if (!releasedButtons.contains(mouseButton))
+				releasedButtons.insert(mouseButton);
+
+			if (pressedButtons.contains(mouseButton))
+				pressedButtons.erase(pressedButtons.find(mouseButton));
+			else
+				getMouseButtonResult = KEY_RELEASED;
+		}
+
+		return mouseButtonStatesForThisFrame[mouseButton] = getMouseButtonResult;
 	}
 }
 

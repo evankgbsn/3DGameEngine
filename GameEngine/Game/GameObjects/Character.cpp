@@ -63,7 +63,7 @@ Character::~Character()
 
 void Character::Initialize()
 {
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Random"));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
 	graphics->Translate({ 0.0f, -0.5f, 0.0f });
@@ -71,7 +71,7 @@ void Character::Initialize()
 	collider = new AnimatedCollider(graphics);
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, castLine, "CastLineFromCamera");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
 
 	obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 }
@@ -79,7 +79,7 @@ void Character::Initialize()
 void Character::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
-	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_B, "CastLineFromCamera");
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "CastLineFromCamera");
 
 	delete collider;
 	delete obb;

@@ -21,6 +21,8 @@ public:
 
 	int GetKey(int keyCode, bool clearFrameKeyStates = false) const;
 
+	int GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates = false) const;
+
 	GLFWwindow* GetGLFWwindow() const;
 
 	void DisableCursor() const;

@@ -26,6 +26,10 @@ public:
 
 	static void DeregisterCallbackForKeyState(int state, int keyCode, const std::string& name);
 
+	static void RegisterCallbackForMouseButtonState(int state, int mouseButton, std::function<void(int mouseButton)>* const callback, const std::string& name);
+
+	static void DeregisterCallbackForMouseButtonState(int state, int mouseButton, const std::string& name);
+
 	static void Update();
 
 private:
@@ -46,6 +50,8 @@ private:
 	
 	void ProcessKeyEvents() const;
 
+	void ProcessMouseButtonEvents() const;
+
 	static InputManager* instance;
 
 	std::mutex inputQueueMutex;
@@ -60,8 +66,29 @@ private:
 
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> registeredKeyReleasedEvents;
 
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonPressEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonReleaseEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonPressedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonReleasedEvents;
+
 	std::unordered_set<int> keysPressed;
 };
+
+#define MOUSE_BUTTON_1         0
+#define MOUSE_BUTTON_2         1
+#define MOUSE_BUTTON_3         2
+#define MOUSE_BUTTON_4         3
+#define MOUSE_BUTTON_5         4
+#define MOUSE_BUTTON_6         5
+#define MOUSE_BUTTON_7         6
+#define MOUSE_BUTTON_8         7
+#define MOUSE_BUTTON_LAST      MOUSE_BUTTON_8
+#define MOUSE_BUTTON_LEFT      MOUSE_BUTTON_1
+#define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
+#define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
 
 #define KEY_SPACE              32
 #define KEY_APOSTROPHE         39  /* ' */

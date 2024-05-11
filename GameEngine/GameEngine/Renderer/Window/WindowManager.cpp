@@ -107,10 +107,10 @@ WindowManager::WindowManager() :
 
 WindowManager::~WindowManager()
 {
-	GraphicsObjectManager::Terminate();
 	LightManager::Terminate();
 	TextureManager::Terminate();
 	ModelManager::Terminate();
+	GraphicsObjectManager::Terminate();
 	ShaderManager::Terminate();
 	DeleteWindows();
 }

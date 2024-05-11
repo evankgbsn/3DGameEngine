@@ -3,6 +3,9 @@
 
 #include <glm/glm.hpp>
 
+class Plane;
+class Sphere;
+
 class Triangle
 {
 public:
@@ -16,6 +19,14 @@ public:
 	const glm::vec3& GetPoint1() const;
 
 	const glm::vec3& GetPoint2() const;
+
+	Plane ConstructPlane() const;
+
+	glm::vec3 ClosestPoint(const glm::vec3& point) const;
+
+	bool PointIntersect(const glm::vec3& point) const;
+
+	bool SphereIntersect(const Sphere& sphere) const;
 
 private:
 
