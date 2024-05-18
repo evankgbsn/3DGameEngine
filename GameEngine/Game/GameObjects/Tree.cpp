@@ -5,6 +5,7 @@
 #include "GameEngine/Renderer/GraphicsObjects/GOColored.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
+#include "GameEngine/Collision/StaticCollider.h"
 
 Tree::Tree() :
 	graphics(nullptr)
@@ -21,20 +22,18 @@ void Tree::Initialize()
 	graphics->Scale({ 2.0f, 2.0f, 2.0f });
 	graphics->SetTranslation({ 10.5f, -1.0f, 10.5f });
 
-	fakeCollider = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Tree"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	fakeCollider->SetDrawMode(GO3D::Mode::LINE);
-	fakeCollider->Scale({ 2.0f, 2.0f, 2.0f });
-	fakeCollider->SetTranslation({ 10.5f, -1.0f, 10.5f });
+	collider = new StaticCollider(graphics);
 }
 
 void Tree::Terminate()
 {
 	GraphicsObjectManager::Delete(graphics);
-	GraphicsObjectManager::Delete(fakeCollider);
+	delete collider;
 }
 
 void Tree::Update()
 {
+	collider->Update();
 }
 
 void Tree::Load()

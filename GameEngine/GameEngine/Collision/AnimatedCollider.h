@@ -9,11 +9,15 @@
 
 class GO3DAnimated;
 class GOColoredAnimated;
+class GOColored;
 class ColoredStaticGraphicsObject;
 class OrientedBoundingBoxWithVisualization;
 class OrientedBoundingBox;
 class SphereWithVisualization;
 class LineSegment3D;
+class Vertex;
+class Armature;
+class StaticCollider;
 
 class AnimatedCollider : public Collider
 {
@@ -30,6 +34,14 @@ public:
 	bool Intersect(const OrientedBoundingBox& other) const;
 
 	bool Intersect(const LineSegment3D& other) const;
+
+	bool Intersect(const AnimatedCollider& other) const;
+
+	bool Intersect(const StaticCollider& other) const;
+
+	const SphereWithVisualization* const GetSphere() const;
+
+	const std::vector<OrientedBoundingBoxWithVisualization*>& GetBoundingBoxes() const;
 
 private:
 
@@ -53,9 +65,17 @@ private:
 
 	SphereWithVisualization* sphere;
 
-	std::vector<OrientedBoundingBoxWithVisualization*> obbs;
+	std::vector<std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>> obbs;
 
 	GOColoredAnimated* meshColliderVisualization;
+
+	GOColored* collidedTriangle;
+
+	std::unordered_map<std::string, std::vector<std::vector<Vertex>>> jointsTriangles;
+
+	const Armature* arms;
+
+	const std::vector<std::string>* jointNames;
 
 
 

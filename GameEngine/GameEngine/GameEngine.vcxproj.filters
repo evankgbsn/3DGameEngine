@@ -309,6 +309,9 @@
     <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
+    <ClCompile Include="Collision\StaticCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\StaticCollider.h">
+      <Filter>Source Files\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

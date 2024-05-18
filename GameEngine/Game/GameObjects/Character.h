@@ -9,6 +9,7 @@ class GOTexturedAnimatedLit;
 class AnimatedCollider;
 class OrientedBoundingBoxWithVisualization;
 class GOTexturedLit;
+class StaticCollider;
 
 class Character : public GameObject
 {
@@ -41,15 +42,28 @@ private:
 
 	GOTexturedAnimatedLit* graphics;
 
+	GOTexturedAnimatedLit* graphics2;
+
 	GOTexturedLit* homeGraphics;
 
+	GOTexturedLit* treeGraphics;
+
+	StaticCollider* treeCollider;
+
 	AnimatedCollider* collider;
+
+	AnimatedCollider* collider2;
 
 	OrientedBoundingBoxWithVisualization* obb;
 
 	std::function<void(int)>* toggleColliderVisibility;
 
 	std::function<void(int)>* castLine;
+
+	std::function<void(int)>* forward;
+	std::function<void(int)>* backward;
+	std::function<void(int)>* left;
+	std::function<void(int)>* right;
 
 };
 

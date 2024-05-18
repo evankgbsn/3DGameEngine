@@ -4,7 +4,7 @@
 #include "GameEngine/GameObject/GameObject.h"
 
 class GOTexturedLit;
-class GOColored;
+class StaticCollider;
 
 class Tree : public GameObject
 {
@@ -37,8 +37,7 @@ private:
 
 	GOTexturedLit* graphics;
 
-	GOColored* fakeCollider;
-
+	StaticCollider* collider;
 };
 
 #endif // TREE_H

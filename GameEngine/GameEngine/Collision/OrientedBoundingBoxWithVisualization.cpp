@@ -57,6 +57,11 @@ void OrientedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor)
 	}
 }
 
+const glm::vec4 OrientedBoundingBoxWithVisualization::GetColor() const
+{
+	return graphics->GetColor();
+}
+
 void OrientedBoundingBoxWithVisualization::CreateGraphics()
 {
 	if (!ModelManager::ModelLoaded("OrientedBoundingBox"))

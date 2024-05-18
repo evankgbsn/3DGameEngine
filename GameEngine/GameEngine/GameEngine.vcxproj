@@ -169,6 +169,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Collision\Collider.cpp" />
     <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\SphereWithVisualization.cpp" />
+    <ClCompile Include="Collision\StaticCollider.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject\Component\AmbientLight.cpp" />
     <ClCompile Include="GameObject\Component\AnimatedColliderComponent.cpp" />
@@ -249,6 +250,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\SphereWithVisualization.h" />
+    <ClInclude Include="Collision\StaticCollider.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject\Component\AmbientLight.h" />
     <ClInclude Include="GameObject\Component\AnimatedColliderComponent.h" />

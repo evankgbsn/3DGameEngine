@@ -36,11 +36,15 @@ public:
 
 	bool PlaneIntersect(const Plane& plane) const;
 
+	bool TriangleIntersect(const Triangle& other) const;
+
 private:
 
 	bool OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const;
 
 	bool OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const;
+
+	bool OverlapOnAxis(const Triangle& triangle, const glm::vec3& axis) const;
 
 	Triangle(const Triangle&) = delete;
 

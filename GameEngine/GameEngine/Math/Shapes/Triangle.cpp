@@ -8,6 +8,13 @@
 
 #include <glm/gtc/matrix_access.hpp>
 
+Triangle::Triangle(const glm::vec3& intitialPoint0, const glm::vec3& initialPoint1, const glm::vec3& intitialPoint2) :
+	point0(intitialPoint0),
+	point1(initialPoint1),
+	point2(intitialPoint2)
+{
+}
+
 Triangle::~Triangle()
 {
 }
@@ -138,6 +145,38 @@ bool Triangle::PlaneIntersect(const Plane& plane) const
 	return true;
 }
 
+bool Triangle::TriangleIntersect(const Triangle& other) const
+{
+	const glm::vec3 t1_f0 = point1 - point0;
+	const glm::vec3 t1_f1 = point2 - point1;
+	const glm::vec3 t1_f2 = point0 - point2;
+	
+	const glm::vec3 t2_f0 = other.point1 - other.point0;
+	const glm::vec3 t2_f1 = other.point2 - other.point1;
+	const glm::vec3 t2_f2 = other.point0 - other.point2;
+	
+	glm::vec3 axisToTest[11] =
+	{
+		glm::cross(t1_f0, t1_f1),
+		glm::cross(t2_f0, t2_f1),
+		glm::cross(t2_f0, t1_f0), glm::cross(t2_f0, t1_f1),
+		glm::cross(t2_f0, t1_f2), glm::cross(t2_f1, t1_f0),
+		glm::cross(t2_f1, t1_f1), glm::cross(t2_f1, t1_f2),
+		glm::cross(t2_f2, t1_f0), glm::cross(t2_f2, t1_f1),
+		glm::cross(t2_f2, t1_f2)
+	};
+	
+	for (unsigned int i = 0; i < 11; ++i)
+	{
+		if (!OverlapOnAxis(other, axisToTest[i]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool Triangle::OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const
 {
 	Interval3D a(aabb, axis);
@@ -148,6 +187,13 @@ bool Triangle::OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3
 bool Triangle::OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const
 {
 	Interval3D a(obb, axis);
+	Interval3D b(*this, axis);
+	return ((b.GetMin() <= a.GetMax()) && a.GetMin() <= b.GetMax());
+}
+
+bool Triangle::OverlapOnAxis(const Triangle& triangle, const glm::vec3& axis) const
+{
+	Interval3D a(triangle, axis);
 	Interval3D b(*this, axis);
 	return ((b.GetMin() <= a.GetMax()) && a.GetMin() <= b.GetMax());
 }
