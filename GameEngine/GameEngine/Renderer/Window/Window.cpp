@@ -61,7 +61,6 @@ bool Window::ShouldClose()
 
 void Window::Update()
 {
-
 	shouldClose.store(glfwWindowShouldClose(glfwWindow));
 	if (!shouldClose.load())
 	{

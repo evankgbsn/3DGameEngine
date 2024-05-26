@@ -36,7 +36,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::string&
 	if (instance->models.find(name) != instance->models.end())
 	{
 		Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
-		return nullptr;
+		return instance->models[name];
 	}
 
 	return instance->models[name] = new Model(path);
@@ -53,7 +53,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 	if (instance->models.find(name) != instance->models.end())
 	{
 		Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
-		return nullptr;
+		return instance->models[name];
 	}
 
 	return instance->models[name] = new Model(vertices, indices);

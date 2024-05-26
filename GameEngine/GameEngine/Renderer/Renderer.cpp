@@ -2,7 +2,8 @@
 
 #include "../Utils/SingletonHelpers.h"
 #include "Window/WindowManager.h"
-#include "Camera//CameraManager.h"
+#include "Camera/CameraManager.h"
+
 
 #include <GLFW/glfw3.h>
 
@@ -86,8 +87,6 @@ Renderer::Renderer()
 	InitializeGLFW();
 	WindowManager::Initialize();
 	CameraManager::Initialize();
-	
-
 }
 
 Renderer::~Renderer()

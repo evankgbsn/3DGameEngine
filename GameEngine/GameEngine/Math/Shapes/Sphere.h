@@ -27,6 +27,8 @@ public:
 
 	const glm::vec3& GetOffset() const;
 
+	void SetOffset(const glm::vec3& newOffset);
+
 	float GetRadius() const;
 
 	void SetRadius(float newRadius);

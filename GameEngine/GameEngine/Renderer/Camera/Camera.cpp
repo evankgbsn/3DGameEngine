@@ -57,6 +57,11 @@ const glm::vec3& Camera::GetPosition() const
 	return position;
 }
 
+const glm::vec3& Camera::GetTarget() const
+{
+	return target;
+}
+
 const glm::mat4& Camera::GetView() const
 {
 	return view;

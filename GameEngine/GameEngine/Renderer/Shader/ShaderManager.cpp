@@ -188,6 +188,7 @@ void ShaderManager::CreateVAO()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_FRAMEBUFFER_SRGB);
+	
 }
 
 void ShaderManager::CreateShadowMapFramebuffer()

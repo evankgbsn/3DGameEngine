@@ -73,6 +73,12 @@
     <Filter Include="Source Files\GameObject\Component">
       <UniqueIdentifier>{06bc2b1d-7e0a-4681-bd74-014ce3edfb22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Renderer\Font">
+      <UniqueIdentifier>{55f8b137-01b9-449c-8805-681960b7406c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Text">
+      <UniqueIdentifier>{e7e4f745-49c9-49e6-aba2-0eb9e825f316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -310,6 +316,18 @@
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
     <ClCompile Include="Collision\StaticCollider.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Font\FontManager.cpp">
+      <Filter>Source Files\Renderer\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Font\Font.cpp">
+      <Filter>Source Files\Renderer\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOGlyph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Text\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -560,6 +578,18 @@
     <ClInclude Include="Collision\StaticCollider.h">
       <Filter>Source Files\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Font\FontManager.h">
+      <Filter>Source Files\Renderer\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Font\Font.h">
+      <Filter>Source Files\Renderer\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOGlyph.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Text\Text.h">
+      <Filter>Source Files\Renderer\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -617,6 +647,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\PointLightShadow.geo">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Font.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Font.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

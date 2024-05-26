@@ -16,6 +16,8 @@
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Collision/StaticCollider.h"
 
+#include "GameEngine/Renderer/Text/Text.h"
+
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
 
 
@@ -24,7 +26,7 @@ Character::Character() :
 	collider(nullptr),
 	toggleColliderVisibility(nullptr)
 {
-	float moveSpeed = 1.0f;
+	float moveSpeed = 3.0f;
 
 	forward = new std::function<void(int)>([this, moveSpeed](int keyCode)
 		{
@@ -77,6 +79,32 @@ Character::Character() :
 			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, {0.0f, 0.0f, 1.0f, 1.0f});
 			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
 		});
+
+	float cameraMoveSpeed = 2.0f;
+
+	moveCamLeft = new std::function<void(int)>([cameraMoveSpeed, this](int)
+		{
+			Camera& cam = CameraManager::GetActiveCamera();
+			
+			glm::vec3 target = cam.GetTarget();
+
+			cameraTarget += glm::vec3(cameraMoveSpeed * TimeManager::DeltaTime(), 0.0f, 0.0f);
+
+			camPosition += glm::vec3(cameraMoveSpeed * TimeManager::DeltaTime(), 0.0f, 0.0f);
+
+		});
+
+	moveCamRight = new std::function<void(int)>([cameraMoveSpeed, this](int)
+		{
+			Camera& cam = CameraManager::GetActiveCamera();
+
+			glm::vec3 target = cam.GetTarget();
+
+			cameraTarget += glm::vec3(-cameraMoveSpeed * TimeManager::DeltaTime(), 0.0f, 0.0f);
+
+			camPosition += glm::vec3(-cameraMoveSpeed * TimeManager::DeltaTime(), 0.0f, 0.0f);
+
+		});
 }
 
 Character::~Character()
@@ -87,16 +115,18 @@ Character::~Character()
 
 void Character::Initialize()
 {
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Sphere"), TextureManager::GetTexture("CrateTree"), TextureManager::GetTexture("GreyTree"));
+	Text* text = new Text("This is test text", "arial");
+
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
-	treeGraphics->SetTranslation({ 10.5f, 2.0f, 10.5f });
+	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
+	treeGraphics->SetShine(8.0f);
 
 	treeCollider = new StaticCollider(treeGraphics);
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("Random"));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
-	graphics->SetClip(0);
-	graphics->Translate({ 0.0f, -0.5f, 0.0f });
+	graphics->SetClip(7);
 
 	collider = new AnimatedCollider(graphics);
 
@@ -104,7 +134,7 @@ void Character::Initialize()
 	graphics2->SetShine(32.0f);
 	graphics2->SetClip(3);
 	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
-	graphics2->Rotate(90.0f, { 0.0f, 1.0f, 0.0f });
+	
 
 	collider2 = new AnimatedCollider(graphics2);
 
@@ -114,8 +144,13 @@ void Character::Initialize()
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
 
 	obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
+
+	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
+	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
 }
 
 void Character::Terminate()
@@ -126,6 +161,8 @@ void Character::Terminate()
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "walk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_H, "CameraMove");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_K, "CameraMove");
 
 	delete collider;
 	delete collider2;
@@ -137,14 +174,16 @@ void Character::Terminate()
 
 void Character::Update()
 {
+	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
+
 	Camera& cam = CameraManager::GetActiveCamera();
 
-	cam.SetPosition(graphics->GetTranslation() + glm::vec3(0.0f, 8.0f, -8.0f));
+	cam.SetPosition(graphics->GetTranslation() + camPosition);
 
-	cam.SetTarget(graphics->GetTranslation());
+	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
 	collider->Update();
-	//collider->Intersect(*obb);
+	collider->Intersect(*obb);
 	collider2->Update();
 
 	treeCollider->Update();
@@ -172,10 +211,10 @@ void Character::Update()
 
 	collider->Intersect(lineFromScreenToWorld);
 
-	collider->Intersect(*collider2);
 
 	collider->Intersect(*treeCollider);
 
+	collider->Intersect(*collider2);
 }
 
 void Character::Load()

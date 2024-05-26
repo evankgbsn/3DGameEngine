@@ -37,6 +37,8 @@ public:
 
 	const glm::vec3& GetPosition() const;
 
+	const glm::vec3& GetTarget() const;
+
 	const glm::mat4& GetView() const;
 
 	const glm::mat4& GetProjection() const;

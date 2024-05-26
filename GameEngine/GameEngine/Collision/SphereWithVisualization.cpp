@@ -27,14 +27,19 @@ SphereWithVisualization::~SphereWithVisualization()
 
 void SphereWithVisualization::Update(const glm::mat4& transformation)
 {
-	glm::mat4 scale(1.0f);
-	scale = glm::scale(scale, { GetRadius(), GetRadius(), GetRadius() });
 
-	glm::mat4 translation(1.0f);
-	translation = glm::translate(translation, GetOffset());
 
-	graphics->SetTransform(transformation * translation * scale);
-	Transform(graphics->GetTransform());
+	glm::mat4 rotation(1.0f);
+	rotation[0] = glm::normalize(transformation[0]);
+	rotation[1] = glm::normalize(transformation[1]);
+	rotation[2] = glm::normalize(transformation[2]);
+
+	glm::vec3 origin = rotation * glm::vec4(GetOffset(), 1.0f);
+
+	origin = glm::vec3(transformation[3]) + origin;
+	graphics->SetTranslation(origin);
+
+	Transform(transformation);
 }
 
 void SphereWithVisualization::SetColor(const glm::vec3& color)
@@ -46,6 +51,5 @@ void SphereWithVisualization::InitializeGraphics()
 {
 	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Sphere"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	graphics->SetScale({ GetRadius(), GetRadius(), GetRadius() });
-	graphics->SetTranslation(GetOrigin());
 	graphics->SetDrawMode(GO3D::Mode::LINE);
 }

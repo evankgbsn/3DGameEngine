@@ -89,6 +89,11 @@ const glm::vec3& Sphere::GetOffset() const
 	return offset;
 }
 
+void Sphere::SetOffset(const glm::vec3& newOffset)
+{
+	offset = newOffset;
+}
+
 float Sphere::GetRadius() const
 {
 	return radius;
@@ -106,7 +111,14 @@ void Sphere::SetOrigin(const glm::vec3& newOrigin)
 
 void Sphere::Transform(const glm::mat4& transform)
 {
-	origin = transform * glm::vec4(offset, 1.0f);
+
+	glm::mat4 rotation(1.0f);
+	rotation[0] = glm::normalize(transform[0]);
+	rotation[1] = glm::normalize(transform[1]);
+	rotation[2] = glm::normalize(transform[2]);
+
+	origin = rotation * glm::vec4(offset, 1.0f);
+	origin = origin + glm::vec3(transform[3]);
 }
 
 bool Sphere::PointIntersect(const glm::vec3& point) const

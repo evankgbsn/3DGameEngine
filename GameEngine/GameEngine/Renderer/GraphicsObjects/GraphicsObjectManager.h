@@ -1,6 +1,8 @@
 #ifndef GRAPHICSOBJECTMANAGER_H
 #define GRAPHICSOBJECTMANAGER_H
 
+#include "../Font/Font.h"
+
 #include <glm/glm.hpp>
 
 #include <vector>
@@ -16,6 +18,8 @@ class GOTexturedAnimated;
 class GOTexturedLit;
 class GOTexturedAnimatedLit;
 class GOLineColored;
+class GOGlyph;
+
 
 class GraphicsObjectManager
 {
@@ -35,11 +39,18 @@ public:
 
 	static GOLineColored* const CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 
+	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale);
+
 	static void Disable(GraphicsObject* const go);
 
-	static void Enable(GraphicsObject* const go);
+	static void Enable(GO3D* const go);
 
-	static void Delete(GraphicsObject* const go);
+	static void Delete(GO3D* const go);
+
+	static void Enable(GOGlyph* const go);
+
+	static void Disable(GOGlyph* const go);
+
 
 private:
 
@@ -71,7 +82,11 @@ private:
 
 	std::vector<GraphicsObject*> graphicsObjects3D;
 
+	std::vector<GraphicsObject*> graphicsObjects2D;
+
 	std::vector<GraphicsObject*> disabledGraphicsObjects3D;
+
+	std::vector<GraphicsObject*> disabledGraphicsObjects2D;
 
 };
 

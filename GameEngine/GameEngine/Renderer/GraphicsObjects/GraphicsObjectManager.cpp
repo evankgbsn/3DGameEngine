@@ -9,11 +9,15 @@
 #include "GOTexturedLit.h"
 #include "GOTexturedAnimatedLit.h"
 #include "GOLineColored.h"
+#include "GOGlyph.h"
+#include "../Font/FontManager.h"
 #include "../../Utils/Logger.h"
 #include "../Shader/ShaderManager.h"
 #include "../Window/WindowManager.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
+
+GOGlyph* glyph = nullptr;
 
 void GraphicsObjectManager::Update()
 {
@@ -46,6 +50,15 @@ void GraphicsObjectManager::Update()
 				graphicsObject->Update();
 			}
 		}
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjects2D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				graphicsObject->Update();
+			}
+		}
+		
 	}
 	else
 	{
@@ -198,6 +211,23 @@ GOLineColored* const GraphicsObjectManager::CreateGOLineColored(const glm::vec3&
 	return result;
 }
 
+GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale)
+{
+	GOGlyph* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects2D.push_back(result = new GOGlyph(glyph, color, position, scale));
+		instance->graphicsObjects2D[instance->graphicsObjects2D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects2D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGOGlyph() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
 void GraphicsObjectManager::Disable(GraphicsObject* const go)
 {
 	if (instance != nullptr)
@@ -217,7 +247,7 @@ void GraphicsObjectManager::Disable(GraphicsObject* const go)
 	}
 }
 
-void GraphicsObjectManager::Enable(GraphicsObject* const go)
+void GraphicsObjectManager::Enable(GO3D* const go)
 {
 	if (instance != nullptr)
 	{
@@ -227,7 +257,7 @@ void GraphicsObjectManager::Enable(GraphicsObject* const go)
 	}
 }
 
-void GraphicsObjectManager::Delete(GraphicsObject* const go)
+void GraphicsObjectManager::Delete(GO3D* const go)
 {
 	if (instance != nullptr)
 	{
@@ -239,9 +269,52 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				{
 					delete go;
 					instance->graphicsObjects3D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
 				}
 			}
 		}
+
+		for (unsigned int i = 0; i < instance->graphicsObjects2D.size(); ++i)
+		{
+			if (instance->graphicsObjects2D[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->graphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
+				}
+			}
+		}
+	}
+}
+
+void GraphicsObjectManager::Enable(GOGlyph* const go)
+{
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects2D[go->managerVectorIndex] = go;
+		instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = nullptr;
+		go->isDisabled = false;
+	}
+}
+
+void GraphicsObjectManager::Disable(GOGlyph* const go)
+{
+	if (instance != nullptr)
+	{
+		if (go->managerVectorDisableIndex != UINT_MAX)
+		{
+			instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = go;
+		}
+		else
+		{
+			instance->disabledGraphicsObjects2D.push_back(go);
+			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects2D.size() - 1);
+		}
+
+		instance->graphicsObjects2D[go->managerVectorIndex] = nullptr;
+		go->isDisabled = true;
 	}
 }
 

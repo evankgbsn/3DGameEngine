@@ -115,7 +115,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -150,7 +150,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -213,10 +213,13 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Animation\TransformTrack.cpp" />
     <ClCompile Include="Renderer\Camera\Camera.cpp" />
     <ClCompile Include="Renderer\Camera\CameraManager.cpp" />
+    <ClCompile Include="Renderer\Font\Font.cpp" />
+    <ClCompile Include="Renderer\Font\FontManager.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GO3D.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOGlyph.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
@@ -238,6 +241,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Shader\ShaderManager.cpp" />
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
     <ClCompile Include="Renderer\Texture\TextureManager.cpp" />
+    <ClCompile Include="Renderer\Text\Text.cpp" />
     <ClCompile Include="Renderer\Window\Window.cpp" />
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -295,10 +299,13 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Animation\TransformTrack.h" />
     <ClInclude Include="Renderer\Camera\Camera.h" />
     <ClInclude Include="Renderer\Camera\CameraManager.h" />
+    <ClInclude Include="Renderer\Font\Font.h" />
+    <ClInclude Include="Renderer\Font\FontManager.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GO3D.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOGlyph.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLit.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
@@ -320,6 +327,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Shader\ShaderManager.h" />
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\TextureManager.h" />
+    <ClInclude Include="Renderer\Text\Text.h" />
     <ClInclude Include="Renderer\Window\Window.h" />
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -334,6 +342,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.vert" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag" />
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert" />
+    <None Include="Renderer\Shader\GLSL\Font.frag" />
+    <None Include="Renderer\Shader\GLSL\Font.vert" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.frag" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.geo" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.vert" />

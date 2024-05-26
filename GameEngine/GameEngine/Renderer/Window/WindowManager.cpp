@@ -7,6 +7,7 @@
 #include "../Texture/TextureManager.h"
 #include "../GraphicsObjects/GraphicsObjectManager.h"
 #include "../Light/LightManager.h"
+#include "../Font/FontManager.h"
 
 WindowManager* WindowManager::instance = nullptr;
 
@@ -56,6 +57,7 @@ void WindowManager::CreateWindow(unsigned int width, unsigned int height, const 
 				TextureManager::Initialize();
 				LightManager::Initialize();
 				GraphicsObjectManager::Initialize();
+				FontManager::Initialize();
 			}
 		}
 		else
@@ -107,6 +109,7 @@ WindowManager::WindowManager() :
 
 WindowManager::~WindowManager()
 {
+	FontManager::Terminate();
 	LightManager::Terminate();
 	TextureManager::Terminate();
 	ModelManager::Terminate();

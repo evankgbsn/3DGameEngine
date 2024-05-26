@@ -83,7 +83,7 @@ public:
 
 	virtual const glm::mat4& GetTransform()
 	{
-		return transformation = translation * scale * rotation;
+		return transformation = translation * rotation * scale;
 	};
 
 	enum class Mode

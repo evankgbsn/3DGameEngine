@@ -7,6 +7,10 @@ bool GraphicsObject::IsDisabled() const
 	return isDisabled;
 }
 
+GraphicsObject::GraphicsObject()
+{
+}
+
 GraphicsObject::GraphicsObject(Model* const m) :
 	model(m),
 	managerVectorIndex(UINT_MAX),

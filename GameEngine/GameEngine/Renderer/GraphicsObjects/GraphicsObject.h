@@ -18,6 +18,8 @@ protected:
 
 	friend class GraphicsObjectManager;
 
+	GraphicsObject();
+
 	GraphicsObject(Model* const model);
 
 	virtual ~GraphicsObject();

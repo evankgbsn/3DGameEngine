@@ -3,6 +3,8 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
+#include <glm/glm.hpp>
+
 #include <functional>
 
 class GOTexturedAnimatedLit;
@@ -64,6 +66,14 @@ private:
 	std::function<void(int)>* backward;
 	std::function<void(int)>* left;
 	std::function<void(int)>* right;
+
+	std::function<void(int)>* moveCamLeft;
+	std::function<void(int)>* moveCamRight;
+	std::function<void(int)>* moveCamUp;
+	std::function<void(int)>* moveCamDown;
+
+	glm::vec3 cameraTarget;
+	glm::vec3 camPosition;
 
 };
 
