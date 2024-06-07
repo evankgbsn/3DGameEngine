@@ -166,6 +166,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collision\AnimatedCollider.cpp" />
+    <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
     <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\SphereWithVisualization.cpp" />
@@ -246,11 +247,13 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Time\TimeManager.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision\AnimatedCollider.h" />
+    <ClInclude Include="Collision\AxisAlignedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\SphereWithVisualization.h" />
@@ -332,6 +335,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Time\TimeManager.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\OpenGLDebug.h" />

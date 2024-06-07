@@ -99,3 +99,22 @@ float Math::ProjLength(const glm::vec3& v, const glm::vec3& w)
 {
 	return glm::dot(v, w) / glm::length(w);
 }
+
+Math::BarycentricRelation Math::CreateBarycentricRelation(Math::Tri triPoints, glm::vec3 point, float scale, bool sign)
+{
+	glm::vec2 p(point.x, point.z);
+	glm::vec2 a(triPoints.a.x, triPoints.a.z);
+
+	BarycentricRelation br;
+
+	if (sign)
+	{
+		br = { glm::dot(-(p - a), glm::vec2(1,0)) / scale, glm::dot(+(p - a), glm::vec2(0,1)) / scale };
+	}
+	else
+	{
+		br = { glm::dot((p - a), glm::vec2(1,0)) / scale, glm::dot(-(p - a), glm::vec2(0,1)) / scale };
+	}
+
+	return br;
+}

@@ -12,6 +12,7 @@ class AnimatedCollider;
 class OrientedBoundingBoxWithVisualization;
 class GOTexturedLit;
 class StaticCollider;
+class Terrain;
 
 class Character : public GameObject
 {
@@ -74,6 +75,8 @@ private:
 
 	glm::vec3 cameraTarget;
 	glm::vec3 camPosition;
+
+	Terrain* terrain;
 
 };
 

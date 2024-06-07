@@ -28,6 +28,8 @@ public:
 
 	Model(const std::string& path);
 
+	Model(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+
 	~Model();
 
 	Model(const Model&) = delete;

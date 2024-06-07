@@ -79,6 +79,9 @@
     <Filter Include="Source Files\Renderer\Text">
       <UniqueIdentifier>{e7e4f745-49c9-49e6-aba2-0eb9e825f316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Terrain">
+      <UniqueIdentifier>{8207dbfc-3faf-450c-8fa4-fcfabdc2767d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -325,9 +328,15 @@
       <Filter>Source Files\Renderer\Font</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\GraphicsObjects\GOGlyph.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Text\Text.cpp">
+      <Filter>Source Files\Renderer\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain\Terrain.cpp">
+      <Filter>Source Files\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -589,6 +598,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\Text\Text.h">
       <Filter>Source Files\Renderer\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\Terrain.h">
+      <Filter>Source Files\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\AxisAlignedBoundingBoxWithVisualization.h">
+      <Filter>Source Files\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

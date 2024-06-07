@@ -15,10 +15,9 @@
 #include "GameEngine/Renderer/Camera/Camera.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Collision/StaticCollider.h"
-
 #include "GameEngine/Renderer/Text/Text.h"
-
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
+#include "GameEngine/Terrain/Terrain.h"
 
 
 Character::Character() :
@@ -31,21 +30,25 @@ Character::Character() :
 	forward = new std::function<void(int)>([this, moveSpeed](int keyCode)
 		{
 			graphics->Translate(glm::vec3(0.0f, 0.0f, 1.0f) * TimeManager::DeltaTime() * moveSpeed);
+			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 		});
 
 	backward = new std::function<void(int)>([this, moveSpeed](int keyCode)
 		{
 			graphics->Translate(glm::vec3(0.0f, 0.0f, -1.0f) * TimeManager::DeltaTime() * moveSpeed);
+			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 		});
 
 	left = new std::function<void(int)>([this, moveSpeed](int keyCode)
 		{
 			graphics->Translate(glm::vec3(1.0f, 0.0f, 0.0f) * TimeManager::DeltaTime() * moveSpeed);
+			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 		});
 
 	right = new std::function<void(int)>([this, moveSpeed](int keyCode)
 		{
 			graphics->Translate(glm::vec3(-1.0f, 0.0f, 0.0f) * TimeManager::DeltaTime() * moveSpeed);
+			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 		});
 
 	toggleColliderVisibility = new std::function<void(int)>([this](int keyCode)
@@ -151,6 +154,8 @@ void Character::Initialize()
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
+
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "CrateTree", "Random", 1000, 1000, 500, 500, 3, -3);
 }
 
 void Character::Terminate()

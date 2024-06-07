@@ -13,6 +13,12 @@ AxisAlignedBoundingBox::AxisAlignedBoundingBox(const glm::vec3& initialOrigin, c
 {
 }
 
+AxisAlignedBoundingBox::AxisAlignedBoundingBox() :
+	origin({0.0f, 0.0f, 0.0f}),
+	size({ 1.0f, 1.0f, 1.0f })
+{
+}
+
 AxisAlignedBoundingBox::~AxisAlignedBoundingBox()
 {
 }
@@ -20,7 +26,7 @@ AxisAlignedBoundingBox::~AxisAlignedBoundingBox()
 void AxisAlignedBoundingBox::FromMinAndMax(const glm::vec3& min, const glm::vec3& max)
 {
 	origin = (min + max) * 0.5f;
-	size = max - min * 0.5f;
+	size = (max - min) * 0.5f;
 }
 
 const glm::vec3& AxisAlignedBoundingBox::GetOrigin() const

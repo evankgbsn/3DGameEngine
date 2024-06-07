@@ -13,7 +13,7 @@ LightArray::~LightArray()
 
 void LightArray::Initialize()
 {
-	float count = 10;
+	int count = 10;
 	float dist = 5.0f;
 	spotLights.reserve(count * count);
 	for (int i = 0; i < count; ++i)

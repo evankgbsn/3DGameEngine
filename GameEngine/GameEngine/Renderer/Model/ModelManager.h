@@ -25,6 +25,8 @@ public:
 
 	static bool ModelLoaded(const std::string& name);
 
+	static Model* const CreateModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+
 private:
 
 	ModelManager();

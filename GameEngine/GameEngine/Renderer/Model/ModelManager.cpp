@@ -4,6 +4,7 @@
 #include "Model.h"
 
 #include <stdexcept>
+#include <sstream>
 
 ModelManager* ModelManager::instance = nullptr;
 
@@ -86,6 +87,29 @@ bool ModelManager::ModelLoaded(const std::string& name)
 	}
 
 	return instance->models.find(name) != instance->models.end();
+}
+
+Model* const ModelManager::CreateModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
+{
+	Model* newTerrainModel = nullptr;
+
+	if (instance == nullptr)
+	{
+		Logger::Log("Calling ModelManager::CreateModelTerrain() beofre ModelManager:Initialize()", Logger::Category::Error);
+		return newTerrainModel;
+	}
+
+	if (instance->models.find(name) != instance->models.end())
+	{
+		Logger::Log("The name " + name + " is already being used for a model. ModelManager::CreateModelTerrain()", Logger::Category::Warning);
+		return newTerrainModel;
+	}
+	else
+	{
+		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
+		instance->models.insert(std::pair<std::string, Model*>(name, newTerrainModel));
+		return newTerrainModel;
+	}
 }
 
 Model* const ModelManager::GetModel(const std::string& modelName)

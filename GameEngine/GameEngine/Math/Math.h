@@ -29,6 +29,25 @@ namespace Math
 	float ChangeRange(float currentBegin, float currentEnd, float newBegin, float newEnd, float value);
 
 	float ProjLength(const glm::vec3& v, const  glm::vec3& w);
+
+	struct Tri
+	{
+		glm::vec3 a, b, c;
+	};
+
+	struct BarycentricRelation
+	{
+		float beta, gama;
+
+		template<typename T>
+		T Use(T a, T b, T c)
+		{
+			return a + (beta * (b - a)) + (gama * (c - b));
+		};
+
+	};
+
+	BarycentricRelation CreateBarycentricRelation(Tri triPoints, glm::vec3 point, float scale, bool sign);
 };
 
 #endif // MATH_H
