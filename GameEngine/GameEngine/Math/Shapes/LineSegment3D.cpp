@@ -17,8 +17,7 @@ float LineSegment3D::GetLength() const
 
 float LineSegment3D::GetLengthSq() const
 {
-	glm::vec2 vect = end - start;
-	return glm::dot(vect, vect);
+	return glm::dot(GetEnd() - GetStart(), GetEnd() - GetStart());
 }
 
 const glm::vec3& LineSegment3D::GetStart() const

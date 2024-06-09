@@ -8,6 +8,7 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 {
 	FromMinAndMax(initialMin, initialMax);
 	CreateGraphics();
+	ToggleVisibility();
 }
 
 AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualization()
@@ -17,17 +18,25 @@ AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualizatio
 
 void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 {
+	if (!graphics->IsDisabled())
+	{
+		GraphicsObjectManager::Disable(graphics);
+	}
+	else
+	{
+		GraphicsObjectManager::Enable(graphics);
+	}
 }
 
 void AxisAlignedBoundingBoxWithVisualization::CreateGraphics()
 {
-	//if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
-	//{
-	//	ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
-	//}
-	//
-	//graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("OrientedBoundingBox"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	//graphics->SetDrawMode(GO3D::Mode::LINE);
-	//graphics->SetScale(GetSize());
-	//graphics->SetTranslation(GetOrigin());
+	if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
+	{
+		ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
+	}
+	
+	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("OrientedBoundingBox"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	graphics->SetDrawMode(GO3D::Mode::LINE);
+	graphics->SetScale(GetSize());
+	graphics->SetTranslation(GetOrigin());
 }

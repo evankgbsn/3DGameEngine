@@ -154,7 +154,7 @@ float AxisAlignedBoundingBox::RayIntersect(const Ray& ray) const
 	float t3 = (min.y - rayOrigin.y) / rayDirection.y;
 	float t4 = (max.y - rayOrigin.y) / rayDirection.y;
 	float t5 = (min.z - rayOrigin.z) / rayDirection.z;
-	float t6 = (max.z = rayOrigin.z) / rayDirection.z;
+	float t6 = (max.z - rayOrigin.z) / rayDirection.z;
 
 	// Find the largest minimum value.
 	float tmin = fmaxf(fmaxf(fminf(t1, t2), fminf(t3, t4)), fminf(t5, t6));

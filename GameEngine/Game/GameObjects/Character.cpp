@@ -18,6 +18,8 @@
 #include "GameEngine/Renderer/Text/Text.h"
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
 #include "GameEngine/Terrain/Terrain.h"
+#include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
+#include "GameEngine/Math/Shapes/Ray.h"
 
 
 Character::Character() :
@@ -80,7 +82,28 @@ Character::Character() :
 			x /= x.w;
 
 			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, {0.0f, 0.0f, 1.0f, 1.0f});
-			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
+			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), glm::vec3(x));
+
+			Ray rayFromScreenToWorld(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
+
+			const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& boxes = terrain->GetCellArray();
+
+			unsigned int count = 0;
+
+			for (const auto& boxArray : boxes)
+			{
+				for (AxisAlignedBoundingBoxWithVisualization* aabb : boxArray)
+				{
+					if (aabb->RayIntersect(rayFromScreenToWorld) != -1.0f)
+					{
+						graphics->SetTranslation(terrain->GetTerrainPoint(aabb->GetOrigin()));
+						aabb->ToggleVisibility();
+						count++;
+					}
+				}
+			}
+
+			count++;
 		});
 
 	float cameraMoveSpeed = 2.0f;
@@ -155,7 +178,7 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "CrateTree", "Random", 1000, 1000, 500, 500, 3, -3);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grass", "Random", 1000, 1000, 500, 500, 15, -3);
 }
 
 void Character::Terminate()
@@ -224,6 +247,11 @@ void Character::Update()
 
 void Character::Load()
 {
+	if (!TextureManager::TextureLoaded("Grass"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Grass.png", "Grass");
+	}
+
 	if (!ModelManager::ModelLoaded("Cube"))
 	{
 		ModelManager::LoadModel("Cube", "Assets/Model/Cube.gltf");
