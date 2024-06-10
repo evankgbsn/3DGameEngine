@@ -25,7 +25,8 @@
 Character::Character() :
 	graphics(nullptr),
 	collider(nullptr),
-	toggleColliderVisibility(nullptr)
+	toggleColliderVisibility(nullptr),
+	targetPosition({0.0f, 0.0f, 0.0f})
 {
 	float moveSpeed = 3.0f;
 
@@ -81,7 +82,7 @@ Character::Character() :
 			x = invView * x;
 			x /= x.w;
 
-			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, {0.0f, 0.0f, 1.0f, 1.0f});
+			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, { 0.0f, 0.0f, 1.0f, 1.0f });
 			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), glm::vec3(x));
 
 			Ray rayFromScreenToWorld(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
@@ -96,7 +97,18 @@ Character::Character() :
 				{
 					if (aabb->RayIntersect(rayFromScreenToWorld) != -1.0f)
 					{
-						graphics->SetTranslation(terrain->GetTerrainPoint(aabb->GetOrigin()));
+						targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
+						
+						glm::vec3 translation = graphics->GetTranslation();
+
+						glm::vec4 normalToTarget = -glm::vec4(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)), 0.0f);
+
+
+						glm::mat4 rotation = graphics->GetRotation();
+						rotation[2] = normalToTarget;
+
+						graphics->SetRotation(rotation);
+
 						aabb->ToggleVisibility();
 						count++;
 					}
@@ -178,7 +190,7 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grass", "Random", 1000, 1000, 500, 500, 15, -3);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "RockGround", "Random", 1000, 1000, 250, 250, 15, -3);
 }
 
 void Character::Terminate()
@@ -202,6 +214,11 @@ void Character::Terminate()
 
 void Character::Update()
 {
+	if (graphics->GetTranslation() != targetPosition)
+	{
+		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
+	}
+
 	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
 
 	Camera& cam = CameraManager::GetActiveCamera();
@@ -247,9 +264,9 @@ void Character::Update()
 
 void Character::Load()
 {
-	if (!TextureManager::TextureLoaded("Grass"))
+	if (!TextureManager::TextureLoaded("RockGround"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Grass.png", "Grass");
+		TextureManager::LoadTexture("Assets/Texture/RockGround.png", "RockGround");
 	}
 
 	if (!ModelManager::ModelLoaded("Cube"))

@@ -78,6 +78,8 @@ private:
 
 	Terrain* terrain;
 
+	glm::vec3 targetPosition;
+
 };
 
 #endif // CHARACTER_H
