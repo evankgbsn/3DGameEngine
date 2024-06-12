@@ -66,8 +66,10 @@ layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 // Image Texture Data Samplers
 //--------------------------------------------------
 
-layout(binding = 0) uniform sampler2D diffuseSampler;
-layout(binding = 1) uniform sampler2D specularSampler;
+layout(binding = 0) uniform sampler2D diffuseSampler0;
+layout(binding = 1) uniform sampler2D specularSampler0;
+layout(binding = 2) uniform sampler2D diffuseSampler1;
+layout(binding = 3) uniform sampler2D specularSampler1;
 layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
@@ -85,11 +87,12 @@ layout(location = 8) in vec4 inLightSpacePosition;
 
 out vec4 color;
 
-vec4 CalcAmbientLight(Ambient light);
-vec4 CalcDirectionalLight(DirectionalLight light);
-vec4 CalcPointLight(PointLight light);
-vec4 CalcSpotLight(SpotLight light);
+vec4 CalcAmbientLight(Ambient light, sampler2D diffuse);
+vec4 CalcDirectionalLight(DirectionalLight light, sampler2D diffuse, sampler2D specular);
+vec4 CalcPointLight(PointLight light, sampler2D diffuse, sampler2D specular);
+vec4 CalcSpotLight(SpotLight light, sampler2D diffuse, sampler2D specular);
 float CalcShadow();
+float CalcPointShadow();
 
 void main(void)
 {
@@ -97,53 +100,82 @@ void main(void)
 	{
 		if(directionalLight.light[i].lightOn)
 		{
-			color += CalcDirectionalLight(directionalLight.light[i]);
+			if(inPosition.y > -8.2f)
+			{
+				color += CalcDirectionalLight(directionalLight.light[i], diffuseSampler0, specularSampler0);
+			}
+			else
+			{
+				color += CalcDirectionalLight(directionalLight.light[i], diffuseSampler1, specularSampler1);
+			}
 		}
 
 		if(pointLight.light[i].lightOn)
 		{
-			color += CalcPointLight(pointLight.light[i]);
+			if(inPosition.y > -8.2f)
+			{
+				color += CalcPointLight(pointLight.light[i], diffuseSampler0, specularSampler0);
+			}
+			else
+			{
+				color += CalcPointLight(pointLight.light[i], diffuseSampler1, specularSampler1);
+			}
 		}
 
 		if(spotLight.light[i].lightOn)
 		{
-			color += CalcSpotLight(spotLight.light[i]);
+			if(inPosition.y > -8.2f)
+			{
+				color += CalcSpotLight(spotLight.light[i], diffuseSampler0, specularSampler0);
+			}
+			else
+			{
+				color += CalcSpotLight(spotLight.light[i], diffuseSampler1, specularSampler1);
+			}
 		}
 	}
 
-	color += CalcAmbientLight(ambient.light);
+
+	if(inPosition.y > -8.2f)
+	{
+		color += CalcAmbientLight(ambient.light, diffuseSampler0);
+	}
+	else
+	{
+		color += CalcAmbientLight(ambient.light, diffuseSampler1);
+	}
 };
 
-vec4 CalcAmbientLight(Ambient light)
+vec4 CalcAmbientLight(Ambient light, sampler2D diffMap)
 {
-	return light.color * texture(diffuseSampler, inUV);
+	return light.color * texture(diffMap, inUV);
 }
 
-vec4 CalcDirectionalLight(DirectionalLight light)
+vec4 CalcDirectionalLight(DirectionalLight light, sampler2D diffMap, sampler2D specMap)
 {
 	float diff = max(dot(inNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
-	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
+	vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
 
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 	vec3 reflectDir = reflect(light.direction.xyz, inNormal.xyz);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
-	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
+	vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
 
 	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
 }
 
-vec4 CalcPointLight(PointLight light)
+vec4 CalcPointLight(PointLight light, sampler2D diffMap, sampler2D specMap)
 {
 	// Point Light
 	vec3 normal = normalize(light.position - inPosition).xyz;
 	float diff = max(dot(inNormal.xyz, normal), 0.0f);
-	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
+	vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
 
 	vec3 lightDir = normalize(light.position - inPosition).xyz;
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 	vec3 halfwayDir = normalize(lightDir + viewDir);
 	float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
-	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
+	vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
 
 	float distance = length(light.position - inPosition);
 	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
@@ -154,7 +186,7 @@ vec4 CalcPointLight(PointLight light)
 	return diffuseLight + vec4(specularLight, 1.0f);
 }
 
-vec4 CalcSpotLight(SpotLight light)
+vec4 CalcSpotLight(SpotLight light, sampler2D diffMap, sampler2D specMap)
 {
 	float theta = dot(normalize(light.position - inPosition), -light.direction);
 	float epsilon = light.cutoff - light.outerCutoff;
@@ -166,13 +198,13 @@ vec4 CalcSpotLight(SpotLight light)
 	{
 		vec3 normal = normalize(light.position - inPosition).xyz;
 		float diff = max(dot(inNormal.xyz, normalize(light.position - inPosition).xyz), 0.0f);
-		vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
+		vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
 
 		vec3 lightDir = normalize(light.position - inPosition).xyz;
 		vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 		vec3 halfwayDir = normalize(lightDir + viewDir);
 		float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
-		vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
+		vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
 
 		float distance = length(light.position - inPosition);
 		float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  

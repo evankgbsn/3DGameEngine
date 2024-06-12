@@ -10,6 +10,7 @@
 #include "GOTexturedAnimatedLit.h"
 #include "GOLineColored.h"
 #include "GOGlyph.h"
+#include "GOTerrain.h"
 #include "../Font/FontManager.h"
 #include "../../Utils/Logger.h"
 #include "../Shader/ShaderManager.h"
@@ -171,7 +172,24 @@ GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const m
 	}
 	else
 	{
-		Logger::Log("Calling GraphicsObjectManager::CreateGO3DColored() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+		Logger::Log("Calling GraphicsObjectManager::CreateGO3DTexturedLit() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
+GOTerrain* const GraphicsObjectManager::CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials)
+{
+	GOTerrain* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects3D.push_back(result = new GOTerrain(model, materials));
+		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGOTerrain() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
 	}
 
 	return result;

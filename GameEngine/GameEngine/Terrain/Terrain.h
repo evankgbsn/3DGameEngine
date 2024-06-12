@@ -7,7 +7,7 @@
 #include "glm/vec2.hpp"
 #include <list>
 
-class GOTexturedLit;
+class GOTerrain;
 
 class Terrain
 {
@@ -57,7 +57,7 @@ public:
 
 private:
 
-	GOTexturedLit* terrainGraphics;
+	GOTerrain* terrainGraphics;
 
 	class Model* terrainModel;
 

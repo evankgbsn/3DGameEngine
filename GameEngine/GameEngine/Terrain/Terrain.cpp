@@ -3,7 +3,7 @@
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
 #include "../Renderer/GraphicsObjects/GraphicsobjectManager.h"
-#include "../Renderer/GraphicsObjects/GOTexturedLit.h"
+#include "../Renderer/GraphicsObjects/GOTerrain.h"
 #include "../Renderer/Texture/TextureManager.h"
 #include "../Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "../Math/Math.h"
@@ -26,7 +26,12 @@ Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const s
 	ModelManager::CreateModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
 	terrainModel = ModelManager::GetModel(name);
 
-	terrainGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(terrainModel, TextureManager::GetTexture(diffTextureName), TextureManager::GetTexture(specTextureName));
+	if (!TextureManager::TextureLoaded("Grass"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Grass.png", "Grass");
+	}
+
+	terrainGraphics = GraphicsObjectManager::CreateGOTerrain(terrainModel, std::vector<GOLit::Material>({ GOLit::Material(TextureManager::GetTexture(diffTextureName), TextureManager::GetTexture(specTextureName)), GOLit::Material(TextureManager::GetTexture("Grass"), TextureManager::GetTexture("Grass"))}));
 	terrainGraphics->SetShine(8.0f);
 	
 	for (unsigned int x = 0; x < tileX; x++)

@@ -11,9 +11,7 @@
 
 #include <GL/glew.h>
 
-
-
-GOLit::GOLit(Texture* const diffueseMap, Texture* const specularMap) :
+GOLit::GOLit(const std::vector<Material>& mats) :
 	directionalLight(),
 	pointLight(),
 	ambient(),
@@ -24,8 +22,7 @@ GOLit::GOLit(Texture* const diffueseMap, Texture* const specularMap) :
 	ambientBuffer(),
 	viewPositionBuffer(),
 	materialBuffer(),
-	specular(specularMap),
-	diffuse(diffueseMap)
+	materials(mats)
 {
 	glCreateBuffers(1, &directionalLightBuffer);
 	glNamedBufferStorage(directionalLightBuffer, sizeof(directionalLight), &directionalLight, GL_DYNAMIC_STORAGE_BIT);
@@ -58,8 +55,13 @@ GOLit::~GOLit()
 
 void GOLit::UpdateLighting()
 {
-	diffuse->Bind(GL_TEXTURE0);
-	specular->Bind(GL_TEXTURE1);
+	unsigned int textureSlotId = GL_TEXTURE0;
+
+	for (const Material& mat : materials)
+	{
+		mat.diffuseMap->Bind(textureSlotId++);
+		mat.specularMap->Bind(textureSlotId++);
+	}
 
 	ambient.ambient = glm::vec4(1.0f) * LightManager::GetAmbientIntensity();
 
@@ -85,7 +87,6 @@ void GOLit::UpdateLighting()
 		pointLight[i].lightOn = true;
 		i++;
 	}
-	
 
 	i = 0;
 	std::vector<SpotLight*> spotLights = LightManager::GetSpotLights(cam.GetPosition(), 15.0f, 20);

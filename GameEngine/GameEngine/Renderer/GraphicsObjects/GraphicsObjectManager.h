@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include "GOLit.h"
+
 #include <vector>
 
 class Model;
@@ -19,6 +21,7 @@ class GOTexturedLit;
 class GOTexturedAnimatedLit;
 class GOLineColored;
 class GOGlyph;
+class GOTerrain;
 
 
 class GraphicsObjectManager
@@ -34,6 +37,8 @@ public:
 	static GOTexturedAnimated* const CreateGO3DTexturedAnimated(Model* const model, Texture* const texture);
 
 	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
+
+	static GOTerrain* const CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials);
 
 	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 

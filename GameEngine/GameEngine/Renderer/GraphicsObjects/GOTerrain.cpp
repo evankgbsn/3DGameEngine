@@ -1,35 +1,26 @@
-#include "GOTexturedAnimatedLit.h"
-
+#include "GOTerrain.h"
 #include "../Shader/ShaderManager.h"
+#include "../Camera/CameraManager.h"
 #include "../Light/LightManager.h"
 #include "../Light/DirectionalLight.h"
-#include "../Light/PointLight.h"
-#include "../Texture/Texture.h"
 #include "../Model/Model.h"
-#include "../Animation/Animation.h"
-#include "../Animation/Armature.h"
-#include "../Camera/Camera.h"
-#include "../Camera/CameraManager.h"
 
-#include <GL/glew.h>
-
-GOTexturedAnimatedLit::GOTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap) :
-	GOLit(std::vector<Material>({ Material(diffuseMap, specularMap) })),
-	GO3DAnimated(model)
+GOTerrain::GOTerrain(Model* const model, const std::vector<Material>& textures) :
+	GOLit(textures),
+	GO3D(model)
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
 	glNamedBufferStorage(lightSpaceMatrixBuffer, sizeof(glm::mat4), nullptr, GL_DYNAMIC_STORAGE_BIT);
 }
 
-GOTexturedAnimatedLit::~GOTexturedAnimatedLit()
+GOTerrain::~GOTerrain()
 {
 	glDeleteBuffers(1, &lightSpaceMatrixBuffer);
 }
 
-void GOTexturedAnimatedLit::Update()
+void GOTerrain::Update()
 {
-	ShaderManager::StartShaderUsage("TexturedAnimatedLit");
-
+	ShaderManager::StartShaderUsage("Terrain");
 
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
@@ -40,6 +31,7 @@ void GOTexturedAnimatedLit::Update()
 	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
 	position.y = 10.0f;
 	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -49,7 +41,7 @@ void GOTexturedAnimatedLit::Update()
 
 	mvp.view = lightView;
 	mvp.projection = lightProjection;
-	//mvp.model = translation * rotation * scale;
+	mvp.model = translation * rotation * scale;
 
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
@@ -57,15 +49,14 @@ void GOTexturedAnimatedLit::Update()
 	glNamedBufferSubData(lightSpaceMatrixBuffer, 0, sizeof(glm::mat4), &lightSpaceMatrix);
 
 	GOLit::UpdateLighting();
-	GO3DAnimated::Update();
 	GO3D::Update();
 
-	ShaderManager::EndShaderUsage("TexturedAnimatedLit");
+	ShaderManager::EndShaderUsage("Terrain");
 }
 
-void GOTexturedAnimatedLit::RenderToShadowMap()
+void GOTerrain::RenderToShadowMap()
 {
-	ShaderManager::StartShaderUsage("AnimatedShadowMap");
+	ShaderManager::StartShaderUsage("ShadowMap");
 
 	float near_plane = -100.0f, far_plane = 100.0f;
 	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
@@ -73,6 +64,7 @@ void GOTexturedAnimatedLit::RenderToShadowMap()
 	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
 	position.y = 10.0f;
 	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -89,11 +81,8 @@ void GOTexturedAnimatedLit::RenderToShadowMap()
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, mvpBuffer);
 	glNamedBufferSubData(mvpBuffer, 0, sizeof(MVP), &mvp);
 
-	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
-	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
-
 	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)drawMode);
 	glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 
-	ShaderManager::EndShaderUsage("AnimatedShadowMap");
+	ShaderManager::EndShaderUsage("ShadowMap");
 }

@@ -68,7 +68,7 @@ layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
 layout(binding = 0) uniform sampler2D diffuseSampler;
 layout(binding = 1) uniform sampler2D specularSampler;
-layout(binding = 2) uniform sampler2D shadowMap;
+layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
 // Data Sent from Vertex Shader

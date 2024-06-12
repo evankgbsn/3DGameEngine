@@ -33,6 +33,8 @@ private:
 
 	friend class GOTexturedAnimatedLit;
 
+	friend class GOTerrain;
+
 	friend class PointLight;
 
 	friend class Renderer;

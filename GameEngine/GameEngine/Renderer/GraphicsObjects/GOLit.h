@@ -2,6 +2,7 @@
 #define GOLIT_H
 
 #include <glm/glm.hpp>
+#include <vector>
 
 class Texture;
 
@@ -9,13 +10,26 @@ class GOLit
 {
 public:
 
+	struct Material
+	{
+		Material(Texture* const diff, Texture* const spec) :
+			diffuseMap(diff),
+			specularMap(spec)
+		{
+
+		};
+
+		Texture* const diffuseMap;
+		Texture* const specularMap;
+	};
+
 	virtual ~GOLit();
 
 	void SetShine(float shine);
 
 protected:
 
-	GOLit(Texture* const diffueseMap, Texture* const specularMap);
+	GOLit(const std::vector<Material>& materials);
 
 	GOLit(const GOLit&) = delete;
 
@@ -87,9 +101,7 @@ private:
 
 	unsigned int materialBuffer;
 
-	Texture* specular;
-
-	Texture* diffuse;
+	std::vector<Material> materials;
 };
 
 #endif // GOLIT_H

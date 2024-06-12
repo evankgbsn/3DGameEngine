@@ -10,7 +10,7 @@
 #include "../Camera/CameraManager.h"
 
 GOTexturedLit::GOTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap) :
-	GOLit(diffuseMap, specularMap),
+	GOLit(std::vector<Material>( {Material(diffuseMap, specularMap)})),
 	GO3D(model)
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
@@ -26,7 +26,7 @@ void GOTexturedLit::Update()
 {
 	ShaderManager::StartShaderUsage("TexturedLit");
 
-	glActiveTexture(GL_TEXTURE2);
+	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
 	float near_plane = -100.0f, far_plane = 100.0f;

@@ -336,8 +336,11 @@
     <ClCompile Include="Terrain\Terrain.cpp">
       <Filter>Source Files\Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTerrain.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
     <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -605,6 +608,9 @@
     <ClInclude Include="Collision\AxisAlignedBoundingBoxWithVisualization.h">
       <Filter>Source Files\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTerrain.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -668,6 +674,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\Font.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Terrain.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Terrain.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

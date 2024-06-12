@@ -20,6 +20,9 @@
 #include "GameEngine/Terrain/Terrain.h"
 #include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "GameEngine/Math/Shapes/Ray.h"
+#include "GameEngine/Utils/Logger.h"
+
+#include <glm/gtc/matrix_access.hpp>
 
 
 Character::Character() :
@@ -82,7 +85,6 @@ Character::Character() :
 			x = invView * x;
 			x /= x.w;
 
-			GraphicsObjectManager::CreateGOLineColored(cam.GetPosition(), x, { 0.0f, 0.0f, 1.0f, 1.0f });
 			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), glm::vec3(x));
 
 			Ray rayFromScreenToWorld(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
@@ -95,21 +97,25 @@ Character::Character() :
 			{
 				for (AxisAlignedBoundingBoxWithVisualization* aabb : boxArray)
 				{
-					if (aabb->RayIntersect(rayFromScreenToWorld) != -1.0f)
+					if (aabb->LineIntersect(lineFromScreenToWorld))
 					{
 						targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
 						
 						glm::vec3 translation = graphics->GetTranslation();
 
-						glm::vec4 normalToTarget = -glm::vec4(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)), 0.0f);
+						glm::vec3 forward = glm::normalize(glm::vec3(graphics->GetRotation()[2]));
+						glm::vec3 toTarget = -glm::normalize(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)));
+						glm::vec3 right = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), toTarget);
 
-
-						glm::mat4 rotation = graphics->GetRotation();
-						rotation[2] = normalToTarget;
+						glm::mat4 rotation(
+							glm::vec4(glm::normalize(right), 0.0f),
+							glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
+							glm::vec4(toTarget, 0.0f),
+							graphics->GetRotation()[3]
+						);
 
 						graphics->SetRotation(rotation);
 
-						aabb->ToggleVisibility();
 						count++;
 					}
 				}
@@ -166,7 +172,7 @@ void Character::Initialize()
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
 
-	collider = new AnimatedCollider(graphics);
+	//collider = new AnimatedCollider(graphics);
 
 	graphics2 = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("Random"));
 	graphics2->SetShine(32.0f);
@@ -174,7 +180,7 @@ void Character::Initialize()
 	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
 	
 
-	collider2 = new AnimatedCollider(graphics2);
+	//collider2 = new AnimatedCollider(graphics2);
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
@@ -190,7 +196,10 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "RockGround", "Random", 1000, 1000, 250, 250, 15, -3);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "RockGround", "RockGround", 1000, 1000, 400, 400, 30, -30);
+
+	treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
+	graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
 }
 
 void Character::Terminate()
@@ -217,6 +226,7 @@ void Character::Update()
 	if (graphics->GetTranslation() != targetPosition)
 	{
 		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
+		graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 	}
 
 	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
@@ -227,9 +237,9 @@ void Character::Update()
 
 	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
-	collider->Update();
-	collider->Intersect(*obb);
-	collider2->Update();
+	//collider->Update();
+	//collider->Intersect(*obb);
+	//collider2->Update();
 
 	treeCollider->Update();
 
@@ -254,12 +264,12 @@ void Character::Update()
 
 	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
 
-	collider->Intersect(lineFromScreenToWorld);
+	//collider->Intersect(lineFromScreenToWorld);
 
 
-	collider->Intersect(*treeCollider);
+	//collider->Intersect(*treeCollider);
 
-	collider->Intersect(*collider2);
+	//collider->Intersect(*collider2);
 }
 
 void Character::Load()

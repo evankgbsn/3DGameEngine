@@ -223,6 +223,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\GraphicsObjects\GOGlyph.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOTerrain.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.cpp" />
@@ -311,6 +312,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\GraphicsObjects\GOGlyph.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLit.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOTerrain.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.h" />
@@ -353,6 +355,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\PointLightShadow.vert" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.frag" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.vert" />
+    <None Include="Renderer\Shader\GLSL\Terrain.frag" />
+    <None Include="Renderer\Shader\GLSL\Terrain.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedLit.frag" />
