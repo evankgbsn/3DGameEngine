@@ -68,7 +68,7 @@ layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
 layout(binding = 0) uniform sampler2D diffuseSampler;
 layout(binding = 1) uniform sampler2D specularSampler;
-layout(binding = 2) uniform sampler2D shadowMap;
+layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
 // Data Sent from Vertex Shader
@@ -90,6 +90,7 @@ vec4 CalcDirectionalLight(DirectionalLight light);
 vec4 CalcPointLight(PointLight light);
 vec4 CalcSpotLight(SpotLight light);
 float CalcShadow();
+float CalcPointShadow();
 
 void main(void)
 {
@@ -205,6 +206,21 @@ float CalcShadow()
 
 	// check whether current frag pos is in shadow
 	float bias =0.000005f; //max(0.05 * (1.0 - dot(inNormal, directionalLight.light[0].direction)), 0.005); 
-	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+	//float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+
+
+
+	float shadow = 0.0;
+	vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+	for(int x = -1; x <= 1; ++x)
+	{
+	    for(int y = -1; y <= 1; ++y)
+	    {
+	        float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+	        shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
+	    }    
+	}
+	shadow /= 9.0;
 	return shadow;
+
 }

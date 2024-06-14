@@ -68,6 +68,7 @@ layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
 layout(binding = 0) uniform sampler2D diffuseSampler;
 layout(binding = 1) uniform sampler2D specularSampler;
+layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
 // Data Sent from Vertex Shader
@@ -76,6 +77,7 @@ layout(binding = 1) uniform sampler2D specularSampler;
 layout(location = 5) in vec2 inUV;
 layout(location = 6) in vec4 inNormal;
 layout(location = 7) in vec4 inPosition;
+layout(location = 8) in vec4 inLightSpacePosition;
 
 //--------------------------------------------------
 // Final Color Sent to Rasterizer
@@ -87,6 +89,7 @@ vec4 CalcAmbientLight(Ambient light);
 vec4 CalcDirectionalLight(DirectionalLight light);
 vec4 CalcPointLight(PointLight light);
 vec4 CalcSpotLight(SpotLight light);
+float CalcShadow();
 
 void main(void)
 {
@@ -126,7 +129,7 @@ vec4 CalcDirectionalLight(DirectionalLight light)
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
 	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
-	return diffuseLight + vec4(specularLight, 1.0f);
+	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
 }
 
 vec4 CalcPointLight(PointLight light)
@@ -184,4 +187,39 @@ vec4 CalcSpotLight(SpotLight light)
 	}
 
 	return lightColor;
+}
+
+float CalcShadow()
+{
+	// perform perspective divide
+	vec3 projCoords = inLightSpacePosition.xyz / inLightSpacePosition.w;
+	
+	// transform to [0,1] range
+	projCoords = projCoords * 0.5 + 0.5;
+	
+	// get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+	float closestDepth = texture(shadowMap, projCoords.xy).r;
+
+	// get depth of current fragment from light's perspective
+	float currentDepth = projCoords.z;
+
+	// check whether current frag pos is in shadow
+	float bias =0.000005f; //max(0.05 * (1.0 - dot(inNormal, directionalLight.light[0].direction)), 0.005); 
+	//float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+
+
+
+	float shadow = 0.0;
+	vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+	for(int x = -1; x <= 1; ++x)
+	{
+	    for(int y = -1; y <= 1; ++y)
+	    {
+	        float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+	        shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;        
+	    }    
+	}
+	shadow /= 9.0;
+	return shadow;
+
 }

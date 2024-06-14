@@ -233,9 +233,9 @@ void Character::Update()
 
 	Camera& cam = CameraManager::GetActiveCamera();
 
-	cam.SetPosition(graphics->GetTranslation() + camPosition);
+	//cam.SetPosition(graphics->GetTranslation() + camPosition);
 
-	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
+	//cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
 	//collider->Update();
 	//collider->Intersect(*obb);
