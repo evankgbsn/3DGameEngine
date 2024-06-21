@@ -161,7 +161,7 @@ void Character::Initialize()
 {
 	Text* text = new Text("This is test text", "arial");
 
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
@@ -172,7 +172,7 @@ void Character::Initialize()
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
 
-	//collider = new AnimatedCollider(graphics);
+	collider = new AnimatedCollider(graphics);
 
 	graphics2 = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("Random"));
 	graphics2->SetShine(32.0f);
@@ -180,14 +180,14 @@ void Character::Initialize()
 	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
 	
 
-	//collider2 = new AnimatedCollider(graphics2);
+	collider2 = new AnimatedCollider(graphics2);
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, forward, "walk");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
+	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, forward, "walk");
+	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
+	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
+	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
 
@@ -196,7 +196,7 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "RockGround", "RockGround", 1000, 1000, 400, 400, 30, -30);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 1000, 1000, 400, 400, 30, -30);
 
 	treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
 	graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
@@ -206,10 +206,10 @@ void Character::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "CastLineFromCamera");
-	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "walk");
-	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
-	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
-	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "walk");
+	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "walk");
+	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
+	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
+	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_H, "CameraMove");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_K, "CameraMove");
 
@@ -237,9 +237,9 @@ void Character::Update()
 
 	//cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
-	//collider->Update();
-	//collider->Intersect(*obb);
-	//collider2->Update();
+	collider->Update();
+	collider->Intersect(*obb);
+	collider2->Update();
 
 	treeCollider->Update();
 
@@ -264,16 +264,21 @@ void Character::Update()
 
 	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
 
-	//collider->Intersect(lineFromScreenToWorld);
+	collider->Intersect(lineFromScreenToWorld);
 
 
-	//collider->Intersect(*treeCollider);
+	collider->Intersect(*treeCollider);
 
-	//collider->Intersect(*collider2);
+	collider->Intersect(*collider2);
 }
 
 void Character::Load()
 {
+	if (!TextureManager::TextureLoaded("Green"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/OIP.jpg", "Green");
+	}
+
 	if (!TextureManager::TextureLoaded("RockGround"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/RockGround.png", "RockGround");

@@ -5,6 +5,7 @@
 #include "Sphere.h"
 #include "../SAT/Interval3D.h"
 #include "OrientedBoundingBox.h"
+#include "../Math.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -166,6 +167,37 @@ bool Triangle::TriangleIntersect(const Triangle& other) const
 		glm::cross(t2_f2, t1_f2)
 	};
 	
+	for (unsigned int i = 0; i < 11; ++i)
+	{
+		if (!OverlapOnAxis(other, axisToTest[i]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Triangle::TriangleIntersectRobust(const Triangle& other) const
+{
+	glm::vec3 axisToTest[11] =
+	{
+		Math::SatCrossEdge(point0, point1, point1, point2),
+		Math::SatCrossEdge(other.point0, other.point1, other.point1, other.point2),
+
+		Math::SatCrossEdge(other.point0, other.point1, point0, point1),
+		Math::SatCrossEdge(other.point0, other.point1, point1, point2),
+		Math::SatCrossEdge(other.point0, other.point1, point2, point0),
+
+		Math::SatCrossEdge(other.point1, other.point2, point0, point1),
+		Math::SatCrossEdge(other.point1, other.point2, point1, point2),
+		Math::SatCrossEdge(other.point1, other.point2, point2, point0),
+
+		Math::SatCrossEdge(other.point2, other.point0, point0, point1),
+		Math::SatCrossEdge(other.point2, other.point0, point1, point2),
+		Math::SatCrossEdge(other.point2, other.point0, point2, point0)
+	};
+
 	for (unsigned int i = 0; i < 11; ++i)
 	{
 		if (!OverlapOnAxis(other, axisToTest[i]))

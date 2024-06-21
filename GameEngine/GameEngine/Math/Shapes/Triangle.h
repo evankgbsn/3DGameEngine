@@ -38,6 +38,8 @@ public:
 
 	bool TriangleIntersect(const Triangle& other) const;
 
+	bool TriangleIntersectRobust(const Triangle& other) const;
+
 private:
 
 	bool OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const;

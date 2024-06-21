@@ -118,3 +118,33 @@ Math::BarycentricRelation Math::CreateBarycentricRelation(Math::Tri triPoints, g
 
 	return br;
 }
+
+glm::vec3 Math::SatCrossEdge(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c, const glm::vec3& const d)
+{
+	// A - Edge / Triangle 0, Point 0
+	// B - Edge / Triangle 0, Point 1
+	// C - Edge / Triangle 1, Point 0
+	// D - Edge / Triangle 1, Point 1
+
+	glm::vec3 ab = a - b;
+	glm::vec3 cd = c - d;
+	glm::vec3 result = glm::cross(ab, cd);
+
+	float magsq = glm::dot(result, result);
+
+	if (!(magsq < 0.00001f && magsq > -0.00001f))
+	{
+		return result; // Not parallel
+	}
+	else
+	{
+		glm::vec3 axis = glm::cross(ab, c - a);
+		result = glm::cross(ab, axis);
+
+		if (!(magsq < 0.00001f && magsq > -0.00001f))
+		{
+			return result; // Not Parallel
+		}
+	}
+	return glm::vec3();
+}

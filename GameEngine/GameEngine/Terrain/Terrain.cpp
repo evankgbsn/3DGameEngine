@@ -28,7 +28,7 @@ Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const s
 
 	if (!TextureManager::TextureLoaded("Grass"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Grass.png", "Grass");
+		TextureManager::LoadTexture("Assets/Texture/Green.png", "Grass");
 	}
 
 	terrainGraphics = GraphicsObjectManager::CreateGOTerrain(terrainModel, std::vector<GOLit::Material>({ GOLit::Material(TextureManager::GetTexture(diffTextureName), TextureManager::GetTexture(specTextureName)), GOLit::Material(TextureManager::GetTexture("Grass"), TextureManager::GetTexture("Grass"))}));

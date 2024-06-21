@@ -267,7 +267,7 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 													other.meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[1], other.meshColliderVisualization) * glm::vec4(otherTriangleVerts[1].GetPosition(), 1.0f),
 													other.meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[2], other.meshColliderVisualization) * glm::vec4(otherTriangleVerts[2].GetPosition(), 1.0f));
 
-												if (t1.TriangleIntersect(t2))
+												if (t1.TriangleIntersectRobust(t2))
 												{
 													intersect = true;
 													meshColliderVisualization->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));

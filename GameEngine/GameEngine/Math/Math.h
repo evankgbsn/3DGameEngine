@@ -48,6 +48,8 @@ namespace Math
 	};
 
 	BarycentricRelation CreateBarycentricRelation(Tri triPoints, glm::vec3 point, float scale, bool sign);
+
+	glm::vec3 SatCrossEdge(const glm::vec3& a, const glm::vec3& b, const glm::vec3& c, const glm::vec3& d);
 };
 
 #endif // MATH_H
