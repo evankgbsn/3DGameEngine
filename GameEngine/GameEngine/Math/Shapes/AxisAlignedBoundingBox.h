@@ -45,6 +45,12 @@ public:
 
 	bool LineIntersect(const LineSegment3D& line) const;
 
+protected:
+
+	glm::vec3 origin;
+
+	glm::vec3 size;
+
 private:
 
 	bool OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const;
@@ -57,9 +63,7 @@ private:
 
 	AxisAlignedBoundingBox& operator=(AxisAlignedBoundingBox&&) = delete;
 
-	glm::vec3 origin;
-
-	glm::vec3 size;
+	
 
 };
 

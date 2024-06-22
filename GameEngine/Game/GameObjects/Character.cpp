@@ -161,12 +161,11 @@ void Character::Initialize()
 {
 	Text* text = new Text("This is test text", "arial");
 
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
 
-	treeCollider = new StaticCollider(treeGraphics);
 
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
@@ -191,7 +190,7 @@ void Character::Initialize()
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
 
-	obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
+	//obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
@@ -199,6 +198,7 @@ void Character::Initialize()
 	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 1000, 1000, 400, 400, 30, -30);
 
 	treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
+	treeCollider = new StaticCollider(treeGraphics);
 	graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
 }
 
@@ -215,7 +215,7 @@ void Character::Terminate()
 
 	delete collider;
 	delete collider2;
-	delete obb;
+	//delete obb;
 
 	GraphicsObjectManager::Delete(graphics);
 	GraphicsObjectManager::Delete(graphics2);
@@ -233,12 +233,12 @@ void Character::Update()
 
 	Camera& cam = CameraManager::GetActiveCamera();
 
-	//cam.SetPosition(graphics->GetTranslation() + camPosition);
+	cam.SetPosition(graphics->GetTranslation() + camPosition);
 
-	//cam.SetTarget(graphics->GetTranslation() + cameraTarget);
+	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
 	collider->Update();
-	collider->Intersect(*obb);
+	//collider->Intersect(*obb);
 	collider2->Update();
 
 	treeCollider->Update();
@@ -266,7 +266,7 @@ void Character::Update()
 
 	Ray ray(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
 
-	collider->Intersect(ray);
+	collider->Intersect(lineFromScreenToWorld);
 
 
 	collider->Intersect(*treeCollider);

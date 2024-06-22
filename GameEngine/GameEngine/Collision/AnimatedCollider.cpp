@@ -177,27 +177,71 @@ bool AnimatedCollider::Intersect(const OrientedBoundingBox& other) const
 
 bool AnimatedCollider::Intersect(const LineSegment3D& other) const
 {
-
 	bool intersect = false;
-	for (const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb : obbs)
-	{
-		if (obb.first != nullptr)
-		{
-			if (obb.first->LineIntersect(other))
-			{
-				obb.first->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-				intersect = true;
-			}
-			else
-			{
-				obb.first->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-			}
 
-		}
+	std::for_each(std::execution::par, obbs.begin(), obbs.end(),
+		[this, &other, &intersect](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+		{
+			if (obb.first != nullptr)
+			{
+				if (obb.first->LineIntersect(other))
+				{
+					const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
+
+					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect](const std::vector<Vertex>& triangleVerts)
+						{
+							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
+								{
+									const glm::ivec4& influences = vert.GetInfluences();
+
+									const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
+									glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
+									glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
+									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
+									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
+
+									const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+									glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
+									glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
+									glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
+									glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
+
+									const glm::vec4& weights = vert.GetWeights();
+
+									glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
+									skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
+									skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
+									skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+
+									return skin;
+								};
+
+							Triangle t1(
+								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+
+							if (t1.LineIntersect(other))
+							{
+								intersect = true;
+
+							}
+
+						});
+				}
+			}
+		});
+
+	if (intersect)
+	{
+		meshColliderVisualization->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	}
+	else
+	{
+		meshColliderVisualization->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	}
 
 	return intersect;
-	return false;
 }
 
 bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
@@ -475,14 +519,14 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 			}
 		});
 
-	if (intersect)
-	{
-		meshColliderVisualization->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	}
-	else
-	{
-		meshColliderVisualization->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	}
+	//if (intersect)
+	//{
+	//	meshColliderVisualization->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	//}
+	//else
+	//{
+	//	meshColliderVisualization->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	//}
 
 	return intersect;
 }

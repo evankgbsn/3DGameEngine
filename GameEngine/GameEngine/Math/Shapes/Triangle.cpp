@@ -210,6 +210,15 @@ bool Triangle::TriangleIntersectRobust(const Triangle& other) const
 	return true;
 }
 
+bool Triangle::LineIntersect(const LineSegment3D& line) const
+{
+	Ray ray(line.GetStart(), glm::normalize(line.GetEnd() - line.GetStart()));
+
+	float t = Raycast(ray);
+
+	return t >= 0.0f && t * t <= line.GetLengthSq();
+}
+
 glm::vec3 Triangle::Barycentric(const glm::vec3& p) const
 {
 	const glm::vec3 ap = p - point0;
@@ -239,7 +248,7 @@ glm::vec3 Triangle::Barycentric(const glm::vec3& p) const
 	return glm::vec3(a, b, c);
 }
 
-float Triangle::Raycast(const Ray& ray)
+float Triangle::Raycast(const Ray& ray) const
 {
 	Plane plane = ConstructPlane();
 

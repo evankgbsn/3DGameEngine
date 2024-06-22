@@ -9,11 +9,13 @@ class AxisAlignedBoundingBoxWithVisualization : public AxisAlignedBoundingBox
 {
 public:
 
-	AxisAlignedBoundingBoxWithVisualization(const glm::vec3& initialMin, const glm::vec3& initialMax);
+	AxisAlignedBoundingBoxWithVisualization(const glm::vec3& initialMin = { 0.0f, 0.0f, 0.0f }, const glm::vec3& initialMax = {1.0f, 1.0f, 1.0f});
+
+	void FromOriginAndSize(const glm::vec3& o, const glm::vec3& s);
 
 	~AxisAlignedBoundingBoxWithVisualization();
 
-	void Update(const glm::vec3& newOrigin);
+	void Update();
 
 	void ToggleVisibility();
 

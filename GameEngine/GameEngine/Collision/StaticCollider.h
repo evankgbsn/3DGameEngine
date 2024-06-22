@@ -2,6 +2,7 @@
 #define STATICCOLLIDER_H
 
 #include "Collider.h"
+#include "AxisAlignedBoundingBoxWithVisualization.h"
 
 #include <glm/glm.hpp>
 
@@ -9,7 +10,7 @@ class GO3D;
 class AnimatedCollider;
 class OrientedBoundingBoxWithVisualization;
 class OrientedBoundingBox;
-class AxisAllignedBoundingBox;
+class AxisAlignedBoundingBoxWithVisualization;
 class SphereWithVisualization;
 class LineSegment3D;
 class GOColored;
@@ -43,6 +44,20 @@ public:
 
 private:
 
+	struct BVHNode
+	{
+		BVHNode() :
+			children(nullptr),
+			numTriangles(0),
+			triangles(nullptr)
+		{
+		};
+		AxisAlignedBoundingBoxWithVisualization bounds;
+		BVHNode* children;
+		int numTriangles;
+		int* triangles;
+	};
+
 	StaticCollider(const StaticCollider&) = delete;
 
 	StaticCollider& operator=(const StaticCollider&) = delete;
@@ -50,6 +65,14 @@ private:
 	StaticCollider(StaticCollider&&) = delete;
 
 	StaticCollider& operator=(StaticCollider&&) = delete;
+
+	void AccelerateMesh();
+
+	void SplitBVHNode(BVHNode* node, int depth);
+
+	void FreeBVHNode(BVHNode* node);
+
+	BVHNode* accelerator;
 
 	GO3D* wrapedGraphics;
 

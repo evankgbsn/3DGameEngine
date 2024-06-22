@@ -11,9 +11,21 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 	ToggleVisibility();
 }
 
+void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3& o, const glm::vec3& s)
+{
+	origin = o;
+	size = s;
+}
+
 AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualization()
 {
 	GraphicsObjectManager::Delete(graphics);
+}
+
+void AxisAlignedBoundingBoxWithVisualization::Update()
+{
+	graphics->SetScale(GetSize());
+	graphics->SetTranslation(GetOrigin());
 }
 
 void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()

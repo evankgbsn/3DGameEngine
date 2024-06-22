@@ -14,8 +14,8 @@ MainScene::MainScene() :
 	directionalLight(new DirectionalLightGameObject()),
 	character(new Character()),
 	////tree(new Tree()),
-	groundPlane(new LargePlane()),
-	cam(new FreeCamera())
+	groundPlane(new LargePlane())
+	//cam(new FreeCamera())
 {
 
 	loadSub = new std::function<void(int)>([](int keyCode)
@@ -33,7 +33,7 @@ MainScene::~MainScene()
 {
 	//delete unloadSub;
 	//delete loadSub;
-	delete cam;
+	//delete cam;
 	////delete spotLights;
 	delete directionalLight;
 	delete character;
@@ -48,7 +48,7 @@ void MainScene::Initialize()
 		SceneManager::UnloadScene("Sub");
 	}
 
-	RegisterGameObject(cam, "FreeCam");
+	//RegisterGameObject(cam, "FreeCam");
 	RegisterGameObject(directionalLight, "DirectionalLight");
 	RegisterGameObject(groundPlane, "Ground");
 	RegisterGameObject(character, "Character");
@@ -66,7 +66,7 @@ void MainScene::Terminate()
 
 	//DeregisterGameObject("Lights");
 	//DeregisterGameObject("Tree");
-	DeregisterGameObject("FreeCam");
+	//DeregisterGameObject("FreeCam");
 	DeregisterGameObject("DirectionalLight");
 	DeregisterGameObject("Ground");
 	DeregisterGameObject("Character");
