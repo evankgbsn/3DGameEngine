@@ -7,6 +7,7 @@ class Plane;
 class Sphere;
 class AxisAlignedBoundingBox;
 class OrientedBoundingBox;
+class Ray;
 
 class Triangle
 {
@@ -39,6 +40,10 @@ public:
 	bool TriangleIntersect(const Triangle& other) const;
 
 	bool TriangleIntersectRobust(const Triangle& other) const;
+
+	glm::vec3 Barycentric(const glm::vec3& p) const;
+
+	float Raycast(const Ray& ray);
 
 private:
 

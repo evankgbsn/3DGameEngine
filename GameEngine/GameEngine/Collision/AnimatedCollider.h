@@ -15,6 +15,7 @@ class OrientedBoundingBoxWithVisualization;
 class OrientedBoundingBox;
 class SphereWithVisualization;
 class LineSegment3D;
+class Ray;
 class Vertex;
 class Armature;
 class StaticCollider;
@@ -38,6 +39,8 @@ public:
 	bool Intersect(const AnimatedCollider& other) const;
 
 	bool Intersect(const StaticCollider& other) const;
+
+	bool Intersect(const Ray& other) const;
 
 	const SphereWithVisualization* const GetSphere() const;
 

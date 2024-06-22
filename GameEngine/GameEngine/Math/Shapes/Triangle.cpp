@@ -6,6 +6,7 @@
 #include "../SAT/Interval3D.h"
 #include "OrientedBoundingBox.h"
 #include "../Math.h"
+#include "Ray.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -207,6 +208,58 @@ bool Triangle::TriangleIntersectRobust(const Triangle& other) const
 	}
 
 	return true;
+}
+
+glm::vec3 Triangle::Barycentric(const glm::vec3& p) const
+{
+	const glm::vec3 ap = p - point0;
+	const glm::vec3 bp = p - point1;
+	const glm::vec3 cp = p - point2;
+
+	const glm::vec3 ab = point1 - point0;
+	const glm::vec3 ac = point2 - point0;
+	const glm::vec3 bc = point2 - point1;
+	const glm::vec3 cb = point1 - point2;
+	const glm::vec3 ca = point0 - point2;
+
+	auto proj = [](const glm::vec3& vec, const glm::vec3& w) -> glm::vec3
+		{
+			return ((glm::dot(vec, w) / glm::dot(w, w)) * w);
+		};
+
+	glm::vec3 v = ab - proj(ab, cb);
+	float a = 1.0f - (glm::dot(v, ap) / glm::dot(v, ab));
+
+	v = bc - proj(bc, ac);
+	float b = 1.0f - (glm::dot(v, bp) / glm::dot(v, bc));
+
+	v = ca - proj(ca, ab);
+	float c = 1.0f - (glm::dot(v, cp) / glm::dot(v, ca));
+
+	return glm::vec3(a, b, c);
+}
+
+float Triangle::Raycast(const Ray& ray)
+{
+	Plane plane = ConstructPlane();
+
+	float t = plane.RayIntersect(ray);
+	if (t < 0.0f)
+	{
+		return t;
+	}
+
+	const glm::vec3 result = ray.GetOrigin() + ray.GetDirection() * t;
+
+	glm::vec3 barycentric = Barycentric(result);
+	if (barycentric.x >= 0.0f && barycentric.x <= 1.0f &&
+		barycentric.y >= 0.0f && barycentric.y <= 1.0f &&
+		barycentric.z >= 0.0f && barycentric.z <= 1.0f)
+	{
+		return t;
+	}
+	
+	return -1;
 }
 
 bool Triangle::OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const

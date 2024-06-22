@@ -264,7 +264,9 @@ void Character::Update()
 
 	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
 
-	collider->Intersect(lineFromScreenToWorld);
+	Ray ray(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
+
+	collider->Intersect(ray);
 
 
 	collider->Intersect(*treeCollider);
