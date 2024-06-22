@@ -162,7 +162,7 @@ void Character::Initialize()
 	Text* text = new Text("This is test text", "arial");
 
 	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
-	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
+	treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
 

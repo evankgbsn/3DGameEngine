@@ -7,6 +7,7 @@
 #include "../Collision/SphereWithVisualization.h"
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
+#include "../Math/Shapes/Triangle.h"
 
 StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
@@ -24,6 +25,7 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 StaticCollider::~StaticCollider()
 {
 	GraphicsObjectManager::Delete(trianglesColliderVisualization);
+	FreeBVHNode(accelerator);
 }
 
 void StaticCollider::Update()
@@ -98,10 +100,10 @@ void StaticCollider::AccelerateMesh()
 	accelerator->bounds.FromMinAndMax(wrapedGraphics->GetTransform() * glm::vec4(min, 1.0f), wrapedGraphics->GetTransform() *glm::vec4( max, 1.0f));
 	accelerator->bounds.Update();
 	accelerator->bounds.ToggleVisibility();
-	accelerator->numTriangles = vertices.size() / 3;
+	accelerator->numTriangles = static_cast<int>(vertices.size()) / 3U;
 	accelerator->triangles = new int[accelerator->numTriangles]();
 
-	for (unsigned int i = 0; i < accelerator->numTriangles; ++i)
+	for (int i = 0; i < accelerator->numTriangles; ++i)
 	{
 		accelerator->triangles[i] = i;
 	}
@@ -154,9 +156,75 @@ void StaticCollider::SplitBVHNode(BVHNode* node, int depth)
 
 	if (node->children != 0 && node->numTriangles > 0)
 	{
+		const std::vector<Vertex> vertices = wrapedGraphics->GetModel()->GetVertices();
+		const std::vector<unsigned int> indices = wrapedGraphics->GetModel()->GetIndices();
+
+		std::vector<Triangle> triangles;
+
+		for (unsigned int i = 0; i < indices.size(); i += 3)
+		{
+			Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
+			triangles.push_back(t);
+		}
+
 		for (unsigned int i = 0; i < 8; ++i)
 		{
+			node->children[i].numTriangles = 0;
+			for (int j = 0; j < node->numTriangles; ++j)
+			{
+				const Triangle& t = triangles[node->triangles[j]];
 
+				if (t.AxisAlignedBoundingBoxIntersect(node->children[i].bounds))
+				{
+					node->children[i].numTriangles += 1;
+				}
+			}
+
+			if (node->children[i].numTriangles == 0)
+			{
+				continue;
+			}
+
+			node->children[i].triangles = new int[node->children[i].numTriangles];
+
+			int index = 0;
+			for (int j = 0; j < node->numTriangles; ++j)
+			{
+				const Triangle& t = triangles[node->triangles[j]];
+				if (t.AxisAlignedBoundingBoxIntersect(node->children[i].bounds))
+				{
+					node->children[i].triangles[index++] = node->triangles[j];
+				}
+			}
 		}
+
+		node->numTriangles = 0;
+		delete[] node->triangles;
+		node->triangles = 0;
+
+		for (int i = 0; i < 8; ++i)
+		{
+			SplitBVHNode(&node->children[i], depth);
+		}
+	}
+}
+
+void StaticCollider::FreeBVHNode(BVHNode* node)
+{
+	if (node->children != nullptr)
+	{
+		for (int i = 0; i < 8; ++i)
+		{
+			FreeBVHNode(&node->children[i]);
+		}
+		delete[] node->children;
+		node->children = 0;
+	}
+
+	if (node->numTriangles != 0 || node->triangles != nullptr)
+	{
+		delete[] node->triangles;
+		node->triangles = nullptr;
+		node->numTriangles = 0;
 	}
 }

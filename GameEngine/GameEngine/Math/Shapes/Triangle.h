@@ -15,6 +15,14 @@ class Triangle
 public:
 
 	Triangle(const glm::vec3& intitialPoint0, const glm::vec3& initialPoint1, const glm::vec3& intitialPoint2);
+	
+	Triangle(const Triangle&) = default;
+
+	Triangle& operator=(const Triangle&) = default;
+
+	Triangle(Triangle&&) = default;
+
+	Triangle& operator=(Triangle&&) = default;
 
 	~Triangle();
 
@@ -55,14 +63,6 @@ private:
 	bool OverlapOnAxis(const OrientedBoundingBox& obb, const glm::vec3& axis) const;
 
 	bool OverlapOnAxis(const Triangle& triangle, const glm::vec3& axis) const;
-
-	Triangle(const Triangle&) = delete;
-
-	Triangle& operator=(const Triangle&) = delete;
-
-	Triangle(Triangle&&) = delete;
-
-	Triangle& operator=(Triangle&&) = delete;
 
 	glm::vec3 point0;
 
