@@ -21,6 +21,7 @@
 #include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "GameEngine/Math/Shapes/Ray.h"
 #include "GameEngine/Utils/Logger.h"
+#include "GameEngine/Math/Shapes/Plane.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -161,8 +162,8 @@ void Character::Initialize()
 {
 	Text* text = new Text("This is test text", "arial");
 
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
-	treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
+	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
 
@@ -243,6 +244,7 @@ void Character::Update()
 
 	treeCollider->Update();
 
+
 	// Screen space to world space for object picking.
 	Window* window = WindowManager::GetWindow("Engine");
 	glm::vec2 cursorPos = window->GetCursorPosition();
@@ -264,7 +266,25 @@ void Character::Update()
 
 	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
 
-	Ray ray(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
+	const glm::vec3 normal = glm::normalize(glm::vec3(x) - cam.GetPosition());
+
+	Ray ray(cam.GetPosition(), normal);
+
+	Plane plane(glm::vec3(0.0f, 1.0f, 0.0f), treeGraphics->GetTranslation().y);
+
+	glm::vec3 planePoint = cam.GetPosition() + normal * plane.RayIntersect(ray);
+
+	//if (treeCollider->Intersect(ray) != -1)
+	//{
+
+	const glm::vec3 terrainPoint = terrain->GetTerrainPoint(planePoint);
+		
+		const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
+
+		treeCollider->Translate(-translation);
+
+		treeGraphics->SetTranslation(terrainPoint);
+	//};
 
 	collider->Intersect(lineFromScreenToWorld);
 

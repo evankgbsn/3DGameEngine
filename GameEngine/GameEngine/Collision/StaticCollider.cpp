@@ -8,6 +8,9 @@
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
 #include "../Math/Shapes/Triangle.h"
+#include "../Utils/Logger.h"
+
+#include <list>
 
 StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
@@ -25,6 +28,8 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 StaticCollider::~StaticCollider()
 {
 	GraphicsObjectManager::Delete(trianglesColliderVisualization);
+	delete obb;
+	delete boundingSphere;
 	FreeBVHNode(accelerator);
 }
 
@@ -54,6 +59,70 @@ bool StaticCollider::Intersect(const AnimatedCollider& other) const
 	return other.Intersect(*this);
 }
 
+float StaticCollider::Intersect(const Ray& ray) const
+{
+	const std::vector<Vertex> vertices = wrapedGraphics->GetModel()->GetVertices();
+	const std::vector<unsigned int> indices = wrapedGraphics->GetModel()->GetIndices();
+
+	std::vector<Triangle> triangles;
+
+	for (unsigned int i = 0; i < indices.size(); i += 3)
+	{
+		Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
+		triangles.push_back(t);
+	}
+
+	if (accelerator == nullptr)
+	{
+
+		for (int i = 0; i < triangles.size(); ++i)
+		{
+			float result = triangles[i].Raycast(ray);
+			if (result >= 0)
+			{
+				return result;
+			}
+		}
+	}
+	else
+	{
+		std::list<BVHNode*> toProcess;
+		toProcess.push_front(accelerator);
+
+		//Recursively walk the BVH tree.
+		while (!toProcess.empty())
+		{
+			BVHNode* iterator = *(toProcess.begin());
+			toProcess.erase(toProcess.begin());
+
+			if (iterator->numTriangles >= 0)
+			{
+				for (int i = 0; i < iterator->numTriangles; ++i)
+				{
+					float r = triangles[iterator->triangles[i]].Raycast(ray);
+					if (r >= 0)
+					{
+						return r;
+					}
+				}
+			}
+
+			if (iterator->children != 0)
+			{
+				for (int i = 8 - 1; i >= 0; --i)
+				{
+					if (iterator->children[i].bounds.RayIntersect(ray) >= 0)
+					{
+						toProcess.push_front(&iterator->children[i]);
+					}
+				}
+			}
+		}
+	}
+
+	return -1.0f;
+}
+
 const OrientedBoundingBoxWithVisualization* const StaticCollider::GetBox() const
 {
 	return obb;
@@ -72,6 +141,30 @@ const Model* const StaticCollider::GetModel() const
 glm::mat4 StaticCollider::GetTransform() const
 {
 	return wrapedGraphics->GetTransform();
+}
+
+void StaticCollider::Translate(const glm::vec3& translation)
+{
+	std::list<BVHNode*> toProcess;
+	toProcess.push_front(accelerator);
+
+	//Recursively walk the BVH tree.
+	while (!toProcess.empty())
+	{
+		BVHNode* iterator = *(toProcess.begin());
+		toProcess.erase(toProcess.begin());
+
+		iterator->bounds.FromOriginAndSize(iterator->bounds.GetOrigin() + translation, iterator->bounds.GetSize());
+		iterator->bounds.Update();
+
+		if (iterator->children != 0)
+		{
+			for (int i = 8 - 1; i >= 0; --i)
+			{
+				toProcess.push_front(&iterator->children[i]);
+			}
+		}
+	}
 }
 
 void StaticCollider::AccelerateMesh()

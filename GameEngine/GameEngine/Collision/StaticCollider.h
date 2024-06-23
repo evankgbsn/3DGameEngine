@@ -34,6 +34,8 @@ public:
 
 	bool Intersect(const AnimatedCollider& other) const;
 
+	float Intersect(const Ray& ray) const;
+
 	const OrientedBoundingBoxWithVisualization* const GetBox() const;
 
 	const SphereWithVisualization* const GetSphere() const;
@@ -41,6 +43,8 @@ public:
 	const Model* const GetModel() const;
 
 	glm::mat4 GetTransform() const;
+
+	void Translate(const glm::vec3& translation);
 
 private:
 
