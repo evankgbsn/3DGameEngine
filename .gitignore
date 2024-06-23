@@ -35,6 +35,7 @@
 !*glfw3.lib
 !*glew32s.lib
 !*glfw3_mt.lib
+!*freetype.lib
 
 #Ignore .vs folder and other generated folders
 *.vs
