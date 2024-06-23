@@ -13,6 +13,7 @@ class OrientedBoundingBoxWithVisualization;
 class GOTexturedLit;
 class StaticCollider;
 class Terrain;
+class GOTextured;
 
 class Character : public GameObject
 {
@@ -50,6 +51,8 @@ private:
 	GOTexturedLit* homeGraphics;
 
 	GOTexturedLit* treeGraphics;
+
+	GOTextured* skybox;
 
 	StaticCollider* treeCollider;
 

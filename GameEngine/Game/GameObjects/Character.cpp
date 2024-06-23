@@ -3,6 +3,7 @@
 #include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "GameEngine/Renderer/GraphicsObjects/GOTexturedAnimatedLit.h"
 #include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
+#include "GameEngine/Renderer/GraphicsObjects/GOTextured.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -178,6 +179,9 @@ void Character::Initialize()
 	graphics2->SetShine(32.0f);
 	graphics2->SetClip(3);
 	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
+
+	skybox = GraphicsObjectManager::Create3DGOTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
+	skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f });
 	
 
 	collider2 = new AnimatedCollider(graphics2);
@@ -194,7 +198,7 @@ void Character::Initialize()
 	//obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
-	camPosition = glm::vec3(0.0f, 15.0f, -10.0f);
+	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
 	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 1000, 1000, 400, 400, 30, -30);
 
