@@ -22,7 +22,9 @@ protected:
 
 	virtual void Terminate() = 0;
 
-	virtual void Update() = 0;
+	virtual void GameUpdate() = 0;
+
+	virtual void EditorUpdate() = 0;
 
 	virtual void Load() = 0;
 
@@ -31,6 +33,8 @@ protected:
 	void AddComponent(Component* component, const std::string name);
 
 	void RemoveComponent(const std::string& name);
+
+	Component* const GetComponent(const std::string& component) const;
 
 private:
 

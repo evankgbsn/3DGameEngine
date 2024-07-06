@@ -51,7 +51,7 @@ void Boxes::Terminate()
 	boxes.clear();
 }
 
-void Boxes::Update()
+void Boxes::GameUpdate()
 {
 	float rotationSpeed = 10.0f;
 
@@ -63,6 +63,10 @@ void Boxes::Update()
 		obbs[i]->Update(box->GetTransform());
 		i++;
 	}
+}
+
+void Boxes::EditorUpdate()
+{
 }
 
 void Boxes::Load()

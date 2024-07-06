@@ -3,7 +3,7 @@
 
 #include "../Math/Shapes/AxisAlignedBoundingBox.h"
 
-class GOColored;
+class GOColoredInstanced;
 
 class AxisAlignedBoundingBoxWithVisualization : public AxisAlignedBoundingBox
 {
@@ -35,7 +35,11 @@ private:
 
 	void CreateGraphics();
 
-	GOColored* graphics;
+	static GOColoredInstanced* graphics;
+
+	static unsigned int instanceIDGenerator;
+
+	unsigned int instanceID;
 
 
 };

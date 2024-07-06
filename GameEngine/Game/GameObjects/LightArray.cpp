@@ -37,7 +37,11 @@ void LightArray::Terminate()
 	LightManager::Delete(pointLight);
 }
 
-void LightArray::Update()
+void LightArray::GameUpdate()
+{
+}
+
+void LightArray::EditorUpdate()
 {
 }
 

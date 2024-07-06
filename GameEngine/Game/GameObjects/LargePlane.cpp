@@ -29,7 +29,11 @@ void LargePlane::Terminate()
 	GraphicsObjectManager::Delete(graphics);
 }
 
-void LargePlane::Update()
+void LargePlane::GameUpdate()
+{
+}
+
+void LargePlane::EditorUpdate()
 {
 }
 

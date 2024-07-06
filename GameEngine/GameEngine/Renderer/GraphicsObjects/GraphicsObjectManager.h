@@ -22,6 +22,7 @@ class GOTexturedAnimatedLit;
 class GOLineColored;
 class GOGlyph;
 class GOTerrain;
+class GOColoredInstanced;
 
 
 class GraphicsObjectManager
@@ -29,6 +30,8 @@ class GraphicsObjectManager
 public:
 
 	static GOColored* const CreateGO3DColored(Model* const model, const glm::vec4& initialColor);
+
+	static GOColoredInstanced* const CreateGO3DColoredInstanced(Model* const model, const glm::vec4& initialColor, unsigned int instanceCount);
 
 	static GOTextured* const Create3DGOTextured(Model* const model, Texture* const texture);
 

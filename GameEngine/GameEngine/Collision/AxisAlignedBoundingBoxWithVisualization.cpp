@@ -2,11 +2,30 @@
 
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
-#include "../Renderer/GraphicsObjects/GOCOlored.h"
+#include "../Renderer/GraphicsObjects/GOCOloredInstanced.h"
 
-AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization(const glm::vec3& initialMin, const glm::vec3& initialMax)
+unsigned int AxisAlignedBoundingBoxWithVisualization::instanceIDGenerator = 0;
+GOColoredInstanced* AxisAlignedBoundingBoxWithVisualization::graphics = nullptr;
+
+AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization(const glm::vec3& initialMin, const glm::vec3& initialMax) :
+	instanceID(instanceIDGenerator++)
 {
 	FromMinAndMax(initialMin, initialMax);
+
+	if (graphics == nullptr)
+	{
+		if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
+		{
+			ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
+		}
+
+		graphics = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("OrientedBoundingBox"), { 0.0f, 1.0f, 0.0f, 1.0f }, 1);
+	}
+	else
+	{
+		graphics->AddInstance();
+	}
+
 	CreateGraphics();
 	ToggleVisibility();
 }
@@ -19,13 +38,12 @@ void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3&
 
 AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualization()
 {
-	GraphicsObjectManager::Delete(graphics);
 }
 
 void AxisAlignedBoundingBoxWithVisualization::Update()
 {
-	graphics->SetScale(GetSize());
-	graphics->SetTranslation(GetOrigin());
+	graphics->SetScale(GetSize(), instanceID);
+	graphics->SetTranslation(GetOrigin(), instanceID);
 }
 
 void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
@@ -36,19 +54,22 @@ void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 	}
 	else
 	{
-		GraphicsObjectManager::Enable(graphics);
+		//GraphicsObjectManager::Enable(graphics);
 	}
+}
+
+void AxisAlignedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor)
+{
+	graphics->SetColor(newColor, instanceID);
+}
+
+const glm::vec4 AxisAlignedBoundingBoxWithVisualization::GetColor() const
+{
+	return graphics->GetColor(instanceID);
 }
 
 void AxisAlignedBoundingBoxWithVisualization::CreateGraphics()
 {
-	if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
-	{
-		ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
-	}
-	
-	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("OrientedBoundingBox"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	graphics->SetDrawMode(GO3D::Mode::LINE);
-	graphics->SetScale(GetSize());
-	graphics->SetTranslation(GetOrigin());
+	graphics->SetScale(GetSize(), instanceID);
+	graphics->SetTranslation(GetOrigin(), instanceID);
 }

@@ -167,6 +167,28 @@ void StaticCollider::Translate(const glm::vec3& translation)
 	}
 }
 
+const Model* const StaticCollider::GetWrapedGraphicsModel() const
+{
+	return wrapedGraphics->GetModel();
+}
+
+std::vector<Triangle> StaticCollider::GetTriangles() const
+{
+	const std::vector<Vertex> vertices = wrapedGraphics->GetModel()->GetVertices();
+	const std::vector<unsigned int> indices = wrapedGraphics->GetModel()->GetIndices();
+
+	std::vector<Triangle> triangles;
+
+	for (unsigned int i = 0; i < indices.size(); i += 3)
+	{
+		Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
+		triangles.push_back(t);
+	}
+
+
+	return triangles;
+}
+
 void StaticCollider::AccelerateMesh()
 {
 	if (accelerator != nullptr)

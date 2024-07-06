@@ -82,6 +82,9 @@
     <Filter Include="Source Files\Terrain">
       <UniqueIdentifier>{8207dbfc-3faf-450c-8fa4-fcfabdc2767d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{9f053ae4-965a-4799-bd13-0677f888c895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -341,6 +344,12 @@
     </ClCompile>
     <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp">
       <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Editor.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOColoredInstanced.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -611,6 +620,12 @@
     <ClInclude Include="Renderer\GraphicsObjects\GOTerrain.h">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Editor.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOColoredInstanced.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -680,6 +695,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\Terrain.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredInstanced.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\ColoredInstanced.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

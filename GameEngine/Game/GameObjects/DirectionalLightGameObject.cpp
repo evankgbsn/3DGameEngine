@@ -26,7 +26,7 @@ void DirectionalLightGameObject::Terminate()
 	LightManager::Delete(light);
 }
 
-void DirectionalLightGameObject::Update()
+void DirectionalLightGameObject::GameUpdate()
 {
 	glm::mat4 rot(1.0f);
 	static float rotationAngle = 0.01f;
@@ -34,6 +34,10 @@ void DirectionalLightGameObject::Update()
 	rot = glm::rotate(rot, rotationAngle * TimeManager::DeltaTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	light->SetDirection(rot * light->GetDirection());
+}
+
+void DirectionalLightGameObject::EditorUpdate()
+{
 }
 
 void DirectionalLightGameObject::Load()

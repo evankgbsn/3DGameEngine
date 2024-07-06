@@ -396,6 +396,8 @@ void Model::BindBuffer()
 	glVertexArrayVertexBuffer(ShaderManager::GetVAO(), 0, vertexArrayBuffer, 0, sizeof(Vertex));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexArrayBuffer);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Model::CPUSkinMatrices(Armature& armature, Pose& pose)

@@ -382,83 +382,81 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 bool AnimatedCollider::Intersect(const StaticCollider& other) const
 {
 	bool intersect = false;
-	
-	if (other.GetSphere()->SphereIntersect(*sphere))
+
+	std::list<StaticCollider::BVHNode*> toProcess;
+	toProcess.push_front(other.accelerator);
+
+	//Recursively walk the BVH tree.
+	while (!toProcess.empty())
 	{
-		const OrientedBoundingBoxWithVisualization* otherObb = other.GetBox();
-		std::for_each(std::execution::par, obbs.begin(), obbs.end(),
-			[otherObb, this, &other, &intersect](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+		StaticCollider::BVHNode* iterator = *(toProcess.begin());
+		toProcess.erase(toProcess.begin());
+
+		for (const auto& obb : obbs)
+		{
+			if (obb.first != nullptr)
 			{
-				if (obb.first != nullptr)
+				if (iterator->bounds.OrientedBoundingBoxIntersect(*obb.first))
 				{
-					if (otherObb->OrientedBoundingBoxIntersect(*obb.first))
+					const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
+
+					for (const auto& triangleVerts : obbTriangles)
 					{
-						const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
-
-						std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect](const std::vector<Vertex>& triangleVerts)
+						auto skinVertexForTriangleCollider = [this, &iterator, &intersect, &other](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
 							{
-								auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
-									{
-										const glm::ivec4& influences = vert.GetInfluences();
+								const glm::ivec4& influences = vert.GetInfluences();
 
-										const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
-										glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
-										glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
-										glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
-										glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
+								const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
+								glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
+								glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
+								glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
+								glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-										const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
-										glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
-										glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
-										glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
-										glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
+								const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+								glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
+								glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
+								glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
+								glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
 
-										const glm::vec4& weights = vert.GetWeights();
+								const glm::vec4& weights = vert.GetWeights();
 
-										glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
-										skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
-										skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
-										skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+								glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
+								skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
+								skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
+								skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
 
-										return skin;
-									};
+								return skin;
+							};
 
-								Triangle t1(
-									meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-									meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-									meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+						Triangle t1(
+							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
-								const std::vector<unsigned int>& indices = other.GetModel()->GetIndices();
-								const std::vector<Vertex>& vertices = other.GetModel()->GetVertices();
 
-								const glm::mat4 transform = other.GetTransform();
+						static const std::vector<Triangle> otherTriangles = other.GetTriangles();
 
-								for (unsigned int i = 0; i < indices.size() - 4; ++i)
-								{
-									Triangle t2(
-										transform * glm::vec4(vertices[indices[i + 0]].GetPosition(), 1.0f),
-										transform * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f),
-										transform * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
-
-									if (t1.TriangleIntersect(t2))
-									{
-										intersect = true;
-
-									}
-								}
-
-							});
+						for (unsigned int i = 0; i < iterator->numTriangles; ++i)
+						{
+							if (t1.TriangleIntersect(otherTriangles[iterator->triangles[i]]))
+							{
+								return intersect = true;
+							}
+						}
 					}
 				}
-			});
+			}
+		}
 
-		sphere->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		if (iterator->children != 0)
+		{
+			for (int i = 8 - 1; i >= 0; --i)
+			{
+				toProcess.push_front(&iterator->children[i]);
+			}
+		}
 	}
-	else
-	{
-		sphere->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	}
-
+	
 	return intersect;
 }
 

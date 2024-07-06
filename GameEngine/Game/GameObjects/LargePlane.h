@@ -28,7 +28,9 @@ private:
 
 	void Terminate() override;
 
-	void Update() override;
+	void GameUpdate() override;
+
+	void EditorUpdate();
 
 	void Load() override;
 

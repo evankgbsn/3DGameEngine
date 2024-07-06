@@ -113,7 +113,7 @@ void SceneManager::Update()
 	{
 		for (auto& scene : instance->loadedScenes)
 		{
-			scene.second->Update();
+			scene.second->GameUpdate();
 		}
 	}
 }

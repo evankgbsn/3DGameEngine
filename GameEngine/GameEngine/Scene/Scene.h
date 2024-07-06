@@ -41,7 +41,9 @@ private:
 
 	void Unload();
 
-	void Update();
+	void GameUpdate();
+
+	void EditorUpdate();
 
 	void InitializeObjects();
 

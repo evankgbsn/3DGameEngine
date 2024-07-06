@@ -38,12 +38,16 @@ void Scene::Unload()
 	Terminate();
 }
 
-void Scene::Update()
+void Scene::GameUpdate()
 {
 	for (auto& object : objects)
 	{
-		object.second->Update();
+		object.second->GameUpdate();
 	}
+}
+
+void Scene::EditorUpdate()
+{
 }
 
 void Scene::InitializeObjects()

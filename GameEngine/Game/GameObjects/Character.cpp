@@ -4,6 +4,7 @@
 #include "GameEngine/Renderer/GraphicsObjects/GOTexturedAnimatedLit.h"
 #include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
 #include "GameEngine/Renderer/GraphicsObjects/GOTextured.h"
+#include "GameEngine/Renderer/GraphicsObjects/GOColoredInstanced.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -161,9 +162,15 @@ Character::~Character()
 
 void Character::Initialize()
 {
+
+	//GOColoredInstanced* inst = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("Woman"), { 1.0f, 0.0f, 0.0f, 1.0f }, 1);
+	//inst->SetTranslation({0.0f, 0.0f, 0.0f}, 0);
+	//inst->SetRotation(glm::mat4(1.0f), 0);
+	//inst->SetScale({ 1.0f, 1.0f, 1.0f }, 0);
+
 	Text* text = new Text("This is test text", "arial");
 
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
@@ -200,7 +207,7 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 1000, 1000, 400, 400, 30, -30);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 500, 500, 200, 200, 30, -30);
 
 	treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
 	treeCollider = new StaticCollider(treeGraphics);
@@ -226,7 +233,7 @@ void Character::Terminate()
 	GraphicsObjectManager::Delete(graphics2);
 }
 
-void Character::Update()
+void Character::GameUpdate()
 {
 	if (graphics->GetTranslation() != targetPosition)
 	{
@@ -283,19 +290,23 @@ void Character::Update()
 
 	const glm::vec3 terrainPoint = terrain->GetTerrainPoint(planePoint);
 		
-		const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
+	const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
 
-		treeCollider->Translate(-translation);
+	treeCollider->Translate(-translation);
 
-		treeGraphics->SetTranslation(terrainPoint);
+	treeGraphics->SetTranslation(terrainPoint);
 	//};
 
 	collider->Intersect(lineFromScreenToWorld);
 
 
-	collider->Intersect(*treeCollider);
+	//collider->Intersect(*treeCollider);
 
 	collider->Intersect(*collider2);
+}
+
+void Character::EditorUpdate()
+{
 }
 
 void Character::Load()

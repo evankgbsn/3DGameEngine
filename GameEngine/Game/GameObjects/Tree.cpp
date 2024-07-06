@@ -31,9 +31,13 @@ void Tree::Terminate()
 	delete collider;
 }
 
-void Tree::Update()
+void Tree::GameUpdate()
 {
 	collider->Update();
+}
+
+void Tree::EditorUpdate()
+{
 }
 
 void Tree::Load()

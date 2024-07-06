@@ -49,7 +49,7 @@ void FreeCamera::Terminate()
 	InputDeregistration();
 }
 
-void FreeCamera::Update()
+void FreeCamera::GameUpdate()
 {
 	Window* window = WindowManager::GetWindow("Engine");
 	glm::vec2 cursorPos = window->GetCursorPosition();
@@ -69,6 +69,10 @@ void FreeCamera::Update()
 	}
 
 	prevPos = cursorPos;
+}
+
+void FreeCamera::EditorUpdate()
+{
 }
 
 void FreeCamera::InputRegistration()

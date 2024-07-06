@@ -6,6 +6,8 @@
 
 #include <glm/glm.hpp>
 
+#include <vector>
+
 class GO3D;
 class AnimatedCollider;
 class OrientedBoundingBoxWithVisualization;
@@ -15,6 +17,7 @@ class SphereWithVisualization;
 class LineSegment3D;
 class GOColored;
 class Model;
+class Triangle;
 
 class StaticCollider : public Collider
 {
@@ -46,7 +49,13 @@ public:
 
 	void Translate(const glm::vec3& translation);
 
+	const Model* const GetWrapedGraphicsModel() const;
+
+	std::vector<Triangle> GetTriangles() const;
+
 private:
+
+	friend class AnimatedCollider;
 
 	struct BVHNode
 	{
