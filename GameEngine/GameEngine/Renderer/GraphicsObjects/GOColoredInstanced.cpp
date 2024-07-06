@@ -14,29 +14,33 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 	scales(std::vector<glm::mat4>(instanceCount)),
 	transformations(std::vector<glm::mat4>(instanceCount)),
 	transforms(std::vector<glm::mat4>(instanceCount)),
-	colors(std::vector<glm::vec4>(instanceCount))
+	colors(std::vector<glm::vec4>(instanceCount)),
+	rights(std::vector<glm::vec4>(instanceCount)),
+	ups(std::vector<glm::vec4>(instanceCount)),
+	forwards(std::vector<glm::vec4>(instanceCount)),
+	trans(std::vector<glm::vec4>(instanceCount))
 {
 	glCreateBuffers(1, &viewProjectionBuffer);
 	glNamedBufferStorage(viewProjectionBuffer, sizeof(vp), &vp, GL_DYNAMIC_STORAGE_BIT);
 
 	glGenBuffers(1, &translationsBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &rightBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &upBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &forwardBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glEnableVertexAttribArray(5);
@@ -62,6 +66,9 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glVertexAttribDivisor(8, 1);
+
+	FinalizeTransforms();
+
 }
 
 GOColoredInstanced::~GOColoredInstanced()
@@ -93,40 +100,6 @@ void GOColoredInstanced::Update()
 
 	glNamedBufferSubData(viewProjectionBuffer, 0, sizeof(ViewProjectionUBO), &vp);
 
-	for (unsigned int i = 0; i < transformations.size(); ++i)
-	{
-		transforms[i] = translations[i] * rotations[i] * scales[i];
-	}
-
-	std::vector<glm::vec4> translations;
-	std::vector<glm::vec4> rights;
-	std::vector<glm::vec4> ups;
-	std::vector<glm::vec4> forwards;
-
-	for (glm::mat4& transform : transforms)
-	{
-		rights.push_back(transform[0]);
-		ups.push_back(transform[1]);
-		forwards.push_back(transform[2]);
-		translations.push_back(transform[3]);
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * translations.size(), translations.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * rights.size(), rights.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * ups.size(), ups.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * forwards.size(), forwards.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 	glDrawElementsInstanced(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0, (unsigned int)transforms.size());
@@ -142,6 +115,11 @@ void GOColoredInstanced::AddInstance()
 	transformations.push_back(glm::mat4(1.0f));
 	transforms.push_back(glm::mat4(1.0f));
 	colors.push_back(glm::vec4(1.0f));
+
+	trans.push_back(glm::vec4(1.0f));
+	rights.push_back(glm::vec4(1.0f));
+	ups.push_back(glm::vec4(1.0f));
+	forwards.push_back(glm::vec4(1.0f));
 }
 
 void GOColoredInstanced::RemoveInstance(unsigned int instanceID)
@@ -151,4 +129,46 @@ void GOColoredInstanced::RemoveInstance(unsigned int instanceID)
 unsigned int GOColoredInstanced::GetInstanceCount()
 {
 	return static_cast<unsigned int>(transforms.size());
+}
+
+void GOColoredInstanced::FinalizeTransforms()
+{
+	for (unsigned int i = 0; i < transformations.size(); ++i)
+	{
+		transforms[i] = translations[i] * rotations[i] * scales[i];
+		rights[i] = transforms[i][0];
+		ups[i] = transforms[i][1];
+		forwards[i] = transforms[i][2];
+		trans[i] = transforms[i][3];
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * trans.size(), trans.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * rights.size(), rights.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * ups.size(), ups.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * forwards.size(), forwards.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GOColoredInstanced::UpdateInstanceByID(unsigned int instanceID)
+{
+	transforms[instanceID] = translations[instanceID] * rotations[instanceID] * scales[instanceID];
+	rights[instanceID] = transforms[instanceID][0];
+	ups[instanceID] = transforms[instanceID][1];
+	forwards[instanceID] = transforms[instanceID][2];
+	trans[instanceID] = transforms[instanceID][3];
+
+	glNamedBufferSubData(translationsBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &trans[instanceID]);
+	glNamedBufferSubData(rightBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &rights[instanceID]);
+	glNamedBufferSubData(upBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &ups[instanceID]);
+	glNamedBufferSubData(forwardBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &forwards[instanceID]);
 }

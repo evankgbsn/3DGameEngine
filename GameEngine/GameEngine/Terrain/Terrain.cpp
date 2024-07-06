@@ -52,6 +52,8 @@ Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const s
 			aabbs[x].push_back(new AxisAlignedBoundingBoxWithVisualization(min, max));
 		}
 	}
+
+	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 }
 
 Terrain::~Terrain()

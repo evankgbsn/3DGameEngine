@@ -23,6 +23,8 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	trianglesColliderVisualization = GraphicsObjectManager::CreateGO3DColored(const_cast<Model*>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	AccelerateMesh();
+
+	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 }
 
 StaticCollider::~StaticCollider()
@@ -38,6 +40,27 @@ void StaticCollider::Update()
 	boundingSphere->Update(wrapedGraphics->GetTransform());
 	obb->Update(wrapedGraphics->GetTransform());
 	trianglesColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
+
+
+	//Updated instanced visualized aabbs
+	//Recursively walk the BVH tree.
+	std::list<BVHNode*> toProcess;
+	toProcess.push_front(accelerator);
+	while (!toProcess.empty())
+	{
+		BVHNode* iterator = *(toProcess.begin());
+		toProcess.erase(toProcess.begin());
+
+		iterator->bounds.UpdateGraphicsInstance();
+
+		if (iterator->children != 0)
+		{
+			for (int i = 8 - 1; i >= 0; --i)
+			{
+				toProcess.push_front(&iterator->children[i]);
+			}
+		}
+	}
 }
 
 void StaticCollider::ToggleVisibility()

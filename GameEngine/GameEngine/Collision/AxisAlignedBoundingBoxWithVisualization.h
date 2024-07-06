@@ -23,6 +23,10 @@ public:
 
 	const glm::vec4 GetColor() const;
 
+	static void UpdateInstanceTransforms();
+
+	void UpdateGraphicsInstance();
+
 private:
 
 	AxisAlignedBoundingBoxWithVisualization(const AxisAlignedBoundingBoxWithVisualization&) = delete;

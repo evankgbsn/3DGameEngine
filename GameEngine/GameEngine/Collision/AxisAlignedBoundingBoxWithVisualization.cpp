@@ -27,7 +27,6 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 	}
 
 	CreateGraphics();
-	ToggleVisibility();
 }
 
 void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3& o, const glm::vec3& s)
@@ -50,7 +49,7 @@ void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 {
 	if (!graphics->IsDisabled())
 	{
-		GraphicsObjectManager::Disable(graphics);
+		//GraphicsObjectManager::Disable(graphics);
 	}
 	else
 	{
@@ -66,6 +65,16 @@ void AxisAlignedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor
 const glm::vec4 AxisAlignedBoundingBoxWithVisualization::GetColor() const
 {
 	return graphics->GetColor(instanceID);
+}
+
+void AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms()
+{
+	graphics->FinalizeTransforms();
+}
+
+void AxisAlignedBoundingBoxWithVisualization::UpdateGraphicsInstance()
+{
+	graphics->UpdateInstanceByID(instanceID);
 }
 
 void AxisAlignedBoundingBoxWithVisualization::CreateGraphics()

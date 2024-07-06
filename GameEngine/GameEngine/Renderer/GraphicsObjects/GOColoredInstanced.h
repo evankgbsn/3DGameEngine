@@ -102,6 +102,10 @@ public:
 
 	unsigned int GetInstanceCount();
 
+	void FinalizeTransforms();
+
+	void UpdateInstanceByID(unsigned int instanceID);
+
 private:
 
 	struct ModelUBO
@@ -150,6 +154,11 @@ private:
 	std::vector<glm::vec4> colors;
 
 	std::vector<glm::mat4> transforms;
+
+	std::vector<glm::vec4> trans;
+	std::vector<glm::vec4> rights;
+	std::vector<glm::vec4> ups;
+	std::vector<glm::vec4> forwards;
 };
 
 #endif // GOCOLOREDINSTANCED_H
