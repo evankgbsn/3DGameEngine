@@ -99,6 +99,28 @@ bool SceneManager::SceneLoaded(const std::string& sceneName)
 	return false;
 }
 
+Scene* const SceneManager::GetLoadedScene(const std::string& name)
+{
+	if (instance != nullptr)
+	{
+		const auto& query = instance->loadedScenes.find(name);
+		if (query != instance->loadedScenes.end())
+		{
+			return query->second;
+		}
+	}
+	else
+	{
+		Logger::Log("Calling SceneManager::GetScene() before SceneManager::Initialize()", Logger::Category::Error);
+
+		return nullptr;
+	}
+
+	Logger::Log("The scene" + name + "has not been loaded.SceneManager::GetLoadedScene", Logger::Category::Warning);
+
+	return nullptr;
+}
+
 SceneManager::SceneManager()
 {
 }

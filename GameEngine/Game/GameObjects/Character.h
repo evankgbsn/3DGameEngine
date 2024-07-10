@@ -46,6 +46,8 @@ private:
 
 	void Unload() override;
 
+	Terrain* GetTerrain() const;
+
 	GOTexturedAnimatedLit* graphics;
 
 	GOTexturedAnimatedLit* graphics2;
@@ -80,8 +82,6 @@ private:
 
 	glm::vec3 cameraTarget;
 	glm::vec3 camPosition;
-
-	Terrain* terrain;
 
 	glm::vec3 targetPosition;
 

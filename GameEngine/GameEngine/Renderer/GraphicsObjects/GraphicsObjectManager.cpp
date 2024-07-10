@@ -283,7 +283,7 @@ void GraphicsObjectManager::Disable(GraphicsObject* const go)
 	}
 }
 
-void GraphicsObjectManager::Enable(GO3D* const go)
+void GraphicsObjectManager::Enable(GraphicsObject* const go)
 {
 	if (instance != nullptr)
 	{
@@ -293,7 +293,7 @@ void GraphicsObjectManager::Enable(GO3D* const go)
 	}
 }
 
-void GraphicsObjectManager::Delete(GO3D* const go)
+void GraphicsObjectManager::Delete(GraphicsObject* const go)
 {
 	if (instance != nullptr)
 	{

@@ -12,6 +12,7 @@
 #include "GameEngine/Collision/OrientedBoundingBoxWithVisualization.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Scene/Scene.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
 #include "GameEngine/Renderer/Camera/CameraManager.h"
 #include "GameEngine/Renderer/Camera/Camera.h"
@@ -24,6 +25,7 @@
 #include "GameEngine/Math/Shapes/Ray.h"
 #include "GameEngine/Utils/Logger.h"
 #include "GameEngine/Math/Shapes/Plane.h"
+#include "GameTerrain.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -36,28 +38,39 @@ Character::Character() :
 {
 	float moveSpeed = 3.0f;
 
-	forward = new std::function<void(int)>([this, moveSpeed](int keyCode)
+	Terrain* terrain = GetTerrain();
+
+	auto snapToTerrain = [this, terrain]()
+		{
+			if (terrain != nullptr)
+			{
+				graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+			}
+		};
+
+	forward = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
 		{
 			graphics->Translate(glm::vec3(0.0f, 0.0f, 1.0f) * TimeManager::DeltaTime() * moveSpeed);
-			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+			snapToTerrain();
+			
 		});
 
-	backward = new std::function<void(int)>([this, moveSpeed](int keyCode)
+	backward = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
 		{
 			graphics->Translate(glm::vec3(0.0f, 0.0f, -1.0f) * TimeManager::DeltaTime() * moveSpeed);
-			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+			snapToTerrain();
 		});
 
-	left = new std::function<void(int)>([this, moveSpeed](int keyCode)
+	left = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
 		{
 			graphics->Translate(glm::vec3(1.0f, 0.0f, 0.0f) * TimeManager::DeltaTime() * moveSpeed);
-			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+			snapToTerrain();
 		});
 
-	right = new std::function<void(int)>([this, moveSpeed](int keyCode)
+	right = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
 		{
 			graphics->Translate(glm::vec3(-1.0f, 0.0f, 0.0f) * TimeManager::DeltaTime() * moveSpeed);
-			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+			snapToTerrain();
 		});
 
 	toggleColliderVisibility = new std::function<void(int)>([this](int keyCode)
@@ -92,39 +105,45 @@ Character::Character() :
 
 			Ray rayFromScreenToWorld(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
 
-			const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& boxes = terrain->GetCellArray();
+			Terrain* terrain = GetTerrain();
 
-			unsigned int count = 0;
-
-			for (const auto& boxArray : boxes)
+			if (terrain != nullptr)
 			{
-				for (AxisAlignedBoundingBoxWithVisualization* aabb : boxArray)
+				const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& boxes = terrain->GetCellArray();
+
+				unsigned int count = 0;
+
+				for (const auto& boxArray : boxes)
 				{
-					if (aabb->LineIntersect(lineFromScreenToWorld))
+					for (AxisAlignedBoundingBoxWithVisualization* aabb : boxArray)
 					{
-						targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
-						
-						glm::vec3 translation = graphics->GetTranslation();
+						if (aabb->LineIntersect(lineFromScreenToWorld))
+						{
+							targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
 
-						glm::vec3 forward = glm::normalize(glm::vec3(graphics->GetRotation()[2]));
-						glm::vec3 toTarget = -glm::normalize(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)));
-						glm::vec3 right = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), toTarget);
+							glm::vec3 translation = graphics->GetTranslation();
 
-						glm::mat4 rotation(
-							glm::vec4(glm::normalize(right), 0.0f),
-							glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
-							glm::vec4(toTarget, 0.0f),
-							graphics->GetRotation()[3]
-						);
+							glm::vec3 forward = glm::normalize(glm::vec3(graphics->GetRotation()[2]));
+							glm::vec3 toTarget = -glm::normalize(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)));
+							glm::vec3 right = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), toTarget);
 
-						graphics->SetRotation(rotation);
+							glm::mat4 rotation(
+								glm::vec4(glm::normalize(right), 0.0f),
+								glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
+								glm::vec4(toTarget, 0.0f),
+								graphics->GetRotation()[3]
+							);
 
-						count++;
+							graphics->SetRotation(rotation);
+
+							count++;
+						}
 					}
 				}
-			}
 
-			count++;
+				count++;
+			}
+			
 		});
 
 	float cameraMoveSpeed = 2.0f;
@@ -187,8 +206,8 @@ void Character::Initialize()
 	graphics2->SetClip(3);
 	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
 
-	skybox = GraphicsObjectManager::Create3DGOTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
-	skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f });
+	//skybox = GraphicsObjectManager::Create3DGOTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
+	//skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f });
 	
 
 	collider2 = new AnimatedCollider(graphics2);
@@ -207,11 +226,15 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", "Grey", "Grey", 1000, 1000, 400, 400, 30, -30);
+	Terrain* terrain = GetTerrain();
 
-	treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
+	if (terrain != nullptr)
+	{
+		treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
+		graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
+	}
+	
 	treeCollider = new StaticCollider(treeGraphics);
-	graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
 }
 
 void Character::Terminate()
@@ -227,18 +250,24 @@ void Character::Terminate()
 
 	delete collider;
 	delete collider2;
+	delete treeCollider;
 	//delete obb;
 
 	GraphicsObjectManager::Delete(graphics);
 	GraphicsObjectManager::Delete(graphics2);
+	GraphicsObjectManager::Delete(treeGraphics);
 }
 
 void Character::GameUpdate()
 {
+	Terrain* terrain = GetTerrain();
+
 	if (graphics->GetTranslation() != targetPosition)
 	{
 		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
-		graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+
+		if(terrain != nullptr)
+			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 	}
 
 	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
@@ -288,13 +317,19 @@ void Character::GameUpdate()
 	//if (treeCollider->Intersect(ray) != -1)
 	//{
 
-	const glm::vec3 terrainPoint = terrain->GetTerrainPoint(planePoint);
-		
-	const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
+	
 
-	treeCollider->Translate(-translation);
+	if (terrain != nullptr)
+	{
+		const glm::vec3 terrainPoint = terrain->GetTerrainPoint(planePoint);
 
-	treeGraphics->SetTranslation(terrainPoint);
+		const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
+
+		treeCollider->Translate(-translation);
+
+		treeGraphics->SetTranslation(terrainPoint);
+	}
+	
 	//};
 
 	collider->Intersect(lineFromScreenToWorld);
@@ -346,7 +381,6 @@ void Character::Load()
 		TextureManager::LoadTexture("Assets/Texture/Grey.png", "RandomGrey");
 	}
 
-
 	if (!ModelManager::ModelLoaded("Woman"))
 	{
 		ModelManager::LoadModel("Woman", "Assets/Model/Woman.gltf");
@@ -370,24 +404,24 @@ void Character::Load()
 
 void Character::Unload()
 {
-	if (ModelManager::ModelLoaded("Home"))
+
+}
+
+Terrain* Character::GetTerrain() const
+{
+	Scene* mainScene = SceneManager::GetLoadedScene("Main");
+
+	Terrain* terrain = nullptr;
+
+	if (mainScene != nullptr)
 	{
-		ModelManager::UnloadModel("Home");
+		GameTerrain* gameTerrainObject = static_cast<GameTerrain*>(mainScene->GetGameObject("Terrain"));
+
+		if (gameTerrainObject != nullptr)
+		{
+			terrain = gameTerrainObject->GetTerrain();
+		}
 	}
 
-	if (TextureManager::TextureLoaded("Woman"))
-	{
-		TextureManager::UnloadTexture("Woman");
-	}
-
-	if (ModelManager::ModelLoaded("Woman"))
-	{
-		ModelManager::UnloadModel("Woman");
-	}
-
-	if (TextureManager::TextureLoaded("RandomGrey"))
-	{
-		TextureManager::UnloadTexture("RandomGrey");
-	}
-
+	return terrain;
 }

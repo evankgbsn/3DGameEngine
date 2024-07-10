@@ -65,6 +65,8 @@ Terrain::~Terrain()
 			delete y;
 		}
 	}
+
+	GraphicsObjectManager::Delete(terrainGraphics);
 }
 
 void Terrain::ToggleCells()

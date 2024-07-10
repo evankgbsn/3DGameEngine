@@ -51,9 +51,9 @@ public:
 
 	static void Disable(GraphicsObject* const go);
 
-	static void Enable(GO3D* const go);
+	static void Enable(GraphicsObject* const go);
 
-	static void Delete(GO3D* const go);
+	static void Delete(GraphicsObject* const go);
 
 	static void Enable(GOGlyph* const go);
 

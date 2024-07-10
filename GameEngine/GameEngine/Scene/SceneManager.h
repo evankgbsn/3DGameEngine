@@ -25,6 +25,8 @@ public:
 
 	static bool SceneLoaded(const std::string& sceneName);
 
+	static Scene* const GetLoadedScene(const std::string& name);
+
 private:
 
 	friend class SingletonHelpers;

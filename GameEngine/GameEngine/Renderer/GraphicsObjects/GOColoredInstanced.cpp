@@ -122,8 +122,18 @@ void GOColoredInstanced::AddInstance()
 	forwards.push_back(glm::vec4(1.0f));
 }
 
-void GOColoredInstanced::RemoveInstance(unsigned int instanceID)
+void GOColoredInstanced::RemoveInstanceByID(unsigned int instanceID)
 {
+	translations.erase(translations.begin() + instanceID);
+	rotations.erase(rotations.begin() + instanceID);
+	scales.erase(scales.begin() + instanceID);
+	transformations.erase(transformations.begin() + instanceID);
+	transforms.erase(transforms.begin() + instanceID);
+	colors.erase(colors.begin() + instanceID);
+	trans.erase(trans.begin() + instanceID);
+	rights.erase(rights.begin() + instanceID);
+	ups.erase(ups.begin() + instanceID);
+	forwards.erase(forwards.begin() + instanceID);
 }
 
 unsigned int GOColoredInstanced::GetInstanceCount()

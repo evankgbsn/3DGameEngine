@@ -15,6 +15,8 @@ public:
 
 	~Scene();
 
+	GameObject* const GetGameObject(const std::string& GameObejctName) const;
+
 protected:
 
 	virtual void Initialize() = 0;

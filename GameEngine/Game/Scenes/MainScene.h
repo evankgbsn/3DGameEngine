@@ -14,6 +14,7 @@ class LargePlane;
 class DirectionalLightGameObject;
 class Character;
 class FreeCamera;
+class GameTerrain;
 
 class MainScene : public Scene
 {
@@ -49,6 +50,8 @@ private:
 	LargePlane* groundPlane;
 
 	FreeCamera* cam;
+
+	GameTerrain* terrain;
 
 	std::function<void(int)>* loadSub;
 

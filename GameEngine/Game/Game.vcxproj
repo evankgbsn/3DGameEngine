@@ -139,6 +139,7 @@
     <ClCompile Include="GameObjects\Character.cpp" />
     <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp" />
     <ClCompile Include="GameObjects\FreeCamera.cpp" />
+    <ClCompile Include="GameObjects\GameTerrain.cpp" />
     <ClCompile Include="GameObjects\LargePlane.cpp" />
     <ClCompile Include="GameObjects\LightArray.cpp" />
     <ClCompile Include="GameObjects\Tree.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="GameObjects\Character.h" />
     <ClInclude Include="GameObjects\DirectionalLightGameObject.h" />
     <ClInclude Include="GameObjects\FreeCamera.h" />
+    <ClInclude Include="GameObjects\GameTerrain.h" />
     <ClInclude Include="GameObjects\LargePlane.h" />
     <ClInclude Include="GameObjects\LightArray.h" />
     <ClInclude Include="GameObjects\Tree.h" />

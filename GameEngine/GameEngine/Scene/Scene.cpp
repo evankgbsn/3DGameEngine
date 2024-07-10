@@ -10,6 +10,14 @@ Scene::~Scene()
 {
 }
 
+GameObject* const Scene::GetGameObject(const std::string& name) const
+{
+	if (objects.find(name) != objects.end())
+	{
+		return objects.find(name)->second;
+	}
+}
+
 void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 {
 	if (objects.find(name) == objects.end())

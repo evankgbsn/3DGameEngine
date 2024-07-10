@@ -17,7 +17,7 @@ public:
 
 	AxisAlignedBoundingBox();
 
-	~AxisAlignedBoundingBox();
+	virtual ~AxisAlignedBoundingBox();
 
 	void FromMinAndMax(const glm::vec3& min, const glm::vec3& max);
 

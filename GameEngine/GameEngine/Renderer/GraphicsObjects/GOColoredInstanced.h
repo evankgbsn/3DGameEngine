@@ -98,7 +98,7 @@ public:
 
 	void AddInstance();
 
-	void RemoveInstance(unsigned int instanceID);
+	void RemoveInstanceByID(unsigned int instanceID);
 
 	unsigned int GetInstanceCount();
 

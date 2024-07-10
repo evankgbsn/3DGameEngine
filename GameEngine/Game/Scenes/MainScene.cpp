@@ -8,13 +8,15 @@
 #include "../GameObjects/Boxes.h"
 #include "../GameObjects/FreeCamera.h"
 #include "GameEngine/Input/InputManager.h"
+#include "../GameObjects/GameTerrain.h"
 
 MainScene::MainScene() :
 	spotLights(new LightArray()),
 	directionalLight(new DirectionalLightGameObject()),
 	character(new Character()),
 	////tree(new Tree()),
-	groundPlane(new LargePlane())
+	groundPlane(new LargePlane()),
+	terrain(new GameTerrain())
 	//cam(new FreeCamera())
 {
 
@@ -39,6 +41,7 @@ MainScene::~MainScene()
 	delete character;
 	////delete tree;
 	delete groundPlane;
+	delete terrain;
 }
 
 void MainScene::Initialize()
@@ -54,16 +57,18 @@ void MainScene::Initialize()
 	RegisterGameObject(character, "Character");
 	//RegisterGameObject(tree, "Tree");
 	RegisterGameObject(spotLights, "Lights");
+	RegisterGameObject(terrain, "Terrain");
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_L, loadSub, "LoadSubscene");
-	//InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_U, unloadSub, "UnloadSubscene");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_U, unloadSub, "UnloadSubscene");
 }
 
 void MainScene::Terminate()
 {
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "LoadSubscene");
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_U, "UnloadSubscene");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "LoadSubscene");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_U, "UnloadSubscene");
 
+	DeregisterGameObject("Terrain");
 	DeregisterGameObject("Lights");
 	//DeregisterGameObject("Tree");
 	//DeregisterGameObject("FreeCam");
