@@ -139,3 +139,14 @@ void SceneManager::Update()
 		}
 	}
 }
+
+void SceneManager::EditorUpdate()
+{
+	if (instance != nullptr)
+	{
+		for (auto& scene : instance->loadedScenes)
+		{
+			scene.second->EditorUpdate();
+		}
+	}
+}

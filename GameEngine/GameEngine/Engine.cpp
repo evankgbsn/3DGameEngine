@@ -21,6 +21,7 @@
 #include "Collision/OrientedBoundingBoxWithVisualization.h"
 #include "Renderer/Model/Model.h"
 #include "Scene/SceneManager.h"
+#include "Editor/Editor.h"
 
 #include <GLFW/glfw3.h>
 
@@ -35,10 +36,21 @@ void Engine::Run()
 {
 	while (!Renderer::ShouldTerminate())
 	{
-		TimeManager::RecordUpdateTime();
-		Renderer::Update();
-		InputManager::Update();
-		SceneManager::Update();
+		if (Editor::Enabled())
+		{
+			TimeManager::RecordUpdateTime();
+			Renderer::Update();
+			InputManager::EditorUpdate();
+			SceneManager::EditorUpdate();
+		}
+		else
+		{
+			TimeManager::RecordUpdateTime();
+			Renderer::Update();
+			InputManager::Update();
+			SceneManager::Update();
+		}
+		
 	}
 }
 
@@ -54,16 +66,31 @@ WindowManager* Engine::GetWindowManager()
 
 Engine::Engine()
 {
-
 	TimeManager::Initialize();
 	Renderer::Initialize();
 	InputManager::Initialize();
 	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
 	SceneManager::Initialize();
+	Editor::Initialize();
+
+	static std::function<void(int)> tildaPress = std::function<void(int)>([](int keyCode)
+		{
+			Editor::Disbale();
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress, "Play");
+
+	static std::function<void(int)> tildaPress2 = std::function<void(int)>([](int keyCode)
+		{
+			Editor::Enable();
+		});
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress2, "Play");
 }
 
 Engine::~Engine()
 {
+	Editor::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
 	Renderer::Terminate();

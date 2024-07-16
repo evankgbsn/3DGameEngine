@@ -30,7 +30,21 @@ public:
 
 	static void DeregisterCallbackForMouseButtonState(int state, int mouseButton, const std::string& name);
 
+	static void EditorRegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* const callback, const std::string& name);
+
+	static void EditorDeregisterCallbackForKeyState(int state, int keyCode, const std::string& name);
+
+	static void EditorRegisterCallbackForMouseButtonState(int state, int mouseButton, std::function<void(int mouseButton)>* const callback, const std::string& name);
+
+	static void EditorDeregisterCallbackForMouseButtonState(int state, int mouseButton, const std::string& name);
+
+	static void EditorGetCursorPosition(std::function<void(const glm::vec2& cursorPositon)> callback);
+
+	static void EditorWhenCursorMoved(std::function<void(const glm::vec2& newCursorPosition)> callback);
+
 	static void Update();
+
+	static void EditorUpdate();
 
 private:
 
@@ -47,15 +61,22 @@ private:
 	InputManager& operator=(InputManager&&) = delete;
 
 	static void EnqueueInputCall(std::function<void()> inputCall);
+
+	static void EditorEnqueueInputCall(std::function<void()> inputCall);
 	
 	void ProcessKeyEvents() const;
 
+	void EditorProcessKeyEvents() const;
+
 	void ProcessMouseButtonEvents() const;
+
+	void EditorProcessMouseButtonEvents() const;
 
 	static InputManager* instance;
 
 	std::mutex inputQueueMutex;
 
+	// Game
 	std::list<std::function<void()>> inputQueue;
 
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> registeredKeyPressEvents;
@@ -75,6 +96,27 @@ private:
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonReleasedEvents;
 
 	std::unordered_set<int> keysPressed;
+
+	// Editor
+	std::list<std::function<void()>> editorInputQueue;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> editorRegisteredKeyPressEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> editorRegisteredKeyReleaseEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> editorRegisteredKeyPressedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> editorRegisteredKeyReleasedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> editorRegisteredMouseButtonPressEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> editorRegisteredMouseButtonReleaseEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> editorRegisteredMouseButtonPressedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> editorRegisteredMouseButtonReleasedEvents;
+
+	std::unordered_set<int> editorKeysPressed;
 };
 
 #define MOUSE_BUTTON_1         0

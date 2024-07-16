@@ -47,6 +47,8 @@ private:
 
 	static void Update();
 
+	static void EditorUpdate();
+
 	static SceneManager* instance;
 
 	std::unordered_map<std::string, Scene*> registeredScenes;

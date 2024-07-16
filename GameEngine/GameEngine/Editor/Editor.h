@@ -9,6 +9,14 @@ public:
 	
 	static void Terminate();
 
+	static void Update();
+
+	static bool Enabled();
+
+	static void Disbale();
+
+	static void Enable();
+
 private:
 
 	friend class SingletonHelpers;
@@ -24,6 +32,12 @@ private:
 	Editor(Editor&&) = delete;
 
 	Editor& operator=(Editor&&) = delete;
+
+	void SetupEditorInput();
+
+	static Editor* instance;
+
+	bool enabled;
 };
 
 #endif // EDITOR_H
