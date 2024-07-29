@@ -79,6 +79,13 @@ Character::Character() :
 		});
 
 
+	updateCollisionVisuals = new std::function<void(int)>([this](int keycode)
+		{
+			Terrain* terrain = GetTerrain();
+
+			terrain->UpdateTerrainCells();
+		});
+
 	castLine = new std::function<void(int)>([this](int keyCode)
 		{
 			// Screen space to world space for object picking.
@@ -189,7 +196,7 @@ void Character::Initialize()
 
 	Text* text = new Text("This is test text", "arial");
 
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
+	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Sphere"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
@@ -200,6 +207,7 @@ void Character::Initialize()
 	graphics->SetClip(7);
 
 	collider = new AnimatedCollider(graphics);
+	//collider->ToggleVisibility();
 
 	graphics2 = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("Random"));
 	graphics2->SetShine(32.0f);
@@ -211,6 +219,7 @@ void Character::Initialize()
 	
 
 	collider2 = new AnimatedCollider(graphics2);
+	//collider2->ToggleVisibility();
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
@@ -220,6 +229,7 @@ void Character::Initialize()
 	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, updateCollisionVisuals, "ColisionVisuals");
 
 	//obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
 
@@ -235,6 +245,7 @@ void Character::Initialize()
 	}
 	
 	treeCollider = new StaticCollider(treeGraphics);
+	//treeCollider->ToggleVisibility();
 }
 
 void Character::Terminate()
@@ -268,11 +279,13 @@ void Character::GameUpdate()
 
 		if(terrain != nullptr)
 			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+
+		terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
 	}
 
 	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
 
-	Camera& cam = CameraManager::GetActiveCamera();
+	Camera& cam = CameraManager::GetCamera("Main");
 
 	cam.SetPosition(graphics->GetTranslation() + camPosition);
 
@@ -283,7 +296,6 @@ void Character::GameUpdate()
 	collider2->Update();
 
 	treeCollider->Update();
-
 
 	// Screen space to world space for object picking.
 	Window* window = WindowManager::GetWindow("Engine");
@@ -327,7 +339,7 @@ void Character::GameUpdate()
 
 		treeCollider->Translate(-translation);
 
-		treeGraphics->SetTranslation(terrainPoint);
+		treeGraphics->SetTranslation(planePoint);
 	}
 	
 	//};
@@ -342,6 +354,33 @@ void Character::GameUpdate()
 
 void Character::EditorUpdate()
 {
+	collider->Update();
+	collider2->Update();
+	treeCollider->Update();
+
+	Camera& cam = CameraManager::GetActiveCamera();
+
+	// Screen space to world space for object picking.
+	Window* window = WindowManager::GetWindow("Engine");
+	glm::vec2 cursorPos = window->GetCursorPosition();
+	glm::mat4 invPersp = glm::inverse(cam.GetProjection());
+	glm::mat4 invView = glm::inverse(cam.GetView());
+	glm::mat4 screenToNDC(
+		glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
+		glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+		glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
+	);
+	screenToNDC = glm::inverse(screenToNDC);
+
+	glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
+	x = screenToNDC * x;
+	x = invPersp * x;
+	x = invView * x;
+	x /= x.w;
+
+	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
+	collider->Intersect(lineFromScreenToWorld);
 }
 
 void Character::Load()

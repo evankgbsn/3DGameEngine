@@ -122,6 +122,8 @@ void AnimatedCollider::ToggleVisibility()
 			obb.first->ToggleVisibility();
 	}
 
+	sphere->ToggleVisibility();
+
 	if (visible)
 	{
 		GraphicsObjectManager::Disable(meshColliderVisualization);

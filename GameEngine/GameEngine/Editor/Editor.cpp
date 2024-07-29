@@ -11,6 +11,7 @@ Editor* Editor::instance = nullptr;
 Editor::Editor() :
 	enabled(true)
 {
+	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
 	SetupEditorInput();
 }
 
@@ -48,6 +49,7 @@ void Editor::Disbale()
 	if (instance != nullptr)
 	{
 		instance->enabled = false;
+		CameraManager::SetActiveCamera("Main");
 		Logger::Log("Disabled Editor", Logger::Category::Info);
 	}
 	else
@@ -61,6 +63,7 @@ void Editor::Enable()
 	if (instance != nullptr)
 	{
 		instance->enabled = true;
+		CameraManager::SetActiveCamera("Editor");
 		Logger::Log("Enabled Editor", Logger::Category::Info);
 	}
 	else

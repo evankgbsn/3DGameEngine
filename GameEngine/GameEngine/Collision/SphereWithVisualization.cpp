@@ -47,6 +47,18 @@ void SphereWithVisualization::SetColor(const glm::vec3& color)
 	graphics->SetColor(glm::vec4(color, 1.0f));
 }
 
+void SphereWithVisualization::ToggleVisibility()
+{
+	if (graphics->IsDisabled())
+	{
+		GraphicsObjectManager::Enable(graphics);
+	}
+	else
+	{
+		GraphicsObjectManager::Disable(graphics);
+	}
+}
+
 void SphereWithVisualization::InitializeGraphics()
 {
 	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Sphere"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));

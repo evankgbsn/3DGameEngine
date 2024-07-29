@@ -20,6 +20,8 @@ public:
 
 	void SetColor(const glm::vec3& color);
 
+	void ToggleVisibility();
+
 private:
 
 	void InitializeGraphics();

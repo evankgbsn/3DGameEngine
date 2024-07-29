@@ -1,6 +1,8 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
+#include "../Renderer/GraphicsObjects/GOLit.h"
+
 #include <string>
 #include <vector>
 #include "glm/vec3.hpp"
@@ -21,25 +23,29 @@ public:
 
 public:
 
-	Terrain(const std::string& name, const std::string& heightMapPath, const std::string& diffTextureName, const std::string& specTextureName, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	Terrain(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
 
 	~Terrain();
 
 	void ToggleCells();
 	
-	void HighlightCell(Cell cell);
+	void HighlightCell(const Cell& cell);
 	
-	Cell TestPoint(glm::vec3 point);
+	Cell TestPoint(const glm::vec3& point);
 	
-	float GetCellHeight(Cell cell);
+	float GetCellHeight(const Cell& cell);
 	
-	glm::vec3 GetTerrainPoint(glm::vec3 point);
+	glm::vec3 GetTerrainPoint(const glm::vec3& point);
 	
-	glm::vec3 GetTerrainNormal(glm::vec3 point);
+	glm::vec3 GetTerrainNormal(const glm::vec3& point);
+
+	void UpdateHeightByTerrainPoint(const glm::vec3& point, float heightChange);
 	
 	void VisualizeAllCells();
 	
 	const std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>>& GetCellArray() const;
+
+	void UpdateTerrainCells();
 
 private:
 

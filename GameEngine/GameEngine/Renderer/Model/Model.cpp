@@ -249,6 +249,11 @@ const std::vector<Vertex>& Model::GetVertices() const
 	return vertices;
 }
 
+std::vector<Vertex>& Model::GetVertices()
+{
+	return vertices;
+}
+
 const std::vector<unsigned int>& Model::GetIndices() const
 {
 	return indices;
@@ -398,6 +403,12 @@ void Model::BindBuffer()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexArrayBuffer);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void Model::UpdateBuffer()
+{
+	DestroyVertexArrayBuffer();
+	CreateVertexArrayBuffer();
 }
 
 void Model::CPUSkinMatrices(Armature& armature, Pose& pose)

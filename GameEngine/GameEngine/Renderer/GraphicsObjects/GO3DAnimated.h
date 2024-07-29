@@ -56,6 +56,8 @@ private:
 
 	unsigned int clip;
 
+	unsigned int lastPausedFrame;
+
 };
 
 #endif // GO3DANIMATED_H

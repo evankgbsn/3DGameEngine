@@ -56,6 +56,10 @@ void Scene::GameUpdate()
 
 void Scene::EditorUpdate()
 {
+	for (auto& object : objects)
+	{
+		object.second->EditorUpdate();
+	}
 }
 
 void Scene::InitializeObjects()

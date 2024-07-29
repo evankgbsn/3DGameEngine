@@ -2,6 +2,7 @@
 
 #include "../Animation/Animation.h"
 #include "../Animation/Armature.h"
+#include "../../Editor/Editor.h"
 #include "../Model/Model.h"
 
 glm::mat4* GO3DAnimated::GetAnimPoseArray()
@@ -15,11 +16,24 @@ glm::mat4* GO3DAnimated::GetAnimInvBindPoseArray()
 }
 
 void GO3DAnimated::Update()
-{
-	animation->Update(animationData.pose);
+{	
+	if (Editor::Enabled())
+	{
+		animation->SetFrame(lastPausedFrame);
+		animation->Update(animationData.pose);
+	}
+	else
+	{
+		animation->Update(animationData.pose);
+		lastPausedFrame = animation->GetFrame();
+	}
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
 	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
+
+
+	
+	
 }
 
 void GO3DAnimated::SetClip(unsigned int clipIndex)
@@ -27,6 +41,7 @@ void GO3DAnimated::SetClip(unsigned int clipIndex)
 	delete animation;
 	animation = new Animation(model->GetBakedAnimation(clipIndex));
 	clip = clipIndex;
+
 }
 
 unsigned int GO3DAnimated::GetClip() const

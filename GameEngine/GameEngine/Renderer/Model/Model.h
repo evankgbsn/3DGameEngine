@@ -42,6 +42,8 @@ public:
 
 	const std::vector<Vertex>& GetVertices() const;
 
+	std::vector<Vertex>& GetVertices();
+
 	const std::vector<unsigned int>& GetIndices() const;
 
 	Armature* const GetArmature() const;
@@ -57,6 +59,8 @@ public:
 	void FlipTriangleWindingOrder();
 
 	void BindBuffer();
+
+	void UpdateBuffer();
 
 protected:
 

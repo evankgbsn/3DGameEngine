@@ -65,6 +65,15 @@ void StaticCollider::Update()
 
 void StaticCollider::ToggleVisibility()
 {
+	this->boundingSphere->ToggleVisibility();
+	if (trianglesColliderVisualization->IsDisabled())
+	{
+		GraphicsObjectManager::Enable(trianglesColliderVisualization);
+	}
+	else
+	{
+		GraphicsObjectManager::Disable(trianglesColliderVisualization);
+	}
 }
 
 bool StaticCollider::Intersect(const OrientedBoundingBox& other) const

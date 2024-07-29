@@ -80,6 +80,8 @@ private:
 	std::function<void(int)>* moveCamUp;
 	std::function<void(int)>* moveCamDown;
 
+	std::function<void(int)>* updateCollisionVisuals;
+
 	glm::vec3 cameraTarget;
 	glm::vec3 camPosition;
 
