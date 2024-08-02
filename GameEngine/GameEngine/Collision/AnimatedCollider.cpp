@@ -24,6 +24,8 @@ AnimatedCollider::AnimatedCollider(GO3DAnimated* const graphicsObject) :
 	InitializeSphere();
 	InitializeOBBs();
 	InitializeMeshColliderVisualization();
+
+	ToggleVisibility();
 }
 
 AnimatedCollider::~AnimatedCollider()
@@ -126,7 +128,7 @@ void AnimatedCollider::ToggleVisibility()
 
 	if (visible)
 	{
-		GraphicsObjectManager::Disable(meshColliderVisualization);
+		//GraphicsObjectManager::Disable(meshColliderVisualization);
 	}
 	else
 	{

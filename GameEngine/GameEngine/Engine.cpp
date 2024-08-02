@@ -30,18 +30,39 @@ Engine* Engine::instance = nullptr;
 void Engine::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<Engine>(&instance, "Engine");
+
+	instance->editorState = Editor::Enabled();
 }
 
 void Engine::Run()
 {
 	while (!Renderer::ShouldTerminate())
 	{
+		auto managePlay = []()
+			{
+				if (instance->editorState != Editor::Enabled())
+				{
+					if (instance->editorState)
+					{
+						SceneManager::StartLoadedScenes();
+					}
+					else
+					{
+						SceneManager::EndLoadedScenes();
+					}
+				}
+
+				instance->editorState = Editor::Enabled();
+			};
+
+
 		if (Editor::Enabled())
 		{
 			TimeManager::RecordUpdateTime();
 			Renderer::Update();
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
+			Editor::Update();
 		}
 		else
 		{
@@ -51,6 +72,8 @@ void Engine::Run()
 			SceneManager::Update();
 		}
 		
+
+		managePlay();
 	}
 }
 

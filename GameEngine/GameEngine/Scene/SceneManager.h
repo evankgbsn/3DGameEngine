@@ -27,6 +27,12 @@ public:
 
 	static Scene* const GetLoadedScene(const std::string& name);
 
+	static std::vector<Scene*> GetLoadedScenes();
+
+	static void StartLoadedScenes();
+
+	static void EndLoadedScenes();
+
 private:
 
 	friend class SingletonHelpers;

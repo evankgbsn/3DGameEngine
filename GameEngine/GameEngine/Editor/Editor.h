@@ -1,6 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+class GOColored;
+
 class Editor
 {
 public:
@@ -16,6 +18,10 @@ public:
 	static void Disbale();
 
 	static void Enable();
+
+	static bool ShiftPressed();
+
+	static float GetGridY();
 
 private:
 
@@ -35,9 +41,19 @@ private:
 
 	void SetupEditorInput();
 
+	void InitializeGrid();
+
+	void TerminateGrid();
+
 	static Editor* instance;
 
+	GOColored* grid;
+
+	float gridSpeed;
+
 	bool enabled;
+
+	bool shiftPressed;
 };
 
 #endif // EDITOR_H

@@ -5,19 +5,29 @@
 #include "../Renderer/Camera/CameraManager.h"
 #include "../Time/TimeManager.h"
 #include "../Renderer/Window/WindowManager.h"
+#include "../Renderer/Model/ModelManager.h"
+#include "../Renderer/GraphicsObjects/GOColored.h"
+#include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "Select/SelectionManager.h"
 
 Editor* Editor::instance = nullptr;
 
 Editor::Editor() :
-	enabled(true)
+	enabled(true),
+	grid(nullptr),
+	shiftPressed(false),
+	gridSpeed(5.0f)
 {
 	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
 	SetupEditorInput();
+	InitializeGrid();
+
+	SelectionManager::Initialize();
 }
 
 Editor::~Editor()
 {
-
+	SelectionManager::Terminate();
 }
 
 void Editor::Initialize()
@@ -32,6 +42,18 @@ void Editor::Terminate()
 
 void Editor::Update()
 {
+	if (instance != nullptr)
+	{
+		if (!instance->grid->IsDisabled())
+		{
+			const glm::vec3& cameraPosition = CameraManager::GetActiveCamera().GetPosition();
+			int x = cameraPosition.x;
+			int z = cameraPosition.z;
+			instance->grid->SetTranslation(glm::vec3(x, instance->grid->GetTranslation().y, z));
+		}
+
+		SelectionManager::Update();
+	}
 }
 
 bool Editor::Enabled()
@@ -50,6 +72,12 @@ void Editor::Disbale()
 	{
 		instance->enabled = false;
 		CameraManager::SetActiveCamera("Main");
+
+		if (!instance->grid->IsDisabled())
+		{
+			GraphicsObjectManager::Disable(instance->grid);
+		}
+
 		Logger::Log("Disabled Editor", Logger::Category::Info);
 	}
 	else
@@ -64,12 +92,41 @@ void Editor::Enable()
 	{
 		instance->enabled = true;
 		CameraManager::SetActiveCamera("Editor");
+
+		if (instance->grid->IsDisabled())
+		{
+			GraphicsObjectManager::Enable(instance->grid);
+		}
+
 		Logger::Log("Enabled Editor", Logger::Category::Info);
 	}
 	else
 	{
 		Logger::Log("Calling Editor::Enable before Editor::Initialize()", Logger::Category::Error);
 	}
+}
+
+bool Editor::ShiftPressed()
+{
+	if (instance != nullptr)
+	{
+		return instance->shiftPressed;
+	}
+
+	return false;
+}
+
+float Editor::GetGridY()
+{
+	if (instance != nullptr)
+	{
+		if (instance->grid != nullptr)
+		{
+			return instance->grid->GetTranslation().y;
+		}
+	}
+
+	return 0.0f;
 }
 
 void Editor::SetupEditorInput()
@@ -149,7 +206,100 @@ void Editor::SetupEditorInput()
 			toggle = !toggle;
 		});
 
+	static std::function<void(int)> shiftPress = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				instance->shiftPressed = true;
+			}
+		});
+
+	static std::function<void(int)> shiftRelease = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				instance->shiftPressed = false;
+			}
+		});
+
+	static std::function<void(int)> upArrowPressed = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				if (!instance->grid->IsDisabled())
+				{
+					if (!instance->shiftPressed)
+					{
+						instance->grid->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * TimeManager::DeltaTime() * instance->gridSpeed);
+					}
+				}
+			}
+		});
+
+	static std::function<void(int)> downArrowPressed = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				if (!instance->grid->IsDisabled())
+				{
+					if (!instance->shiftPressed)
+					{
+						instance->grid->Translate(glm::vec3(0.0f, -1.0f, 0.0f) * TimeManager::DeltaTime() * instance->gridSpeed);
+					}
+					else
+					{
+					}
+				}
+			}
+		});
+
+
+	static std::function<void(int)> upArrowPress = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				if (!instance->grid->IsDisabled())
+				{
+					if (instance->shiftPressed)
+					{
+						glm::vec3 gridPos = instance->grid->GetTranslation();
+
+						int y = gridPos.y;
+
+						y += 1;
+
+						instance->grid->SetTranslation(glm::vec3(gridPos.x, y, gridPos.z));
+					}
+				}
+			}
+		});
+
+	static std::function<void(int)> downArrowPress = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				if (!instance->grid->IsDisabled())
+				{
+					if (instance->shiftPressed)
+					{
+						glm::vec3 gridPos = instance->grid->GetTranslation();
+
+						int y = gridPos.y;
+
+						y -= 1;
+
+						instance->grid->SetTranslation(glm::vec3(gridPos.x, y, gridPos.z));
+					}
+				}
+			}
+		});
 	
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_UP, &upArrowPress, "gridMovement");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_DOWN, &downArrowPress, "gridMovement");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, &shiftRelease, "gridMovement");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, &shiftPress, "gridMovement");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_UP, &upArrowPressed, "gridMovement");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_DOWN, &downArrowPressed, "gridMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_W, &wPress, "camMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_A, &aPress, "camMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_S, &sPress, "camMovement");
@@ -162,4 +312,18 @@ void Editor::SetupEditorInput()
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_SPACE, &spacePress, "camMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, &escPress, "hiddenCursor");
 
+}
+
+void Editor::InitializeGrid()
+{
+	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 500.0f, 500.0f, 500U, 500U, 0, 0.0f);
+
+	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+	grid->SetDrawMode(GO3D::Mode::LINE);
+}
+
+void Editor::TerminateGrid()
+{
+	GraphicsObjectManager::Delete(grid);
 }

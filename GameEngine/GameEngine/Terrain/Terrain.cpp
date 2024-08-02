@@ -49,6 +49,8 @@ Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const s
 	}
 
 	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
+
+	ToggleCells();
 }
 
 Terrain::~Terrain()

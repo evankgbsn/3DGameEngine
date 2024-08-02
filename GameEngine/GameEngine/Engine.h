@@ -32,6 +32,8 @@ private:
 	~Engine();
 
 	static Engine* instance;
+
+	bool editorState;
 };
 
 #endif // ENGINE_H

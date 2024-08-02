@@ -85,6 +85,9 @@
     <Filter Include="Source Files\Editor">
       <UniqueIdentifier>{9f053ae4-965a-4799-bd13-0677f888c895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Editor\Select">
+      <UniqueIdentifier>{7090faea-2993-40ac-8b49-11fd1e95a361}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -350,6 +353,9 @@
     </ClCompile>
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredInstanced.cpp">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Select\SelectionManager.cpp">
+      <Filter>Source Files\Editor\Select</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -625,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredInstanced.h">
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Select\SelectionManager.h">
+      <Filter>Source Files\Editor\Select</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

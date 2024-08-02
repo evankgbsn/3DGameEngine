@@ -19,8 +19,10 @@ Terrain* GameTerrain::GetTerrain() const
 
 void GameTerrain::Initialize()
 {
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", std::vector<GOLit::Material>({ {TextureManager::GetTexture("Grass"), TextureManager::GetTexture("Grass")}, {TextureManager::GetTexture("Grass"), TextureManager::GetTexture("Grass")} }), 1000, 1000, 400, 400, 30, -30);
+	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", std::vector<GOLit::Material>({ {TextureManager::GetTexture("Grass"), TextureManager::GetTexture("Grass")}, {TextureManager::GetTexture("Dirt"), TextureManager::GetTexture("Dirt")} }), 1000, 1000, 400, 400, 30, -30);
 	//terrain->ToggleCells();
+
+	
 }
 
 void GameTerrain::Terminate()
@@ -45,7 +47,12 @@ void GameTerrain::Load()
 
 	if (!TextureManager::TextureLoaded("Grass"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Green.png", "Grass");
+		TextureManager::LoadTexture("Assets/Texture/Grass.png", "Grass");
+	}
+
+	if (!TextureManager::TextureLoaded("Dirt"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Dirt.png", "Dirt");
 	}
 }
 

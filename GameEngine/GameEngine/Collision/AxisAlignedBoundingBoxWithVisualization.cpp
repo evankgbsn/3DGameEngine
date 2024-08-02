@@ -52,7 +52,7 @@ void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 {
 	if (!graphics->IsDisabled())
 	{
-		//GraphicsObjectManager::Disable(graphics);
+		GraphicsObjectManager::Disable(graphics);
 	}
 	else
 	{

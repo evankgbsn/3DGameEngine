@@ -46,6 +46,14 @@ private:
 
 	void Unload() override;
 
+	bool Hovered() const override;
+
+	void SetPosition(const glm::vec3& newPos) override;
+
+	void Start() override;
+
+	glm::vec3 GetPosition() override;
+
 	Terrain* GetTerrain() const;
 
 	GOTexturedAnimatedLit* graphics;

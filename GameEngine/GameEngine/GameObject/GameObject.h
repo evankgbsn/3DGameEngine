@@ -1,6 +1,8 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <glm/glm.hpp>
+
 #include <unordered_map>
 #include <string>
 
@@ -9,6 +11,16 @@ class Component;
 class GameObject
 {
 public:
+
+	virtual bool Hovered() const;
+
+	virtual void SetPosition(const glm::vec3& pos) {};
+
+	virtual glm::vec3 GetPosition() { static glm::vec3 defaultReturn; return defaultReturn; };
+
+	virtual void Start() {};
+
+	virtual void End() {};
 
 protected:
 

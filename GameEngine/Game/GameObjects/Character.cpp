@@ -188,7 +188,6 @@ Character::~Character()
 
 void Character::Initialize()
 {
-
 	//GOColoredInstanced* inst = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("Woman"), { 1.0f, 0.0f, 0.0f, 1.0f }, 1);
 	//inst->SetTranslation({0.0f, 0.0f, 0.0f}, 0);
 	//inst->SetRotation(glm::mat4(1.0f), 0);
@@ -200,7 +199,6 @@ void Character::Initialize()
 	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
 	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
 	treeGraphics->SetShine(8.0f);
-
 
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
@@ -357,30 +355,6 @@ void Character::EditorUpdate()
 	collider->Update();
 	collider2->Update();
 	treeCollider->Update();
-
-	Camera& cam = CameraManager::GetActiveCamera();
-
-	// Screen space to world space for object picking.
-	Window* window = WindowManager::GetWindow("Engine");
-	glm::vec2 cursorPos = window->GetCursorPosition();
-	glm::mat4 invPersp = glm::inverse(cam.GetProjection());
-	glm::mat4 invView = glm::inverse(cam.GetView());
-	glm::mat4 screenToNDC(
-		glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
-		glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
-		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-		glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
-	);
-	screenToNDC = glm::inverse(screenToNDC);
-
-	glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
-	x = screenToNDC * x;
-	x = invPersp * x;
-	x = invView * x;
-	x /= x.w;
-
-	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
-	collider->Intersect(lineFromScreenToWorld);
 }
 
 void Character::Load()
@@ -444,6 +418,52 @@ void Character::Load()
 void Character::Unload()
 {
 
+}
+
+bool Character::Hovered() const
+{
+	Camera& cam = CameraManager::GetActiveCamera();
+
+	// Screen space to world space for object picking.
+	Window* window = WindowManager::GetWindow("Engine");
+	glm::vec2 cursorPos = window->GetCursorPosition();
+	glm::mat4 invPersp = glm::inverse(cam.GetProjection());
+	glm::mat4 invView = glm::inverse(cam.GetView());
+	glm::mat4 screenToNDC(
+		glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
+		glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+		glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
+	);
+	screenToNDC = glm::inverse(screenToNDC);
+
+	glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
+	x = screenToNDC * x;
+	x = invPersp * x;
+	x = invView * x;
+	x /= x.w;
+
+	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
+	return collider->Intersect(lineFromScreenToWorld);
+}
+
+void Character::SetPosition(const glm::vec3& newPos)
+{
+	graphics->SetTranslation(newPos);
+	collider->Update();
+}
+
+void Character::Start()
+{
+	if (graphics != nullptr)
+	{
+		targetPosition = graphics->GetTranslation();
+	}
+}
+
+glm::vec3 Character::GetPosition()
+{
+	return graphics->GetTranslation();
 }
 
 Terrain* Character::GetTerrain() const

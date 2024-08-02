@@ -16,6 +16,29 @@ GameObject* const Scene::GetGameObject(const std::string& name) const
 	{
 		return objects.find(name)->second;
 	}
+
+	return nullptr;
+}
+
+const std::unordered_map<std::string, GameObject*>& Scene::GetGameObjects() const
+{
+	return objects;
+}
+
+void Scene::Start()
+{
+	for (auto& object : objects)
+	{
+		object.second->Start();
+	}
+}
+
+void Scene::End()
+{
+	for (auto& object : objects)
+	{
+		object.second->End();
+	}
 }
 
 void Scene::RegisterGameObject(GameObject* object, const std::string& name)

@@ -22,3 +22,8 @@ Component* const GameObject::GetComponent(const std::string& component) const
 {
 	return nullptr;
 }
+
+bool GameObject::Hovered() const
+{
+	return false;
+}

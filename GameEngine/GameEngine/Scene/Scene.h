@@ -17,6 +17,12 @@ public:
 
 	GameObject* const GetGameObject(const std::string& GameObejctName) const;
 
+	const std::unordered_map<std::string, GameObject*>& GetGameObjects() const;
+
+	void Start();
+
+	void End();
+
 protected:
 
 	virtual void Initialize() = 0;

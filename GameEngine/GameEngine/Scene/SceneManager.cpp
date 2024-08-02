@@ -121,6 +121,44 @@ Scene* const SceneManager::GetLoadedScene(const std::string& name)
 	return nullptr;
 }
 
+std::vector<Scene*> SceneManager::GetLoadedScenes()
+{
+	std::vector<Scene*> scenes;
+
+	if (instance != nullptr)
+	{
+		scenes.reserve(instance->loadedScenes.size());
+		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		{
+			scenes.push_back(scene.second);
+		}
+	}
+
+	return scenes;
+}
+
+void SceneManager::StartLoadedScenes()
+{
+	if (instance != nullptr)
+	{
+		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		{
+			scene.second->Start();
+		}
+	}
+}
+
+void SceneManager::EndLoadedScenes()
+{
+	if (instance != nullptr)
+	{
+		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		{
+			scene.second->End();
+		}
+	}
+}
+
 SceneManager::SceneManager()
 {
 }
