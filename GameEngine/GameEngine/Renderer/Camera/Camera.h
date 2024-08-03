@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "../../Math/Shapes/LineSegment3D.h"
+
 #include <glm/glm.hpp>
 
 class Window;
@@ -76,6 +78,8 @@ public:
 	void SetType(const Camera::Type& newType);
 
 	void SetWindow(Window* const newWindow);
+
+	static LineSegment3D CastLineFromCursorWithActiveCamera();
 	
 private:
 

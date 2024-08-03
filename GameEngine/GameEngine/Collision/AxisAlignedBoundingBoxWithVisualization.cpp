@@ -56,7 +56,7 @@ void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 	}
 	else
 	{
-		GraphicsObjectManager::Enable(graphics);
+		//GraphicsObjectManager::Enable(graphics);
 	}
 }
 

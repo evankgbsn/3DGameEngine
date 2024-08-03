@@ -58,21 +58,7 @@ private:
 
 	GOTexturedAnimatedLit* graphics;
 
-	GOTexturedAnimatedLit* graphics2;
-
-	GOTexturedLit* homeGraphics;
-
-	GOTexturedLit* treeGraphics;
-
-	GOTextured* skybox;
-
-	StaticCollider* treeCollider;
-
 	AnimatedCollider* collider;
-
-	AnimatedCollider* collider2;
-
-	OrientedBoundingBoxWithVisualization* obb;
 
 	std::function<void(int)>* toggleColliderVisibility;
 

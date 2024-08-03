@@ -7,7 +7,7 @@
 #include <functional>
 
 
-class LightArray;
+class LightObject;
 class Boxes;
 class Tree;
 class LargePlane;
@@ -39,7 +39,7 @@ private:
 
 	void Terminate() override;
 
-	LightArray* spotLights;
+	LightObject* spotLight;
 
 	DirectionalLightGameObject* directionalLight;
 

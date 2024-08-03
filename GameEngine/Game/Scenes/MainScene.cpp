@@ -1,7 +1,7 @@
 #include "MainScene.h"
 
 #include "../GameObjects/LargePlane.h"
-#include "../GameObjects/LightArray.h"
+#include "../GameObjects/LightObject.h"
 #include "../GameObjects/Character.h"
 #include "../GameObjects/Tree.h"
 #include "../GameObjects/DirectionalLightGameObject.h"
@@ -11,7 +11,7 @@
 #include "../GameObjects/GameTerrain.h"
 
 MainScene::MainScene() :
-	spotLights(new LightArray()),
+	spotLight(new LightObject()),
 	directionalLight(new DirectionalLightGameObject()),
 	character(new Character()),
 	////tree(new Tree()),
@@ -36,7 +36,7 @@ MainScene::~MainScene()
 	//delete unloadSub;
 	//delete loadSub;
 	//delete cam;
-	delete spotLights;
+	delete spotLight;
 	delete directionalLight;
 	delete character;
 	////delete tree;
@@ -56,7 +56,7 @@ void MainScene::Initialize()
 	RegisterGameObject(groundPlane, "Ground");
 	RegisterGameObject(character, "Character");
 	//RegisterGameObject(tree, "Tree");
-	RegisterGameObject(spotLights, "Lights");
+	RegisterGameObject(spotLight, "Light");
 	RegisterGameObject(terrain, "Terrain");
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_L, loadSub, "LoadSubscene");

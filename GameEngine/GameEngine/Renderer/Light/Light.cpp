@@ -12,6 +12,11 @@ void Light::SetColor(const glm::vec4& newColor)
 	color = newColor;
 }
 
+SphereWithVisualization* Light::GetCollider() const
+{
+	return collider;
+}
+
 Light::Light(const glm::vec4& c) :
 	color(c),
 	collider()

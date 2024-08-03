@@ -26,6 +26,8 @@ public:
 
 	const float& GetQudratic() const;
 
+	void SetPosition(const glm::vec3& pos);
+
 protected:
 
 private:

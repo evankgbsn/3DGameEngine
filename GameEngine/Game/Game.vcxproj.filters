@@ -45,7 +45,7 @@
     <ClCompile Include="GameObjects\LargePlane.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\LightArray.cpp">
+    <ClCompile Include="GameObjects\LightObject.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\Tree.cpp">
@@ -77,7 +77,7 @@
     <ClInclude Include="GameObjects\LargePlane.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\LightArray.h">
+    <ClInclude Include="GameObjects\LightObject.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Tree.h">

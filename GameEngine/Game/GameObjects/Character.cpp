@@ -42,10 +42,7 @@ Character::Character() :
 
 	auto snapToTerrain = [this, terrain]()
 		{
-			if (terrain != nullptr)
-			{
-				graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
-			}
+			targetPosition = graphics->GetTranslation();
 		};
 
 	forward = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
@@ -88,31 +85,9 @@ Character::Character() :
 
 	castLine = new std::function<void(int)>([this](int keyCode)
 		{
-			// Screen space to world space for object picking.
-			Window* window = WindowManager::GetWindow("Engine");
-			Camera& cam = CameraManager::GetActiveCamera();
-			glm::vec2 cursorPos = window->GetCursorPosition();
-			glm::mat4 invPersp = glm::inverse(cam.GetProjection());
-			glm::mat4 invView = glm::inverse(cam.GetView());
-			glm::mat4 screenToNDC(
-				glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
-				glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
-				glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-				glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
-			);
-			screenToNDC = glm::inverse(screenToNDC);
-
-			glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
-			x = screenToNDC * x;
-			x = invPersp * x;
-			x = invView * x;
-			x /= x.w;
-
-			LineSegment3D lineFromScreenToWorld(cam.GetPosition(), glm::vec3(x));
-
-			Ray rayFromScreenToWorld(cam.GetPosition(), glm::normalize(glm::vec3(x) - cam.GetPosition()));
-
 			Terrain* terrain = GetTerrain();
+
+			LineSegment3D lineToWorld = Camera::CastLineFromCursorWithActiveCamera();
 
 			if (terrain != nullptr)
 			{
@@ -124,7 +99,7 @@ Character::Character() :
 				{
 					for (AxisAlignedBoundingBoxWithVisualization* aabb : boxArray)
 					{
-						if (aabb->LineIntersect(lineFromScreenToWorld))
+						if (aabb->LineIntersect(lineToWorld))
 						{
 							targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
 
@@ -188,83 +163,41 @@ Character::~Character()
 
 void Character::Initialize()
 {
-	//GOColoredInstanced* inst = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("Woman"), { 1.0f, 0.0f, 0.0f, 1.0f }, 1);
-	//inst->SetTranslation({0.0f, 0.0f, 0.0f}, 0);
-	//inst->SetRotation(glm::mat4(1.0f), 0);
-	//inst->SetScale({ 1.0f, 1.0f, 1.0f }, 0);
-
 	Text* text = new Text("This is test text", "arial");
-
-	treeGraphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Sphere"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("RandomGrey"));
-	//treeGraphics->Scale({ 2.0f, 2.0f, 2.0f });
-	treeGraphics->SetTranslation({ 10.5f, 0.0f, 10.5f });
-	treeGraphics->SetShine(8.0f);
 
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
-
 	collider = new AnimatedCollider(graphics);
-	//collider->ToggleVisibility();
-
-	graphics2 = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("RandomGrey"), TextureManager::GetTexture("Random"));
-	graphics2->SetShine(32.0f);
-	graphics2->SetClip(3);
-	graphics2->Translate({ 10.0f, -0.5f, 0.0f });
-
-	//skybox = GraphicsObjectManager::Create3DGOTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
-	//skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f });
-	
-
-	collider2 = new AnimatedCollider(graphics2);
-	//collider2->ToggleVisibility();
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
-	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, forward, "walk");
-	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
-	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
-	//InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, forward, "walk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, updateCollisionVisuals, "ColisionVisuals");
 
-	//obb = new OrientedBoundingBoxWithVisualization(ModelManager::GetModel("Woman")->GetVertices());
-
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
-
-	Terrain* terrain = GetTerrain();
-
-	if (terrain != nullptr)
-	{
-		treeGraphics->SetTranslation(terrain->GetTerrainPoint(treeGraphics->GetTranslation()));
-		graphics2->SetTranslation(terrain->GetTerrainPoint(graphics2->GetTranslation()));
-	}
-	
-	treeCollider = new StaticCollider(treeGraphics);
-	//treeCollider->ToggleVisibility();
 }
 
 void Character::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "CastLineFromCamera");
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "walk");
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
-	//InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "walk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "walk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_H, "CameraMove");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_K, "CameraMove");
 
 	delete collider;
-	delete collider2;
-	delete treeCollider;
-	//delete obb;
 
 	GraphicsObjectManager::Delete(graphics);
-	GraphicsObjectManager::Delete(graphics2);
-	GraphicsObjectManager::Delete(treeGraphics);
 }
 
 void Character::GameUpdate()
@@ -274,14 +207,11 @@ void Character::GameUpdate()
 	if (graphics->GetTranslation() != targetPosition)
 	{
 		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
-
-		if(terrain != nullptr)
-			graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
-
 		terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
 	}
 
-	graphics2->Rotate(5.0f * TimeManager::DeltaTime(), {0.0f, 1.0f, 0.0f});
+	if (terrain != nullptr)
+		graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 
 	Camera& cam = CameraManager::GetCamera("Main");
 
@@ -290,108 +220,18 @@ void Character::GameUpdate()
 	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
 
 	collider->Update();
-	//collider->Intersect(*obb);
-	collider2->Update();
-
-	treeCollider->Update();
-
-	// Screen space to world space for object picking.
-	Window* window = WindowManager::GetWindow("Engine");
-	glm::vec2 cursorPos = window->GetCursorPosition();
-	glm::mat4 invPersp = glm::inverse(cam.GetProjection());
-	glm::mat4 invView = glm::inverse(cam.GetView());
-	glm::mat4 screenToNDC(
-		glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
-		glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
-		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-		glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
-	);
-	screenToNDC = glm::inverse(screenToNDC);
-
-	glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
-	x = screenToNDC * x;
-	x = invPersp * x;
-	x = invView * x;
-	x /= x.w;
-
-	LineSegment3D lineFromScreenToWorld(cam.GetPosition(), x);
-
-	const glm::vec3 normal = glm::normalize(glm::vec3(x) - cam.GetPosition());
-
-	Ray ray(cam.GetPosition(), normal);
-
-	Plane plane(glm::vec3(0.0f, 1.0f, 0.0f), treeGraphics->GetTranslation().y);
-
-	glm::vec3 planePoint = cam.GetPosition() + normal * plane.RayIntersect(ray);
-
-	//if (treeCollider->Intersect(ray) != -1)
-	//{
-
-	
-
-	if (terrain != nullptr)
-	{
-		const glm::vec3 terrainPoint = terrain->GetTerrainPoint(planePoint);
-
-		const glm::vec3 translation = treeGraphics->GetTranslation() - terrainPoint;
-
-		treeCollider->Translate(-translation);
-
-		treeGraphics->SetTranslation(planePoint);
-	}
-	
-	//};
-
-	collider->Intersect(lineFromScreenToWorld);
-
-
-	//collider->Intersect(*treeCollider);
-
-	collider->Intersect(*collider2);
 }
 
 void Character::EditorUpdate()
 {
 	collider->Update();
-	collider2->Update();
-	treeCollider->Update();
 }
 
 void Character::Load()
 {
-	if (!TextureManager::TextureLoaded("Green"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/OIP.jpg", "Green");
-	}
-
-	if (!TextureManager::TextureLoaded("RockGround"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/RockGround.png", "RockGround");
-	}
-
-	if (!ModelManager::ModelLoaded("Cube"))
-	{
-		ModelManager::LoadModel("Cube", "Assets/Model/Cube.gltf");
-	}
-
-	if (!ModelManager::ModelLoaded("Home"))
-	{
-		ModelManager::LoadModel("Home", "Assets/Model/HomeModel.gltf");
-	}
-
 	if (!TextureManager::TextureLoaded("Woman"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Woman.png", "Woman");
-	}
-
-	if (!TextureManager::TextureLoaded("Random"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/container2_specular.png", "Random");
-	}
-
-	if (!TextureManager::TextureLoaded("RandomGrey"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/Grey.png", "RandomGrey");
 	}
 
 	if (!ModelManager::ModelLoaded("Woman"))
@@ -399,19 +239,9 @@ void Character::Load()
 		ModelManager::LoadModel("Woman", "Assets/Model/Woman.gltf");
 	}
 
-	if (!ModelManager::ModelLoaded("Tree"))
+	if (!TextureManager::TextureLoaded("Random"))
 	{
-		ModelManager::LoadModel("Tree", "Assets/Model/Tree.gltf");
-	}
-
-	if (!TextureManager::TextureLoaded("CrateTree"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/container2.png", "CrateTree");
-	}
-
-	if (!TextureManager::TextureLoaded("GreyTree"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/Grey.png", "GreyTree");
+		TextureManager::LoadTexture("Assets/Texture/Grey.png", "Random");
 	}
 }
 

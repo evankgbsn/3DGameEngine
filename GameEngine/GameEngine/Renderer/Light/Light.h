@@ -14,6 +14,8 @@ public:
 
 	void SetColor(const glm::vec4& newColor);
 
+	SphereWithVisualization* GetCollider() const;
+
 protected:
 
 	Light(const glm::vec4& color);

@@ -59,3 +59,14 @@ const float& SpotLight::GetQudratic() const
 {
 	return quadratic;
 }
+
+void SpotLight::SetPosition(const glm::vec3& pos)
+{
+	glm::mat4 transform(1.0f);
+	transform = glm::translate(transform, pos);
+
+	collider->Transform(transform);
+	collider->Update(transform);
+
+	position = pos;
+}

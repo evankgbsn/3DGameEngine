@@ -65,7 +65,17 @@ void SelectionManager::Update()
 
 			glm::vec3 planePoint = cam.GetPosition() + normal * plane.RayIntersect(ray);
 
-			instance->selection->SetPosition(planePoint);
+
+
+			if (Editor::ShiftPressed())
+			{
+				int newPosX = planePoint.x, newPosY = planePoint.y, newPosZ = planePoint.z;
+				instance->selection->SetPosition({newPosX, newPosY, newPosZ});
+			}
+			else
+			{
+				instance->selection->SetPosition(planePoint);
+			}
 		}
 	}
 }

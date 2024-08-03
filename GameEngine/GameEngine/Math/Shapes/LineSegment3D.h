@@ -23,15 +23,15 @@ public:
 
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;
 
+	LineSegment3D(const LineSegment3D&) = default;
+
+	LineSegment3D& operator=(const LineSegment3D&) = default;
+
+	LineSegment3D(LineSegment3D&&) = default;
+
+	LineSegment3D& operator=(LineSegment3D&&) = default;
+
 private:
-
-	LineSegment3D(const LineSegment3D&) = delete;
-
-	LineSegment3D& operator=(const LineSegment3D&) = delete;
-
-	LineSegment3D(LineSegment3D&&) = delete;
-
-	LineSegment3D& operator=(LineSegment3D&&) = delete;
 
 	glm::vec3 start;
 
