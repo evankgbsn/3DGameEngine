@@ -207,7 +207,7 @@ void Character::GameUpdate()
 	if (graphics->GetTranslation() != targetPosition)
 	{
 		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
-		terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
+		//terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
 	}
 
 	if (terrain != nullptr)
@@ -289,6 +289,13 @@ void Character::Start()
 	{
 		targetPosition = graphics->GetTranslation();
 	}
+
+	collider->ToggleVisibility();
+}
+
+void Character::End()
+{
+	collider->ToggleVisibility();
 }
 
 glm::vec3 Character::GetPosition()

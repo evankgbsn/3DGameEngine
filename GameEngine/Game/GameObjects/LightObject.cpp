@@ -49,3 +49,8 @@ void LightObject::SetPosition(const glm::vec3& pos)
 {
 	spotLight->SetPosition(pos);
 }
+
+glm::vec3 LightObject::GetPosition()
+{
+	return spotLight->GetPosition();
+}

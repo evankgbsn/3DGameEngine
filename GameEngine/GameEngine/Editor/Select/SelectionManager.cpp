@@ -61,11 +61,14 @@ void SelectionManager::Update()
 
 			Ray ray(cam.GetPosition(), normal);
 
-			Plane plane(glm::vec3(0.0f, 1.0f, 0.0f), Editor::GetGridY());
+			float gridY = Editor::GetGridY();
+			float selectionY = instance->selection->GetPosition().y;
+
+			Editor::SetGridY(selectionY);
+
+			Plane plane(glm::vec3(0.0f, 1.0f, 0.0f), selectionY);
 
 			glm::vec3 planePoint = cam.GetPosition() + normal * plane.RayIntersect(ray);
-
-
 
 			if (Editor::ShiftPressed())
 			{
@@ -77,6 +80,14 @@ void SelectionManager::Update()
 				instance->selection->SetPosition(planePoint);
 			}
 		}
+	}
+}
+
+GameObject* const SelectionManager::GetSelection()
+{
+	if (instance != nullptr)
+	{
+		return instance->selection;
 	}
 }
 

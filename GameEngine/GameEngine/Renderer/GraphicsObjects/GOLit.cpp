@@ -77,7 +77,7 @@ void GOLit::UpdateLighting()
 	Camera& cam = CameraManager::GetActiveCamera();
 
 	i = 0;
-	for (PointLight* pLight : LightManager::GetPointLights(cam.GetPosition(), 15.0f, 20))
+	for (PointLight* pLight : LightManager::GetPointLights(cam.GetPosition(), 100.0f, 20))
 	{
 		pointLight[i].position = glm::vec4(pLight->GetPosition(), 1.0f);
 		pointLight[i].color = pLight->GetColor();
@@ -89,7 +89,7 @@ void GOLit::UpdateLighting()
 	}
 
 	i = 0;
-	std::vector<SpotLight*> spotLights = LightManager::GetSpotLights(cam.GetPosition(), 15.0f, 20);
+	std::vector<SpotLight*> spotLights = LightManager::GetSpotLights(cam.GetPosition(), 100.0f, 20);
 	for (SpotLight* sLight : spotLights)
 	{
 		spotLight[i].position = glm::vec4(sLight->GetPosition(), 1.0f);

@@ -14,6 +14,8 @@ public:
 
 	static void Update();
 
+	static GameObject* const GetSelection();
+
 private:
 
 	friend class SingletonHelpers;

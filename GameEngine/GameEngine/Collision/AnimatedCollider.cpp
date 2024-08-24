@@ -24,8 +24,6 @@ AnimatedCollider::AnimatedCollider(GO3DAnimated* const graphicsObject) :
 	InitializeSphere();
 	InitializeOBBs();
 	InitializeMeshColliderVisualization();
-
-	ToggleVisibility();
 }
 
 AnimatedCollider::~AnimatedCollider()
@@ -128,7 +126,7 @@ void AnimatedCollider::ToggleVisibility()
 
 	if (visible)
 	{
-		//GraphicsObjectManager::Disable(meshColliderVisualization);
+		GraphicsObjectManager::Disable(meshColliderVisualization);
 	}
 	else
 	{
@@ -194,7 +192,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other) const
 
 					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect](const std::vector<Vertex>& triangleVerts)
 						{
-							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
+							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
 								{
 									const glm::ivec4& influences = vert.GetInfluences();
 
@@ -221,9 +219,9 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other) const
 								};
 
 							Triangle t1(
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
 							if (t1.LineIntersect(other))
 							{
@@ -279,7 +277,7 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 										std::for_each(std::execution::par, otherObbTriangles.begin(), otherObbTriangles.end(),
 										[this, triangleVerts, &other, &intersect](const std::vector<Vertex>& otherTriangleVerts)
 											{
-												auto skinVertexForTriangleCollider = [this](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
+												auto skinVertexForTriangleCollider = [this](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
 													{
 														const glm::ivec4& influences = vert.GetInfluences();
 
@@ -306,14 +304,14 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 													};
 
 												Triangle t1(
-													meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-													meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-													meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+													wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+													wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+													wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
 												Triangle t2(
-													other.meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[0], other.meshColliderVisualization) * glm::vec4(otherTriangleVerts[0].GetPosition(), 1.0f),
-													other.meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[1], other.meshColliderVisualization) * glm::vec4(otherTriangleVerts[1].GetPosition(), 1.0f),
-													other.meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[2], other.meshColliderVisualization) * glm::vec4(otherTriangleVerts[2].GetPosition(), 1.0f));
+													other.wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[0], other.wrapedGraphics) * glm::vec4(otherTriangleVerts[0].GetPosition(), 1.0f),
+													other.wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[1], other.wrapedGraphics) * glm::vec4(otherTriangleVerts[1].GetPosition(), 1.0f),
+													other.wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(otherTriangleVerts[2], other.wrapedGraphics) * glm::vec4(otherTriangleVerts[2].GetPosition(), 1.0f));
 
 												if (t1.TriangleIntersectRobust(t2))
 												{
@@ -406,7 +404,7 @@ bool AnimatedCollider::Intersect(const StaticCollider& other) const
 
 					for (const auto& triangleVerts : obbTriangles)
 					{
-						auto skinVertexForTriangleCollider = [this, &iterator, &intersect, &other](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
+						auto skinVertexForTriangleCollider = [this, &iterator, &intersect, &other](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
 							{
 								const glm::ivec4& influences = vert.GetInfluences();
 
@@ -433,9 +431,9 @@ bool AnimatedCollider::Intersect(const StaticCollider& other) const
 							};
 
 						Triangle t1(
-							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-							meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+							wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+							wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+							wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
 
 						static const std::vector<Triangle> otherTriangles = other.GetTriangles();
@@ -479,7 +477,7 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 
 					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect](const std::vector<Vertex>& triangleVerts)
 						{
-							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GOColoredAnimated* animatedVisualization) -> glm::mat4
+							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
 								{
 									const glm::ivec4& influences = vert.GetInfluences();
 
@@ -506,9 +504,9 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 								};
 
 							Triangle t1(
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], meshColliderVisualization) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], meshColliderVisualization) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-								meshColliderVisualization->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], meshColliderVisualization) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
 							if (t1.Raycast(other) != -1.0f)
 							{

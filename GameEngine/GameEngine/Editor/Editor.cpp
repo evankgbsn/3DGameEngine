@@ -9,6 +9,7 @@
 #include "../Renderer/GraphicsObjects/GOColored.h"
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "Select/SelectionManager.h"
+#include "../GameObject/GameObject.h"
 
 Editor* Editor::instance = nullptr;
 
@@ -129,6 +130,18 @@ float Editor::GetGridY()
 	return 0.0f;
 }
 
+void Editor::SetGridY(float newY)
+{
+	if (instance != nullptr)
+	{
+		if (instance->grid != nullptr)
+		{
+			const glm::vec3 translation = instance->grid->GetTranslation();
+			instance->grid->SetTranslation({ translation.x, newY, translation.z });
+		}
+	}
+}
+
 void Editor::SetupEditorInput()
 {
 	float cameraSpeed = 5.0f;
@@ -222,7 +235,20 @@ void Editor::SetupEditorInput()
 			}
 		});
 
-	static std::function<void(int)> upArrowPressed = std::function<void(int)>([](int keyCode)
+	auto snapObjectToGrid = []()
+		{
+			GameObject* selection = SelectionManager::GetSelection();
+
+			if (selection != nullptr)
+			{
+				const glm::vec3& gridTranslation = instance->grid->GetTranslation();
+				const glm::vec3& objectTranslation = selection->GetPosition();
+
+				selection->SetPosition({ objectTranslation.x, gridTranslation.y, objectTranslation.z });
+			}
+		};
+
+	static std::function<void(int)> upArrowPressed = std::function<void(int)>([snapObjectToGrid](int keyCode)
 		{
 			if (instance != nullptr)
 			{
@@ -230,13 +256,14 @@ void Editor::SetupEditorInput()
 				{
 					if (!instance->shiftPressed)
 					{
-						instance->grid->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * TimeManager::DeltaTime() * instance->gridSpeed);
+						instance->grid->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * TimeManager::DeltaTime() * instance->gridSpeed);	
 					}
+					snapObjectToGrid();
 				}
 			}
 		});
 
-	static std::function<void(int)> downArrowPressed = std::function<void(int)>([](int keyCode)
+	static std::function<void(int)> downArrowPressed = std::function<void(int)>([snapObjectToGrid](int keyCode)
 		{
 			if (instance != nullptr)
 			{
@@ -245,16 +272,18 @@ void Editor::SetupEditorInput()
 					if (!instance->shiftPressed)
 					{
 						instance->grid->Translate(glm::vec3(0.0f, -1.0f, 0.0f) * TimeManager::DeltaTime() * instance->gridSpeed);
+
 					}
 					else
 					{
 					}
+					snapObjectToGrid();
 				}
 			}
 		});
 
 
-	static std::function<void(int)> upArrowPress = std::function<void(int)>([](int keyCode)
+	static std::function<void(int)> upArrowPress = std::function<void(int)>([snapObjectToGrid](int keyCode)
 		{
 			if (instance != nullptr)
 			{
@@ -269,12 +298,14 @@ void Editor::SetupEditorInput()
 						y += 1;
 
 						instance->grid->SetTranslation(glm::vec3(gridPos.x, y, gridPos.z));
+
+						snapObjectToGrid();
 					}
 				}
 			}
 		});
 
-	static std::function<void(int)> downArrowPress = std::function<void(int)>([](int keyCode)
+	static std::function<void(int)> downArrowPress = std::function<void(int)>([snapObjectToGrid](int keyCode)
 		{
 			if (instance != nullptr)
 			{
@@ -289,6 +320,8 @@ void Editor::SetupEditorInput()
 						y -= 1;
 
 						instance->grid->SetTranslation(glm::vec3(gridPos.x, y, gridPos.z));
+
+						snapObjectToGrid();
 					}
 				}
 			}

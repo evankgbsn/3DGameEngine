@@ -23,6 +23,8 @@ public:
 
 	static float GetGridY();
 
+	static void SetGridY(float newY);
+
 private:
 
 	friend class SingletonHelpers;

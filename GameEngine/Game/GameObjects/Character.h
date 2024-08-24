@@ -52,6 +52,8 @@ private:
 
 	void Start() override;
 
+	void End() override;
+
 	glm::vec3 GetPosition() override;
 
 	Terrain* GetTerrain() const;
