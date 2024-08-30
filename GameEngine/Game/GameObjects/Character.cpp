@@ -153,6 +153,41 @@ Character::Character() :
 			camPosition += glm::vec3(-cameraMoveSpeed * TimeManager::DeltaTime(), 0.0f, 0.0f);
 
 		});
+
+	static glm::vec2 lastMousePos;
+
+	rotateCameraView = new std::function<void(int)>([](int)
+		{
+			InputManager::GetCursorPosition([](glm::vec2 pos) 
+				{
+					float speed = 10.0f;
+
+					float xDif = lastMousePos.x - pos.x;
+					float yDif = lastMousePos.y - pos.y;
+
+					Camera& cam = CameraManager::GetActiveCamera();
+
+					cam.Translate({0.0f, yDif * TimeManager::DeltaTime() * speed, 0.0f });
+
+					lastMousePos = pos;
+				});
+
+		});
+
+	rotateCameraViewPress = new std::function<void(int)>([](int)
+		{
+			WindowManager::GetWindow("Engine")->DisableCursor();
+
+			InputManager::GetCursorPosition([](glm::vec2 pos)
+				{
+					lastMousePos = pos;
+				});
+		});
+
+	rotateCameraViewRelease = new std::function<void(int)>([](int)
+		{
+			WindowManager::GetWindow("Engine")->EnableCursor();
+		});
 }
 
 Character::~Character()
@@ -163,7 +198,7 @@ Character::~Character()
 
 void Character::Initialize()
 {
-	Text* text = new Text("This is test text", "arial");
+	text = new Text("This is test text", "arial");
 
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
@@ -172,6 +207,9 @@ void Character::Initialize()
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_3, rotateCameraView, "Camera");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_3, rotateCameraViewPress, "Camera");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_3, rotateCameraViewRelease, "Camera");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, forward, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, backward, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, left, "walk");
@@ -182,12 +220,17 @@ void Character::Initialize()
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
+
+	Camera& cam = CameraManager::GetCamera("Main");
+
+	cam.SetPosition(graphics->GetTranslation() + camPosition);
 }
 
 void Character::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "CastLineFromCamera");
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_3, "Camera");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "walk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "walk");
@@ -198,6 +241,8 @@ void Character::Terminate()
 	delete collider;
 
 	GraphicsObjectManager::Delete(graphics);
+
+	delete text;
 }
 
 void Character::GameUpdate()
@@ -215,11 +260,23 @@ void Character::GameUpdate()
 
 	Camera& cam = CameraManager::GetCamera("Main");
 
-	cam.SetPosition(graphics->GetTranslation() + camPosition);
+	cam.SetTarget(graphics->GetTranslation());
 
-	cam.SetTarget(graphics->GetTranslation() + cameraTarget);
+	glm::vec3 direction = glm::normalize(cam.GetTarget() - cam.GetPosition());
+
+	cam.SetPosition(cam.GetTarget() + -direction * 20.0f);
 
 	collider->Update();
+
+	glm::vec2 texPos = text->GetPosition();
+
+	float speed = 4.0f;
+
+	glm::vec2 newTextPos = texPos + glm::vec2(speed* TimeManager::DeltaTime(), speed* TimeManager::DeltaTime());
+
+	text->SetPosition(newTextPos);
+
+
 }
 
 void Character::EditorUpdate()

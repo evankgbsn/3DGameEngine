@@ -16,6 +16,10 @@ public:
 
 	void Update() override;
 
+	void SetPosition(const glm::vec2& newPosition);
+
+	glm::vec2 GetPosition() const;
+
 private:
 
 	GOGlyph(const GOGlyph&) = delete;

@@ -14,6 +14,7 @@ class GOTexturedLit;
 class StaticCollider;
 class Terrain;
 class GOTextured;
+class Text;
 
 class Character : public GameObject
 {
@@ -78,11 +79,18 @@ private:
 
 	std::function<void(int)>* updateCollisionVisuals;
 
+	std::function<void(int)>* rotateCameraView;
+	std::function<void(int)>* rotateCameraViewPress;
+	std::function<void(int)>* rotateCameraViewRelease;
+
+
 	glm::vec3 cameraTarget;
 	glm::vec3 camPosition;
 
 	glm::vec3 targetPosition;
 
+
+	Text* text;
 };
 
 #endif // CHARACTER_H

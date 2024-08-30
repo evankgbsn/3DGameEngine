@@ -69,3 +69,13 @@ void GOGlyph::Update()
 
 	ShaderManager::EndShaderUsage("Font");
 }
+
+void GOGlyph::SetPosition(const glm::vec2& newPosition)
+{
+	position = newPosition;
+}
+
+glm::vec2 GOGlyph::GetPosition() const
+{
+	return position;
+}

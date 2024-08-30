@@ -15,6 +15,10 @@ public:
 
 	Text(const std::string& string, const std::string& fontName, const glm::vec4& color = {1.0f, 1.0f, 1.0f, 1.0f}, const glm::vec2& position = { 50.0f, 50.0f }, float scale = 1.0f);
 
+	void SetPosition(const glm::vec2& newPosition);
+
+	glm::vec2 GetPosition() const;
+
 	~Text();
 
 private:
@@ -32,6 +36,10 @@ private:
 	std::vector<GOGlyph*> glyphs;
 
 	std::string text;
+
+	float scale;
+
+	std::string fontName;
 
 };
 
