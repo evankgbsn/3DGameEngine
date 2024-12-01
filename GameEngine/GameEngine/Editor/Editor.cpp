@@ -17,9 +17,12 @@ Editor::Editor() :
 	enabled(true),
 	grid(nullptr),
 	shiftPressed(false),
+	rightMousePressed(false),
 	gridSpeed(5.0f)
 {
-	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
+	Camera& cam = CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
+	cam.SetPosition(glm::vec3(10.0f, 10.0f, 10.0f));
+	cam.SetTarget(glm::vec3(0.0f));
 	SetupEditorInput();
 	InitializeGrid();
 
@@ -48,9 +51,11 @@ void Editor::Update()
 		if (!instance->grid->IsDisabled())
 		{
 			const glm::vec3& cameraPosition = CameraManager::GetActiveCamera().GetPosition();
-			int x = cameraPosition.x;
-			int z = cameraPosition.z;
+			int x = (int)cameraPosition.x;
+			int z = (int)cameraPosition.z;
 			instance->grid->SetTranslation(glm::vec3(x, instance->grid->GetTranslation().y, z));
+
+			instance->FreeCameraMovement();
 		}
 
 		SelectionManager::Update();
@@ -79,6 +84,11 @@ void Editor::Disbale()
 			GraphicsObjectManager::Disable(instance->grid);
 		}
 
+		for (std::function<void()>* func : instance->onEditorDisableCallbacks)
+		{
+			(*func)();
+		}
+
 		Logger::Log("Disabled Editor", Logger::Category::Info);
 	}
 	else
@@ -97,6 +107,11 @@ void Editor::Enable()
 		if (instance->grid->IsDisabled())
 		{
 			GraphicsObjectManager::Enable(instance->grid);
+		}
+
+		for (std::function<void()>* func : instance->onEditorEnableCallbacks)
+		{
+			(*func)();
 		}
 
 		Logger::Log("Enabled Editor", Logger::Category::Info);
@@ -142,66 +157,110 @@ void Editor::SetGridY(float newY)
 	}
 }
 
+void Editor::RegisterOnEditorEnable(std::function<void()>* function)
+{
+	if (instance != nullptr)
+	{
+		instance->onEditorEnableCallbacks.push_back(function);
+	}
+}
+
+void Editor::DeregisterOnEditorEnable(std::function<void()>* function)
+{
+	if (instance != nullptr)
+	{
+		instance->onEditorEnableCallbacks.remove(function);
+	}
+}
+
+void Editor::RegisterOnEditorDisable(std::function<void()>* function)
+{
+	if (instance != nullptr)
+	{
+		instance->onEditorDisableCallbacks.push_back(function);
+	}
+}
+
+void Editor::DeregisterOnEditorDisable(std::function<void()>* function)
+{
+	if (instance != nullptr)
+	{
+		instance->onEditorDisableCallbacks.remove(function);
+	}
+}
+
 void Editor::SetupEditorInput()
 {
 	float cameraSpeed = 5.0f;
-	static std::function<void(int)> wPress = std::function<void(int)>([cameraSpeed](int keycode)
+	static std::function<void(int)> wPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
+			if (instance != nullptr)
+			{
+				if (instance->rightMousePressed)
+				{
+					Camera& cam = CameraManager::GetActiveCamera();
+					cam.Translate(cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
+				}
+			}
 		});
 
-	static std::function<void(int)> aPress = std::function<void(int)>([cameraSpeed](int keycode)
+	static std::function<void(int)> aPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * -cameraSpeed * TimeManager::DeltaTime());
-		});
-	static std::function<void(int)> sPress = std::function<void(int)>([cameraSpeed](int keycode)
-		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * -cameraSpeed * TimeManager::DeltaTime());
-		});
-
-	static std::function<void(int)> dPress = std::function<void(int)>([cameraSpeed](int keycode)
-		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
+			if (instance != nullptr)
+			{
+				if (instance->rightMousePressed)
+				{
+					Camera& cam = CameraManager::GetActiveCamera();
+					cam.Translate(-cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
+				}
+			}
 		});
 
-	float rotSpeed = 0.001f;
-	static std::function<void(int)> qPress = std::function<void(int)>([rotSpeed](int keycode)
+	static std::function<void(int)> sPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetRightVector(), rotSpeed);
-		});
-	static std::function<void(int)> ePress = std::function<void(int)>([rotSpeed](int keycode)
-		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetRightVector(), -rotSpeed);
-		});
-
-	static std::function<void(int)> zPress = std::function<void(int)>([rotSpeed](int keycode)
-		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetUpVector(), rotSpeed);
+			if (instance != nullptr)
+			{
+				if (instance->rightMousePressed)
+				{
+					Camera& cam = CameraManager::GetActiveCamera();
+					cam.Translate(-cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
+				}
+			}
 		});
 
-	static std::function<void(int)> cPress = std::function<void(int)>([rotSpeed](int keycode)
+	static glm::vec2 lookPreservationCursorPosition;
+
+	static std::function<void(int)> dPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetUpVector(), -rotSpeed);
+			if (instance != nullptr)
+			{
+				if (instance->rightMousePressed)
+				{
+					Camera& cam = CameraManager::GetActiveCamera();
+					cam.Translate(cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
+				}
+			}
 		});
 
-	static std::function<void(int)> ctrPress = std::function<void(int)>([cameraSpeed](int keycode)
+
+	static std::function<void(int)> rightMousePress = std::function<void(int)>([](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -cameraSpeed * TimeManager::DeltaTime());
+			if (instance != nullptr)
+			{
+				instance->rightMousePressed = true;
+				WindowManager::GetWindow("Engine")->DisableCursor();
+				WindowManager::GetWindow("Engine")->SetCursorPosition(lookPreservationCursorPosition);
+			}
 		});
-	
-	static std::function<void(int)> spacePress = std::function<void(int)>([cameraSpeed](int keycode)
+
+	static std::function<void(int)> rightMouseRelease = std::function<void(int)>([](int keyCode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed * TimeManager::DeltaTime());
+			if (instance != nullptr)
+			{
+				instance->rightMousePressed = false;
+				lookPreservationCursorPosition = WindowManager::GetWindow("Engine")->GetCursorPosition();
+				WindowManager::GetWindow("Engine")->EnableCursor();
+			}
 		});
 
 	static std::function<void(int)> escPress = std::function<void(int)>([](int keycode)
@@ -293,7 +352,7 @@ void Editor::SetupEditorInput()
 					{
 						glm::vec3 gridPos = instance->grid->GetTranslation();
 
-						int y = gridPos.y;
+						int y = (int)gridPos.y;
 
 						y += 1;
 
@@ -315,7 +374,7 @@ void Editor::SetupEditorInput()
 					{
 						glm::vec3 gridPos = instance->grid->GetTranslation();
 
-						int y = gridPos.y;
+						int y = (int)gridPos.y;
 
 						y -= 1;
 
@@ -333,17 +392,13 @@ void Editor::SetupEditorInput()
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, &shiftPress, "gridMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_UP, &upArrowPressed, "gridMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_DOWN, &downArrowPressed, "gridMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_W, &wPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_A, &aPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_S, &sPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_D, &dPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_Q, &qPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_E, &ePress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_Z, &zPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_C, &cPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_LEFT_CTRL, &ctrPress, "camMovement");
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_SPACE, &spacePress, "camMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, &escPress, "hiddenCursor");
+	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_2, &rightMousePress, "MouseLook");
+	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_2, &rightMouseRelease, "MouseLook");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_W, &wPress, "FreeCamera");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_A, &aPress, "FreeCamera");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_S, &sPress, "FreeCamera");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_D, &dPress, "FreeCamera");
 
 }
 
@@ -354,9 +409,35 @@ void Editor::InitializeGrid()
 	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	grid->SetDrawMode(GO3D::Mode::LINE);
+	grid->SetLineWidth(4.5f);
 }
 
 void Editor::TerminateGrid()
 {
 	GraphicsObjectManager::Delete(grid);
+}
+
+void Editor::FreeCameraMovement()
+{
+	if (rightMousePressed)
+	{
+		Window* window = WindowManager::GetWindow("Engine");
+		glm::vec2 cursorPos = window->GetCursorPosition();
+		static glm::vec2 prevPos;
+
+		Camera& cam = CameraManager::GetActiveCamera();
+
+		float xspeed = 0.0005f;
+		float yspeed = 0.0005f;
+		if (cursorPos.x != prevPos.x)
+		{
+			cam.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x));
+		}
+		if (cursorPos.y != prevPos.y)
+		{
+			cam.Rotate(cam.GetRightVector(), yspeed * (float)-(cursorPos.y - prevPos.y));
+		}
+
+		prevPos = cursorPos;
+	}
 }

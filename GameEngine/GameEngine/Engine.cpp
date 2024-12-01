@@ -95,7 +95,21 @@ Engine::Engine()
 	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
 	SceneManager::Initialize();
 	Editor::Initialize();
+	Editor::Enable();
+	EditorPlayToggleInputSetup();
+}
 
+Engine::~Engine()
+{
+	Editor::Terminate();
+	SceneManager::Terminate();
+	InputManager::Terminate();
+	Renderer::Terminate();
+	TimeManager::Terminate();
+}
+
+void Engine::EditorPlayToggleInputSetup()
+{
 	static std::function<void(int)> tildaPress = std::function<void(int)>([](int keyCode)
 		{
 			Editor::Disbale();
@@ -109,13 +123,4 @@ Engine::Engine()
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress2, "Play");
-}
-
-Engine::~Engine()
-{
-	Editor::Terminate();
-	SceneManager::Terminate();
-	InputManager::Terminate();
-	Renderer::Terminate();
-	TimeManager::Terminate();
 }

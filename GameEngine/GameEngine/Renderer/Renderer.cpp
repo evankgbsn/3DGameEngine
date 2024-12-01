@@ -28,11 +28,7 @@ void Renderer::CreateMainWindow(unsigned int width, unsigned int height, const s
 {
 	WindowManager::CreateWindow(width, height, name);
 
-	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
-	CameraManager::SetActiveCamera("Main");
-
-	CameraManager::GetActiveCamera().SetPosition({ 0.0f, 5.0f, 10.0f });
-	CameraManager::GetActiveCamera().SetTarget({ 0.0f, 0.0f, 0.0f });
+	
 
 }
 

@@ -203,6 +203,7 @@ void Character::Initialize()
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
+	graphics->SetSpeed(1.0f);
 	collider = new AnimatedCollider(graphics);
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
@@ -221,6 +222,8 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
+	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
+
 	Camera& cam = CameraManager::GetCamera("Main");
 
 	cam.SetPosition(graphics->GetTranslation() + camPosition);
@@ -228,6 +231,8 @@ void Character::Initialize()
 
 void Character::Terminate()
 {
+	CameraManager::DestroyCamera("Main");
+
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_V, "CharacterColliderVisibility");
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "CastLineFromCamera");
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_3, "Camera");

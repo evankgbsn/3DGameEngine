@@ -31,6 +31,8 @@ private:
 
 	~Engine();
 
+	void EditorPlayToggleInputSetup();
+
 	static Engine* instance;
 
 	bool editorState;

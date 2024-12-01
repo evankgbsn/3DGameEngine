@@ -1,6 +1,9 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <functional>
+#include <list>
+
 class GOColored;
 
 class Editor
@@ -25,6 +28,14 @@ public:
 
 	static void SetGridY(float newY);
 
+	static void RegisterOnEditorEnable(std::function<void()>* function);
+
+	static void DeregisterOnEditorEnable(std::function<void()>* function);
+
+	static void RegisterOnEditorDisable(std::function<void()>* function);
+
+	static void DeregisterOnEditorDisable(std::function<void()>* function);
+
 private:
 
 	friend class SingletonHelpers;
@@ -47,6 +58,8 @@ private:
 
 	void TerminateGrid();
 
+	void FreeCameraMovement();
+
 	static Editor* instance;
 
 	GOColored* grid;
@@ -56,6 +69,12 @@ private:
 	bool enabled;
 
 	bool shiftPressed;
+
+	bool rightMousePressed;
+
+	std::list<std::function<void()>*> onEditorEnableCallbacks;
+
+	std::list<std::function<void()>*> onEditorDisableCallbacks;
 };
 
 #endif // EDITOR_H

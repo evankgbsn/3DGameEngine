@@ -72,7 +72,7 @@ void SelectionManager::Update()
 
 			if (Editor::ShiftPressed())
 			{
-				int newPosX = planePoint.x, newPosY = planePoint.y, newPosZ = planePoint.z;
+				int newPosX = (int)planePoint.x, newPosY = (int)planePoint.y, newPosZ = (int)planePoint.z;
 				instance->selection->SetPosition({newPosX, newPosY, newPosZ});
 			}
 			else
@@ -89,6 +89,8 @@ GameObject* const SelectionManager::GetSelection()
 	{
 		return instance->selection;
 	}
+
+	return nullptr;
 }
 
 SelectionManager::SelectionManager() :

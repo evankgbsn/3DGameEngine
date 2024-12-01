@@ -17,23 +17,10 @@ glm::mat4* GO3DAnimated::GetAnimInvBindPoseArray()
 
 void GO3DAnimated::Update()
 {	
-	if (Editor::Enabled())
-	{
-		animation->SetFrame(lastPausedFrame);
-		animation->Update(animationData.pose);
-	}
-	else
-	{
-		animation->Update(animationData.pose);
-		lastPausedFrame = animation->GetFrame();
-	}
+	animation->Update(animationData.pose);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
 	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
-
-
-	
-	
 }
 
 void GO3DAnimated::SetClip(unsigned int clipIndex)
@@ -64,9 +51,24 @@ float GO3DAnimated::GetSpeed() const
 	return animation->GetSpeed();
 }
 
-void GO3DAnimated::SetSpeed(float speed)
+void GO3DAnimated::SetSpeed(float spd)
 {
-	animation->SetSpeed(speed);
+	speed = spd;
+
+	if (!Editor::Enabled())
+	{
+		animation->SetSpeed(speed);
+	}
+}
+
+void GO3DAnimated::PauseAnimation()
+{
+	animation->SetSpeed(0.0f);
+}
+
+void GO3DAnimated::ResumeAnimation()
+{
+	SetSpeed(speed);
 }
 
 GO3DAnimated::GO3DAnimated(Model* const model) :
@@ -80,15 +82,33 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 
 	animation = new Animation(model->GetBakedAnimation(0));
 
-	for (unsigned int i = 0; i < model->GetArmature()->GetInvBindPose().size(); i++)
-	{
-		animationData.invBindPose[i] = model->GetArmature()->GetInvBindPose()[i];
-	}
+	PauseAnimationOnEditorEnable();
 }
 
 GO3DAnimated::~GO3DAnimated()
 {
 	delete animation;
-
+	delete onEditorEnable;
 	glDeleteBuffers(1, &animationBuffer);
+}
+
+void GO3DAnimated::PauseAnimationOnEditorEnable()
+{
+	for (unsigned int i = 0; i < model->GetArmature()->GetInvBindPose().size(); i++)
+	{
+		animationData.invBindPose[i] = model->GetArmature()->GetInvBindPose()[i];
+	}
+
+	onEditorEnable = new std::function<void()>([this]()
+		{
+			PauseAnimation();
+		});
+
+	onEditorDisable = new std::function<void()>([this]()
+		{
+			ResumeAnimation();
+		});
+
+	Editor::RegisterOnEditorEnable(onEditorEnable);
+	Editor::RegisterOnEditorDisable(onEditorDisable);
 }

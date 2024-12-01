@@ -95,6 +95,8 @@ public:
 
 	void SetDrawMode(Mode m);
 
+	void SetLineWidth(float width);
+
 protected:
 
 	friend class GraphicsObjectManager;
@@ -123,6 +125,8 @@ protected:
 	Mode drawMode;
 
 	unsigned int mvpBuffer;
+
+	float lineWidth;
 
 private:
 

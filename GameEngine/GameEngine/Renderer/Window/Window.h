@@ -17,6 +17,8 @@ public:
 
 	glm::vec2 GetCursorPosition() const;
 
+	void SetCursorPosition(const glm::vec2& newPos);
+
 	bool GetCursorMoved(glm::vec2& outNewPosition) const;
 
 	int GetKey(int keyCode, bool clearFrameKeyStates = false) const;

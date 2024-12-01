@@ -100,6 +100,11 @@ glm::vec2 Window::GetCursorPosition() const
 	return glm::vec2(static_cast<float>(cursorX), static_cast<float>(cursorY));
 }
 
+void Window::SetCursorPosition(const glm::vec2& newPos)
+{
+	glfwSetCursorPos(glfwWindow, newPos.x, newPos.y);
+}
+
 bool Window::GetCursorMoved(glm::vec2& outNewPosition) const
 {
 	glm::vec2 currentCursorPosition = GetCursorPosition();

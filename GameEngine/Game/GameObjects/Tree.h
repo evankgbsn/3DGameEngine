@@ -15,6 +15,14 @@ public:
 
 	~Tree();
 
+	bool Hovered() const override;
+
+	void SetPosition(const glm::vec3& newPos) override;
+
+	void Start() override;
+
+	void End() override;
+
 private:
 
 	Tree(const Tree&) = delete;

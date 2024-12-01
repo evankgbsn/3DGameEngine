@@ -3,6 +3,8 @@
 
 #include "GO3D.h"
 
+#include <functional>
+
 class Animation;
 
 class GO3DAnimated : public GO3D
@@ -27,6 +29,9 @@ public:
 
 	void SetSpeed(float speed);
 
+	void PauseAnimation();
+
+	void ResumeAnimation();
 
 protected:
 
@@ -54,9 +59,15 @@ private:
 
 	GO3DAnimated& operator=(GO3DAnimated&&) = delete;
 
+	void PauseAnimationOnEditorEnable();
+
 	unsigned int clip;
 
-	unsigned int lastPausedFrame;
+	float speed;
+
+	std::function<void()>* onEditorEnable;
+
+	std::function<void()>* onEditorDisable;
 
 };
 

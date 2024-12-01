@@ -18,9 +18,8 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	this->boundingSphere = new SphereWithVisualization(wrapedGraphics);
 	this->obb = new OrientedBoundingBoxWithVisualization(wrapedGraphics->GetModel()->GetVertices());
 
-	this->obb->ToggleVisibility();
-
 	trianglesColliderVisualization = GraphicsObjectManager::CreateGO3DColored(const_cast<Model*>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	trianglesColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
 
 	AccelerateMesh();
 
@@ -66,6 +65,7 @@ void StaticCollider::Update()
 void StaticCollider::ToggleVisibility()
 {
 	this->boundingSphere->ToggleVisibility();
+	this->obb->ToggleVisibility();
 	if (trianglesColliderVisualization->IsDisabled())
 	{
 		GraphicsObjectManager::Enable(trianglesColliderVisualization);
@@ -255,7 +255,7 @@ void StaticCollider::AccelerateMesh()
 		accelerator->triangles[i] = i;
 	}
 
-	SplitBVHNode(accelerator, 3);
+	SplitBVHNode(accelerator, 2);
 }
 
 void StaticCollider::SplitBVHNode(BVHNode* node, int depth)
