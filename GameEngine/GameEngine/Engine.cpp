@@ -22,6 +22,7 @@
 #include "Renderer/Model/Model.h"
 #include "Scene/SceneManager.h"
 #include "Editor/Editor.h"
+#include "Physics/PhysicsManager.h"
 
 #include <GLFW/glfw3.h>
 
@@ -97,10 +98,12 @@ Engine::Engine()
 	Editor::Initialize();
 	Editor::Enable();
 	EditorPlayToggleInputSetup();
+	PhysicsManager::Initialize();
 }
 
 Engine::~Engine()
 {
+	PhysicsManager::Terminate();
 	Editor::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();

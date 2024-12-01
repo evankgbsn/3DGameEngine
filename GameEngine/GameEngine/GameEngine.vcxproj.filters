@@ -88,6 +88,9 @@
     <Filter Include="Source Files\Editor\Select">
       <UniqueIdentifier>{7090faea-2993-40ac-8b49-11fd1e95a361}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{0ffa5ea2-f529-4e2c-91b3-3eaf1687e6fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -356,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Select\SelectionManager.cpp">
       <Filter>Source Files\Editor\Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\PhysicsManager.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,6 +640,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Select\SelectionManager.h">
       <Filter>Source Files\Editor\Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\PhysicsManager.h">
+      <Filter>Source Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

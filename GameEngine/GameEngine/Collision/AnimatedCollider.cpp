@@ -438,7 +438,7 @@ bool AnimatedCollider::Intersect(const StaticCollider& other) const
 
 						static const std::vector<Triangle> otherTriangles = other.GetTriangles();
 
-						for (unsigned int i = 0; i < iterator->numTriangles; ++i)
+						for (int i = 0; i < iterator->numTriangles; ++i)
 						{
 							if (t1.TriangleIntersect(otherTriangles[iterator->triangles[i]]))
 							{
