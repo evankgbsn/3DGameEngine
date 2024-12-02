@@ -34,8 +34,18 @@
 # Allow
 !*glfw3.lib
 !*glew32s.lib
-!*glfw3_mt.lib
 !*freetype.lib
+!*freetyped.lib
+!*PhysX_static_64.lib
+!*PhysXFoundation_static_64.lib
+!*PhysXExtensions_static_64.lib
+!*PhysXCommon_static_64.lib
+!*PhysXPvdSDK_static_64.lib
+!*PhysX_static_64.pdb
+!*PhysXFoundation_static_64.pdb
+!*PhysXExtensions_static_64.pdb
+!*PhysXCommon_static_64.pdb
+!*PhysXPvdSDK_static_64.pdb
 
 #Ignore .vs folder and other generated folders
 *.vs
