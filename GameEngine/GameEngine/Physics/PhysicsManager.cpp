@@ -40,8 +40,6 @@ PhysicsManager::PhysicsManager()
 			Logger::Log("PxCreatePhysics failed!", Logger::Category::Error);
 		}
 	}
-
-	
 }
 
 PhysicsManager::~PhysicsManager()
