@@ -42,7 +42,7 @@ private:
 
 	void SetPosition(const glm::vec3& pos) override;
 
-	glm::vec3 GetPosition() override;
+	glm::vec3 GetPosition() const override;
 
 	SpotLight* spotLight;
 };

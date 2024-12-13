@@ -175,6 +175,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Collision\StaticCollider.cpp" />
     <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Editor\Select\SelectionManager.cpp" />
+    <ClCompile Include="Editor\UI\EditorUI.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject\Component\AmbientLight.cpp" />
     <ClCompile Include="GameObject\Component\AnimatedColliderComponent.cpp" />
@@ -229,6 +230,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\GraphicsObjects\GOGlyph.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLineColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOLit.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOSprite.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTerrain.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTextured.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
@@ -256,6 +258,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Time\TimeManager.cpp" />
+    <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +270,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Collision\StaticCollider.h" />
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\Select\SelectionManager.h" />
+    <ClInclude Include="Editor\UI\EditorUI.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject\Component\AmbientLight.h" />
     <ClInclude Include="GameObject\Component\AnimatedColliderComponent.h" />
@@ -322,6 +326,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\GraphicsObjects\GOGlyph.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLineColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOLit.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOSprite.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTerrain.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTextured.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />
@@ -349,6 +354,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Time\TimeManager.h" />
+    <ClInclude Include="UI\Button.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\OpenGLDebug.h" />
     <ClInclude Include="Utils\SingletonHelpers.h" />
@@ -367,6 +373,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <None Include="Renderer\Shader\GLSL\PointLightShadow.vert" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.frag" />
     <None Include="Renderer\Shader\GLSL\ShadowMap.vert" />
+    <None Include="Renderer\Shader\GLSL\Sprite.frag" />
+    <None Include="Renderer\Shader\GLSL\Sprite.vert" />
     <None Include="Renderer\Shader\GLSL\Terrain.frag" />
     <None Include="Renderer\Shader\GLSL\Terrain.vert" />
     <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag" />

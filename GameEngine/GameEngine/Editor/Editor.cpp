@@ -10,6 +10,7 @@
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "Select/SelectionManager.h"
 #include "../GameObject/GameObject.h"
+#include "UI/EditorUI.h"
 
 Editor* Editor::instance = nullptr;
 
@@ -18,7 +19,8 @@ Editor::Editor() :
 	grid(nullptr),
 	shiftPressed(false),
 	rightMousePressed(false),
-	gridSpeed(5.0f)
+	gridSpeed(5.0f),
+	ui(new EditorUI())
 {
 	Camera& cam = CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
 	cam.SetPosition(glm::vec3(10.0f, 10.0f, 10.0f));
@@ -32,6 +34,7 @@ Editor::Editor() :
 Editor::~Editor()
 {
 	SelectionManager::Terminate();
+	delete ui;
 }
 
 void Editor::Initialize()
@@ -59,6 +62,8 @@ void Editor::Update()
 		}
 
 		SelectionManager::Update();
+
+		instance->ui->Update();
 	}
 }
 
@@ -409,7 +414,7 @@ void Editor::InitializeGrid()
 	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	grid->SetDrawMode(GO3D::Mode::LINE);
-	grid->SetLineWidth(4.5f);
+	grid->SetLineWidth(1.0f);
 }
 
 void Editor::TerminateGrid()

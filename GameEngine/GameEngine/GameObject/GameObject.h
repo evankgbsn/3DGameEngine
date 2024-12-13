@@ -5,6 +5,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 class Component;
 
@@ -16,11 +17,15 @@ public:
 
 	virtual void SetPosition(const glm::vec3& pos) {};
 
-	virtual glm::vec3 GetPosition() { static glm::vec3 defaultReturn; return defaultReturn; };
+	virtual glm::vec3 GetPosition() const { static glm::vec3 defaultReturn; return defaultReturn; };
 
 	virtual void Start() {};
 
 	virtual void End() {};
+
+	virtual std::vector<char> Serialize() { return std::vector<char>(); };
+
+	virtual void Deserialize() {};
 
 protected:
 

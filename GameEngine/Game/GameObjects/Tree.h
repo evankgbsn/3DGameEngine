@@ -19,6 +19,8 @@ public:
 
 	void SetPosition(const glm::vec3& newPos) override;
 
+	glm::vec3 GetPosition() const override;
+
 	void Start() override;
 
 	void End() override;

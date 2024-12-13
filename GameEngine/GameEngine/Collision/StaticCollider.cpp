@@ -104,53 +104,55 @@ float StaticCollider::Intersect(const Ray& ray) const
 		triangles.push_back(t);
 	}
 
-	if (accelerator == nullptr)
+	for (int i = 0; i < triangles.size(); ++i)
 	{
-
-		for (int i = 0; i < triangles.size(); ++i)
+		float result = triangles[i].Raycast(ray);
+		if (result >= 0)
 		{
-			float result = triangles[i].Raycast(ray);
-			if (result >= 0)
-			{
-				return result;
-			}
+			return result;
 		}
 	}
-	else
-	{
-		std::list<BVHNode*> toProcess;
-		toProcess.push_front(accelerator);
 
-		//Recursively walk the BVH tree.
-		while (!toProcess.empty())
-		{
-			BVHNode* iterator = *(toProcess.begin());
-			toProcess.erase(toProcess.begin());
-
-			if (iterator->numTriangles >= 0)
-			{
-				for (int i = 0; i < iterator->numTriangles; ++i)
-				{
-					float r = triangles[iterator->triangles[i]].Raycast(ray);
-					if (r >= 0)
-					{
-						return r;
-					}
-				}
-			}
-
-			if (iterator->children != 0)
-			{
-				for (int i = 8 - 1; i >= 0; --i)
-				{
-					if (iterator->children[i].bounds.RayIntersect(ray) >= 0)
-					{
-						toProcess.push_front(&iterator->children[i]);
-					}
-				}
-			}
-		}
-	}
+	//if (accelerator == nullptr)
+	//{
+	//
+	//	
+	//}
+	//else
+	//{
+	//	std::list<BVHNode*> toProcess;
+	//	toProcess.push_front(accelerator);
+	//
+	//	//Recursively walk the BVH tree.
+	//	while (!toProcess.empty())
+	//	{
+	//		BVHNode* iterator = *(toProcess.begin());
+	//		toProcess.erase(toProcess.begin());
+	//
+	//		if (iterator->numTriangles >= 0)
+	//		{
+	//			for (int i = 0; i < iterator->numTriangles; ++i)
+	//			{
+	//				float r = triangles[iterator->triangles[i]].Raycast(ray);
+	//				if (r >= 0)
+	//				{
+	//					return r;
+	//				}
+	//			}
+	//		}
+	//
+	//		if (iterator->children != 0)
+	//		{
+	//			for (int i = 8 - 1; i >= 0; --i)
+	//			{
+	//				if (iterator->children[i].bounds.RayIntersect(ray) >= 0)
+	//				{
+	//					toProcess.push_front(&iterator->children[i]);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
 	return -1.0f;
 }

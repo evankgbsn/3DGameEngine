@@ -12,6 +12,7 @@
 #include "GOLineColored.h"
 #include "GOGlyph.h"
 #include "GOTerrain.h"
+#include "GOSprite.h"
 #include "../Font/FontManager.h"
 #include "../../Utils/Logger.h"
 #include "../Shader/ShaderManager.h"
@@ -264,6 +265,23 @@ GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, co
 	return result;
 }
 
+GOSprite* const GraphicsObjectManager::CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position)
+{
+	GOSprite* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects2D.push_back(result = new GOSprite(model2D, imageTexture, position));
+		instance->graphicsObjects2D[instance->graphicsObjects2D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects2D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGOSprite() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
 void GraphicsObjectManager::Disable(GraphicsObject* const go)
 {
 	if (instance != nullptr)
@@ -336,6 +354,35 @@ void GraphicsObjectManager::Enable(GOGlyph* const go)
 }
 
 void GraphicsObjectManager::Disable(GOGlyph* const go)
+{
+	if (instance != nullptr)
+	{
+		if (go->managerVectorDisableIndex != UINT_MAX)
+		{
+			instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = go;
+		}
+		else
+		{
+			instance->disabledGraphicsObjects2D.push_back(go);
+			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects2D.size() - 1);
+		}
+
+		instance->graphicsObjects2D[go->managerVectorIndex] = nullptr;
+		go->isDisabled = true;
+	}
+}
+
+void GraphicsObjectManager::Enable(GOSprite* const go)
+{
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects2D[go->managerVectorIndex] = go;
+		instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = nullptr;
+		go->isDisabled = false;
+	}
+}
+
+void GraphicsObjectManager::Disable(GOSprite* const go)
 {
 	if (instance != nullptr)
 	{

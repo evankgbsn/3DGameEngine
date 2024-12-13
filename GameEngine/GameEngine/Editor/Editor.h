@@ -5,6 +5,7 @@
 #include <list>
 
 class GOColored;
+class EditorUI;
 
 class Editor
 {
@@ -75,6 +76,8 @@ private:
 	std::list<std::function<void()>*> onEditorEnableCallbacks;
 
 	std::list<std::function<void()>*> onEditorDisableCallbacks;
+
+	EditorUI* ui;
 };
 
 #endif // EDITOR_H

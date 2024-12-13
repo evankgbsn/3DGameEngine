@@ -91,6 +91,12 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{0ffa5ea2-f529-4e2c-91b3-3eaf1687e6fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Editor\UI">
+      <UniqueIdentifier>{c9fcf940-270a-4ba3-9f33-33288f008240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{73b4131e-ba4e-45fa-9b43-bb1a9abdc1c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -362,6 +368,15 @@
     </ClCompile>
     <ClCompile Include="Physics\PhysicsManager.cpp">
       <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOSprite.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\UI\EditorUI.cpp">
+      <Filter>Source Files\Editor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Button.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +659,15 @@
     <ClInclude Include="Physics\PhysicsManager.h">
       <Filter>Source Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOSprite.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\UI\EditorUI.h">
+      <Filter>Source Files\Editor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Button.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
@@ -719,6 +743,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\ColoredInstanced.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Sprite.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Sprite.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

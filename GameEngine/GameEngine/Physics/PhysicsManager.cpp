@@ -3,9 +3,6 @@
 #include "../Utils/SingletonHelpers.h"
 #include "../Utils/Logger.h"
 
-#include <PXConfig.h>
-#include <PxPhysicsAPI.h>
-
 PhysicsManager* PhysicsManager::instance = nullptr;
 
 void PhysicsManager::Initialize()
@@ -18,24 +15,23 @@ void PhysicsManager::Terminate()
 	SingletonHelpers::TerminateSingleton(&instance, "PhysicsManager");
 }
 
-PhysicsManager::PhysicsManager()
+PhysicsManager::PhysicsManager() :
+	recordMemoryAllocations(true),
+	defaultAllocatorCallback(),
+	defaultErrorCallback(),
+	physics(nullptr)
 {
-	bool recordMemoryAllocations = true;
+	foundation = PxCreateFoundation(PX_PHYSICS_VERSION, defaultAllocatorCallback, defaultErrorCallback);
 	
-	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
-	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
-	
-	physx::PxFoundation* mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
-	
-	if (!mFoundation)
+	if (!foundation)
 	{
 		Logger::Log("PxCreateFoundation failed!", Logger::Category::Error);
 	}
 	else
 	{
-		physx::PxPhysics* mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), recordMemoryAllocations, nullptr);
+		physics = PxCreatePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), recordMemoryAllocations, nullptr);
 		
-		if (!mPhysics)
+		if (!physics)
 		{
 			Logger::Log("PxCreatePhysics failed!", Logger::Category::Error);
 		}
@@ -44,4 +40,6 @@ PhysicsManager::PhysicsManager()
 
 PhysicsManager::~PhysicsManager()
 {
+	physics->release();
+	foundation->release();
 }

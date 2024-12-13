@@ -26,6 +26,8 @@
 #include "GameEngine/Utils/Logger.h"
 #include "GameEngine/Math/Shapes/Plane.h"
 #include "GameTerrain.h"
+#include "GameEngine/UI/Button.h"
+#include "GameEngine/Editor/Editor.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
@@ -198,9 +200,11 @@ Character::~Character()
 
 void Character::Initialize()
 {
+	
+
 	text = new Text("This is test text", "arial");
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Woman"), TextureManager::GetTexture("Woman"), TextureManager::GetTexture("Random"));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Soldier"), TextureManager::GetTexture("Soldier"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
 	graphics->SetClip(7);
 	graphics->SetSpeed(1.0f);
@@ -252,11 +256,13 @@ void Character::Terminate()
 
 void Character::GameUpdate()
 {
+	
+
 	Terrain* terrain = GetTerrain();
 
 	if (graphics->GetTranslation() != targetPosition)
 	{
-		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 3.0f);
+		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 5.0f);
 		//terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
 	}
 
@@ -301,9 +307,19 @@ void Character::Load()
 		ModelManager::LoadModel("Woman", "Assets/Model/Woman.gltf");
 	}
 
+	if (!ModelManager::ModelLoaded("Soldier"))
+	{
+		ModelManager::LoadModel("Soldier", "Assets/Model/Soldier.gltf");
+	}
+
 	if (!TextureManager::TextureLoaded("Random"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Grey.png", "Random");
+	}
+
+	if (!TextureManager::TextureLoaded("Soldier"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Grey.png", "Soldier");
 	}
 }
 
@@ -360,7 +376,7 @@ void Character::End()
 	collider->ToggleVisibility();
 }
 
-glm::vec3 Character::GetPosition()
+glm::vec3 Character::GetPosition() const
 {
 	return graphics->GetTranslation();
 }

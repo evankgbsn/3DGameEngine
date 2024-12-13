@@ -23,6 +23,7 @@ class GOLineColored;
 class GOGlyph;
 class GOTerrain;
 class GOColoredInstanced;
+class GOSprite;
 
 
 class GraphicsObjectManager
@@ -49,6 +50,8 @@ public:
 
 	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale);
 
+	static GOSprite* const CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position);
+
 	static void Disable(GraphicsObject* const go);
 
 	static void Enable(GraphicsObject* const go);
@@ -58,6 +61,10 @@ public:
 	static void Enable(GOGlyph* const go);
 
 	static void Disable(GOGlyph* const go);
+
+	static void Enable(GOSprite* const go);
+
+	static void Disable(GOSprite* const go);
 
 
 private:

@@ -54,6 +54,11 @@ void Tree::SetPosition(const glm::vec3& newPos)
 	graphics->SetTranslation(newPos);
 }
 
+glm::vec3 Tree::GetPosition() const
+{
+	return graphics->GetTranslation();
+}
+
 void Tree::Start()
 {
 	collider->ToggleVisibility();
