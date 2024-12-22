@@ -4,6 +4,8 @@
 #include <string>
 #include <atomic>
 #include <glm/glm.hpp>
+#include <functional>
+#include <unordered_map>
 
 struct GLFWwindow;
 
@@ -25,12 +27,17 @@ public:
 
 	int GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates = false) const;
 
+	void RegisterCallbackForMouseScroll(const std::string& name, std::function<void(double scrollx, double scrolly)>* const callback);
+
+	void DeregisterCallbackForMouseScroll(const std::string& name);
+
 	GLFWwindow* GetGLFWwindow() const;
 
 	void DisableCursor() const;
 
 	void EnableCursor() const;
 
+	static std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>> mouseScrollCallbacks;
 
 private:
 
@@ -61,6 +68,7 @@ private:
 	GLFWwindow* glfwWindow;
 
 	std::atomic<bool> shouldClose;
+	
 };
 
 #endif WINDOW_H

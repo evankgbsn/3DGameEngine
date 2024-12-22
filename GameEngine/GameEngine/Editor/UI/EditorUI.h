@@ -13,6 +13,12 @@ public:
 
 	void Update();
 
+	bool IsDisabled() const;
+
+	void Disable();
+
+	void Enable();
+
 private:
 
 	EditorUI(const EditorUI&) = delete;
@@ -26,6 +32,8 @@ private:
 	void CreatePlayButton();
 
 	Button* playButton;
+
+	bool disabled;
 };
 
 #endif //EDITORUI_H

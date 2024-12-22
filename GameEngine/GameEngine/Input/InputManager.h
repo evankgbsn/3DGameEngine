@@ -30,6 +30,10 @@ public:
 
 	static void DeregisterCallbackForMouseButtonState(int state, int mouseButton, const std::string& name);
 
+	static void RegisterCallbackForMouseScroll(std::function<void(double, double)>* const callback, const std::string& name);
+
+	static void DeregisterCallbackForMouseScroll(const std::string& name);
+
 	static void EditorRegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* const callback, const std::string& name);
 
 	static void EditorDeregisterCallbackForKeyState(int state, int keyCode, const std::string& name);
@@ -94,6 +98,8 @@ private:
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonPressedEvents;
 
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonReleasedEvents;
+
+	std::unordered_map<std::string, std::function<void(double, double)>*> registeredMouseScrollEvents;
 
 	std::unordered_set<int> keysPressed;
 

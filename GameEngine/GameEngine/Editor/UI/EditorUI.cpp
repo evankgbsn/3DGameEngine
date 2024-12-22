@@ -4,8 +4,10 @@
 #include "../../Renderer/Texture/TextureManager.h"
 #include "../../Editor/Editor.h"
 #include "../../Renderer/Window/WindowManager.h"
+#include "../../Renderer/Model/ModelManager.h"
 
-EditorUI::EditorUI()
+EditorUI::EditorUI() :
+	disabled(false)
 {
 	CreatePlayButton();
 }
@@ -20,20 +22,38 @@ void EditorUI::Update()
 	playButton->Update();
 }
 
+bool EditorUI::IsDisabled() const
+{
+	return disabled;
+}
+
 void EditorUI::CreatePlayButton()
 {
-	TextureManager::LoadTexture("Assets/Texture/Play.png", "Play");
-	TextureManager::LoadTexture("Assets/Texture/PlayPress.png", "PlayPress");
-	TextureManager::LoadTexture("Assets/Texture/PlayIdle.png", "PlayIdle");
+	TextureManager::LoadTexture("Assets/Texture/grey.png", "Play");
+	TextureManager::LoadTexture("Assets/Texture/Green.png", "PlayPress");
+	TextureManager::LoadTexture("Assets/Texture/Green.png", "PlayIdle");
+	ModelManager::LoadModel("Play", "Assets/Model/PlayButton.gltf");
 
-
-	std::function<void()>* buttonFunc = new std::function<void()>([]() {
-		Editor::Disbale();
+	static std::function<void()> buttonFunc = std::function<void()>([this]() 
+		{
+			Editor::Disbale();
 		});
 
 	Window* window = WindowManager::GetWindow("Engine");
 	float windowHeight = (float)window->GetHeight();
 	float windowWidth = (float)window->GetWidth();
 
-	playButton = new Button("PlayIdle", "Play", "PlayPress", "Rectangle", { (windowWidth/2.0f) - 50.0f, windowHeight - 100.0f }, buttonFunc);
+	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { (windowWidth/2.0f) - 50.0f, windowHeight - 100.0f }, &buttonFunc);
+}
+
+void EditorUI::Disable()
+{
+	disabled = true;
+	playButton->Disable();
+}
+
+void EditorUI::Enable()
+{
+	playButton->Enable();
+	disabled = false;
 }

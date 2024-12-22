@@ -455,6 +455,22 @@ void InputManager::DeregisterCallbackForMouseButtonState(int state, int mouseBut
 	EnqueueInputCall(inputDeregisterFunctionToQueue);
 }
 
+void InputManager::RegisterCallbackForMouseScroll(std::function<void(double, double)>* const callback, const std::string& name)
+{
+	EnqueueInputCall(std::function<void()>([callback, name]()
+		{
+			WindowManager::GetWindow("Engine")->RegisterCallbackForMouseScroll(name, callback);
+		}));
+}
+
+void InputManager::DeregisterCallbackForMouseScroll(const std::string& name)
+{
+	EnqueueInputCall(std::function<void()>([name]()
+		{
+			WindowManager::GetWindow("Engine")->DeregisterCallbackForMouseScroll(name);
+		}));
+}
+
 void InputManager::EditorRegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* const callback, const std::string& name)
 {
 	auto registerCallbackForKeyState = [keyCode, callback, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>>& map, const std::string& successLog)
@@ -649,16 +665,16 @@ void InputManager::EditorDeregisterCallbackForMouseButtonState(int state, int mo
 				switch (state)
 				{
 				case KEY_PRESS:
-					deregisterCallbackForMouseButtonState(instance->editorRegisteredKeyPressEvents, pressSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->editorRegisteredMouseButtonPressEvents, pressSuccessLog);
 					break;
 				case KEY_RELEASE:
-					deregisterCallbackForMouseButtonState(instance->editorRegisteredKeyReleaseEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->editorRegisteredMouseButtonReleaseEvents, releaseSuccessLog);
 					break;
 				case KEY_PRESSED:
-					deregisterCallbackForMouseButtonState(instance->editorRegisteredKeyPressedEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->editorRegisteredMouseButtonPressedEvents, releaseSuccessLog);
 					break;
 				case KEY_RELEASED:
-					deregisterCallbackForMouseButtonState(instance->editorRegisteredKeyReleasedEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->editorRegisteredMouseButtonReleasedEvents, releaseSuccessLog);
 					break;
 				default:
 					break;

@@ -94,6 +94,13 @@ void Editor::Disbale()
 			(*func)();
 		}
 
+		if (!instance->ui->IsDisabled())
+		{
+			instance->ui->Disable();
+		}
+
+		SelectionManager::ClearSelection();
+
 		Logger::Log("Disabled Editor", Logger::Category::Info);
 	}
 	else
@@ -117,6 +124,11 @@ void Editor::Enable()
 		for (std::function<void()>* func : instance->onEditorEnableCallbacks)
 		{
 			(*func)();
+		}
+
+		if (instance->ui->IsDisabled())
+		{
+			instance->ui->Enable();
 		}
 
 		Logger::Log("Enabled Editor", Logger::Category::Info);

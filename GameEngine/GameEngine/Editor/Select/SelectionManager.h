@@ -16,6 +16,8 @@ public:
 
 	static GameObject* const GetSelection();
 
+	static void ClearSelection();
+
 private:
 
 	friend class SingletonHelpers;

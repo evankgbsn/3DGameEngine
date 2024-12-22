@@ -82,6 +82,7 @@ private:
 	std::function<void(int)>* rotateCameraView;
 	std::function<void(int)>* rotateCameraViewPress;
 	std::function<void(int)>* rotateCameraViewRelease;
+	std::function<void(double, double)>* zoomCamera;
 
 
 	glm::vec3 cameraTarget;
@@ -89,6 +90,7 @@ private:
 
 	glm::vec3 targetPosition;
 
+	float cameraDistance;
 
 	Text* text;
 };

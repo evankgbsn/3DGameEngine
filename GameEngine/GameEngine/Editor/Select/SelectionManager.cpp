@@ -93,6 +93,14 @@ GameObject* const SelectionManager::GetSelection()
 	return nullptr;
 }
 
+void SelectionManager::ClearSelection()
+{
+	if (instance != nullptr)
+	{
+		instance->selection = nullptr;
+	}
+}
+
 SelectionManager::SelectionManager() :
 	selection(nullptr)
 {

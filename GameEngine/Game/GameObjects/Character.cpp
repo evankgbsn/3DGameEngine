@@ -36,7 +36,8 @@ Character::Character() :
 	graphics(nullptr),
 	collider(nullptr),
 	toggleColliderVisibility(nullptr),
-	targetPosition({0.0f, 0.0f, 0.0f})
+	targetPosition({0.0f, 0.0f, 0.0f}),
+	cameraDistance(20.0f)
 {
 	float moveSpeed = 3.0f;
 
@@ -158,18 +159,41 @@ Character::Character() :
 
 	static glm::vec2 lastMousePos;
 
-	rotateCameraView = new std::function<void(int)>([](int)
+	rotateCameraView = new std::function<void(int)>([this](int)
 		{
-			InputManager::GetCursorPosition([](glm::vec2 pos) 
+			InputManager::GetCursorPosition([this](glm::vec2 pos) 
 				{
-					float speed = 10.0f;
+					float speed = 100.0f;
 
 					float xDif = lastMousePos.x - pos.x;
 					float yDif = lastMousePos.y - pos.y;
 
 					Camera& cam = CameraManager::GetActiveCamera();
 
-					cam.Translate({0.0f, yDif * TimeManager::DeltaTime() * speed, 0.0f });
+					//cam.Translate({0.0f, yDif * TimeManager::DeltaTime() * speed, 0.0f });
+
+
+
+					glm::mat4 yrotation(1.0f);
+					glm::vec4 vectorToRotate(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
+					vectorToRotate = glm::normalize(vectorToRotate);
+					yrotation = glm::rotate(yrotation, glm::radians(speed * TimeManager::DeltaTime() * yDif), glm::normalize(glm::cross(glm::vec3(vectorToRotate), glm::vec3(0.0f, 1.0f, 0.0f))));
+
+					vectorToRotate = glm::normalize(vectorToRotate * yrotation) * 20.0f;
+
+					cam.SetPosition(cam.GetTarget() + glm::vec3(-vectorToRotate));
+
+					glm::mat4 xrotation(1.0f);
+					vectorToRotate = glm::vec4(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
+					vectorToRotate = glm::normalize(vectorToRotate);
+					xrotation = glm::rotate(xrotation, glm::radians(speed * TimeManager::DeltaTime() * xDif), glm::vec3(0.0f, 1.0f, 0.0f));
+
+					vectorToRotate = glm::normalize(vectorToRotate * xrotation) * cameraDistance;
+
+					cam.SetPosition(cam.GetTarget() + glm::vec3(-vectorToRotate));
+
+					camPosition =  cam.GetPosition() - cam.GetTarget();
+
 
 					lastMousePos = pos;
 				});
@@ -190,6 +214,13 @@ Character::Character() :
 		{
 			WindowManager::GetWindow("Engine")->EnableCursor();
 		});
+
+	zoomCamera = new std::function<void(double, double)>([this](double xdiff, double ydiff)
+		{
+			float speed = 1000.0f;
+
+			cameraDistance += TimeManager::DeltaTime() * ydiff * speed;
+		});
 }
 
 Character::~Character()
@@ -200,13 +231,11 @@ Character::~Character()
 
 void Character::Initialize()
 {
-	
-
 	text = new Text("This is test text", "arial");
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Soldier"), TextureManager::GetTexture("Soldier"), TextureManager::GetTexture("Random"));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Soldier"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
-	graphics->SetClip(7);
+	graphics->SetClip(3);
 	graphics->SetSpeed(1.0f);
 	collider = new AnimatedCollider(graphics);
 
@@ -222,6 +251,7 @@ void Character::Initialize()
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, updateCollisionVisuals, "ColisionVisuals");
+	InputManager::RegisterCallbackForMouseScroll(zoomCamera, "CharacterCameraZoom");
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
@@ -256,7 +286,11 @@ void Character::Terminate()
 
 void Character::GameUpdate()
 {
+	Camera& cam = CameraManager::GetCamera("Main");
+
+	cam.SetTarget(graphics->GetTranslation());
 	
+	cam.SetPosition(cam.GetTarget() + glm::normalize(camPosition) * cameraDistance);
 
 	Terrain* terrain = GetTerrain();
 
@@ -269,13 +303,7 @@ void Character::GameUpdate()
 	if (terrain != nullptr)
 		graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
 
-	Camera& cam = CameraManager::GetCamera("Main");
 
-	cam.SetTarget(graphics->GetTranslation());
-
-	glm::vec3 direction = glm::normalize(cam.GetTarget() - cam.GetPosition());
-
-	cam.SetPosition(cam.GetTarget() + -direction * 20.0f);
 
 	collider->Update();
 

@@ -11,6 +11,16 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>> Window::mouseScrollCallbacks = std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>>();
+
+void WindowScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	for (auto& function : Window::mouseScrollCallbacks[window])
+	{
+		(*function.second)(xoffset, yoffset);
+	}
+}
+
 unsigned int Window::GetWidth() const
 {
 	int width, height;
@@ -47,6 +57,7 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 		glfwMakeContextCurrent(glfwWindow);
 		glfwSwapInterval(0);
 		InitializeGLEW();
+		glfwSetScrollCallback(glfwWindow, WindowScrollCallback);
 	}
 }
 
@@ -214,6 +225,16 @@ int Window::GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates) co
 
 		return mouseButtonStatesForThisFrame[mouseButton] = getMouseButtonResult;
 	}
+}
+
+void Window::RegisterCallbackForMouseScroll(const std::string& name, std::function<void(double, double)>* const callback)
+{
+	mouseScrollCallbacks[glfwWindow][name] = callback;
+}
+
+void Window::DeregisterCallbackForMouseScroll(const std::string& name)
+{
+	mouseScrollCallbacks[glfwWindow][name] = nullptr;
 }
 
 GLFWwindow* Window::GetGLFWwindow() const

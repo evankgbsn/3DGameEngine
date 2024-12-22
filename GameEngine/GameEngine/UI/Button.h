@@ -20,6 +20,10 @@ public:
 
 	void Update();
 
+	void Disable();
+
+	void Enable();
+
 private:
 
 	Button() = delete;
@@ -36,8 +40,6 @@ private:
 
 	bool Pressed();
 
-	static bool leftMousePressed;
-
 	Texture* base;
 
 	Texture* hovered;
@@ -51,6 +53,8 @@ private:
 	std::function<void()>* pressFunction;
 
 	std::function<void()>* hoveredFunction;
+
+	bool enabled;
 };
 
 
