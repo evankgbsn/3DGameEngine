@@ -12,4 +12,13 @@ GraphicsObjectTextured::~GraphicsObjectTextured()
 {
 }
 
+const std::vector<char> GraphicsObjectTextured::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void GraphicsObjectTextured::Deserialize(const std::vector<char>& data)
+{
+}
+
 

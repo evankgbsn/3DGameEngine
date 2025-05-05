@@ -1,11 +1,18 @@
 #include "GameObject.h"
 
-GameObject::GameObject()
+const std::string& GameObject::GetName() const
+{
+	return name;
+}
+
+GameObject::GameObject(const std::string& n) :
+	name(n)
 {
 }
 
 GameObject::~GameObject()
 {
+	
 }
 
 void GameObject::AddComponent(Component* component, const std::string name)

@@ -6,7 +6,8 @@
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
 
-FreeCamera::FreeCamera() :
+FreeCamera::FreeCamera() : 
+	GameObject("FreeCamera"),
 	wPress(nullptr),
 	aPress(nullptr),
 	sPress(nullptr),
@@ -42,10 +43,18 @@ void FreeCamera::Initialize()
 {
 	WindowManager::GetWindow("Engine")->DisableCursor();
 	InputRegistration();
+
+	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
+
+	Camera& cam = CameraManager::GetCamera("Main");
+
+	CameraManager::SetActiveCamera("Main");
 }
 
 void FreeCamera::Terminate()
 {
+	CameraManager::DestroyCamera("Main");
+
 	InputDeregistration();
 }
 
@@ -181,6 +190,15 @@ void FreeCamera::CreateInputFunctions()
 
 			toggle = !toggle;
 		});
+}
+
+const std::vector<char> FreeCamera::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void FreeCamera::Deserialize(const std::vector<char>& data)
+{
 }
 
 void FreeCamera::Load()

@@ -33,8 +33,10 @@ MainScene::MainScene() :
 
 MainScene::~MainScene()
 {
-	//delete unloadSub;
-	//delete loadSub;
+	Unload();
+
+	delete unloadSub;
+	delete loadSub;
 	//delete cam;
 	delete spotLight;
 	delete directionalLight;
@@ -54,10 +56,10 @@ void MainScene::Initialize()
 	//RegisterGameObject(cam, "FreeCam");
 	RegisterGameObject(directionalLight, "DirectionalLight");
 	RegisterGameObject(groundPlane, "Ground");
+	RegisterGameObject(terrain, "Terrain");
 	RegisterGameObject(character, "Character");
 	RegisterGameObject(tree, "Tree");
 	RegisterGameObject(spotLight, "Light");
-	RegisterGameObject(terrain, "Terrain");
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_L, loadSub, "LoadSubscene");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_U, unloadSub, "UnloadSubscene");

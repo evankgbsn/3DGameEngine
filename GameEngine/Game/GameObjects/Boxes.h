@@ -39,6 +39,10 @@ private:
 
 	void Unload() override;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	std::vector<GraphicsObjectTexturedLit*> boxes;
 
 	std::vector<OrientedBoundingBoxWithVisualization*> obbs;

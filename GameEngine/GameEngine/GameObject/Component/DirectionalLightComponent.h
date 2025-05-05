@@ -36,6 +36,10 @@ private:
 
 	DirectionalLightComponent& operator=(DirectionalLightComponent&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	DirectionalLight* light;
 
 };

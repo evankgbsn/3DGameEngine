@@ -13,6 +13,15 @@ GraphicsObject3DComponent::~GraphicsObject3DComponent()
 	GraphicsObjectManager::Delete(graphics);
 }
 
+const std::vector<char> GraphicsObject3DComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void GraphicsObject3DComponent::Deserialize(const std::vector<char>& data)
+{
+}
+
 glm::vec3 GraphicsObject3DComponent::GetPosition() const
 {
 	return graphics->GetTranslation();

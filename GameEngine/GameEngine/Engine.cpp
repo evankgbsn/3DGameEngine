@@ -32,7 +32,7 @@ void Engine::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<Engine>(&instance, "Engine");
 
-	instance->editorState = Editor::Enabled();
+	instance->editorState = Editor::IsEnabled();
 }
 
 void Engine::Run()
@@ -41,7 +41,7 @@ void Engine::Run()
 	{
 		auto managePlay = []()
 			{
-				if (instance->editorState != Editor::Enabled())
+				if (instance->editorState != Editor::IsEnabled())
 				{
 					if (instance->editorState)
 					{
@@ -53,17 +53,17 @@ void Engine::Run()
 					}
 				}
 
-				instance->editorState = Editor::Enabled();
+				instance->editorState = Editor::IsEnabled();
 			};
 
 
-		if (Editor::Enabled())
+		if (Editor::IsEnabled())
 		{
 			TimeManager::RecordUpdateTime();
 			Renderer::Update();
+			Editor::Update();
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
-			Editor::Update();
 		}
 		else
 		{
@@ -98,15 +98,15 @@ Engine::Engine()
 	Editor::Initialize();
 	Editor::Enable();
 	EditorPlayToggleInputSetup();
-	PhysicsManager::Initialize();
+	//PhysicsManager::Initialize();
 }
 
 Engine::~Engine()
 {
-	PhysicsManager::Terminate();
-	Editor::Terminate();
+	//PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
+	Editor::Terminate();
 	Renderer::Terminate();
 	TimeManager::Terminate();
 }
@@ -115,7 +115,7 @@ void Engine::EditorPlayToggleInputSetup()
 {
 	static std::function<void(int)> tildaPress = std::function<void(int)>([](int keyCode)
 		{
-			Editor::Disbale();
+			Editor::Disable();
 		});
 
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress, "Play");

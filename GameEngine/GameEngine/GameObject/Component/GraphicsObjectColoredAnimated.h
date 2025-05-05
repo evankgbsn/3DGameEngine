@@ -43,6 +43,10 @@ private:
 
 	GraphicsObjectColoredAnimated& operator=(GraphicsObjectColoredAnimated&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 };
 
 #endif // GRAPHICSOBJECTCOLOREDANIMATED_H

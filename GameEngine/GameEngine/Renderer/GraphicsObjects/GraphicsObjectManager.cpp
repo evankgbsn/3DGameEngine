@@ -328,6 +328,19 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 			}
 		}
 
+		for (unsigned int i = 0; i < instance->disabledGraphicsObjects3D.size(); ++i)
+		{
+			if (instance->disabledGraphicsObjects3D[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->disabledGraphicsObjects3D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
+				}
+			}
+		}
+
 		for (unsigned int i = 0; i < instance->graphicsObjects2D.size(); ++i)
 		{
 			if (instance->graphicsObjects2D[i] == go)
@@ -336,6 +349,19 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				{
 					delete go;
 					instance->graphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
+				}
+			}
+		}
+
+		for (unsigned int i = 0; i < instance->disabledGraphicsObjects2D.size(); ++i)
+		{
+			if (instance->disabledGraphicsObjects2D[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->disabledGraphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
 					break;
 				}
 			}

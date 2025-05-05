@@ -42,6 +42,10 @@ protected:
 
 	virtual ~GraphicsObject3DComponent();
 
+	virtual const std::vector<char> Serialize() const override;
+
+	virtual void Deserialize(const std::vector<char>& data) override;
+
 	GO3D* graphics;
 
 private:
@@ -53,7 +57,6 @@ private:
 	GraphicsObject3DComponent(GraphicsObject3DComponent&&) = delete;
 
 	GraphicsObject3DComponent& operator=(GraphicsObject3DComponent&&) = delete;
-
 };
 
 

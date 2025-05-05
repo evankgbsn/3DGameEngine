@@ -21,3 +21,16 @@ void AmbientLight::SetAmbientIntensity(float intensity)
 {
 	LightManager::SetAmbientIntensity(intensity);
 }
+
+const std::vector<char> AmbientLight::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void AmbientLight::Deserialize(const std::vector<char>& data)
+{
+}
+
+void AmbientLight::Update()
+{
+}

@@ -26,6 +26,10 @@ private:
 
 	SpotLightComponent& operator=(SpotLightComponent&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	SpotLight* light;
 };
 

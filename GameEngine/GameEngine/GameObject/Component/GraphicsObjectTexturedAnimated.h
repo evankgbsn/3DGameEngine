@@ -41,6 +41,10 @@ private:
 
 	GraphicsObjectTexturedAnimated& operator=(GraphicsObjectTexturedAnimated&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& date) override;
+
 };
 
 #endif // GRAPHICSOBJECTTEXTUREDANIMATED_H

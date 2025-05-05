@@ -12,6 +12,8 @@
 #include "../../Math/Shapes/Plane.h"
 #include "../../GameObject/GameObject.h"
 #include "../../Editor/Editor.h"
+#include "../../Renderer/Text/Text.h"
+#include "../../Time/TimeManager.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -34,6 +36,22 @@ void SelectionManager::Update()
 	{
 		if (instance->selection != nullptr)
 		{
+
+			std::string newText = "Selection: " + instance->selection->GetName();
+			if (instance->selectionName != nullptr)
+			{
+				if (instance->selectionName->GetString() != newText)
+				{
+					delete instance->selectionName;
+					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+				}
+			}
+			else
+			{
+				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+			}
+			
+
 			Camera& cam = CameraManager::GetActiveCamera();
 
 			// Screen space to world space for object picking.
@@ -80,6 +98,24 @@ void SelectionManager::Update()
 				instance->selection->SetPosition(planePoint);
 			}
 		}
+		else
+		{
+			std::string newText = "Selection: ";
+
+			if (instance->selectionName != nullptr)
+			{
+				if (instance->selectionName->GetString() != newText)
+				{
+					delete instance->selectionName;
+					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+				}
+			}
+			else
+			{
+				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+			}
+			
+		}
 	}
 }
 
@@ -102,13 +138,19 @@ void SelectionManager::ClearSelection()
 }
 
 SelectionManager::SelectionManager() :
-	selection(nullptr)
+	selection(nullptr),
+	selectionName(nullptr)
 {
+	selectionName = new Text("Selection: ", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
 	SetupInput();
 }
 
 SelectionManager::~SelectionManager()
 {
+	if (selectionName != nullptr)
+	{
+		delete selectionName;
+	}
 }
 
 void SelectionManager::SetupInput()
@@ -146,6 +188,44 @@ void SelectionManager::SetupInput()
 			selection = nullptr;
 		});
 
+	static std::function<void(int)> qPress = std::function<void(int)>([this](int keyCode)
+		{
+
+			if (selection != nullptr)
+			{
+				glm::mat4 rotation = selection->GetRotation();
+
+				rotation = glm::rotate(rotation, 1.0f * TimeManager::DeltaTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+
+				selection->SetRotation(rotation);
+			}
+
+		});
+
+	static std::function<void(int)> ePress = std::function<void(int)>([this](int keyCode)
+		{
+
+			if (selection != nullptr)
+			{
+				glm::mat4 rotation = selection->GetRotation();
+
+				rotation = glm::rotate(rotation, -1.0f * TimeManager::DeltaTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+
+				selection->SetRotation(rotation);
+			}
+
+		});
+
+	static std::function<void()> onEditorDisable = std::function<void()>([this]()
+		{
+			delete selectionName;
+			selectionName = nullptr;
+		});
+
+	Editor::RegisterOnEditorDisable(&onEditorDisable);
+
 	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, &click, "Selection");
 	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_1, &clickRelease, "Selection");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_Q, &qPress, "Selection");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_E, &ePress, "Selection");
 }

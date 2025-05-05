@@ -378,6 +378,18 @@
     <ClCompile Include="UI\Button.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Component\TextComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\TerrainComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\OrientedBoundingBoxComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\StaticColliderComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -667,6 +679,18 @@
     </ClInclude>
     <ClInclude Include="UI\Button.h">
       <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\TextComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\TerrainComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\StaticColliderComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\OrientedBoundingBoxComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

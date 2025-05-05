@@ -8,9 +8,9 @@ layout(std140, binding = 0) uniform Projection {
     mat4 proj;
 } projection;
 
-layout(std140, binding = 2) uniform Position {
-    vec2 pos;
-} position;
+layout(std140, binding = 2) uniform Model {
+    mat4 model;
+} modelMat;
 
 
 //--------------------------------------------------
@@ -31,6 +31,6 @@ out vec2 texCoords;
 
 void main()
 {
-    gl_Position = projection.proj * vec4(inPosition.x + position.pos.x, inPosition.y + position.pos.y, inPosition.z, 1.0);
+    gl_Position = projection.proj * modelMat.model * vec4(inPosition, 1.0f);
     texCoords = inUV;
 }

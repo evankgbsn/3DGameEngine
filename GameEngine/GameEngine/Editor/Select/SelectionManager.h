@@ -2,6 +2,7 @@
 #define SELECTIONMANAGER_H
 
 class GameObject;
+class Text;
 
 class SelectionManager
 {
@@ -39,6 +40,8 @@ private:
 	static SelectionManager* instance;
 
 	GameObject* selection;
+
+	Text* selectionName;
 
 };
 

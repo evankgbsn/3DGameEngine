@@ -3,7 +3,7 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class GOTexturedLit;
+class GraphicsObjectTexturedLit;
 
 class LargePlane : public GameObject
 {
@@ -36,7 +36,11 @@ private:
 
 	void Unload() override;
 
-	GOTexturedLit* graphics;
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	GraphicsObjectTexturedLit* graphics;
 
 };
 

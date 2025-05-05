@@ -42,6 +42,10 @@ private:
 
 	void CreateInputFunctions();
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	std::function<void(int keyCode)>* wPress;
 
 	std::function<void(int keyCode)>* aPress;

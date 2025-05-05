@@ -25,7 +25,11 @@ public:
 
 	void SetTexture(Texture* const newTexture);
 
+	void SetScale(float x, float y);
+
 	glm::mat4 GetProjection() const;
+
+	glm::mat4 GetModelMat() const;
 
 	Texture* const GetTexture() const;
 
@@ -51,7 +55,7 @@ private:
 
 	glm::mat4 projection;
 
-	glm::vec2 position;
+	glm::mat4 modelMat;
 
 	Texture* imageTexture;
 

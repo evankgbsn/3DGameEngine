@@ -32,6 +32,7 @@ StaticCollider::~StaticCollider()
 	delete obb;
 	delete boundingSphere;
 	FreeBVHNode(accelerator);
+	delete accelerator;
 }
 
 void StaticCollider::Update()

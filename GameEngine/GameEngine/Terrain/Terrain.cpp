@@ -249,9 +249,3 @@ const std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>>& 
 {
 	return aabbs;
 }
-
-void Terrain::UpdateTerrainCells()
-{
-	
-	
-}

@@ -17,6 +17,10 @@ public:
 
 	void SetShine(float shine);
 
+	void SetClip(unsigned int clipNum);
+
+	void SetSpeed(float speed);
+
 private:
 
 	GraphicsObjectTexturedAnimatedLit(const GraphicsObjectTexturedAnimatedLit&) = delete;
@@ -26,6 +30,10 @@ private:
 	GraphicsObjectTexturedAnimatedLit(GraphicsObjectTexturedAnimatedLit&&) = delete;
 
 	GraphicsObjectTexturedAnimatedLit& operator=(GraphicsObjectTexturedAnimatedLit&&) = delete;
+
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
 
 };
 

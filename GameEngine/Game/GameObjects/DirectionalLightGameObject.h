@@ -36,6 +36,16 @@ private:
 
 	void Unload() override;
 
+	bool Hovered() const override;
+
+	void SetPosition(const glm::vec3& pos) override;
+
+	glm::vec3 GetPosition() const override;
+
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	DirectionalLight* light;
 
 };

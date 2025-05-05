@@ -1,7 +1,9 @@
 #ifndef AMBIENTLIGHT_H
 #define AMBIENTLIGHT_H
 
-class AmbientLight
+#include "Component.h"
+
+class AmbientLight : public Component
 {
 
 public:
@@ -16,6 +18,8 @@ public:
 
 private:
 
+	
+
 	AmbientLight(const AmbientLight&) = delete;
 
 	AmbientLight& operator=(const AmbientLight&) = delete;
@@ -23,6 +27,14 @@ private:
 	AmbientLight(AmbientLight&&) = delete;
 
 	AmbientLight& operator=(AmbientLight&&) = delete;
+
+
+	// Inherited via Component
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	void Update() override;
 
 };
 

@@ -4,6 +4,10 @@
 #include "GraphicsObjectColoredAnimated.h"
 #include "GraphicsObjectTexturedAnimated.h"
 #include "GraphicsObjectTexturedAnimatedLit.h"
+#include "../../Math/Shapes/LineSegment3D.h"
+#include "StaticColliderComponent.h"
+#include "OrientedBoundingBoxComponent.h"
+#include "../../Collision/OrientedBoundingBoxWithVisualization.h"
 
 AnimatedColliderComponent::AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject)
 {
@@ -35,7 +39,31 @@ void AnimatedColliderComponent::ToggleVisibility()
 	collider->ToggleVisibility();
 }
 
-bool AnimatedColliderComponent::Intersect(const OrientedBoundingBox& other) const
+bool AnimatedColliderComponent::Intersect(const OrientedBoundingBoxComponent& other) const
 {
-	return false;
+	return collider->Intersect(*other.GetCollider());
+}
+
+bool AnimatedColliderComponent::IsVisible() const
+{
+	return collider->IsVisible();
+}
+
+bool AnimatedColliderComponent::Intersect(const LineSegment3D& lineSegment) const
+{
+	return collider->Intersect(lineSegment);
+}
+
+bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other) const
+{
+	return collider->Intersect(*other.GetCollider());
+}
+
+const std::vector<char> AnimatedColliderComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void AnimatedColliderComponent::Deserialize(const std::vector<char>& data)
+{
 }

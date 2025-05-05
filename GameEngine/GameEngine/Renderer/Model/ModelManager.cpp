@@ -53,7 +53,18 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 
 	if (instance->models.find(name) != instance->models.end())
 	{
-		Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
+		std::string glyphName;
+
+		for (unsigned int i = 0; i < 5; i++)
+		{
+			glyphName += name[i];
+		}
+
+
+		if (glyphName != "Glyph")
+		{
+			Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
+		}
 		return instance->models[name];
 	}
 

@@ -16,3 +16,12 @@ void GraphicsObjectTexturedLit::SetShine(float shine)
 {
 	static_cast<GOTexturedLit*>(graphics)->SetShine(shine);
 }
+
+const std::vector<char> GraphicsObjectTexturedLit::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void GraphicsObjectTexturedLit::Deserialize(const std::vector<char>& data)
+{
+}

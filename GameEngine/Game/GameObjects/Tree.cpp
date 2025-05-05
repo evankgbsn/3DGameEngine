@@ -1,16 +1,15 @@
 #include "Tree.h"
 
-#include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOColored.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
+#include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
-#include "GameEngine/Collision/StaticCollider.h"
 #include "GameEngine/Renderer/Camera/CameraManager.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
 #include "GameEngine/Math/Shapes/Ray.h"
 
 Tree::Tree() :
+	GameObject("Tree"),
 	graphics(nullptr),
 	collider(nullptr)
 {
@@ -50,46 +49,52 @@ bool Tree::Hovered() const
 
 void Tree::SetPosition(const glm::vec3& newPos)
 {
-	collider->Translate(newPos - graphics->GetTranslation());
-	graphics->SetTranslation(newPos);
+	collider->Translate(newPos - graphics->GetPosition());
+	graphics->SetPosition(newPos);
 }
 
 glm::vec3 Tree::GetPosition() const
 {
-	return graphics->GetTranslation();
+	return graphics->GetPosition();
 }
 
 void Tree::Start()
 {
-	collider->ToggleVisibility();
+	if (collider->IsVisible())
+	{
+		collider->ToggleVisibility();
+	}
 }
 
 void Tree::End()
 {
-	collider->ToggleVisibility();
+	if (!collider->IsVisible())
+	{
+		collider->ToggleVisibility();
+	}
 }
 
 void Tree::Initialize()
 {
-	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("CrateTree"), TextureManager::GetTexture("GreyTree"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("CrateTree"), TextureManager::GetTexture("GreyTree"));
 
-	collider = new StaticCollider(graphics);
+	collider = new StaticColliderComponent(graphics);
 }
 
 void Tree::Terminate()
 {
-	GraphicsObjectManager::Delete(graphics);
 	delete collider;
+	delete graphics;
 }
 
 void Tree::GameUpdate()
 {
-	collider->Update();
+	collider->UpdateCollider();
 }
 
 void Tree::EditorUpdate()
 {
-	collider->Update();
+	collider->UpdateCollider();
 }
 
 void Tree::Load()
@@ -132,4 +137,23 @@ void Tree::Unload()
 	{
 		TextureManager::UnloadTexture("GreyTree");
 	}
+}
+
+void Tree::SetRotation(const glm::mat4& rotation)
+{
+	graphics->SetRotation(rotation);
+}
+
+glm::mat4 Tree::GetRotation() const
+{
+	return graphics->GetRotation();
+}
+
+const std::vector<char> Tree::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void Tree::Deserialize(const std::vector<char>& data)
+{
 }

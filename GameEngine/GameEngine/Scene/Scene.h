@@ -13,7 +13,7 @@ public:
 
 	Scene();
 
-	~Scene();
+	virtual ~Scene();
 
 	GameObject* const GetGameObject(const std::string& GameObejctName) const;
 
@@ -28,6 +28,10 @@ protected:
 	virtual void Initialize() = 0;
 
 	virtual void Terminate() = 0;
+
+	void Load();
+
+	void Unload();
 
 	void RegisterGameObject(GameObject* object, const std::string& name);
 
@@ -44,10 +48,6 @@ private:
 	Scene(Scene&&) = delete;
 
 	Scene& operator=(Scene&&) = delete;
-	
-	void Load();
-
-	void Unload();
 
 	void GameUpdate();
 

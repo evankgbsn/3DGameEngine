@@ -67,6 +67,10 @@ private:
 
 	CameraComponent& operator=(CameraComponent&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	std::string name;
 
 };

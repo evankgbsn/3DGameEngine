@@ -51,3 +51,12 @@ void GraphicsObjectColoredAnimated::SetSpeed(float speed)
 {
 	static_cast<GOColoredAnimated*>(graphics)->SetSpeed(speed);
 }
+
+const std::vector<char> GraphicsObjectColoredAnimated::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void GraphicsObjectColoredAnimated::Deserialize(const std::vector<char>& data)
+{
+}

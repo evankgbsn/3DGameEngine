@@ -189,8 +189,12 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimated.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLit.cpp" />
+    <ClCompile Include="GameObject\Component\OrientedBoundingBoxComponent.cpp" />
     <ClCompile Include="GameObject\Component\PointLightComponent.cpp" />
     <ClCompile Include="GameObject\Component\SpotLightComponent.cpp" />
+    <ClCompile Include="GameObject\Component\StaticColliderComponent.cpp" />
+    <ClCompile Include="GameObject\Component\TerrainComponent.cpp" />
+    <ClCompile Include="GameObject\Component\TextComponent.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Math\BezierSpline.cpp" />
@@ -284,8 +288,12 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimated.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLit.h" />
+    <ClInclude Include="GameObject\Component\OrientedBoundingBoxComponent.h" />
     <ClInclude Include="GameObject\Component\PointLightComponent.h" />
     <ClInclude Include="GameObject\Component\SpotLightComponent.h" />
+    <ClInclude Include="GameObject\Component\StaticColliderComponent.h" />
+    <ClInclude Include="GameObject\Component\TerrainComponent.h" />
+    <ClInclude Include="GameObject\Component\TextComponent.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Math\BezierSpline.h" />

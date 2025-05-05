@@ -2,11 +2,11 @@
 
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
-#include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Terrain/Terrain.h"
 
 LargePlane::LargePlane() :
+	GameObject("LargePlane"),
 	graphics(nullptr)
 {
 }
@@ -17,7 +17,7 @@ LargePlane::~LargePlane()
 
 void LargePlane::Initialize()
 {
-	//graphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	//graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
 	//graphics->Translate({ 0.0f, -0.5f, 0.0f });
 	//graphics->SetShine(32.0f);
 
@@ -26,7 +26,7 @@ void LargePlane::Initialize()
 
 void LargePlane::Terminate()
 {
-	GraphicsObjectManager::Delete(graphics);
+	delete graphics;
 }
 
 void LargePlane::GameUpdate()
@@ -61,4 +61,13 @@ void LargePlane::Unload()
 	{
 		ModelManager::UnloadModel("LargePlane");
 	}
+}
+
+const std::vector<char> LargePlane::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void LargePlane::Deserialize(const std::vector<char>& data)
+{
 }

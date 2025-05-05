@@ -18,8 +18,6 @@ GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor)
 	glCreateBuffers(1, &animationBuffer);
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
 
-	animation = new Animation(model->GetBakedAnimation(0));
-
 	for (unsigned int i = 0; i < model->GetArmature()->GetInvBindPose().size(); i++)
 	{
 		animationData.invBindPose[i] = model->GetArmature()->GetInvBindPose()[i];
@@ -32,6 +30,7 @@ GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor)
 GOColoredAnimated::~GOColoredAnimated()
 {
 	glDeleteBuffers(1, &colorBuffer);
+	glDeleteBuffers(1, &animationBuffer);
 }
 
 void GOColoredAnimated::Update()

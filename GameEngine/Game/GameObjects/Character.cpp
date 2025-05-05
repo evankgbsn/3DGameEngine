@@ -1,15 +1,12 @@
 #include "Character.h"
 
-#include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTexturedAnimatedLit.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTexturedLit.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOTextured.h"
-#include "GameEngine/Renderer/GraphicsObjects/GOColoredInstanced.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedAnimatedLit.h"
+#include "GameEngine/GameObject/Component/AnimatedColliderComponent.h"
+#include "GameEngine/GameObject/Component/TextComponent.h"
+#include "GameEngine/GameObject/Component/TerrainComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
-#include "GameEngine/Collision/AnimatedCollider.h"
-#include "GameEngine/Collision/OrientedBoundingBoxWithVisualization.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
@@ -17,22 +14,23 @@
 #include "GameEngine/Renderer/Camera/CameraManager.h"
 #include "GameEngine/Renderer/Camera/Camera.h"
 #include "GameEngine/Time/TimeManager.h"
-#include "GameEngine/Collision/StaticCollider.h"
 #include "GameEngine/Renderer/Text/Text.h"
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
 #include "GameEngine/Terrain/Terrain.h"
-#include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "GameEngine/Math/Shapes/Ray.h"
+#include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "GameEngine/Utils/Logger.h"
 #include "GameEngine/Math/Shapes/Plane.h"
 #include "GameTerrain.h"
 #include "GameEngine/UI/Button.h"
 #include "GameEngine/Editor/Editor.h"
+#include "GameTerrain.h"
 
 #include <glm/gtc/matrix_access.hpp>
 
 
-Character::Character() :
+Character::Character() : 
+	GameObject("Character"),
 	graphics(nullptr),
 	collider(nullptr),
 	toggleColliderVisibility(nullptr),
@@ -41,11 +39,11 @@ Character::Character() :
 {
 	float moveSpeed = 3.0f;
 
-	Terrain* terrain = GetTerrain();
+	TerrainComponent* terrain = GetTerrain();
 
-	auto snapToTerrain = [this, terrain]()
+	auto snapToTerrain = [this]()
 		{
-			targetPosition = graphics->GetTranslation();
+			targetPosition = graphics->GetPosition();
 		};
 
 	forward = new std::function<void(int)>([this, moveSpeed, snapToTerrain](int keyCode)
@@ -78,17 +76,9 @@ Character::Character() :
 			collider->ToggleVisibility();
 		});
 
-
-	updateCollisionVisuals = new std::function<void(int)>([this](int keycode)
-		{
-			Terrain* terrain = GetTerrain();
-
-			terrain->UpdateTerrainCells();
-		});
-
 	castLine = new std::function<void(int)>([this](int keyCode)
 		{
-			Terrain* terrain = GetTerrain();
+			TerrainComponent* terrain = GetTerrain();
 
 			LineSegment3D lineToWorld = Camera::CastLineFromCursorWithActiveCamera();
 
@@ -106,7 +96,7 @@ Character::Character() :
 						{
 							targetPosition = terrain->GetTerrainPoint(aabb->GetOrigin());
 
-							glm::vec3 translation = graphics->GetTranslation();
+							glm::vec3 translation = graphics->GetPosition();
 
 							glm::vec3 forward = glm::normalize(glm::vec3(graphics->GetRotation()[2]));
 							glm::vec3 toTarget = -glm::normalize(glm::normalize(glm::vec3(translation.x, 0.0f, translation.z) - glm::vec3(targetPosition.x, 0.0f, targetPosition.z)));
@@ -172,12 +162,10 @@ Character::Character() :
 
 					//cam.Translate({0.0f, yDif * TimeManager::DeltaTime() * speed, 0.0f });
 
-
-
 					glm::mat4 yrotation(1.0f);
 					glm::vec4 vectorToRotate(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
 					vectorToRotate = glm::normalize(vectorToRotate);
-					yrotation = glm::rotate(yrotation, glm::radians(speed * TimeManager::DeltaTime() * yDif), glm::normalize(glm::cross(glm::vec3(vectorToRotate), glm::vec3(0.0f, 1.0f, 0.0f))));
+					yrotation = glm::rotate(yrotation, glm::radians(speed * TimeManager::DeltaTime() * -yDif), glm::normalize(glm::cross(glm::vec3(vectorToRotate), glm::vec3(0.0f, 1.0f, 0.0f))));
 
 					vectorToRotate = glm::normalize(vectorToRotate * yrotation) * 20.0f;
 
@@ -186,7 +174,7 @@ Character::Character() :
 					glm::mat4 xrotation(1.0f);
 					vectorToRotate = glm::vec4(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
 					vectorToRotate = glm::normalize(vectorToRotate);
-					xrotation = glm::rotate(xrotation, glm::radians(speed * TimeManager::DeltaTime() * xDif), glm::vec3(0.0f, 1.0f, 0.0f));
+					xrotation = glm::rotate(xrotation, glm::radians(speed * TimeManager::DeltaTime() * -xDif), glm::vec3(0.0f, 1.0f, 0.0f));
 
 					vectorToRotate = glm::normalize(vectorToRotate * xrotation) * cameraDistance;
 
@@ -219,25 +207,43 @@ Character::Character() :
 		{
 			float speed = 1000.0f;
 
-			cameraDistance += TimeManager::DeltaTime() * ydiff * speed;
+			cameraDistance += TimeManager::DeltaTime() * -(float)ydiff * speed;
 		});
 }
 
 Character::~Character()
 {
+	delete forward;
+	delete backward;
+	delete left;
+	delete right;
 	delete toggleColliderVisibility;
 	delete castLine;
+	delete updateCollisionVisuals;
+	delete moveCamLeft;
+	delete moveCamRight;
+	delete rotateCameraView;
+	delete rotateCameraViewPress;
+	delete rotateCameraViewRelease;
+	delete zoomCamera;
 }
 
 void Character::Initialize()
 {
-	text = new Text("This is test text", "arial");
+	text = new TextComponent("This is test text gggg jjjj", "arial");
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel("Soldier"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Random"));
+	AddComponent(text, "TestText");
+
+	graphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Soldier"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Random"));
 	graphics->SetShine(32.0f);
 	graphics->SetClip(3);
 	graphics->SetSpeed(1.0f);
-	collider = new AnimatedCollider(graphics);
+
+	AddComponent(graphics, "CharacterGraphics");
+
+	collider = new AnimatedColliderComponent(graphics);
+
+	AddComponent(collider, "CharacterGraphicsCollider");
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_V, toggleColliderVisibility, "CharacterColliderVisibility");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, castLine, "CastLineFromCamera");
@@ -250,7 +256,6 @@ void Character::Initialize()
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, right, "walk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_H, moveCamLeft, "CameraMove");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_K, moveCamRight, "CameraMove");
-	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_B, updateCollisionVisuals, "ColisionVisuals");
 	InputManager::RegisterCallbackForMouseScroll(zoomCamera, "CharacterCameraZoom");
 
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
@@ -260,7 +265,7 @@ void Character::Initialize()
 
 	Camera& cam = CameraManager::GetCamera("Main");
 
-	cam.SetPosition(graphics->GetTranslation() + camPosition);
+	cam.SetPosition(graphics->GetPosition() + camPosition);
 }
 
 void Character::Terminate()
@@ -279,7 +284,7 @@ void Character::Terminate()
 
 	delete collider;
 
-	GraphicsObjectManager::Delete(graphics);
+	delete graphics;
 
 	delete text;
 }
@@ -288,20 +293,20 @@ void Character::GameUpdate()
 {
 	Camera& cam = CameraManager::GetCamera("Main");
 
-	cam.SetTarget(graphics->GetTranslation());
+	cam.SetTarget(graphics->GetPosition());
 	
 	cam.SetPosition(cam.GetTarget() + glm::normalize(camPosition) * cameraDistance);
 
-	Terrain* terrain = GetTerrain();
+	TerrainComponent* terrain = GetTerrain();
 
-	if (graphics->GetTranslation() != targetPosition)
+	if (graphics->GetPosition() != targetPosition)
 	{
-		graphics->Translate(glm::normalize(targetPosition - graphics->GetTranslation()) * TimeManager::DeltaTime() * 5.0f);
+		graphics->Translate(glm::normalize(targetPosition - graphics->GetPosition()) * TimeManager::DeltaTime() * 5.0f);
 		//terrain->UpdateHeightByTerrainPoint(graphics->GetTranslation(), TimeManager::DeltaTime() * -1.0f);
 	}
 
 	if (terrain != nullptr)
-		graphics->SetTranslation(terrain->GetTerrainPoint(graphics->GetTranslation()));
+		graphics->SetPosition(terrain->GetTerrainPoint(graphics->GetPosition()));
 
 
 
@@ -385,7 +390,13 @@ bool Character::Hovered() const
 
 void Character::SetPosition(const glm::vec3& newPos)
 {
-	graphics->SetTranslation(newPos);
+	graphics->SetPosition(newPos);
+	collider->Update();
+}
+
+void Character::SetRotation(const glm::mat4& newRotation)
+{
+	graphics->SetRotation(newRotation);
 	collider->Update();
 }
 
@@ -393,27 +404,38 @@ void Character::Start()
 {
 	if (graphics != nullptr)
 	{
-		targetPosition = graphics->GetTranslation();
+		targetPosition = graphics->GetPosition();
 	}
 
-	collider->ToggleVisibility();
+	if (collider->IsVisible() && !Editor::IsEnabled())
+	{
+		collider->ToggleVisibility();
+	}
 }
 
 void Character::End()
 {
-	collider->ToggleVisibility();
+	if (!collider->IsVisible())
+	{
+		collider->ToggleVisibility();
+	}
 }
 
 glm::vec3 Character::GetPosition() const
 {
-	return graphics->GetTranslation();
+	return graphics->GetPosition();
 }
 
-Terrain* Character::GetTerrain() const
+glm::mat4 Character::GetRotation() const
+{
+	return graphics->GetRotation();
+}
+
+TerrainComponent* Character::GetTerrain() const
 {
 	Scene* mainScene = SceneManager::GetLoadedScene("Main");
 
-	Terrain* terrain = nullptr;
+	TerrainComponent* terrain = nullptr;
 
 	if (mainScene != nullptr)
 	{
@@ -426,4 +448,13 @@ Terrain* Character::GetTerrain() const
 	}
 
 	return terrain;
+}
+
+const std::vector<char> Character::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void Character::Deserialize(const std::vector<char>& data)
+{
 }

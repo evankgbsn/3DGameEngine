@@ -27,23 +27,22 @@ Editor::Editor() :
 	cam.SetTarget(glm::vec3(0.0f));
 	SetupEditorInput();
 	InitializeGrid();
-
-	SelectionManager::Initialize();
 }
 
 Editor::~Editor()
 {
-	SelectionManager::Terminate();
 	delete ui;
 }
 
 void Editor::Initialize()
 {
 	SingletonHelpers::InitializeSingleton(&instance, "Editor");
+	SelectionManager::Initialize();
 }
 
 void Editor::Terminate()
 {
+	SelectionManager::Terminate();
 	SingletonHelpers::TerminateSingleton(&instance, "Editor");
 }
 
@@ -67,7 +66,7 @@ void Editor::Update()
 	}
 }
 
-bool Editor::Enabled()
+bool Editor::IsEnabled()
 {
 	if (instance != nullptr)
 	{
@@ -77,7 +76,7 @@ bool Editor::Enabled()
 	return false;
 }
 
-void Editor::Disbale()
+void Editor::Disable()
 {
 	if (instance != nullptr)
 	{

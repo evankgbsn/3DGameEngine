@@ -32,6 +32,10 @@ private:
 
 	GraphicsObjectColored& operator=(GraphicsObjectColored&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 };
 
 #endif // GRAPHICSOBJECTTEXTURED_H

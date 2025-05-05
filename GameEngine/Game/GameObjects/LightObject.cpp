@@ -6,6 +6,7 @@
 #include "GameEngine/Renderer/Camera/Camera.h"
 
 LightObject::LightObject() :
+	GameObject("LightObject"),
 	spotLight(nullptr)
 {
 }
@@ -53,4 +54,13 @@ void LightObject::SetPosition(const glm::vec3& pos)
 glm::vec3 LightObject::GetPosition() const
 {
 	return spotLight->GetPosition();
+}
+
+const std::vector<char> LightObject::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void LightObject::Deserialize(const std::vector<char>& data)
+{
 }

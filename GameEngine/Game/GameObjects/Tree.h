@@ -3,8 +3,8 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class GOTexturedLit;
-class StaticCollider;
+class GraphicsObjectTexturedLit;
+class StaticColliderComponent;
 
 class Tree : public GameObject
 {
@@ -47,9 +47,17 @@ private:
 
 	void Unload() override;
 
-	GOTexturedLit* graphics;
+	void SetRotation(const glm::mat4& rotation) override;
 
-	StaticCollider* collider;
+	glm::mat4 GetRotation() const override;
+
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	GraphicsObjectTexturedLit* graphics;
+
+	StaticColliderComponent* collider;
 };
 
 #endif // TREE_H

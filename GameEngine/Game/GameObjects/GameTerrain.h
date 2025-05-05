@@ -3,7 +3,7 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class Terrain;
+class TerrainComponent;
 
 class GameTerrain : public GameObject
 {
@@ -13,7 +13,7 @@ public:
 
 	~GameTerrain();
 
-	Terrain* GetTerrain() const;
+	TerrainComponent* GetTerrain() const;
 
 private:
 
@@ -37,7 +37,11 @@ private:
 
 	void Unload() override;
 
-	Terrain* terrain;
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	TerrainComponent* terrain;
 };
 
 #endif // GAMETERRAIN_H

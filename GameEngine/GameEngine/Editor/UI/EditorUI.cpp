@@ -36,7 +36,7 @@ void EditorUI::CreatePlayButton()
 
 	static std::function<void()> buttonFunc = std::function<void()>([this]() 
 		{
-			Editor::Disbale();
+			Editor::Disable();
 		});
 
 	Window* window = WindowManager::GetWindow("Engine");

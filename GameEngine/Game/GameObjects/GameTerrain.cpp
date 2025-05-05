@@ -1,9 +1,10 @@
 #include "GameTerrain.h"
 
-#include "GameEngine/Terrain/Terrain.h"
+#include "GameEngine/GameObject/Component/TerrainComponent.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 
-GameTerrain::GameTerrain() :
+GameTerrain::GameTerrain() : 
+	GameObject("GameTerrain"),
 	terrain(nullptr)
 {
 }
@@ -12,15 +13,15 @@ GameTerrain::~GameTerrain()
 {
 }
 
-Terrain* GameTerrain::GetTerrain() const
+TerrainComponent* GameTerrain::GetTerrain() const
 {
 	return terrain;
 }
 
 void GameTerrain::Initialize()
 {
-	terrain = new Terrain("Terrain", "Assets/Texture/Noise.png", std::vector<GOLit::Material>({ {TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey")}, {TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey")} }), 1081, 1081, 400, 400, 10, -5);
-	//terrain->ToggleCells();
+	terrain = new TerrainComponent("Terrain", "Assets/Texture/Noise.png", std::vector<GOLit::Material>({ {TextureManager::GetTexture("Dirt"), TextureManager::GetTexture("Grey")}, {TextureManager::GetTexture("Dirt"), TextureManager::GetTexture("Grey")} }), 1081, 1081, 500, 500, 30, -15);
+	terrain->ToggleCells();
 
 	
 }
@@ -57,5 +58,14 @@ void GameTerrain::Load()
 }
 
 void GameTerrain::Unload()
+{
+}
+
+const std::vector<char> GameTerrain::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void GameTerrain::Deserialize(const std::vector<char>& data)
 {
 }

@@ -5,7 +5,7 @@ class Collider
 {
 public:
 	
-	bool Visible() const;
+	bool IsVisible() const;
 
 protected:
 

@@ -28,7 +28,6 @@ void GO3DAnimated::SetClip(unsigned int clipIndex)
 	delete animation;
 	animation = new Animation(model->GetBakedAnimation(clipIndex));
 	clip = clipIndex;
-
 }
 
 unsigned int GO3DAnimated::GetClip() const
@@ -55,7 +54,7 @@ void GO3DAnimated::SetSpeed(float spd)
 {
 	speed = spd;
 
-	if (!Editor::Enabled())
+	if (!Editor::IsEnabled())
 	{
 		animation->SetSpeed(speed);
 	}
@@ -87,9 +86,19 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 
 GO3DAnimated::~GO3DAnimated()
 {
+
+	if (Editor::IsEnabled())
+	{
+		Editor::DeregisterOnEditorDisable(onEditorDisable);
+		Editor::DeregisterOnEditorEnable(onEditorEnable);
+	}
+
 	delete animation;
 	delete onEditorEnable;
+	delete onEditorDisable;
 	glDeleteBuffers(1, &animationBuffer);
+
+	
 }
 
 void GO3DAnimated::PauseAnimationOnEditorEnable()
@@ -102,6 +111,7 @@ void GO3DAnimated::PauseAnimationOnEditorEnable()
 	onEditorEnable = new std::function<void()>([this]()
 		{
 			PauseAnimation();
+
 		});
 
 	onEditorDisable = new std::function<void()>([this]()

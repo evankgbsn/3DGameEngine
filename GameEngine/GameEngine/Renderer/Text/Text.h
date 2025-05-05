@@ -19,6 +19,8 @@ public:
 
 	glm::vec2 GetPosition() const;
 
+	const std::string& GetString() const;
+
 	~Text();
 
 private:

@@ -74,6 +74,10 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 GOColoredInstanced::~GOColoredInstanced()
 {
 	glDeleteBuffers(1, &viewProjectionBuffer);
+	glDeleteBuffers(1, &translationsBuffer);
+	glDeleteBuffers(1, &rightBuffer);
+	glDeleteBuffers(1, &upBuffer);
+	glDeleteBuffers(1, &forwardBuffer);
 }
 
 void GOColoredInstanced::SetColor(const glm::vec4& color, unsigned int instanceID)

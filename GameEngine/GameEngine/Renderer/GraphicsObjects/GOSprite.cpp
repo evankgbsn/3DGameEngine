@@ -12,14 +12,18 @@
 
 GOSprite::GOSprite(Model* model, Texture* texture, const glm::vec2& initialPosition) :
 	GraphicsObject(model),
-	position(initialPosition),
+	modelMat(1.0f),
 	imageTexture(texture)
 {
 	glCreateBuffers(1, &projectionBuffer);
 	glNamedBufferStorage(projectionBuffer, sizeof(projection), &projection, GL_DYNAMIC_STORAGE_BIT);
 
 	glCreateBuffers(1, &positionBuffer);
-	glNamedBufferStorage(positionBuffer, sizeof(position), &position, GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(positionBuffer, sizeof(modelMat), &modelMat, GL_DYNAMIC_STORAGE_BIT);
+
+	SetPosition(initialPosition);
+
+	SetScale(.5f, .5f);
 }
 
 GOSprite::~GOSprite()
@@ -30,12 +34,12 @@ GOSprite::~GOSprite()
 
 glm::vec2 GOSprite::GetPosition() const
 {
-	return position;
+	return glm::vec2(modelMat[3]);
 }
 
 void GOSprite::SetPosition(const glm::vec2& newPosition)
 {
-	position = newPosition;
+	modelMat[3] = glm::vec4(newPosition, modelMat[3][2], modelMat[3][3]);
 }
 
 void GOSprite::Update()
@@ -56,7 +60,7 @@ void GOSprite::Update()
 	projection = glm::ortho(0.0f, windowWidth, 0.0f, windowHeight);
 
 	glNamedBufferSubData(projectionBuffer, 0, sizeof(projection), &projection);
-	glNamedBufferSubData(positionBuffer, 0, sizeof(position), &position);
+	glNamedBufferSubData(positionBuffer, 0, sizeof(modelMat), &modelMat);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -69,7 +73,7 @@ void GOSprite::Update()
 
 void GOSprite::Translate(const glm::vec2& translation)
 {
-	position += translation;
+	modelMat[3] += glm::vec4(translation, 0.0f, 0.0f);
 }
 
 void GOSprite::SetTexture(Texture* const newTexture)
@@ -77,9 +81,19 @@ void GOSprite::SetTexture(Texture* const newTexture)
 	imageTexture = newTexture;
 }
 
+void GOSprite::SetScale(float x, float y)
+{
+	modelMat = glm::scale(modelMat, glm::vec3(x, y, 1.0f));
+}
+
 glm::mat4 GOSprite::GetProjection() const
 {
 	return projection;
+}
+
+glm::mat4 GOSprite::GetModelMat() const
+{
+	return modelMat;
 }
 
 Texture* const GOSprite::GetTexture() const

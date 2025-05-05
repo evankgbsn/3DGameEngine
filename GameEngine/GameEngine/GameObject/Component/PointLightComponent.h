@@ -34,6 +34,10 @@ private:
 
 	PointLightComponent& operator=(PointLightComponent&&) = delete;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	PointLight* light;
 
 };

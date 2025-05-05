@@ -12,3 +12,12 @@ SpotLightComponent::~SpotLightComponent()
 {
 	LightManager::Delete(light);
 }
+
+const std::vector<char> SpotLightComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void SpotLightComponent::Deserialize(const std::vector<char>& data)
+{
+}

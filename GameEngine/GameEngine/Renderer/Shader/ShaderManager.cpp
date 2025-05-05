@@ -95,6 +95,11 @@ ShaderManager::ShaderManager()
 
 ShaderManager::~ShaderManager()
 {
+	for (auto& shader : shaders)
+	{
+		delete shader;
+	}
+
 	DestroyShadowMapFramebuffer();
 	DestroyVAO();
 	delete debugInfo;

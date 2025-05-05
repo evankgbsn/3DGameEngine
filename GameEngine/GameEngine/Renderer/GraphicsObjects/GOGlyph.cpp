@@ -15,9 +15,9 @@ GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos,
 			Vertex(glm::vec3(g.bearing.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {0.0f, 1.0f}),
 			Vertex(glm::vec3((position.x + g.bearing.x * scale) + g.size.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {1.0f, 1.0f}),
 
-			Vertex(glm::vec3(g.bearing.x * scale, ((g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {0.0f, 0.0f}),
-			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, (g.size.y - g.bearing.y) * scale, 0.0f), {}, {1.0f, 1.0f}),
-			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, ((g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {1.0f, 0.0f})
+			Vertex(glm::vec3(g.bearing.x * scale, (position.y - (g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, (position.y - (g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {1.0f, 0.0f})
 		}, 
 		{0,1,2,3,4,5}
 	)),
@@ -25,6 +25,7 @@ GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos,
 	color(c),
 	position(pos)
 {
+
 	glCreateBuffers(1, &projectionBuffer);
 	glNamedBufferStorage(projectionBuffer, sizeof(projection), &projection, GL_DYNAMIC_STORAGE_BIT);
 

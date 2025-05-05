@@ -29,6 +29,7 @@ public:
 		if (*instance != nullptr)
 		{
 			delete* instance;
+			*instance = nullptr;
 			Logger::Log("Terminated " + className, Logger::Category::Success);
 		}
 		else

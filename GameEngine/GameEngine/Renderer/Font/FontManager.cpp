@@ -88,6 +88,14 @@ FontManager::FontManager() :
 
 FontManager::~FontManager()
 {
+	for (auto& font : fonts)
+	{
+		if (font.second != nullptr)
+		{
+			delete font.second;
+		}
+	}
+
 	TerminateFreetype();
 }
 

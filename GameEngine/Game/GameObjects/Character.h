@@ -7,14 +7,10 @@
 
 #include <functional>
 
-class GOTexturedAnimatedLit;
-class AnimatedCollider;
-class OrientedBoundingBoxWithVisualization;
-class GOTexturedLit;
-class StaticCollider;
-class Terrain;
-class GOTextured;
-class Text;
+class GraphicsObjectTexturedAnimatedLit;
+class AnimatedColliderComponent;
+class TextComponent;
+class TerrainComponent;
 
 class Character : public GameObject
 {
@@ -51,17 +47,25 @@ private:
 
 	void SetPosition(const glm::vec3& newPos) override;
 
+	void SetRotation(const glm::mat4& newRotation) override;
+
 	void Start() override;
 
 	void End() override;
 
 	glm::vec3 GetPosition() const override;
 
-	Terrain* GetTerrain() const;
+	glm::mat4 GetRotation() const override;
 
-	GOTexturedAnimatedLit* graphics;
+	TerrainComponent* GetTerrain() const;
 
-	AnimatedCollider* collider;
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	GraphicsObjectTexturedAnimatedLit* graphics;
+
+	AnimatedColliderComponent* collider;
 
 	std::function<void(int)>* toggleColliderVisibility;
 
@@ -92,7 +96,7 @@ private:
 
 	float cameraDistance;
 
-	Text* text;
+	TextComponent* text;
 };
 
 #endif // CHARACTER_H

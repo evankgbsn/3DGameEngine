@@ -32,6 +32,15 @@ void DirectionalLightComponent::Update()
 {
 }
 
+const std::vector<char> DirectionalLightComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void DirectionalLightComponent::Deserialize(const std::vector<char>& data)
+{
+}
+
 void DirectionalLightComponent::SetColor(const glm::vec3& newColor)
 {
 	light->SetColor(glm::vec4(newColor, 1.0f));

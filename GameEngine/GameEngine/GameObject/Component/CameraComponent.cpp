@@ -113,3 +113,12 @@ void CameraComponent::SetFar(const float& newFar)
 {
 	CameraManager::GetCamera(name).SetFar(newFar);
 }
+
+const std::vector<char> CameraComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void CameraComponent::Deserialize(const std::vector<char>& data)
+{
+}

@@ -19,19 +19,27 @@ public:
 
 	virtual glm::vec3 GetPosition() const { static glm::vec3 defaultReturn; return defaultReturn; };
 
+	virtual void SetRotation(const glm::mat4& rotation) {};
+
+	virtual glm::mat4 GetRotation() const { static glm::mat4 defaultReturn; return defaultReturn; };
+
 	virtual void Start() {};
 
 	virtual void End() {};
 
-	virtual std::vector<char> Serialize() { return std::vector<char>(); };
+	virtual const std::vector<char> Serialize() const = 0;
 
-	virtual void Deserialize() {};
+	virtual void Deserialize(const std::vector<char>& data) = 0;
+
+	virtual const std::string& GetName() const;
 
 protected:
 
 	friend class Scene;
 
-	GameObject();
+	GameObject() = delete;
+
+	GameObject(const std::string& name);
 
 	virtual ~GameObject();
 
@@ -62,6 +70,8 @@ private:
 	GameObject(GameObject&&) = delete;
 
 	GameObject& operator=(GameObject&&) = delete;
+
+	std::string name;
 
 	std::unordered_map<std::string, Component*> components;
 

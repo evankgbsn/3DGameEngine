@@ -21,7 +21,7 @@ Button::Button(const std::string& baseTextureName, const std::string& hoveredTex
 
 Button::~Button()
 {
-	
+	GraphicsObjectManager::Delete(sprite);
 	InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_LEFT, "ButtonPress");
 }
 
@@ -56,11 +56,7 @@ bool Button::Hovered()
 		glm::vec2 cursorPos = window->GetCursorPosition();
 		cursorPos.y = windowHeight - cursorPos.y;
 
-		glm::mat4 transform(1.0f);
-
-		transform[3] = glm::vec4(sprite->GetPosition(), 0.0f, 1.0f);
-
-		if (Math::PointIn2DModel(model, transform, sprite->GetProjection(), glm::mat4(1.0f), cursorPos, { windowWidth, windowHeight }))
+		if (Math::PointIn2DModel(model, glm::mat4(1.0f), sprite->GetProjection(), sprite->GetModelMat(), cursorPos, {windowWidth, windowHeight}))
 		{
 			static std::function<void(int keyCode)> mousePress = [this](int keyCode)
 				{

@@ -9,7 +9,8 @@
 
 #include "GameEngine/GameObject/Component/DirectionalLightComponent.h"
 
-Boxes::Boxes()
+Boxes::Boxes() :
+	GameObject("Boxes")
 {
 }
 
@@ -105,4 +106,13 @@ void Boxes::Unload()
 	}
 
 	// Unload model.
+}
+
+const std::vector<char> Boxes::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void Boxes::Deserialize(const std::vector<char>& data)
+{
 }

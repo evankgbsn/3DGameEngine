@@ -43,6 +43,11 @@ glm::vec2 Text::GetPosition() const
 	return glyphs.front()->GetPosition();
 }
 
+const std::string& Text::GetString() const
+{
+	return text;
+}
+
 Text::~Text()
 {
 	for (GOGlyph* glyph : glyphs)

@@ -17,8 +17,11 @@ Subscene::Subscene() :
 
 Subscene::~Subscene()
 {
+	Unload();
+
 	delete loadMain;
 	delete boxes;
+	delete cam;
 }
 
 void Subscene::Initialize()

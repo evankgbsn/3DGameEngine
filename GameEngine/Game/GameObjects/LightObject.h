@@ -44,6 +44,10 @@ private:
 
 	glm::vec3 GetPosition() const override;
 
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
 	SpotLight* spotLight;
 };
 

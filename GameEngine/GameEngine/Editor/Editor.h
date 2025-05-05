@@ -17,9 +17,9 @@ public:
 
 	static void Update();
 
-	static bool Enabled();
+	static bool IsEnabled();
 
-	static void Disbale();
+	static void Disable();
 
 	static void Enable();
 

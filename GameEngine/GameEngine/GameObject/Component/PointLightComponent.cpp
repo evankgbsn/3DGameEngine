@@ -33,3 +33,12 @@ glm::vec3 PointLightComponent::GetPosition() const
 {
 	return light->GetPosition();
 }
+
+const std::vector<char> PointLightComponent::Serialize() const
+{
+	return std::vector<char>();
+}
+
+void PointLightComponent::Deserialize(const std::vector<char>& data)
+{
+}

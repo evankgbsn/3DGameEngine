@@ -2,11 +2,16 @@
 #define COMPONENT_H
 
 #include <string>
+#include <vector>
 
 class Component
 {
 
 public:
+
+	virtual const std::vector<char> Serialize() const = 0;
+
+	virtual void Deserialize(const std::vector<char>& data) = 0;
 
 protected:
 
