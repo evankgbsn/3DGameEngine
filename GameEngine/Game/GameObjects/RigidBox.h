@@ -46,6 +46,8 @@ private:
 
 	void SetRotation(const glm::mat4& newRotation) override;
 
+	glm::mat4 GetRotation() const override;
+
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* rigidBody;

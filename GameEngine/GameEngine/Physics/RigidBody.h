@@ -16,7 +16,7 @@ public:
 		DYNAMIC
 	};
 
-	RigidBody(Type type, PxGeometry* geometry, const glm::vec3& initialPosition);
+	RigidBody(Type type, PxGeometry* geometry, const glm::vec3& initialPosition, const glm::mat4& initialRotation);
 
 	~RigidBody();
 

@@ -59,7 +59,7 @@ PhysicsManager::PhysicsManager() :
 	physics(nullptr),
 	foundation(nullptr),
 	accumulator(0.0f),
-	stepSize(1.0f/60.0f)
+	stepSize(1.0f/240.0f)
 {
 	foundation = PxCreateFoundation(PX_PHYSICS_VERSION, defaultAllocatorCallback, defaultErrorCallback);
 	

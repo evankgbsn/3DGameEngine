@@ -10,15 +10,15 @@ RigidBodyComponent::RigidBodyComponent(Type type, GameObject* owningObject) :
 {
 
 	PxPlaneGeometry planeGeo = PxPlaneGeometry();
-	PxBoxGeometry boxGeo(2.f, 2.f, 2.f);
+	PxBoxGeometry boxGeo(1.f, 1.f, 1.f);
 
 	switch (type)
 	{
 	case Type::STATIC:
-		body = new RigidBody(RigidBody::Type::STATIC, &planeGeo, owningObject->GetPosition());
+		body = new RigidBody(RigidBody::Type::STATIC, &planeGeo, owningObject->GetPosition(), owningObject->GetRotation());
 		break;
 	case Type::DYNAMIC:
-		body = new RigidBody(RigidBody::Type::DYNAMIC, &boxGeo, owningObject->GetPosition());
+		body = new RigidBody(RigidBody::Type::DYNAMIC, &boxGeo, owningObject->GetPosition(), owningObject->GetRotation());
 		break;
 	default:
 		break;

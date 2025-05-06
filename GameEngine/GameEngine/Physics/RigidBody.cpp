@@ -2,7 +2,7 @@
 
 #include "PhysicsManager.h"
 
-RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosition) :
+RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosition, const glm::mat4& initialRotation) :
 	type(t),
     material(nullptr),
     staticBody(nullptr),
@@ -12,6 +12,12 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
 
     PxShapeFlags shapeFlags = PxShapeFlag::eSCENE_QUERY_SHAPE | PxShapeFlag::eSIMULATION_SHAPE;
     PxMaterial* materialPtr = material;
+
+    PxMat33 rot(
+        PxVec3(initialRotation[0][0], initialRotation[0][1], initialRotation[0][2]),
+        PxVec3(initialRotation[1][0], initialRotation[1][1], initialRotation[1][2]),
+        PxVec3(initialRotation[2][0], initialRotation[2][1], initialRotation[2][2])
+    );
 
     PxShape* shape = nullptr;
 
@@ -29,7 +35,7 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
         break;
     case Type::DYNAMIC:
 
-        dynamicBody = PhysicsManager::GetPhysics()->createRigidDynamic(PxTransform(PxVec3(initialPosition.x, initialPosition.y, initialPosition.z)));
+        dynamicBody = PhysicsManager::GetPhysics()->createRigidDynamic(PxTransform(PxVec3(initialPosition.x, initialPosition.y, initialPosition.z), PxQuat(rot)));
         shape = PhysicsManager::GetPhysics()->createShape(*geometry, &materialPtr, 1, true, shapeFlags);
         dynamicBody->attachShape(*shape);
         shape->release(); // this way shape gets automatically released with actor

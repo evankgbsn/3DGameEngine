@@ -28,6 +28,7 @@ void RigidBox::Initialize()
     graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Container"), TextureManager::GetTexture("ContainerSpec"));
     graphics->SetShine(0.5f);
     graphics->SetPosition({ 0.0f, 40.0f, 0.0f });
+    graphics->Rotate(90.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     AddComponent(graphics, "Graphcis");
 
     rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this);
@@ -84,4 +85,9 @@ glm::vec3 RigidBox::GetPosition() const
 void RigidBox::SetRotation(const glm::mat4& newRotation)
 {
     graphics->SetRotation(newRotation);
+}
+
+glm::mat4 RigidBox::GetRotation() const
+{
+    return graphics->GetRotation();
 }
