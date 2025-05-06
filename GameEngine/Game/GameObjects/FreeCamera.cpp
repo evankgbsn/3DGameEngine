@@ -21,6 +21,7 @@ FreeCamera::FreeCamera() :
 	escPress(nullptr)
 {
 	CreateInputFunctions();
+	RegisterGameObjectClassType<FreeCamera>(this);
 }
 
 FreeCamera::~FreeCamera()

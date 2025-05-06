@@ -33,6 +33,10 @@ protected:
 
 	void Unload();
 
+	void Deserialize(const std::vector<char>& sceneData);
+
+	void Save();
+
 	void RegisterGameObject(GameObject* object, const std::string& name);
 
 	void DeregisterGameObject(const std::string& name);

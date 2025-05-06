@@ -191,6 +191,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLit.cpp" />
     <ClCompile Include="GameObject\Component\OrientedBoundingBoxComponent.cpp" />
     <ClCompile Include="GameObject\Component\PointLightComponent.cpp" />
+    <ClCompile Include="GameObject\Component\RigidBodyComponent.cpp" />
     <ClCompile Include="GameObject\Component\SpotLightComponent.cpp" />
     <ClCompile Include="GameObject\Component\StaticColliderComponent.cpp" />
     <ClCompile Include="GameObject\Component\TerrainComponent.cpp" />
@@ -215,6 +216,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Math\Shapes\Triangle.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Physics\RigidBody.cpp" />
     <ClCompile Include="Renderer\Animation\Animation.cpp" />
     <ClCompile Include="Renderer\Animation\Armature.cpp" />
     <ClCompile Include="Renderer\Animation\BakedAnimation.cpp" />
@@ -290,6 +292,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLit.h" />
     <ClInclude Include="GameObject\Component\OrientedBoundingBoxComponent.h" />
     <ClInclude Include="GameObject\Component\PointLightComponent.h" />
+    <ClInclude Include="GameObject\Component\RigidBodyComponent.h" />
     <ClInclude Include="GameObject\Component\SpotLightComponent.h" />
     <ClInclude Include="GameObject\Component\StaticColliderComponent.h" />
     <ClInclude Include="GameObject\Component\TerrainComponent.h" />
@@ -314,6 +317,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Math\Shapes\Triangle.h" />
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Physics\PhysicsManager.h" />
+    <ClInclude Include="Physics\RigidBody.h" />
     <ClInclude Include="Renderer\Animation\Animation.h" />
     <ClInclude Include="Renderer\Animation\Armature.h" />
     <ClInclude Include="Renderer\Animation\BakedAnimation.h" />

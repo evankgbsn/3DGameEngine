@@ -12,6 +12,7 @@
 Boxes::Boxes() :
 	GameObject("Boxes")
 {
+	RegisterGameObjectClassType<Boxes>(this);
 }
 
 Boxes::~Boxes()

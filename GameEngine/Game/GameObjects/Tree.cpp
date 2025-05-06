@@ -13,6 +13,7 @@ Tree::Tree() :
 	graphics(nullptr),
 	collider(nullptr)
 {
+	RegisterGameObjectClassType<Tree>(this);
 }
 
 Tree::~Tree()

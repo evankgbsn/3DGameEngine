@@ -390,6 +390,12 @@
     <ClCompile Include="GameObject\Component\StaticColliderComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\RigidBody.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\RigidBodyComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -690,6 +696,12 @@
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Component\OrientedBoundingBoxComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\RigidBody.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\RigidBodyComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>

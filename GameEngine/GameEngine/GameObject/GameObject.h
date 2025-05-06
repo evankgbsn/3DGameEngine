@@ -1,11 +1,14 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "../Utils/Logger.h"
+
 #include <glm/glm.hpp>
 
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <functional>
 
 class Component;
 
@@ -55,6 +58,9 @@ protected:
 
 	virtual void Unload() = 0;
 
+	template<typename T>
+	void RegisterGameObjectClassType(GameObject* obj);
+
 	void AddComponent(Component* component, const std::string name);
 
 	void RemoveComponent(const std::string& name);
@@ -71,10 +77,27 @@ private:
 
 	GameObject& operator=(GameObject&&) = delete;
 
+	static std::unordered_map<std::string, std::function<void(GameObject**)>> newFunctions;
+
 	std::string name;
+
+	std::string nameOfType;
 
 	std::unordered_map<std::string, Component*> components;
 
 };
+
+template<typename T>
+inline void GameObject::RegisterGameObjectClassType(GameObject* obj)
+{
+	nameOfType = std::string(typeid(*obj).name());
+	Logger::Log(std::string("Created GameObject of Type: ") + nameOfType, Logger::Category::Info);
+
+	newFunctions[nameOfType] = std::function<void(GameObject**)>([](GameObject** outNewGameObject)
+		{
+			*outNewGameObject = new T();
+		});
+
+}
 
 #endif // GAMEOBJECT_H

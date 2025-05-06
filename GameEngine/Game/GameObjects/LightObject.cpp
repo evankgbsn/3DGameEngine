@@ -9,6 +9,7 @@ LightObject::LightObject() :
 	GameObject("LightObject"),
 	spotLight(nullptr)
 {
+	RegisterGameObjectClassType<LightObject>(this);
 }
 
 LightObject::~LightObject()

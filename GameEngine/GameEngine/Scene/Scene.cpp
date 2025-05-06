@@ -69,6 +69,14 @@ void Scene::Unload()
 	Terminate();
 }
 
+void Scene::Deserialize(const std::vector<char>& sceneData)
+{
+}
+
+void Scene::Save()
+{
+}
+
 void Scene::GameUpdate()
 {
 	for (auto& object : objects)

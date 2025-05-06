@@ -7,6 +7,7 @@ GameTerrain::GameTerrain() :
 	GameObject("GameTerrain"),
 	terrain(nullptr)
 {
+	RegisterGameObjectClassType<GameTerrain>(this);
 }
 
 GameTerrain::~GameTerrain()

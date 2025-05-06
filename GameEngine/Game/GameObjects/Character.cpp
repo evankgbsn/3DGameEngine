@@ -37,6 +37,8 @@ Character::Character() :
 	targetPosition({0.0f, 0.0f, 0.0f}),
 	cameraDistance(20.0f)
 {
+	RegisterGameObjectClassType<Character>(this);
+
 	float moveSpeed = 3.0f;
 
 	TerrainComponent* terrain = GetTerrain();

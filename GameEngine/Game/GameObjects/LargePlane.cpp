@@ -4,11 +4,13 @@
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Terrain/Terrain.h"
+#include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 
 LargePlane::LargePlane() :
 	GameObject("LargePlane"),
 	graphics(nullptr)
 {
+	RegisterGameObjectClassType<LargePlane>(this);
 }
 
 LargePlane::~LargePlane()
@@ -17,11 +19,13 @@ LargePlane::~LargePlane()
 
 void LargePlane::Initialize()
 {
-	//graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
-	//graphics->Translate({ 0.0f, -0.5f, 0.0f });
-	//graphics->SetShine(32.0f);
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	graphics->Translate({ 0.0f, -0.5f, 0.0f });
+	graphics->SetShine(32.0f);
+	AddComponent(graphics, "Graphics");
 
-	
+	rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this);
+	AddComponent(rigidBody, "RigidBody");
 }
 
 void LargePlane::Terminate()

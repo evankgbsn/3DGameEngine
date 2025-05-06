@@ -4,6 +4,8 @@
 #include <PXConfig.h>
 #include <PxPhysicsAPI.h>
 
+using namespace physx;
+
 class PhysicsManager
 {
 
@@ -12,6 +14,12 @@ public:
 	static void Initialize();
 
 	static void Terminate();
+
+	static void Update();
+
+	static physx::PxPhysics* const GetPhysics();
+
+	static physx::PxScene* const GetScene();
 
 private:
 
@@ -23,15 +31,23 @@ private:
 
 	static PhysicsManager* instance;
 
-	physx::PxDefaultErrorCallback defaultErrorCallback;
+	PxDefaultErrorCallback defaultErrorCallback;
 
-	physx::PxDefaultAllocator defaultAllocatorCallback;
+	PxDefaultAllocator defaultAllocatorCallback;
 
 	bool recordMemoryAllocations = true;
 
-	physx::PxPhysics* physics;
+	PxPhysics* physics;
 
-	physx::PxFoundation* foundation;
+	PxFoundation* foundation;
+
+	PxScene* scene;
+
+	PxDefaultCpuDispatcher* dispatcher;
+
+	float accumulator;
+
+	float stepSize;
 };
 
 

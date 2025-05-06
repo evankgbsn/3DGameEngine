@@ -12,6 +12,7 @@ DirectionalLightGameObject::DirectionalLightGameObject() :
 	GameObject("DirectionalLight"),
 	light(nullptr)
 {
+	RegisterGameObjectClassType<DirectionalLightGameObject>(this);
 }
 
 DirectionalLightGameObject::~DirectionalLightGameObject()

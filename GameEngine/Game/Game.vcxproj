@@ -144,9 +144,11 @@
     <ClCompile Include="GameObjects\GameTerrain.cpp" />
     <ClCompile Include="GameObjects\LargePlane.cpp" />
     <ClCompile Include="GameObjects\LightObject.cpp" />
+    <ClCompile Include="GameObjects\RigidBox.cpp" />
     <ClCompile Include="GameObjects\Tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\MainScene.cpp" />
+    <ClCompile Include="Scenes\PhysXTest.cpp" />
     <ClCompile Include="Scenes\Subscene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,8 +159,10 @@
     <ClInclude Include="GameObjects\GameTerrain.h" />
     <ClInclude Include="GameObjects\LargePlane.h" />
     <ClInclude Include="GameObjects\LightObject.h" />
+    <ClInclude Include="GameObjects\RigidBox.h" />
     <ClInclude Include="GameObjects\Tree.h" />
     <ClInclude Include="Scenes\MainScene.h" />
+    <ClInclude Include="Scenes\PhysXTest.h" />
     <ClInclude Include="Scenes\Subscene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

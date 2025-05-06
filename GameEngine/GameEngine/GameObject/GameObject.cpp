@@ -1,5 +1,9 @@
 #include "GameObject.h"
 
+#include <typeinfo>
+
+std::unordered_map<std::string, std::function<void(GameObject**)>> GameObject::newFunctions = std::unordered_map<std::string, std::function<void(GameObject**)>>();
+
 const std::string& GameObject::GetName() const
 {
 	return name;
@@ -8,6 +12,7 @@ const std::string& GameObject::GetName() const
 GameObject::GameObject(const std::string& n) :
 	name(n)
 {
+	
 }
 
 GameObject::~GameObject()

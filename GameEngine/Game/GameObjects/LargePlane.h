@@ -4,6 +4,7 @@
 #include "GameEngine/GameObject/GameObject.h"
 
 class GraphicsObjectTexturedLit;
+class RigidBodyComponent;
 
 class LargePlane : public GameObject
 {
@@ -41,6 +42,8 @@ private:
 	void Deserialize(const std::vector<char>& data) override;
 
 	GraphicsObjectTexturedLit* graphics;
+
+	RigidBodyComponent* rigidBody;
 
 };
 
