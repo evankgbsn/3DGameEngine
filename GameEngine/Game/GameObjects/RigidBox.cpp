@@ -31,8 +31,9 @@ void RigidBox::Initialize()
     graphics->Rotate(90.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     AddComponent(graphics, "Graphcis");
 
-    rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this);
+    rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
     AddComponent(rigidBody, "RigidBody");
+    rigidBody->SyncPhysics();
 
 
 }
@@ -54,7 +55,7 @@ void RigidBox::Load()
 {
     if (!ModelManager::ModelLoaded("Cube"))
     {
-        ModelManager::LoadModel("Cube", "Assets/Model/Cube.gltf");
+        ModelManager::LoadModel("Cube", "Assets/Model/Sphere.gltf");
     }
 
     if (!TextureManager::TextureLoaded("Container"))
@@ -90,4 +91,9 @@ void RigidBox::SetRotation(const glm::mat4& newRotation)
 glm::mat4 RigidBox::GetRotation() const
 {
     return graphics->GetRotation();
+}
+
+glm::mat4 RigidBox::GetTransform() const
+{
+    return graphics->GetTransform();
 }

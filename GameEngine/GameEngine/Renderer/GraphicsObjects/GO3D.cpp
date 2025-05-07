@@ -14,6 +14,11 @@ void GO3D::SetLineWidth(float width)
 	lineWidth = width;
 }
 
+void GO3D::SetPointSize(float size)
+{
+	pointSize = size;
+}
+
 GO3D::GO3D(Model* const model) :
 	GraphicsObject(model),
 	mvp({ glm::mat4(1.0f), glm::mat4(1.0f), glm::mat4(1.0f) }),
@@ -23,7 +28,8 @@ GO3D::GO3D(Model* const model) :
 	scale(glm::mat4(1.0f)),
 	transformation(glm::mat4(1.0f)),
 	drawMode(Mode::FILL),
-	lineWidth(1.0f)
+	lineWidth(1.0f),
+	pointSize(1.0f)
 {
 	glCreateBuffers(1, &mvpBuffer);
 	glNamedBufferStorage(mvpBuffer, sizeof(mvp), &mvp, GL_DYNAMIC_STORAGE_BIT);
@@ -48,6 +54,7 @@ void GO3D::Update()
 	glNamedBufferSubData(mvpBuffer, 0, sizeof(MVP), &mvp);
 
 	glLineWidth(lineWidth);
+	glPointSize(pointSize);
 
 	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)drawMode);
 	glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);

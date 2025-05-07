@@ -14,7 +14,7 @@ public:
 
 	Track();
 
-	Track(const Interpolation& interpolationType);
+	Track(const Interp& interpolationType);
 
 	~Track();
 
@@ -28,9 +28,9 @@ public:
 
 	Frame<N>& operator[](unsigned int index);
 
-	void SetInterpolation(Interpolation newInterpolation);
+	void SetInterpolation(Interp newInterpolation);
 
-	Interpolation GetInterpolation() const;
+	Interp GetInterpolation() const;
 
 	unsigned int Size() const;
 
@@ -58,7 +58,7 @@ private:
 	
 	T SampleCubic(float time, bool isLooping);
 
-	Interpolation interpolation;
+	Interp interpolation;
 
 	std::vector<Frame<N>> frames;
 

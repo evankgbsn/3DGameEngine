@@ -1,7 +1,7 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-enum class Interpolation
+enum class Interp
 {
 	Constant,
 	Linear,

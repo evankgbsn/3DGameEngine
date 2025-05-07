@@ -97,6 +97,8 @@ public:
 
 	void SetLineWidth(float width);
 
+	void SetPointSize(float size);
+
 protected:
 
 	friend class GraphicsObjectManager;
@@ -127,6 +129,8 @@ protected:
 	unsigned int mvpBuffer;
 
 	float lineWidth;
+
+	float pointSize;
 
 private:
 

@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 class GO3D;
+class Model;
 
 class GraphicsObject3DComponent : public Component
 {
@@ -34,7 +35,9 @@ public:
 
 	virtual void Update() override;
 
-	GO3D* const GetGraphics();
+	GO3D* const GetGraphics() const;
+
+	const Model* const GetModel() const;
 
 protected:
 

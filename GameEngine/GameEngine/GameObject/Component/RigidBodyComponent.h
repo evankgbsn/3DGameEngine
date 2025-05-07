@@ -5,6 +5,15 @@
 
 class RigidBody;
 class GameObject;
+class Model;
+class OrientedBoundingBoxWithVisualization;
+class GOColored;
+
+namespace physx
+{
+	class PxConvexMesh;
+	class PxTriangleMesh;
+}
 
 class RigidBodyComponent : public Component
 {
@@ -16,7 +25,7 @@ public:
 		DYNAMIC
 	};
 
-	RigidBodyComponent(Type type, GameObject* owner);
+	RigidBodyComponent(Type type, GameObject* owner, const Model* const model);
 
 	~RigidBodyComponent();
 
@@ -32,9 +41,21 @@ private:
 
 	RigidBodyComponent& operator=(RigidBodyComponent&&) = delete;
 
+	void CreateShapeFromModel();
+
 	RigidBody* body;
 
 	GameObject* owner;
+
+	const Model* const model;
+
+	physx::PxConvexMesh* convexMeshShape;
+
+	physx::PxTriangleMesh* triangleMeshShape;
+
+	GOColored* shapeVisuals;
+
+	Type type;
 
 	const std::vector<char> Serialize() const override;
 

@@ -2,6 +2,7 @@
 
 #include "PhysicsManager.h"
 
+
 RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosition, const glm::mat4& initialRotation) :
 	type(t),
     material(nullptr),
@@ -25,7 +26,7 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
     {
     case Type::STATIC:
 
-        staticBody = PhysicsManager::GetPhysics()->createRigidStatic(PxTransformFromPlaneEquation(PxPlane(PxVec3(0.f, 1.f, 0.f), 0.f)));
+        staticBody = PhysicsManager::GetPhysics()->createRigidStatic(PxTransform(PxVec3(initialPosition.x, initialPosition.y, initialPosition.z), PxQuat(rot)));
         shape = PhysicsManager::GetPhysics()->createShape(*geometry, &materialPtr, 1, true, shapeFlags);
         staticBody->attachShape(*shape);
         shape->release(); // this way shape gets automatically released with actor
@@ -66,14 +67,32 @@ PxMaterial* RigidBody::GetMaterial() const
 
 glm::vec3 RigidBody::GetPosition() const
 {
-    PxTransform transform = dynamicBody->getGlobalPose();
+    PxTransform transform;
+
+    if (dynamicBody != nullptr)
+    {
+        transform = dynamicBody->getGlobalPose();
+    }
+    else if (staticBody != nullptr)
+    {
+        transform = staticBody->getGlobalPose();
+    }
 
     return glm::vec3(transform.p.x, transform.p.y, transform.p.z);
 }
 
 glm::mat4 RigidBody::GetRotation() const
 {
-    PxTransform transform = dynamicBody->getGlobalPose();
+    PxTransform transform;
+
+    if (dynamicBody != nullptr)
+    {
+        transform = dynamicBody->getGlobalPose();
+    }
+    else if (staticBody != nullptr)
+    {
+        transform = staticBody->getGlobalPose();
+    }
 
     PxMat44 rot = PxMat44(transform.q);
 

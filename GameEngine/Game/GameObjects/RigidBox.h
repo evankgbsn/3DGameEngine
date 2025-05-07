@@ -48,6 +48,8 @@ private:
 
 	glm::mat4 GetRotation() const override;
 
+	glm::mat4 GetTransform() const override;
+
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* rigidBody;

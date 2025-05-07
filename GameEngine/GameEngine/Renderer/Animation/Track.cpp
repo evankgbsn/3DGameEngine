@@ -63,12 +63,12 @@ namespace TrackHelpers
 
 template<typename T, size_t N>
 inline Track<T, N>::Track() :
-	interpolation(Interpolation::Linear)
+	interpolation(Interp::Linear)
 {
 }
 
 template<typename T, size_t N>
-inline Track<T, N>::Track(const Interpolation& interpolationType) :
+inline Track<T, N>::Track(const Interp& interpolationType) :
 	interpolation(interpolationType)
 {
 }
@@ -85,13 +85,13 @@ inline Frame<N>& Track<T, N>::operator[](unsigned int index)
 }
 
 template<typename T, size_t N>
-inline void Track<T, N>::SetInterpolation(Interpolation newInterpolation)
+inline void Track<T, N>::SetInterpolation(Interp newInterpolation)
 {
 	interpolation = newInterpolation;
 }
 
 template<typename T, size_t N>
-inline Interpolation Track<T, N>::GetInterpolation() const
+inline Interp Track<T, N>::GetInterpolation() const
 {
 	return interpolation;
 }
@@ -263,11 +263,11 @@ inline T Track<T, N>::Sample(float time, bool isLooping)
 {
 	switch (interpolation)
 	{
-	case Interpolation::Constant:
+	case Interp::Constant:
 		return SampleConstant(time, isLooping);
-	case Interpolation::Linear:
+	case Interp::Linear:
 		return SampleLinear(time, isLooping);
-	case Interpolation::Cubic:
+	case Interp::Cubic:
 		return SampleCubic(time, isLooping);
 	default:
 		break;

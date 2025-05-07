@@ -24,8 +24,10 @@ void LargePlane::Initialize()
 	graphics->SetShine(32.0f);
 	AddComponent(graphics, "Graphics");
 
-	rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this);
+	rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	AddComponent(rigidBody, "RigidBody");
+
+	rigidBody->SyncPhysics();
 }
 
 void LargePlane::Terminate()
@@ -35,6 +37,7 @@ void LargePlane::Terminate()
 
 void LargePlane::GameUpdate()
 {
+	rigidBody->SyncPhysics();
 }
 
 void LargePlane::EditorUpdate()
@@ -65,6 +68,31 @@ void LargePlane::Unload()
 	{
 		ModelManager::UnloadModel("LargePlane");
 	}
+}
+
+void LargePlane::SetPosition(const glm::vec3& newPosition)
+{
+	graphics->SetPosition(newPosition);
+}
+
+void LargePlane::SetRotation(const glm::mat4& newRotation)
+{
+	graphics->SetRotation(newRotation);
+}
+
+glm::vec3 LargePlane::GetPosition() const
+{
+	return graphics->GetPosition();
+}
+
+glm::mat4 LargePlane::GetRotation() const
+{
+	return graphics->GetRotation();
+}
+
+glm::mat4 LargePlane::GetTransform() const
+{
+	return graphics->GetTransform();
 }
 
 const std::vector<char> LargePlane::Serialize() const

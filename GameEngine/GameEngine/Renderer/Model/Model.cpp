@@ -692,21 +692,21 @@ template<typename T, size_t N>
 void GLTFHelpers::TrackFromChannel(Track<T, N>& result, const cgltf_animation_channel& channel)
 {
 	cgltf_animation_sampler& sampler = *channel.sampler;
-	Interpolation interpolation = Interpolation::Constant;
+	Interp interpolation = Interp::Constant;
 	
 	switch(sampler.interpolation)
 	{
 		case cgltf_interpolation_type_linear:
-			interpolation = Interpolation::Linear;
+			interpolation = Interp::Linear;
 			break;
 		case cgltf_interpolation_type_cubic_spline:
-			interpolation = Interpolation::Cubic;
+			interpolation = Interp::Cubic;
 			break;
 		default:
 			break;
 	}
 
-	bool isSamplerCubic = interpolation == Interpolation::Cubic;
+	bool isSamplerCubic = interpolation == Interp::Cubic;
 
 	result.SetInterpolation(interpolation);
 

@@ -37,6 +37,16 @@ private:
 
 	void Unload() override;
 
+	void SetPosition(const glm::vec3& newPosition) override;
+
+	void SetRotation(const glm::mat4& newRotation) override;
+
+	glm::vec3 GetPosition() const override;
+
+	glm::mat4 GetRotation() const override;
+
+	glm::mat4 GetTransform() const override;
+
 	const std::vector<char> Serialize() const override;
 
 	void Deserialize(const std::vector<char>& data) override;

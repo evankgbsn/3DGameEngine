@@ -26,6 +26,8 @@ public:
 
 	virtual glm::mat4 GetRotation() const { static glm::mat4 defaultReturn; return defaultReturn; };
 
+	virtual glm::mat4 GetTransform() const { static glm::mat4 defaultReturn; return defaultReturn; };
+
 	virtual void Start() {};
 
 	virtual void End() {};

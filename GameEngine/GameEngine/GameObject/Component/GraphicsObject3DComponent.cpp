@@ -2,6 +2,7 @@
 
 #include "../../Renderer/GraphicsObjects/GO3D.h"
 #include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "../../Renderer/Model/Model.h"
 
 GraphicsObject3DComponent::GraphicsObject3DComponent() :
 	graphics(nullptr)
@@ -76,7 +77,12 @@ void GraphicsObject3DComponent::Update()
 {
 }
 
-GO3D* const GraphicsObject3DComponent::GetGraphics()
+const Model* const GraphicsObject3DComponent::GetModel() const
+{
+	return graphics->GetModel();
+}
+
+GO3D* const GraphicsObject3DComponent::GetGraphics() const
 {
 	return graphics;
 }

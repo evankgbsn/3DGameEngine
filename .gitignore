@@ -46,6 +46,8 @@
 !*PhysXExtensions_static_64.pdb
 !*PhysXCommon_static_64.pdb
 !*PhysXPvdSDK_static_64.pdb
+!*PhysXCooking_static_64.lib
+!*PhysXCooking_static_64.pdb
 
 #Ignore .vs folder and other generated folders
 *.vs
