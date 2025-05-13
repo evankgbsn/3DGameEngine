@@ -5,6 +5,7 @@
 
 GraphicsObjectTextured::GraphicsObjectTextured(Model* const model, Texture* const texture)
 {
+	RegisterComponentClassType<GraphicsObjectTextured>(this);
 	graphics = GraphicsObjectManager::Create3DGOTextured(model, texture);
 }
 

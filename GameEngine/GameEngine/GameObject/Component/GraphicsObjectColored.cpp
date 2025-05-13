@@ -5,6 +5,7 @@
 
 GraphicsObjectColored::GraphicsObjectColored(Model* const model, const glm::vec4& color)
 {
+	RegisterComponentClassType<GraphicsObjectColored>(this);
 	graphics = GraphicsObjectManager::CreateGO3DColored(model, color);
 }
 

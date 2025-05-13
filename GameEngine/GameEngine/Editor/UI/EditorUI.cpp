@@ -29,9 +29,9 @@ bool EditorUI::IsDisabled() const
 
 void EditorUI::CreatePlayButton()
 {
-	TextureManager::LoadTexture("Assets/Texture/grey.png", "Play");
-	TextureManager::LoadTexture("Assets/Texture/Green.png", "PlayPress");
-	TextureManager::LoadTexture("Assets/Texture/Green.png", "PlayIdle");
+	TextureManager::LoadTexture("Assets/Texture/Green.png", "Play");
+	TextureManager::LoadTexture("Assets/Texture/grey.png", "PlayPress");
+	TextureManager::LoadTexture("Assets/Texture/grey.png", "PlayIdle");
 	ModelManager::LoadModel("Play", "Assets/Model/PlayButton.gltf");
 
 	static std::function<void()> buttonFunc = std::function<void()>([this]() 

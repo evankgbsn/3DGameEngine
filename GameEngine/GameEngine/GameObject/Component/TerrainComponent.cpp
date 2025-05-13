@@ -4,6 +4,7 @@
 
 TerrainComponent::TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
 {
+	RegisterComponentClassType<TerrainComponent>(this);
 	terrain = new Terrain(name, heightMapPath, heightMaterials, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
 }
 

@@ -45,6 +45,7 @@ Texture* const TextureManager::LoadTexture(const std::string& filePath, const st
 		else
 		{
 			Logger::Log(std::string("A texture with the name ") + name + " already exists. TextureManager::LoadTexture.", Logger::Category::Warning);
+			return instance->textures[name];
 		}
 	}
 	else

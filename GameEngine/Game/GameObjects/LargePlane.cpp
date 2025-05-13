@@ -3,8 +3,11 @@
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTextured.h"
 #include "GameEngine/Terrain/Terrain.h"
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
+#include "GameEngine/Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "GameEngine/Renderer/GraphicsObjects//GOTerrain.h"
 
 LargePlane::LargePlane() :
 	GameObject("LargePlane"),
@@ -19,10 +22,21 @@ LargePlane::~LargePlane()
 
 void LargePlane::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
-	graphics->Translate({ 0.0f, -0.5f, 0.0f });
-	graphics->SetShine(32.0f);
-	AddComponent(graphics, "Graphics");
+	//graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("LargePlane"), TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	//graphics->Translate({ 0.0f, -0.5f, 0.0f });
+	//graphics->SetShine(32.0f);
+	//AddComponent(graphics, "Graphics");
+
+	Model* terrainModel = ModelManager::CreateModelTerrain("PhysxTest", "Assets/Texture/Noise.png", 1081, 1081, 200, 200, 30, -15);
+
+	graphics = new GraphicsObjectTexturedLit(terrainModel, TextureManager::GetTexture("Grey"), TextureManager::GetTexture("Grey"));
+	graphics->SetShine(8.0f);
+	AddComponent(graphics, "TerrainGraphics");
+
+	skybox = new GraphicsObjectTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
+	skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f});
+	AddComponent(skybox, "SkyboxGraphics");
+
 
 	rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	AddComponent(rigidBody, "RigidBody");
@@ -33,6 +47,8 @@ void LargePlane::Initialize()
 void LargePlane::Terminate()
 {
 	delete graphics;
+	delete skybox;
+	delete rigidBody;
 }
 
 void LargePlane::GameUpdate()

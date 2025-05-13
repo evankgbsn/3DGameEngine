@@ -5,11 +5,13 @@
 
 OrientedBoundingBoxComponent::OrientedBoundingBoxComponent(const glm::vec3& initialOrigin, const glm::vec3& initialSize, const glm::mat4& initialOrientation)
 {
+	RegisterComponentClassType<OrientedBoundingBoxComponent>(this);
 	collider = new OrientedBoundingBoxWithVisualization(initialOrigin, initialSize, initialOrientation);
 }
 
 OrientedBoundingBoxComponent::OrientedBoundingBoxComponent(const std::vector<Vertex>& vertices, const glm::mat4& initialOrientation)
 {
+	RegisterComponentClassType<OrientedBoundingBoxComponent>(this);
 	collider = new OrientedBoundingBoxWithVisualization(vertices, initialOrientation);
 }
 

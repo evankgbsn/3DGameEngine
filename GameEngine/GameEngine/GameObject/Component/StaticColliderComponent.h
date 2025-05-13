@@ -20,6 +20,8 @@ class StaticColliderComponent : public Component
 {
 public:
 
+	StaticColliderComponent() = default;
+
 	StaticColliderComponent(GraphicsObject3DComponent* graphics);
 
 	~StaticColliderComponent();
@@ -55,8 +57,6 @@ public:
 	bool IsVisible() const;
 
 private:
-
-	StaticColliderComponent() = delete;
 
 	StaticColliderComponent(const StaticColliderComponent&) = delete;
 

@@ -27,6 +27,12 @@ void PhysXTest::Initialize()
 	RegisterGameObject(light, "Light");
 	RegisterGameObject(cam, "Camera");
 	RegisterGameObject(box, "RigidBox");
+
+	for (unsigned int i = 0; i < 100; i++)
+	{
+		RigidBox* newBox = new RigidBox();
+		RegisterGameObject(newBox, std::string("RigidBox") + std::to_string(i));
+	}
 }
 
 void PhysXTest::Terminate()

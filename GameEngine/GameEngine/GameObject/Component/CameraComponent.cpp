@@ -6,6 +6,7 @@
 CameraComponent::CameraComponent(const std::string& n) :
 	name(n)
 {
+	RegisterComponentClassType<CameraComponent>(this);
 	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, name, Engine::GetWindow());
 }
 
@@ -69,6 +70,11 @@ const glm::mat4& CameraComponent::GetView() const
 	return CameraManager::GetCamera(name).GetView();
 }
 
+const glm::vec3& CameraComponent::GetTarget() const
+{
+	return CameraManager::GetCamera(name).GetTarget();
+}
+
 const glm::mat4& CameraComponent::GetProjection() const
 {
 	return CameraManager::GetCamera(name).GetProjection();
@@ -120,5 +126,9 @@ const std::vector<char> CameraComponent::Serialize() const
 }
 
 void CameraComponent::Deserialize(const std::vector<char>& data)
+{
+}
+
+void CameraComponent::Update()
 {
 }

@@ -5,6 +5,7 @@
 
 GraphicsObjectTexturedLit::GraphicsObjectTexturedLit(Model* const model, Texture* const diffuse, Texture* const specular)
 {
+	RegisterComponentClassType<GraphicsObjectTexturedLit>(this);
 	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(model, diffuse, specular);
 }
 

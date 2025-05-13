@@ -15,6 +15,8 @@ class OrientedBoundingBoxComponent : public Component
 {
 public:
 
+	OrientedBoundingBoxComponent() = default;
+
 	OrientedBoundingBoxComponent(const glm::vec3& initialOrigin, const glm::vec3& initialSize, const glm::mat4& initialOrientation = glm::mat4(1.0f));
 
 	OrientedBoundingBoxComponent(const std::vector<Vertex>& vertices, const glm::mat4& initialOrientation = glm::mat4(1.0f));
@@ -62,8 +64,6 @@ public:
 	OrientedBoundingBoxWithVisualization* const GetCollider() const;
 
 private:
-
-	OrientedBoundingBoxComponent() = delete;
 
 	OrientedBoundingBoxComponent(const OrientedBoundingBoxComponent&) = delete;
 

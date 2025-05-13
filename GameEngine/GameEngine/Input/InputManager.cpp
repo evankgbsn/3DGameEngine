@@ -783,6 +783,26 @@ void InputManager::EditorUpdate()
 	}
 }
 
+void InputManager::DisableCursor(const std::string& window)
+{
+	Window* windowPtr = WindowManager::GetWindow(window);
+
+	if (windowPtr != nullptr)
+	{
+		windowPtr->DisableCursor();
+	}
+}
+
+void InputManager::EnableCursor(const std::string& window)
+{
+	Window* windowPtr = WindowManager::GetWindow(window);
+
+	if (windowPtr != nullptr)
+	{
+		windowPtr->EnableCursor();
+	}
+}
+
 InputManager::InputManager() :
 	inputQueue(std::list<std::function<void()>>()),
 	keysPressed(std::unordered_set<int>())

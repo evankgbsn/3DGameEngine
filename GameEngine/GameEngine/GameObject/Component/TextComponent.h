@@ -11,6 +11,8 @@ class TextComponent : public Component
 {
 public:
 
+	TextComponent() = default;
+
 	TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec2& position = { 50.0f, 50.0f }, float scale = 1.0f);
 
 	~TextComponent();
@@ -22,8 +24,6 @@ public:
 	const std::string& GetString() const;
 
 private:
-
-	TextComponent() = delete;
 
 	TextComponent(const TextComponent&) = delete;
 

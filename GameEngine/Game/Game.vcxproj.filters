@@ -60,6 +60,15 @@
     <ClCompile Include="GameObjects\RigidBox.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\FPSTest.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Bullet.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\MainScene.h">
@@ -96,6 +105,15 @@
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\RigidBox.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\FPSTest.h">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Player.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Bullet.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,7 @@
 
 GraphicsObjectTexturedAnimated::GraphicsObjectTexturedAnimated(Model* const model, Texture* const texture)
 {
+	RegisterComponentClassType<GraphicsObjectTexturedAnimated>(this);
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimated(model, texture);
 }
 

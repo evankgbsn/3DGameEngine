@@ -11,16 +11,19 @@
 
 AnimatedColliderComponent::AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject)
 {
+	RegisterComponentClassType<AnimatedColliderComponent>(this);
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
 AnimatedColliderComponent::AnimatedColliderComponent(GraphicsObjectTexturedAnimatedLit* const graphicsObject)
 {
+	RegisterComponentClassType<AnimatedColliderComponent>(this);
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
 AnimatedColliderComponent::AnimatedColliderComponent(GraphicsObjectColoredAnimated* const graphicsObject)
 {
+	RegisterComponentClassType<AnimatedColliderComponent>(this);
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 

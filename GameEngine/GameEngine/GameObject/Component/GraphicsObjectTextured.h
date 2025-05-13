@@ -13,6 +13,8 @@ class GraphicsObjectTextured : public GraphicsObject3DComponent
 {
 public:
 
+	GraphicsObjectTextured() = default;
+
 	GraphicsObjectTextured(Model* const model, Texture* const texture);
 
 	~GraphicsObjectTextured();

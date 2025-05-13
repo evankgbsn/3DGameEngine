@@ -12,6 +12,8 @@ class GraphicsObjectColored : public GraphicsObject3DComponent
 
 public:
 
+	GraphicsObjectColored() = default;
+
 	GraphicsObjectColored(Model* const model, const glm::vec4& color);
 
 	~GraphicsObjectColored();

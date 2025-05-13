@@ -16,6 +16,8 @@ class AnimatedColliderComponent : public Component
 
 public:
 
+	AnimatedColliderComponent() = default;
+
 	AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject);
 
 	AnimatedColliderComponent(GraphicsObjectTexturedAnimatedLit* const graphicsObject);

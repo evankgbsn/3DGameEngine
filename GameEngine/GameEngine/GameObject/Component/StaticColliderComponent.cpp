@@ -7,6 +7,7 @@
 
 StaticColliderComponent::StaticColliderComponent(GraphicsObject3DComponent* graphics)
 {
+	RegisterComponentClassType<StaticColliderComponent>(this);
 	collider = new StaticCollider(graphics->GetGraphics());
 }
 

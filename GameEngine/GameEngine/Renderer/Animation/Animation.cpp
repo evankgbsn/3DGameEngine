@@ -4,7 +4,7 @@
 #include "../../Time/TimeManager.h"
 
 Animation::Animation(const BakedAnimation& ba) :
-	playback(0.0f),
+	playback(ANIMATION_PLAYBACK_FRAME_TIME),
 	speed(0.0f),
 	bakedAnimation(ba),
 	index(0U)
@@ -17,7 +17,7 @@ Animation::~Animation()
 
 void Animation::Update(glm::mat4* posePalette)
 {
-	playback += TimeManager::DeltaTime();
+	playback += TimeManager::DeltaTime() * speed;
 	if (playback >= ANIMATION_PLAYBACK_FRAME_TIME)
 	{
 		for (unsigned int i = 0; i < bakedAnimation.GetPoseAtIndex(index).size(); ++i)
@@ -25,7 +25,7 @@ void Animation::Update(glm::mat4* posePalette)
 			posePalette[i] = bakedAnimation.GetPoseAtIndex(index)[i];
 		}
 
-		++index *= static_cast<unsigned int>(speed);
+		++index;
 		if (index >= bakedAnimation.GetFrameCount())
 		{
 			index = 0;

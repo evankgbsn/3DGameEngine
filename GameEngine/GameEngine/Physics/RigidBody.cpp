@@ -47,8 +47,6 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
     default:
         break;
     }
-    
-
 }
 
 RigidBody::~RigidBody()
@@ -102,4 +100,71 @@ glm::mat4 RigidBody::GetRotation() const
         glm::vec4(rot.column2.x, rot.column2.y, rot.column2.z, rot.column2.w),
         glm::vec4(rot.column3.x, rot.column3.y, rot.column3.z, rot.column3.w)
     );
+}
+
+void RigidBody::LockAngularMotionOnAxisX()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, true);
+    }
+}
+
+void RigidBody::LockAngularMotionOnAxisY()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, true);
+    }
+}
+
+void RigidBody::LockAngularMotionOnAxisZ()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, true);
+    }
+}
+
+void RigidBody::LockLinearMotionOnAxisX()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_X, true);
+    }
+}
+
+void RigidBody::LockLinearMotionOnAxisY()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, true);
+    }
+}
+
+void RigidBody::LockLinearMotionOnAxisZ()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, true);
+    }
+}
+
+void RigidBody::AddForce(const glm::vec3& direction)
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z));
+    }
+}
+
+glm::vec3 RigidBody::GetVelocity() const
+{
+    if (dynamicBody != nullptr)
+    {
+        PxVec3 vel = dynamicBody->getLinearVelocity();
+        return glm::vec3(vel.x, vel.y, vel.z);
+    }
+    
+    return {};
 }

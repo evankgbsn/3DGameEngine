@@ -5,6 +5,7 @@
 
 SpotLightComponent::SpotLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position, const glm::vec3& direction)
 {
+	RegisterComponentClassType<SpotLightComponent>(this);
 	light = LightManager::CreateSpotLight(glm::vec4(colorIntensity, 1.0f), position, direction);
 }
 
@@ -19,5 +20,9 @@ const std::vector<char> SpotLightComponent::Serialize() const
 }
 
 void SpotLightComponent::Deserialize(const std::vector<char>& data)
+{
+}
+
+void SpotLightComponent::Update()
 {
 }

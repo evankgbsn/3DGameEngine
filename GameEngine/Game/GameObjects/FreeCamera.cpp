@@ -1,7 +1,6 @@
 #include "FreeCamera.h"
 
-#include "GameEngine/Renderer/Camera/CameraManager.h"
-#include "GameEngine/Renderer/Camera/Camera.h"
+#include "GameEngine/GameObject/Component/CameraComponent.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
@@ -42,43 +41,22 @@ FreeCamera::~FreeCamera()
 
 void FreeCamera::Initialize()
 {
-	WindowManager::GetWindow("Engine")->DisableCursor();
 	InputRegistration();
 
-	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
-
-	Camera& cam = CameraManager::GetCamera("Main");
-
-	CameraManager::SetActiveCamera("Main");
+	cam = new CameraComponent("FreeCamera");
+	AddComponent(cam, "Camera");
 }
 
 void FreeCamera::Terminate()
 {
-	CameraManager::DestroyCamera("Main");
+	delete cam;
 
 	InputDeregistration();
 }
 
 void FreeCamera::GameUpdate()
 {
-	Window* window = WindowManager::GetWindow("Engine");
-	glm::vec2 cursorPos = window->GetCursorPosition();
-	static glm::vec2 prevPos;
-
-	Camera& cam = CameraManager::GetActiveCamera();
-
-	float xspeed = 0.0005f;
-	float yspeed = 0.0005f;
-	if (cursorPos.x != prevPos.x)
-	{
-		cam.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x));
-	}
-	if (cursorPos.y != prevPos.y)
-	{
-		cam.Rotate(cam.GetRightVector(), yspeed * (float)-(cursorPos.y - prevPos.y));
-	}
-
-	prevPos = cursorPos;
+	InputManager::WhenCursorMoved(*whenCursorMove);
 }
 
 void FreeCamera::EditorUpdate()
@@ -118,63 +96,53 @@ void FreeCamera::InputDeregistration()
 void FreeCamera::CreateInputFunctions()
 {
 	float cameraSpeed = 5.0f;
-	wPress = new std::function<void(int)>([cameraSpeed](int keycode)
+	wPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(cam->GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
 		});
 
-	aPress = new std::function<void(int)>([cameraSpeed](int keycode)
+	aPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * -cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(cam->GetRightVector() * -cameraSpeed * TimeManager::DeltaTime());
 		});
-	sPress = new std::function<void(int)>([cameraSpeed](int keycode)
+	sPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetForwardVector() * -cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(cam->GetForwardVector() * -cameraSpeed * TimeManager::DeltaTime());
 		});
 
-	dPress = new std::function<void(int)>([cameraSpeed](int keycode)
+	dPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(cam->GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	float rotSpeed = 0.001f;
-	qPress = new std::function<void(int)>([rotSpeed](int keycode)
+	qPress = new std::function<void(int)>([this, rotSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetRightVector(), rotSpeed);
+			cam->Rotate(cam->GetRightVector(), rotSpeed);
 		});
-	ePress = new std::function<void(int)>([rotSpeed](int keycode)
+	ePress = new std::function<void(int)>([this, rotSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetRightVector(), -rotSpeed);
+			cam->Rotate(cam->GetRightVector(), -rotSpeed);
 		});
 
-	zPress = new std::function<void(int)>([rotSpeed](int keycode)
+	zPress = new std::function<void(int)>([this, rotSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetUpVector(), rotSpeed);
+			cam->Rotate(cam->GetUpVector(), rotSpeed);
 		});
 
-	cPress = new std::function<void(int)>([rotSpeed](int keycode)
+	cPress = new std::function<void(int)>([this, rotSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Rotate(cam.GetUpVector(), -rotSpeed);
+			cam->Rotate(cam->GetUpVector(), -rotSpeed);
 		});
 
-	ctrPress = new std::function<void(int)>([cameraSpeed](int keycode)
+	ctrPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -cameraSpeed * TimeManager::DeltaTime());
 		});
 
-	spacePress = new std::function<void(int)>([cameraSpeed](int keycode)
+	spacePress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
-			Camera& cam = CameraManager::GetActiveCamera();
-			cam.Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed * TimeManager::DeltaTime());
+			cam->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed * TimeManager::DeltaTime());
 		});
 
 	escPress = new std::function<void(int)>([](int keycode)
@@ -191,6 +159,24 @@ void FreeCamera::CreateInputFunctions()
 
 			toggle = !toggle;
 		});
+
+	whenCursorMove = new std::function<void(const glm::vec2&)>([this](const glm::vec2& cursorPos)
+		{
+			static glm::vec2 prevPos;
+
+			float xspeed = 0.0005f;
+			float yspeed = 0.0005f;
+			if (cursorPos.x != prevPos.x)
+			{
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x));
+			}
+			if (cursorPos.y != prevPos.y)
+			{
+				cam->Rotate(cam->GetRightVector(), yspeed * (float)-(cursorPos.y - prevPos.y));
+			}
+
+			prevPos = cursorPos;
+		});
 }
 
 const std::vector<char> FreeCamera::Serialize() const
@@ -200,6 +186,17 @@ const std::vector<char> FreeCamera::Serialize() const
 
 void FreeCamera::Deserialize(const std::vector<char>& data)
 {
+}
+
+void FreeCamera::Start()
+{
+	InputManager::DisableCursor("Engine");
+	cam->SetActive();
+}
+
+void FreeCamera::End()
+{
+	InputManager::EnableCursor("Engine");
 }
 
 void FreeCamera::Load()

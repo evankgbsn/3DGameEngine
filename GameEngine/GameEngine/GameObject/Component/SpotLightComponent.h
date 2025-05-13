@@ -12,7 +12,9 @@ class SpotLightComponent : public Component
 
 public:
 
-	SpotLightComponent(const glm::vec3& colorIntensity = glm::vec3(1.0f, 1.0f, 1.0f), const glm::vec3& position = glm::vec3(0.0f, 1.0f, 0.0f), const glm::vec3& direction = glm::vec3(0.0f, -1.0f, 0.0f));
+	SpotLightComponent() = default;
+
+	SpotLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position, const glm::vec3& direction);
 
 	~SpotLightComponent();
 
@@ -29,6 +31,8 @@ private:
 	const std::vector<char> Serialize() const override;
 
 	void Deserialize(const std::vector<char>& data) override;
+
+	void Update() override;
 
 	SpotLight* light;
 };

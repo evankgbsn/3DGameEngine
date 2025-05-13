@@ -14,6 +14,16 @@ public:
 
 	~RigidBox();
 
+	void SetPosition(const glm::vec3& newPosition) override;
+
+	glm::vec3 GetPosition() const override;
+
+	void SetRotation(const glm::mat4& newRotation) override;
+
+	glm::mat4 GetRotation() const override;
+
+	glm::mat4 GetTransform() const override;
+
 private:
 
 	RigidBox(const RigidBox&) = delete;
@@ -39,16 +49,6 @@ private:
 	void Load() override;
 
 	void Unload() override;
-
-	void SetPosition(const glm::vec3& newPosition) override;
-
-	glm::vec3 GetPosition() const override;
-
-	void SetRotation(const glm::mat4& newRotation) override;
-
-	glm::mat4 GetRotation() const override;
-
-	glm::mat4 GetTransform() const override;
 
 	GraphicsObjectTexturedLit* graphics;
 

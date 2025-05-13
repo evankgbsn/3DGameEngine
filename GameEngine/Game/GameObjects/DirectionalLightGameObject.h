@@ -3,7 +3,7 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class DirectionalLight;
+class DirectionalLightComponent;
 
 class DirectionalLightGameObject : public GameObject
 {
@@ -46,7 +46,7 @@ private:
 
 	void Deserialize(const std::vector<char>& data) override;
 
-	DirectionalLight* light;
+	DirectionalLightComponent* light;
 
 };
 

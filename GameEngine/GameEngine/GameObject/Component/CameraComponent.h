@@ -12,6 +12,8 @@ class CameraComponent : public Component
 
 public:
 
+	CameraComponent() = default;
+
 	CameraComponent(const std::string& name);
 
 	~CameraComponent();
@@ -37,6 +39,8 @@ public:
 	const glm::vec3& GetPosition() const;
 
 	const glm::mat4& GetView() const;
+
+	const glm::vec3& GetTarget() const;
 
 	const glm::mat4& GetProjection() const;
 
@@ -70,6 +74,8 @@ private:
 	const std::vector<char> Serialize() const override;
 
 	void Deserialize(const std::vector<char>& data) override;
+
+	void Update() override;
 
 	std::string name;
 

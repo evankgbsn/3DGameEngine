@@ -10,7 +10,6 @@
 class LightObject;
 class Boxes;
 class Tree;
-class LargePlane;
 class DirectionalLightGameObject;
 class Character;
 class FreeCamera;
@@ -46,8 +45,6 @@ private:
 	Character* character;
 
 	Tree* tree;
-
-	LargePlane* groundPlane;
 
 	FreeCamera* cam;
 

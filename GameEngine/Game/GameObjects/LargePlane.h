@@ -5,6 +5,9 @@
 
 class GraphicsObjectTexturedLit;
 class RigidBodyComponent;
+class GOTerrain;
+class GraphicsObjectTexturedLit;
+class GraphicsObjectTextured;
 
 class LargePlane : public GameObject
 {
@@ -51,6 +54,10 @@ private:
 
 	void Deserialize(const std::vector<char>& data) override;
 
+	//GraphicsObjectTexturedLit* graphics;
+	
+	GraphicsObjectTextured* skybox;
+	
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* rigidBody;

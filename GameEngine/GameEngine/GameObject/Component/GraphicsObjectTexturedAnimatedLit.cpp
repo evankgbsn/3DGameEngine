@@ -5,6 +5,7 @@
 
 GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular)
 {
+	RegisterComponentClassType<GraphicsObjectTexturedAnimatedLit>(this);
 	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(model, diffuse, specular);
 }
 

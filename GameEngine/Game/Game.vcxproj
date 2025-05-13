@@ -138,29 +138,35 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObjects\Boxes.cpp" />
+    <ClCompile Include="GameObjects\Bullet.cpp" />
     <ClCompile Include="GameObjects\Character.cpp" />
     <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp" />
     <ClCompile Include="GameObjects\FreeCamera.cpp" />
     <ClCompile Include="GameObjects\GameTerrain.cpp" />
     <ClCompile Include="GameObjects\LargePlane.cpp" />
     <ClCompile Include="GameObjects\LightObject.cpp" />
+    <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="GameObjects\RigidBox.cpp" />
     <ClCompile Include="GameObjects\Tree.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scenes\FPSTest.cpp" />
     <ClCompile Include="Scenes\MainScene.cpp" />
     <ClCompile Include="Scenes\PhysXTest.cpp" />
     <ClCompile Include="Scenes\Subscene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Boxes.h" />
+    <ClInclude Include="GameObjects\Bullet.h" />
     <ClInclude Include="GameObjects\Character.h" />
     <ClInclude Include="GameObjects\DirectionalLightGameObject.h" />
     <ClInclude Include="GameObjects\FreeCamera.h" />
     <ClInclude Include="GameObjects\GameTerrain.h" />
     <ClInclude Include="GameObjects\LargePlane.h" />
     <ClInclude Include="GameObjects\LightObject.h" />
+    <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="GameObjects\RigidBox.h" />
     <ClInclude Include="GameObjects\Tree.h" />
+    <ClInclude Include="Scenes\FPSTest.h" />
     <ClInclude Include="Scenes\MainScene.h" />
     <ClInclude Include="Scenes\PhysXTest.h" />
     <ClInclude Include="Scenes\Subscene.h" />

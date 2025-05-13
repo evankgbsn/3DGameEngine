@@ -11,6 +11,8 @@
 #include "Select/SelectionManager.h"
 #include "../GameObject/GameObject.h"
 #include "UI/EditorUI.h"
+#include "../Scene/SceneManager.h"
+#include "../Scene/Scene.h"
 
 Editor* Editor::instance = nullptr;
 
@@ -19,11 +21,12 @@ Editor::Editor() :
 	grid(nullptr),
 	shiftPressed(false),
 	rightMousePressed(false),
+	ctrPressed(false),
 	gridSpeed(5.0f),
 	ui(new EditorUI())
 {
 	Camera& cam = CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
-	cam.SetPosition(glm::vec3(10.0f, 10.0f, 10.0f));
+	cam.SetPosition(glm::vec3(25.0f, 25.0f, 25.0f));
 	cam.SetTarget(glm::vec3(0.0f));
 	SetupEditorInput();
 	InitializeGrid();
@@ -310,6 +313,22 @@ void Editor::SetupEditorInput()
 			}
 		});
 
+	static std::function<void(int)> ctrPress = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				instance->ctrPressed = true;
+			}
+		});
+
+	static std::function<void(int)> ctrRelease = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				instance->ctrPressed = false;
+			}
+		});
+
 	auto snapObjectToGrid = []()
 		{
 			GameObject* selection = SelectionManager::GetSelection();
@@ -401,6 +420,24 @@ void Editor::SetupEditorInput()
 				}
 			}
 		});
+
+	static std::function<void(int)> sPressForSave = std::function<void(int)>([](int keyCode)
+		{
+			if (instance != nullptr)
+			{
+				if (instance->ctrPressed)
+				{
+					// Save all loaded scenes
+					const std::vector<Scene*>& scenes = SceneManager::GetLoadedScenes();
+
+					for (Scene* scene : scenes)
+					{
+						scene->Save();
+					}
+
+				}
+			}
+		});
 	
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_UP, &upArrowPress, "gridMovement");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_DOWN, &downArrowPress, "gridMovement");
@@ -415,6 +452,10 @@ void Editor::SetupEditorInput()
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_A, &aPress, "FreeCamera");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_S, &sPress, "FreeCamera");
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_D, &dPress, "FreeCamera");
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_CTRL, &ctrRelease, "Save");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_CTRL, &ctrPress, "Save");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_S, &sPressForSave, "Save");
 
 }
 

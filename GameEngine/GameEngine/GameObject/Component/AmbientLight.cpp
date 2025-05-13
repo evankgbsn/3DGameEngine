@@ -4,6 +4,7 @@
 
 AmbientLight::AmbientLight(float intensity)
 {
+	RegisterComponentClassType<AmbientLight>(this);
 	LightManager::SetAmbientIntensity(intensity);
 }
 

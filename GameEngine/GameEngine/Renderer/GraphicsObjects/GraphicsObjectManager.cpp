@@ -306,8 +306,12 @@ void GraphicsObjectManager::Enable(GraphicsObject* const go)
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D[go->managerVectorIndex] = go;
-		instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
-		go->isDisabled = false;
+
+		if (go->isDisabled)
+		{
+			instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
+			go->isDisabled = false;
+		}
 	}
 }
 

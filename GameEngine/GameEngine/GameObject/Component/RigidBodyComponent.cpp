@@ -8,16 +8,29 @@
 #include "../../Collision/OrientedBoundingBoxWithVisualization.h"
 #include "../../Renderer/GraphicsObjects/GOColored.h"
 #include "../../Renderer/Model/ModelManager.h"
+#include "../../Editor/Editor.h"
 
 #include <cooking/PxCooking.h>
+
+RigidBodyComponent::RigidBodyComponent() :
+	body(nullptr),
+	owner(nullptr),
+	model(nullptr),
+	type(Type::DYNAMIC),
+	onEditorEnable(nullptr),
+	onEditorDisable(nullptr)
+{
+}
 
 RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const Model* const m) :
 	body(nullptr),
 	owner(owningObject),
 	model(m),
-	type(t)
+	type(t),
+	onEditorEnable(nullptr),
+	onEditorDisable(nullptr)
 {
-
+	RegisterComponentClassType<RigidBodyComponent>(this);
 	CreateShapeFromModel();
 
 	PxPlaneGeometry planeGeo = PxPlaneGeometry();
@@ -36,10 +49,25 @@ RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const M
 	default:
 		break;
 	}
+
+	onEditorEnable = new std::function<void()>([this]()
+		{
+			GraphicsObjectManager::Enable(shapeVisuals);
+		});
+
+	onEditorDisable = new std::function<void()>([this]()
+		{
+			GraphicsObjectManager::Disable(shapeVisuals);
+		});
+
+	Editor::RegisterOnEditorEnable(onEditorEnable);
+	Editor::RegisterOnEditorDisable(onEditorDisable);
 }
 
 RigidBodyComponent::~RigidBodyComponent()
 {
+	delete onEditorEnable;
+	delete onEditorDisable;
 	delete body;
 }
 
@@ -48,6 +76,58 @@ void RigidBodyComponent::SyncPhysics()
 	owner->SetPosition(body->GetPosition());
 	owner->SetRotation(body->GetRotation());
 	shapeVisuals->SetTransform(owner->GetTransform());
+}
+
+void RigidBodyComponent::SyncPhysicsPosition()
+{
+	shapeVisuals->SetTransform(owner->GetTransform());
+	owner->SetPosition(body->GetPosition());
+}
+
+void RigidBodyComponent::SyncPhysicsRotation()
+{
+	shapeVisuals->SetTransform(owner->GetTransform());
+	owner->SetRotation(body->GetRotation());
+}
+
+void RigidBodyComponent::LockAngularMotionOnAxisX()
+{
+	body->LockAngularMotionOnAxisX();
+}
+
+void RigidBodyComponent::LockAngularMotionOnAxisY()
+{
+	body->LockAngularMotionOnAxisY();
+}
+
+void RigidBodyComponent::LockAngularMotionOnAxisZ()
+{
+	body->LockAngularMotionOnAxisZ();
+}
+
+void RigidBodyComponent::LockLinearMotionOnAxisX()
+{
+	body->LockLinearMotionOnAxisX();
+}
+
+void RigidBodyComponent::LockLinearMotionOnAxisY()
+{
+	body->LockLinearMotionOnAxisY();
+}
+
+void RigidBodyComponent::LockLinearMotionOnAxisZ()
+{
+	body->LockLinearMotionOnAxisZ();
+}
+
+void RigidBodyComponent::AddForce(const glm::vec3& direction)
+{
+	body->AddForce(direction);
+}
+
+glm::vec3 RigidBodyComponent::GetVelocity() const
+{
+	return body->GetVelocity();
 }
 
 void RigidBodyComponent::CreateShapeFromModel()
@@ -62,11 +142,12 @@ void RigidBodyComponent::CreateShapeFromModel()
 		vertCloud.push_back(PxVec3(vert.GetPosition().x, vert.GetPosition().y, vert.GetPosition().z));
 	}
 
+	static int x = 0;
 
 	if (type == Type::DYNAMIC)
 	{
 		PxConvexMeshDesc convexDesc;
-		convexDesc.points.count = vertCloud.size();
+		convexDesc.points.count = static_cast<PxU32>(vertCloud.size());
 		convexDesc.points.stride = sizeof(PxVec3);
 		convexDesc.points.data = vertCloud.data();
 		convexDesc.flags = PxConvexFlag::eCOMPUTE_CONVEX;
@@ -92,17 +173,17 @@ void RigidBodyComponent::CreateShapeFromModel()
 			convexShapeIndices.push_back(i);
 		}
 
-		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("CollisionReference", convexShapeVerts, convexShapeIndices), { 1.0f, 0.0f, 0.0f, 1.0f });
+		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("CollisionReference" + std::to_string(x++), convexShapeVerts, convexShapeIndices), {0.0f, 0.5f, 0.5f, 1.0f});
 		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
-		shapeVisuals->SetPointSize(10.0f);
+		shapeVisuals->SetPointSize(4.0f);
 	}
 	else if (type == Type::STATIC)
 	{
 		PxTriangleMeshDesc meshDesc;
-		meshDesc.points.count = vertCloud.size();
+		meshDesc.points.count = static_cast<PxU32>(vertCloud.size());
 		meshDesc.points.stride = sizeof(PxVec3);
 		meshDesc.points.data = vertCloud.data();
-		meshDesc.triangles.count = modelIndices.size() / 3;
+		meshDesc.triangles.count = static_cast<PxU32>(modelIndices.size() / 3);
 		meshDesc.triangles.stride = 3 * sizeof(PxU32);
 		meshDesc.triangles.data = modelIndices.data();
 
@@ -143,11 +224,16 @@ void RigidBodyComponent::CreateShapeFromModel()
 			triangleMeshVerts.push_back(Vertex(glmVert, {}, {}));
 		}
 
-		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("StaticCollisionReference", triangleMeshVerts, triangleMeshIndices), { 1.0f, 0.0f, 0.0f, 1.0f });
-		shapeVisuals->SetDrawMode(GO3D::Mode::LINE);
-		shapeVisuals->SetPointSize(10.0f);
+		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("CollisionReference" + std::to_string(x++), triangleMeshVerts, triangleMeshIndices), { 0.0f, 0.5f, 0.5f, 1.0f });
+		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
+		shapeVisuals->SetPointSize(4.0f);
 	}
 	
+	if (!Editor::IsEnabled())
+	{
+		GraphicsObjectManager::Disable(shapeVisuals);
+	}
+
 }
 
 const std::vector<char> RigidBodyComponent::Serialize() const

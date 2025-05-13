@@ -50,6 +50,10 @@ public:
 
 	static void EditorUpdate();
 
+	static void DisableCursor(const std::string& window);
+
+	static void EnableCursor(const std::string& window);
+
 private:
 
 	InputManager();

@@ -8,6 +8,7 @@
 RigidBox::RigidBox() :
     GameObject("RigidBox")
 {
+    RegisterGameObjectClassType<RigidBox>(this);
 }
 
 RigidBox::~RigidBox()
@@ -25,17 +26,19 @@ void RigidBox::Deserialize(const std::vector<char>& data)
 
 void RigidBox::Initialize()
 {
+    static float offset = 0.0f;
+
     graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Cube"), TextureManager::GetTexture("Container"), TextureManager::GetTexture("ContainerSpec"));
     graphics->SetShine(0.5f);
-    graphics->SetPosition({ 0.0f, 40.0f, 0.0f });
+    graphics->SetPosition({ 0.0f, 40.0f + offset, 0.0f });
     graphics->Rotate(90.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     AddComponent(graphics, "Graphcis");
 
     rigidBody = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
-    AddComponent(rigidBody, "RigidBody");
     rigidBody->SyncPhysics();
+    AddComponent(rigidBody, "RigidBody");
 
-
+    offset += 2.0f;
 }
 
 void RigidBox::Terminate()
@@ -55,7 +58,7 @@ void RigidBox::Load()
 {
     if (!ModelManager::ModelLoaded("Cube"))
     {
-        ModelManager::LoadModel("Cube", "Assets/Model/Sphere.gltf");
+        ModelManager::LoadModel("Cube", "Assets/Model/Cube.gltf");
     }
 
     if (!TextureManager::TextureLoaded("Container"))

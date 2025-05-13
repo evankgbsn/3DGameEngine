@@ -2,9 +2,11 @@
 
 #include "../../Renderer/Light/LightManager.h"
 #include "../../Renderer/Light/DirectionalLight.h"
+#include "../../Collision/SphereWithVisualization.h"
 
 DirectionalLightComponent::DirectionalLightComponent(const glm::vec3& initialDirection, const glm::vec3& colorIntensity)
 {
+	RegisterComponentClassType<DirectionalLightComponent>(this);
 	light = LightManager::CreateDirectionalLight(glm::vec4(colorIntensity, 1.0f), glm::vec4(initialDirection, 0.0f));
 }
 
@@ -16,6 +18,11 @@ DirectionalLightComponent::~DirectionalLightComponent()
 glm::vec3 DirectionalLightComponent::GetColor() const
 {
 	return light->GetColor();
+}
+
+SphereWithVisualization* const DirectionalLightComponent::GetCollider() const
+{
+	return light->GetCollider();
 }
 
 glm::vec3 DirectionalLightComponent::GetDirection() const

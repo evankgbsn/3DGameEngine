@@ -6,6 +6,7 @@
 PointLightComponent::PointLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position) :
 	light(nullptr)
 {
+	RegisterComponentClassType<PointLightComponent>(this);
 	light = LightManager::CreatePointLight(glm::vec4(colorIntensity, 1.0f), position);
 }
 
@@ -40,5 +41,9 @@ const std::vector<char> PointLightComponent::Serialize() const
 }
 
 void PointLightComponent::Deserialize(const std::vector<char>& data)
+{
+}
+
+void PointLightComponent::Update()
 {
 }

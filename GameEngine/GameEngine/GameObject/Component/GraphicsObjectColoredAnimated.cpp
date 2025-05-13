@@ -5,6 +5,7 @@
 
 GraphicsObjectColoredAnimated::GraphicsObjectColoredAnimated(Model* const model, const glm::vec4& color)
 {
+	RegisterComponentClassType<GraphicsObjectColoredAnimated>(this);
 	graphics = GraphicsObjectManager::CreateGO3DColoredAnimated(model, color);
 }
 

@@ -15,7 +15,6 @@ MainScene::MainScene() :
 	directionalLight(new DirectionalLightGameObject()),
 	character(new Character()),
 	tree(new Tree()),
-	groundPlane(new LargePlane()),
 	terrain(new GameTerrain())
 	//cam(new FreeCamera())
 {
@@ -42,7 +41,6 @@ MainScene::~MainScene()
 	delete directionalLight;
 	delete character;
 	delete tree;
-	delete groundPlane;
 	delete terrain;
 }
 
@@ -55,7 +53,6 @@ void MainScene::Initialize()
 
 	//RegisterGameObject(cam, "FreeCam");
 	RegisterGameObject(directionalLight, "DirectionalLight");
-	RegisterGameObject(groundPlane, "Ground");
 	RegisterGameObject(terrain, "Terrain");
 	RegisterGameObject(character, "Character");
 	RegisterGameObject(tree, "Tree");
@@ -75,6 +72,5 @@ void MainScene::Terminate()
 	DeregisterGameObject("Tree");
 	//DeregisterGameObject("FreeCam");
 	DeregisterGameObject("DirectionalLight");
-	DeregisterGameObject("Ground");
 	DeregisterGameObject("Character");
 }

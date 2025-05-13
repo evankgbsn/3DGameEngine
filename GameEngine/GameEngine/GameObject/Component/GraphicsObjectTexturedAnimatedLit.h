@@ -11,6 +11,8 @@ class GraphicsObjectTexturedAnimatedLit : public GraphicsObject3DComponent
 
 public:
 
+	GraphicsObjectTexturedAnimatedLit() = default;
+
 	GraphicsObjectTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular);
 
 	~GraphicsObjectTexturedAnimatedLit();

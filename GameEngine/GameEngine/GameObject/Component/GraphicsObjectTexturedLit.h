@@ -11,6 +11,8 @@ class GraphicsObjectTexturedLit : public GraphicsObject3DComponent
 
 public:
 
+	GraphicsObjectTexturedLit() = default;
+
 	GraphicsObjectTexturedLit(Model* const model, Texture* const diffuse, Texture* const specular);
 
 	~GraphicsObjectTexturedLit();

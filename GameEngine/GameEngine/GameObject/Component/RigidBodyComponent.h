@@ -3,6 +3,10 @@
 
 #include "Component.h"
 
+#include <glm/glm.hpp>
+
+#include <functional>
+
 class RigidBody;
 class GameObject;
 class Model;
@@ -25,11 +29,33 @@ public:
 		DYNAMIC
 	};
 
+	RigidBodyComponent();
+
 	RigidBodyComponent(Type type, GameObject* owner, const Model* const model);
 
 	~RigidBodyComponent();
 
 	void SyncPhysics();
+
+	void SyncPhysicsPosition();
+
+	void SyncPhysicsRotation();
+
+	void LockAngularMotionOnAxisX();
+
+	void LockAngularMotionOnAxisY();
+
+	void LockAngularMotionOnAxisZ();
+
+	void LockLinearMotionOnAxisX();
+
+	void LockLinearMotionOnAxisY();
+
+	void LockLinearMotionOnAxisZ();
+
+	void AddForce(const glm::vec3& direction);
+
+	glm::vec3 GetVelocity() const;
 
 private:
 
@@ -42,6 +68,12 @@ private:
 	RigidBodyComponent& operator=(RigidBodyComponent&&) = delete;
 
 	void CreateShapeFromModel();
+
+	const std::vector<char> Serialize() const override;
+
+	void Deserialize(const std::vector<char>& data) override;
+
+	void Update() override;
 
 	RigidBody* body;
 
@@ -57,11 +89,11 @@ private:
 
 	Type type;
 
-	const std::vector<char> Serialize() const override;
+	std::function<void()>* onEditorEnable;
 
-	void Deserialize(const std::vector<char>& data) override;
+	std::function<void()>* onEditorDisable;
 
-	void Update() override;
+	
 };
 
 #endif // RIGIDBODYCOMPONENT_H

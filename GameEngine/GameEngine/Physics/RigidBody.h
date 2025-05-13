@@ -28,6 +28,22 @@ public:
 
 	glm::mat4 GetRotation() const;
 
+	void LockAngularMotionOnAxisX();
+
+	void LockAngularMotionOnAxisY();
+
+	void LockAngularMotionOnAxisZ();
+
+	void LockLinearMotionOnAxisX();
+
+	void LockLinearMotionOnAxisY();
+
+	void LockLinearMotionOnAxisZ();
+
+	void AddForce(const glm::vec3& direction);
+
+	glm::vec3 GetVelocity() const;
+
 private:
 
 	RigidBody() = delete;

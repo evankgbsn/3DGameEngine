@@ -12,6 +12,8 @@ class GraphicsObjectColoredAnimated : public GraphicsObject3DComponent
 
 public:
 
+	GraphicsObjectColoredAnimated() = default;
+
 	GraphicsObjectColoredAnimated(Model* const model, const glm::vec4& color);
 
 	~GraphicsObjectColoredAnimated();

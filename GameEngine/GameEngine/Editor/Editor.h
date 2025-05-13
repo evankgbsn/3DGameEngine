@@ -73,6 +73,8 @@ private:
 
 	bool rightMousePressed;
 
+	bool ctrPressed;
+
 	std::list<std::function<void()>*> onEditorEnableCallbacks;
 
 	std::list<std::function<void()>*> onEditorDisableCallbacks;

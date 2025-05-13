@@ -39,6 +39,10 @@ public:
 
 	const Model* const GetModel() const;
 
+	void Disable();
+
+	void Enable();
+
 protected:
 
 	GraphicsObject3DComponent();

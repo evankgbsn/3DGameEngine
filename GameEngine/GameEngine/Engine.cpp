@@ -89,6 +89,11 @@ WindowManager* Engine::GetWindowManager()
 	return nullptr;
 }
 
+Window* Engine::GetWindow()
+{
+	return WindowManager::GetWindow("Engine");
+}
+
 Engine::Engine()
 {
 	TimeManager::Initialize();

@@ -1,7 +1,6 @@
 #include "DirectionalLightGameObject.h"
 
-#include "GameEngine/Renderer/Light/LightManager.h"
-#include "GameEngine/Renderer/Light/DirectionalLight.h"
+#include "GameEngine/GameObject/Component/DirectionalLightComponent.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Collision/SphereWithVisualization.h"
 #include "GameEngine/Renderer/Camera/Camera.h"
@@ -21,13 +20,13 @@ DirectionalLightGameObject::~DirectionalLightGameObject()
 
 void DirectionalLightGameObject::Initialize()
 {
-	light = LightManager::CreateDirectionalLight({ 1.0f, 1.0f, 1.0f, 1.0f }, { -0.5f, -0.5f, 0.5f, 0.0f });
-	LightManager::SetAmbientIntensity(0.02f);
+	light = new DirectionalLightComponent({ -0.5f, -0.5f, 0.5f}, { 1.0f, 1.0f, 1.0f });
+	AddComponent(light, "DirectionalLight");
 }
 
 void DirectionalLightGameObject::Terminate()
 {
-	LightManager::Delete(light);
+	delete light;
 }
 
 void DirectionalLightGameObject::GameUpdate()
@@ -37,7 +36,7 @@ void DirectionalLightGameObject::GameUpdate()
 
 	rot = glm::rotate(rot, rotationAngle * TimeManager::DeltaTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	light->SetDirection(rot * light->GetDirection());
+	//light->SetDirection(rot * light->GetDirection());
 }
 
 void DirectionalLightGameObject::EditorUpdate()

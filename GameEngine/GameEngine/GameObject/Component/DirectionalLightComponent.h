@@ -6,11 +6,14 @@
 #include <glm/glm.hpp>
 
 class DirectionalLight;
+class SphereWithVisualization;
 
 class DirectionalLightComponent : public Component
 {
 
 public:
+
+	DirectionalLightComponent() = default;
 
 	DirectionalLightComponent(const glm::vec3& initialDirection, const glm::vec3& colorIntensity);
 
@@ -19,6 +22,8 @@ public:
 	glm::vec3 GetDirection() const;
 
 	glm::vec3 GetColor() const;
+
+	SphereWithVisualization* const GetCollider() const;
 
 	void SetDirection(const glm::vec3& newDirection);
 

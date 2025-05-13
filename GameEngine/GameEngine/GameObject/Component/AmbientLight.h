@@ -8,6 +8,8 @@ class AmbientLight : public Component
 
 public:
 
+	AmbientLight() = default;
+
 	AmbientLight(float intensity);
 
 	~AmbientLight();
@@ -17,8 +19,6 @@ public:
 	void SetAmbientIntensity(float intensity);
 
 private:
-
-	
 
 	AmbientLight(const AmbientLight&) = delete;
 

@@ -23,6 +23,12 @@ public:
 
 	void End();
 
+	void RegisterGameObject(GameObject* object, const std::string& name);
+
+	void DeregisterGameObject(const std::string& name);
+	
+	void Save();
+
 protected:
 
 	virtual void Initialize() = 0;
@@ -34,12 +40,6 @@ protected:
 	void Unload();
 
 	void Deserialize(const std::vector<char>& sceneData);
-
-	void Save();
-
-	void RegisterGameObject(GameObject* object, const std::string& name);
-
-	void DeregisterGameObject(const std::string& name);
 
 private:
 
@@ -62,6 +62,10 @@ private:
 	void TerminateObjects();
 
 	std::unordered_map<std::string, GameObject*> objects;
+
+	std::string savedName;
+
+	bool started;
 
 };
 

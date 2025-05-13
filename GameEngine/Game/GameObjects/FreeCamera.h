@@ -5,6 +5,8 @@
 
 #include <functional>
 
+class CameraComponent;
+
 class FreeCamera : public GameObject
 {
 
@@ -45,6 +47,14 @@ private:
 	const std::vector<char> Serialize() const override;
 
 	void Deserialize(const std::vector<char>& data) override;
+
+	void Start() override;
+
+	void End() override;
+
+	CameraComponent* cam;
+
+	std::function<void(const glm::vec2&)>* whenCursorMove;
 
 	std::function<void(int keyCode)>* wPress;
 

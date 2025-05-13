@@ -11,6 +11,8 @@ class GraphicsObjectTexturedAnimated : public GraphicsObject3DComponent
 
 public:
 
+	GraphicsObjectTexturedAnimated() = default;
+
 	GraphicsObjectTexturedAnimated(Model* const model, Texture* const texture);
 
 	~GraphicsObjectTexturedAnimated();

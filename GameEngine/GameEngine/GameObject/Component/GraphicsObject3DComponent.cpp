@@ -86,3 +86,13 @@ GO3D* const GraphicsObject3DComponent::GetGraphics() const
 {
 	return graphics;
 }
+
+void GraphicsObject3DComponent::Disable()
+{
+	GraphicsObjectManager::Disable(graphics);
+}
+
+void GraphicsObject3DComponent::Enable()
+{
+	GraphicsObjectManager::Enable(graphics);
+}

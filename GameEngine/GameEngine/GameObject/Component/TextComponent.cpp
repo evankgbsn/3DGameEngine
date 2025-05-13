@@ -4,6 +4,7 @@
 
 TextComponent::TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color, const glm::vec2& position, float scale)
 {
+	RegisterComponentClassType<TextComponent>(this);
 	text = new Text(string, fontName, color, position, scale);
 }
 
