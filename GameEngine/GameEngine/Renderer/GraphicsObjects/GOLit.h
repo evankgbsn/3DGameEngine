@@ -27,6 +27,10 @@ public:
 
 	void SetShine(float shine);
 
+	float GetShine() const;
+
+	const std::vector<GOLit::Material>& GetMaterials() const;
+
 protected:
 
 	GOLit(const std::vector<Material>& materials);
@@ -40,6 +44,8 @@ protected:
 	GOLit& operator=(GOLit&&) = delete;
 
 	void UpdateLighting();
+
+	std::vector<Material> materials;
 
 private:
 
@@ -101,7 +107,6 @@ private:
 
 	unsigned int materialBuffer;
 
-	std::vector<Material> materials;
 };
 
 #endif // GOLIT_H

@@ -106,11 +106,14 @@ Player::~Player()
 void Player::SetPosition(const glm::vec3& newPosition)
 {
     graphics->SetPosition(newPosition);
+    sphere->SetPosition(newPosition);
+    body->SetPosition(newPosition);
 }
 
 void Player::SetRotation(const glm::mat4& newRotation)
 {
     graphics->SetRotation(newRotation);
+    sphere->SetRotation(newRotation);
 }
 
 glm::vec3 Player::GetPosition() const
@@ -139,13 +142,14 @@ void Player::End()
     InputManager::EnableCursor("Engine");
 }
 
-const std::vector<char> Player::Serialize() const
+void Player::Serialize()
 {
-    return std::vector<char>();
+    GameObject::Serialize();
 }
 
-void Player::Deserialize(const std::vector<char>& data)
+void Player::Deserialize()
 {
+    GameObject::Deserialize();
 }
 
 void Player::Initialize()
@@ -159,6 +163,7 @@ void Player::Initialize()
 
     sphere = new GraphicsObjectColored(ModelManager::GetModel("Sphere"), { 1.0f, 1.0f, 1.0f, 1.0f });
     sphere->Disable();
+    AddComponent(sphere, "Sphere");
 
     cam = new CameraComponent("Player");
     AddComponent(cam, "Camera");
@@ -266,4 +271,9 @@ void Player::Load()
 
 void Player::Unload()
 {
+}
+
+bool Player::Hovered() const
+{
+    return body->Hovered();
 }

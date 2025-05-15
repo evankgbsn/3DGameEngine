@@ -12,7 +12,7 @@ class SpotLightComponent : public Component
 
 public:
 
-	SpotLightComponent() = default;
+	SpotLightComponent();
 
 	SpotLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position, const glm::vec3& direction);
 
@@ -28,9 +28,9 @@ private:
 
 	SpotLightComponent& operator=(SpotLightComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
 

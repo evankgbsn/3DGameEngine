@@ -2,6 +2,11 @@
 
 #include "../../GameEngine/Collision/SphereWithVisualization.h"
 
+BoundingSphereComponent::BoundingSphereComponent()
+{
+	RegisterComponentClassType<BoundingSphereComponent>(this);
+}
+
 BoundingSphereComponent::BoundingSphereComponent(float radius) :
 	sphere(new SphereWithVisualization(radius))
 {
@@ -108,13 +113,20 @@ glm::vec3 BoundingSphereComponent::ClosestPoint(const glm::vec3& point) const
 	return sphere->ClosestPoint(point);
 }
 
-const std::vector<char> BoundingSphereComponent::Serialize() const
+void BoundingSphereComponent::Serialize()
 {
-	return std::vector<char>();
+	savedVec3s["Origin"] = GetOrigin();
+	savedVec3s["Offset"] = GetOffset();
+	savedFloats["Radius"] = GetRadius();
+	savedMat4s["Transform"] = sphere->GetTransform();
 }
 
-void BoundingSphereComponent::Deserialize(const std::vector<char>& data)
+void BoundingSphereComponent::Deserialize()
 {
+	SetOrigin(savedVec3s["Origin"]);
+	SetOffset(savedVec3s["Offset"]);
+	SetRadius(savedFloats["Radius"]);
+	sphere->Transform(savedMat4s["Transform"]);
 }
 
 void BoundingSphereComponent::Update()

@@ -12,7 +12,7 @@ class PointLightComponent : public Component
 
 public:
 
-	PointLightComponent() = default;
+	PointLightComponent();
 
 	PointLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position);
 
@@ -36,9 +36,9 @@ private:
 
 	PointLightComponent& operator=(PointLightComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
 

@@ -50,9 +50,9 @@ private:
 
 	glm::mat4 GetTransform() const override;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	//GraphicsObjectTexturedLit* graphics;
 	

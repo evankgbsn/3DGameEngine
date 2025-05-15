@@ -91,15 +91,25 @@ bool StaticColliderComponent::IsVisible() const
 	return collider->IsVisible();
 }
 
+void StaticColliderComponent::SetGraphics(GraphicsObject3DComponent* graphics)
+{
+	collider = new StaticCollider(graphics->GetGraphics());
+}
+
 void StaticColliderComponent::Update()
 {
+	collider->Update();
 }
 
-const std::vector<char> StaticColliderComponent::Serialize() const
+void StaticColliderComponent::Serialize()
 {
-	return std::vector<char>();
+	savedBools["IsVisible"] = IsVisible();
 }
 
-void StaticColliderComponent::Deserialize(const std::vector<char>& data)
+void StaticColliderComponent::Deserialize()
 {
+	if (!savedBools["IsVisible"])
+	{
+		ToggleVisibility();
+	}
 }

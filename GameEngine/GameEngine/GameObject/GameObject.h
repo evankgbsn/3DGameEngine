@@ -32,11 +32,13 @@ public:
 
 	virtual void End() {};
 
-	virtual const std::vector<char> Serialize() const = 0;
+	virtual void Serialize();
 
-	virtual void Deserialize(const std::vector<char>& data) = 0;
+	virtual void Deserialize();
 
 	virtual const std::string& GetName() const;
+
+	void SetName(const std::string& name);
 
 protected:
 
@@ -69,6 +71,8 @@ protected:
 
 	Component* const GetComponent(const std::string& component) const;
 
+	static std::function<void(GameObject**)> GetConstructor(const std::string& name);
+
 private:
 
 	GameObject(const GameObject*) = delete;
@@ -93,6 +97,7 @@ template<typename T>
 inline void GameObject::RegisterGameObjectClassType(GameObject* obj)
 {
 	nameOfType = std::string(typeid(*obj).name());
+	nameOfType.replace(0, 6, "");
 	Logger::Log(std::string("Created GameObject of Type: ") + nameOfType, Logger::Category::Info);
 
 	newFunctions[nameOfType] = std::function<void(GameObject**)>([](GameObject** outNewGameObject)

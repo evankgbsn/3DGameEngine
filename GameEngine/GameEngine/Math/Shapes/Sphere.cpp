@@ -109,8 +109,10 @@ void Sphere::SetOrigin(const glm::vec3& newOrigin)
 	origin = newOrigin;
 }
 
-void Sphere::Transform(const glm::mat4& transform)
+void Sphere::Transform(const glm::mat4& trans)
 {
+
+	transform = trans;
 
 	glm::mat4 rotation(1.0f);
 	rotation[0] = glm::normalize(transform[0]);
@@ -210,4 +212,9 @@ glm::vec3 Sphere::ClosestPoint(const glm::vec3& point) const
 {
 	glm::vec3 toPoint = glm::normalize(point - origin);
 	return origin + toPoint * radius;
+}
+
+glm::mat4 Sphere::GetTransform() const
+{
+	return transform;
 }

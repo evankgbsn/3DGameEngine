@@ -40,7 +40,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::string&
 		return instance->models[name];
 	}
 
-	return instance->models[name] = new Model(path);
+	return instance->models[name] = new Model(path, name);
 }
 
 Model* const ModelManager::LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
@@ -68,7 +68,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 		return instance->models[name];
 	}
 
-	return instance->models[name] = new Model(vertices, indices);
+	return instance->models[name] = new Model(vertices, indices, name);
 }
 
 void ModelManager::UnloadModel(const std::string& name)
@@ -117,7 +117,7 @@ Model* const ModelManager::CreateModelTerrain(const std::string& name, const std
 	}
 	else
 	{
-		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
+		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, name);
 		instance->models.insert(std::pair<std::string, Model*>(name, newTerrainModel));
 		return newTerrainModel;
 	}
@@ -171,7 +171,7 @@ void ModelManager::LoadDefaultModels()
 
 	std::vector<unsigned int> indices = { 0,1,2,2,3,0 };
 
-	models.insert(std::make_pair(std::string("RectangleWithDepth"), new Model(rectangleVertices, indices)));
+	models.insert(std::make_pair(std::string("RectangleWithDepth"), new Model(rectangleVertices, indices, "RectangleWithDepth")));
 
 	// Default triangle
 	std::vector<Vertex> triangleVertices = {
@@ -182,12 +182,12 @@ void ModelManager::LoadDefaultModels()
 
 	std::vector<unsigned int> triangleIndices = { 0,2,1 };
 
-	models.insert(std::make_pair(std::string("Triangle"), new Model(triangleVertices, triangleIndices)));
+	models.insert(std::make_pair(std::string("Triangle"), new Model(triangleVertices, triangleIndices, "Triangle")));
 
 	std::vector<Vertex> nullVertices;
 	std::vector<unsigned int> nullIndices;
 
-	models.insert(std::make_pair(std::string("Null"), new Model(nullVertices, nullIndices)));
+	models.insert(std::make_pair(std::string("Null"), new Model(nullVertices, nullIndices, "Null")));
 
 	LoadModel("Sphere", "Assets/Model/Sphere.gltf");
 }

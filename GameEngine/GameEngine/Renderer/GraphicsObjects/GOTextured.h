@@ -15,6 +15,8 @@ public:
 
 	~GOTextured();
 
+	Texture* const GetTexture() const;
+
 	void Update() override;
 
 protected:

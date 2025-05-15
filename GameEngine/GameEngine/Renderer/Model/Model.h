@@ -24,11 +24,11 @@ public:
 
 	Model();
 
-	Model(const std::vector<Vertex>& verices, const std::vector<unsigned int>& indices);
+	Model(const std::vector<Vertex>& verices, const std::vector<unsigned int>& indices, const std::string& name);
 
-	Model(const std::string& path);
+	Model(const std::string& path, const std::string& name);
 
-	Model(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	Model(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
 
 	~Model();
 
@@ -61,6 +61,8 @@ public:
 	void BindBuffer();
 
 	void UpdateBuffer();
+
+	const std::string& GetName() const;
 
 protected:
 
@@ -99,6 +101,8 @@ private:
 	unsigned int vertexArrayBuffer;
 
 	unsigned int indexArrayBuffer;
+
+	std::string name;
 
 };
 

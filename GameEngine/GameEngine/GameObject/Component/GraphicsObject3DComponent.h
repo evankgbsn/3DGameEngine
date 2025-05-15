@@ -21,6 +21,8 @@ public:
 
 	glm::mat4 GetTransform() const;
 
+	void SetTransform(const glm::mat4& newTransform);
+
 	void SetPosition(const glm::vec3& position);
 
 	void SetRotation(const glm::mat4& rotation);
@@ -49,9 +51,9 @@ protected:
 
 	virtual ~GraphicsObject3DComponent();
 
-	virtual const std::vector<char> Serialize() const override;
+	virtual void Serialize() override;
 
-	virtual void Deserialize(const std::vector<char>& data) override;
+	virtual void Deserialize() override;
 
 	GO3D* graphics;
 

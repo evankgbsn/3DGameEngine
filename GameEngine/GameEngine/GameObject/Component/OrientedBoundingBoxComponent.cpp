@@ -124,11 +124,24 @@ void OrientedBoundingBoxComponent::Update()
 {
 }
 
-const std::vector<char> OrientedBoundingBoxComponent::Serialize() const
+void OrientedBoundingBoxComponent::Serialize()
 {
-	return std::vector<char>();
+	savedBools["IsVisible"] = collider->IsVisible();
+	savedVec3s["Origin"] = collider->GetOrigin();
+	savedMat4s["Orientation"] = collider->GetOrientation();
+	savedVec3s["Color"] = collider->GetColor();
+	savedVec3s["Offset"] = collider->GetOffset();
+	savedVec3s["Size"] = collider->GetSize();
 }
 
-void OrientedBoundingBoxComponent::Deserialize(const std::vector<char>& data)
+void OrientedBoundingBoxComponent::Deserialize()
 {
+	collider = new OrientedBoundingBoxWithVisualization(savedVec3s["Origin"], savedVec3s["Size"], savedMat4s["Orientation"]);
+
+	collider->SetColor(glm::vec4(savedVec3s["Color"], 1.0f));
+
+	if (!savedBools["IsVisible"])
+	{
+		collider->ToggleVisibility();
+	}
 }

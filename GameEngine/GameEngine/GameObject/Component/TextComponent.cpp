@@ -2,6 +2,11 @@
 
 #include "../../Renderer/Text/Text.h"
 
+TextComponent::TextComponent()
+{
+	RegisterComponentClassType<TextComponent>(this);
+}
+
 TextComponent::TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color, const glm::vec2& position, float scale)
 {
 	RegisterComponentClassType<TextComponent>(this);
@@ -28,13 +33,23 @@ const std::string& TextComponent::GetString() const
 	return text->GetString();
 }
 
-const std::vector<char> TextComponent::Serialize() const
+void TextComponent::Serialize()
 {
-	return std::vector<char>();
+	savedStrings["Text"] = text->GetString();
+	savedStrings["FontName"] = text->GetFontName();
+	savedVec2s["Position"] = text->GetPosition();
+	savedVec3s["Color"] = text->GetColor();
+	savedFloats["Scale"] = text->GetScale();
 }
 
-void TextComponent::Deserialize(const std::vector<char>& data)
+void TextComponent::Deserialize()
 {
+	if (text != nullptr)
+	{
+		delete text;
+	}
+
+	text = new Text(savedStrings["Text"], savedStrings["FontName"], glm::vec4(savedVec3s["Color"], 1.0f), savedVec2s["Position"], savedFloats["Scale"]);
 }
 
 void TextComponent::Update()

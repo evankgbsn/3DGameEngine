@@ -11,7 +11,7 @@ class GraphicsObjectTexturedAnimatedLit : public GraphicsObject3DComponent
 
 public:
 
-	GraphicsObjectTexturedAnimatedLit() = default;
+	GraphicsObjectTexturedAnimatedLit();
 
 	GraphicsObjectTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular);
 
@@ -33,9 +33,9 @@ private:
 
 	GraphicsObjectTexturedAnimatedLit& operator=(GraphicsObjectTexturedAnimatedLit&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 };
 

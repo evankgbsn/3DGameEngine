@@ -12,7 +12,7 @@ class TerrainComponent : public Component
 {
 public:
 
-	TerrainComponent() = default;
+	TerrainComponent();
 
 	TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
 
@@ -36,9 +36,9 @@ private:
 
 	void Update() override;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	Terrain* terrain;
 

@@ -75,11 +75,15 @@ glm::vec3 DirectionalLightGameObject::GetPosition() const
 	return light->GetCollider()->GetOrigin();
 }
 
-const std::vector<char> DirectionalLightGameObject::Serialize() const
+void DirectionalLightGameObject::Serialize()
 {
-	return std::vector<char>();
+
+
+	GameObject::Serialize();
 }
 
-void DirectionalLightGameObject::Deserialize(const std::vector<char>& data)
+void DirectionalLightGameObject::Deserialize()
 {
+
+	GameObject::Deserialize();
 }

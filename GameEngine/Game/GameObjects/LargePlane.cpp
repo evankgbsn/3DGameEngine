@@ -111,11 +111,12 @@ glm::mat4 LargePlane::GetTransform() const
 	return graphics->GetTransform();
 }
 
-const std::vector<char> LargePlane::Serialize() const
+void LargePlane::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void LargePlane::Deserialize(const std::vector<char>& data)
+void LargePlane::Deserialize()
 {
+	GameObject::Deserialize();
 }

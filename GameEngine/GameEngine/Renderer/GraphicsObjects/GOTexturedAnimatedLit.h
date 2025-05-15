@@ -20,6 +20,10 @@ public:
 
 	void RenderToShadowMap() override;
 
+	Texture* const GetDiffuseTexture() const;
+
+	Texture* const GetSpecularTexture() const;
+
 private:
 
 	GOTexturedAnimatedLit(const GOTexturedAnimatedLit&) = delete;
@@ -31,6 +35,10 @@ private:
 	GOTexturedAnimatedLit& operator=(GOTexturedAnimatedLit&&) = delete;
 
 	unsigned int lightSpaceMatrixBuffer;
+
+	Texture* diffuse;
+
+	Texture* specular;
 
 };
 

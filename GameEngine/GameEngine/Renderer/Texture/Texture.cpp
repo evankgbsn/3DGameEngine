@@ -13,8 +13,9 @@ Texture::Texture() :
 	LoadTexture();
 }
 
-Texture::Texture(const std::string& p) :
-	path(p)
+Texture::Texture(const std::string& p, const std::string& n) :
+	path(p),
+	name(n)
 {
 	LoadTexture();
 }
@@ -38,6 +39,11 @@ void Texture::Bind(unsigned int bindingPoint)
 {
 	glActiveTexture(bindingPoint);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+}
+
+const std::string& Texture::GetName() const
+{
+	return name;
 }
 
 void Texture::LoadTexture()

@@ -90,3 +90,13 @@ void GOTexturedLit::RenderToShadowMap()
 	
 	ShaderManager::EndShaderUsage("ShadowMap");
 }
+
+Texture* const GOTexturedLit::GetDiffuseTexture() const
+{
+	return materials.front().diffuseMap;
+}
+
+Texture* const GOTexturedLit::GetSpecularTexture() const
+{
+	return materials.front().specularMap;
+}

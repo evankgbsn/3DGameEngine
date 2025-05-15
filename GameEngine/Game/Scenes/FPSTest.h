@@ -3,6 +3,8 @@
 
 #include "GameEngine/Scene/Scene.h"
 
+#include <functional>
+
 class LargePlane;
 class DirectionalLightGameObject;
 class Player;
@@ -37,6 +39,8 @@ private:
 	Player* player;
 
 	RigidBox* box;
+
+	std::function<void(int)>* deserialize;
 
 };
 

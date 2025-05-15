@@ -43,9 +43,9 @@ private:
 
 	Player& operator=(Player&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Initialize() override;
 
@@ -58,6 +58,8 @@ private:
 	void Load() override;
 
 	void Unload() override;
+
+	bool Hovered() const override;
 
 	CameraComponent* cam;
 

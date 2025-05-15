@@ -9,6 +9,11 @@
 #include "OrientedBoundingBoxComponent.h"
 #include "../../Collision/OrientedBoundingBoxWithVisualization.h"
 
+AnimatedColliderComponent::AnimatedColliderComponent()
+{
+	RegisterComponentClassType<AnimatedColliderComponent>(this);
+}
+
 AnimatedColliderComponent::AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject)
 {
 	RegisterComponentClassType<AnimatedColliderComponent>(this);
@@ -62,11 +67,30 @@ bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other) 
 	return collider->Intersect(*other.GetCollider());
 }
 
-const std::vector<char> AnimatedColliderComponent::Serialize() const
+void AnimatedColliderComponent::SetGraphics(GraphicsObjectTexturedAnimated* const graphicsObject)
 {
-	return std::vector<char>();
+	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
-void AnimatedColliderComponent::Deserialize(const std::vector<char>& data)
+void AnimatedColliderComponent::SetGraphics(GraphicsObjectTexturedAnimatedLit* const graphicsObject)
 {
+	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
+}
+
+void AnimatedColliderComponent::SetGraphics(GraphicsObjectColoredAnimated* const graphicsObject)
+{
+	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
+}
+
+void AnimatedColliderComponent::Serialize()
+{
+	savedBools["IsVisible"] = collider->IsVisible();
+}
+
+void AnimatedColliderComponent::Deserialize()
+{
+	if (!savedBools["IsVisible"])
+	{
+		collider->ToggleVisibility();
+	}
 }

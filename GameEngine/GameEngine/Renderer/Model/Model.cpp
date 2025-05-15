@@ -40,7 +40,8 @@ Model::Model() :
 	vertices(std::vector<Vertex>()),
 	indices(std::vector<unsigned int>()),
 	animationClips(std::vector<Clip>()),
-	armature(new Armature())
+	armature(new Armature()),
+	name("DefaultRectangle")
 {
 	// Default rectangle.
 	vertices = {
@@ -55,20 +56,22 @@ Model::Model() :
 	CreateVertexArrayBuffer();
 }
 
-Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i) :
+Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i, const std::string& n) :
 	vertices(v),
 	indices(i),
 	animationClips(std::vector<Clip>()),
-	armature(new Armature())
+	armature(new Armature()),
+	name(n)
 {
 	CreateVertexArrayBuffer();
 }
 
-Model::Model(const std::string& path) :
+Model::Model(const std::string& path, const std::string& n) :
 	vertices(std::vector<Vertex>()),
 	indices(std::vector<unsigned int>()),
 	animationClips(std::vector<Clip>()),
-	armature(new Armature())
+	armature(new Armature()),
+	name(n)
 {
 	if (std::filesystem::exists(path.c_str()))
 	{
@@ -125,7 +128,8 @@ unsigned int MoveToRange(unsigned int val, unsigned int min, unsigned int max, u
 	return (newVal > newMax) ? newMax : newVal;
 }
 
-Model::Model(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
+Model::Model(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& n) :
+	name(n)
 {
 	// Open the image file and store it in a buffer.
 	int width, height, bitsPerPixel;
@@ -409,6 +413,11 @@ void Model::UpdateBuffer()
 {
 	DestroyVertexArrayBuffer();
 	CreateVertexArrayBuffer();
+}
+
+const std::string& Model::GetName() const
+{
+	return name;
 }
 
 void Model::CPUSkinMatrices(Armature& armature, Pose& pose)

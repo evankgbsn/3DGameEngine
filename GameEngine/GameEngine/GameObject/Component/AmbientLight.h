@@ -8,7 +8,7 @@ class AmbientLight : public Component
 
 public:
 
-	AmbientLight() = default;
+	AmbientLight();
 
 	AmbientLight(float intensity);
 
@@ -28,11 +28,9 @@ private:
 
 	AmbientLight& operator=(AmbientLight&&) = delete;
 
+	void Serialize() override;
 
-	// Inherited via Component
-	const std::vector<char> Serialize() const override;
-
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
 

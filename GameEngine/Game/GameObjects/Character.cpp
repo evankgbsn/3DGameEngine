@@ -4,6 +4,7 @@
 #include "GameEngine/GameObject/Component/AnimatedColliderComponent.h"
 #include "GameEngine/GameObject/Component/TextComponent.h"
 #include "GameEngine/GameObject/Component/TerrainComponent.h"
+#include "GameEngine/GameObject/Component/CameraComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -160,29 +161,25 @@ Character::Character() :
 					float xDif = lastMousePos.x - pos.x;
 					float yDif = lastMousePos.y - pos.y;
 
-					Camera& cam = CameraManager::GetActiveCamera();
-
-					//cam.Translate({0.0f, yDif * TimeManager::DeltaTime() * speed, 0.0f });
-
 					glm::mat4 yrotation(1.0f);
-					glm::vec4 vectorToRotate(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
+					glm::vec4 vectorToRotate(glm::normalize(cam->GetTarget() - cam->GetPosition()), 0.0f);
 					vectorToRotate = glm::normalize(vectorToRotate);
 					yrotation = glm::rotate(yrotation, glm::radians(speed * TimeManager::DeltaTime() * -yDif), glm::normalize(glm::cross(glm::vec3(vectorToRotate), glm::vec3(0.0f, 1.0f, 0.0f))));
 
 					vectorToRotate = glm::normalize(vectorToRotate * yrotation) * 20.0f;
 
-					cam.SetPosition(cam.GetTarget() + glm::vec3(-vectorToRotate));
+					cam->SetPosition(cam->GetTarget() + glm::vec3(-vectorToRotate));
 
 					glm::mat4 xrotation(1.0f);
-					vectorToRotate = glm::vec4(glm::normalize(cam.GetTarget() - cam.GetPosition()), 0.0f);
+					vectorToRotate = glm::vec4(glm::normalize(cam->GetTarget() - cam->GetPosition()), 0.0f);
 					vectorToRotate = glm::normalize(vectorToRotate);
 					xrotation = glm::rotate(xrotation, glm::radians(speed * TimeManager::DeltaTime() * -xDif), glm::vec3(0.0f, 1.0f, 0.0f));
 
 					vectorToRotate = glm::normalize(vectorToRotate * xrotation) * cameraDistance;
 
-					cam.SetPosition(cam.GetTarget() + glm::vec3(-vectorToRotate));
+					cam->SetPosition(cam->GetTarget() + glm::vec3(-vectorToRotate));
 
-					camPosition =  cam.GetPosition() - cam.GetTarget();
+					camPosition =  cam->GetPosition() - cam->GetTarget();
 
 
 					lastMousePos = pos;
@@ -263,11 +260,10 @@ void Character::Initialize()
 	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
 	camPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
-	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
+	cam = new CameraComponent("Character");
+	AddComponent(cam, "CharacterCamera");
 
-	Camera& cam = CameraManager::GetCamera("Main");
-
-	cam.SetPosition(graphics->GetPosition() + camPosition);
+	cam->SetPosition(graphics->GetPosition() + camPosition);
 }
 
 void Character::Terminate()
@@ -293,11 +289,9 @@ void Character::Terminate()
 
 void Character::GameUpdate()
 {
-	Camera& cam = CameraManager::GetCamera("Main");
-
-	cam.SetTarget(graphics->GetPosition());
+	cam->SetTarget(graphics->GetPosition());
 	
-	cam.SetPosition(cam.GetTarget() + glm::normalize(camPosition) * cameraDistance);
+	cam->SetPosition(cam->GetTarget() + glm::normalize(camPosition) * cameraDistance);
 
 	TerrainComponent* terrain = GetTerrain();
 
@@ -308,7 +302,7 @@ void Character::GameUpdate()
 	}
 
 	if (terrain != nullptr)
-		graphics->SetPosition(terrain->GetTerrainPoint(graphics->GetPosition()));
+		//graphics->SetPosition(terrain->GetTerrainPoint(graphics->GetPosition()));
 
 
 
@@ -404,6 +398,7 @@ void Character::SetRotation(const glm::mat4& newRotation)
 
 void Character::Start()
 {
+	cam->SetActive();
 	if (graphics != nullptr)
 	{
 		targetPosition = graphics->GetPosition();
@@ -452,11 +447,12 @@ TerrainComponent* Character::GetTerrain() const
 	return terrain;
 }
 
-const std::vector<char> Character::Serialize() const
+void Character::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void Character::Deserialize(const std::vector<char>& data)
+void Character::Deserialize()
 {
+	GameObject::Deserialize();
 }

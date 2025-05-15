@@ -19,6 +19,10 @@ public:
 
 	void RenderToShadowMap() override;
 
+	Texture* const GetDiffuseTexture() const;
+
+	Texture* const GetSpecularTexture() const;
+
 protected:
 
 private:

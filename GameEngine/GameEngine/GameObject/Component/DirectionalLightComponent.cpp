@@ -4,6 +4,11 @@
 #include "../../Renderer/Light/DirectionalLight.h"
 #include "../../Collision/SphereWithVisualization.h"
 
+DirectionalLightComponent::DirectionalLightComponent()
+{
+	RegisterComponentClassType<DirectionalLightComponent>(this);
+}
+
 DirectionalLightComponent::DirectionalLightComponent(const glm::vec3& initialDirection, const glm::vec3& colorIntensity)
 {
 	RegisterComponentClassType<DirectionalLightComponent>(this);
@@ -39,13 +44,16 @@ void DirectionalLightComponent::Update()
 {
 }
 
-const std::vector<char> DirectionalLightComponent::Serialize() const
+void DirectionalLightComponent::Serialize() 
 {
-	return std::vector<char>();
+	savedVec3s["ColorIntensity"] = GetColor();
+	savedVec3s["Direction"] = GetDirection();
 }
 
-void DirectionalLightComponent::Deserialize(const std::vector<char>& data)
+void DirectionalLightComponent::Deserialize()
 {
+	SetDirection(savedVec3s["Direction"]);
+	SetColor(savedVec3s["ColorIntensity"]);
 }
 
 void DirectionalLightComponent::SetColor(const glm::vec3& newColor)

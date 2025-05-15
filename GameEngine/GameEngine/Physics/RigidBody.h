@@ -44,6 +44,12 @@ public:
 
 	glm::vec3 GetVelocity() const;
 
+	void SetPosition(const glm::vec3& newPosition);
+
+	bool Hovered() const;
+
+	void SetUserData(void* data);
+
 private:
 
 	RigidBody() = delete;

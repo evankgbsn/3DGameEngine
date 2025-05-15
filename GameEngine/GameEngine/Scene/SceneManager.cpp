@@ -59,8 +59,8 @@ void SceneManager::LoadScene(const std::string& sceneName)
 	{
 		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
 		{
-			instance->registeredScenes.find(sceneName)->second->Load();
 			instance->loadedScenes.insert(*instance->registeredScenes.find(sceneName));
+			instance->registeredScenes.find(sceneName)->second->Load();
 		}
 		else
 		{
@@ -157,6 +157,22 @@ void SceneManager::EndLoadedScenes()
 			scene.second->End();
 		}
 	}
+}
+
+GameObject* SceneManager::FindGameObject(const std::string& name)
+{
+	for (auto& scene : GetLoadedScenes())
+	{
+		for (auto& object : scene->objects)
+		{
+			if (object.first == name)
+			{
+				return object.second;
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 SceneManager::SceneManager()

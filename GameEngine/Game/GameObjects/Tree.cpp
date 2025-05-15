@@ -150,11 +150,12 @@ glm::mat4 Tree::GetRotation() const
 	return graphics->GetRotation();
 }
 
-const std::vector<char> Tree::Serialize() const
+void Tree::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void Tree::Deserialize(const std::vector<char>& data)
+void Tree::Deserialize()
 {
+	GameObject::Deserialize();
 }

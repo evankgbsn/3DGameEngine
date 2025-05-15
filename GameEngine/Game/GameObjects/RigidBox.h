@@ -24,6 +24,8 @@ public:
 
 	glm::mat4 GetTransform() const override;
 
+	bool Hovered() const override;
+
 private:
 
 	RigidBox(const RigidBox&) = delete;
@@ -34,9 +36,9 @@ private:
 
 	RigidBox& operator=(RigidBox&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Initialize() override;
 

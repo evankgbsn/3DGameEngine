@@ -2,6 +2,10 @@
 
 #include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../../Renderer/GraphicsObjects/GOTexturedAnimated.h"
+#include "../../Renderer/Model/Model.h"
+#include "../../Renderer/Model/ModelManager.h"
+#include "../../Renderer/Texture/Texture.h"
+#include "../../Renderer/Texture/TextureManager.h"
 
 GraphicsObjectTexturedAnimated::GraphicsObjectTexturedAnimated(Model* const model, Texture* const texture)
 {
@@ -53,11 +57,32 @@ void GraphicsObjectTexturedAnimated::SetSpeed(float speed)
 	static_cast<GOTexturedAnimated*>(graphics)->SetSpeed(speed);
 }
 
-const std::vector<char> GraphicsObjectTexturedAnimated::Serialize() const
+void GraphicsObjectTexturedAnimated::Serialize()
 {
-	return std::vector<char>();
+	GraphicsObject3DComponent::Serialize();
+
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	savedStrings["ModelName"] = GetModel()->GetName();
+	savedStrings["TextureName"] = go->GetTexture()->GetName();
+	savedFloats["AnimationSpeed"] = go->GetSpeed();
+	savedInts["AnimationClip"] = go->GetClip();
+	savedInts["AnimationFrame"] = go->GetFrame();
 }
 
-void GraphicsObjectTexturedAnimated::Deserialize(const std::vector<char>& date)
+void GraphicsObjectTexturedAnimated::Deserialize()
 {
+	if (graphics != nullptr)
+	{
+		GraphicsObjectManager::Delete(graphics);
+	}
+
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimated(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["TextureName"]));
+
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	go->SetClip(savedInts["AnimationClip"]);
+	go->SetFrame(savedInts["AnimationFrame"]);
+	go->SetSpeed(savedFloats["AnimationSpeed"]);
+	GraphicsObject3DComponent::Deserialize();
 }

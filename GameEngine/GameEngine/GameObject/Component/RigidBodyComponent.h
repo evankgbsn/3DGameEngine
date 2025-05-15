@@ -31,7 +31,7 @@ public:
 
 	RigidBodyComponent();
 
-	RigidBodyComponent(Type type, GameObject* owner, const Model* const model);
+	RigidBodyComponent(Type type, GameObject* owner, const Model* model);
 
 	~RigidBodyComponent();
 
@@ -57,6 +57,9 @@ public:
 
 	glm::vec3 GetVelocity() const;
 
+	void SetPosition(const glm::vec3& newPosition);
+
+	bool Hovered() const;
 private:
 
 	RigidBodyComponent(const RigidBodyComponent&) = delete;
@@ -69,17 +72,21 @@ private:
 
 	void CreateShapeFromModel();
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
+
+	void RegisterEditorCallbacks();
+
+	void CreatePhysXRigidBody();
 
 	RigidBody* body;
 
 	GameObject* owner;
 
-	const Model* const model;
+	const Model* model;
 
 	physx::PxConvexMesh* convexMeshShape;
 

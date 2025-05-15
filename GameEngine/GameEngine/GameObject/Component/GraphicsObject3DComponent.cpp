@@ -14,13 +14,14 @@ GraphicsObject3DComponent::~GraphicsObject3DComponent()
 	GraphicsObjectManager::Delete(graphics);
 }
 
-const std::vector<char> GraphicsObject3DComponent::Serialize() const
+void GraphicsObject3DComponent::Serialize()
 {
-	return std::vector<char>();
+	savedMat4s["Transform"] = GetTransform();
 }
 
-void GraphicsObject3DComponent::Deserialize(const std::vector<char>& data)
+void GraphicsObject3DComponent::Deserialize()
 {
+	SetTransform(savedMat4s["Transform"]);
 }
 
 glm::vec3 GraphicsObject3DComponent::GetPosition() const
@@ -41,6 +42,11 @@ glm::vec3 GraphicsObject3DComponent::GetScale() const
 glm::mat4 GraphicsObject3DComponent::GetTransform() const
 {
 	return graphics->GetTransform();
+}
+
+void GraphicsObject3DComponent::SetTransform(const glm::mat4& newTransform)
+{
+	graphics->SetTransform(newTransform);
 }
 
 void GraphicsObject3DComponent::SetPosition(const glm::vec3& position)

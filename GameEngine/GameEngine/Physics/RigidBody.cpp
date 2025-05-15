@@ -51,6 +51,15 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
 
 RigidBody::~RigidBody()
 {
+    if (staticBody != nullptr)
+    {
+        staticBody->release();
+    }
+
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->release();
+    }
 }
 
 RigidBody::Type RigidBody::GetType() const
@@ -167,4 +176,60 @@ glm::vec3 RigidBody::GetVelocity() const
     }
     
     return {};
+}
+
+void RigidBody::SetPosition(const glm::vec3& newPosition)
+{
+    PxTransform currentTransform;
+
+    PxVec3 pos(newPosition.x, newPosition.y, newPosition.z);
+
+    if (dynamicBody != nullptr)
+    {
+        currentTransform = dynamicBody->getGlobalPose();
+        dynamicBody->setGlobalPose(PxTransform(pos, currentTransform.q));
+    }
+    else if (staticBody != nullptr)
+    {
+        currentTransform = staticBody->getGlobalPose();
+        dynamicBody->setGlobalPose(PxTransform(pos, currentTransform.q));
+    }
+}
+
+bool RigidBody::Hovered() const
+{
+    PxRaycastBuffer hitInfo;
+
+    if (PhysicsManager::RaycastFromCursor(1000.0f, hitInfo))
+    {
+        if (dynamicBody != nullptr)
+        {
+            if (hitInfo.block.actor->userData == dynamicBody->userData)
+            {
+                return true;
+            }
+        }
+        else if (staticBody != nullptr)
+        {
+            if (hitInfo.block.actor->userData == staticBody->userData)
+            {
+                return true;
+            }
+        }
+        
+    }
+
+    return false;
+}
+
+void RigidBody::SetUserData(void* data)
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->userData = data;
+    }
+    else if (staticBody != nullptr)
+    {
+        staticBody->userData = data;
+    }
 }

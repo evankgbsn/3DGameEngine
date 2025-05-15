@@ -28,6 +28,11 @@ MainScene::MainScene() :
 		{
 			SceneManager::UnloadScene("Sub");
 		});
+
+	deserialize = new std::function<void(int)>([this](int keyCode)
+		{
+			this->Deserialize("Assets/Scenes/MainScene.xml");
+		});
 }
 
 MainScene::~MainScene()
@@ -60,10 +65,12 @@ void MainScene::Initialize()
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_L, loadSub, "LoadSubscene");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_U, unloadSub, "UnloadSubscene");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_J, deserialize, "deserialize");
 }
 
 void MainScene::Terminate()
 {
+	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_J, "deserialize");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "LoadSubscene");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_U, "UnloadSubscene");
 

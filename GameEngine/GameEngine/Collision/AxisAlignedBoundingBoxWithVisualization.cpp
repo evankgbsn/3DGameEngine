@@ -37,9 +37,9 @@ void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3&
 
 AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualization()
 {
-	GraphicsObjectManager::Delete(graphics);
-	graphics = nullptr;
-	instanceIDGenerator = 0;
+	//GraphicsObjectManager::Delete(graphics);
+	//graphics = nullptr;
+	//instanceIDGenerator = 0;
 }
 
 void AxisAlignedBoundingBoxWithVisualization::Update()

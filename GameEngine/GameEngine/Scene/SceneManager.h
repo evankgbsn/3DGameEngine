@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 class Scene;
+class GameObject;
 
 class SceneManager
 {
@@ -32,6 +33,8 @@ public:
 	static void StartLoadedScenes();
 
 	static void EndLoadedScenes();
+
+	static GameObject* FindGameObject(const std::string& name);
 
 private:
 

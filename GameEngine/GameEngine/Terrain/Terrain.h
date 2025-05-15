@@ -47,6 +47,24 @@ public:
 
 	void UpdateTerrainCells();
 
+	const std::string& GetHeightMapPath() const;
+
+	const std::string& GetName() const;
+
+	float GetWidth() const;
+
+	float GetHeight() const;
+
+	unsigned int GetTileX() const;
+
+	unsigned int GetTileY() const;
+
+	float GetMaxHeight() const;
+
+	float GetYOffset() const;
+
+	const std::vector<GOLit::Material>& GetMaterials() const;
+
 private:
 
 	Terrain() = delete;
@@ -92,6 +110,8 @@ private:
 	bool isEnabled;
 
 	std::list<Cell> highlightedCells;
+
+	std::string heightMapPath;
 
 };
 

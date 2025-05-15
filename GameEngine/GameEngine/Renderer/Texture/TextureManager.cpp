@@ -39,7 +39,7 @@ Texture* const TextureManager::LoadTexture(const std::string& filePath, const st
 	{
 		if (instance->textures.find(name) == instance->textures.end())
 		{
-			ret = new Texture(filePath);
+			ret = new Texture(filePath, name);
 			instance->textures.insert(std::make_pair(name, ret));
 		}
 		else

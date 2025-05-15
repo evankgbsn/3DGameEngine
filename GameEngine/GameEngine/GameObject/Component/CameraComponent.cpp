@@ -3,6 +3,11 @@
 #include "../../Renderer/Camera/CameraManager.h"
 #include "../../Engine.h"
 
+CameraComponent::CameraComponent()
+{
+	RegisterComponentClassType<CameraComponent>(this);
+}
+
 CameraComponent::CameraComponent(const std::string& n) :
 	name(n)
 {
@@ -120,13 +125,21 @@ void CameraComponent::SetFar(const float& newFar)
 	CameraManager::GetCamera(name).SetFar(newFar);
 }
 
-const std::vector<char> CameraComponent::Serialize() const
+void CameraComponent::Serialize()
 {
-	return std::vector<char>();
+	savedStrings["Name"] = name;
+	savedVec3s["Position"] = GetPosition();
+	savedVec3s["Target"] = GetTarget();
 }
 
-void CameraComponent::Deserialize(const std::vector<char>& data)
+void CameraComponent::Deserialize()
 {
+	name = savedStrings["Name"];
+	CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, name, Engine::GetWindow());
+
+	Camera& cam = CameraManager::GetCamera(name);
+	cam.SetPosition(savedVec3s["Position"]);
+	cam.SetTarget(savedVec3s["Target"]);
 }
 
 void CameraComponent::Update()

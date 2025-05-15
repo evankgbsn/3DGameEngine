@@ -13,7 +13,7 @@ class DirectionalLightComponent : public Component
 
 public:
 
-	DirectionalLightComponent() = default;
+	DirectionalLightComponent();
 
 	DirectionalLightComponent(const glm::vec3& initialDirection, const glm::vec3& colorIntensity);
 
@@ -41,9 +41,9 @@ private:
 
 	DirectionalLightComponent& operator=(DirectionalLightComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	DirectionalLight* light;
 

@@ -17,6 +17,8 @@ public:
 
 	void Update() override;
 
+	Texture* const GetTexture() const;
+
 private:
 
 	GOTexturedAnimated(const GOTexturedAnimated&) = delete;

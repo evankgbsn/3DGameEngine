@@ -179,13 +179,14 @@ void FreeCamera::CreateInputFunctions()
 		});
 }
 
-const std::vector<char> FreeCamera::Serialize() const
+void FreeCamera::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void FreeCamera::Deserialize(const std::vector<char>& data)
+void FreeCamera::Deserialize()
 {
+	GameObject::Deserialize();
 }
 
 void FreeCamera::Start()

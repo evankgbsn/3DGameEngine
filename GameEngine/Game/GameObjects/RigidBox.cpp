@@ -15,13 +15,14 @@ RigidBox::~RigidBox()
 {
 }
 
-const std::vector<char> RigidBox::Serialize() const
+void RigidBox::Serialize()
 {
-    return std::vector<char>();
+    GameObject::Serialize();
 }
 
-void RigidBox::Deserialize(const std::vector<char>& data)
+void RigidBox::Deserialize()
 {
+    GameObject::Deserialize();
 }
 
 void RigidBox::Initialize()
@@ -79,6 +80,7 @@ void RigidBox::Unload()
 void RigidBox::SetPosition(const glm::vec3& newPosition)
 {
     graphics->SetPosition(newPosition);
+    rigidBody->SetPosition(newPosition);
 }
 
 glm::vec3 RigidBox::GetPosition() const
@@ -99,4 +101,9 @@ glm::mat4 RigidBox::GetRotation() const
 glm::mat4 RigidBox::GetTransform() const
 {
     return graphics->GetTransform();
+}
+
+bool RigidBox::Hovered() const
+{
+    return rigidBody->Hovered();
 }

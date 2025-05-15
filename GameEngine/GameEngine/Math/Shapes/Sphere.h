@@ -53,6 +53,8 @@ public:
 
 	glm::vec3 ClosestPoint(const glm::vec3& point) const;
 
+	glm::mat4 GetTransform() const;
+
 private:
 
 	Sphere(const Sphere&) = delete;
@@ -68,6 +70,8 @@ private:
 	float radius;
 
 	glm::vec3 offset;
+
+	glm::mat4 transform;
 };
 
 #endif // SPHERE_H

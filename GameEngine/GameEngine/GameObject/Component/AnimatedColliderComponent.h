@@ -16,7 +16,7 @@ class AnimatedColliderComponent : public Component
 
 public:
 
-	AnimatedColliderComponent() = default;
+	AnimatedColliderComponent();
 
 	AnimatedColliderComponent(GraphicsObjectTexturedAnimated* const graphicsObject);
 
@@ -38,6 +38,12 @@ public:
 
 	bool Intersect(const StaticColliderComponent& other) const;
 
+	void SetGraphics(GraphicsObjectTexturedAnimated* const graphicsObject);
+
+	void SetGraphics(GraphicsObjectTexturedAnimatedLit* const graphicsObject);
+
+	void SetGraphics(GraphicsObjectColoredAnimated* const graphicsObject);
+
 private:
 
 
@@ -49,9 +55,9 @@ private:
 
 	AnimatedColliderComponent& operator=(AnimatedColliderComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	AnimatedCollider* collider;
 

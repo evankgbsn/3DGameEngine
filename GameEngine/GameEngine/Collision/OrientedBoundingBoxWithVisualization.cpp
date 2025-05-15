@@ -49,6 +49,11 @@ void OrientedBoundingBoxWithVisualization::ToggleVisibility()
 	}
 }
 
+bool OrientedBoundingBoxWithVisualization::IsVisible() const
+{
+	return !graphics->IsDisabled();
+}
+
 void OrientedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor)
 {
 	if (graphics != nullptr)

@@ -21,6 +21,12 @@ public:
 
 	const std::string& GetString() const;
 
+	const std::string& GetFontName() const;
+
+	glm::vec3 GetColor() const;
+
+	float GetScale() const;
+
 	~Text();
 
 private:
@@ -40,6 +46,8 @@ private:
 	std::string text;
 
 	float scale;
+
+	glm::vec3 color;
 
 	std::string fontName;
 

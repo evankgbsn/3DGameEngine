@@ -8,7 +8,7 @@
 #include "../Collision/AxisAlignedBoundingBoxWithVisualization.h"
 #include "../Math/Math.h"
 
-Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo) :
+Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo) :
 	aabbs(std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>()),
 	tileNormals(std::vector<std::vector<glm::vec3>>()),
 	terrainWidth(w),
@@ -20,7 +20,8 @@ Terrain::Terrain(const std::string& n, const std::string& heightMapPath, const s
 	tileHeight(terrainHeight/tileY),
 	tileWidth(terrainWidth/tileX),
 	isEnabled(true),
-	highlightedCells(std::list<Cell>())
+	highlightedCells(std::list<Cell>()),
+	heightMapPath(hmp)
 {
 
 	ModelManager::CreateModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
@@ -248,4 +249,53 @@ void Terrain::VisualizeAllCells()
 const std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>>& Terrain::GetCellArray() const
 {
 	return aabbs;
+}
+
+void Terrain::UpdateTerrainCells()
+{
+}
+
+const std::string& Terrain::GetHeightMapPath() const
+{
+	return heightMapPath;
+}
+
+const std::string& Terrain::GetName() const
+{
+	return name;
+}
+
+float Terrain::GetWidth() const
+{
+	return terrainWidth;
+}
+
+float Terrain::GetHeight() const
+{
+	return terrainHeight;
+}
+
+unsigned int Terrain::GetTileX() const
+{
+	return tileX;
+}
+
+unsigned int Terrain::GetTileY() const
+{
+	return tileY;
+}
+
+float Terrain::GetMaxHeight() const
+{
+	return maxHeight;
+}
+
+float Terrain::GetYOffset() const
+{
+	return yOffset;
+}
+
+const std::vector<GOLit::Material>& Terrain::GetMaterials() const
+{
+	return terrainGraphics->GetMaterials();
 }

@@ -10,7 +10,7 @@ public:
 
 	Texture();
 
-	Texture(const std::string& path);
+	Texture(const std::string& path, const std::string& name);
 
 	~Texture();
 
@@ -28,6 +28,8 @@ public:
 
 	void Bind(unsigned int bindingPoint);
 
+	const std::string& GetName() const;
+
 private:
 
 	void LoadTexture();
@@ -41,6 +43,8 @@ private:
 	int channels;
 
 	unsigned int textureID;
+
+	std::string name;
 
 };
 

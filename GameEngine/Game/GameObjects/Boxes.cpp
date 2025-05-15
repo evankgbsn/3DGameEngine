@@ -109,11 +109,12 @@ void Boxes::Unload()
 	// Unload model.
 }
 
-const std::vector<char> Boxes::Serialize() const
+void Boxes::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void Boxes::Deserialize(const std::vector<char>& data)
+void Boxes::Deserialize()
 {
+	GameObject::Deserialize();
 }

@@ -17,7 +17,7 @@ class BoundingSphereComponent : public Component
 {
 public:
 
-	BoundingSphereComponent() = default;
+	BoundingSphereComponent();
 
 	BoundingSphereComponent(float radius);
 
@@ -71,9 +71,9 @@ private:
 
 	BoundingSphereComponent& operator=(BoundingSphereComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
 

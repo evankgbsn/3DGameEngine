@@ -57,11 +57,12 @@ glm::vec3 LightObject::GetPosition() const
 	return spotLight->GetPosition();
 }
 
-const std::vector<char> LightObject::Serialize() const
+void LightObject::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void LightObject::Deserialize(const std::vector<char>& data)
+void LightObject::Deserialize()
 {
+	GameObject::Deserialize();
 }

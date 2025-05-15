@@ -2,6 +2,8 @@
 
 #include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../../Renderer/GraphicsObjects/GOColored.h"
+#include "../../Renderer/Model/Model.h"
+#include "../../Renderer/Model/ModelManager.h"
 
 GraphicsObjectColored::GraphicsObjectColored(Model* const model, const glm::vec4& color)
 {
@@ -24,11 +26,22 @@ const glm::vec4& GraphicsObjectColored::GetColor() const
 	return static_cast<GOColored*>(graphics)->GetColor();
 }
 
-const std::vector<char> GraphicsObjectColored::Serialize() const
+void GraphicsObjectColored::Serialize()
 {
-	return std::vector<char>();
+	GraphicsObject3DComponent::Serialize();
+
+	savedVec3s["Color"] = GetColor();
+	savedStrings["ModelName"] = GetModel()->GetName();
 }
 
-void GraphicsObjectColored::Deserialize(const std::vector<char>& data)
+void GraphicsObjectColored::Deserialize()
 {
+	if (graphics != nullptr)
+	{
+		GraphicsObjectManager::Delete(graphics);
+	}
+
+	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel(savedStrings["ModelName"]), glm::vec4(savedVec3s["Color"], 1.0f));
+
+	GraphicsObject3DComponent::Deserialize();
 }

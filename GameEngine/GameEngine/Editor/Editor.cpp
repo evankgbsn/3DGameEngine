@@ -432,7 +432,9 @@ void Editor::SetupEditorInput()
 
 					for (Scene* scene : scenes)
 					{
-						scene->Save();
+						std::string name = typeid(*scene).name();
+						name.replace(0, 6, "");
+						scene->Save(name);
 					}
 
 				}

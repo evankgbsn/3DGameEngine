@@ -12,7 +12,7 @@ class GraphicsObjectColoredAnimated : public GraphicsObject3DComponent
 
 public:
 
-	GraphicsObjectColoredAnimated() = default;
+	GraphicsObjectColoredAnimated();
 
 	GraphicsObjectColoredAnimated(Model* const model, const glm::vec4& color);
 
@@ -45,9 +45,9 @@ private:
 
 	GraphicsObjectColoredAnimated& operator=(GraphicsObjectColoredAnimated&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 };
 

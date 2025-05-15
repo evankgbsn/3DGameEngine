@@ -15,6 +15,11 @@ GOTextured::~GOTextured()
 {
 }
 
+Texture* const GOTextured::GetTexture() const
+{
+	return texture;
+}
+
 void GOTextured::Update()
 {
 	ShaderManager::StartShaderUsage("Textured");

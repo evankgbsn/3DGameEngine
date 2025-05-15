@@ -27,7 +27,9 @@ public:
 
 	void DeregisterGameObject(const std::string& name);
 	
-	void Save();
+	void Save(const std::string& saveFileName);
+
+	void Deserialize(const std::string& path);
 
 protected:
 
@@ -38,8 +40,6 @@ protected:
 	void Load();
 
 	void Unload();
-
-	void Deserialize(const std::vector<char>& sceneData);
 
 private:
 
@@ -62,8 +62,6 @@ private:
 	void TerminateObjects();
 
 	std::unordered_map<std::string, GameObject*> objects;
-
-	std::string savedName;
 
 	bool started;
 

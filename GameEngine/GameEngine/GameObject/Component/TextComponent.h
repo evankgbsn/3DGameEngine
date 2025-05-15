@@ -11,7 +11,7 @@ class TextComponent : public Component
 {
 public:
 
-	TextComponent() = default;
+	TextComponent();
 
 	TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec2& position = { 50.0f, 50.0f }, float scale = 1.0f);
 
@@ -35,9 +35,9 @@ private:
 
 	void Update() override;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	Text* text;
 

@@ -30,3 +30,8 @@ void GOTexturedAnimated::Update()
 
 	ShaderManager::EndShaderUsage("TexturedAnimated");
 }
+
+Texture* const GOTexturedAnimated::GetTexture() const
+{
+	return texture;
+}

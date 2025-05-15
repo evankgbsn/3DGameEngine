@@ -130,3 +130,13 @@ void GOLit::SetShine(float shine)
 {
 	material.shine = shine;
 }
+
+float GOLit::GetShine() const
+{
+	return material.shine;
+}
+
+const std::vector<GOLit::Material>& GOLit::GetMaterials() const
+{
+	return materials;
+}

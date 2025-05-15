@@ -56,6 +56,8 @@ public:
 
 	bool IsVisible() const;
 
+	void SetGraphics(GraphicsObject3DComponent* graphics);
+
 private:
 
 	StaticColliderComponent(const StaticColliderComponent&) = delete;
@@ -68,9 +70,9 @@ private:
 
 	void Update() override;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	StaticCollider* collider;
 

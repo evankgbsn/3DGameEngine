@@ -9,6 +9,7 @@ Bullet::Bullet() :
     graphics(nullptr),
     body(nullptr)
 {
+    RegisterGameObjectClassType<Bullet>(this);
 }
 
 Bullet::~Bullet()
@@ -50,13 +51,14 @@ glm::mat4 Bullet::GetTransform() const
     return graphics->GetTransform();
 }
 
-const std::vector<char> Bullet::Serialize() const
+void Bullet::Serialize()
 {
-    return std::vector<char>();
+    GameObject::Serialize();
 }
 
-void Bullet::Deserialize(const std::vector<char>& data)
+void Bullet::Deserialize()
 {
+    GameObject::Deserialize();
 }
 
 void Bullet::Initialize()

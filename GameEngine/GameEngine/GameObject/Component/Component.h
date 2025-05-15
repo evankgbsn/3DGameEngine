@@ -3,6 +3,8 @@
 
 #include "../../Utils/Logger.h"
 
+#include <glm/glm.hpp>
+
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -13,9 +15,11 @@ class Component
 
 public:
 
-	virtual const std::vector<char> Serialize() const = 0;
+	virtual void Serialize() = 0;
 
-	virtual void Deserialize(const std::vector<char>& data) = 0;
+	virtual void Deserialize() = 0;
+
+	static std::function<void(Component**)> GetConstructor(const std::string& name);
 
 protected:
 
@@ -25,6 +29,22 @@ protected:
 
 	template<typename T>
 	void RegisterComponentClassType(Component* obj);
+
+	std::unordered_map<std::string, int> savedInts;
+
+	std::unordered_map<std::string, float> savedFloats;
+
+	std::unordered_map<std::string, glm::vec3> savedVec3s;
+
+	std::unordered_map<std::string, glm::vec2> savedVec2s;
+
+	std::unordered_map<std::string, glm::vec4> savedVec4s;
+
+	std::unordered_map<std::string, glm::mat4> savedMat4s;
+
+	std::unordered_map<std::string, std::string> savedStrings;
+
+	std::unordered_map<std::string, bool> savedBools;
 
 private:
 	friend class Scene;
@@ -51,6 +71,7 @@ template<typename T>
 inline void Component::RegisterComponentClassType(Component* obj)
 {
 	nameOfType = std::string(typeid(*obj).name());
+	nameOfType.replace(0, 6, "");
 	Logger::Log(std::string("Created Component of Type: ") + nameOfType, Logger::Category::Info);
 
 	newFunctions[nameOfType] = std::function<void(Component**)>([](Component** outNewGameObject)

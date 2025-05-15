@@ -2,6 +2,13 @@
 
 #include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../../Renderer/GraphicsObjects/GOColoredAnimated.h"
+#include "../../Renderer/Model/Model.h"
+#include "../../Renderer/Model/ModelManager.h"
+
+GraphicsObjectColoredAnimated::GraphicsObjectColoredAnimated()
+{
+	RegisterComponentClassType<GraphicsObjectColoredAnimated>(this);
+}
 
 GraphicsObjectColoredAnimated::GraphicsObjectColoredAnimated(Model* const model, const glm::vec4& color)
 {
@@ -53,11 +60,34 @@ void GraphicsObjectColoredAnimated::SetSpeed(float speed)
 	static_cast<GOColoredAnimated*>(graphics)->SetSpeed(speed);
 }
 
-const std::vector<char> GraphicsObjectColoredAnimated::Serialize() const
+void GraphicsObjectColoredAnimated::Serialize()
 {
-	return std::vector<char>();
+	GraphicsObject3DComponent::Serialize();
+
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	savedVec3s["Color"] = go->GetColor();
+	savedFloats["AnimationSpeed"] = go->GetSpeed();
+	savedInts["AnimationClip"] = go->GetClip();
+	savedInts["AnimationFrame"] = go->GetFrame();
+	savedStrings["ModelName"] = GetModel()->GetName();
+
 }
 
-void GraphicsObjectColoredAnimated::Deserialize(const std::vector<char>& data)
+void GraphicsObjectColoredAnimated::Deserialize()
 {
+	if (graphics != nullptr)
+	{
+		GraphicsObjectManager::Delete(graphics);
+	}
+
+	graphics = GraphicsObjectManager::CreateGO3DColoredAnimated(ModelManager::GetModel(savedStrings["ModelName"]), glm::vec4(savedVec3s["Color"], 1.0f));
+
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	go->SetColor(glm::vec4(savedVec3s["Color"], 1.0f));
+	go->SetClip(savedInts["AnimationClip"]);
+	go->SetFrame(savedInts["AnimationFrame"]);
+	go->SetSpeed(savedFloats["AnimationSpeed"]);
+	GraphicsObject3DComponent::Deserialize();
 }

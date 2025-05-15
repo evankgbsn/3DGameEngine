@@ -9,6 +9,7 @@
 #include "../../Renderer/GraphicsObjects/GOColored.h"
 #include "../../Renderer/Model/ModelManager.h"
 #include "../../Editor/Editor.h"
+#include "../../Scene/SceneManager.h"
 
 #include <cooking/PxCooking.h>
 
@@ -20,9 +21,11 @@ RigidBodyComponent::RigidBodyComponent() :
 	onEditorEnable(nullptr),
 	onEditorDisable(nullptr)
 {
+	RegisterComponentClassType<RigidBodyComponent>(this);
+	RegisterEditorCallbacks();
 }
 
-RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const Model* const m) :
+RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const Model* m) :
 	body(nullptr),
 	owner(owningObject),
 	model(m),
@@ -32,36 +35,8 @@ RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const M
 {
 	RegisterComponentClassType<RigidBodyComponent>(this);
 	CreateShapeFromModel();
-
-	PxPlaneGeometry planeGeo = PxPlaneGeometry();
-
-	PxConvexMeshGeometry convexGeo(convexMeshShape);
-	PxTriangleMeshGeometry triangleGeo(triangleMeshShape);
-
-	switch (type)
-	{
-	case Type::STATIC:
-		body = new RigidBody(RigidBody::Type::STATIC, &triangleGeo, owningObject->GetPosition(), owningObject->GetRotation());
-		break;
-	case Type::DYNAMIC:
-		body = new RigidBody(RigidBody::Type::DYNAMIC, &convexGeo, owningObject->GetPosition(), owningObject->GetRotation());
-		break;
-	default:
-		break;
-	}
-
-	onEditorEnable = new std::function<void()>([this]()
-		{
-			GraphicsObjectManager::Enable(shapeVisuals);
-		});
-
-	onEditorDisable = new std::function<void()>([this]()
-		{
-			GraphicsObjectManager::Disable(shapeVisuals);
-		});
-
-	Editor::RegisterOnEditorEnable(onEditorEnable);
-	Editor::RegisterOnEditorDisable(onEditorDisable);
+	CreatePhysXRigidBody();
+	RegisterEditorCallbacks();
 }
 
 RigidBodyComponent::~RigidBodyComponent()
@@ -130,8 +105,24 @@ glm::vec3 RigidBodyComponent::GetVelocity() const
 	return body->GetVelocity();
 }
 
+void RigidBodyComponent::SetPosition(const glm::vec3& newPosition)
+{
+	body->SetPosition(newPosition);
+	shapeVisuals->SetTranslation(newPosition);
+}
+
+bool RigidBodyComponent::Hovered() const
+{
+	return body->Hovered();
+}
+
 void RigidBodyComponent::CreateShapeFromModel()
 {
+	if (shapeVisuals != nullptr)
+	{
+		GraphicsObjectManager::Delete(shapeVisuals);
+	}
+
 	const std::vector<Vertex>& modelVerts = model->GetVertices();
 	const std::vector<unsigned int>& modelIndices = model->GetIndices();
 
@@ -236,15 +227,66 @@ void RigidBodyComponent::CreateShapeFromModel()
 
 }
 
-const std::vector<char> RigidBodyComponent::Serialize() const
+void RigidBodyComponent::Serialize()
 {
-	return std::vector<char>();
+	savedStrings["ModelName"] = model->GetName();
+	savedStrings["OwningObject"] = owner->GetName();
+	savedBools["IsDynamic"] = type == Type::DYNAMIC;
 }
 
-void RigidBodyComponent::Deserialize(const std::vector<char>& data)
+void RigidBodyComponent::Deserialize()
 {
+	owner = SceneManager::FindGameObject(savedStrings["OwningObject"]);
+	model = ModelManager::GetModel(savedStrings["ModelName"]);
+	type = savedBools["IsDynamic"] ? Type::DYNAMIC : Type::STATIC;
+
+	CreateShapeFromModel();
+	CreatePhysXRigidBody();
 }
 
 void RigidBodyComponent::Update()
 {
+}
+
+void RigidBodyComponent::RegisterEditorCallbacks()
+{
+	onEditorEnable = new std::function<void()>([this]()
+		{
+			GraphicsObjectManager::Enable(shapeVisuals);
+		});
+
+	onEditorDisable = new std::function<void()>([this]()
+		{
+			GraphicsObjectManager::Disable(shapeVisuals);
+		});
+
+	Editor::RegisterOnEditorEnable(onEditorEnable);
+	Editor::RegisterOnEditorDisable(onEditorDisable);
+}
+
+void RigidBodyComponent::CreatePhysXRigidBody()
+{
+	if (body != nullptr)
+	{
+		delete body;
+	}
+
+	PxPlaneGeometry planeGeo = PxPlaneGeometry();
+
+	PxConvexMeshGeometry convexGeo(convexMeshShape);
+	PxTriangleMeshGeometry triangleGeo(triangleMeshShape);
+
+	switch (type)
+	{
+	case Type::STATIC:
+		body = new RigidBody(RigidBody::Type::STATIC, &triangleGeo, owner->GetPosition(), owner->GetRotation());
+		break;
+	case Type::DYNAMIC:
+		body = new RigidBody(RigidBody::Type::DYNAMIC, &convexGeo, owner->GetPosition(), owner->GetRotation());
+		break;
+	default:
+		break;
+	}
+
+	body->SetUserData(static_cast<void*>(owner));
 }

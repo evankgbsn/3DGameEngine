@@ -97,3 +97,13 @@ void GOTexturedAnimatedLit::RenderToShadowMap()
 
 	ShaderManager::EndShaderUsage("AnimatedShadowMap");
 }
+
+Texture* const GOTexturedAnimatedLit::GetDiffuseTexture() const
+{
+	return materials.front().diffuseMap;
+}
+
+Texture* const GOTexturedAnimatedLit::GetSpecularTexture() const
+{
+	return materials.front().specularMap;
+}

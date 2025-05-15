@@ -11,6 +11,7 @@ class GraphicsObjectTexturedAnimatedLit;
 class AnimatedColliderComponent;
 class TextComponent;
 class TerrainComponent;
+class CameraComponent;
 
 class Character : public GameObject
 {
@@ -59,9 +60,9 @@ private:
 
 	TerrainComponent* GetTerrain() const;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	GraphicsObjectTexturedAnimatedLit* graphics;
 
@@ -97,6 +98,8 @@ private:
 	float cameraDistance;
 
 	TextComponent* text;
+
+	CameraComponent* cam;
 };
 
 #endif // CHARACTER_H

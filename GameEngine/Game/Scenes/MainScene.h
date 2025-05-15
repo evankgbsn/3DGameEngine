@@ -54,6 +54,8 @@ private:
 
 	std::function<void(int)>* unloadSub;
 
+	std::function<void(int)>* deserialize;
+
 };
 
 #endif // MAINSCENE_H

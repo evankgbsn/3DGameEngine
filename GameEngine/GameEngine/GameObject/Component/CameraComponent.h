@@ -12,7 +12,7 @@ class CameraComponent : public Component
 
 public:
 
-	CameraComponent() = default;
+	CameraComponent();
 
 	CameraComponent(const std::string& name);
 
@@ -71,9 +71,9 @@ private:
 
 	CameraComponent& operator=(CameraComponent&&) = delete;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	void Update() override;
 

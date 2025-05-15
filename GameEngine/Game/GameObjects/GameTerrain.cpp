@@ -61,11 +61,12 @@ void GameTerrain::Unload()
 {
 }
 
-const std::vector<char> GameTerrain::Serialize() const
+void GameTerrain::Serialize()
 {
-	return std::vector<char>();
+	GameObject::Serialize();
 }
 
-void GameTerrain::Deserialize(const std::vector<char>& data)
+void GameTerrain::Deserialize()
 {
+	GameObject::Deserialize();
 }

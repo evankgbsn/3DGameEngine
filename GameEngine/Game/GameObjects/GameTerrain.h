@@ -37,9 +37,9 @@ private:
 
 	void Unload() override;
 
-	const std::vector<char> Serialize() const override;
+	void Serialize() override;
 
-	void Deserialize(const std::vector<char>& data) override;
+	void Deserialize() override;
 
 	TerrainComponent* terrain;
 };

@@ -3,6 +3,11 @@
 #include "../../Renderer/Light/LightManager.h"
 #include "../../Renderer/Light/PointLight.h"
 
+PointLightComponent::PointLightComponent()
+{
+	RegisterComponentClassType<PointLightComponent>(this);
+}
+
 PointLightComponent::PointLightComponent(const glm::vec3& colorIntensity, const glm::vec3& position) :
 	light(nullptr)
 {
@@ -35,13 +40,15 @@ glm::vec3 PointLightComponent::GetPosition() const
 	return light->GetPosition();
 }
 
-const std::vector<char> PointLightComponent::Serialize() const
+void PointLightComponent::Serialize()
 {
-	return std::vector<char>();
+	savedVec3s["ColorIntensity"] = GetColor();
+	savedVec3s["Position"] = GetPosition();
 }
 
-void PointLightComponent::Deserialize(const std::vector<char>& data)
+void PointLightComponent::Deserialize()
 {
+	light = LightManager::CreatePointLight(glm::vec4(savedVec3s["ColorIntensity"], 1.0f), savedVec3s["Position"]);
 }
 
 void PointLightComponent::Update()

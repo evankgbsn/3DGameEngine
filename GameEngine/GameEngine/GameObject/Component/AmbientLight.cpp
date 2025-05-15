@@ -2,6 +2,11 @@
 
 #include "../../Renderer/Light/LightManager.h"
 
+AmbientLight::AmbientLight()
+{
+	RegisterComponentClassType<AmbientLight>(this);
+}
+
 AmbientLight::AmbientLight(float intensity)
 {
 	RegisterComponentClassType<AmbientLight>(this);
@@ -23,13 +28,14 @@ void AmbientLight::SetAmbientIntensity(float intensity)
 	LightManager::SetAmbientIntensity(intensity);
 }
 
-const std::vector<char> AmbientLight::Serialize() const
+void AmbientLight::Serialize()
 {
-	return std::vector<char>();
+	savedFloats["intensity"] = LightManager::GetAmbientIntensity();
 }
 
-void AmbientLight::Deserialize(const std::vector<char>& data)
+void AmbientLight::Deserialize()
 {
+	LightManager::SetAmbientIntensity(savedFloats["intensity"]);
 }
 
 void AmbientLight::Update()
