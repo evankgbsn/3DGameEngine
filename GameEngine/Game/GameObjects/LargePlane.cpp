@@ -33,7 +33,7 @@ void LargePlane::Initialize()
 	graphics->SetShine(8.0f);
 	AddComponent(graphics, "TerrainGraphics");
 
-	skybox = new GraphicsObjectTextured(ModelManager::LoadModel("Skybox", "Assets/Model/Skybox.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox2.png", "Skybox"));
+	skybox = new GraphicsObjectTextured(ModelManager::LoadModel("Skybox", "./Assets/Model/SkyboxTest.gltf"), TextureManager::LoadTexture("Assets/Texture/Skybox3.png", "Skybox"));
 	skybox->SetScale({ 1000.0f, 1000.0f, 1000.0f});
 	AddComponent(skybox, "SkyboxGraphics");
 

@@ -15,6 +15,8 @@ public:
 
 	~OrientedBoundingBoxWithVisualization();
 
+	void SetOffset(const glm::vec3& offset);
+
 	void Update(const glm::mat4& transform);
 
 	void ToggleVisibility();

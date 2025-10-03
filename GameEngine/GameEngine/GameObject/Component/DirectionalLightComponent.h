@@ -29,6 +29,8 @@ public:
 
 	void SetColor(const glm::vec3& newColor);
 
+	void SetAmbientIntensity(float intensity);
+
 	void Update() override;
 
 private:

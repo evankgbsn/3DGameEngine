@@ -5,6 +5,12 @@
 #include "OrientedBoundingBoxComponent.h"
 #include "../../Collision/OrientedBoundingBoxWithVisualization.h"
 
+StaticColliderComponent::StaticColliderComponent() :
+	collider(nullptr)
+{
+	RegisterComponentClassType<StaticColliderComponent>(this);
+}
+
 StaticColliderComponent::StaticColliderComponent(GraphicsObject3DComponent* graphics)
 {
 	RegisterComponentClassType<StaticColliderComponent>(this);
@@ -13,27 +19,44 @@ StaticColliderComponent::StaticColliderComponent(GraphicsObject3DComponent* grap
 
 StaticColliderComponent::~StaticColliderComponent()
 {
-	delete collider;
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
 }
 
 void StaticColliderComponent::UpdateCollider()
 {
-	collider->Update();
+	if (collider != nullptr)
+	{
+		collider->Update();
+	}
 }
 
 void StaticColliderComponent::ToggleVisibility()
 {
-	collider->ToggleVisibility();
+	if (collider != nullptr)
+	{
+		collider->ToggleVisibility();
+	}
 }
 
 bool StaticColliderComponent::Intersect(const OrientedBoundingBoxComponent& other) const
 {
-	return collider->Intersect(*other.GetCollider());
+	if (collider != nullptr)
+	{
+		return collider->Intersect(*other.GetCollider());
+	}
+	return false;
 }
 
 bool StaticColliderComponent::Intersect(const LineSegment3D& other) const
 {
-	return collider->Intersect(other);
+	if (collider != nullptr)
+	{
+		return collider->Intersect(other);
+	}
+	return false;
 }
 
 bool StaticColliderComponent::Intersect(const AnimatedColliderComponent& other) const
@@ -43,7 +66,11 @@ bool StaticColliderComponent::Intersect(const AnimatedColliderComponent& other) 
 
 float StaticColliderComponent::Intersect(const Ray& ray) const
 {
-	return collider->Intersect(ray);
+	if (collider != nullptr)
+	{
+		return collider->Intersect(ray);
+	}
+	return -1.0f;
 }
 
 const OrientedBoundingBoxWithVisualization* const StaticColliderComponent::GetBox() const
@@ -58,27 +85,50 @@ const SphereWithVisualization* const StaticColliderComponent::GetSphere() const
 
 const Model* const StaticColliderComponent::GetModel() const
 {
-	return collider->GetModel();
+	if (collider != nullptr)
+	{
+		return collider->GetModel();
+	}
+
+	return nullptr;
 }
 
 glm::mat4 StaticColliderComponent::GetTransform() const
 {
-	return collider->GetTransform();
+	if (collider != nullptr)
+	{
+		return collider->GetTransform();
+	}
+
+	return glm::mat4(0.0f);
 }
 
 void StaticColliderComponent::Translate(const glm::vec3& translation)
 {
-	collider->Translate(translation);
+	if (collider != nullptr)
+	{
+		collider->Translate(translation);
+	}
 }
 
 const Model* const StaticColliderComponent::GetWrapedGraphicsModel() const
 {
-	return collider->GetWrapedGraphicsModel();
+	if (collider != nullptr)
+	{
+		return collider->GetWrapedGraphicsModel();
+	}
+
+	return nullptr;
 }
 
 std::vector<Triangle> StaticColliderComponent::GetTriangles() const
 {
-	return collider->GetTriangles();
+	if (collider != nullptr)
+	{
+		return collider->GetTriangles();
+	}
+
+	return std::vector<Triangle>();
 }
 
 StaticCollider* const StaticColliderComponent::GetCollider() const
@@ -88,17 +138,30 @@ StaticCollider* const StaticColliderComponent::GetCollider() const
 
 bool StaticColliderComponent::IsVisible() const
 {
-	return collider->IsVisible();
+	if (collider != nullptr)
+	{
+		return collider->IsVisible();
+	}
+
+	return false;
 }
 
 void StaticColliderComponent::SetGraphics(GraphicsObject3DComponent* graphics)
 {
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
 	collider = new StaticCollider(graphics->GetGraphics());
 }
 
 void StaticColliderComponent::Update()
 {
-	collider->Update();
+	if (collider != nullptr)
+	{
+		collider->Update();
+	}
 }
 
 void StaticColliderComponent::Serialize()
@@ -108,6 +171,8 @@ void StaticColliderComponent::Serialize()
 
 void StaticColliderComponent::Deserialize()
 {
+	UpdateCollider();
+
 	if (!savedBools["IsVisible"])
 	{
 		ToggleVisibility();

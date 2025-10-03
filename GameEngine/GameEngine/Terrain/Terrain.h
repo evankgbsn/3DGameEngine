@@ -65,6 +65,8 @@ public:
 
 	const std::vector<GOLit::Material>& GetMaterials() const;
 
+	GOTerrain* GetGraphics() const;
+
 private:
 
 	Terrain() = delete;

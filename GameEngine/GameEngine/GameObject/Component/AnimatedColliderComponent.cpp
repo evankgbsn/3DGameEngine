@@ -69,16 +69,31 @@ bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other) 
 
 void AnimatedColliderComponent::SetGraphics(GraphicsObjectTexturedAnimated* const graphicsObject)
 {
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
 void AnimatedColliderComponent::SetGraphics(GraphicsObjectTexturedAnimatedLit* const graphicsObject)
 {
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
 void AnimatedColliderComponent::SetGraphics(GraphicsObjectColoredAnimated* const graphicsObject)
 {
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 

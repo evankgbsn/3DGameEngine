@@ -60,3 +60,8 @@ void DirectionalLightComponent::SetColor(const glm::vec3& newColor)
 {
 	light->SetColor(glm::vec4(newColor, 1.0f));
 }
+
+void DirectionalLightComponent::SetAmbientIntensity(float intensity)
+{
+	LightManager::SetAmbientIntensity(intensity);
+}

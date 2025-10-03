@@ -14,13 +14,45 @@ Button::Button(const std::string& baseTextureName, const std::string& hoveredTex
 	pressed(TextureManager::GetTexture(pressedTextureName)),
 	model(ModelManager::GetModel(model2DName)),
 	pressFunction(press),
-	enabled(true)
+	enabled(true),
+	relativePosition(position)
 {
-	sprite = GraphicsObjectManager::CreateGOSprite(model, base, position);
+	Window* window = WindowManager::GetWindow("Engine");
+
+	float width = static_cast<float>(window->GetWidth());
+	float height = static_cast<float>(window->GetHeight());
+
+	float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
+	float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
+
+	sprite = GraphicsObjectManager::CreateGOSprite(model, base, {xPos, yPos});
+
+	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int w, unsigned int h)
+		{
+			float width = static_cast<float>(w);
+			float height = static_cast<float>(h);
+
+			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
+			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
+
+			sprite->SetPosition({ xPos, yPos });
+
+		});
+
+	static unsigned int buttonId = 0;
+
+	window->RegisterCallbackForWindowResize("Button" + std::to_string(ID = buttonId++), windowResizeCallback);
 }
 
 Button::~Button()
 {
+
+	Window* window = WindowManager::GetWindow("Engine");
+
+	window->DeregisterCallbackForWindowResize("Button" + std::to_string(ID));
+
+	delete windowResizeCallback;
+
 	GraphicsObjectManager::Delete(sprite);
 	InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_LEFT, "ButtonPress");
 }

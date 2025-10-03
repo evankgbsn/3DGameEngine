@@ -5,21 +5,38 @@
 #include "../../Editor/Editor.h"
 #include "../../Renderer/Window/WindowManager.h"
 #include "../../Renderer/Model/ModelManager.h"
+#include "../../Renderer/Model/Vertex.h"
+#include "../../UI/InputField.h"
+#include "../../Scene/SceneManager.h"
+#include "../../Scene/Scene.h"
+#include "../../Renderer/GraphicsObjects/GOSprite.h"
+#include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "../../Math/Math.h"
+#include "../../Renderer/Text/Text.h"
+#include "../../Input/InputManager.h"
 
 EditorUI::EditorUI() :
-	disabled(false)
+	disabled(false),
+	sceneManagementInterfaceEnabled(true),
+	altPress(nullptr),
+	sPress(nullptr)
 {
 	CreatePlayButton();
+	CreateSceneManagementInterface();
+	CreateInterfaceToggleCallbacks();
 }
 
 EditorUI::~EditorUI()
 {
+	CleanupInterfaceToggleCallbacks();
+	CleanupSceneManagementInterface();
 	delete playButton;
 }
 
 void EditorUI::Update()
 {
 	playButton->Update();
+	UpdateSceneManagementInterface();
 }
 
 bool EditorUI::IsDisabled() const
@@ -39,21 +56,552 @@ void EditorUI::CreatePlayButton()
 			Editor::Disable();
 		});
 
+	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { 0.5f, 0.9f }, &buttonFunc);
+}
+
+void EditorUI::CreateLoadSceneInputFields()
+{
+	TextureManager::LoadTexture("Assets/Texture/UIBackground0.png", "LoadSceneInputFieldBackground");
+	TextureManager::LoadTexture("Assets/Texture/UIBackground0.png", "LoadSceneInputFieldBackgroundHover");
+	TextureManager::LoadTexture("Assets/Texture/Green.png", "LoadSceneInputFieldBackgroundPress");
+
 	Window* window = WindowManager::GetWindow("Engine");
 	float windowHeight = (float)window->GetHeight();
 	float windowWidth = (float)window->GetWidth();
 
-	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { (windowWidth/2.0f) - 50.0f, windowHeight - 100.0f }, &buttonFunc);
+	loadSceneInputField0 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.37f });
+	loadSceneInputField1 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.45f });
+
+	loadSceneInputFieldOnEnter = new std::function<void()>([this]()
+		{
+			std::string sceneName = loadSceneInputField1->GetText();
+			std::string sceneFile = loadSceneInputField0->GetText();
+
+			Scene* scene = SceneManager::GetRegisteredScene(sceneName);
+			if (scene != nullptr)
+			{
+				if (!SceneManager::SceneLoaded(sceneName))
+				{
+					SceneManager::LoadScene(sceneName);
+				}
+
+				scene->Deserialize("Assets/Scenes/" + sceneFile);
+			}
+		});
+
+	loadSceneInputField0->SetOnEnter(loadSceneInputFieldOnEnter);
+
+	unloadSceneInputField = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.57f });
+
+	unloadSceneInputFieldOnEnter = new std::function<void()>([this]()
+		{
+			std::string sceneName = unloadSceneInputField->GetText();
+
+			Scene* scene = SceneManager::GetLoadedScene(sceneName);
+
+			if (scene != nullptr)
+			{
+				SceneManager::UnloadScene(sceneName);
+			}
+		});
+
+	unloadSceneInputField->SetOnEnter(unloadSceneInputFieldOnEnter);
+
+	saveSceneInputFieldFile = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.17f });
+	saveSceneInputFieldName = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.24f });
+
+	saveSceneInputFieldOnEnter = new std::function<void()>([this]()
+		{
+			std::string fileName = saveSceneInputFieldFile->GetText();
+			std::string sceneName = saveSceneInputFieldName->GetText();
+
+			Scene* scene = SceneManager::GetLoadedScene(sceneName);
+
+			if (scene != nullptr)
+			{
+				scene->Save(fileName);
+			}
+
+		});
+
+	saveSceneInputFieldFile->SetOnEnter(saveSceneInputFieldOnEnter);
+
+}
+
+void EditorUI::CreateSceneManagementInterface()
+{
+	CreateLoadSceneInputFields();
+
+	Window* window = WindowManager::GetWindow("Engine");
+
+	float width = static_cast<float>(window->GetWidth());
+	float height = static_cast<float>(window->GetHeight());
+
+	// Create the background.
+	float xDimension = 1000.0f;
+	float yDimension = 1500.0f;
+	float z = 0.02f;
+
+	Model* sceneManagementBackgroundModel = ModelManager::LoadModel("SceneManagementBackground",
+		{
+			Vertex({0.0f, 0.0f, z }, {}, {0.0f, 0.0f}),
+			Vertex({xDimension, 0.0f, z}, {}, {1.0f, 0.0f}),
+			Vertex({xDimension, yDimension, z}, {}, {1.0f, 1.0f}),
+			Vertex({0.0f, yDimension, z}, {}, {0.0f, 1.0f})
+		},
+		{0, 1, 2, 2, 3, 0}
+		);
+
+	Texture* sceneManagementBackgroundTexture = TextureManager::LoadTexture("Assets/Texture/grey.png", "SceneManagementBackground");
+
+	float backgroundXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.05f);
+	float backgroundYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.05f);
+
+	sceneManagementBackground = GraphicsObjectManager::CreateGOSprite(sceneManagementBackgroundModel, TextureManager::GetTexture("SceneManagementBackground"), {backgroundXPos, backgroundYPos});
+
+	// Create title.
+	float titleXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
+	float titleYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.7f);
+
+	sceneManagementWindowTitle = new Text("Scene Management", "arial");
+	sceneManagementWindowTitle->SetPosition({ titleXPos, titleYPos });
+	sceneManagementWindowTitle->SetZ(0.5f);
+
+	// Create input field titles.
+	float sceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
+	float sceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.5f);
+
+	sceneName = new Text("Scene Name:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, {sceneNameXPos, sceneNameYPos}, 0.5f);
+	sceneName->SetZ(0.5f);
+
+	float sceneFileXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
+	float sceneFileYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.42f);
+
+	sceneFileName = new Text("Scene File:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { sceneFileXPos, sceneFileYPos }, 0.5f);
+	sceneFileName->SetZ(0.5f);
+
+	// Create load scene title.
+	float loadSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
+	float loadSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.53f);
+
+	sceneLoadingTitle = new Text("Load Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { loadSceneXPos, loadSceneYPos }, 0.7f);
+	sceneLoadingTitle->SetZ(0.5f);
+
+	// Create unload scene title.
+	float unloadingSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
+	float unloadingSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.65f);
+
+	sceneUnloadingTitle = new Text("Unload Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { unloadingSceneXPos, unloadingSceneYPos }, 0.7f);
+	sceneUnloadingTitle->SetZ(0.5f);
+
+
+	// Create unload scene name.
+	float unloadingSceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
+	float unloadingSceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.62f);
+
+	unloadSceneName = new Text("SceneName:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { unloadingSceneNameXPos, unloadingSceneNameYPos }, 0.5f);
+	unloadSceneName->SetZ(0.5f);
+
+	// Create save scene title.
+	float saveSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
+	float saveSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.32f);
+
+	saveSceneTitle = new Text("Save Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneXPos, saveSceneYPos }, 0.7f);
+	saveSceneTitle->SetZ(0.5f);
+
+	// Create save scene name.
+	float saveSceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
+	float saveSceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.29f);
+
+	saveSceneName = new Text("SceneName:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneNameXPos, saveSceneNameYPos }, 0.5f);
+	saveSceneName->SetZ(0.5f);
+
+	// Create save scene file.
+	float saveSceneFileXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
+	float saveSceneFileYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.21f);
+
+	saveSceneFile = new Text("SceneFile:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneFileXPos, saveSceneFileYPos }, 0.5f);
+	saveSceneFile->SetZ(0.5f);
+
+
+}
+
+void EditorUI::UpdateSceneManagementInterface()
+{
+	if (loadSceneInputField0 != nullptr)
+	{
+		loadSceneInputField0->Update();
+	}
+
+	if (loadSceneInputField1 != nullptr)
+	{
+		loadSceneInputField1->Update();
+	}
+
+	if (unloadSceneInputField != nullptr)
+	{
+		unloadSceneInputField->Update();
+	}
+
+	if (saveSceneInputFieldFile != nullptr)
+	{
+		saveSceneInputFieldFile->Update();
+	}
+
+	if (saveSceneInputFieldName != nullptr)
+	{
+		saveSceneInputFieldName->Update();
+	}
+}
+
+void EditorUI::CleanupSceneManagementInterface()
+{
+	if (loadSceneInputField0 != nullptr)
+	{
+		delete loadSceneInputField0;
+	}
+
+	if (loadSceneInputField1 != nullptr)
+	{
+		delete loadSceneInputField1;
+	}
+
+	if (loadSceneInputFieldOnEnter != nullptr)
+	{
+		delete loadSceneInputFieldOnEnter;
+	}
+
+	if (sceneManagementBackground != nullptr)
+	{
+		GraphicsObjectManager::Delete(sceneManagementBackground);
+	}
+
+	if (sceneManagementWindowTitle != nullptr)
+	{
+		delete sceneManagementWindowTitle;
+	}
+
+	if (sceneName != nullptr)
+	{
+		delete sceneName;
+	}
+
+	if (sceneFileName != nullptr)
+	{
+		delete sceneFileName;
+	}
+
+	if (sceneLoadingTitle != nullptr)
+	{
+		delete sceneLoadingTitle;
+	}
+
+	if (unloadSceneInputField != nullptr)
+	{
+		delete unloadSceneInputField;
+	}
+
+	if (unloadSceneInputFieldOnEnter != nullptr)
+	{
+		delete unloadSceneInputFieldOnEnter;
+	}
+
+	if (sceneUnloadingTitle != nullptr)
+	{
+		delete sceneUnloadingTitle;
+	}
+
+	if (unloadSceneName != nullptr)
+	{
+		delete unloadSceneName;
+	}
+
+	if (saveSceneInputFieldFile != nullptr)
+	{
+		delete saveSceneInputFieldFile;
+	}
+
+	if (saveSceneInputFieldName != nullptr)
+	{
+		delete saveSceneInputFieldName;
+	}
+
+	if (saveSceneInputFieldOnEnter != nullptr)
+	{
+		delete saveSceneInputFieldOnEnter;
+	}
+
+	if (saveSceneTitle != nullptr)
+	{
+		delete saveSceneTitle;
+	}
+
+	if (saveSceneName != nullptr)
+	{
+		delete saveSceneName;
+	}
+
+	if (saveSceneFile != nullptr)
+	{
+		delete saveSceneFile;
+	}
+}
+
+void EditorUI::EnableSceneManagementInterface()
+{
+	if (!sceneManagementInterfaceEnabled)
+	{
+		if (loadSceneInputField0 != nullptr)
+		{
+			loadSceneInputField0->Enable();
+		}
+
+		if (loadSceneInputField1 != nullptr)
+		{
+			loadSceneInputField1->Enable();
+		}
+
+		if (sceneManagementBackground != nullptr)
+		{
+			GraphicsObjectManager::Enable(sceneManagementBackground);
+		}
+
+		if (sceneManagementWindowTitle != nullptr)
+		{
+			sceneManagementWindowTitle->Enable();
+		}
+
+		if (sceneName != nullptr)
+		{
+			sceneName->Enable();
+		}
+
+		if (sceneFileName != nullptr)
+		{
+			sceneFileName->Enable();
+		}
+
+		if (sceneLoadingTitle != nullptr)
+		{
+			sceneLoadingTitle->Enable();
+		}
+
+		if (unloadSceneInputField != nullptr)
+		{
+			unloadSceneInputField->Enable();
+		}
+
+		if (sceneUnloadingTitle != nullptr)
+		{
+			sceneUnloadingTitle->Enable();
+		}
+
+		if (unloadSceneName != nullptr)
+		{
+			unloadSceneName->Enable();
+		}
+
+		if (saveSceneInputFieldFile != nullptr)
+		{
+			saveSceneInputFieldFile->Enable();
+		}
+
+		if (saveSceneInputFieldName != nullptr)
+		{
+			saveSceneInputFieldName->Enable();
+		}
+
+		if (saveSceneTitle != nullptr)
+		{
+			saveSceneTitle->Enable();
+		}
+
+		if (saveSceneName != nullptr)
+		{
+			saveSceneName->Enable();
+		}
+
+		if (saveSceneFile != nullptr)
+		{
+			saveSceneFile->Enable();
+		}
+
+		sceneManagementInterfaceEnabled = true;
+	}
+}
+
+void EditorUI::DisableSceneManagementInterface()
+{
+	if (sceneManagementInterfaceEnabled)
+	{
+		if (loadSceneInputField0 != nullptr)
+		{
+			loadSceneInputField0->Disable();
+		}
+
+		if (loadSceneInputField1 != nullptr)
+		{
+			loadSceneInputField1->Disable();
+		}
+
+		if (sceneManagementBackground != nullptr)
+		{
+			GraphicsObjectManager::Disable(sceneManagementBackground);
+		}
+
+		if (sceneManagementWindowTitle != nullptr)
+		{
+			sceneManagementWindowTitle->Disable();
+		}
+
+		if (sceneName != nullptr)
+		{
+			sceneName->Disable();
+		}
+
+		if (sceneFileName != nullptr)
+		{
+			sceneFileName->Disable();
+		}
+
+		if (sceneLoadingTitle != nullptr)
+		{
+			sceneLoadingTitle->Disable();
+		}
+
+		if (unloadSceneInputField != nullptr)
+		{
+			unloadSceneInputField->Disable();
+		}
+
+		if (sceneUnloadingTitle != nullptr)
+		{
+			sceneUnloadingTitle->Disable();
+		}
+
+		if (unloadSceneName != nullptr)
+		{
+			unloadSceneName->Disable();
+		}
+
+		if (saveSceneInputFieldFile != nullptr)
+		{
+			saveSceneInputFieldFile->Disable();
+		}
+
+		if (saveSceneInputFieldName != nullptr)
+		{
+			saveSceneInputFieldName->Disable();
+		}
+
+		if (saveSceneTitle != nullptr)
+		{
+			saveSceneTitle->Disable();
+		}
+
+		if (saveSceneName != nullptr)
+		{
+			saveSceneName->Disable();
+		}
+
+		if (saveSceneFile != nullptr)
+		{
+			saveSceneFile->Disable();
+		}
+
+		sceneManagementInterfaceEnabled = false;
+	}
+}
+
+void EditorUI::CreateInterfaceToggleCallbacks()
+{
+	altPress = new std::function<void(int)>([this](int keyCode)
+		{
+			altPressed = true;
+
+			InputManager::EditorRegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_ALT, altRelease, "EditorUI");
+			InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_ALT, "EditorUI");
+
+		});
+
+	altRelease = new std::function<void(int)>([this](int keyCode)
+		{
+			altPressed = false;
+
+			InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_ALT, altPress, "EditorUI");
+			InputManager::EditorDeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_ALT, "EditorUI");
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_ALT, altPress, "EditorUI");
+
+	sPress = new std::function<void(int)>([this](int keyCode)
+		{
+			if (altPressed)
+			{
+				if (sceneManagementInterfaceEnabled)
+				{
+					DisableSceneManagementInterface();
+				}
+				else
+				{
+					EnableSceneManagementInterface();
+				}
+			}
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_S, sPress, "EditorUI");
+}
+
+void EditorUI::CleanupInterfaceToggleCallbacks()
+{
+	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_S, "EditorUI");
+
+	if (altPressed)
+	{
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_ALT, "EditorUI");
+	}
+	else
+	{
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_ALT, "EditorUI");
+	}
+
+	if (altPress != nullptr)
+	{
+		delete altPress;
+		altPress = nullptr;
+	}
+
+	if (altRelease != nullptr)
+	{
+		delete altRelease;
+		altRelease = nullptr;
+	}
+
+	if (sPress != nullptr)
+	{
+		delete sPress;
+		sPress = nullptr;
+	}
+
 }
 
 void EditorUI::Disable()
 {
 	disabled = true;
 	playButton->Disable();
+	DisableSceneManagementInterface();
+	CleanupInterfaceToggleCallbacks();
 }
 
 void EditorUI::Enable()
 {
+	CreateInterfaceToggleCallbacks();
+
+	if (sceneManagementInterfaceEnabled)
+	{
+		EnableSceneManagementInterface();
+	}
+
 	playButton->Enable();
 	disabled = false;
 }

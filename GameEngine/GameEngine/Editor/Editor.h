@@ -37,6 +37,10 @@ public:
 
 	static void DeregisterOnEditorDisable(std::function<void()>* function);
 
+	static void DisableCameraMovement();
+
+	static void EnableCameraMovement();
+
 private:
 
 	friend class SingletonHelpers;
@@ -80,6 +84,8 @@ private:
 	std::list<std::function<void()>*> onEditorDisableCallbacks;
 
 	EditorUI* ui;
+
+	bool cameraMovementEnabled;
 };
 
 #endif // EDITOR_H

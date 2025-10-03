@@ -20,6 +20,7 @@ GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit(Model* cons
 
 GraphicsObjectTexturedAnimatedLit::~GraphicsObjectTexturedAnimatedLit()
 {
+	GraphicsObjectManager::Delete(graphics);
 }
 
 void GraphicsObjectTexturedAnimatedLit::SetShine(float shine)

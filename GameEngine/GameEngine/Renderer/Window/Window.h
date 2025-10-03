@@ -39,6 +39,12 @@ public:
 
 	static std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>> mouseScrollCallbacks;
 
+	static std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(unsigned int, unsigned int)>*>> windowResizeCallbacks;
+
+	void RegisterCallbackForWindowResize(const std::string& name, std::function<void(unsigned int width, unsigned int height)>* const callback);
+
+	void DeregisterCallbackForWindowResize(const std::string& name);
+
 private:
 
 	friend class WindowManager;

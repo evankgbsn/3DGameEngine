@@ -175,6 +175,19 @@ GameObject* SceneManager::FindGameObject(const std::string& name)
 	return nullptr;
 }
 
+Scene* const SceneManager::GetRegisteredScene(const std::string& name)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(name) != instance->registeredScenes.end())
+		{
+			return instance->registeredScenes[name];
+		}
+	}
+
+	return nullptr;
+}
+
 SceneManager::SceneManager()
 {
 }

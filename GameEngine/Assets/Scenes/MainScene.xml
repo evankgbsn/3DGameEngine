@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="MainScene" type="class MainScene">
+	<Object type="DirectionalLightGameObject" name="DirectionalLight">
+		<Component type="DirectionalLightComponent" name="DirectionalLight">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="1.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="-0.500000"/>
+				<float Y="-0.500000"/>
+				<float Z="0.500000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="GameTerrain" name="Terrain">
+		<Component type="TerrainComponent" name="Terrain">
+			<Variable type="float" name="YOffset">
+				<float val="-15.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="1081.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="1081.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="500"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture1">
+				<string val="Grey"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="Terrain"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/Noise.png"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture0">
+				<string val="Dirt"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture0">
+				<string val="Grey"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture1">
+				<string val="Dirt"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Character" name="Character">
+		<Component type="TextComponent" name="TestText">
+			<Variable type="float" name="Scale">
+				<float val="1.000000"/>
+			</Variable>
+			<Variable type="vec2" name="Position">
+				<float X="50.000000"/>
+				<float Y="50.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="1.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="string" name="Text">
+				<string val="This is test text gggg jjjj"/>
+			</Variable>
+			<Variable type="string" name="FontName">
+				<string val="arial"/>
+			</Variable>
+		</Component>
+		<Component type="AnimatedColliderComponent" name="CharacterGraphicsCollider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedAnimatedLit" name="CharacterGraphics">
+			<Variable type="float" name="AnimationSpeed">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="AnimationClip">
+				<int val="3"/>
+			</Variable>
+			<Variable type="int" name="AnimationFrame">
+				<int val="1"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-1.497370"/>
+				<float WY="0.000008"/>
+				<float WZ="-50.421257"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Soldier"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Grey"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Random"/>
+			</Variable>
+		</Component>
+		<Component type="CameraComponent" name="CharacterCamera">
+			<Variable type="vec3" name="Position">
+				<float X="0.000000"/>
+				<float Y="7.000000"/>
+				<float Z="-10.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Target">
+				<float X="0.000000"/>
+				<float Y="0.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="Character"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Tree" name="Tree"/>
+	<Object type="LightObject" name="Light"/>
+</Scene>
+

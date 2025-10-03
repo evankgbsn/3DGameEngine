@@ -23,6 +23,11 @@ OrientedBoundingBoxWithVisualization::~OrientedBoundingBoxWithVisualization()
 	GraphicsObjectManager::Delete(graphics);
 }
 
+void OrientedBoundingBoxWithVisualization::SetOffset(const glm::vec3& offset)
+{
+	OrientedBoundingBox::SetOffset(offset);
+}
+
 void OrientedBoundingBoxWithVisualization::Update(const glm::mat4& transform)
 {
 	glm::mat4 scale(1.0f);

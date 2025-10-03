@@ -41,9 +41,13 @@ RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const M
 
 RigidBodyComponent::~RigidBodyComponent()
 {
+	Editor::DeregisterOnEditorEnable(onEditorEnable);
+	Editor::DeregisterOnEditorDisable(onEditorDisable);
+
 	delete onEditorEnable;
 	delete onEditorDisable;
 	delete body;
+	GraphicsObjectManager::Delete(shapeVisuals);
 }
 
 void RigidBodyComponent::SyncPhysics()

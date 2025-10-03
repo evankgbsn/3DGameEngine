@@ -44,6 +44,8 @@ void RigidBox::Initialize()
 
 void RigidBox::Terminate()
 {
+    delete graphics;
+    delete rigidBody;
 }
 
 void RigidBox::GameUpdate()

@@ -27,6 +27,14 @@ public:
 
 	float GetScale() const;
 
+	void SetZ(float newZ);
+
+	void Disable();
+
+	void Enable();
+
+	bool IsDisabled() const;
+
 	~Text();
 
 private:
@@ -49,7 +57,11 @@ private:
 
 	glm::vec3 color;
 
+	glm::vec2 position;
+
 	std::string fontName;
+
+	bool disabled;
 
 };
 

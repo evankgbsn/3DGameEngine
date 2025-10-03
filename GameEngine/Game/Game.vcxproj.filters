@@ -19,6 +19,15 @@
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{5316fa13-87a2-4625-963f-6e475023a0a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects\SurvivalGame">
+      <UniqueIdentifier>{b3f34004-5969-404b-93a1-5ffb7a8f9a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\TestObjects">
+      <UniqueIdentifier>{c745f2a0-d041-447d-a2d8-88d9ad92d570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\SurvivalGame">
+      <UniqueIdentifier>{f69bd648-50dd-4994-8a1a-57d95d4e2f4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,44 +39,62 @@
     <ClCompile Include="Scenes\Subscene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\Boxes.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Character.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\FreeCamera.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\LargePlane.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\LightObject.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Tree.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\GameTerrain.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Scenes\PhysXTest.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\RigidBox.cpp">
-      <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\FPSTest.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\Player.cpp">
-      <Filter>Source Files\GameObjects</Filter>
+    <ClCompile Include="GameObjects\SurvivalCharacter.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SurvivalScene.cpp">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalSun.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Boxes.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\Bullet.cpp">
-      <Filter>Source Files\GameObjects</Filter>
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Character.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\FreeCamera.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\GameTerrain.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\LargePlane.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\LightObject.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\RigidBox.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Tree.cpp">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalTerrain.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalTree.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalWater.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,44 +104,62 @@
     <ClInclude Include="Scenes\Subscene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\Boxes.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Character.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\DirectionalLightGameObject.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\FreeCamera.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\LargePlane.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\LightObject.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Tree.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\GameTerrain.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scenes\PhysXTest.h">
       <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\RigidBox.h">
-      <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\FPSTest.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\Player.h">
-      <Filter>Source Files\GameObjects</Filter>
+    <ClInclude Include="GameObjects\SurvivalCharacter.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SurvivalScene.h">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalSun.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Boxes.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Bullet.h">
-      <Filter>Source Files\GameObjects</Filter>
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Character.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DirectionalLightGameObject.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\FreeCamera.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\GameTerrain.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\LargePlane.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\LightObject.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Player.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\RigidBox.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Tree.h">
+      <Filter>Source Files\GameObjects\TestObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalTerrain.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalTree.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalWater.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

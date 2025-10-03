@@ -20,6 +20,8 @@ public:
 
 	glm::vec2 GetPosition() const;
 
+	void SetZ(float newZ);
+
 private:
 
 	GOGlyph(const GOGlyph&) = delete;
@@ -40,9 +42,13 @@ private:
 
 	unsigned int positionBuffer;
 
+	unsigned int zBuffer;
+
 	glm::mat4 projection;
 
 	glm::vec2 position;
+
+	float z;
 
 };
 

@@ -110,6 +110,23 @@ void Scene::DeregisterGameObject(const std::string& name)
 	}
 }
 
+void Scene::Initialize()
+{
+}
+
+void Scene::Terminate()
+{
+	for (auto& gameObject : objects)
+	{
+		if (gameObject.second != nullptr)
+		{
+			gameObject.second;
+		}
+	}
+
+	objects.clear();
+}
+
 void Scene::Load()
 {
 	Initialize();
@@ -124,6 +141,9 @@ void Scene::Unload()
 
 void Scene::Deserialize(const std::string& path)
 {
+	Terminate();
+	Initialize();
+
 	// Open and parse the xml document.
 	rapidxml::file<>* xmlFile = new rapidxml::file<>(path.c_str());
 	rapidxml::xml_document<>* doc = new rapidxml::xml_document<>();
@@ -162,7 +182,7 @@ void Scene::Deserialize(const std::string& path)
 				if (newObj->components.find(componentName) == newObj->components.end())
 				{
 					// Create the new component and add it to the components.
-					std::function<void(Component**)> componentConstructor = Component::GetConstructor(name);
+					std::function<void(Component**)> componentConstructor = Component::GetConstructor(componenType);
 					
 					Component* newComponent;
 					componentConstructor(&newComponent);
@@ -407,7 +427,8 @@ void Scene::Deserialize(const std::string& path)
 
 			GameObject* newObj = go;
 
-			RegisterGameObject(newObj, name);
+			newObj->Terminate();
+			newObj->Initialize();
 
 			// Update all its components.
 			rapidxml::xml_node<>* componentNode = n->first_node();

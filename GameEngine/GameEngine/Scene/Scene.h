@@ -33,9 +33,9 @@ public:
 
 protected:
 
-	virtual void Initialize() = 0;
+	virtual void Initialize();
 
-	virtual void Terminate() = 0;
+	virtual void Terminate();
 
 	void Load();
 

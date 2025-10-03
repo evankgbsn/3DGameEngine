@@ -25,6 +25,11 @@ OrientedBoundingBox::~OrientedBoundingBox()
 {
 }
 
+void OrientedBoundingBox::SetOffset(const glm::vec3& os)
+{
+    offset = os;
+}
+
 const glm::vec3& OrientedBoundingBox::GetOrigin() const
 {
     return origin;

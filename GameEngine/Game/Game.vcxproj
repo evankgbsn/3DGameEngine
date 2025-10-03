@@ -137,39 +137,111 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObjects\Boxes.cpp" />
-    <ClCompile Include="GameObjects\Bullet.cpp" />
-    <ClCompile Include="GameObjects\Character.cpp" />
-    <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp" />
-    <ClCompile Include="GameObjects\FreeCamera.cpp" />
-    <ClCompile Include="GameObjects\GameTerrain.cpp" />
-    <ClCompile Include="GameObjects\LargePlane.cpp" />
-    <ClCompile Include="GameObjects\LightObject.cpp" />
-    <ClCompile Include="GameObjects\Player.cpp" />
-    <ClCompile Include="GameObjects\RigidBox.cpp" />
-    <ClCompile Include="GameObjects\Tree.cpp" />
+    <ClCompile Include="GameObjects\Boxes.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Bullet.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Character.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DirectionalLightGameObject.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\FreeCamera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\GameTerrain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\LargePlane.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\LightObject.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\RigidBox.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalCharacter.cpp" />
+    <ClCompile Include="GameObjects\SurvivalSun.cpp" />
+    <ClCompile Include="GameObjects\SurvivalTerrain.cpp" />
+    <ClCompile Include="GameObjects\SurvivalTree.cpp" />
+    <ClCompile Include="GameObjects\SurvivalWater.cpp" />
+    <ClCompile Include="GameObjects\Tree.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scenes\FPSTest.cpp" />
-    <ClCompile Include="Scenes\MainScene.cpp" />
-    <ClCompile Include="Scenes\PhysXTest.cpp" />
-    <ClCompile Include="Scenes\Subscene.cpp" />
+    <ClCompile Include="Scenes\FPSTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Scenes\MainScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Scenes\PhysXTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Scenes\Subscene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Scenes\SurvivalScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects\Boxes.h" />
-    <ClInclude Include="GameObjects\Bullet.h" />
-    <ClInclude Include="GameObjects\Character.h" />
-    <ClInclude Include="GameObjects\DirectionalLightGameObject.h" />
-    <ClInclude Include="GameObjects\FreeCamera.h" />
-    <ClInclude Include="GameObjects\GameTerrain.h" />
-    <ClInclude Include="GameObjects\LargePlane.h" />
-    <ClInclude Include="GameObjects\LightObject.h" />
-    <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="GameObjects\RigidBox.h" />
-    <ClInclude Include="GameObjects\Tree.h" />
-    <ClInclude Include="Scenes\FPSTest.h" />
-    <ClInclude Include="Scenes\MainScene.h" />
-    <ClInclude Include="Scenes\PhysXTest.h" />
-    <ClInclude Include="Scenes\Subscene.h" />
+    <ClInclude Include="GameObjects\Boxes.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Bullet.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Character.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DirectionalLightGameObject.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\FreeCamera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\GameTerrain.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\LargePlane.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\LightObject.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Player.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\RigidBox.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalCharacter.h" />
+    <ClInclude Include="GameObjects\SurvivalSun.h" />
+    <ClInclude Include="GameObjects\SurvivalTerrain.h" />
+    <ClInclude Include="GameObjects\SurvivalTree.h" />
+    <ClInclude Include="GameObjects\SurvivalWater.h" />
+    <ClInclude Include="GameObjects\Tree.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Scenes\FPSTest.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Scenes\MainScene.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Scenes\PhysXTest.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Scenes\Subscene.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Scenes\SurvivalScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #include "CameraComponent.h"
 
 #include "../../Renderer/Camera/CameraManager.h"
+#include "../../Renderer/Window/WindowManager.h"
 #include "../../Engine.h"
 
 CameraComponent::CameraComponent()
@@ -83,6 +84,32 @@ const glm::vec3& CameraComponent::GetTarget() const
 const glm::mat4& CameraComponent::GetProjection() const
 {
 	return CameraManager::GetCamera(name).GetProjection();
+}
+
+const glm::vec3& CameraComponent::GetCursorWorldPosition() const
+{
+	Camera& cam = CameraManager::GetCamera(name);
+
+	// Screen space to world space for object picking.
+	Window* window = WindowManager::GetWindow("Engine");
+	glm::vec2 cursorPos = window->GetCursorPosition();
+	glm::mat4 invPersp = glm::inverse(cam.GetProjection());
+	glm::mat4 invView = glm::inverse(cam.GetView());
+	glm::mat4 screenToNDC(
+		glm::vec4((float)window->GetWidth() / 2.0f, 0.0f, 0.0f, 0.0f),
+		glm::vec4(0, -(float)window->GetHeight() / 2.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+		glm::vec4((float)window->GetWidth() / 2.0f, (float)window->GetHeight() / 2.0f, 0.5f, 1.0f)
+	);
+	screenToNDC = glm::inverse(screenToNDC);
+
+	glm::vec4 x = glm::vec4(cursorPos.x, cursorPos.y, 1.0f, 1.0f);
+	x = screenToNDC * x;
+	x = invPersp * x;
+	x = invView * x;
+	x /= x.w;
+
+	return x;
 }
 
 void CameraComponent::SetPosition(const glm::vec3& position)

@@ -54,7 +54,13 @@ private:
 
 	std::function<void()>* hoveredFunction;
 
+	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
+
+	glm::vec2 relativePosition;
+
 	bool enabled;
+
+	unsigned int ID;
 };
 
 

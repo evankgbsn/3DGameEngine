@@ -64,11 +64,20 @@ void GameObject::AddComponent(Component* component, const std::string name)
 
 void GameObject::RemoveComponent(const std::string& name)
 {
-	components.erase(components.find(name));
+	if (components.find(name) != components.end())
+	{
+		components.erase(components.find(name));
+	}
 }
 
 Component* const GameObject::GetComponent(const std::string& component) const
 {
+	auto componentIt = components.find(component);
+	if (componentIt != components.end())
+	{
+		return componentIt->second;
+	}
+
 	return nullptr;
 }
 

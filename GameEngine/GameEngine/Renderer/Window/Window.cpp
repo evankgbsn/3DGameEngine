@@ -13,11 +13,21 @@
 
 std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>> Window::mouseScrollCallbacks = std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>>();
 
+std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(unsigned int, unsigned int)>*>> Window::windowResizeCallbacks = std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(unsigned int, unsigned int)>*>>();
+
 void WindowScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	for (auto& function : Window::mouseScrollCallbacks[window])
 	{
 		(*function.second)(xoffset, yoffset);
+	}
+}
+
+void WindowResizeCallback(GLFWwindow* window, int width, int height)
+{
+	for (auto& function : Window::windowResizeCallbacks[window])
+	{
+		(*function.second)(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
 	}
 }
 
@@ -58,6 +68,7 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 		glfwSwapInterval(0);
 		InitializeGLEW();
 		glfwSetScrollCallback(glfwWindow, WindowScrollCallback);
+		glfwSetWindowSizeCallback(glfwWindow, WindowResizeCallback);
 	}
 }
 
@@ -76,6 +87,7 @@ void Window::Update()
 	shouldClose.store(glfwWindowShouldClose(glfwWindow));
 	if (!shouldClose.load())
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		GraphicsObjectManager::Update();
@@ -250,4 +262,14 @@ void Window::DisableCursor() const
 void Window::EnableCursor() const
 {
 	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void Window::RegisterCallbackForWindowResize(const std::string& name, std::function<void(unsigned int width, unsigned int height)>* const callback)
+{
+	windowResizeCallbacks[glfwWindow][name] = callback;
+}
+
+void Window::DeregisterCallbackForWindowResize(const std::string& name)
+{
+	windowResizeCallbacks[glfwWindow][name] = nullptr;
 }

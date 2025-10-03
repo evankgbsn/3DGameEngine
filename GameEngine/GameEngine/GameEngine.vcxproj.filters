@@ -399,6 +399,9 @@
     <ClCompile Include="GameObject\Component\BoundingSphereComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="UI\InputField.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -709,6 +712,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Component\BoundingSphereComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InputField.h">
+      <Filter>Source Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

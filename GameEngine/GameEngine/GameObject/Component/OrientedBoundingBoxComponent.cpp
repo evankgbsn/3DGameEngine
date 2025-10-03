@@ -30,6 +30,11 @@ void OrientedBoundingBoxComponent::ToggleVisibility()
 	collider->ToggleVisibility();
 }
 
+bool OrientedBoundingBoxComponent::IsVisible() const
+{
+	return collider->IsVisible();
+}
+
 void OrientedBoundingBoxComponent::SetColor(const glm::vec4& newColor)
 {
 	collider->SetColor(newColor);
@@ -136,7 +141,13 @@ void OrientedBoundingBoxComponent::Serialize()
 
 void OrientedBoundingBoxComponent::Deserialize()
 {
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
 	collider = new OrientedBoundingBoxWithVisualization(savedVec3s["Origin"], savedVec3s["Size"], savedMat4s["Orientation"]);
+	collider->SetOffset(savedVec3s["Offset"]);
 
 	collider->SetColor(glm::vec4(savedVec3s["Color"], 1.0f));
 

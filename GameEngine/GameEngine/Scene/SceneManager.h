@@ -36,6 +36,8 @@ public:
 
 	static GameObject* FindGameObject(const std::string& name);
 
+	static Scene* const GetRegisteredScene(const std::string& name);
+
 private:
 
 	friend class SingletonHelpers;

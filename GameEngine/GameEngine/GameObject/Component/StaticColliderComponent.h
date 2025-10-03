@@ -20,7 +20,7 @@ class StaticColliderComponent : public Component
 {
 public:
 
-	StaticColliderComponent() = default;
+	StaticColliderComponent();
 
 	StaticColliderComponent(GraphicsObject3DComponent* graphics);
 

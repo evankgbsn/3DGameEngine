@@ -299,3 +299,8 @@ const std::vector<GOLit::Material>& Terrain::GetMaterials() const
 {
 	return terrainGraphics->GetMaterials();
 }
+
+GOTerrain* Terrain::GetGraphics() const
+{
+	return terrainGraphics;
+}

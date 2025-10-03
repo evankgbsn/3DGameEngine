@@ -27,6 +27,8 @@ public:
 
 	void ToggleVisibility();
 
+	bool IsVisible() const;
+
 	void SetColor(const glm::vec4& newColor = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	const glm::vec4 GetColor() const;

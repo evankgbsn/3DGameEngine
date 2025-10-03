@@ -47,7 +47,7 @@ void GO3DAnimated::SetFrame(unsigned int frameIndex)
 
 float GO3DAnimated::GetSpeed() const
 {
-	return animation->GetSpeed();
+	return speed;
 }
 
 void GO3DAnimated::SetSpeed(float spd)

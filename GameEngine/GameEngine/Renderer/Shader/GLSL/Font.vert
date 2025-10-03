@@ -12,6 +12,9 @@ layout(std140, binding = 2) uniform Position {
     vec2 pos;
 } position;
 
+layout(std140, binding = 3) uniform Z {
+    float z;
+} z;
 
 //--------------------------------------------------
 // Vertex Buffer Data
@@ -31,6 +34,6 @@ out vec2 texCoords;
 
 void main()
 {
-    gl_Position = projection.proj * vec4(inPosition.x + position.pos.x, inPosition.y + position.pos.y, inPosition.z, 1.0);
+    gl_Position = projection.proj * vec4(inPosition.x + position.pos.x, inPosition.y + position.pos.y, z.z, 1.0);
     texCoords = inUV;
 }

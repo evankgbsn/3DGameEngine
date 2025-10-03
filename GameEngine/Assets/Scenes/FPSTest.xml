@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="FPSTest" type="class FPSTest">
+	<Object type="RigidBox" name="RigidBox2">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.116893"/>
+				<float XY="0.166188"/>
+				<float XZ="0.979141"/>
+				<float XW="0.000000"/>
+				<float YX="0.992995"/>
+				<float YY="0.002476"/>
+				<float YZ="0.118127"/>
+				<float YW="0.000000"/>
+				<float ZX="0.017207"/>
+				<float ZY="0.986091"/>
+				<float ZZ="-0.165313"/>
+				<float ZW="0.000000"/>
+				<float WX="7.237847"/>
+				<float WY="1.736871"/>
+				<float WZ="-17.678719"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox2"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.902214"/>
+				<float XY="0.088841"/>
+				<float XZ="-0.422041"/>
+				<float XW="0.000000"/>
+				<float YX="0.178993"/>
+				<float YY="0.967431"/>
+				<float YZ="-0.178994"/>
+				<float YW="0.000000"/>
+				<float ZX="0.392393"/>
+				<float ZY="-0.237033"/>
+				<float ZZ="-0.888731"/>
+				<float ZW="0.000000"/>
+				<float WX="14.066378"/>
+				<float WY="7.081184"/>
+				<float WZ="3.513173"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox0">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.019296"/>
+				<float XY="-0.999748"/>
+				<float XZ="-0.011523"/>
+				<float XW="0.000000"/>
+				<float YX="-0.513129"/>
+				<float YY="0.000011"/>
+				<float YZ="0.858311"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.858095"/>
+				<float ZY="0.022474"/>
+				<float ZZ="-0.513000"/>
+				<float ZW="0.000000"/>
+				<float WX="1.147492"/>
+				<float WY="1.022225"/>
+				<float WZ="-23.449905"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox0"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox1">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.516648"/>
+				<float XY="0.856080"/>
+				<float XZ="-0.014231"/>
+				<float XW="0.000000"/>
+				<float YX="0.748951"/>
+				<float YY="-0.443815"/>
+				<float YZ="0.492037"/>
+				<float YW="0.000000"/>
+				<float ZX="0.414907"/>
+				<float ZY="-0.264868"/>
+				<float ZZ="-0.870458"/>
+				<float ZW="0.000000"/>
+				<float WX="4.265686"/>
+				<float WY="2.193308"/>
+				<float WZ="-17.858582"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox3">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.218113"/>
+				<float XY="0.501869"/>
+				<float XZ="-0.836991"/>
+				<float XW="0.000000"/>
+				<float YX="-0.975923"/>
+				<float YY="0.113095"/>
+				<float YZ="-0.186505"/>
+				<float YW="0.000000"/>
+				<float ZX="0.001058"/>
+				<float ZY="0.857518"/>
+				<float ZZ="0.514453"/>
+				<float ZW="0.000000"/>
+				<float WX="-4.226538"/>
+				<float WY="5.863923"/>
+				<float WZ="-9.293577"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox3"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox4">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.927360"/>
+				<float XY="-0.068073"/>
+				<float XZ="-0.367928"/>
+				<float XW="0.000000"/>
+				<float YX="-0.374158"/>
+				<float YY="0.160350"/>
+				<float YZ="0.913397"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.003180"/>
+				<float ZY="0.984710"/>
+				<float ZZ="-0.174172"/>
+				<float ZW="0.000000"/>
+				<float WX="12.247206"/>
+				<float WY="3.713665"/>
+				<float WZ="-7.090892"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox4"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox5">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.020365"/>
+				<float XY="-0.984630"/>
+				<float XZ="0.173463"/>
+				<float XW="0.000000"/>
+				<float YX="-0.973290"/>
+				<float YY="-0.020158"/>
+				<float YZ="-0.228692"/>
+				<float YW="0.000000"/>
+				<float ZX="0.228674"/>
+				<float ZY="-0.173487"/>
+				<float ZZ="-0.957920"/>
+				<float ZW="0.000000"/>
+				<float WX="6.720088"/>
+				<float WY="3.823298"/>
+				<float WZ="-17.447128"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox5"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox6">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.194589"/>
+				<float XY="0.966464"/>
+				<float XZ="0.167580"/>
+				<float XW="0.000000"/>
+				<float YX="0.781375"/>
+				<float YY="-0.256008"/>
+				<float YZ="0.569134"/>
+				<float YW="0.000000"/>
+				<float ZX="0.592949"/>
+				<float ZY="0.020195"/>
+				<float ZZ="-0.804987"/>
+				<float ZW="0.000000"/>
+				<float WX="-2.696647"/>
+				<float WY="4.653385"/>
+				<float WZ="-12.789997"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox6"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox7">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.160900"/>
+				<float XY="0.904745"/>
+				<float XZ="-0.394395"/>
+				<float XW="0.000000"/>
+				<float YX="-0.734176"/>
+				<float YY="-0.376782"/>
+				<float YZ="-0.564819"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.659618"/>
+				<float ZY="0.198676"/>
+				<float ZZ="0.724867"/>
+				<float ZW="0.000000"/>
+				<float WX="27.879318"/>
+				<float WY="28.263010"/>
+				<float WZ="-108.490677"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox7"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox8">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.664727"/>
+				<float XY="0.725969"/>
+				<float XZ="0.176372"/>
+				<float XW="0.000000"/>
+				<float YX="0.075393"/>
+				<float YY="0.300061"/>
+				<float YZ="-0.950936"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.743272"/>
+				<float ZY="-0.618816"/>
+				<float ZZ="-0.254192"/>
+				<float ZW="0.000000"/>
+				<float WX="-1.120889"/>
+				<float WY="58.651119"/>
+				<float WZ="-3.313910"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox8"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="RigidBox" name="RigidBox9">
+		<Component type="GraphicsObjectTexturedLit" name="Graphcis">
+			<Variable type="float" name="Shine">
+				<float val="0.500000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.865401"/>
+				<float XY="-0.174335"/>
+				<float XZ="0.469775"/>
+				<float XW="0.000000"/>
+				<float YX="0.141883"/>
+				<float YY="-0.984411"/>
+				<float YZ="-0.103946"/>
+				<float YW="0.000000"/>
+				<float ZX="0.480573"/>
+				<float ZY="-0.023302"/>
+				<float ZZ="0.876645"/>
+				<float ZW="0.000000"/>
+				<float WX="-6.404965"/>
+				<float WY="122.946510"/>
+				<float WZ="5.297334"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Container"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ContainerSpec"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Cube"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="RigidBox9"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="LargePlane" name="TerrainObject">
+		<Component type="GraphicsObjectTexturedLit" name="TerrainGraphics">
+			<Variable type="float" name="Shine">
+				<float val="8.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="PhysxTest"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Grey"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Grey"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTextured" name="SkyboxGraphics">
+			<Variable type="mat4" name="Transform">
+				<float XX="1000.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1000.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1000.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="TextureName">
+				<string val="Skybox"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Skybox"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="PhysxTest"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="TerrainObject"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="DirectionalLightGameObject" name="DirectionalLight">
+		<Component type="DirectionalLightComponent" name="DirectionalLight">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="1.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="-0.500000"/>
+				<float Y="-0.500000"/>
+				<float Z="0.500000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Player" name="Player">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Sphere"/>
+			</Variable>
+			<Variable type="string" name="OwningObject">
+				<string val="Player"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectColored" name="Sphere">
+			<Variable type="vec3" name="Color">
+				<float X="1.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="27.126646"/>
+				<float WY="-1.981190"/>
+				<float WZ="-52.453758"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Sphere"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedAnimatedLit" name="Graphics">
+			<Variable type="float" name="AnimationSpeed">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="float" name="Shine">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="AnimationClip">
+				<int val="0"/>
+			</Variable>
+			<Variable type="int" name="AnimationFrame">
+				<int val="51"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.832317"/>
+				<float XY="0.000000"/>
+				<float XZ="0.554299"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.554299"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.832317"/>
+				<float ZW="0.000000"/>
+				<float WX="27.126646"/>
+				<float WY="-1.981190"/>
+				<float WZ="-52.453758"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Woman"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Woman"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Woman"/>
+			</Variable>
+		</Component>
+		<Component type="CameraComponent" name="Camera">
+			<Variable type="vec3" name="Position">
+				<float X="29.350077"/>
+				<float Y="3.019964"/>
+				<float Z="-55.768646"/>
+			</Variable>
+			<Variable type="vec3" name="Target">
+				<float X="28.802769"/>
+				<float Y="2.861648"/>
+				<float Z="-54.946827"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="Player"/>
+			</Variable>
+		</Component>
+	</Object>
+</Scene>
+

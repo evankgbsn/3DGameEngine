@@ -23,7 +23,8 @@ Editor::Editor() :
 	rightMousePressed(false),
 	ctrPressed(false),
 	gridSpeed(5.0f),
-	ui(new EditorUI())
+	ui(new EditorUI()),
+	cameraMovementEnabled(true)
 {
 	Camera& cam = CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
 	cam.SetPosition(glm::vec3(25.0f, 25.0f, 25.0f));
@@ -208,14 +209,30 @@ void Editor::DeregisterOnEditorDisable(std::function<void()>* function)
 	}
 }
 
+void Editor::DisableCameraMovement()
+{
+	if (instance != nullptr)
+	{
+		instance->cameraMovementEnabled = false;
+	}
+}
+
+void Editor::EnableCameraMovement()
+{
+	if (instance != nullptr)
+	{
+		instance->cameraMovementEnabled = true;
+	}
+}
+
 void Editor::SetupEditorInput()
 {
-	float cameraSpeed = 5.0f;
+	float cameraSpeed = 100.0f;
 	static std::function<void(int)> wPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
 			if (instance != nullptr)
 			{
-				if (instance->rightMousePressed)
+				if (instance->rightMousePressed && instance->cameraMovementEnabled)
 				{
 					Camera& cam = CameraManager::GetActiveCamera();
 					cam.Translate(cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
@@ -227,7 +244,7 @@ void Editor::SetupEditorInput()
 		{
 			if (instance != nullptr)
 			{
-				if (instance->rightMousePressed)
+				if (instance->rightMousePressed && instance->cameraMovementEnabled)
 				{
 					Camera& cam = CameraManager::GetActiveCamera();
 					cam.Translate(-cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
@@ -239,7 +256,7 @@ void Editor::SetupEditorInput()
 		{
 			if (instance != nullptr)
 			{
-				if (instance->rightMousePressed)
+				if (instance->rightMousePressed && instance->cameraMovementEnabled)
 				{
 					Camera& cam = CameraManager::GetActiveCamera();
 					cam.Translate(-cam.GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
@@ -253,7 +270,7 @@ void Editor::SetupEditorInput()
 		{
 			if (instance != nullptr)
 			{
-				if (instance->rightMousePressed)
+				if (instance->rightMousePressed && instance->cameraMovementEnabled)
 				{
 					Camera& cam = CameraManager::GetActiveCamera();
 					cam.Translate(cam.GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
@@ -463,7 +480,7 @@ void Editor::SetupEditorInput()
 
 void Editor::InitializeGrid()
 {
-	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 500.0f, 500.0f, 500U, 500U, 0, 0.0f);
+	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 0, 0.0f);
 
 	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 

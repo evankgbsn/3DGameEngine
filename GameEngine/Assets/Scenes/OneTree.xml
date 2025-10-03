@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="OneTree" type="class SurvivalScene">
+	<Object type="SurvivalCharacter" name="Player">
+		<Component type="GraphicsObjectTexturedAnimatedLit" name="CharacterGraphics">
+			<Variable type="float" name="AnimationSpeed">
+				<float val="1.000000"/>
+			</Variable>
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="AnimationClip">
+				<int val="0"/>
+			</Variable>
+			<Variable type="int" name="AnimationFrame">
+				<int val="6"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.933339"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.358996"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.358996"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.933339"/>
+				<float ZW="0.000000"/>
+				<float WX="28.739569"/>
+				<float WY="5.712969"/>
+				<float WZ="-7.510309"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Woman"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Woman"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Woman"/>
+			</Variable>
+		</Component>
+		<Component type="CameraComponent" name="CharacterCamera">
+			<Variable type="vec3" name="Position">
+				<float X="0.307216"/>
+				<float Y="11.721289"/>
+				<float Z="-20.124435"/>
+			</Variable>
+			<Variable type="vec3" name="Target">
+				<float X="0.307216"/>
+				<float Y="0.252040"/>
+				<float Z="-3.739798"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="CharacterCamera"/>
+			</Variable>
+		</Component>
+		<Component type="AnimatedColliderComponent" name="CharacterCollider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="Sun">
+		<Component type="DirectionalLightComponent" name="Sun">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="2.500000"/>
+				<float Y="1.500000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="-0.500000"/>
+				<float Y="-0.500000"/>
+				<float Z="-0.500000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="Terrain">
+		<Component type="TerrainComponent" name="SurvivalTerrain">
+			<Variable type="float" name="YOffset">
+				<float val="-10.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="50"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="50"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture1">
+				<string val="TerrainBase"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="SurvivalTerrain"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture2">
+				<string val="TerrainBase"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/Noise.png"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture0">
+				<string val="TerrainBase"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture0">
+				<string val="TerrainBase"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture1">
+				<string val="TerrainBase"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture2">
+				<string val="TerrainBase"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="Tree">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="1.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+</Scene>
+

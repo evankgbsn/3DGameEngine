@@ -34,6 +34,9 @@ GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos,
 
 	glCreateBuffers(1, &positionBuffer);
 	glNamedBufferStorage(positionBuffer, sizeof(position), &position, GL_DYNAMIC_STORAGE_BIT);
+
+	glCreateBuffers(1, &zBuffer);
+	glNamedBufferStorage(zBuffer, sizeof(z), &z, GL_DYNAMIC_STORAGE_BIT);
 }
 
 GOGlyph::~GOGlyph()
@@ -41,6 +44,7 @@ GOGlyph::~GOGlyph()
 	glDeleteBuffers(1, &colorBuffer);
 	glDeleteBuffers(1, &projectionBuffer);
 	glDeleteBuffers(1, &positionBuffer);
+	glDeleteBuffers(1, &zBuffer);
 }
 
 void GOGlyph::Update()
@@ -55,12 +59,14 @@ void GOGlyph::Update()
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, projectionBuffer);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, colorBuffer);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, positionBuffer);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, zBuffer);
 
 	projection = glm::ortho(0.0f, (float)WindowManager::GetWindow("Engine")->GetWidth(), 0.0f, (float)WindowManager::GetWindow("Engine")->GetHeight());
 
 	glNamedBufferSubData(projectionBuffer, 0, sizeof(projection), &projection);
 	glNamedBufferSubData(colorBuffer, 0, sizeof(color), &color);
 	glNamedBufferSubData(positionBuffer, 0, sizeof(position), &position);
+	glNamedBufferSubData(zBuffer, 0, sizeof(z), &z);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -79,4 +85,9 @@ void GOGlyph::SetPosition(const glm::vec2& newPosition)
 glm::vec2 GOGlyph::GetPosition() const
 {
 	return position;
+}
+
+void GOGlyph::SetZ(float newZ)
+{
+	z = newZ;
 }

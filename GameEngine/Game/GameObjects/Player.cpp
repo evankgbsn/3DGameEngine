@@ -198,6 +198,7 @@ void Player::Terminate()
 
     delete cam;
     delete graphics;
+    delete body;
 }
 
 void Player::GameUpdate()

@@ -7,6 +7,8 @@
 
 class Terrain;
 class AxisAlignedBoundingBoxWithVisualization;
+class LineSegment3D;
+class StaticCollider;
 
 class TerrainComponent : public Component
 {
@@ -23,6 +25,12 @@ public:
 	const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& GetCellArray() const;
 
 	void ToggleCells();
+
+	bool ColliderVisible() const;
+
+	void ToggleColliderVisibility();
+
+	glm::vec3 GetLineIntersection(const LineSegment3D& line);
 
 private:
 
@@ -42,6 +50,7 @@ private:
 
 	Terrain* terrain;
 
+	StaticCollider* collider;
 };
 
 

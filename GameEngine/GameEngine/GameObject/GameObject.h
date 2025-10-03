@@ -40,6 +40,8 @@ public:
 
 	void SetName(const std::string& name);
 
+	Component* const GetComponent(const std::string& component) const;
+
 protected:
 
 	friend class Scene;
@@ -68,8 +70,6 @@ protected:
 	void AddComponent(Component* component, const std::string name);
 
 	void RemoveComponent(const std::string& name);
-
-	Component* const GetComponent(const std::string& component) const;
 
 	static std::function<void(GameObject**)> GetConstructor(const std::string& name);
 

@@ -113,7 +113,7 @@ Model* const ModelManager::CreateModelTerrain(const std::string& name, const std
 	if (instance->models.find(name) != instance->models.end())
 	{
 		Logger::Log("The name " + name + " is already being used for a model. ModelManager::CreateModelTerrain()", Logger::Category::Warning);
-		return newTerrainModel;
+		return instance->models[name];
 	}
 	else
 	{

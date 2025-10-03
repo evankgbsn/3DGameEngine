@@ -104,12 +104,12 @@ Engine::Engine()
 	Editor::Initialize();
 	Editor::Enable();
 	EditorPlayToggleInputSetup();
-	PhysicsManager::Initialize();
+	//PhysicsManager::Initialize();
 }
 
 Engine::~Engine()
 {
-	PhysicsManager::Terminate();
+	//PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
 	Editor::Terminate();

@@ -8,6 +8,8 @@
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
 #include "../Math/Shapes/Triangle.h"
+#include "../Math/Shapes/Ray.h"
+#include "../Math/Shapes/LineSegment3D.h"
 #include "../Utils/Logger.h"
 
 #include <list>
@@ -31,8 +33,12 @@ StaticCollider::~StaticCollider()
 	GraphicsObjectManager::Delete(trianglesColliderVisualization);
 	delete obb;
 	delete boundingSphere;
-	FreeBVHNode(accelerator);
-	delete accelerator;
+
+	if (accelerator != nullptr)
+	{
+		FreeBVHNode(accelerator);
+		delete accelerator;
+	}
 }
 
 void StaticCollider::Update()
@@ -42,22 +48,25 @@ void StaticCollider::Update()
 	trianglesColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
 
 
-	//Updated instanced visualized aabbs
-	//Recursively walk the BVH tree.
-	std::list<BVHNode*> toProcess;
-	toProcess.push_front(accelerator);
-	while (!toProcess.empty())
+	if (accelerator != nullptr)
 	{
-		BVHNode* iterator = *(toProcess.begin());
-		toProcess.erase(toProcess.begin());
-
-		iterator->bounds.UpdateGraphicsInstance();
-
-		if (iterator->children != 0)
+		//Updated instanced visualized aabbs
+		//Recursively walk the BVH tree.
+		std::list<BVHNode*> toProcess;
+		toProcess.push_front(accelerator);
+		while (!toProcess.empty())
 		{
-			for (int i = 8 - 1; i >= 0; --i)
+			BVHNode* iterator = *(toProcess.begin());
+			toProcess.erase(toProcess.begin());
+
+			iterator->bounds.UpdateGraphicsInstance();
+
+			if (iterator->children != 0)
 			{
-				toProcess.push_front(&iterator->children[i]);
+				for (int i = 8 - 1; i >= 0; --i)
+				{
+					toProcess.push_front(&iterator->children[i]);
+				}
 			}
 		}
 	}
@@ -75,6 +84,8 @@ void StaticCollider::ToggleVisibility()
 	{
 		GraphicsObjectManager::Disable(trianglesColliderVisualization);
 	}
+
+	visible = !visible;
 }
 
 bool StaticCollider::Intersect(const OrientedBoundingBox& other) const
@@ -84,6 +95,12 @@ bool StaticCollider::Intersect(const OrientedBoundingBox& other) const
 
 bool StaticCollider::Intersect(const LineSegment3D& other) const
 {
+	if (boundingSphere->LineSegmentIntersect(other) && GetBox()->LineIntersect(other))
+	{
+		Ray ray(other.GetStart(), glm::normalize(other.GetEnd() - other.GetStart()));
+		return Intersect(ray) != -1.0f;
+	}
+
 	return false;
 }
 
@@ -361,20 +378,23 @@ void StaticCollider::SplitBVHNode(BVHNode* node, int depth)
 
 void StaticCollider::FreeBVHNode(BVHNode* node)
 {
-	if (node->children != nullptr)
+	if (node != nullptr)
 	{
-		for (int i = 0; i < 8; ++i)
+		if (node->children != nullptr)
 		{
-			FreeBVHNode(&node->children[i]);
+			for (int i = 0; i < 8; ++i)
+			{
+				FreeBVHNode(&node->children[i]);
+			}
+			delete[] node->children;
+			node->children = 0;
 		}
-		delete[] node->children;
-		node->children = 0;
-	}
 
-	if (node->numTriangles != 0 || node->triangles != nullptr)
-	{
-		delete[] node->triangles;
-		node->triangles = nullptr;
-		node->numTriangles = 0;
+		if (node->numTriangles != 0 || node->triangles != nullptr)
+		{
+			delete[] node->triangles;
+			node->triangles = nullptr;
+			node->numTriangles = 0;
+		}
 	}
 }

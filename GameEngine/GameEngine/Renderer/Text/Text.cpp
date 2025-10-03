@@ -4,11 +4,13 @@
 #include "../Font/FontManager.h"
 #include "../GraphicsObjects/GOGlyph.h"
 
-Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c, const glm::vec2& position, float s) :
+Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c, const glm::vec2& p, float s) :
 	text(string),
 	scale(s),
 	fontName(fn),
-	color(c)
+	color(c),
+	disabled(false),
+	position(p)
 {
 	Font* font = FontManager::GetFont(fontName);
 
@@ -27,6 +29,8 @@ Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c,
 
 void Text::SetPosition(const glm::vec2& newPosition)
 {
+	position = newPosition;
+
 	Font* font = FontManager::GetFont(fontName);
 
 	float x = newPosition.x;
@@ -41,7 +45,7 @@ void Text::SetPosition(const glm::vec2& newPosition)
 
 glm::vec2 Text::GetPosition() const
 {
-	return glyphs.front()->GetPosition();
+	return position;
 }
 
 const std::string& Text::GetString() const
@@ -62,6 +66,37 @@ glm::vec3 Text::GetColor() const
 float Text::GetScale() const
 {
 	return scale;
+}
+
+void Text::SetZ(float newZ)
+{
+	for (auto& glyph : glyphs)
+	{
+		glyph->SetZ(newZ);
+	}
+}
+
+void Text::Disable()
+{
+	for (GOGlyph* glyph : glyphs)
+	{
+		GraphicsObjectManager::Disable(glyph);
+	}
+	disabled = true;
+}
+
+void Text::Enable()
+{
+	for (GOGlyph* glyph : glyphs)
+	{
+		GraphicsObjectManager::Enable(glyph);
+	}
+	disabled = false;
+}
+
+bool Text::IsDisabled() const
+{
+	return disabled;
 }
 
 Text::~Text()

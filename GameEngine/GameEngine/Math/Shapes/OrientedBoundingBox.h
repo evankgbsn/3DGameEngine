@@ -20,6 +20,8 @@ public:
 
 	~OrientedBoundingBox();
 
+	void SetOffset(const glm::vec3& os);
+
 	const glm::vec3& GetOrigin() const;
 
 	const glm::vec3& GetSize() const;
