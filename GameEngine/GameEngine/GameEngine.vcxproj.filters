@@ -97,6 +97,9 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{73b4131e-ba4e-45fa-9b43-bb1a9abdc1c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Networking">
+      <UniqueIdentifier>{37c6780c-51f7-45dc-9973-588c9904b860}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -401,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="UI\InputField.cpp">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\NetworkManager.cpp">
+      <Filter>Source Files\Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -715,6 +721,9 @@
     </ClInclude>
     <ClInclude Include="UI\InputField.h">
       <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\NetworkManager.h">
+      <Filter>Source Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -227,7 +227,7 @@ void Editor::EnableCameraMovement()
 
 void Editor::SetupEditorInput()
 {
-	float cameraSpeed = 100.0f;
+	float cameraSpeed = 25.0f;
 	static std::function<void(int)> wPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
 			if (instance != nullptr)

@@ -30,10 +30,10 @@ int main(int argc, const char** argv)
 	//SceneManager::RegisterScene(physXTest, "PhysXTest");
 	//SceneManager::RegisterScene(fpsTest, "FPSTest");
 
-	//Scene* survivalScene = new SurvivalScene();
-	//SceneManager::RegisterScene(survivalScene, "SurvivalScene");
-	//
-	//SceneManager::LoadScene("SurvivalScene");
+	Scene* survivalScene = new SurvivalScene();
+	SceneManager::RegisterScene(survivalScene, "SurvivalScene");
+	
+	SceneManager::LoadScene("SurvivalScene");
 
 	Engine::Run();
 
@@ -42,8 +42,8 @@ int main(int argc, const char** argv)
 	//delete subscene;
 	//delete mainScene;
 
+	delete survivalScene;
 	Engine::Terminate();
 
-	//delete survivalScene;
 	return 0;
 }

@@ -23,6 +23,7 @@
 #include "Scene/SceneManager.h"
 #include "Editor/Editor.h"
 #include "Physics/PhysicsManager.h"
+#include "Networking/NetworkManager.h"
 
 #include <GLFW/glfw3.h>
 
@@ -64,6 +65,7 @@ void Engine::Run()
 			Editor::Update();
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
+			NetworkManager::EditorUpdate();
 		}
 		else
 		{
@@ -72,6 +74,7 @@ void Engine::Run()
 			Renderer::Update();
 			InputManager::Update();
 			SceneManager::Update();
+			NetworkManager::Update();
 		}
 		
 
@@ -105,10 +108,13 @@ Engine::Engine()
 	Editor::Enable();
 	EditorPlayToggleInputSetup();
 	//PhysicsManager::Initialize();
+	NetworkManager::Initialize();
+	
 }
 
 Engine::~Engine()
 {
+	NetworkManager::Terminate();
 	//PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
@@ -132,4 +138,28 @@ void Engine::EditorPlayToggleInputSetup()
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress2, "Play");
+
+	static std::function<void(int)> startServer = std::function<void(int)>([](int keyCode)
+		{
+			NetworkManager::Start(true);
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_KP_ADD, &startServer, "StartServer");
+
+	static std::function<void(int)> startClient = std::function<void(int)>([](int keyCode)
+		{
+			NetworkManager::Start(false);
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_KP_SUBTRACT, &startClient, "StartClient");
+
+	static std::function<void(int)> serverSendAll = std::function<void(int)>([](int keyCode)
+		{
+			if (NetworkManager::IsServer())
+			{
+				NetworkManager::ServerSendAll("Hello");
+			}
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_H, &serverSendAll, "TestServerSendAll");
 }

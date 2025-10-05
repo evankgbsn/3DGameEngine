@@ -15,7 +15,7 @@ SurvivalSun::~SurvivalSun()
 
 void SurvivalSun::Initialize()
 {
-	sun = new DirectionalLightComponent({-.5f, -.5f, -.5f}, {2.5f, 1.5f, 0.0f});
+	sun = new DirectionalLightComponent({-.5f, -.5f, -.5f}, {1.5f, .5f, 0.0f});
 	AddComponent(sun, "Sun");
 
 	sun->SetAmbientIntensity(0.5);
