@@ -6,27 +6,27 @@ std::unordered_map<std::string, std::function<void(NetworkObject**)>> NetworkObj
 
 void NetworkObject::OnSpawn()
 {
-	NetworkManager::RegisterReceiveDataFunction("NetworkObject:" + networkObjectID, onReceiveData);
+	NetworkManager::RegisterReceiveDataFunction("NetworkObject:" + std::to_string(networkObjectID), onReceiveData);
 }
 
 void NetworkObject::OnDespawn()
 {
-	NetworkManager::DeregisterReceiveDataFunction("NetworkObject:" + networkObjectID);
+	NetworkManager::DeregisterReceiveDataFunction("NetworkObject:" + std::to_string(networkObjectID));
 }
 
 void NetworkObject::ClientSend(const std::string& data)
 {
-	NetworkManager::ClientSend(data, "NetworkObject:" + networkObjectID);
+	NetworkManager::ClientSend(data, "NetworkObject:" + std::to_string(networkObjectID));
 }
 
 void NetworkObject::ServerSend(const std::string& IP, const std::string& data)
 {
-	NetworkManager::ServerSend(IP, data, "NetworkObject:" + networkObjectID);
+	NetworkManager::ServerSend(IP, data, "NetworkObject:" + std::to_string(networkObjectID));
 }
 
 void NetworkObject::ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs)
 {
-	NetworkManager::ServerSendAll(data, "NetworkObject:" + networkObjectID, excludedIPs);
+	NetworkManager::ServerSendAll(data, "NetworkObject:" + std::to_string(networkObjectID), excludedIPs);
 }
 
 bool NetworkObject::SpawnedFromLocalSpawnRequest() const
