@@ -1,9 +1,12 @@
 #include "NetworkManager.h"
 
 #include "../Utils/SingletonHelpers.h"
+#include "NetworkObject.h"
 
 #define DEFAULT_PORT "27015"
-#define SERVER_IP "136.30.15.215"
+//#define SERVER_IP "136.30.15.215"
+#define SERVER_IP "192.168.50.2"
+
 #define DEFAULT_BUFFLEN 512
 
 NetworkManager* NetworkManager::instance = nullptr;
@@ -11,10 +14,17 @@ NetworkManager* NetworkManager::instance = nullptr;
 void NetworkManager::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<NetworkManager>(&instance, "NetworkManager");
+
+	instance->SetupServerReceiveSpawnRequestCallback();
+	instance->SetupReceiveSpawnFromServer();
 }
 
 void NetworkManager::Terminate()
 {
+	instance->CleanupReceiveSpawnFromServer();
+	instance->CleanupSpawnedNetworkObjects();
+	instance->CleanupServerReceiveSpawnRequestCallback();
+
 	SingletonHelpers::TerminateSingleton<NetworkManager>(&instance, "NetworkManager");
 }
 
@@ -46,12 +56,18 @@ void NetworkManager::Start(bool isServer)
 
 void NetworkManager::Update()
 {
-	
+	if (instance != nullptr)
+	{
+		instance->ProcessReceivedData();
+	}
 }
 
 void NetworkManager::EditorUpdate()
 {
-	
+	if (instance != nullptr)
+	{
+		instance->ProcessReceivedData();
+	}
 }
 
 bool NetworkManager::IsServer()
@@ -68,7 +84,9 @@ NetworkManager::NetworkManager() :
 	connectSocket(INVALID_SOCKET),
 	connectedClients(),
 	isServer(false),
-	started(false)
+	started(false),
+	networkObjectIDGenerator(0ULL),
+	serverReceiveSpawnRequest(nullptr)
 {
 	InitializeWinsock();
 }
@@ -80,7 +98,11 @@ NetworkManager::~NetworkManager()
 	if (!isServer)
 	{
 		closesocket(connectSocket);
-		receiveThread.join();
+
+		if (receiveThread.joinable())
+		{
+			receiveThread.join();
+		}
 	}
 	else
 	{
@@ -89,8 +111,19 @@ NetworkManager::~NetworkManager()
 		{
 			closesocket(client.second);
 		}
-		listenThread.join();
-		receiveThread.join();
+
+		for (auto& clientThread : connectedClientsReceiveThreads)
+		{
+			if (clientThread.second.joinable())
+			{
+				clientThread.second.join();
+			}
+		}
+
+		if (listenThread.joinable())
+		{
+			listenThread.join();
+		}
 	}
 
 	WSACleanup();
@@ -145,6 +178,7 @@ void NetworkManager::StartClient()
 	// Connect to server.
 	res = connect(connectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
 	if (res == SOCKET_ERROR) {
+		Logger::Log(std::to_string(WSAGetLastError()), Logger::Category::Error);
 		closesocket(connectSocket);
 		connectSocket = INVALID_SOCKET;
 	}
@@ -162,7 +196,7 @@ void NetworkManager::StartClient()
 	}
 
 	int recvbuflen = DEFAULT_BUFFLEN;
-	const char* sendbuf = "this is a test";
+	const char sendbuf[19] = {'1', '2', '7', '.', '0', '.', '0', '.', '1', '\0', '\0', '\0', '\0', '\0', '\0', '\0','\0', '\0', '\0' };
 	char recvbuf[DEFAULT_BUFFLEN];
 
 	// Send an initial buffer
@@ -177,14 +211,14 @@ void NetworkManager::StartClient()
 
 	// shutdown the connection for sending since no more data will be sent
 	// the client can still use the ConnectSocket for receiving data
-	res = shutdown(connectSocket, SD_SEND);
-	if (res == SOCKET_ERROR) {
-		Logger::Log("shutdown failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-		closesocket(connectSocket);
-		return;
-	}
+	//res = shutdown(connectSocket, SD_SEND);
+	//if (res == SOCKET_ERROR) {
+	//	Logger::Log("shutdown failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+	//	closesocket(connectSocket);
+	//	return;
+	//}
 
-	receiveThread = std::thread(&NetworkManager::Receive, this);
+	receiveThread = std::thread(&NetworkManager::ClientReceive, this);
 
 }
 
@@ -222,7 +256,12 @@ void NetworkManager::StartServer()
 	}
 
 	// Setup the TCP listening socket
-	res = bind(listenSocket, result->ai_addr, (int)result->ai_addrlen);
+	sockaddr_in serverAddr;
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_port = htons(27015);
+	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+	res = bind(listenSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 	if (res == SOCKET_ERROR)
 	{
 		Logger::Log("bind failed with error: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
@@ -234,53 +273,104 @@ void NetworkManager::StartServer()
 	freeaddrinfo(result);
 
 	listenThread = std::thread(&NetworkManager::ListenForConnections, this);
-	receiveThread = std::thread(&NetworkManager::Receive, this);
 }
 
-void NetworkManager::Receive()
+void NetworkManager::ClientReceive()
 {
-	int recvbuflen = DEFAULT_BUFFLEN;
-	char recvbuf[DEFAULT_BUFFLEN] = {};
-
 	while (running.load())
 	{
+		int recvbuflen = DEFAULT_BUFFLEN;
+		char recvbuf[DEFAULT_BUFFLEN] = {};
+
 		if (!isServer)
 		{
+			static bool firstMessage = true;
+
 			int iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
 			if (iResult > 0)
 			{
 				Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
 
-				std::lock_guard<std::mutex> guard(receivedDataMutex);
-				receivedData.push_back(recvbuf);
+				if (firstMessage)
+				{
+
+					clientIP = std::string(recvbuf);
+
+					firstMessage = false;
+				}
+				else if(iResult > 16)
+				{
+					std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+					std::string ip = std::string(recvbuf);
+					std::string functionID = (recvbuf + 16);
+					std::string data = ip + " " + functionID + " ";
+
+					if (iResult > 16)
+					{
+						data += (recvbuf + 17 + functionID.size());
+					}
+
+					receivedData.push_back(data);
+				}
 			}
 			else if (iResult < 0)
 			{
 				Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 			}
 		}
-		else
+	}
+}
+
+void NetworkManager::ServerReceive(const std::string& IP)
+{
+	while (running.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+		int recvbuflen = DEFAULT_BUFFLEN;
+		char recvbuf[DEFAULT_BUFFLEN] = {};
+
+		connectedClientsMutex.lock();
+		const auto& clientSocket = connectedClients.find(IP);
+
+		if (clientSocket == connectedClients.end())
 		{
-			if (!connectedClients.empty())
+			return;
+		}
+
+		SOCKET socket = clientSocket->second;
+
+		connectedClientsMutex.unlock();
+
+		if (socket != INVALID_SOCKET)
+		{
+			int iResult = recv(socket, recvbuf, recvbuflen, 0);
+			if (iResult > 0)
 			{
-				std::lock_guard<std::mutex> lockGuard(connectedClientsMutex);
-				for (auto& clientSocket : connectedClients)
+				Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
+
+				if (iResult >= 16)
 				{
-					if (clientSocket.second != INVALID_SOCKET)
+					std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+					std::string ip = std::string(recvbuf);
+					std::string functionID = (recvbuf + 16);
+					std::string data = ip + " " + functionID + " ";
+
+					if (iResult > 16)
 					{
-						int iResult = recv(clientSocket.second, recvbuf, recvbuflen, 0);
-						if (iResult > 0) 
-						{
-							printf("Bytes received: %d\n", iResult);
-						}
-						else if(iResult < 0)
-						{
-							Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-							closesocket(clientSocket.second);
-							return;
-						}
+						data += (recvbuf + 17 + functionID.size());
 					}
+
+					receivedData.push_back(data);
 				}
+			}
+			else if (iResult < 0)
+			{
+				Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+				closesocket(socket);
+				return;
 			}
 		}
 	}
@@ -312,26 +402,575 @@ void NetworkManager::ListenForConnections()
 		char clientIP[INET_ADDRSTRLEN];
 		inet_ntop(AF_INET, &clientAddr.sin_addr, clientIP, INET_ADDRSTRLEN);
 
-
-		std::lock_guard<std::mutex> lockGuard(connectedClientsMutex);
+		
+		connectedClientsMutex.lock();
 		connectedClients[clientIP] = clientSocket;
+		connectedClientsMutex.unlock();
+
+		connectedClientsReceiveThreadsMutex.lock();
+		connectedClientsReceiveThreads[clientIP] = std::thread(&NetworkManager::ServerReceive, this, clientIP);
+		connectedClientsReceiveThreadsMutex.unlock();
+		
+		ServerSend(clientIP, "", "");
 	}
 }
 
-void NetworkManager::ServerSendAll(const std::string& data)
+void NetworkManager::ProcessReceivedData()
+{
+	std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+	if (!receivedData.empty())
+	{
+		std::string data = receivedData.front();
+
+		if (data.size() >= 19)
+		{
+			std::string senderReportedIP;
+
+			unsigned int i = 0;
+			for (i; i < data.size(); i++)
+			{
+				if (data[i] == ' ')
+				{
+					break;
+				}
+
+				senderReportedIP += data[i];
+			}
+
+			std::string functionID;
+
+			i++;
+			for (i; i < data.size(); i++)
+			{
+				if (data[i] == ' ')
+				{
+					break;
+				}
+
+				functionID += data[i];
+			}
+
+			const auto& function = responseFunctions.find(functionID);
+
+			if (function != responseFunctions.end())
+			{
+				if (function->second != nullptr)
+				{
+					(*function->second)(data);
+				}
+			}
+		}
+
+		receivedData.erase(receivedData.begin());
+	}
+
+}
+
+void NetworkManager::SetupServerReceiveSpawnRequestCallback()
+{
+	serverReceiveSpawnRequest = new std::function<void(const std::string&)>([](const std::string& data)
+		{
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			std::string networkObjectClassName;
+			std::string clientResponseFunctionName;
+
+			unsigned int i = 0;
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (dataBlock[i] == ' ')
+				{
+					break;
+				}
+
+				networkObjectClassName += dataBlock[i];
+			}
+
+			i++;
+
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (dataBlock[i] == ' ')
+				{
+					break;
+				}
+				clientResponseFunctionName += dataBlock[i];
+			}
+
+			NetworkObject* newNetworkObject = nullptr;
+			NetworkObject::GetConstructor(networkObjectClassName)(&newNetworkObject);
+
+			if (newNetworkObject != nullptr)
+			{
+				unsigned long long newNetworkObjectID = GenerateNetworkObjectID();
+				newNetworkObject->networkObjectID = newNetworkObjectID;
+
+				newNetworkObject->OnSpawn();
+
+
+				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
+
+				std::string targetIP = GetIPFromData(data);
+
+				ServerSend(targetIP, std::to_string(newNetworkObjectID), clientResponseFunctionName);
+				ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", { targetIP });
+			}
+			else
+			{
+				std::string targetIP = GetIPFromData(data);
+
+				ServerSend(targetIP, "Failure", clientResponseFunctionName);
+			}
+		});
+
+	RegisterReceiveDataFunction("NetworkManagerServerSpawnRequest", serverReceiveSpawnRequest);
+}
+
+void NetworkManager::CleanupServerReceiveSpawnRequestCallback()
+{
+	if (serverReceiveSpawnRequest != nullptr)
+	{
+		delete serverReceiveSpawnRequest;
+	}
+}
+
+void NetworkManager::CleanupSpawnedNetworkObjects()
+{
+	//for (const auto& networkObject : spawnedNetworkObjects)
+	//{
+	//	delete networkObject.second;
+	//}
+	//
+	//spawnedNetworkObjects.clear();
+}
+
+void NetworkManager::SetupReceiveSpawnFromServer()
+{
+	receiveSpawnFromServer = new std::function<void(const std::string&)>([](const std::string& data)
+		{
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			std::string networkObjectClassName;
+			std::string networkObjectID;
+
+			unsigned int i = 0;
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (i == ' ')
+				{
+					break;
+				}
+
+				networkObjectClassName += dataBlock[i];
+			}
+
+			i++;
+
+			for (i; i < dataBlock.size(); i++)
+			{
+				networkObjectID += dataBlock[i];
+			}
+
+			NetworkObject* newNetworkObject = nullptr;
+			NetworkObject::GetConstructor(networkObjectClassName)(&newNetworkObject);
+
+			if (newNetworkObject != nullptr)
+			{
+				newNetworkObject->networkObjectID = std::stoull(networkObjectID);
+				newNetworkObject->OnSpawn();
+				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
+			}
+		});
+
+	RegisterReceiveDataFunction("NetworkManagerClientReceiveSpawnFromServer", receiveSpawnFromServer);
+}
+
+void NetworkManager::CleanupReceiveSpawnFromServer()
+{
+	if (receiveSpawnFromServer != nullptr)
+	{
+		DeregisterReceiveDataFunction("NetworkManagerClientReceiveSpawnFromServer");
+		delete receiveSpawnFromServer;
+	}
+}
+
+void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
 {
 	if (instance != nullptr)
 	{
-		std::lock_guard<std::mutex> guard(instance->connectedClientsMutex);
-		for (auto& clientSocket : instance->connectedClients)
+		if (IsServer())
 		{
-			int iSendResult = send(clientSocket.second, data.data(), data.size(), 0);
-			if (iSendResult == SOCKET_ERROR) {
+			instance->connectedClientsMutex.lock();
+			for (auto& clientSocket : instance->connectedClients)
+			{
+				if (excludedIPs.contains(clientSocket.first))
+				{
+					continue;
+				}
+
+				char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
+				ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+
+				unsigned int i = 0;
+				for (i; i < clientSocket.first.size(); i++)
+				{
+					*(sendbuf + i) = clientSocket.first[i];
+				}
+				
+				i = 16;
+				for (i; i < 16 + receiveFunction.size(); i++)
+				{
+					*(sendbuf + i) = receiveFunction[i - 16];
+				}
+
+				*(sendbuf + i) = '\0';
+
+				i = 17 + receiveFunction.size();
+				for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+				{
+					*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+				}
+
+				int iSendResult = send(clientSocket.second, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+				if (iSendResult == SOCKET_ERROR) {
+					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+					closesocket(clientSocket.second);
+					return;
+				}
+
+				delete[] sendbuf;
+				Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
+			}
+			instance->connectedClientsMutex.unlock();
+		}
+	}
+}
+
+void NetworkManager::ServerSend(const std::string& ip, const std::string& data, const std::string& receiveFunction)
+{
+	if (instance != nullptr)
+	{
+		if (IsServer())
+		{
+			instance->connectedClientsMutex.lock();
+			const auto& clientSocket = instance->connectedClients.find(ip);
+
+			if (clientSocket != instance->connectedClients.end())
+			{
+				char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
+
+				ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+
+				unsigned int i = 0;
+				for (i; i < ip.size(); i++)
+				{
+					*(sendbuf + i) = ip[i];
+				}
+
+				i = 16;
+				for (i; i < 16 + receiveFunction.size(); i++)
+				{
+					*(sendbuf + i) = receiveFunction[i - 16];
+				}
+
+				*(sendbuf + i) = '\0';
+
+				i = 17 + receiveFunction.size();
+				for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+				{
+					*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+				}
+
+				int iSendResult = send(clientSocket->second, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+				if (iSendResult == SOCKET_ERROR) {
+					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+					closesocket(clientSocket->second);
+					return;
+				}
+
+				delete[] sendbuf;
+
+				Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket->first, Logger::Category::Success);
+			}
+
+			
+
+			instance->connectedClientsMutex.unlock();
+		}
+	}
+}
+
+void NetworkManager::ClientSend(const std::string& data, const std::string& receiveFunction)
+{
+	if (instance != nullptr)
+	{
+		if (!IsServer())
+		{
+			char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
+			ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+			
+			unsigned int i = 0;
+			for (i; i < instance->clientIP.size(); i++)
+			{
+				*(sendbuf + i) = instance->clientIP[i];
+			}
+
+			i = 16;
+			for (i; i < 16 + receiveFunction.size(); i++)
+			{
+				*(sendbuf + i) = receiveFunction[i - 16];
+			}
+
+			*(sendbuf + i) = '\0';
+
+			i = 17 + receiveFunction.size();
+			for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+			{
+				*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+			}
+
+			int res = send(instance->connectSocket, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+			if (res == SOCKET_ERROR) {
 				Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-				closesocket(clientSocket.second);
+				closesocket(instance->connectSocket);
 				return;
 			}
-			Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
+
+			delete[] sendbuf;
 		}
+	}
+}
+
+void NetworkManager::RegisterReceiveDataFunction(const std::string& key, std::function<void(const std::string&)>* function)
+{
+	if (instance != nullptr)
+	{
+		instance->responseFunctions[key] = function;
+	}
+}
+
+void NetworkManager::DeregisterReceiveDataFunction(const std::string& key)
+{
+	if (instance != nullptr)
+	{
+		instance->responseFunctions.erase(instance->responseFunctions.find(key));
+	}
+}
+
+std::string NetworkManager::GetIPFromData(const std::string& data)
+{
+	std::string IP;
+
+	unsigned int i = 0;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		IP += data[i];
+	}
+
+	return IP;
+}
+
+std::string NetworkManager::GetFunctionFromData(const std::string& data)
+{
+	std::string IP;
+
+	unsigned int i = 0;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		IP += data[i];
+	}
+	i++;
+
+	std::string functionID;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		functionID += data[i];
+	}
+
+	return functionID;
+}
+
+std::string NetworkManager::GetDataBlockFromData(const std::string data)
+{
+	std::string IP;
+
+	unsigned int i = 0;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		IP += data[i];
+	}
+
+	i++;
+
+	std::string functionID;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		functionID += data[i];
+	}
+
+	i++;
+
+	std::string ret = std::string(data.begin() + i, data.end());
+
+	return ret;
+}
+
+std::string NetworkManager::ConvertVec3ToData(const glm::vec3& vec3)
+{
+	return std::to_string(vec3.x) + " " + std::to_string(vec3.y) + " " + std::to_string(vec3.z);
+}
+
+glm::vec3 NetworkManager::ConvertDataToVec3(const std::string& data)
+{
+	std::string x = "";
+	std::string y = "";
+	std::string z = "";
+
+	unsigned int i = 0;
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		x += data[i];
+	}
+
+	i++;
+
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		y += data[i];
+	}
+
+	i++;
+
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			break;
+		}
+
+		z += data[i];
+	}
+
+	return glm::vec3(std::stof(x), std::stof(y), std::stof(z));
+}
+
+std::string NetworkManager::GetIP()
+{
+	if (instance != nullptr)
+	{
+		if (IsServer())
+		{
+			return SERVER_IP;
+		}
+		else
+		{
+			return instance->clientIP;
+		}
+	}
+
+	return "";
+}
+
+unsigned long long NetworkManager::GenerateNetworkObjectID()
+{
+	if (instance != nullptr)
+	{
+
+		if (IsServer())
+		{
+			return instance->networkObjectIDGenerator++;
+		}
+		else
+		{
+			Logger::Log("Calling NetworkManager::GenerateNetworkObjectID on a Client. This should only be called on the server.");
+		}
+
+	}
+
+	Logger::Log("Calling NetworkManager::GenerateNetworkObjectID before NetworkManager::Initialize", Logger::Category::Error);
+	return ULLONG_MAX;
+}
+
+void NetworkManager::Spawn(const std::string& networkObjectClassName, std::function<void(NetworkObject*)>* callback)
+{
+	if (instance == nullptr)
+	{
+		return;
+	}
+
+
+	if (IsServer())
+	{
+		
+	}
+	else
+	{
+		
+		static unsigned long long clientSpawnRequestID = 0ULL;
+
+		std::function<void(const std::string&)>* clientSpawnRequest = new std::function<void(const std::string&)>([networkObjectClassName, callback](const std::string& data)
+			{
+				std::string dataBlock = GetDataBlockFromData(data);
+
+				if (dataBlock != "Failure")
+				{
+					NetworkObject* newNetworkObject = nullptr;
+					NetworkObject::GetConstructor(networkObjectClassName)(&newNetworkObject);
+
+					if (newNetworkObject != nullptr)
+					{
+						newNetworkObject->OnSpawn();
+						newNetworkObject->networkObjectID = std::stod(dataBlock);
+						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
+					}
+
+					(*callback)(newNetworkObject);
+				}
+			});
+
+		instance->clientSpawnRequestCallbacks[clientSpawnRequestID++] = clientSpawnRequest;
+		
+		std::string clientSpawnRequestName = "ClientSpawnRequest:" + std::to_string(clientSpawnRequestID);
+
+		RegisterReceiveDataFunction(clientSpawnRequestName, clientSpawnRequest);
+
+
+		ClientSend(networkObjectClassName + " " + clientSpawnRequestName, "NetworkManagerServerSpawnRequest");
 	}
 }

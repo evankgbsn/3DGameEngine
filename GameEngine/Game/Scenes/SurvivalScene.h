@@ -11,6 +11,7 @@ class SurvivalSun;
 class SurvivalTerrain;
 class SurvivalTree;
 class SurvivalWater;
+class SurvivalServerFreeCamera;
 
 class SurvivalScene : public Scene
 {
@@ -44,7 +45,7 @@ private:
 
 	SurvivalWater* water;
 
-	std::function<void(int)>* deserialize;
+	SurvivalServerFreeCamera* serverFreeCam;
 
 };
 

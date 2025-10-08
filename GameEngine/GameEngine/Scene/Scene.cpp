@@ -2,6 +2,7 @@
 
 #include "../GameObject/GameObject.h"
 #include "../GameObject/Component/Component.h"
+#include "../Editor/Editor.h"
 
 #include <filesystem>
 #include <fstream>
@@ -96,6 +97,7 @@ void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 
 		if (started)
 		{
+			object->Load();
 			object->Initialize();
 			object->Start();
 		}
@@ -120,7 +122,7 @@ void Scene::Terminate()
 	{
 		if (gameObject.second != nullptr)
 		{
-			gameObject.second;
+			delete gameObject.second;
 		}
 	}
 
@@ -131,6 +133,10 @@ void Scene::Load()
 {
 	Initialize();
 	InitializeObjects();
+	if (!Editor::IsEnabled())
+	{
+		Start();
+	}
 }
 
 void Scene::Unload()

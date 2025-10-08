@@ -217,6 +217,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Math\Shapes\Triangle.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="Networking\NetworkManager.cpp" />
+    <ClCompile Include="Networking\NetworkObject.cpp" />
     <ClCompile Include="Physics\PhysicsManager.cpp" />
     <ClCompile Include="Physics\RigidBody.cpp" />
     <ClCompile Include="Renderer\Animation\Animation.cpp" />
@@ -321,6 +322,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Math\Shapes\Triangle.h" />
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Networking\NetworkManager.h" />
+    <ClInclude Include="Networking\NetworkObject.h" />
     <ClInclude Include="Physics\PhysicsManager.h" />
     <ClInclude Include="Physics\RigidBody.h" />
     <ClInclude Include="Renderer\Animation\Animation.h" />

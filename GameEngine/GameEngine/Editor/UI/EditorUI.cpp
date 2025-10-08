@@ -69,8 +69,8 @@ void EditorUI::CreateLoadSceneInputFields()
 	float windowHeight = (float)window->GetHeight();
 	float windowWidth = (float)window->GetWidth();
 
-	loadSceneInputField0 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.37f });
-	loadSceneInputField1 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.45f });
+	loadSceneInputField0 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.37f }, nullptr, nullptr, true);
+	loadSceneInputField1 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.45f }, nullptr, nullptr, true);
 
 	loadSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{
@@ -91,7 +91,7 @@ void EditorUI::CreateLoadSceneInputFields()
 
 	loadSceneInputField0->SetOnEnter(loadSceneInputFieldOnEnter);
 
-	unloadSceneInputField = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.57f });
+	unloadSceneInputField = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.57f }, nullptr, nullptr, true);
 
 	unloadSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{
@@ -107,8 +107,8 @@ void EditorUI::CreateLoadSceneInputFields()
 
 	unloadSceneInputField->SetOnEnter(unloadSceneInputFieldOnEnter);
 
-	saveSceneInputFieldFile = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.17f });
-	saveSceneInputFieldName = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.24f });
+	saveSceneInputFieldFile = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.17f }, nullptr, nullptr, true);
+	saveSceneInputFieldName = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.24f }, nullptr, nullptr, true);
 
 	saveSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{

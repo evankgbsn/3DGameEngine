@@ -72,6 +72,11 @@ void SurvivalTerrain::Unload()
 	}
 }
 
+void SurvivalTerrain::Start()
+{
+	(*onEditorDisable)();
+}
+
 void SurvivalTerrain::SetupEditorCallbacks()
 {
 	onEditorEnable = new std::function<void()>([this]()

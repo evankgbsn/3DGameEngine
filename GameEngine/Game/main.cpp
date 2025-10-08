@@ -5,6 +5,8 @@
 //#include "Scenes/FPSTest.h"
 #include "Scenes/SurvivalScene.h"
 #include "GameEngine/Scene/SceneManager.h"
+#include "Scenes/SurvivalLogin.h"
+#include "Scenes/SurvivalNetworkManager.h"
 
 class HeapProfile
 {
@@ -33,7 +35,13 @@ int main(int argc, const char** argv)
 	Scene* survivalScene = new SurvivalScene();
 	SceneManager::RegisterScene(survivalScene, "SurvivalScene");
 	
-	SceneManager::LoadScene("SurvivalScene");
+	Scene* survivalLoginScene = new SurvivalLogin();
+	SceneManager::RegisterScene(survivalLoginScene, "SurvivalLoginScene");
+
+	Scene* survivalNetworkManager = new SurvivalNetworkManager();
+	SceneManager::RegisterScene(survivalNetworkManager, "SurvivalNetworkManager");
+
+	SceneManager::LoadScene("SurvivalLoginScene");
 
 	Engine::Run();
 

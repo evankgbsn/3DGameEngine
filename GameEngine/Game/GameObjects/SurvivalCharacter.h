@@ -2,6 +2,7 @@
 #define SURVIVALCHARACTER_H
 
 #include "GameEngine/GameObject/GameObject.h"
+#include "GameEngine/Networking/NetworkObject.h"
 
 #include <functional>
 
@@ -9,7 +10,7 @@ class GraphicsObjectTexturedAnimatedLit;
 class CameraComponent;
 class AnimatedColliderComponent;
 
-class SurvivalCharacter : public GameObject
+class SurvivalCharacter : public GameObject, public NetworkObject
 {
 
 public:
@@ -27,6 +28,12 @@ private:
 	SurvivalCharacter(SurvivalCharacter&&) = delete;
 
 	SurvivalCharacter& operator=(SurvivalCharacter&&) = delete;
+
+	void OnSpawn() override;
+
+	void OnDespawn() override;
+
+	void OnDataReceived(const std::string& data) override;
 
 	void Initialize() override;
 

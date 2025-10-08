@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <list>
 
 class Scene;
 class GameObject;
@@ -60,11 +61,15 @@ private:
 
 	static void EditorUpdate();
 
+	void UnloadScenes();
+
 	static SceneManager* instance;
 
 	std::unordered_map<std::string, Scene*> registeredScenes;
 
 	std::unordered_map<std::string, Scene*> loadedScenes;
+
+	std::list<std::string> scenesToUnload;
 };
 
 

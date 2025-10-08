@@ -3,6 +3,8 @@
 #include "../Utils/SingletonHelpers.h"
 #include "Scene.h"
 
+#include <list>
+
 SceneManager* SceneManager::instance = nullptr;
 
 void SceneManager::Initialize()
@@ -73,15 +75,7 @@ void SceneManager::UnloadScene(const std::string& sceneName)
 {
 	if (instance != nullptr)
 	{
-		if (instance->loadedScenes.find(sceneName) != instance->loadedScenes.end())
-		{
-			instance->loadedScenes[sceneName]->Unload();
-			instance->loadedScenes.erase(instance->loadedScenes.find(sceneName));
-		}
-		else
-		{
-			Logger::Log("A scene with the name " + sceneName + " has not been loaded. SceneManager::UnloadScene()", Logger::Category::Warning);
-		}
+		instance->scenesToUnload.push_back(sceneName);
 	}
 }
 
@@ -141,9 +135,21 @@ void SceneManager::StartLoadedScenes()
 {
 	if (instance != nullptr)
 	{
+		std::list<std::string> keys;
+
 		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
 		{
-			scene.second->Start();
+			keys.push_back(scene.first);
+		}
+
+		for (const std::string& scene : keys)
+		{
+			const auto& loadedScene = instance->loadedScenes.find(scene);
+
+			if (loadedScene != instance->loadedScenes.end())
+			{
+				loadedScene->second->Start();
+			}
 		}
 	}
 }
@@ -200,6 +206,8 @@ void SceneManager::Update()
 {
 	if (instance != nullptr)
 	{
+		instance->UnloadScenes();
+
 		for (auto& scene : instance->loadedScenes)
 		{
 			scene.second->GameUpdate();
@@ -211,9 +219,31 @@ void SceneManager::EditorUpdate()
 {
 	if (instance != nullptr)
 	{
+		instance->UnloadScenes();
+
 		for (auto& scene : instance->loadedScenes)
 		{
 			scene.second->EditorUpdate();
 		}
 	}
+}
+
+void SceneManager::UnloadScenes()
+{
+	for (const std::string& sceneName : scenesToUnload)
+	{
+		const auto& sceneToUnload = loadedScenes.find(sceneName);
+
+		if (sceneToUnload != loadedScenes.end())
+		{
+			sceneToUnload->second->Unload();
+			loadedScenes.erase(sceneToUnload);
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been loaded. SceneManager::UnloadScene()", Logger::Category::Warning);
+		}
+	}
+
+	scenesToUnload.clear();
 }

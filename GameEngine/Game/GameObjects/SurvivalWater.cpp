@@ -82,6 +82,11 @@ void SurvivalWater::Deserialize()
 	GameObject::Deserialize();
 }
 
+void SurvivalWater::Start()
+{
+	(*onEditorDisable)();
+}
+
 void SurvivalWater::SetupEditorCallbacks()
 {
 	onEditorEnable = new std::function<void()>([this]()

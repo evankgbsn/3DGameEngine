@@ -408,6 +408,9 @@
     <ClCompile Include="Networking\NetworkManager.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
+    <ClCompile Include="Networking\NetworkObject.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -723,6 +726,9 @@
       <Filter>Source Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="Networking\NetworkManager.h">
+      <Filter>Source Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\NetworkObject.h">
       <Filter>Source Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>

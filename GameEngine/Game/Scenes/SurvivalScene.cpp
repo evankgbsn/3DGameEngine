@@ -5,6 +5,9 @@
 #include "../GameObjects/SurvivalTerrain.h"
 #include "../GameObjects/SurvivalTree.h"
 #include "../GameObjects/SurvivalWater.h"
+#include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Networking/NetworkManager.h"
+#include "../GameObjects/SurvivalServerFreeCamera.h"
 
 
 SurvivalScene::SurvivalScene() :
@@ -12,13 +15,9 @@ SurvivalScene::SurvivalScene() :
 	sun(new SurvivalSun()),
 	terrain(new SurvivalTerrain()),
 	tree(new SurvivalTree()),
-	water(new SurvivalWater())
+	water(new SurvivalWater()),
+	serverFreeCam(nullptr)
 {
-
-	deserialize = new std::function<void(int)>([this](int keyCode)
-		{
-			this->Deserialize("Assets/Scenes/SurvivalScene.xml");
-		});
 
 }
 
@@ -39,11 +38,6 @@ SurvivalScene::~SurvivalScene()
 		delete player;
 	}
 
-	if (deserialize != nullptr)
-	{
-		delete deserialize;
-	}
-
 	if (tree != nullptr)
 	{
 		delete tree;
@@ -53,11 +47,36 @@ SurvivalScene::~SurvivalScene()
 	{
 		delete water;
 	}
+
+	if (serverFreeCam != nullptr)
+	{
+		delete serverFreeCam;
+	}
 }
 
 void SurvivalScene::Initialize()
 {
-	RegisterGameObject(player, "Player");
+	if (SceneManager::SceneLoaded("SurvivalLoginScene"))
+	{
+		SceneManager::UnloadScene("SurvivalLoginScene");
+	}
+
+	if (!NetworkManager::IsServer())
+	{
+		static std::function<void(NetworkObject*)> callback = [](NetworkObject* spawnedObject)
+			{
+				spawnedObject->GetNetworkObjectID();
+			};
+
+		NetworkManager::Spawn("SurvivalCharacter", &callback);
+	}
+	else
+	{
+		serverFreeCam = new SurvivalServerFreeCamera();
+		RegisterGameObject(serverFreeCam, "SurvivalServerFreeCamera");
+	}
+
+	//RegisterGameObject(player, "Player");
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(terrain, "Terrain");
 	RegisterGameObject(tree, "Tree");
@@ -66,11 +85,11 @@ void SurvivalScene::Initialize()
 
 void SurvivalScene::Terminate()
 {
-	Scene::Terminate();
-
 	DeregisterGameObject("Water");
-	DeregisterGameObject("Player");
+	//DeregisterGameObject("Player");
 	DeregisterGameObject("Sun");
 	DeregisterGameObject("Terrain");
 	DeregisterGameObject("Tree");
+
+	Scene::Terminate();
 }

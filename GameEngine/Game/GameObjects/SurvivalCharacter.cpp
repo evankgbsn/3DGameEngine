@@ -19,6 +19,7 @@
 #include "GameEngine/Editor/Editor.h"
 #include "SurvivalWater.h"
 #include "SurvivalTree.h"
+#include "GameEngine/Networking/NetworkManager.h"
 
 #include <glm/gtx/transform.hpp>
 
@@ -42,6 +43,7 @@ SurvivalCharacter::SurvivalCharacter() :
 
 {
 	RegisterGameObjectClassType<SurvivalCharacter>(this);
+	RegisterNetworkObjectClassType<SurvivalCharacter>(this);
 }
 
 SurvivalCharacter::~SurvivalCharacter()
@@ -49,55 +51,94 @@ SurvivalCharacter::~SurvivalCharacter()
 	Terminate();
 }
 
+void SurvivalCharacter::OnSpawn()
+{
+	NetworkObject::OnSpawn();
+
+	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+
+	if (scene != nullptr)
+	{
+		scene->RegisterGameObject(this, "SurvivalCharacter:" + std::to_string(GetNetworkObjectID()));
+	}
+}
+
+void SurvivalCharacter::OnDespawn()
+{
+	NetworkObject::OnDespawn();
+}
+
+void SurvivalCharacter::OnDataReceived(const std::string& data)
+{
+	NetworkObject::OnDataReceived(data);
+
+	if (!NetworkManager::IsServer())
+	{
+		glm::vec3 newPosition = NetworkManager::ConvertDataToVec3(data);
+		characterGraphics->SetPosition(newPosition);
+	}
+	else
+	{
+		target = NetworkManager::ConvertDataToVec3(data);
+	}
+}
+
 void SurvivalCharacter::Initialize()
 {
 	characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel(CHARACTER_GRAPHICS_MODEL_NAME), TextureManager::GetTexture(CHARACTER_GRAPHICS_DIFFUSE_NAME), TextureManager::GetTexture(CHARACTER_GRAPHCIS_SPECULAR_NAME));
 	AddComponent(characterGraphics, "CharacterGraphics");
-
+	
 	characterGraphics->SetShine(32.0f);
 	characterGraphics->SetClip(0);
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+	
+	if (!NetworkManager::IsServer())
+	{
+		characterCamera = new CameraComponent("CharacterCamera");
+		AddComponent(characterCamera, "CharacterCamera");
 
-	characterCamera = new CameraComponent("CharacterCamera");
-	AddComponent(characterCamera, "CharacterCamera");
+		cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
+		cameraPosition = glm::vec3(0.0f, 7.0f, -10.0f);
 
-	cameraTarget = glm::vec3(0.0f, 0.0f, 10.0f);
-	cameraPosition = glm::vec3(0.0f, 7.0f, -10.0f);
+		characterCamera->SetPosition(characterGraphics->GetPosition() + cameraPosition);
+		characterCamera->SetTarget(characterGraphics->GetPosition());
 
-	characterCamera->SetPosition(characterGraphics->GetPosition() + cameraPosition);
-	characterCamera->SetTarget(characterGraphics->GetPosition());
-
+		SetupMovement();
+		SetupCameraMovement();
+	}
+	
 	characterCollider = new AnimatedColliderComponent(characterGraphics);
 	AddComponent(characterCollider, "CharacterCollider");
-
-	SetupMovement();
-	SetupCameraMovement();
+	
 	SetupEditorCallbacks();
 }
 
 void SurvivalCharacter::Terminate()
 {
 	CleanupEditorCallbacks();
-	CleanupCameraMovement();
-	CleanupMovement();
 
-	RemoveComponent("CharacterGraphics");
-	RemoveComponent("CharacterCamera");
-	RemoveComponent("CharacterCollider");
+	if (!NetworkManager::IsServer())
+	{
+		CleanupCameraMovement();
+		CleanupMovement();
+	}
 
 	if (characterGraphics != nullptr)
 	{
+		RemoveComponent("CharacterGraphics");
 		delete characterGraphics;
 	}
 
 	if (characterCamera != nullptr)
 	{
+		RemoveComponent("CharacterCamera");
 		delete characterCamera;
 	}
 
 	if (characterCollider != nullptr)
 	{
+		RemoveComponent("CharacterCollider");
 		delete characterCollider;
 	}
 }
@@ -106,10 +147,13 @@ void SurvivalCharacter::GameUpdate()
 {
 	characterCollider->Update();
 
-	characterCamera->SetTarget(characterGraphics->GetPosition());
+	if (!NetworkManager::IsServer())
+	{
+		characterCamera->SetTarget(characterGraphics->GetPosition());
 
-	characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
-
+		characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
+	}
+	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
 
 	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
@@ -127,30 +171,36 @@ void SurvivalCharacter::GameUpdate()
 			{
 				terrainPoint = terrainComponent->GetTerrainPoint(characterGraphics->GetPosition());
 
-				glm::vec3 cameraTerrainPoint = terrainComponent->GetTerrainPoint(characterCamera->GetPosition());
-
-				float cameraYRestriction = 3.0f;
-
-				if (characterCamera->GetPosition().y < cameraTerrainPoint.y + cameraYRestriction)
+				if (!NetworkManager::IsServer())
 				{
-					characterCamera->SetPosition(cameraTerrainPoint + glm::vec3(0.0f, cameraYRestriction, 0.0f));
+					glm::vec3 cameraTerrainPoint = terrainComponent->GetTerrainPoint(characterCamera->GetPosition());
+
+					float cameraYRestriction = 3.0f;
+
+					if (characterCamera->GetPosition().y < cameraTerrainPoint.y + cameraYRestriction)
+					{
+						characterCamera->SetPosition(cameraTerrainPoint + glm::vec3(0.0f, cameraYRestriction, 0.0f));
+					}
 				}
 			}
 		}
 
-		if (water != nullptr)
+		if (!NetworkManager::IsServer())
 		{
-			TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
-
-			if (terrainComponent != nullptr)
+			if (water != nullptr)
 			{
-				glm::vec3 cameraTerrainPoint = terrainComponent->GetTerrainPoint(characterCamera->GetPosition());
+				TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
 
-				float cameraYRestriction = 3.0f;
-
-				if (characterCamera->GetPosition().y < cameraTerrainPoint.y + cameraYRestriction)
+				if (terrainComponent != nullptr)
 				{
-					characterCamera->SetPosition(cameraTerrainPoint + glm::vec3(0.0f, cameraYRestriction, 0.0f));
+					glm::vec3 cameraTerrainPoint = terrainComponent->GetTerrainPoint(characterCamera->GetPosition());
+
+					float cameraYRestriction = 3.0f;
+
+					if (characterCamera->GetPosition().y < cameraTerrainPoint.y + cameraYRestriction)
+					{
+						characterCamera->SetPosition(cameraTerrainPoint + glm::vec3(0.0f, cameraYRestriction, 0.0f));
+					}
 				}
 			}
 		}
@@ -158,12 +208,20 @@ void SurvivalCharacter::GameUpdate()
 
 	characterGraphics->SetPosition(terrainPoint);
 
-	MoveToTarget();
+	if (NetworkManager::IsServer())
+	{
+		MoveToTarget();
+	}
 }
 
 void SurvivalCharacter::Start()
 {
-	characterCamera->SetActive();
+	(*onEditorDisable)();
+
+	if (!NetworkManager::IsServer())
+	{
+		characterCamera->SetActive();
+	}
 }
 
 void SurvivalCharacter::EditorUpdate()
@@ -266,6 +324,7 @@ void SurvivalCharacter::SetupMovement()
 						if (terrainPoint.y >= waterPoint.y)
 						{
 							target = terrainPoint;
+							ClientSend(NetworkManager::ConvertVec3ToData(target));
 						}
 
 					}
@@ -417,10 +476,11 @@ void SurvivalCharacter::MoveToTarget()
 
 	if (glm::length(targetVector) > movementUnit && target != glm::zero<glm::vec3>())
 	{
-		
-
 		characterGraphics->Translate(direction * movementUnit);
 
+		glm::vec3 newPosition = characterGraphics->GetPosition();
+
+		ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
 
 		if (shouldRotate)
 		{

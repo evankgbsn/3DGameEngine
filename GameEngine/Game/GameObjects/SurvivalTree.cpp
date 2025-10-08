@@ -88,6 +88,8 @@ void SurvivalTree::Unload()
 
 void SurvivalTree::Start()
 {
+	(*onEditorDisable)();
+
 	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
 	if (scene != nullptr)
 	{

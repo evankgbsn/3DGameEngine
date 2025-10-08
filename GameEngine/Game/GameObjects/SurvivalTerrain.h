@@ -37,6 +37,8 @@ private:
 
 	void Unload() override;
 
+	void Start() override;
+
 	void SetupEditorCallbacks();
 
 	void CleanupEditorCallbacks();

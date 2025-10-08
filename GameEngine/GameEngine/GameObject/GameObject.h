@@ -98,13 +98,16 @@ inline void GameObject::RegisterGameObjectClassType(GameObject* obj)
 {
 	nameOfType = std::string(typeid(*obj).name());
 	nameOfType.replace(0, 6, "");
-	Logger::Log(std::string("Created GameObject of Type: ") + nameOfType, Logger::Category::Info);
 
-	newFunctions[nameOfType] = std::function<void(GameObject**)>([](GameObject** outNewGameObject)
-		{
-			*outNewGameObject = new T();
-		});
+	if (newFunctions.find(nameOfType) == newFunctions.end())
+	{
+		Logger::Log(std::string("Registered GameObject of Type: ") + nameOfType, Logger::Category::Info);
 
+		newFunctions[nameOfType] = std::function<void(GameObject**)>([](GameObject** outNewGameObject)
+			{
+				*outNewGameObject = new T();
+			});
+	}
 }
 
 #endif // GAMEOBJECT_H

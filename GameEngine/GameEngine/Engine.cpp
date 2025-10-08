@@ -157,7 +157,7 @@ void Engine::EditorPlayToggleInputSetup()
 		{
 			if (NetworkManager::IsServer())
 			{
-				NetworkManager::ServerSendAll("Hello");
+				NetworkManager::ServerSendAll("Hello", 0);
 			}
 		});
 

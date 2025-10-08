@@ -96,6 +96,18 @@
     <ClCompile Include="GameObjects\SurvivalWater.cpp">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\SurvivalLogin.cpp">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalLoginUI.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SurvivalNetworkManager.cpp">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalServerFreeCamera.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\MainScene.h">
@@ -159,6 +171,18 @@
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\SurvivalWater.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SurvivalLogin.h">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalLoginUI.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SurvivalNetworkManager.h">
+      <Filter>Source Files\Scenes\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalServerFreeCamera.h">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
   </ItemGroup>

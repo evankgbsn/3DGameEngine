@@ -41,6 +41,8 @@ private:
 
 	void Deserialize() override;
 
+	void Start() override;
+
 	void SetupEditorCallbacks();
 
 	void CleanupEditorCallbacks();

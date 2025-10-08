@@ -435,16 +435,16 @@ void InputManager::DeregisterCallbackForMouseButtonState(int state, int mouseBut
 				switch (state)
 				{
 				case KEY_PRESS:
-					deregisterCallbackForMouseButtonState(instance->registeredKeyPressEvents, pressSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->registeredMouseButtonPressEvents, pressSuccessLog);
 					break;
 				case KEY_RELEASE:
-					deregisterCallbackForMouseButtonState(instance->registeredKeyReleaseEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->registeredMouseButtonReleaseEvents, releaseSuccessLog);
 					break;
 				case KEY_PRESSED:
-					deregisterCallbackForMouseButtonState(instance->registeredKeyPressedEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->registeredMouseButtonPressedEvents, releaseSuccessLog);
 					break;
 				case KEY_RELEASED:
-					deregisterCallbackForMouseButtonState(instance->registeredKeyReleasedEvents, releaseSuccessLog);
+					deregisterCallbackForMouseButtonState(instance->registeredMouseButtonReleasedEvents, releaseSuccessLog);
 					break;
 				default:
 					break;

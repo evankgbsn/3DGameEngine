@@ -16,7 +16,7 @@ class InputField
 
 public:
 
-	InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onEnter = nullptr, std::function<void()>* onChange = nullptr);
+	InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onEnter = nullptr, std::function<void()>* onChange = nullptr, bool editor = false);
 
 	~InputField();
 
@@ -97,6 +97,8 @@ private:
 	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
 
 	unsigned int ID;
+
+	bool isEditor;
 
 };
 

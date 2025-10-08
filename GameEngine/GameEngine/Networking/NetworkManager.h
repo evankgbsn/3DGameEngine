@@ -4,16 +4,22 @@
 #ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <iphlpapi.h>
 #pragma comment(lib, "Ws2_32.lib")
 #endif
+
+#include <glm/glm.hpp>
 
 #include <thread>
 #include <unordered_map>
 #include <mutex>
 #include <list>
+#include <functional>
+#include <string>
+#include <unordered_set>
 
 class SingletonHelpers;
-
+class NetworkObject;
 
 class NetworkManager
 {
@@ -31,7 +37,31 @@ public:
 
 	static bool IsServer();
 
-	static void ServerSendAll(const std::string& data);
+	static void ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs = {});
+
+	static void ServerSend(const std::string& ip, const std::string& data, const std::string& receiveFunction);
+
+	static void ClientSend(const std::string& data, const std::string& receiveFunction);
+
+	static void RegisterReceiveDataFunction(const std::string& key, std::function<void(const std::string&)>*);
+
+	static void DeregisterReceiveDataFunction(const std::string& key);
+
+	static std::string GetIPFromData(const std::string& data);
+
+	static std::string GetFunctionFromData(const std::string& data);
+
+	static std::string GetDataBlockFromData(const std::string data);
+
+	static std::string ConvertVec3ToData(const glm::vec3& vec3);
+
+	static glm::vec3 ConvertDataToVec3(const std::string& data);
+
+	static std::string GetIP();
+
+	static unsigned long long GenerateNetworkObjectID();
+
+	static void Spawn(const std::string& networkObjectClassName, std::function<void(NetworkObject*)>* callback);
 
 private:
 
@@ -55,11 +85,27 @@ private:
 
 	void StartServer();
 
-	void Receive();
+	void ClientReceive();
+
+	void ServerReceive(const std::string& IP);
 
 	void ListenForConnections();
 
+	void ProcessReceivedData();
+
+	void SetupServerReceiveSpawnRequestCallback();
+
+	void CleanupServerReceiveSpawnRequestCallback();
+
+	void CleanupSpawnedNetworkObjects();
+
+	void SetupReceiveSpawnFromServer();
+
+	void CleanupReceiveSpawnFromServer();
+
 	static NetworkManager* instance;
+
+	std::string clientIP;
 
 	bool isServer;
 
@@ -77,11 +123,27 @@ private:
 
 	std::unordered_map<std::string, SOCKET> connectedClients;
 
+	std::mutex connectedClientsReceiveThreadsMutex;
+
+	std::unordered_map<std::string, std::thread> connectedClientsReceiveThreads;
+
 	std::mutex receivedDataMutex;
 
 	std::list<std::string> receivedData;
 
 	std::atomic<bool> running;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> responseFunctions;
+
+	std::unordered_map<unsigned long long, std::function<void(const std::string&)>*> clientSpawnRequestCallbacks;
+
+	std::function<void(const std::string&)>* serverReceiveSpawnRequest;
+
+	std::unordered_map<unsigned long long, NetworkObject*> spawnedNetworkObjects;
+
+	std::function<void(const std::string&)>* receiveSpawnFromServer;
+
+	unsigned long long networkObjectIDGenerator;
 	
 };
 
