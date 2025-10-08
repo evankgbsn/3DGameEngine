@@ -557,7 +557,7 @@ void NetworkManager::SetupReceiveSpawnFromServer()
 			unsigned int i = 0;
 			for (i; i < dataBlock.size(); i++)
 			{
-				if (i == ' ')
+				if (dataBlock[i] == ' ')
 				{
 					break;
 				}
