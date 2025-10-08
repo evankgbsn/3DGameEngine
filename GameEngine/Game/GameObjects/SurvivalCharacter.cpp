@@ -186,7 +186,7 @@ void SurvivalCharacter::GameUpdate()
 			{
 				terrainPoint = terrainComponent->GetTerrainPoint(characterGraphics->GetPosition());
 
-				if (!NetworkManager::IsServer())
+				if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 				{
 					glm::vec3 cameraTerrainPoint = terrainComponent->GetTerrainPoint(characterCamera->GetPosition());
 
