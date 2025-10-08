@@ -955,8 +955,8 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 
 					if (newNetworkObject != nullptr)
 					{
-						newNetworkObject->OnSpawn();
 						newNetworkObject->spawnedFromLocalSpawnRequest = true;
+						newNetworkObject->OnSpawn();
 						newNetworkObject->networkObjectID = std::stod(dataBlock);
 						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 					}
