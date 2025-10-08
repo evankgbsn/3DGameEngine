@@ -65,7 +65,7 @@ private:
 
 	std::function<void(const std::string&)>* onReceiveData;
 
-	bool spawnedFromLocalSpwanRequest;
+	bool spawnedFromLocalSpawnRequest;
 };
 
 template<typename T>
