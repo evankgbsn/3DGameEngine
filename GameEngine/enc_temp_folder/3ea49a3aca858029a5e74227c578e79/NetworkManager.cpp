@@ -506,10 +506,10 @@ void NetworkManager::SetupServerReceiveSpawnRequestCallback()
 				unsigned long long newNetworkObjectID = GenerateNetworkObjectID();
 				newNetworkObject->networkObjectID = newNetworkObjectID;
 
-				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
-
 				newNetworkObject->OnSpawn();
 
+
+				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 
 				std::string targetIP = GetIPFromData(data);
 
@@ -578,8 +578,8 @@ void NetworkManager::SetupReceiveSpawnFromServer()
 			if (newNetworkObject != nullptr)
 			{
 				newNetworkObject->networkObjectID = std::stoull(networkObjectID);
-				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 				newNetworkObject->OnSpawn();
+				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 			}
 		});
 
@@ -956,9 +956,9 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 					if (newNetworkObject != nullptr)
 					{
 						newNetworkObject->spawnedFromLocalSpawnRequest = true;
+						newNetworkObject->OnSpawn();
 						newNetworkObject->networkObjectID = std::stod(dataBlock);
 						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
-						newNetworkObject->OnSpawn();
 					}
 
 					(*callback)(newNetworkObject);
