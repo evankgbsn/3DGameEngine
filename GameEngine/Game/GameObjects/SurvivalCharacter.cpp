@@ -150,9 +150,12 @@ void SurvivalCharacter::GameUpdate()
 
 	if (!NetworkManager::IsServer())
 	{
-		characterCamera->SetTarget(characterGraphics->GetPosition());
+		if (SpawnedFromLocalSpawnRequest())
+		{
+			characterCamera->SetTarget(characterGraphics->GetPosition());
 
-		characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
+			characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
+		}
 
 		float movementUnit = walkSpeed * TimeManager::DeltaTime();
 		glm::vec3 targetVector(receivedPosition - characterGraphics->GetPosition());
@@ -231,7 +234,7 @@ void SurvivalCharacter::Start()
 {
 	(*onEditorDisable)();
 
-	if (!NetworkManager::IsServer())
+	if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 	{
 		characterCamera->SetActive();
 	}
