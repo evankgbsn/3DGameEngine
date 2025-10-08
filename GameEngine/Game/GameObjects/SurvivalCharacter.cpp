@@ -61,6 +61,8 @@ void SurvivalCharacter::OnSpawn()
 	{
 		scene->RegisterGameObject(this, "SurvivalCharacter:" + std::to_string(GetNetworkObjectID()));
 	}
+
+	currentTranslationVector = glm::vec3(0.0f);
 }
 
 void SurvivalCharacter::OnDespawn()
@@ -74,8 +76,7 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 
 	if (!NetworkManager::IsServer())
 	{
-		glm::vec3 newPosition = NetworkManager::ConvertDataToVec3(data);
-		characterGraphics->SetPosition(newPosition);
+		receivedPosition = NetworkManager::ConvertDataToVec3(data);
 	}
 	else
 	{
@@ -152,6 +153,17 @@ void SurvivalCharacter::GameUpdate()
 		characterCamera->SetTarget(characterGraphics->GetPosition());
 
 		characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
+
+		float movementUnit = walkSpeed * TimeManager::DeltaTime();
+		glm::vec3 targetVector(receivedPosition - characterGraphics->GetPosition());
+		glm::vec3 direction = glm::normalize(targetVector);
+
+		if (glm::length(targetVector) > movementUnit)
+		{
+			currentTranslationVector = direction * movementUnit;
+
+			characterGraphics->Translate(currentTranslationVector);
+		}
 	}
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
@@ -206,6 +218,7 @@ void SurvivalCharacter::GameUpdate()
 		}
 	}
 
+	
 	characterGraphics->SetPosition(terrainPoint);
 
 	if (NetworkManager::IsServer())
@@ -480,7 +493,10 @@ void SurvivalCharacter::MoveToTarget()
 
 		glm::vec3 newPosition = characterGraphics->GetPosition();
 
-		ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+		if (NetworkManager::IsServer())
+		{
+			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+		}
 
 		if (shouldRotate)
 		{

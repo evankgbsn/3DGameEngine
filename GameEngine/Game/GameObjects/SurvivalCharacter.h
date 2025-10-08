@@ -107,6 +107,10 @@ private:
 
 	float cameraDistance;
 
+	glm::vec3 receivedPosition;
+
+	glm::vec3 currentTranslationVector;
+
 };
 
 #endif // SURVIVALCHARACTER_H
