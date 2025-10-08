@@ -94,7 +94,7 @@ void SurvivalCharacter::Initialize()
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
 	
-	if (!NetworkManager::IsServer())
+	if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 	{
 		characterCamera = new CameraComponent("CharacterCamera");
 		AddComponent(characterCamera, "CharacterCamera");
@@ -345,6 +345,7 @@ void SurvivalCharacter::SetupMovement()
 			}
 		});
 
+	
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, clickToMove, "ClickToMove");
 }
 

@@ -28,6 +28,8 @@ public:
 
 	void ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs = {});
 
+	bool SpawnedFromLocalSpawnRequest() const;
+
 protected:
 
 	NetworkObject();
@@ -62,6 +64,8 @@ private:
 	std::string nameOfType;
 
 	std::function<void(const std::string&)>* onReceiveData;
+
+	bool spawnedFromLocalSpwanRequest;
 };
 
 template<typename T>

@@ -29,6 +29,11 @@ void NetworkObject::ServerSendAll(const std::string& data, const std::unordered_
 	NetworkManager::ServerSendAll(data, "NetworkObject:" + networkObjectID, excludedIPs);
 }
 
+bool NetworkObject::SpawnedFromLocalSpawnRequest() const
+{
+	return spawnedFromLocalSpwanRequest;
+}
+
 void NetworkObject::OnDataReceived(const std::string& Data)
 {
 }
@@ -48,7 +53,8 @@ std::function<void(NetworkObject**)> NetworkObject::GetConstructor(const std::st
 	return std::function<void(NetworkObject**)>();
 }
 
-NetworkObject::NetworkObject()
+NetworkObject::NetworkObject() :
+	spawnedFromLocalSpwanRequest(false)
 {
 	onReceiveData = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
