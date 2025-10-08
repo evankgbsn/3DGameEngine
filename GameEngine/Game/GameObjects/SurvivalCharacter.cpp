@@ -200,7 +200,7 @@ void SurvivalCharacter::GameUpdate()
 			}
 		}
 
-		if (!NetworkManager::IsServer())
+		if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 		{
 			if (water != nullptr)
 			{
