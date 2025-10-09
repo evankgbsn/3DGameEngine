@@ -47,7 +47,8 @@ void GameObject::SetName(const std::string& n)
 }
 
 GameObject::GameObject(const std::string& n) :
-	name(n)
+	name(n),
+	owningScene(nullptr)
 {
 	
 }
@@ -79,6 +80,11 @@ Component* const GameObject::GetComponent(const std::string& component) const
 	}
 
 	return nullptr;
+}
+
+Scene* GameObject::GetOwningScene() const
+{
+	return owningScene;
 }
 
 std::function<void(GameObject**)> GameObject::GetConstructor(const std::string& name)

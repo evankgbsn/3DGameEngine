@@ -48,7 +48,7 @@ SurvivalCharacter::SurvivalCharacter() :
 
 SurvivalCharacter::~SurvivalCharacter()
 {
-	Terminate();
+	
 }
 
 void SurvivalCharacter::OnSpawn()
@@ -62,11 +62,26 @@ void SurvivalCharacter::OnSpawn()
 		scene->RegisterGameObject(this, "SurvivalCharacter:" + std::to_string(GetNetworkObjectID()));
 	}
 
+	if (NetworkManager::IsServer())
+	{
+		onClientDisconnect = new std::function<void(const std::string&)>([this](const std::string& IP)
+			{
+				NetworkManager::Despawn(GetNetworkObjectID());
+			});
+
+		NetworkManager::RegisterOnClientDisconnectFunction("SurvivalCharacter", onClientDisconnect);
+	}
+
 	currentTranslationVector = glm::vec3(0.0f);
 }
 
 void SurvivalCharacter::OnDespawn()
 {
+	if (NetworkManager::IsServer())
+	{
+		NetworkManager::DeregisterOnClientDisconnectFunction("SurvivalCharacter");
+	}
+
 	NetworkObject::OnDespawn();
 }
 

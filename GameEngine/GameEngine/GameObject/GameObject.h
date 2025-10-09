@@ -11,6 +11,7 @@
 #include <functional>
 
 class Component;
+class Scene;
 
 class GameObject
 {
@@ -41,6 +42,8 @@ public:
 	void SetName(const std::string& name);
 
 	Component* const GetComponent(const std::string& component) const;
+
+	Scene* GetOwningScene() const;
 
 protected:
 
@@ -90,6 +93,8 @@ private:
 	std::string nameOfType;
 
 	std::unordered_map<std::string, Component*> components;
+
+	Scene* owningScene;
 
 };
 

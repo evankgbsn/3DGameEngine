@@ -73,11 +73,4 @@ void MainScene::Terminate()
 	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_J, "deserialize");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "LoadSubscene");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_U, "UnloadSubscene");
-
-	DeregisterGameObject("Terrain");
-	DeregisterGameObject("Lights");
-	DeregisterGameObject("Tree");
-	//DeregisterGameObject("FreeCam");
-	DeregisterGameObject("DirectionalLight");
-	DeregisterGameObject("Character");
 }

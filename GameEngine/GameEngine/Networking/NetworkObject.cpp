@@ -34,6 +34,11 @@ bool NetworkObject::SpawnedFromLocalSpawnRequest() const
 	return spawnedFromLocalSpawnRequest;
 }
 
+std::string NetworkObject::GetSpawnerIP() const
+{
+	return spawnerIP;
+}
+
 void NetworkObject::OnDataReceived(const std::string& Data)
 {
 }

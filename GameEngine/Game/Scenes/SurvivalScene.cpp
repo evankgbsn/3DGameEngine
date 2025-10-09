@@ -85,11 +85,5 @@ void SurvivalScene::Initialize()
 
 void SurvivalScene::Terminate()
 {
-	DeregisterGameObject("Water");
-	//DeregisterGameObject("Player");
-	DeregisterGameObject("Sun");
-	DeregisterGameObject("Terrain");
-	DeregisterGameObject("Tree");
-
 	Scene::Terminate();
 }

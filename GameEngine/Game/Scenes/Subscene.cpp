@@ -38,7 +38,4 @@ void Subscene::Initialize()
 void Subscene::Terminate()
 {
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "LoadMainScene");
-
-	DeregisterGameObject("FreeCam");
-	DeregisterGameObject("SpinningBoxez");
 }

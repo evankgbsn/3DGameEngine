@@ -95,6 +95,8 @@ void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 
 		object->SetName(name);
 
+		object->owningScene = this;
+
 		if (started)
 		{
 			object->Load();
@@ -108,7 +110,14 @@ void Scene::DeregisterGameObject(const std::string& name)
 {
 	if (objects.find(name) != objects.end())
 	{
-		objects.erase(objects.find(name));
+		const auto& object = objects.find(name);
+
+		object->second->End();
+		object->second->Terminate();
+		object->second->Unload();
+
+		object->second->owningScene = nullptr;
+		objects.erase(object);
 	}
 }
 

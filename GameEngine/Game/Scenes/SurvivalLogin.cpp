@@ -19,5 +19,4 @@ void SurvivalLogin::Initialize()
 
 void SurvivalLogin::Terminate()
 {
-	DeregisterGameObject("SurvivalLoginUI");
 }

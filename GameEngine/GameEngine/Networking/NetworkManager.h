@@ -71,6 +71,8 @@ public:
 
 	static void Spawn(const std::string& networkObjectClassName, std::function<void(NetworkObject*)>* callback);
 
+	static void Despawn(unsigned long long networkObjectID);
+
 private:
 
 	friend class SingletonHelpers;
@@ -105,13 +107,25 @@ private:
 
 	void CleanupServerReceiveSpawnRequestCallback();
 
+	void SetupServerReceiveDespawnRequestCallback();
+
+	void CleanupServerReceiveDespawnRequestCallback();
+	
 	void CleanupSpawnedNetworkObjects();
 
 	void SetupReceiveSpawnFromServer();
 
 	void CleanupReceiveSpawnFromServer();
 
+	void SetupReceiveDespawnFromServer();
+
+	void CleanupReceiveDespawnFromServer();
+
 	void OnClientDisconnect(const std::string& IP);
+
+	void CleanDisconnectedClientThreads();
+
+	void ProcessMainThreadUpdates();
 
 	static NetworkManager* instance;
 
@@ -149,15 +163,25 @@ private:
 
 	std::function<void(const std::string&)>* serverReceiveSpawnRequest;
 
+	std::function<void(const std::string&)>* serverReceiveDespawnRequest;
+
 	std::unordered_map<unsigned long long, NetworkObject*> spawnedNetworkObjects;
 
 	std::function<void(const std::string&)>* receiveSpawnFromServer;
+
+	std::function<void(const std::string&)>* receiveDespawnFromServer;
 
 	std::mutex onClientDisconnectCallbacksMutex;
 
 	std::unordered_map<std::string, std::function<void(const std::string&)>*> onClientDisconnectCallbacks;
 
 	std::unordered_map<std::string, std::function<void()>*> onDisconnectCallbacks;
+
+	std::mutex mainThreadUpdatesMutex;
+
+	std::list<std::function<void()>> mainThreadUpdates;
+
+	std::thread cleanDisconnectedClientThread;
 
 	unsigned long long networkObjectIDGenerator;
 	

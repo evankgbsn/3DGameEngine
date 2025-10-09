@@ -2,6 +2,8 @@
 
 #include "../Utils/SingletonHelpers.h"
 #include "NetworkObject.h"
+#include "../GameObject/GameObject.h"
+#include "../Scene/Scene.h"
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
@@ -17,10 +19,14 @@ void NetworkManager::Initialize()
 
 	instance->SetupServerReceiveSpawnRequestCallback();
 	instance->SetupReceiveSpawnFromServer();
+	instance->SetupServerReceiveDespawnRequestCallback();
+	instance->SetupReceiveDespawnFromServer();
 }
 
 void NetworkManager::Terminate()
 {
+	instance->CleanupReceiveDespawnFromServer();
+	instance->CleanupServerReceiveDespawnRequestCallback();
 	instance->CleanupReceiveSpawnFromServer();
 	instance->CleanupSpawnedNetworkObjects();
 	instance->CleanupServerReceiveSpawnRequestCallback();
@@ -59,6 +65,7 @@ void NetworkManager::Update()
 	if (instance != nullptr)
 	{
 		instance->ProcessReceivedData();
+		instance->ProcessMainThreadUpdates();
 	}
 }
 
@@ -97,19 +104,21 @@ NetworkManager::~NetworkManager()
 
 	if (!isServer)
 	{
-		closesocket(connectSocket);
+		shutdown(connectSocket, SD_SEND);
 
 		if (receiveThread.joinable())
 		{
 			receiveThread.join();
 		}
+
+		closesocket(connectSocket);
 	}
 	else
 	{
 		closesocket(listenSocket);
 		for (auto& client : connectedClients)
 		{
-			closesocket(client.second);
+			shutdown(client.second, SD_SEND);
 		}
 
 		for (auto& clientThread : connectedClientsReceiveThreads)
@@ -120,9 +129,19 @@ NetworkManager::~NetworkManager()
 			}
 		}
 
+		for (auto& client : connectedClients)
+		{
+			closesocket(client.second);
+		}
+
 		if (listenThread.joinable())
 		{
 			listenThread.join();
+		}
+
+		if (cleanDisconnectedClientThread.joinable())
+		{
+			cleanDisconnectedClientThread.join();
 		}
 	}
 
@@ -273,6 +292,7 @@ void NetworkManager::StartServer()
 	freeaddrinfo(result);
 
 	listenThread = std::thread(&NetworkManager::ListenForConnections, this);
+	cleanDisconnectedClientThread = std::thread(&NetworkManager::CleanDisconnectedClientThreads, this);
 }
 
 void NetworkManager::ClientReceive()
@@ -313,6 +333,10 @@ void NetworkManager::ClientReceive()
 
 					receivedData.push_back(data);
 				}
+			}
+			else if (iResult == 0)
+			{
+				Logger::Log("Disconnected from server", Logger::Category::Warning);
 			}
 			else if (iResult < 0)
 			{
@@ -373,6 +397,7 @@ void NetworkManager::ServerReceive(const std::string& IP)
 				connectedClientsMutex.lock();
 				connectedClients.erase(clientSocket);
 				connectedClientsMutex.unlock();
+
 				OnClientDisconnect(IP);
 				return;
 			}
@@ -518,10 +543,10 @@ void NetworkManager::SetupServerReceiveSpawnRequestCallback()
 
 				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 
-				newNetworkObject->OnSpawn();
-
-
 				std::string targetIP = GetIPFromData(data);
+				newNetworkObject->spawnerIP = targetIP;
+
+				newNetworkObject->OnSpawn();
 
 				ServerSend(targetIP, std::to_string(newNetworkObjectID), clientResponseFunctionName);
 				ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", { targetIP });
@@ -545,14 +570,87 @@ void NetworkManager::CleanupServerReceiveSpawnRequestCallback()
 	}
 }
 
+void NetworkManager::SetupServerReceiveDespawnRequestCallback()
+{
+	serverReceiveDespawnRequest = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			std::string networkObjectID;
+			std::string clientResponseFunctionName;
+
+			unsigned int i = 0;
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (dataBlock[i] == ' ')
+				{
+					break;
+				}
+
+				networkObjectID += dataBlock[i];
+			}
+
+			i++;
+
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (dataBlock[i] == ' ')
+				{
+					break;
+				}
+				clientResponseFunctionName += dataBlock[i];
+			}
+
+			const auto& networkObject = spawnedNetworkObjects.find(std::stoull(networkObjectID));
+
+			if (networkObject != spawnedNetworkObjects.end())
+			{
+				networkObject->second->OnDespawn();
+
+				GameObject* networkGameObject = dynamic_cast<GameObject*>(networkObject->second);
+
+				if (networkGameObject != nullptr)
+				{
+					Scene* owningScene = networkGameObject->GetOwningScene();
+					if (owningScene != nullptr)
+					{
+						owningScene->DeregisterGameObject(networkGameObject->GetName());
+					}
+				}
+
+				delete networkObject->second;
+				spawnedNetworkObjects.erase(networkObject);
+
+				std::string targetIP = GetIPFromData(data);
+
+				ServerSendAll(networkObjectID, "NetworkManagerClientReceiveDespawnFromServer");
+			}
+			else
+			{
+				Logger::Log("Received request to despawn a network object that was never spawned with network object ID: " + std::stoull(networkObjectID), Logger::Category::Warning);
+			}
+		});
+
+	RegisterReceiveDataFunction("NetworkManagerServerDespawnRequest", serverReceiveDespawnRequest);
+}
+
+void NetworkManager::CleanupServerReceiveDespawnRequestCallback()
+{
+	if (serverReceiveDespawnRequest != nullptr)
+	{
+		DeregisterReceiveDataFunction("NetworkManagerServerDespawnRequest");
+		delete serverReceiveDespawnRequest;
+	}
+}
+
 void NetworkManager::CleanupSpawnedNetworkObjects()
 {
-	//for (const auto& networkObject : spawnedNetworkObjects)
-	//{
-	//	delete networkObject.second;
-	//}
-	//
-	//spawnedNetworkObjects.clear();
+	for (const auto& networkObject : spawnedNetworkObjects)
+	{
+		delete networkObject.second;
+	}
+	
+	spawnedNetworkObjects.clear();
 }
 
 void NetworkManager::SetupReceiveSpawnFromServer()
@@ -605,14 +703,113 @@ void NetworkManager::CleanupReceiveSpawnFromServer()
 	}
 }
 
+void NetworkManager::SetupReceiveDespawnFromServer()
+{
+	receiveDespawnFromServer = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			std::string networkObjectID;
+
+			unsigned int i = 0;
+			for (i; i < dataBlock.size(); i++)
+			{
+				if (dataBlock[i] == ' ')
+				{
+					break;
+				}
+
+				networkObjectID += dataBlock[i];
+			}
+
+			const auto& networkObject = spawnedNetworkObjects.find(std::stoull(networkObjectID));
+
+			if (networkObject != spawnedNetworkObjects.end())
+			{
+				GameObject* networkGameObject = dynamic_cast<GameObject*>(networkObject->second);
+
+				if (networkGameObject != nullptr)
+				{
+					Scene* owningScene = networkGameObject->GetOwningScene();
+					if (owningScene != nullptr)
+					{
+						owningScene->DeregisterGameObject(networkGameObject->GetName());
+					}
+				}
+
+				delete networkObject->second;
+				spawnedNetworkObjects.erase(networkObject);
+			}
+
+		});
+
+	RegisterReceiveDataFunction("NetworkManagerClientReceiveDespawnFromServer", receiveDespawnFromServer);
+}
+
+void NetworkManager::CleanupReceiveDespawnFromServer()
+{
+	if (receiveDespawnFromServer != nullptr)
+	{
+		DeregisterReceiveDataFunction("NetworkManagerClientReceiveDespawnFromServer");
+		delete receiveDespawnFromServer;
+	}
+}
+
 void NetworkManager::OnClientDisconnect(const std::string& IP)
 {
 	std::lock_guard<std::mutex> guard(onClientDisconnectCallbacksMutex);
 
 	for (const auto& callback : onClientDisconnectCallbacks)
 	{
-		(*callback.second)(IP);
+		std::lock_guard<std::mutex> guard(mainThreadUpdatesMutex);
+
+		mainThreadUpdates.push_back([callback, IP]()
+			{
+				(*callback.second)(IP);
+			});
 	}
+}
+
+void NetworkManager::CleanDisconnectedClientThreads()
+{
+	while (running.load())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+		std::unordered_set<std::string> disconnectedClients;
+
+		connectedClientsReceiveThreadsMutex.lock();
+
+		for (auto& clientThread : connectedClientsReceiveThreads)
+		{
+			if (connectedClients.find(clientThread.first) != connectedClients.end())
+			{
+				disconnectedClients.insert(clientThread.first);
+
+				if (clientThread.second.joinable())
+				{
+					clientThread.second.join();
+				}
+			}
+		}
+
+		for (const auto& client : disconnectedClients)
+		{
+			connectedClientsReceiveThreads.erase(connectedClientsReceiveThreads.find(client));
+		}
+
+		connectedClientsReceiveThreadsMutex.unlock();
+	}
+}
+
+void NetworkManager::ProcessMainThreadUpdates()
+{
+	for (const auto& update : mainThreadUpdates)
+	{
+		update();
+	}
+
+	mainThreadUpdates.clear();
 }
 
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
@@ -1027,5 +1224,41 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 
 
 		ClientSend(networkObjectClassName + " " + clientSpawnRequestName, "NetworkManagerServerSpawnRequest");
+	}
+}
+
+void NetworkManager::Despawn(unsigned long long networkObjectID)
+{
+	if (instance == nullptr)
+	{
+		return;
+	}
+
+	if (IsServer())
+	{
+		const auto& networkObject = instance->spawnedNetworkObjects.find(networkObjectID);
+
+		if (networkObject != instance->spawnedNetworkObjects.end())
+		{
+			GameObject* networkGameObject = dynamic_cast<GameObject*>(networkObject->second);
+
+			if (networkGameObject != nullptr)
+			{
+				Scene* owningScene = networkGameObject->GetOwningScene();
+				if (owningScene != nullptr)
+				{
+					owningScene->DeregisterGameObject(networkGameObject->GetName());
+				}
+			}
+
+			delete networkObject->second;
+			instance->spawnedNetworkObjects.erase(networkObject);
+		}
+
+		ServerSendAll(std::to_string(networkObjectID), "NetworkManagerClientReceiveDespawnFromServer");
+	}
+	else
+	{
+		ClientSend(std::to_string(networkObjectID), "NetworkManagerServerDespawnRequest");
 	}
 }

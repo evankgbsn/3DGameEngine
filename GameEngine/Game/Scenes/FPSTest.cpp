@@ -46,7 +46,4 @@ void FPSTest::Initialize()
 void FPSTest::Terminate()
 {
 	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_L, "deserialize");
-	DeregisterGameObject("Player");
-	DeregisterGameObject("TerrainObject");
-	DeregisterGameObject("DirectionalLight");
 }

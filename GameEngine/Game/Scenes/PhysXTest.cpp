@@ -37,8 +37,5 @@ void PhysXTest::Initialize()
 
 void PhysXTest::Terminate()
 {
-	DeregisterGameObject("RigidBox");
-	DeregisterGameObject("Camera");
-	DeregisterGameObject("Light");
-	DeregisterGameObject("Floor");
+
 }

@@ -45,6 +45,9 @@ void SurvivalServerFreeCamera::Initialize()
 
 	cam = new CameraComponent("FreeCamera");
 	AddComponent(cam, "Camera");
+
+	cam->SetPosition({ 0.0f, 50.0f, -50.0f });
+	cam->SetTarget({ 0.0f, 0.0f, 0.0f });
 }
 
 void SurvivalServerFreeCamera::Terminate()

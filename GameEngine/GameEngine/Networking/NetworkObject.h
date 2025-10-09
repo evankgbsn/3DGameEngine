@@ -30,6 +30,8 @@ public:
 
 	bool SpawnedFromLocalSpawnRequest() const;
 
+	std::string GetSpawnerIP() const;
+
 protected:
 
 	NetworkObject();
@@ -66,6 +68,8 @@ private:
 	std::function<void(const std::string&)>* onReceiveData;
 
 	bool spawnedFromLocalSpawnRequest;
+
+	std::string spawnerIP;
 };
 
 template<typename T>
