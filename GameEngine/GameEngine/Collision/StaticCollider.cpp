@@ -13,6 +13,9 @@
 #include "../Utils/Logger.h"
 
 #include <list>
+#include <algorithm>
+#include <execution>
+#include <atomic>
 
 StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	wrapedGraphics(graphicsObject)
@@ -114,22 +117,54 @@ float StaticCollider::Intersect(const Ray& ray) const
 	const std::vector<Vertex> vertices = wrapedGraphics->GetModel()->GetVertices();
 	const std::vector<unsigned int> indices = wrapedGraphics->GetModel()->GetIndices();
 
-	std::vector<Triangle> triangles;
+	struct TriangleIndices
+	{
+		unsigned int triIndex;
+		unsigned int a;
+		unsigned int b;
+		unsigned int c;
+	};
+	
+	std::vector<TriangleIndices> trianglesIndices;
 
+	unsigned int triIndex = 0;
 	for (unsigned int i = 0; i < indices.size(); i += 3)
 	{
-		Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
-		triangles.push_back(t);
+		trianglesIndices.push_back({ triIndex++, indices[i], indices[i + 1], indices[i + 2] });
 	}
 
-	for (int i = 0; i < triangles.size(); ++i)
-	{
-		float result = triangles[i].Raycast(ray);
-		if (result >= 0)
+	std::vector<Triangle> triangles(indices.size()/3);
+
+	std::for_each(std::execution::par, trianglesIndices.begin(), trianglesIndices.end(), [&triangles, &vertices, this](const TriangleIndices& triangleIndices)
 		{
-			return result;
-		}
-	}
+			triangles[triangleIndices.triIndex] = Triangle(wrapedGraphics->GetTransform() * glm::vec4(vertices[triangleIndices.a].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[triangleIndices.b].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[triangleIndices.c].GetPosition(), 1.0f));
+		});
+
+	//for (unsigned int i = 0; i < indices.size(); i += 3)
+	//{
+	//	Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
+	//	triangles.push_back(t);
+	//}
+
+
+	std::atomic<float> result = -1.0f;
+	std::for_each(std::execution::par, triangles.begin(), triangles.end(), [&result, &ray](const Triangle& tri)
+		{
+			float currentResult = tri.Raycast(ray);
+			if (currentResult >= 0)
+			{
+				if (currentResult < result.load())
+				{
+					result.store(currentResult);
+				}
+				else if(result.load() == -1.0f)
+				{
+					result.store(currentResult);
+				}
+			}
+		});
+	
+	return result.load();
 
 	//if (accelerator == nullptr)
 	//{

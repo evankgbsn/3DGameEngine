@@ -403,9 +403,24 @@ void NetworkManager::ServerReceive(const std::string& IP)
 			}
 			else if (iResult < 0)
 			{
-				Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-				closesocket(socket);
-				return;
+				if (WSAGetLastError() == WSAECONNRESET)
+				{
+					Logger::Log("Client Hard Disconnected: " + IP, Logger::Category::Error);
+					closesocket(socket);
+					connectedClientsMutex.lock();
+					connectedClients.erase(clientSocket);
+					connectedClientsMutex.unlock();
+
+					OnClientDisconnect(IP);
+					return;
+				}
+				else
+				{
+					Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+					closesocket(socket);
+					return;
+				}
+				
 			}
 		}
 	}

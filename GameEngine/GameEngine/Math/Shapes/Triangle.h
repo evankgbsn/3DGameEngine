@@ -14,6 +14,8 @@ class Triangle
 {
 public:
 
+	Triangle() = default;
+
 	Triangle(const glm::vec3& intitialPoint0, const glm::vec3& initialPoint1, const glm::vec3& intitialPoint2);
 	
 	Triangle(const Triangle&) = default;
