@@ -34,6 +34,15 @@ void Engine::Initialize()
 	SingletonHelpers::InitializeSingleton<Engine>(&instance, "Engine");
 
 	instance->editorState = Editor::IsEnabled();
+
+#ifdef _SERVER
+	NetworkManager::Start(true);
+#endif
+
+#ifdef _CLIENT
+	NetworkManager::Start(false);
+#endif
+
 }
 
 void Engine::Run()
@@ -138,28 +147,4 @@ void Engine::EditorPlayToggleInputSetup()
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress2, "Play");
-
-	static std::function<void(int)> startServer = std::function<void(int)>([](int keyCode)
-		{
-			NetworkManager::Start(true);
-		});
-
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_KP_ADD, &startServer, "StartServer");
-
-	static std::function<void(int)> startClient = std::function<void(int)>([](int keyCode)
-		{
-			NetworkManager::Start(false);
-		});
-
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_KP_SUBTRACT, &startClient, "StartClient");
-
-	static std::function<void(int)> serverSendAll = std::function<void(int)>([](int keyCode)
-		{
-			if (NetworkManager::IsServer())
-			{
-				NetworkManager::ServerSendAll("Hello", 0);
-			}
-		});
-
-	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_H, &serverSendAll, "TestServerSendAll");
 }

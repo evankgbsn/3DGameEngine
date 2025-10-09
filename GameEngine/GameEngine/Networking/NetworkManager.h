@@ -47,6 +47,14 @@ public:
 
 	static void DeregisterReceiveDataFunction(const std::string& key);
 
+	static void RegisterOnClientDisconnectFunction(const std::string& key, std::function<void(const std::string&)>* callback);
+
+	static void DeregisterOnClientDisconnectFunction(const std::string& key);
+
+	static void RegisterOnDisconnectFunction(const std::string& key, std::function<void()>* callback);
+
+	static void DeregisterOnDisconnectFunction(const std::string& key);
+
 	static std::string GetIPFromData(const std::string& data);
 
 	static std::string GetFunctionFromData(const std::string& data);
@@ -103,6 +111,8 @@ private:
 
 	void CleanupReceiveSpawnFromServer();
 
+	void OnClientDisconnect(const std::string& IP);
+
 	static NetworkManager* instance;
 
 	std::string clientIP;
@@ -142,6 +152,12 @@ private:
 	std::unordered_map<unsigned long long, NetworkObject*> spawnedNetworkObjects;
 
 	std::function<void(const std::string&)>* receiveSpawnFromServer;
+
+	std::mutex onClientDisconnectCallbacksMutex;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> onClientDisconnectCallbacks;
+
+	std::unordered_map<std::string, std::function<void()>*> onDisconnectCallbacks;
 
 	unsigned long long networkObjectIDGenerator;
 	

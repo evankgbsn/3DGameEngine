@@ -366,6 +366,16 @@ void NetworkManager::ServerReceive(const std::string& IP)
 					receivedData.push_back(data);
 				}
 			}
+			else if (iResult == 0)
+			{
+				Logger::Log("Client Disconnected: " + IP, Logger::Category::Warning);
+				closesocket(socket);
+				connectedClientsMutex.lock();
+				connectedClients.erase(clientSocket);
+				connectedClientsMutex.unlock();
+				OnClientDisconnect(IP);
+				return;
+			}
 			else if (iResult < 0)
 			{
 				Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
@@ -595,6 +605,16 @@ void NetworkManager::CleanupReceiveSpawnFromServer()
 	}
 }
 
+void NetworkManager::OnClientDisconnect(const std::string& IP)
+{
+	std::lock_guard<std::mutex> guard(onClientDisconnectCallbacksMutex);
+
+	for (const auto& callback : onClientDisconnectCallbacks)
+	{
+		(*callback.second)(IP);
+	}
+}
+
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
 {
 	if (instance != nullptr)
@@ -755,6 +775,40 @@ void NetworkManager::DeregisterReceiveDataFunction(const std::string& key)
 	if (instance != nullptr)
 	{
 		instance->responseFunctions.erase(instance->responseFunctions.find(key));
+	}
+}
+
+void NetworkManager::RegisterOnClientDisconnectFunction(const std::string& key, std::function<void(const std::string&)>* callback)
+{
+	if (instance != nullptr)
+	{
+		std::lock_guard<std::mutex> guard(instance->onClientDisconnectCallbacksMutex);
+		instance->onClientDisconnectCallbacks[key] = callback;
+	}
+}
+
+void NetworkManager::DeregisterOnClientDisconnectFunction(const std::string& key)
+{
+	if (instance != nullptr)
+	{
+		std::lock_guard<std::mutex> guard(instance->onClientDisconnectCallbacksMutex);
+		instance->onClientDisconnectCallbacks.erase(instance->onClientDisconnectCallbacks.find(key));
+	}
+}
+
+void NetworkManager::RegisterOnDisconnectFunction(const std::string& key, std::function<void()>* callback)
+{
+	if (instance != nullptr)
+	{
+		instance->onDisconnectCallbacks[key] = callback;
+	}
+}
+
+void NetworkManager::DeregisterOnDisconnectFunction(const std::string& key)
+{
+	if (instance != nullptr)
+	{
+		instance->onDisconnectCallbacks.erase(instance->onDisconnectCallbacks.find(key));
 	}
 }
 
