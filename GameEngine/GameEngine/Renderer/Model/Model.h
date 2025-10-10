@@ -82,6 +82,10 @@ private:
 
 	void DestroyVertexArrayBuffer();
 
+	void CreateTerrain(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
+
+	void CreateTerrainLegacy(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
+
 	std::vector<Vertex> vertices;
 
 	std::vector<unsigned int> indices;

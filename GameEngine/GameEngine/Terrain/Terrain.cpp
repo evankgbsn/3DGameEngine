@@ -30,24 +30,26 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 	terrainGraphics = GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials);
 	terrainGraphics->SetShine(8.0f);
 	
-	for (unsigned int x = 0; x < tileX; x++)
-	{
-		aabbs.push_back(std::vector<AxisAlignedBoundingBoxWithVisualization*>());
-		for (unsigned int y = 0; y < tileY; y++)
-		{
-			// Get the min and max.
-			glm::vec3 min(INFINITY, INFINITY, INFINITY);
-			glm::vec3 max(-INFINITY, -INFINITY, -INFINITY);
-			for (unsigned int i = 0; i < 6; i++)
-			{
-				unsigned int index = x * tileY * 6 + y * 6 + i;
-				min = glm::min(glm::vec3(terrainModel->GetVertices()[index].GetPosition()), min);
-				max = glm::max(glm::vec3(terrainModel->GetVertices()[index].GetPosition()), max);
-			}
+	CreateAABBs();
 
-			aabbs[x].push_back(new AxisAlignedBoundingBoxWithVisualization(min, max));
-		}
-	}
+	//for (unsigned int x = 0; x < tileX; x++)
+	//{
+	//	aabbs.push_back(std::vector<AxisAlignedBoundingBoxWithVisualization*>());
+	//	for (unsigned int y = 0; y < tileY; y++)
+	//	{
+	//		// Get the min and max.
+	//		glm::vec3 min(INFINITY, INFINITY, INFINITY);
+	//		glm::vec3 max(-INFINITY, -INFINITY, -INFINITY);
+	//		for (unsigned int i = 0; i < 6; i++)
+	//		{
+	//			unsigned int index = x * tileY * 6 + y * 6 + i;
+	//			min = glm::min(glm::vec3(terrainModel->GetVertices()[index].GetPosition()), min);
+	//			max = glm::max(glm::vec3(terrainModel->GetVertices()[index].GetPosition()), max);
+	//		}
+	//
+	//		aabbs[x].push_back(new AxisAlignedBoundingBoxWithVisualization(min, max));
+	//	}
+	//}
 
 	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 
@@ -90,8 +92,8 @@ Terrain::Cell Terrain::TestPoint(const glm::vec3& p)
 {
 	glm::vec3 point = p;
 	point.x += (terrainWidth / 2);
-	point.z -= (terrainHeight / 2);
-	return { static_cast<unsigned int>(glm::clamp(point.x / tileWidth, 0.f, tileX - 1.f)), static_cast<unsigned int>(glm::clamp(point.z / -tileHeight,0.f, tileY - 1.f)) };
+	point.z += (terrainHeight / 2);
+	return { static_cast<unsigned int>(glm::clamp(point.x / tileWidth, 0.f, tileX - 1.f)), static_cast<unsigned int>(glm::clamp(point.z / tileHeight,0.f, tileY - 1.f)) };
 }
 
 float Terrain::GetCellHeight(const Cell& cell)
@@ -106,10 +108,22 @@ glm::vec3 Terrain::GetTerrainPoint(const glm::vec3& point)
 	Cell cell = TestPoint(point);
 
 	// 4 points of the cell.
-	glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
-	glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
-	glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
-	glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
+	// Get the indices of the four corners of the quad
+	// Indices of the quad corners
+	int topLeftIdx = (cell.y * tileX) + cell.x;
+	int topRightIdx = topLeftIdx + 1;
+	int bottomLeftIdx = ((cell.y + 1) * tileX) + cell.x;
+	int bottomRightIdx = bottomLeftIdx + 1;
+
+	//glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
+	//glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
+	//glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
+	//glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
+
+	glm::vec3 a = terrainModel->GetVertices()[bottomLeftIdx].GetPosition();
+	glm::vec3 b = terrainModel->GetVertices()[bottomRightIdx].GetPosition();
+	glm::vec3 c = terrainModel->GetVertices()[topRightIdx].GetPosition();
+	glm::vec3 d = terrainModel->GetVertices()[topLeftIdx].GetPosition();
 
 	glm::vec3 AToP = point - a;
 
@@ -134,14 +148,29 @@ glm::vec3 Terrain::GetTerrainNormal(const glm::vec3& point)
 	Cell cell = TestPoint(point);
 
 	// 4 points of the cell.
-	glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
-	glm::vec3 na = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetNormal();
-	glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
-	glm::vec3 nb = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetNormal();
-	glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
-	glm::vec3 nc = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetNormal();
-	glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
-	glm::vec3 nd = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetNormal();
+	//glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
+	//glm::vec3 na = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetNormal();
+	//glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
+	//glm::vec3 nb = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetNormal();
+	//glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
+	//glm::vec3 nc = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetNormal();
+	//glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
+	//glm::vec3 nd = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetNormal();
+
+	// Get the indices of the four corners of the quad
+	int topLeftIdx = (cell.y * tileX) + cell.x;
+	int topRightIdx = topLeftIdx + 1;
+	int bottomLeftIdx = ((cell.y + 1) * tileX) + cell.x;
+	int bottomRightIdx = bottomLeftIdx + 1;
+
+	glm::vec3 a = terrainModel->GetVertices()[topLeftIdx].GetPosition();
+	glm::vec3 na = terrainModel->GetVertices()[topLeftIdx].GetNormal();
+	glm::vec3 b = terrainModel->GetVertices()[topRightIdx].GetPosition();
+	glm::vec3 nb = terrainModel->GetVertices()[topRightIdx].GetNormal();
+	glm::vec3 c = terrainModel->GetVertices()[bottomLeftIdx].GetPosition();
+	glm::vec3 nc = terrainModel->GetVertices()[bottomLeftIdx].GetNormal();
+	glm::vec3 d = terrainModel->GetVertices()[bottomRightIdx].GetPosition();
+	glm::vec3 nd = terrainModel->GetVertices()[bottomRightIdx].GetNormal();
 
 	glm::vec3 AToP = point - a;
 
@@ -303,4 +332,41 @@ const std::vector<GOLit::Material>& Terrain::GetMaterials() const
 GOTerrain* Terrain::GetGraphics() const
 {
 	return terrainGraphics;
+}
+
+void Terrain::CreateAABBs()
+{
+	const std::vector<Vertex>& vertices = terrainModel->GetVertices();
+
+	// Reserve space to avoid reallocations
+	aabbs.reserve((tileX - 1) * (tileY - 1));
+
+	// Loop through each tile (quad) on the terrain
+	for (int z = 0; z < tileY - 1; ++z) {
+		aabbs.push_back(std::vector<AxisAlignedBoundingBoxWithVisualization*>());
+		for (int x = 0; x < tileX - 1; ++x) {
+			// Get the indices of the four corners of the quad
+			int topLeftIdx = (z * tileX) + x;
+			int topRightIdx = topLeftIdx + 1;
+			int bottomLeftIdx = ((z + 1) * tileX) + x;
+			int bottomRightIdx = bottomLeftIdx + 1;
+
+			// Get the Y-positions of the four vertices
+			float y_tl = vertices[topLeftIdx].GetPosition().y;
+			float y_tr = vertices[topRightIdx].GetPosition().y;
+			float y_bl = vertices[bottomLeftIdx].GetPosition().y;
+			float y_br = vertices[bottomRightIdx].GetPosition().y;
+
+			// Find the minimum and maximum height for this tile
+			float minY = std::min({ y_tl, y_tr, y_bl, y_br });
+			float maxY = std::max({ y_tl, y_tr, y_bl, y_br });
+
+			float xPos = static_cast<float>(x) * (terrainWidth / tileX) - (terrainWidth / 2);
+			float xPos1 = (static_cast<float>(x) + 1.0f) * (terrainWidth / tileX) - (terrainWidth / 2);
+			float zPos = static_cast<float>(z) * (terrainHeight / tileY) - (terrainHeight / 2);
+			float zPos1 = (static_cast<float>(z) + 1.0f) * (terrainHeight / tileY) - (terrainHeight / 2);
+
+			aabbs[z].push_back(new AxisAlignedBoundingBoxWithVisualization(glm::vec3(xPos, minY, zPos) , glm::vec3(xPos1, maxY, zPos1)));
+		}
+	}
 }

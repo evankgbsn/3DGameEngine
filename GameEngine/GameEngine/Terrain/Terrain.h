@@ -79,6 +79,8 @@ private:
 
 	Terrain& operator=(Terrain&&) = delete;
 
+	void CreateAABBs();
+
 public:
 
 private:

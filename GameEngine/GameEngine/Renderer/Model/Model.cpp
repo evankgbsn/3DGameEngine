@@ -128,118 +128,20 @@ unsigned int MoveToRange(unsigned int val, unsigned int min, unsigned int max, u
 	return (newVal > newMax) ? newMax : newVal;
 }
 
+float MoveToRange(float val, float min, float max, float newMin, float newMax)
+{
+	float oldRange = max - min;
+	float newRange = newMax - newMin;
+
+	float newVal = ((val - min) * newRange / oldRange) + newMin;
+	return (newVal > newMax) ? newMax : newVal;
+}
+
 Model::Model(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& n) :
 	name(n)
 {
-	// Open the image file and store it in a buffer.
-	int width, height, bitsPerPixel;
-	unsigned char* buffer = stbi_load(heightMapPath.c_str(), &width, &height, &bitsPerPixel, STBI_rgb_alpha);
-
-	// Create the points.
-	float u = 1.f / tileX;
-	float v = 1.f / tileY;
-	float widthPerSquare = terrainWidth / tileX;
-	float heightPerSquare = terrainHeight / tileY;
-	for (float x = 0; x < static_cast<float>(tileX); x++)
-	{
-		for (float y = 0; y < static_cast<float>(tileY); y++)
-		{
-
-			unsigned int xIndex0 = (unsigned int)MoveToRange((unsigned int)x, 0U, tileX - 1U, 0U, ((unsigned int)width - 1U)) * 4U;
-			unsigned int yIndex0 = (unsigned int)MoveToRange((unsigned int)y, 0U, tileY - 1U, 0U, ((unsigned int)height - 1U)) * width * 4;
-			unsigned int xIndex1 = (unsigned int)MoveToRange((unsigned int)x + 1U, 0U, tileX - 1U, 0U, ((unsigned int)width - 1U)) * 4U;
-			unsigned int yIndex1 = (unsigned int)MoveToRange((unsigned int)y + 1U, 0U, tileY - 1U, 0U, ((unsigned int)height - 1U)) * width * 4;
-
-			float heightVal00 = MoveToRange(buffer[xIndex0 + yIndex0], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
-			float heightVal01 = MoveToRange(buffer[xIndex0 + yIndex1], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
-			float heightVal11 = MoveToRange(buffer[xIndex1 + yIndex1], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
-			float heightVal10 = MoveToRange(buffer[xIndex1 + yIndex0], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
-
-			// Push back points for a tile.
-			Vertex vert;
-			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal11, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(1, 1);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal00, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(0, 0);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal10, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(1, 0);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal00, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(0, 0);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal11, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(1, 1);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal01, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
-			vert.GetUV() = glm::vec2(0, 1);
-			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
-			vertices.push_back(vert);
-		}
-	}
-
-	// Compute the normals.
-	for (float x = 0; x < static_cast<float>(tileX); x++)
-	{
-		for (float y = 0; y < static_cast<float>(tileY); y++)
-		{
-
-			for (unsigned int i = 0; i < 6; i++)
-			{
-				unsigned int index0 = (unsigned int)(x * tileY * 6 + y * 6 + i);
-				unsigned int index1 = (unsigned int)(x * tileY * 6 + (y - 1) * 6 + i);
-				unsigned int index2 = (unsigned int)((x - 1) * tileY * 6 + y * 6 + i);
-				unsigned int index3 = (unsigned int)((x - 1) * tileY * 6 + (y + 1) * 6 + i);
-				unsigned int index4 = (unsigned int)(x * tileY * 6 + (y + 1) * 6 + i);
-				unsigned int index5 = (unsigned int)((x + 1) * tileY * 6 + y * 6 + i);
-				unsigned int index6 = (unsigned int)((x + 1) * tileY * 6 + (y - 1) * 6 + i);
-
-				glm::vec3 normal(0, 0, 0);
-				if (index1 < vertices.size() - 1 && index2 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index1].GetPosition() - vertices[index0].GetPosition(), vertices[index2].GetPosition() - vertices[index0].GetPosition()));
-				}
-				if (index2 < vertices.size() - 1 && index3 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index2].GetPosition() - vertices[index0].GetPosition(), vertices[index3].GetPosition() - vertices[index0].GetPosition()));
-				}
-				if (index3 < vertices.size() - 1 && index4 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index3].GetPosition() - vertices[index0].GetPosition(), vertices[index4].GetPosition() - vertices[index0].GetPosition()));
-				}
-				if (index4 < vertices.size() - 1 && index5 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index4].GetPosition() - vertices[index0].GetPosition(), vertices[index5].GetPosition() - vertices[index0].GetPosition()));
-				}
-				if (index5 < vertices.size() - 1 && index6 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index5].GetPosition() - vertices[index0].GetPosition(), vertices[index6].GetPosition() - vertices[index0].GetPosition()));
-				}
-				if (index6 < vertices.size() - 1 && index1 < vertices.size() - 1)
-				{
-					normal += glm::normalize(glm::cross(vertices[index6].GetPosition() - vertices[index0].GetPosition(), vertices[index1].GetPosition() - vertices[index0].GetPosition()));
-				}
-
-				vertices[index0].GetNormal() = -glm::normalize(normal);
-			}
-		}
-	}
-
-	for (unsigned int i = 0; i < vertices.size(); i++)
-	{
-		indices.push_back(i);
-	}
-
-	CreateVertexArrayBuffer();
-
-	////  Release resources.
-	stbi_image_free(buffer);
+	//CreateTerrainLegacy(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, n);
+	CreateTerrain(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, n);
 }
 
 Model::~Model()
@@ -638,6 +540,222 @@ void Model::DestroyVertexArrayBuffer()
 {
 	glDeleteBuffers(1, &vertexArrayBuffer);
 	glDeleteBuffers(1, &indexArrayBuffer);
+}
+
+void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name)
+{
+	// Open the image file and store it in a buffer.
+	int width, height, bitsPerPixel;
+	unsigned char* buffer = stbi_load(heightMapPath.c_str(), &width, &height, &bitsPerPixel, STBI_rgb_alpha);
+
+	vertices.reserve(tileY * tileX);
+
+	for (int z = 0; z < tileY; ++z) {
+		for (int x = 0; x < tileX; ++x) {
+			Vertex vertex;
+
+			unsigned int indexX = MoveToRange(x, 0U, tileX - 1U, 0U, (width - 1U)) * 4U;
+			unsigned int indexY = MoveToRange(z, 0U, tileY - 1U, 0U, (height - 1U)) * width * 4U;
+
+			float heightVal = MoveToRange(static_cast<float>(buffer[indexX + indexY]), 0.0f, 254.0f, 0.0f, static_cast<float>(maxHeight)) + yOffset;
+
+			// Position (X and Z are from the loop, Y is the height)
+			vertex.GetPosition().x = ((terrainWidth / tileX) * static_cast<float>(x)) - terrainWidth / 2;
+			// This is where you determine the height!
+			vertex.GetPosition().y = heightVal;
+			vertex.GetPosition().z = ((terrainHeight / tileY) * static_cast<float>(z)) - terrainHeight / 2;
+
+			// Normal (for now, a simple upward-facing vector)
+			// A proper implementation would calculate this based on adjacent vertices.
+			vertex.GetNormal() = {0.0f, 1.0f, 0.0f};
+
+			// Texture Coordinates (maps the texture across the terrain)
+			vertex.GetUV().x = static_cast<float>(x) / (tileX - 1);
+			vertex.GetUV().y = static_cast<float>(z) / (tileY - 1);
+
+			vertices.push_back(vertex);
+		}
+	}
+
+	for (int z = 0; z < tileY - 1; ++z) {
+		for (int x = 0; x < tileX - 1; ++x) {
+			
+			// Get the indices of the four corners of the quad
+			int topLeft = (z * tileX) + x;
+			int topRight = topLeft + 1;
+			int bottomLeft = ((z + 1) * tileX) + x;
+			int bottomRight = bottomLeft + 1;
+
+			// First triangle
+			indices.push_back(topLeft);
+			indices.push_back(bottomLeft);
+			indices.push_back(topRight);
+
+			// Second triangle
+			indices.push_back(topRight);
+			indices.push_back(bottomLeft);
+			indices.push_back(bottomRight);
+		}
+	}
+
+	// Step 2: Iterate over each triangle and add its normal to its vertices
+	for (size_t i = 0; i < indices.size(); i += 3) {
+		// Get the indices of the triangle
+		unsigned int i0 = indices[i];
+		unsigned int i1 = indices[i + 1];
+		unsigned int i2 = indices[i + 2];
+
+		// Get the vertex positions
+		const glm::vec3& v0 = vertices[i0].GetPosition();
+		const glm::vec3& v1 = vertices[i1].GetPosition();
+		const glm::vec3& v2 = vertices[i2].GetPosition();
+
+		// Calculate the two edges of the triangle
+		glm::vec3 edge1 = { v1.x - v0.x, v1.y - v0.y, v1.z - v0.z };
+		glm::vec3 edge2 = { v2.x - v0.x, v2.y - v0.y, v2.z - v0.z };
+
+		// Calculate the cross product to get the face normal
+		glm::vec3 faceNormal;
+		faceNormal.x = edge1.y * edge2.z - edge1.z * edge2.y;
+		faceNormal.y = edge1.z * edge2.x - edge1.x * edge2.z;
+		faceNormal.z = edge1.x * edge2.y - edge1.y * edge2.x;
+
+		// Add the face normal to the normal of each vertex
+		vertices[i0].GetNormal().x += faceNormal.x;
+		vertices[i0].GetNormal().y += faceNormal.y;
+		vertices[i0].GetNormal().z += faceNormal.z;
+
+		vertices[i1].GetNormal().x += faceNormal.x;
+		vertices[i1].GetNormal().y += faceNormal.y;
+		vertices[i1].GetNormal().z += faceNormal.z;
+
+		vertices[i2].GetNormal().x += faceNormal.x;
+		vertices[i2].GetNormal().y += faceNormal.y;
+		vertices[i2].GetNormal().z += faceNormal.z;
+	}
+
+	// Step 3: Normalize all the vertex normals
+	for (auto& vertex : vertices) {
+		vertex.GetNormal() = glm::normalize(vertex.GetNormal());
+	}
+
+	CreateVertexArrayBuffer();
+
+	////  Release resources.
+	stbi_image_free(buffer);
+}
+
+void Model::CreateTerrainLegacy(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name)
+{
+	// Open the image file and store it in a buffer.
+	int width, height, bitsPerPixel;
+	unsigned char* buffer = stbi_load(heightMapPath.c_str(), &width, &height, &bitsPerPixel, STBI_rgb_alpha);
+
+	// Create the points.
+	float u = 1.f / tileX;
+	float v = 1.f / tileY;
+	float widthPerSquare = terrainWidth / tileX;
+	float heightPerSquare = terrainHeight / tileY;
+	for (float x = 0; x < static_cast<float>(tileX); x++)
+	{
+		for (float y = 0; y < static_cast<float>(tileY); y++)
+		{
+
+			unsigned int xIndex0 = (unsigned int)MoveToRange((unsigned int)x, 0U, tileX - 1U, 0U, ((unsigned int)width - 1U)) * 4U;
+			unsigned int yIndex0 = (unsigned int)MoveToRange((unsigned int)y, 0U, tileY - 1U, 0U, ((unsigned int)height - 1U)) * width * 4;
+			unsigned int xIndex1 = (unsigned int)MoveToRange((unsigned int)x + 1U, 0U, tileX - 1U, 0U, ((unsigned int)width - 1U)) * 4U;
+			unsigned int yIndex1 = (unsigned int)MoveToRange((unsigned int)y + 1U, 0U, tileY - 1U, 0U, ((unsigned int)height - 1U)) * width * 4;
+
+			float heightVal00 = MoveToRange(buffer[xIndex0 + yIndex0], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
+			float heightVal01 = MoveToRange(buffer[xIndex0 + yIndex1], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
+			float heightVal11 = MoveToRange(buffer[xIndex1 + yIndex1], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
+			float heightVal10 = MoveToRange(buffer[xIndex1 + yIndex0], 0U, 254U, 0U, (unsigned int)maxHeight) + yOffset;
+
+			// Push back points for a tile.
+			Vertex vert;
+			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal11, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(1, 1);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal00, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(0, 0);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal10, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(1, 0);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal00, (-(y * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(0, 0);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+			vert.GetPosition() = glm::vec4(((x + 1.f) * widthPerSquare) - terrainWidth / 2, heightVal11, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(1, 1);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+			vert.GetPosition() = glm::vec4((x * widthPerSquare) - terrainWidth / 2, heightVal01, (-((y + 1.f) * heightPerSquare)) + terrainHeight / 2, 1.f);
+			vert.GetUV() = glm::vec2(0, 1);
+			vert.GetNormal() = glm::vec4(0, 0, 0, 0);
+			vertices.push_back(vert);
+		}
+	}
+
+	// Compute the normals.
+	for (float x = 0; x < static_cast<float>(tileX); x++)
+	{
+		for (float y = 0; y < static_cast<float>(tileY); y++)
+		{
+
+			for (unsigned int i = 0; i < 6; i++)
+			{
+				unsigned int index0 = (unsigned int)(x * tileY * 6 + y * 6 + i);
+				unsigned int index1 = (unsigned int)(x * tileY * 6 + (y - 1) * 6 + i);
+				unsigned int index2 = (unsigned int)((x - 1) * tileY * 6 + y * 6 + i);
+				unsigned int index3 = (unsigned int)((x - 1) * tileY * 6 + (y + 1) * 6 + i);
+				unsigned int index4 = (unsigned int)(x * tileY * 6 + (y + 1) * 6 + i);
+				unsigned int index5 = (unsigned int)((x + 1) * tileY * 6 + y * 6 + i);
+				unsigned int index6 = (unsigned int)((x + 1) * tileY * 6 + (y - 1) * 6 + i);
+
+				glm::vec3 normal(0, 0, 0);
+				if (index1 < vertices.size() - 1 && index2 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index1].GetPosition() - vertices[index0].GetPosition(), vertices[index2].GetPosition() - vertices[index0].GetPosition()));
+				}
+				if (index2 < vertices.size() - 1 && index3 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index2].GetPosition() - vertices[index0].GetPosition(), vertices[index3].GetPosition() - vertices[index0].GetPosition()));
+				}
+				if (index3 < vertices.size() - 1 && index4 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index3].GetPosition() - vertices[index0].GetPosition(), vertices[index4].GetPosition() - vertices[index0].GetPosition()));
+				}
+				if (index4 < vertices.size() - 1 && index5 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index4].GetPosition() - vertices[index0].GetPosition(), vertices[index5].GetPosition() - vertices[index0].GetPosition()));
+				}
+				if (index5 < vertices.size() - 1 && index6 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index5].GetPosition() - vertices[index0].GetPosition(), vertices[index6].GetPosition() - vertices[index0].GetPosition()));
+				}
+				if (index6 < vertices.size() - 1 && index1 < vertices.size() - 1)
+				{
+					normal += glm::normalize(glm::cross(vertices[index6].GetPosition() - vertices[index0].GetPosition(), vertices[index1].GetPosition() - vertices[index0].GetPosition()));
+				}
+
+				vertices[index0].GetNormal() = -glm::normalize(normal);
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < vertices.size(); i++)
+	{
+		indices.push_back(i);
+	}
+
+	CreateVertexArrayBuffer();
+
+	////  Release resources.
+	stbi_image_free(buffer);
 }
 
 Math::Transform GLTFHelpers::GetLocalTransform(cgltf_node& n)
