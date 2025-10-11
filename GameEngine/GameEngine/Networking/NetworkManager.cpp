@@ -220,11 +220,13 @@ void NetworkManager::StartClient()
 	}
 
 	int recvbuflen = DEFAULT_BUFFLEN;
-	const char sendbuf[19] = {'1', '2', '7', '.', '0', '.', '0', '.', '1', '\0', '\0', '\0', '\0', '\0', '\0', '\0','\0', '\0', '\0' };
+	char sendbuf[23] = {' ', ' ',' ', ' ','1', '2', '7', '.', '0', '.', '0', '.', '1', '\0', '\0', '\0', '\0', '\0', '\0', '\0','\0', '\0', '\0'};
 	char recvbuf[DEFAULT_BUFFLEN];
 
+	*reinterpret_cast<unsigned int*>(sendbuf) = 23;
+
 	// Send an initial buffer
-	res = send(connectSocket, sendbuf, (int)strlen(sendbuf), 0);
+	res = send(connectSocket, sendbuf, sizeof(sendbuf), 0);
 	if (res == SOCKET_ERROR) {
 		Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 		closesocket(connectSocket);
@@ -316,27 +318,77 @@ void NetworkManager::ClientReceive()
 			{
 				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
 
+				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
+
 				if (firstMessage)
 				{
-
-					clientIP = std::string(recvbuf);
+					clientIP = std::string(recvbuf + 4);
 
 					firstMessage = false;
 				}
-				else if(iResult > 16)
+				else if(iResult > 20)
 				{
 					std::lock_guard<std::mutex> guard(receivedDataMutex);
 
-					std::string ip = std::string(recvbuf);
-					std::string functionID = (recvbuf + 16);
-					std::string data = ip + " " + functionID + " ";
-
-					if (iResult > 16)
+					unsigned int x = 0;
+					while (x < iResult)
 					{
-						data += (recvbuf + 17 + functionID.size());
-					}
+						newPacket:
+						packetSize = *reinterpret_cast<unsigned int*>(recvbuf + x);
 
-					receivedData.push_back(data);
+						if (packetSize > 20)
+						{
+							std::string ip = std::string(recvbuf + 4 + x);
+							std::string functionID = (recvbuf + 20 + x);
+							std::string data = ip + " " + functionID + " ";
+
+							unsigned int i = 21 + functionID.size() + x;
+							while (i < packetSize && i < iResult)
+							{
+								data += recvbuf[i];
+								i++;
+							}
+
+							if (i <= iResult)
+							{
+								// Full packet
+								receivedData.push_back(data);
+							}
+							else
+							{
+								// Partial packet
+								ZeroMemory(recvbuf, recvbuflen);
+								iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
+								if (iResult > 0)
+								{
+									i = 0;
+									while (i < packetSize && i < iResult)
+									{
+										data += recvbuf[i];
+										i++;
+									}
+
+									if (i < iResult)
+									{
+										x = i;
+										goto newPacket;
+									}
+								}
+								else if (iResult == 0)
+								{
+									Logger::Log("Disconnected from server", Logger::Category::Warning);
+									return;
+								}
+								else if (iResult < 0)
+								{
+									Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+									return;
+								}
+							}
+							x = i;
+						}
+						break;
+					}
 				}
 			}
 			else if (iResult == 0)
@@ -360,6 +412,8 @@ void NetworkManager::ServerReceive(const std::string& IP)
 		int recvbuflen = DEFAULT_BUFFLEN;
 		char recvbuf[DEFAULT_BUFFLEN] = {};
 
+		ZeroMemory(recvbuf, DEFAULT_BUFFLEN);
+
 		connectedClientsMutex.lock();
 		const auto& clientSocket = connectedClients.find(IP);
 
@@ -379,20 +433,89 @@ void NetworkManager::ServerReceive(const std::string& IP)
 			{
 				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
 
-				if (iResult >= 16)
+				std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
+
+				unsigned int x = 0;
+				while (x < iResult)
 				{
-					std::lock_guard<std::mutex> guard(receivedDataMutex);
+				newPacket:
+					packetSize = *reinterpret_cast<unsigned int*>(recvbuf + x);
 
-					std::string ip = std::string(recvbuf);
-					std::string functionID = (recvbuf + 16);
-					std::string data = ip + " " + functionID + " ";
-
-					if (iResult > 16)
+					if (packetSize > 20)
 					{
-						data += (recvbuf + 17 + functionID.size());
-					}
+						std::string ip = std::string(recvbuf + 4 + x);
+						std::string functionID = (recvbuf + 20 + x);
+						std::string data = ip + " " + functionID + " ";
 
-					receivedData.push_back(data);
+						unsigned int i = 21 + functionID.size() + x;
+						while (i < packetSize && i < iResult)
+						{
+							data += recvbuf[i];
+							i++;
+						}
+
+						if (i <= iResult)
+						{
+							// Full packet
+							receivedData.push_back(data);
+						}
+						else
+						{
+							// Partial packet
+							ZeroMemory(recvbuf, recvbuflen);
+							iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
+							if (iResult > 0)
+							{
+								i = 0;
+								while (i < packetSize && i < iResult)
+								{
+									data += recvbuf[i];
+									i++;
+								}
+
+								if (i < iResult)
+								{
+									x = i;
+									goto newPacket;
+								}
+							}
+							else if (iResult == 0)
+							{
+								Logger::Log("Client Disconnected: " + IP, Logger::Category::Warning);
+								closesocket(socket);
+								connectedClientsMutex.lock();
+								connectedClients.erase(clientSocket);
+								connectedClientsMutex.unlock();
+
+								OnClientDisconnect(IP);
+								return;
+							}
+							else if (iResult < 0)
+							{
+								if (WSAGetLastError() == WSAECONNRESET)
+								{
+									Logger::Log("Client Hard Disconnected: " + IP, Logger::Category::Error);
+									closesocket(socket);
+									connectedClientsMutex.lock();
+									connectedClients.erase(clientSocket);
+									connectedClientsMutex.unlock();
+
+									OnClientDisconnect(IP);
+									return;
+								}
+								else
+								{
+									Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+									closesocket(socket);
+									return;
+								}
+							}
+						}
+						x = i;
+					}
+					break;
 				}
 			}
 			else if (iResult == 0)
@@ -478,6 +601,8 @@ void NetworkManager::ProcessReceivedData()
 
 	if (!receivedData.empty())
 	{
+		Logger::Log(std::to_string(receivedData.size()), Logger::Category::Warning);
+
 		std::string data = receivedData.front();
 
 		if (data.size() >= 19)
@@ -1041,30 +1166,34 @@ void NetworkManager::ServerSendAll(const std::string& data, const std::string& r
 					continue;
 				}
 
-				char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
-				ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
 
-				unsigned int i = 0;
-				for (i; i < clientSocket.first.size(); i++)
+				char* sendbuf = new char[packetSize]('\0');
+				ZeroMemory(sendbuf, packetSize);
+
+				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+				unsigned int i = 4;
+				for (i; i < instance->clientIP.size(); i++)
 				{
-					*(sendbuf + i) = clientSocket.first[i];
+					*(sendbuf + i) = instance->clientIP[i];
 				}
-				
-				i = 16;
-				for (i; i < 16 + receiveFunction.size(); i++)
+
+				i = 20;
+				for (i; i < 20 + receiveFunction.size(); i++)
 				{
-					*(sendbuf + i) = receiveFunction[i - 16];
+					*(sendbuf + i) = receiveFunction[i - 20];
 				}
 
 				*(sendbuf + i) = '\0';
 
-				i = 17 + receiveFunction.size();
-				for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+				i = 21 + receiveFunction.size();
+				for (i; i < 21 + receiveFunction.size() + data.size(); i++)
 				{
-					*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 				}
 
-				int iSendResult = send(clientSocket.second, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+				int iSendResult = send(clientSocket.second, sendbuf, packetSize, 0);
 				if (iSendResult == SOCKET_ERROR) {
 					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 					closesocket(clientSocket.second);
@@ -1090,31 +1219,34 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 
 			if (clientSocket != instance->connectedClients.end())
 			{
-				char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
 
-				ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+				char* sendbuf = new char[packetSize]('\0');
+				ZeroMemory(sendbuf, packetSize);
 
-				unsigned int i = 0;
-				for (i; i < ip.size(); i++)
+				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+				unsigned int i = 4;
+				for (i; i < ip.size() + 4; i++)
 				{
-					*(sendbuf + i) = ip[i];
+					*(sendbuf + i) = ip[i - 4];
 				}
 
-				i = 16;
-				for (i; i < 16 + receiveFunction.size(); i++)
+				i = 20;
+				for (i; i < 20 + receiveFunction.size(); i++)
 				{
-					*(sendbuf + i) = receiveFunction[i - 16];
+					*(sendbuf + i) = receiveFunction[i - 20];
 				}
 
 				*(sendbuf + i) = '\0';
 
-				i = 17 + receiveFunction.size();
-				for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+				i = 21 + receiveFunction.size();
+				for (i; i < 21 + receiveFunction.size() + data.size(); i++)
 				{
-					*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 				}
 
-				int iSendResult = send(clientSocket->second, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+				int iSendResult = send(clientSocket->second, sendbuf, packetSize, 0);
 				if (iSendResult == SOCKET_ERROR) {
 					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 					closesocket(clientSocket->second);
@@ -1139,30 +1271,36 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 	{
 		if (!IsServer())
 		{
-			char* sendbuf = new char[16 + receiveFunction.size() + data.size() + 1];
-			ZeroMemory(sendbuf, 16 + receiveFunction.size() + data.size() + 1);
+			unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
+
+			char* sendbuf = new char[packetSize]('\0');
+			ZeroMemory(sendbuf, packetSize);
 			
-			unsigned int i = 0;
-			for (i; i < instance->clientIP.size(); i++)
+			*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+			unsigned int i = 4;
+			for (i; i < instance->clientIP.size() + 4; i++)
 			{
-				*(sendbuf + i) = instance->clientIP[i];
+				*(sendbuf + i) = instance->clientIP[i - 4];
 			}
 
-			i = 16;
-			for (i; i < 16 + receiveFunction.size(); i++)
+			i = 20;
+			for (i; i < 20 + receiveFunction.size(); i++)
 			{
-				*(sendbuf + i) = receiveFunction[i - 16];
+				*(sendbuf + i) = receiveFunction[i - 20];
 			}
 
 			*(sendbuf + i) = '\0';
 
-			i = 17 + receiveFunction.size();
-			for (i; i < 17 + receiveFunction.size() + data.size(); i++)
+			i = 21 + receiveFunction.size();
+			for (i; i < 21 + receiveFunction.size() + data.size(); i++)
 			{
-				*(sendbuf + i) = data[i - (17 + receiveFunction.size())];
+				*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 			}
 
-			int res = send(instance->connectSocket, sendbuf, 16 + receiveFunction.size() + data.size() + 1, 0);
+			Logger::Log(std::string(data));
+
+			int res = send(instance->connectSocket, sendbuf, packetSize, 0);
 			if (res == SOCKET_ERROR) {
 				Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 				closesocket(instance->connectSocket);
