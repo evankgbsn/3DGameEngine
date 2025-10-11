@@ -284,15 +284,15 @@ void SurvivalCharacter::Load()
 
 void SurvivalCharacter::Unload()
 {
-	if (ModelManager::ModelLoaded(CHARACTER_GRAPHICS_MODEL_NAME))
-	{
-		ModelManager::UnloadModel(CHARACTER_GRAPHICS_MODEL_NAME);
-	}
-
-	if (TextureManager::TextureLoaded(CHARACTER_GRAPHICS_DIFFUSE_NAME))
-	{
-		TextureManager::UnloadTexture(CHARACTER_GRAPHICS_DIFFUSE_NAME);
-	}
+	//if (ModelManager::ModelLoaded(CHARACTER_GRAPHICS_MODEL_NAME))
+	//{
+	//	ModelManager::UnloadModel(CHARACTER_GRAPHICS_MODEL_NAME);
+	//}
+	//
+	//if (TextureManager::TextureLoaded(CHARACTER_GRAPHICS_DIFFUSE_NAME))
+	//{
+	//	TextureManager::UnloadTexture(CHARACTER_GRAPHICS_DIFFUSE_NAME);
+	//}
 }
 
 void SurvivalCharacter::Serialize()
