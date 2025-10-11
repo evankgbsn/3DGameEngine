@@ -714,6 +714,9 @@ void NetworkManager::SetupReceiveSpawnFromServer()
 				newNetworkObject->networkObjectID = std::stoull(networkObjectID);
 				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 				newNetworkObject->OnSpawn();
+
+				// Send confirmation to server.
+				ClientSend(std::to_string(newNetworkObject->GetNetworkObjectID()), "ServerSpawnConfirmation");
 			}
 		});
 
