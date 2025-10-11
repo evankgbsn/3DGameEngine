@@ -69,7 +69,7 @@ void SurvivalCharacter::OnSpawn()
 				NetworkManager::Despawn(GetNetworkObjectID());
 			});
 
-		NetworkManager::RegisterOnClientDisconnectFunction("SurvivalCharacter", onClientDisconnect);
+		NetworkManager::RegisterOnClientDisconnectFunction("SurvivalCharacter:" + std::to_string(GetNetworkObjectID()), onClientDisconnect);
 	}
 	else
 	{
@@ -82,7 +82,7 @@ void SurvivalCharacter::OnDespawn()
 {
 	if (NetworkManager::IsServer())
 	{
-		NetworkManager::DeregisterOnClientDisconnectFunction("SurvivalCharacter");
+		NetworkManager::DeregisterOnClientDisconnectFunction("SurvivalCharacter:" + std::to_string(GetNetworkObjectID()));
 	}
 
 	NetworkObject::OnDespawn();
