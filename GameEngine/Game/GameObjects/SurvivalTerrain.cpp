@@ -27,8 +27,8 @@ void SurvivalTerrain::Initialize()
 		{ baseMaterial, baseMaterial, baseMaterial},
 		500.0f,
 		500.0f,
-		100U,
-		100U,
+		500U,
+		500U,
 		20.0f,
 		-10.0f
 	);

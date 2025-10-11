@@ -7,6 +7,7 @@
 #include "../GraphicsObjects/GraphicsObjectManager.h"
 #include "../Texture/TextureManager.h"
 #include "../../Input/InputManager.h"
+#include "../../Editor/Editor.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -87,7 +88,14 @@ void Window::Update()
 	shouldClose.store(glfwWindowShouldClose(glfwWindow));
 	if (!shouldClose.load())
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		if (Editor::IsEnabled())
+		{
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+		else
+		{
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		}
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		GraphicsObjectManager::Update();

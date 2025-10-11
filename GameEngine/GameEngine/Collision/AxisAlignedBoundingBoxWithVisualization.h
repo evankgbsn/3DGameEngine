@@ -27,6 +27,8 @@ public:
 
 	void UpdateGraphicsInstance();
 
+	bool IsVisible() const;
+
 private:
 
 	AxisAlignedBoundingBoxWithVisualization(const AxisAlignedBoundingBoxWithVisualization&) = delete;
@@ -44,6 +46,8 @@ private:
 	static unsigned int instanceIDGenerator;
 
 	unsigned int instanceID;
+
+	bool isDisabled;
 
 
 };

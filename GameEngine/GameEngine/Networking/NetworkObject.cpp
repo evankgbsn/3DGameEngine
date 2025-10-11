@@ -4,6 +4,15 @@
 
 std::unordered_map<std::string, std::function<void(NetworkObject**)>> NetworkObject::newFunctions = std::unordered_map<std::string, std::function<void(NetworkObject**)>>();
 
+void NetworkObject::OnServerSpawnConfirmation(const std::string& IP)
+{
+	serverConfirmedIPs.insert(IP);
+}
+
+void NetworkObject::OnClientSpawnConfirmation()
+{
+}
+
 void NetworkObject::OnSpawn()
 {
 	NetworkManager::RegisterReceiveDataFunction("NetworkObject:" + std::to_string(networkObjectID), onReceiveData);
@@ -21,12 +30,21 @@ void NetworkObject::ClientSend(const std::string& data)
 
 void NetworkObject::ServerSend(const std::string& IP, const std::string& data)
 {
-	NetworkManager::ServerSend(IP, data, "NetworkObject:" + std::to_string(networkObjectID));
+	if (serverConfirmedIPs.contains(IP))
+	{
+		NetworkManager::ServerSend(IP, data, "NetworkObject:" + std::to_string(networkObjectID));
+	}
 }
 
 void NetworkObject::ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs)
 {
-	NetworkManager::ServerSendAll(data, "NetworkObject:" + std::to_string(networkObjectID), excludedIPs);
+	for (const std::string& ip : serverConfirmedIPs)
+	{
+		if (!excludedIPs.contains(ip))
+		{
+			ServerSend(ip, data);
+		}
+	}
 }
 
 bool NetworkObject::SpawnedFromLocalSpawnRequest() const

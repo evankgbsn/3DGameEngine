@@ -8,7 +8,8 @@ unsigned int AxisAlignedBoundingBoxWithVisualization::instanceIDGenerator = 0;
 GOColoredInstanced* AxisAlignedBoundingBoxWithVisualization::graphics = nullptr;
 
 AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization(const glm::vec3& initialMin, const glm::vec3& initialMax) :
-	instanceID(instanceIDGenerator++)
+	instanceID(0),
+	isDisabled(false)
 {
 	FromMinAndMax(initialMin, initialMax);
 
@@ -23,7 +24,7 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 	}
 	else
 	{
-		graphics->AddInstance();
+		instanceID = graphics->AddInstance();
 	}
 
 	CreateGraphics();
@@ -37,9 +38,7 @@ void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3&
 
 AxisAlignedBoundingBoxWithVisualization::~AxisAlignedBoundingBoxWithVisualization()
 {
-	//GraphicsObjectManager::Delete(graphics);
-	//graphics = nullptr;
-	//instanceIDGenerator = 0;
+	graphics->RemoveInstanceByID(instanceID);
 }
 
 void AxisAlignedBoundingBoxWithVisualization::Update()
@@ -50,13 +49,15 @@ void AxisAlignedBoundingBoxWithVisualization::Update()
 
 void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 {
-	if (!graphics->IsDisabled())
+	if (!isDisabled)
 	{
-		GraphicsObjectManager::Disable(graphics);
+		graphics->SetScale({ 0.0f, 0.0f, 0.0f }, instanceID);
+		isDisabled = true;
 	}
 	else
 	{
-		//GraphicsObjectManager::Enable(graphics);
+		CreateGraphics();
+		isDisabled = false;
 	}
 }
 
@@ -78,6 +79,11 @@ void AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms()
 void AxisAlignedBoundingBoxWithVisualization::UpdateGraphicsInstance()
 {
 	graphics->UpdateInstanceByID(instanceID);
+}
+
+bool AxisAlignedBoundingBoxWithVisualization::IsVisible() const
+{
+	return !isDisabled;
 }
 
 void AxisAlignedBoundingBoxWithVisualization::CreateGraphics()

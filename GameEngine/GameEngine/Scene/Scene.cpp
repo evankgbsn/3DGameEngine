@@ -705,6 +705,11 @@ void Scene::Deserialize(const std::string& path)
 	Logger::Log("Deserialized Scene: " + name, Logger::Category::Success);
 }
 
+const std::string& Scene::GetName() const
+{
+	return name;
+}
+
 void Scene::Save(const std::string& saveFileName)
 {
 	std::vector<std::string> temp;

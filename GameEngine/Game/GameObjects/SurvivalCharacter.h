@@ -35,6 +35,8 @@ private:
 
 	void OnDataReceived(const std::string& data) override;
 
+	void OnServerSpawnConfirmation(const std::string& IP) override;
+
 	void Initialize() override;
 
 	void Terminate() override;
@@ -112,7 +114,6 @@ private:
 	glm::vec3 currentTranslationVector;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
-
 };
 
 #endif // SURVIVALCHARACTER_H

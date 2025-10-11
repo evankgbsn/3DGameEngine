@@ -22,7 +22,6 @@ TerrainComponent* GameTerrain::GetTerrain() const
 void GameTerrain::Initialize()
 {
 	terrain = new TerrainComponent("Terrain", "Assets/Texture/Noise.png", std::vector<GOLit::Material>({ {TextureManager::GetTexture("Dirt"), TextureManager::GetTexture("Grey")}, {TextureManager::GetTexture("Dirt"), TextureManager::GetTexture("Grey")} }), 1081, 1081, 500, 500, 30, -15);
-	terrain->ToggleCells();
 	AddComponent(terrain, "Terrain");
 }
 

@@ -5,10 +5,11 @@
 
 #include "../../Renderer/GraphicsObjects/GOLit.h"
 
+#include <functional>
+
 class Terrain;
-class AxisAlignedBoundingBoxWithVisualization;
+class AxisAlignedBoundingBox;
 class LineSegment3D;
-class StaticCollider;
 
 class TerrainComponent : public Component
 {
@@ -22,7 +23,7 @@ public:
 
 	glm::vec3 GetTerrainPoint(const glm::vec3& position) const;
 
-	const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& GetCellArray() const;
+	const std::vector<std::vector<AxisAlignedBoundingBox*>>& GetCellArray() const;
 
 	void ToggleCells();
 
@@ -48,9 +49,11 @@ private:
 
 	void Deserialize() override;
 
-	Terrain* terrain;
+	std::function<void()>* onEditorEnable;
 
-	StaticCollider* collider;
+	std::function<void()>* onEditorDisable;
+
+	Terrain* terrain;
 };
 
 

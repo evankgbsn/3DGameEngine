@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
+#include <list>
 
 class Model;
 
@@ -96,7 +97,7 @@ public:
 
 	void Update() override;
 
-	void AddInstance();
+	unsigned int AddInstance();
 
 	void RemoveInstanceByID(unsigned int instanceID);
 
@@ -129,11 +130,11 @@ private:
 
 	GOColoredInstanced& operator=(GOColoredInstanced&&) = delete;
 
+	static std::list<unsigned int> removedInstances;
+
 	unsigned int viewProjectionBuffer;
 
 	unsigned int colorsBuffer;
-
-	unsigned int colorBuffer;
 
 	unsigned int translationsBuffer;
 
@@ -159,6 +160,7 @@ private:
 	std::vector<glm::vec4> rights;
 	std::vector<glm::vec4> ups;
 	std::vector<glm::vec4> forwards;
+
 };
 
 #endif // GOCOLOREDINSTANCED_H

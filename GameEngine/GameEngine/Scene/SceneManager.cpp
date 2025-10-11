@@ -24,6 +24,7 @@ void SceneManager::RegisterScene(Scene* const scene, const std::string& name)
 		if (instance->registeredScenes.find(name) == instance->registeredScenes.end())
 		{
 			instance->registeredScenes[name] = scene;
+			scene->name = name;
 		}
 		else
 		{
@@ -42,6 +43,7 @@ void SceneManager::DegegisterScene(const std::string& name)
 	{
 		if (instance->registeredScenes.find(name) != instance->registeredScenes.end())
 		{
+			instance->registeredScenes.find(name)->second->name = "";
 			instance->registeredScenes.erase(instance->registeredScenes.find(name));
 		}
 		else
@@ -125,6 +127,22 @@ std::vector<Scene*> SceneManager::GetLoadedScenes()
 		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
 		{
 			scenes.push_back(scene.second);
+		}
+	}
+
+	return scenes;
+}
+
+std::vector<std::string> SceneManager::GetLoadedSceneNames()
+{
+	std::vector<std::string> scenes;
+
+	if (instance != nullptr)
+	{
+		scenes.reserve(instance->loadedScenes.size());
+		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		{
+			scenes.push_back(scene.first);
 		}
 	}
 

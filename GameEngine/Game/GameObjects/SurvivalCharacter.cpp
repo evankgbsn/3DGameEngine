@@ -71,6 +71,9 @@ void SurvivalCharacter::OnSpawn()
 
 		NetworkManager::RegisterOnClientDisconnectFunction("SurvivalCharacter", onClientDisconnect);
 	}
+	else
+	{
+	}
 
 	currentTranslationVector = glm::vec3(0.0f);
 }
@@ -97,6 +100,12 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 	{
 		target = NetworkManager::ConvertDataToVec3(data);
 	}
+}
+
+void SurvivalCharacter::OnServerSpawnConfirmation(const std::string& IP)
+{
+	NetworkObject::OnServerSpawnConfirmation(IP);
+	ServerSend(IP, NetworkManager::ConvertVec3ToData(GetPosition()));
 }
 
 void SurvivalCharacter::Initialize()
@@ -355,6 +364,24 @@ void SurvivalCharacter::SetupMovement()
 						if (terrainPoint.y >= waterPoint.y)
 						{
 							target = terrainPoint;
+
+							glm::vec3 direction = target - GetPosition();
+
+							glm::mat4 currentRotation = characterGraphics->GetRotation();
+
+							glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+							glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
+							glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
+
+							glm::mat4 newRotation(
+								right,
+								up,
+								forward,
+								glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+							);
+
+							characterGraphics->SetRotation(newRotation);
+
 							ClientSend(NetworkManager::ConvertVec3ToData(target));
 						}
 
@@ -500,6 +527,7 @@ void SurvivalCharacter::MoveToTarget()
 				{
 					characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
 					shouldRotate = false;
+					//ServerSendAll(NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 					target = glm::vec3(0.0f);
 				}
 			}

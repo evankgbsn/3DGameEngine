@@ -31,6 +31,8 @@ public:
 
 	void Deserialize(const std::string& path);
 
+	const std::string& GetName() const;
+
 protected:
 
 	virtual void Initialize();
@@ -64,6 +66,8 @@ private:
 	std::unordered_map<std::string, GameObject*> objects;
 
 	bool started;
+
+	std::string name;
 
 };
 

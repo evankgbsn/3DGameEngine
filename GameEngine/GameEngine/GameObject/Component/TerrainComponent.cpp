@@ -3,23 +3,47 @@
 #include "../../Terrain/Terrain.h"
 #include "../../Renderer/Texture/Texture.h"
 #include "../../Renderer/Texture/TextureManager.h"
-#include "../../Collision/StaticCollider.h"
 #include "../../Renderer/GraphicsObjects/GOTerrain.h"
 #include "../../Math/Shapes/Ray.h"
 #include "../../Math/Shapes/LineSegment3D.h"
+#include "../../Editor/Editor.h"
 
 TerrainComponent::TerrainComponent() :
-	terrain(nullptr),
-	collider(nullptr)
+	terrain(nullptr)
 {
 	RegisterComponentClassType<TerrainComponent>(this);
+
+	onEditorEnable = new std::function<void()>([this]()
+		{
+			if (terrain != nullptr)
+			{
+				if (!terrain->IsEnabled())
+				{
+					terrain->ToggleCells();
+				}
+			}
+		});
+
+	Editor::RegisterOnEditorEnable(onEditorEnable);
+
+	onEditorDisable = new std::function<void()>([this]()
+		{
+			if (terrain != nullptr)
+			{
+				if (terrain->IsEnabled())
+				{
+					terrain->ToggleCells();
+				}
+			}
+		});
+
+	Editor::RegisterOnEditorEnable(onEditorDisable);
 }
 
 TerrainComponent::TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
 {
 	RegisterComponentClassType<TerrainComponent>(this);
 	terrain = new Terrain(name, heightMapPath, heightMaterials, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
-	collider = new StaticCollider(terrain->GetGraphics());
 }
 
 TerrainComponent::~TerrainComponent()
@@ -28,11 +52,6 @@ TerrainComponent::~TerrainComponent()
 	{
 		delete terrain;
 	}
-
-	if (collider != nullptr)
-	{
-		delete collider;
-	}
 }
 
 glm::vec3 TerrainComponent::GetTerrainPoint(const glm::vec3& position) const
@@ -40,7 +59,7 @@ glm::vec3 TerrainComponent::GetTerrainPoint(const glm::vec3& position) const
 	return terrain->GetTerrainPoint(position);
 }
 
-const std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>& TerrainComponent::GetCellArray() const
+const std::vector<std::vector<AxisAlignedBoundingBox*>>& TerrainComponent::GetCellArray() const
 {
 	return terrain->GetCellArray();
 }
@@ -52,26 +71,19 @@ void TerrainComponent::ToggleCells()
 
 bool TerrainComponent::ColliderVisible() const
 {
-	return collider->IsVisible();
+	return terrain->IsEnabled();
 }
 
 void TerrainComponent::ToggleColliderVisibility()
 {
-	collider->ToggleVisibility();
+	terrain->ToggleCells();
 }
 
 glm::vec3 TerrainComponent::GetLineIntersection(const LineSegment3D& line)
 {
 	Ray ray(line.GetStart(), glm::normalize(line.GetEnd() - line.GetStart()));
 
-	float intersection = collider->Intersect(ray);
-
-	if (intersection > 0)
-	{
-		return ray.GetOrigin() + ray.GetDirection() * intersection;
-	}
-
-	return { 0.0f, 0.0f, 0.0f };
+	return terrain->RayIntersect(ray);
 }
 
 void TerrainComponent::Update()
@@ -106,11 +118,6 @@ void TerrainComponent::Deserialize()
 		delete terrain;
 	}
 
-	if (collider != nullptr)
-	{
-		delete collider;
-	}
-
 	std::vector<GOLit::Material> materials;
 
 	bool allMaterialsLoaded = false;
@@ -133,5 +140,4 @@ void TerrainComponent::Deserialize()
 	}
 
 	terrain = new Terrain(savedStrings["Name"], savedStrings["HeightMapPath"], materials, savedFloats["Width"], savedFloats["Height"], savedInts["TileX"], savedInts["TileY"], savedFloats["MaxHeight"], savedFloats["YOffset"]);
-	collider = new StaticCollider(terrain->GetGraphics());
 }

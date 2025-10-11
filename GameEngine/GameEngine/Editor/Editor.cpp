@@ -480,7 +480,7 @@ void Editor::SetupEditorInput()
 
 void Editor::InitializeGrid()
 {
-	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/Noise.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f);
+	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f);
 
 	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 

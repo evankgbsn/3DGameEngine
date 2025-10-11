@@ -65,7 +65,7 @@ void SurvivalScene::Initialize()
 	{
 		static std::function<void(NetworkObject*)> callback = [](NetworkObject* spawnedObject)
 			{
-				spawnedObject->GetNetworkObjectID();
+				NetworkManager::SyncClientWithServer();
 			};
 
 		NetworkManager::Spawn("SurvivalCharacter", &callback);

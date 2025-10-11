@@ -5,11 +5,12 @@
 #include "../Renderer/GraphicsObjects/GraphicsobjectManager.h"
 #include "../Renderer/GraphicsObjects/GOTerrain.h"
 #include "../Renderer/Texture/TextureManager.h"
-#include "../Collision/AxisAlignedBoundingBoxWithVisualization.h"
+#include "../Math/Shapes/AxisAlignedBoundingBox.h"
 #include "../Math/Math.h"
+#include "../Math/Shapes/Triangle.h"
 
 Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo) :
-	aabbs(std::vector<std::vector<AxisAlignedBoundingBoxWithVisualization*>>()),
+	aabbs(std::vector<std::vector<AxisAlignedBoundingBox*>>()),
 	tileNormals(std::vector<std::vector<glm::vec3>>()),
 	terrainWidth(w),
 	terrainHeight(h),
@@ -51,14 +52,12 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 	//	}
 	//}
 
-	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
-
-	ToggleCells();
+	//ToggleCells();
 }
 
 Terrain::~Terrain()
 {
-	for (std::vector<AxisAlignedBoundingBoxWithVisualization*>& x : aabbs)
+	for (std::vector<AxisAlignedBoundingBox*>& x : aabbs)
 	{
 		for (AxisAlignedBoundingBox* y : x)
 		{
@@ -69,26 +68,67 @@ Terrain::~Terrain()
 	GraphicsObjectManager::Delete(terrainGraphics);
 }
 
+bool Terrain::IsEnabled() const
+{
+	return isEnabled;
+}
+
+bool Terrain::IsVisible(const Cell& cell) const
+{
+	//return aabbs[cell.y][cell.x]->IsVisible();
+	return false;
+}
+
 void Terrain::ToggleCells()
 {
-	if (isEnabled)
-	{
-		for (std::vector<AxisAlignedBoundingBoxWithVisualization*>& aabbvector : aabbs)
-		{
-			for (AxisAlignedBoundingBoxWithVisualization* aabb : aabbvector)
-			{
-				aabb->ToggleVisibility();
-			}
-		}
-	}
+	//if (!isEnabled)
+	//{
+	//	for (std::vector<AxisAlignedBoundingBoxWithVisualization*>& aabbvector : aabbs)
+	//	{
+	//		for (AxisAlignedBoundingBoxWithVisualization* aabb : aabbvector)
+	//		{
+	//			if (!aabb->IsVisible())
+	//			{
+	//				aabb->ToggleVisibility();
+	//			}
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	for (std::vector<AxisAlignedBoundingBoxWithVisualization*>& aabbvector : aabbs)
+	//	{
+	//		for (AxisAlignedBoundingBoxWithVisualization* aabb : aabbvector)
+	//		{
+	//			if (aabb->IsVisible())
+	//			{
+	//				aabb->ToggleVisibility();
+	//			}
+	//		}
+	//	}
+	//}
+
+	//AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
+
+	isEnabled = !isEnabled;
 }
 
-void Terrain::HighlightCell(const Cell& cell)
+void Terrain::ToggleCell(const Cell& cell)
 {
-	
+	//aabbs[cell.y][cell.x]->ToggleVisibility();
 }
 
-Terrain::Cell Terrain::TestPoint(const glm::vec3& p)
+void Terrain::HighlightCell(const Cell& cell, const glm::vec4& color)
+{
+	//if (!aabbs[cell.y][cell.x]->IsVisible())
+	//{
+	//	aabbs[cell.y][cell.x]->ToggleVisibility();
+	//}
+	//
+	//aabbs[cell.y][cell.x]->SetColor(color);
+}
+
+Terrain::Cell Terrain::TestPoint(const glm::vec3& p) const
 {
 	glm::vec3 point = p;
 	point.x += (terrainWidth / 2);
@@ -254,8 +294,8 @@ void Terrain::UpdateHeightByTerrainPoint(const glm::vec3& point, float heightCha
 			}
 
 			aabbs[cell.x + xOffset][cell.y + yOffset]->FromMinAndMax(min, max);
-			aabbs[cell.x + xOffset][cell.y + yOffset]->Update();
-			aabbs[cell.x + xOffset][cell.y + yOffset]->UpdateGraphicsInstance();
+			//aabbs[cell.x + xOffset][cell.y + yOffset]->Update();
+			//aabbs[cell.x + xOffset][cell.y + yOffset]->UpdateGraphicsInstance();
 		};
 
 
@@ -273,9 +313,24 @@ void Terrain::UpdateHeightByTerrainPoint(const glm::vec3& point, float heightCha
 
 void Terrain::VisualizeAllCells()
 {
+	//for (auto& x : aabbs)
+	//{
+	//	for (auto& y : x)
+	//	{
+	//		if (true)
+	//		{
+	//			if (!y->IsVisible())
+	//			{
+	//				y->ToggleVisibility();
+	//			}
+	//		}
+	//	}
+	//}
+
+	//AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 }
 
-const std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>>& Terrain::GetCellArray() const
+const std::vector<std::vector<class AxisAlignedBoundingBox*>>& Terrain::GetCellArray() const
 {
 	return aabbs;
 }
@@ -334,6 +389,122 @@ GOTerrain* Terrain::GetGraphics() const
 	return terrainGraphics;
 }
 
+glm::vec3 Terrain::RayIntersect(const Ray& ray) const
+{
+	// 1. INITIALIZATION
+
+	std::vector<Cell> traversedCells;
+
+	// The grid cell we are currently in (integer coordinates)
+	Cell testPoint = TestPoint(ray.GetOrigin());
+
+	// The distance the ray travels to cross one full grid cell (horizontally or vertically)
+	// Avoid division by zero if the ray is parallel to an axis.
+	double deltaDistX = (ray.GetDirection().x == 0) ? 1e30 : std::abs(tileWidth / ray.GetDirection().x);
+	double deltaDistZ = (ray.GetDirection().z == 0) ? 1e30 : std::abs(tileHeight / ray.GetDirection().z);
+
+	// The distance from the ray's origin to the next grid line
+	double sideDistX;
+	double sideDistZ;
+
+	// The direction to step in on each axis (+1 or -1)
+	int stepX;
+	int stepZ;
+
+	if (ray.GetDirection().x < 0) {
+		stepX = -1;
+		sideDistX = (((ray.GetOrigin().x + (terrainWidth / 2)) / tileWidth) - testPoint.x) * deltaDistX;
+	}
+	else {
+		stepX = 1;
+		sideDistX = (testPoint.x + 1.0 - ((ray.GetOrigin().x + (terrainWidth / 2)) / tileWidth)) * deltaDistX;
+	}
+
+	if (ray.GetDirection().z < 0) {
+		stepZ = -1;
+		sideDistZ = (((ray.GetOrigin().z + (terrainHeight / 2)) / tileHeight) - testPoint.y) * deltaDistZ;
+	}
+	else {
+		stepZ = 1;
+		sideDistZ = (testPoint.y + 1.0 - ((ray.GetOrigin().z + (terrainHeight / 2)) / tileHeight)) * deltaDistZ;
+	}
+
+	// 2. THE MARCHING LOOP
+	int marchSteps = 0;
+	const int maxMarchSteps = 200; // Safety limit
+
+	while (marchSteps < maxMarchSteps) {
+		// Check if we are inside the terrain boundaries
+		if (testPoint.x >= 0 && testPoint.x <  tileX && testPoint.y >= 0 && testPoint.y < tileY) {
+			
+			traversedCells.push_back(testPoint);
+			
+			// --- THIS IS WHERE YOU WOULD TEST FOR INTERSECTION ---
+			// AABB test: rayIntersectsAABB(ray, getAABBForTile(mapX, mapZ))
+			// If it hits, do the precise ray-triangle tests for this cell.
+			// If you find an intersection, you can break the loop.
+
+
+			if (aabbs[testPoint.y][testPoint.x]->RayIntersect(ray) != -1.0f)
+			{
+				
+				const std::vector<Vertex>& vertices = terrainModel->GetVertices();
+				const std::vector<unsigned int>& indices = terrainModel->GetIndices();
+
+				// Get the indices of the four corners of the quad
+				int topLeftIdx = (testPoint.y * tileX) + testPoint.x;
+				int topRightIdx = topLeftIdx + 1;
+				int bottomLeftIdx = ((testPoint.y + 1) * tileX) + testPoint.x;
+				int bottomRightIdx = bottomLeftIdx + 1;
+
+				glm::vec3 a = terrainModel->GetVertices()[bottomLeftIdx].GetPosition();
+				glm::vec3 b = terrainModel->GetVertices()[bottomRightIdx].GetPosition();
+				glm::vec3 c = terrainModel->GetVertices()[topRightIdx].GetPosition();
+				glm::vec3 d = terrainModel->GetVertices()[topLeftIdx].GetPosition();
+
+				Triangle t1 = { a, b, c };
+				Triangle t2 = { c, d, a };
+
+				float hit1 = t1.Raycast(ray);
+				float hit2 = t2.Raycast(ray);
+
+
+				if (hit1 != -1.0f)
+				{
+					//aabbs[testPoint.y][testPoint.x]->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+					return ray.GetOrigin() + ray.GetDirection() * hit1;
+				}
+				else if (hit2 != -1.0f)
+				{
+					//aabbs[testPoint.y][testPoint.x]->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+					return ray.GetOrigin() + ray.GetDirection() * hit2;
+				}
+			}
+		}
+
+		// Advance to the next grid cell
+		if (sideDistX < sideDistZ) {
+			sideDistX += deltaDistX;
+			testPoint.x += stepX;
+		}
+		else {
+			sideDistZ += deltaDistZ;
+			testPoint.y += stepZ;
+		}
+
+		// Check if we've left the terrain after stepping
+		if (testPoint.x < 0 || testPoint.x >= tileX - 1 || testPoint.y < 0 || testPoint.y >= tileY - 1) {
+			break; // Ray has exited the grid
+		}
+
+		
+
+		marchSteps++;
+	}
+
+	return glm::vec3(0.0f);
+}
+
 void Terrain::CreateAABBs()
 {
 	const std::vector<Vertex>& vertices = terrainModel->GetVertices();
@@ -343,7 +514,7 @@ void Terrain::CreateAABBs()
 
 	// Loop through each tile (quad) on the terrain
 	for (int z = 0; z < tileY - 1; ++z) {
-		aabbs.push_back(std::vector<AxisAlignedBoundingBoxWithVisualization*>());
+		aabbs.push_back(std::vector<AxisAlignedBoundingBox*>());
 		for (int x = 0; x < tileX - 1; ++x) {
 			// Get the indices of the four corners of the quad
 			int topLeftIdx = (z * tileX) + x;
@@ -366,7 +537,7 @@ void Terrain::CreateAABBs()
 			float zPos = static_cast<float>(z) * (terrainHeight / tileY) - (terrainHeight / 2);
 			float zPos1 = (static_cast<float>(z) + 1.0f) * (terrainHeight / tileY) - (terrainHeight / 2);
 
-			aabbs[z].push_back(new AxisAlignedBoundingBoxWithVisualization(glm::vec3(xPos, minY, zPos) , glm::vec3(xPos1, maxY, zPos1)));
+			aabbs[z].push_back(new AxisAlignedBoundingBox(glm::vec3(xPos, minY, zPos) , glm::vec3(xPos1, maxY, zPos1)));
 		}
 	}
 }

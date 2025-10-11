@@ -73,6 +73,8 @@ public:
 
 	static void Despawn(unsigned long long networkObjectID);
 
+	static void SyncClientWithServer();
+
 private:
 
 	friend class SingletonHelpers;
@@ -126,6 +128,12 @@ private:
 	void CleanDisconnectedClientThreads();
 
 	void ProcessMainThreadUpdates();
+
+	void CleanupClientSpawnRequests();
+
+	void SetupSpawnConfirmationCallbacks();
+
+	void SetupSyncCallbacks();
 
 	static NetworkManager* instance;
 

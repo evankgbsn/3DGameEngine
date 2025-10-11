@@ -4,6 +4,7 @@
 #include "NetworkObject.h"
 #include "../GameObject/GameObject.h"
 #include "../Scene/Scene.h"
+#include "../Scene/SceneManager.h"
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
@@ -21,6 +22,8 @@ void NetworkManager::Initialize()
 	instance->SetupReceiveSpawnFromServer();
 	instance->SetupServerReceiveDespawnRequestCallback();
 	instance->SetupReceiveDespawnFromServer();
+	instance->SetupSpawnConfirmationCallbacks();
+	instance->SetupSyncCallbacks();
 }
 
 void NetworkManager::Terminate()
@@ -143,6 +146,8 @@ NetworkManager::~NetworkManager()
 		{
 			cleanDisconnectedClientThread.join();
 		}
+
+		CleanupClientSpawnRequests();
 	}
 
 	WSACleanup();
@@ -309,7 +314,7 @@ void NetworkManager::ClientReceive()
 			int iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
 			if (iResult > 0)
 			{
-				Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
+				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
 
 				if (firstMessage)
 				{
@@ -372,7 +377,7 @@ void NetworkManager::ServerReceive(const std::string& IP)
 			int iResult = recv(socket, recvbuf, recvbuflen, 0);
 			if (iResult > 0)
 			{
-				Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
+				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
 
 				if (iResult >= 16)
 				{
@@ -509,6 +514,10 @@ void NetworkManager::ProcessReceivedData()
 				{
 					(*function->second)(data);
 				}
+			}
+			else
+			{
+				Logger::Log("Cannot Process Packet. Either incorrect function ID or corrupt packet: " + data, Logger::Category::Warning);
 			}
 		}
 
@@ -827,6 +836,192 @@ void NetworkManager::ProcessMainThreadUpdates()
 	mainThreadUpdates.clear();
 }
 
+void NetworkManager::CleanupClientSpawnRequests()
+{
+	for (const auto& function : clientSpawnRequestCallbacks)
+	{
+		std::string clientSpawnRequestName = "ClientSpawnRequest:" + std::to_string(function.first);
+		DeregisterReceiveDataFunction(clientSpawnRequestName);
+		delete function.second;
+	}
+}
+
+void NetworkManager::SetupSpawnConfirmationCallbacks()
+{
+	static std::function<void(const std::string&)> serverSpawnConfirmation = [this](const std::string& data)
+		{
+			std::string IP = GetIPFromData(data);
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			unsigned long long id = std::stoull(dataBlock);
+
+			const auto& object = spawnedNetworkObjects.find(id);
+
+			if (object != spawnedNetworkObjects.end())
+			{
+				object->second->OnServerSpawnConfirmation(IP);
+				ServerSend(IP, dataBlock, "ClientSpawnConfirmation");
+			}
+		};
+
+	RegisterReceiveDataFunction("ServerSpawnConfirmation", &serverSpawnConfirmation);
+
+	static std::function<void(const std::string&)> clientSpawnConfirmation = [this](const std::string& data)
+		{
+			std::string IP = GetIPFromData(data);
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			unsigned long long id = std::stoull(dataBlock);
+
+			const auto& object = spawnedNetworkObjects.find(id);
+
+			if (object != spawnedNetworkObjects.end())
+			{
+				object->second->OnClientSpawnConfirmation();
+			}
+		};
+
+	RegisterReceiveDataFunction("ClientSpawnConfirmation", &clientSpawnConfirmation);
+
+}
+
+void NetworkManager::SetupSyncCallbacks()
+{
+	static std::function<void(const std::string&)> serverReceiveSyncRequest = [this](const std::string& data)
+		{
+			std::string IP = GetIPFromData(data);
+
+			std::vector<std::string> sceneNames;
+
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			unsigned int index = 0;
+			while (index < dataBlock.size())
+			{
+				std::string sceneName;
+				while (dataBlock[index] != ' ')
+				{
+					sceneName.append({ dataBlock[index] });
+
+					index++;
+					if (index >= dataBlock.size())
+					{
+						break;
+					}
+				}
+
+				sceneNames.push_back(sceneName);
+				index++;
+			}
+
+			std::vector<NetworkObject*> networkObjectsToSend;
+
+			for (const std::string& sceneName : sceneNames)
+			{
+				Scene* scene = SceneManager::GetLoadedScene(sceneName);
+
+				if (scene != nullptr)
+				{
+					const auto& gameObjects = scene->GetGameObjects();
+
+					for (const auto& gameObject : gameObjects)
+					{
+						NetworkObject* netObject = dynamic_cast<NetworkObject*>(gameObject.second);
+
+						if (netObject != nullptr)
+						{
+							networkObjectsToSend.push_back(netObject);
+						}
+					}
+				}
+			}
+
+			std::string netObjectDataToSend;
+
+			for (unsigned int i = 0; i < networkObjectsToSend.size(); i++)
+			{
+				if (i != 0)
+				{
+					netObjectDataToSend += " ";
+				}
+
+				NetworkObject* netObject = networkObjectsToSend[i];
+
+				GameObject* gameObject = dynamic_cast<GameObject*>(netObject);
+
+				netObjectDataToSend.append(netObject->nameOfType + " " + std::to_string(netObject->GetNetworkObjectID()) + " " + gameObject->GetOwningScene()->GetName());
+			}
+
+			ServerSend(IP, netObjectDataToSend, "ClientReceiveSync");
+		};
+
+	RegisterReceiveDataFunction("ServerReceiveSyncRequest", &serverReceiveSyncRequest);
+
+	static std::function<void(const std::string&)> clientReceiveSync = [this](const std::string& data)
+		{
+			std::string dataBlock = GetDataBlockFromData(data);
+
+			unsigned int i = 0;
+			while (i < dataBlock.size())
+			{
+				std::string objectTypeName;
+
+				while (dataBlock[i] != ' ')
+				{
+					objectTypeName += dataBlock[i];
+					i++;
+				}
+
+				i++;
+
+				std::string networkObjectID;
+
+				while (dataBlock[i] != ' ')
+				{
+					networkObjectID += dataBlock[i];
+					i++;
+				}
+
+				i++;
+
+				std::string owningScene;
+
+				while (dataBlock[i] != ' ')
+				{
+					owningScene += dataBlock[i];
+					i++;
+					if (i >= dataBlock.size())
+					{
+						break;
+					}
+				}
+
+				i++;
+
+				Scene* scene = SceneManager::GetLoadedScene(owningScene);
+
+				if (scene != nullptr && spawnedNetworkObjects.find(std::stoull(networkObjectID)) == spawnedNetworkObjects.end())
+				{
+					NetworkObject* newNetworkObject = nullptr;
+					NetworkObject::GetConstructor(objectTypeName)(&newNetworkObject);
+
+					if (newNetworkObject != nullptr)
+					{
+						newNetworkObject->spawnedFromLocalSpawnRequest = true;
+						newNetworkObject->networkObjectID = std::stoull(networkObjectID);
+						newNetworkObject->OnSpawn();
+						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
+
+						// Send confirmation to server.
+						ClientSend(std::to_string(newNetworkObject->GetNetworkObjectID()), "ServerSpawnConfirmation");
+					}
+				}
+			}
+		};
+
+	RegisterReceiveDataFunction("ClientReceiveSync", &clientReceiveSync);
+}
+
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
 {
 	if (instance != nullptr)
@@ -872,7 +1067,7 @@ void NetworkManager::ServerSendAll(const std::string& data, const std::string& r
 				}
 
 				delete[] sendbuf;
-				Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
+				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
 			}
 			instance->connectedClientsMutex.unlock();
 		}
@@ -923,7 +1118,7 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 
 				delete[] sendbuf;
 
-				Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket->first, Logger::Category::Success);
+				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket->first, Logger::Category::Success);
 			}
 
 			
@@ -1223,8 +1418,11 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 					{
 						newNetworkObject->spawnedFromLocalSpawnRequest = true;
 						newNetworkObject->networkObjectID = std::stod(dataBlock);
-						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 						newNetworkObject->OnSpawn();
+						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
+
+						// Send confirmation to server.
+						ClientSend(std::to_string(newNetworkObject->GetNetworkObjectID()), "ServerSpawnConfirmation");
 					}
 
 					(*callback)(newNetworkObject);
@@ -1236,7 +1434,6 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 		std::string clientSpawnRequestName = "ClientSpawnRequest:" + std::to_string(clientSpawnRequestID);
 
 		RegisterReceiveDataFunction(clientSpawnRequestName, clientSpawnRequest);
-
 
 		ClientSend(networkObjectClassName + " " + clientSpawnRequestName, "NetworkManagerServerSpawnRequest");
 	}
@@ -1276,4 +1473,24 @@ void NetworkManager::Despawn(unsigned long long networkObjectID)
 	{
 		ClientSend(std::to_string(networkObjectID), "NetworkManagerServerDespawnRequest");
 	}
+}
+
+void NetworkManager::SyncClientWithServer()
+{
+	const std::vector<std::string> loadedScenes = SceneManager::GetLoadedSceneNames();
+
+	std::string dataToSend;
+
+	unsigned int i = 0;
+	for (i; i < loadedScenes.size(); i++)
+	{
+		if (i != 0)
+		{
+			dataToSend.append(" ");
+		}
+
+		dataToSend.append(loadedScenes[i]);
+	}
+
+	ClientSend(dataToSend, "ServerReceiveSyncRequest");
 }

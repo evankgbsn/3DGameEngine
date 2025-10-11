@@ -28,7 +28,7 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 
 	AccelerateMesh();
 
-	AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
+	//AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 }
 
 StaticCollider::~StaticCollider()

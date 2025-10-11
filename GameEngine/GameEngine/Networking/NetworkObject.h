@@ -14,6 +14,10 @@ class NetworkObject
 
 public:
 
+	virtual void OnServerSpawnConfirmation(const std::string& IP);
+
+	virtual void OnClientSpawnConfirmation();
+
 	virtual void OnSpawn();
 
 	virtual void OnDespawn();
@@ -57,10 +61,6 @@ private:
 
 	static std::unordered_map<std::string, std::function<void(NetworkObject**)>> newFunctions;
 
-	std::function<void(const std::string&)>* onClientRecieveID;
-
-	std::function<void(const std::string&)>* onServerReceiveIDRequest;
-
 	unsigned long long networkObjectID;
 
 	std::string nameOfType;
@@ -70,6 +70,8 @@ private:
 	bool spawnedFromLocalSpawnRequest;
 
 	std::string spawnerIP;
+
+	std::unordered_set<std::string> serverConfirmedIPs;
 };
 
 template<typename T>

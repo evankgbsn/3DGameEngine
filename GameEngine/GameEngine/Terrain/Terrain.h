@@ -2,6 +2,7 @@
 #define TERRAIN_H
 
 #include "../Renderer/GraphicsObjects/GOLit.h"
+#include "../Math/Shapes/Ray.h"
 
 #include <string>
 #include <vector>
@@ -27,11 +28,17 @@ public:
 
 	~Terrain();
 
+	bool IsEnabled() const;
+
+	bool IsVisible(const Cell& cell) const;
+
 	void ToggleCells();
+
+	void ToggleCell(const Cell& cell);
 	
-	void HighlightCell(const Cell& cell);
+	void HighlightCell(const Cell& cell, const glm::vec4& color = {1.0f, 1.0f, 1.0f, 1.0f});
 	
-	Cell TestPoint(const glm::vec3& point);
+	Cell TestPoint(const glm::vec3& point) const;
 	
 	float GetCellHeight(const Cell& cell);
 	
@@ -43,7 +50,7 @@ public:
 	
 	void VisualizeAllCells();
 	
-	const std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>>& GetCellArray() const;
+	const std::vector<std::vector<class AxisAlignedBoundingBox*>>& GetCellArray() const;
 
 	void UpdateTerrainCells();
 
@@ -67,6 +74,8 @@ public:
 
 	GOTerrain* GetGraphics() const;
 
+	glm::vec3 RayIntersect(const Ray& ray) const;
+
 private:
 
 	Terrain() = delete;
@@ -89,7 +98,7 @@ private:
 
 	class Model* terrainModel;
 
-	std::vector<std::vector<class AxisAlignedBoundingBoxWithVisualization*>> aabbs;
+	std::vector<std::vector<class AxisAlignedBoundingBox*>> aabbs;
 
 	std::vector<std::vector<glm::vec3>> tileNormals;
 

@@ -31,6 +31,8 @@ public:
 
 	static std::vector<Scene*> GetLoadedScenes();
 
+	static std::vector<std::string> GetLoadedSceneNames();
+
 	static void StartLoadedScenes();
 
 	static void EndLoadedScenes();

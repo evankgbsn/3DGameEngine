@@ -7,6 +7,8 @@
 
 #include <gl/glew.h>
 
+std::list<unsigned int> GOColoredInstanced::removedInstances;
+
 GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& initialColor, unsigned int instanceCount) :
 	GraphicsObject(model),
 	translations(std::vector<glm::mat4>(instanceCount)),
@@ -43,6 +45,13 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	colors[0] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glGenBuffers(1, &colorsBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, colorsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * colors.size(), &colors[0], GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	glEnableVertexAttribArray(5);
 	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
 	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
@@ -67,6 +76,12 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glVertexAttribDivisor(8, 1);
 
+	glEnableVertexAttribArray(9);
+	glBindBuffer(GL_ARRAY_BUFFER, colorsBuffer);
+	glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glVertexAttribDivisor(9, 1);
+
 	FinalizeTransforms();
 
 }
@@ -78,11 +93,17 @@ GOColoredInstanced::~GOColoredInstanced()
 	glDeleteBuffers(1, &rightBuffer);
 	glDeleteBuffers(1, &upBuffer);
 	glDeleteBuffers(1, &forwardBuffer);
+	glDeleteBuffers(1, &colorsBuffer);
 }
 
 void GOColoredInstanced::SetColor(const glm::vec4& color, unsigned int instanceID)
 {
 	colors[instanceID] = color;
+
+	glBindBuffer(GL_ARRAY_BUFFER, colorsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * colors.size(), colors.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 }
 
 const glm::vec4& GOColoredInstanced::GetColor(unsigned int instanceID) const
@@ -111,33 +132,57 @@ void GOColoredInstanced::Update()
 	ShaderManager::EndShaderUsage("ColoredInstanced");
 }
 
-void GOColoredInstanced::AddInstance()
+unsigned int GOColoredInstanced::AddInstance()
 {
-	translations.push_back(glm::mat4(1.0f));
-	rotations.push_back(glm::mat4(1.0f));
-	scales.push_back(glm::mat4(1.0f));
-	transformations.push_back(glm::mat4(1.0f));
-	transforms.push_back(glm::mat4(1.0f));
-	colors.push_back(glm::vec4(1.0f));
+	if (removedInstances.empty())
+	{
+		translations.push_back(glm::mat4(1.0f));
+		rotations.push_back(glm::mat4(1.0f));
+		scales.push_back(glm::mat4(1.0f));
+		transformations.push_back(glm::mat4(1.0f));
+		transforms.push_back(glm::mat4(1.0f));
+		colors.push_back(glm::vec4(1.0f));
 
-	trans.push_back(glm::vec4(1.0f));
-	rights.push_back(glm::vec4(1.0f));
-	ups.push_back(glm::vec4(1.0f));
-	forwards.push_back(glm::vec4(1.0f));
+		trans.push_back(glm::vec4(1.0f));
+		rights.push_back(glm::vec4(1.0f));
+		ups.push_back(glm::vec4(1.0f));
+		forwards.push_back(glm::vec4(1.0f));
+
+		return translations.size() - 1;
+	}
+	
+	unsigned int newInstanceID = removedInstances.front();
+	removedInstances.pop_front();
+	
+	translations[newInstanceID] = (glm::mat4(1.0f));
+	rotations[newInstanceID] = (glm::mat4(1.0f));
+	scales[newInstanceID] = (glm::mat4(1.0f));
+	transformations[newInstanceID] = (glm::mat4(1.0f));
+	transforms[newInstanceID] = (glm::mat4(1.0f));
+	colors[newInstanceID] = (glm::vec4(1.0f));
+
+	trans[newInstanceID] = (glm::vec4(1.0f));
+	rights[newInstanceID] = (glm::vec4(1.0f));
+	ups[newInstanceID] = (glm::vec4(1.0f));
+	forwards[newInstanceID] = (glm::vec4(1.0f));
+
+	return newInstanceID;
 }
 
 void GOColoredInstanced::RemoveInstanceByID(unsigned int instanceID)
 {
-	translations.erase(translations.begin() + instanceID);
-	rotations.erase(rotations.begin() + instanceID);
-	scales.erase(scales.begin() + instanceID);
-	transformations.erase(transformations.begin() + instanceID);
-	transforms.erase(transforms.begin() + instanceID);
-	colors.erase(colors.begin() + instanceID);
-	trans.erase(trans.begin() + instanceID);
-	rights.erase(rights.begin() + instanceID);
-	ups.erase(ups.begin() + instanceID);
-	forwards.erase(forwards.begin() + instanceID);
+	translations[instanceID] = glm::mat4(0.0f);
+	rotations[instanceID] = glm::mat4(0.0f);
+	scales[instanceID] = glm::mat4(0.0f);
+	transformations[instanceID] = glm::mat4(0.0f);
+	transforms[instanceID] = glm::mat4(0.0f);
+	colors[instanceID] = glm::vec4(0.0f);
+	trans[instanceID] = glm::vec4(0.0f);
+	rights[instanceID] = glm::vec4(0.0f);
+	ups[instanceID] = glm::vec4(0.0f);
+	forwards[instanceID] = glm::vec4(0.0f);
+
+	removedInstances.push_back(instanceID);
 }
 
 unsigned int GOColoredInstanced::GetInstanceCount()
@@ -185,4 +230,5 @@ void GOColoredInstanced::UpdateInstanceByID(unsigned int instanceID)
 	glNamedBufferSubData(rightBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &rights[instanceID]);
 	glNamedBufferSubData(upBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &ups[instanceID]);
 	glNamedBufferSubData(forwardBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &forwards[instanceID]);
+	glNamedBufferSubData(colorsBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &colors[instanceID]);
 }
