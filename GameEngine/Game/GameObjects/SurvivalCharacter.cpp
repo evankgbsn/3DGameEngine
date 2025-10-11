@@ -66,7 +66,10 @@ void SurvivalCharacter::OnSpawn()
 	{
 		onClientDisconnect = new std::function<void(const std::string&)>([this](const std::string& IP)
 			{
-				NetworkManager::Despawn(GetNetworkObjectID());
+				if (GetSpawnerIP() == IP)
+				{
+					NetworkManager::Despawn(GetNetworkObjectID());
+				}
 			});
 
 		NetworkManager::RegisterOnClientDisconnectFunction("SurvivalCharacter:" + std::to_string(GetNetworkObjectID()), onClientDisconnect);
