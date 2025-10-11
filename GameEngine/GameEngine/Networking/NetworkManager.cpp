@@ -465,6 +465,8 @@ void NetworkManager::ListenForConnections()
 		connectedClientsReceiveThreadsMutex.lock();
 		connectedClientsReceiveThreads[clientIP] = std::thread(&NetworkManager::ServerReceive, this, clientIP);
 		connectedClientsReceiveThreadsMutex.unlock();
+
+		Logger::Log("Client Connected: " + std::string(clientIP), Logger::Category::Info);
 		
 		ServerSend(clientIP, "", "");
 	}
@@ -806,7 +808,7 @@ void NetworkManager::CleanDisconnectedClientThreads()
 
 		for (auto& clientThread : connectedClientsReceiveThreads)
 		{
-			if (connectedClients.find(clientThread.first) != connectedClients.end())
+			if (connectedClients.find(clientThread.first) == connectedClients.end())
 			{
 				disconnectedClients.insert(clientThread.first);
 
@@ -821,6 +823,7 @@ void NetworkManager::CleanDisconnectedClientThreads()
 		{
 			connectedClientsReceiveThreads.erase(connectedClientsReceiveThreads.find(client));
 		}
+
 
 		connectedClientsReceiveThreadsMutex.unlock();
 	}
@@ -1007,7 +1010,6 @@ void NetworkManager::SetupSyncCallbacks()
 
 					if (newNetworkObject != nullptr)
 					{
-						newNetworkObject->spawnedFromLocalSpawnRequest = true;
 						newNetworkObject->networkObjectID = std::stoull(networkObjectID);
 						newNetworkObject->OnSpawn();
 						instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
