@@ -76,6 +76,7 @@ void SurvivalCharacter::OnSpawn()
 	}
 	else
 	{
+		ClientSend(NetworkManager::ConvertVec3ToData(target));
 	}
 
 	currentTranslationVector = glm::vec3(0.0f);
@@ -101,7 +102,16 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 	}
 	else
 	{
-		target = NetworkManager::ConvertDataToVec3(data);
+		glm::vec3 pos = NetworkManager::ConvertDataToVec3(data);
+
+		if (pos != glm::zero<glm::vec3>())
+		{
+			target = pos;
+		}
+		else
+		{
+			ServerSendAll(NetworkManager::ConvertVec3ToData(GetPosition()));
+		}
 	}
 }
 
@@ -109,6 +119,10 @@ void SurvivalCharacter::OnServerSpawnConfirmation(const std::string& IP)
 {
 	NetworkObject::OnServerSpawnConfirmation(IP);
 	ServerSend(IP, NetworkManager::ConvertVec3ToData(GetPosition()));
+}
+
+void SurvivalCharacter::OnClientSpawnConfirmation()
+{
 }
 
 void SurvivalCharacter::Initialize()

@@ -1468,6 +1468,8 @@ void NetworkManager::Despawn(unsigned long long networkObjectID)
 				}
 			}
 
+			networkObject->second->OnDespawn();
+
 			delete networkObject->second;
 			instance->spawnedNetworkObjects.erase(networkObject);
 		}

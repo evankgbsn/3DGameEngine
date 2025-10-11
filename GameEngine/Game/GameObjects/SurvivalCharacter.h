@@ -37,6 +37,8 @@ private:
 
 	void OnServerSpawnConfirmation(const std::string& IP) override;
 
+	void OnClientSpawnConfirmation() override;
+
 	void Initialize() override;
 
 	void Terminate() override;
