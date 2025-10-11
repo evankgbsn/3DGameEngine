@@ -143,7 +143,7 @@ void SurvivalCharacter::Terminate()
 {
 	CleanupEditorCallbacks();
 
-	if (!NetworkManager::IsServer())
+	if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 	{
 		CleanupCameraMovement();
 		CleanupMovement();
