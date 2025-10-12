@@ -384,8 +384,6 @@ void NetworkManager::ClientReceive()
 							}
 							else
 							{
-								partialPacket:
-								
 								unsigned int startOfPacket = i - x;
 
 								char* packetRecvBuf = new char[packetSize]('\0');
@@ -420,6 +418,7 @@ void NetworkManager::ClientReceive()
 									}
 
 									receivedData.push_back(data);
+									delete[] packetRecvBuf;
 									break;
 								}
 								else if (iResult == 0)
