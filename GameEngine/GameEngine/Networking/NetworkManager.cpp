@@ -318,14 +318,15 @@ void NetworkManager::ClientReceive()
 			{
 				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
 
-				char* packetBuf = new char[packetSize]('\0');
-				iResult = recv(connectSocket, packetBuf, packetSize, 0);
+				char* packetBuf = new char[packetSize - 4]('\0');
+				iResult = recv(connectSocket, packetBuf, packetSize - 4, 0);
 
-				if (iResult == packetSize)
+				if (iResult == packetSize - 4)
 				{
 					if (firstMessage)
 					{
 						clientIP = std::string(packetBuf);
+						firstMessage = false;
 					}
 					else
 					{
@@ -334,9 +335,9 @@ void NetworkManager::ClientReceive()
 						std::string data = ip + " " + functionID + " ";
 
 						unsigned int i = 17 + functionID.size();
-						while (i < packetSize)
+						while (i < packetSize - 4)
 						{
-							data += recvbuf[i];
+							data += packetBuf[i];
 							i++;
 						}
 
