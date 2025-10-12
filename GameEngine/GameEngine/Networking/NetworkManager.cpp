@@ -343,13 +343,13 @@ void NetworkManager::ClientReceive()
 							std::string data = ip + " " + functionID + " ";
 
 							unsigned int i = 21 + functionID.size() + x;
-							while (i < packetSize && i < iResult)
+							while (i < packetSize  + x && i < iResult)
 							{
 								data += recvbuf[i];
 								i++;
 							}
 
-							if (i <= iResult)
+							if (i <= iResult + 1)
 							{
 								// Full packet
 								receivedData.push_back(data);
@@ -362,7 +362,7 @@ void NetworkManager::ClientReceive()
 								if (iResult > 0)
 								{
 									i = 0;
-									while (i < packetSize && i < iResult)
+									while (i < packetSize + x && i < iResult)
 									{
 										data += recvbuf[i];
 										i++;
@@ -437,6 +437,7 @@ void NetworkManager::ServerReceive(const std::string& IP)
 				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
 
 				unsigned int x = 0;
+				unsigned int iteration = 0;
 				while (x < iResult)
 				{
 				newPacket:
@@ -448,16 +449,14 @@ void NetworkManager::ServerReceive(const std::string& IP)
 						std::string functionID = (recvbuf + 20 + x);
 						std::string data = ip + " " + functionID + " ";
 
-						Logger::Log("received " + functionID);
-
 						unsigned int i = 21 + functionID.size() + x;
-						while (i < packetSize && i < iResult)
+						while (i < packetSize + x && i < iResult)
 						{
 							data += recvbuf[i];
 							i++;
 						}
 
-						if (i <= iResult)
+						if (i <= iResult + 1)
 						{
 							// Full packet
 							receivedData.push_back(data);
@@ -466,11 +465,11 @@ void NetworkManager::ServerReceive(const std::string& IP)
 						{
 							// Partial packet
 							ZeroMemory(recvbuf, recvbuflen);
-							iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
+							iResult = recv(socket, recvbuf, recvbuflen, 0);
 							if (iResult > 0)
 							{
 								i = 0;
-								while (i < packetSize && i < iResult)
+								while (i < packetSize + x && i < iResult)
 								{
 									data += recvbuf[i];
 									i++;
@@ -515,6 +514,7 @@ void NetworkManager::ServerReceive(const std::string& IP)
 							}
 						}
 						x = i;
+						iteration++;
 					}
 				}
 			}
