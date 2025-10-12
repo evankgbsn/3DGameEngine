@@ -319,24 +319,31 @@ void NetworkManager::ClientReceive()
 				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
 
 				char* packetBuf = new char[packetSize]('\0');
-				iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
+				iResult = recv(connectSocket, packetBuf, packetSize, 0);
 
 				if (iResult == packetSize)
 				{
-					std::string ip = std::string(packetBuf);
-					std::string functionID = (packetBuf + 16);
-					std::string data = ip + " " + functionID + " ";
-
-					unsigned int i = 17 + functionID.size();
-					while (i < packetSize)
+					if (firstMessage)
 					{
-						data += recvbuf[i];
-						i++;
+						clientIP = std::string(packetBuf);
 					}
+					else
+					{
+						std::string ip = std::string(packetBuf);
+						std::string functionID = (packetBuf + 16);
+						std::string data = ip + " " + functionID + " ";
 
-					std::lock_guard<std::mutex> guard(receivedDataMutex);
-					// Full packet
-					receivedData.push_back(data);
+						unsigned int i = 17 + functionID.size();
+						while (i < packetSize)
+						{
+							data += recvbuf[i];
+							i++;
+						}
+
+						std::lock_guard<std::mutex> guard(receivedDataMutex);
+						// Full packet
+						receivedData.push_back(data);
+					}
 				}
 				else if (iResult == 0)
 				{
