@@ -387,7 +387,6 @@ void NetworkManager::ClientReceive()
 							}
 							x = i;
 						}
-						break;
 					}
 				}
 			}
@@ -448,6 +447,8 @@ void NetworkManager::ServerReceive(const std::string& IP)
 						std::string ip = std::string(recvbuf + 4 + x);
 						std::string functionID = (recvbuf + 20 + x);
 						std::string data = ip + " " + functionID + " ";
+
+						Logger::Log("received " + functionID);
 
 						unsigned int i = 21 + functionID.size() + x;
 						while (i < packetSize && i < iResult)
@@ -515,7 +516,6 @@ void NetworkManager::ServerReceive(const std::string& IP)
 						}
 						x = i;
 					}
-					break;
 				}
 			}
 			else if (iResult == 0)
@@ -601,8 +601,6 @@ void NetworkManager::ProcessReceivedData()
 
 	if (!receivedData.empty())
 	{
-		Logger::Log(std::to_string(receivedData.size()), Logger::Category::Warning);
-
 		std::string data = receivedData.front();
 
 		if (data.size() >= 19)
@@ -632,6 +630,12 @@ void NetworkManager::ProcessReceivedData()
 
 				functionID += data[i];
 			}
+
+			if (functionID.empty())
+			{
+				Logger::Log(std::string(functionID));
+			}
+			Logger::Log(std::string(functionID));
 
 			const auto& function = responseFunctions.find(functionID);
 
@@ -1298,7 +1302,7 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 				*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 			}
 
-			Logger::Log(std::string(data));
+			Logger::Log(std::string(receiveFunction));
 
 			int res = send(instance->connectSocket, sendbuf, packetSize, 0);
 			if (res == SOCKET_ERROR) {
@@ -1637,5 +1641,6 @@ void NetworkManager::SyncClientWithServer()
 		dataToSend.append(loadedScenes[i]);
 	}
 
+	Logger::Log(std::string("Sending sync request"));
 	ClientSend(dataToSend, "ServerReceiveSyncRequest");
 }
