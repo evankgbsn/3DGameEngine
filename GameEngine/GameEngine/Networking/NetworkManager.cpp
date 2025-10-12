@@ -333,9 +333,28 @@ void NetworkManager::ClientReceive()
 					unsigned int x = 0;
 					while (x < iResult)
 					{
+						
+						// There are not enough bytes left to get the packet size.
 						if (512 - x < 4)
 						{
+							unsigned int missingSizeBytes = 4 - (512 - x);
+
 							char* partialPacketSizeBuf = new char[4]('\0');
+
+							unsigned int i = 0;
+							for (i; i < 512 - x; i++)
+							{
+								partialPacketSizeBuf[i] = *(recvbuf + x + i);
+							}
+
+							// Get the rest of the packet size.
+							int iResult = recv(connectSocket, partialPacketSizeBuf + 512 - x, missingSizeBytes, 0);
+
+							if (iResult == missingSizeBytes)
+							{
+								missingSizeBytes = 0;
+							}
+
 						}
 
 						packetSize = *reinterpret_cast<unsigned int*>(recvbuf + x);
