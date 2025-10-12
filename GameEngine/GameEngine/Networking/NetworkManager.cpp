@@ -313,6 +313,7 @@ void NetworkManager::ClientReceive()
 		{
 			static bool firstMessage = true;
 
+			start:
 			int iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
 			if (iResult > 0)
 			{
@@ -364,7 +365,7 @@ void NetworkManager::ClientReceive()
 								unsigned int j = x;
 								while (j < iResult)
 								{
-									packetRecvBuf[j] = recvbuf[j];
+									packetRecvBuf[j - x] = recvbuf[j];
 									j++;
 								}
 
@@ -372,16 +373,19 @@ void NetworkManager::ClientReceive()
 								iResult = recv(connectSocket, packetRecvBuf + iResult - x, packetSize - (iResult - x) , 0);
 								if (iResult > 0)
 								{
-									std::string ip = std::string(packetRecvBuf + 4 + x);
-									std::string functionID = (packetRecvBuf + 20 + x);
+									std::string ip = std::string(packetRecvBuf + 4);
+									std::string functionID = (packetRecvBuf + 20);
 									std::string data = ip + " " + functionID + " ";
 
 									unsigned int i = 21 + functionID.size();
-									while (i < packetSize && i < iResult)
+									while (i < packetSize)
 									{
 										data += packetRecvBuf[i];
 										i++;
 									}
+
+									receivedData.push_back(data);
+									goto start;
 								}
 								else if (iResult == 0)
 								{
