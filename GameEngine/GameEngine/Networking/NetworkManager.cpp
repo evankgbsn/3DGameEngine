@@ -306,136 +306,49 @@ void NetworkManager::ClientReceive()
 {
 	while (running.load())
 	{
-		int recvbuflen = DEFAULT_BUFFLEN;
-		char recvbuf[DEFAULT_BUFFLEN] = {};
+		int recvbuflen = 4;
+		char recvbuf[4] = {};
 
 		if (!isServer)
 		{
 			static bool firstMessage = true;
 
 			int iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
-			if (iResult > 0)
+			if (iResult == 4)
 			{
-				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
-
 				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
 
-				if (firstMessage)
-				{
-					clientIP = std::string(recvbuf + 4);
+				char* packetBuf = new char[packetSize]('\0');
+				iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
 
-					firstMessage = false;
-				}
-				else if(iResult > 20)
+				if (iResult == packetSize)
 				{
-					std::lock_guard<std::mutex> guard(receivedDataMutex);
+					std::string ip = std::string(packetBuf);
+					std::string functionID = (packetBuf + 16);
+					std::string data = ip + " " + functionID + " ";
 
-					unsigned int x = 0;
-					while (x < iResult)
+					unsigned int i = 17 + functionID.size();
+					while (i < packetSize)
 					{
-						
-						// There are not enough bytes left to get the packet size.
-						if (512 - x < 4)
-						{
-							unsigned int missingSizeBytes = 4 - (512 - x);
-
-							char* partialPacketSizeBuf = new char[4]('\0');
-
-							unsigned int i = 0;
-							for (i; i < 512 - x; i++)
-							{
-								partialPacketSizeBuf[i] = *(recvbuf + x + i);
-							}
-
-							// Get the rest of the packet size.
-							int iResult = recv(connectSocket, partialPacketSizeBuf + 512 - x, missingSizeBytes, 0);
-
-							if (iResult == missingSizeBytes)
-							{
-								missingSizeBytes = 0;
-							}
-
-						}
-
-						packetSize = *reinterpret_cast<unsigned int*>(recvbuf + x);
-
-						if (packetSize > 20)
-						{
-							if (iResult < packetSize)
-							{
-								packetSize = 0;
-							}
-
-							std::string ip = std::string(recvbuf + 4 + x);
-							std::string functionID = (recvbuf + 20 + x);
-							std::string data = ip + " " + functionID + " ";
-
-							unsigned int i = 21 + functionID.size() + x;
-							while (i < packetSize + x && i < iResult)
-							{
-								data += recvbuf[i];
-								i++;
-							}
-
-							if (i <= iResult + 1)
-							{
-								// Full packet
-								receivedData.push_back(data);
-							}
-							else
-							{
-								unsigned int startOfPacket = i - x;
-
-								char* packetRecvBuf = new char[packetSize]('\0');
-								ZeroMemory(packetRecvBuf, packetSize);
-
-								unsigned int j = x;
-								while (j < iResult)
-								{
-									packetRecvBuf[j - x] = recvbuf[j];
-									j++;
-								}
-
-								// Partial packet
-								unsigned int remaining = packetSize - (iResult - x);
-								iResult = recv(connectSocket, packetRecvBuf + iResult - x, remaining , 0);
-								if (iResult > 0)
-								{
-									if (iResult < remaining)
-									{
-										packetSize = 0;
-									}
-
-									std::string ip = std::string(packetRecvBuf + 4);
-									std::string functionID = (packetRecvBuf + 20);
-									std::string data = ip + " " + functionID + " ";
-
-									unsigned int i = 21 + functionID.size();
-									while (i < packetSize)
-									{
-										data += packetRecvBuf[i];
-										i++;
-									}
-
-									receivedData.push_back(data);
-									delete[] packetRecvBuf;
-									break;
-								}
-								else if (iResult == 0)
-								{
-									Logger::Log("Disconnected from server", Logger::Category::Warning);
-									return;
-								}
-								else if (iResult < 0)
-								{
-									Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-									return;
-								}
-							}
-							x = i;
-						}
+						data += recvbuf[i];
+						i++;
 					}
+
+					std::lock_guard<std::mutex> guard(receivedDataMutex);
+					// Full packet
+					receivedData.push_back(data);
 				}
+				else if (iResult == 0)
+				{
+					Logger::Log("Disconnected from server", Logger::Category::Warning);
+				}
+				else if (iResult < 0)
+				{
+					Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+				}
+
+				delete[] packetBuf;
+
 			}
 			else if (iResult == 0)
 			{
