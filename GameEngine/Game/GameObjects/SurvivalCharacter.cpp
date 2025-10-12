@@ -561,7 +561,13 @@ void SurvivalCharacter::MoveToTarget()
 
 		if (NetworkManager::IsServer())
 		{
-			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+			static float lastSend = TimeManager::SecondsSinceStart();
+
+			if (TimeManager::SecondsSinceStart() - lastSend >= .01f)
+			{
+				ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+				lastSend = TimeManager::SecondsSinceStart();
+			}
 		}
 
 		if (shouldRotate)
