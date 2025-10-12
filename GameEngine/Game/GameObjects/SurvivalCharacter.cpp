@@ -198,16 +198,18 @@ void SurvivalCharacter::GameUpdate()
 			characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
 		}
 
-		float movementUnit = walkSpeed * TimeManager::DeltaTime();
-		glm::vec3 targetVector(receivedPosition - characterGraphics->GetPosition());
-		glm::vec3 direction = glm::normalize(targetVector);
+		characterGraphics->SetPosition(receivedPosition);
 
-		if (glm::length(targetVector) > movementUnit)
-		{
-			currentTranslationVector = direction * movementUnit;
-
-			characterGraphics->Translate(currentTranslationVector);
-		}
+		//float movementUnit = walkSpeed * TimeManager::DeltaTime();
+		//glm::vec3 targetVector(receivedPosition - characterGraphics->GetPosition());
+		//glm::vec3 direction = glm::normalize(targetVector);
+		//
+		//if (glm::length(targetVector) > movementUnit)
+		//{
+		//	currentTranslationVector = direction * movementUnit;
+		//
+		//	characterGraphics->Translate(currentTranslationVector);
+		//}
 	}
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
