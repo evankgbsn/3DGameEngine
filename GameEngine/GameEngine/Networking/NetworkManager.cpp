@@ -343,7 +343,7 @@ void NetworkManager::ClientReceive()
 							std::string data = ip + " " + functionID + " ";
 
 							unsigned int i = 21 + functionID.size() + x;
-							while (i < packetSize  + x && i < iResult)
+							while (i < packetSize + x && i < iResult)
 							{
 								data += recvbuf[i];
 								i++;
@@ -356,22 +356,31 @@ void NetworkManager::ClientReceive()
 							}
 							else
 							{
+								unsigned int startOfPacket = i - x;
+
+								char* packetRecvBuf = new char[packetSize]('\0');
+								ZeroMemory(packetRecvBuf, packetSize);
+
+								unsigned int j = x;
+								while (j < iResult)
+								{
+									packetRecvBuf[j] = recvbuf[j];
+									j++;
+								}
+
 								// Partial packet
-								ZeroMemory(recvbuf, recvbuflen);
-								iResult = recv(connectSocket, recvbuf, recvbuflen, 0);
+								iResult = recv(connectSocket, packetRecvBuf + iResult - x, packetSize - (iResult - x) , 0);
 								if (iResult > 0)
 								{
-									i = 0;
-									while (i < packetSize + x && i < iResult)
-									{
-										data += recvbuf[i];
-										i++;
-									}
+									std::string ip = std::string(packetRecvBuf + 4 + x);
+									std::string functionID = (packetRecvBuf + 20 + x);
+									std::string data = ip + " " + functionID + " ";
 
-									if (i < iResult)
+									unsigned int i = 21 + functionID.size();
+									while (i < packetSize && i < iResult)
 									{
-										x = i;
-										goto newPacket;
+										data += packetRecvBuf[i];
+										i++;
 									}
 								}
 								else if (iResult == 0)
