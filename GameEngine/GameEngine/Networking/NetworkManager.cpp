@@ -8,7 +8,7 @@
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
-#define SERVER_IP "192.168.50.3"
+#define SERVER_IP "75.102.226.185"
 
 #define DEFAULT_BUFFLEN 512
 
@@ -379,7 +379,7 @@ void NetworkManager::ServerReceive(const std::string& IP)
 		int recvbuflen = 4;
 		char recvbuf[4] = {};
 
-		ZeroMemory(recvbuf, DEFAULT_BUFFLEN);
+		ZeroMemory(recvbuf, recvbuflen);
 
 		connectedClientsMutex.lock();
 		const auto& clientSocket = connectedClients.find(IP);
