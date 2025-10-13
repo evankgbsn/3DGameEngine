@@ -17,21 +17,28 @@ Animation::~Animation()
 
 void Animation::Update(glm::mat4* posePalette)
 {
-	playback += TimeManager::DeltaTime() * speed;
-	if (playback >= ANIMATION_PLAYBACK_FRAME_TIME)
-	{
-		for (unsigned int i = 0; i < bakedAnimation.GetPoseAtIndex(index).size(); ++i)
-		{
-			posePalette[i] = bakedAnimation.GetPoseAtIndex(index)[i];
-		}
+    // Accumulate time as before
+    playback += TimeManager::DeltaTime() * speed;
 
-		++index;
-		if (index >= bakedAnimation.GetFrameCount())
-		{
-			index = 0;
-		}
-		playback = 0;
-	}
+    // Use a while loop to process all accumulated time
+    while (playback >= ANIMATION_PLAYBACK_FRAME_TIME)
+    {
+        // Update the pose palette for the current frame
+        for (unsigned int i = 0; i < bakedAnimation.GetPoseAtIndex(index).size(); ++i)
+        {
+            posePalette[i] = bakedAnimation.GetPoseAtIndex(index)[i];
+        }
+
+        // Advance to the next frame
+        ++index;
+        if (index >= bakedAnimation.GetFrameCount())
+        {
+            index = 0;
+        }
+
+        // Subtract the time for one frame, keeping the remainder
+        playback -= ANIMATION_PLAYBACK_FRAME_TIME;
+    }
 }
 
 void Animation::SetSpeed(float newSpeed)

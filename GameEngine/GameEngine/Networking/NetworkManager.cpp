@@ -8,7 +8,7 @@
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
-#define SERVER_IP "192.168.50.2"
+#define SERVER_IP "192.168.50.3"
 
 #define DEFAULT_BUFFLEN 512
 
@@ -321,7 +321,7 @@ void NetworkManager::ClientReceive()
 				char* packetBuf = new char[packetSize - 4]('\0');
 				iResult = recv(connectSocket, packetBuf, packetSize - 4, 0);
 
-				if (iResult == packetSize - 4)
+				if (iResult == packetSize - 4 && packetSize >= 21)
 				{
 					if (firstMessage)
 					{
@@ -376,13 +376,14 @@ void NetworkManager::ServerReceive(const std::string& IP)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-		int recvbuflen = DEFAULT_BUFFLEN;
-		char recvbuf[DEFAULT_BUFFLEN] = {};
+		int recvbuflen = 4;
+		char recvbuf[4] = {};
 
 		ZeroMemory(recvbuf, DEFAULT_BUFFLEN);
 
 		connectedClientsMutex.lock();
 		const auto& clientSocket = connectedClients.find(IP);
+		connectedClientsMutex.unlock();
 
 		if (clientSocket == connectedClients.end())
 		{
@@ -391,111 +392,90 @@ void NetworkManager::ServerReceive(const std::string& IP)
 
 		SOCKET socket = clientSocket->second;
 
-		connectedClientsMutex.unlock();
-
 		if (socket != INVALID_SOCKET)
 		{
 			int iResult = recv(socket, recvbuf, recvbuflen, 0);
-			if (iResult > 0)
+			if (iResult == 4)
 			{
-				//Logger::Log("Bytes received: " + std::to_string(iResult), Logger::Category::Success);
-
-				std::lock_guard<std::mutex> guard(receivedDataMutex);
-
 				unsigned int packetSize = *reinterpret_cast<unsigned int*>(recvbuf);
 
-				unsigned int x = 0;
-				unsigned int iteration = 0;
-				while (x < iResult)
+				char* packetBuf = new char[packetSize - 4]('\0');
+				iResult = recv(socket, packetBuf, packetSize - 4, 0);
+				if (iResult == packetSize - 4 && packetSize >= 21)
 				{
-				newPacket:
-					packetSize = *reinterpret_cast<unsigned int*>(recvbuf + x);
-
-					if (packetSize > 20)
+					if (packetBuf[packetSize - 4 - 1] == '\0')
 					{
-						std::string ip = std::string(recvbuf + 4 + x);
-						std::string functionID = (recvbuf + 20 + x);
+						std::string ip = std::string(packetBuf);
+						std::string functionID = (packetBuf + 16);
 						std::string data = ip + " " + functionID + " ";
 
-						unsigned int i = 21 + functionID.size() + x;
-						while (i < packetSize + x && i < iResult)
+						unsigned int i = 17 + functionID.size();
+						while (i < packetSize - 4)
 						{
-							data += recvbuf[i];
+							data += packetBuf[i];
 							i++;
 						}
 
-						if (i <= iResult + 1)
-						{
-							// Full packet
-							receivedData.push_back(data);
-						}
-						else
-						{
-							// Partial packet
-							ZeroMemory(recvbuf, recvbuflen);
-							iResult = recv(socket, recvbuf, recvbuflen, 0);
-							if (iResult > 0)
-							{
-								i = 0;
-								while (i < packetSize + x && i < iResult)
-								{
-									data += recvbuf[i];
-									i++;
-								}
+						std::lock_guard<std::mutex> guard(receivedDataMutex);
 
-								if (i < iResult)
-								{
-									x = i;
-									goto newPacket;
-								}
-							}
-							else if (iResult == 0)
-							{
-								Logger::Log("Client Disconnected: " + IP, Logger::Category::Warning);
-								closesocket(socket);
-								connectedClientsMutex.lock();
-								connectedClients.erase(clientSocket);
-								connectedClientsMutex.unlock();
-
-								OnClientDisconnect(IP);
-								return;
-							}
-							else if (iResult < 0)
-							{
-								if (WSAGetLastError() == WSAECONNRESET)
-								{
-									Logger::Log("Client Hard Disconnected: " + IP, Logger::Category::Error);
-									closesocket(socket);
-									connectedClientsMutex.lock();
-									connectedClients.erase(clientSocket);
-									connectedClientsMutex.unlock();
-
-									OnClientDisconnect(IP);
-									return;
-								}
-								else
-								{
-									Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-									closesocket(socket);
-									return;
-								}
-							}
-						}
-						x = i;
-						iteration++;
+						// Full packet
+						receivedData.push_back(data);
 					}
+					else
+					{
+						receivedData.push_back("");
+					}
+					
+
+					delete[] packetBuf;
+				}
+				if (iResult == 0)
+				{
+					Logger::Log("Client Disconnected: " + IP, Logger::Category::Warning);
+					closesocket(socket);
+					connectedClientsMutex.lock();
+					connectedClients.erase(clientSocket);
+					connectedClientsMutex.unlock();
+
+					OnClientDisconnect(IP);
+					break;
+				}
+				else if (iResult < 0)
+				{
+					if (WSAGetLastError() == WSAECONNRESET)
+					{
+						Logger::Log("Client Hard Disconnected: " + IP, Logger::Category::Error);
+						closesocket(socket);
+						connectedClientsMutex.lock();
+						connectedClients.erase(clientSocket);
+						connectedClientsMutex.unlock();
+
+						OnClientDisconnect(IP);
+						break;
+					}
+					else
+					{
+						Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+						closesocket(socket);
+						connectedClientsMutex.lock();
+						connectedClients.erase(clientSocket);
+						connectedClientsMutex.unlock();
+						break;
+					}
+
 				}
 			}
 			else if (iResult == 0)
 			{
 				Logger::Log("Client Disconnected: " + IP, Logger::Category::Warning);
 				closesocket(socket);
+
 				connectedClientsMutex.lock();
 				connectedClients.erase(clientSocket);
 				connectedClientsMutex.unlock();
 
 				OnClientDisconnect(IP);
-				return;
+				break;
 			}
 			else if (iResult < 0)
 			{
@@ -508,15 +488,17 @@ void NetworkManager::ServerReceive(const std::string& IP)
 					connectedClientsMutex.unlock();
 
 					OnClientDisconnect(IP);
-					return;
+					break;
 				}
 				else
 				{
 					Logger::Log("recv failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 					closesocket(socket);
-					return;
+					connectedClientsMutex.lock();
+					connectedClients.erase(clientSocket);
+					connectedClientsMutex.unlock();
+					break;
 				}
-				
 			}
 		}
 	}
@@ -1138,7 +1120,7 @@ void NetworkManager::ServerSendAll(const std::string& data, const std::string& r
 					continue;
 				}
 
-				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
 
 				char* sendbuf = new char[packetSize]('\0');
 				ZeroMemory(sendbuf, packetSize);
@@ -1191,7 +1173,7 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 
 			if (clientSocket != instance->connectedClients.end())
 			{
-				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
 
 				char* sendbuf = new char[packetSize]('\0');
 				ZeroMemory(sendbuf, packetSize);
@@ -1243,7 +1225,7 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 	{
 		if (!IsServer())
 		{
-			unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4;
+			unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
 
 			char* sendbuf = new char[packetSize]('\0');
 			ZeroMemory(sendbuf, packetSize);
@@ -1412,7 +1394,7 @@ std::string NetworkManager::GetDataBlockFromData(const std::string data)
 
 	i++;
 
-	std::string ret = std::string(data.begin() + i, data.end());
+	std::string ret = std::string(data.begin() + i, data.end() - 1);
 
 	return ret;
 }
