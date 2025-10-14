@@ -8,9 +8,7 @@
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
-#define SERVER_IP "75.102.230.35"
-
-#define DEFAULT_BUFFLEN 512
+#define SERVER_IP "192.168.50.3"
 
 NetworkManager* NetworkManager::instance = nullptr;
 
@@ -24,6 +22,7 @@ void NetworkManager::Initialize()
 	instance->SetupReceiveDespawnFromServer();
 	instance->SetupSpawnConfirmationCallbacks();
 	instance->SetupSyncCallbacks();
+	instance->SetupLatencyCallbacks();
 }
 
 void NetworkManager::Terminate()
@@ -201,51 +200,53 @@ void NetworkManager::StartClient()
 
 	// Connect to server.
 	res = connect(connectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
-	if (res == SOCKET_ERROR) {
-		Logger::Log(std::to_string(WSAGetLastError()), Logger::Category::Error);
+	while (res == SOCKET_ERROR && running.load())
+	{
+		Logger::Log("Failed to connect to server... Retrying connection... ErrorCode: " + std::to_string(WSAGetLastError()), Logger::Category::Warning);
+		
+		// Create a SOCKET for connecting to server
+		connectSocket = INVALID_SOCKET;
+
+		ptr = result;
+
+		connectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+
+		if (connectSocket == INVALID_SOCKET) {
+			Logger::Log("Error at socket(): " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+			freeaddrinfo(result);
+			return;
+		}
+
+		res = connect(connectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+	}
+
+	if (running.load())
+	{
+		Logger::Log("Connected to server!", Logger::Category::Success);
+
+		char sendbuf[23] = { ' ', ' ',' ', ' ','1', '2', '7', '.', '0', '.', '0', '.', '1', '\0', '\0', '\0', '\0', '\0', '\0', '\0','\0', '\0', '\0' };
+
+		*reinterpret_cast<unsigned int*>(sendbuf) = 23;
+
+		// Send an initial buffer
+		res = send(connectSocket, sendbuf, sizeof(sendbuf), 0);
+		if (res == SOCKET_ERROR) {
+			Logger::Log("Initial send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+			closesocket(connectSocket);
+			return;
+		}
+
+		Logger::Log("Bytes Sent: " + std::to_string(res), Logger::Category::Success);
+		receiveThread = std::thread(&NetworkManager::ClientReceive, this);
+
+	}
+	else
+	{
 		closesocket(connectSocket);
 		connectSocket = INVALID_SOCKET;
 	}
 
-	// Should really try the next address returned by getaddrinfo
-	// if the connect call failed
-	// But for this simple example we just free the resources
-	// returned by getaddrinfo and print an error message
-
 	freeaddrinfo(result);
-
-	if (connectSocket == INVALID_SOCKET) {
-		Logger::Log("Unable to connect to server!", Logger::Category::Error);
-		return;
-	}
-
-	int recvbuflen = DEFAULT_BUFFLEN;
-	char sendbuf[23] = {' ', ' ',' ', ' ','1', '2', '7', '.', '0', '.', '0', '.', '1', '\0', '\0', '\0', '\0', '\0', '\0', '\0','\0', '\0', '\0'};
-	char recvbuf[DEFAULT_BUFFLEN];
-
-	*reinterpret_cast<unsigned int*>(sendbuf) = 23;
-
-	// Send an initial buffer
-	res = send(connectSocket, sendbuf, sizeof(sendbuf), 0);
-	if (res == SOCKET_ERROR) {
-		Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-		closesocket(connectSocket);
-		return;
-	}
-
-	Logger::Log("Bytes Sent: " + std::to_string(res), Logger::Category::Success);
-
-	// shutdown the connection for sending since no more data will be sent
-	// the client can still use the ConnectSocket for receiving data
-	//res = shutdown(connectSocket, SD_SEND);
-	//if (res == SOCKET_ERROR) {
-	//	Logger::Log("shutdown failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-	//	closesocket(connectSocket);
-	//	return;
-	//}
-
-	receiveThread = std::thread(&NetworkManager::ClientReceive, this);
-
 }
 
 void NetworkManager::StartServer()
@@ -326,6 +327,10 @@ void NetworkManager::ClientReceive()
 					if (firstMessage)
 					{
 						clientIP = std::string(packetBuf);
+
+						latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
+						ClientSend("", "NetworkManagerServerReceiveLatency");
+
 						firstMessage = false;
 					}
 					else
@@ -1099,6 +1104,33 @@ void NetworkManager::SetupSyncCallbacks()
 	RegisterReceiveDataFunction("ClientReceiveSync", &clientReceiveSync);
 }
 
+void NetworkManager::SetupLatencyCallbacks()
+{
+	static std::function<void(const std::string&)> serverReceiveLatency = [this](const std::string& data)
+		{
+			ServerSend(GetIPFromData(data), "", "NetworkManagerClientReceiveLatency");
+		};
+
+	static std::function<void(const std::string&)> clientReceiveLatency = [this](const std::string& data)
+		{
+			latency.store(std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime).count());
+			latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
+
+			std::lock_guard<std::mutex> guard(recentLatencyRecordingsMutex);
+			recentLatencyRecordings.push_back(latency.load());
+
+			if (recentLatencyRecordings.size() > 1000)
+			{
+				recentLatencyRecordings.pop_front();
+			}
+
+			ClientSend("", "NetworkManagerServerReceiveLatency");
+		};
+
+	RegisterReceiveDataFunction("NetworkManagerServerReceiveLatency", &serverReceiveLatency);
+	RegisterReceiveDataFunction("NetworkManagerClientReceiveLatency", &clientReceiveLatency);
+}
+
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
 {
 	if (instance != nullptr)
@@ -1584,4 +1616,23 @@ void NetworkManager::SyncClientWithServer()
 		dataToSend.append(loadedScenes[i]);
 	}
 	ClientSend(dataToSend, "ServerReceiveSyncRequest");
+}
+
+float NetworkManager::GetLatency()
+{
+	if (instance != nullptr)
+	{
+		std::lock_guard<std::mutex> guard(instance->recentLatencyRecordingsMutex);
+		float averageLatency = 0.0f;
+
+		for (const auto& latency : instance->recentLatencyRecordings)
+		{
+			averageLatency += latency;
+		}
+
+		averageLatency /= instance->recentLatencyRecordings.size();
+
+		return (averageLatency == 0.0f) ? 0.0f : averageLatency * 1000;
+	}
+	return 0.0f;
 }

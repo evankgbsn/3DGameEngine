@@ -66,11 +66,37 @@ void TimeManager::RecordUpdateTime()
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		instance->deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - instance->lastUpdateTime).count();
 		instance->lastUpdateTime = currentTime;
+
+		instance->recentFrameTimes.push_back(instance->deltaTime);
+
+		if (instance->recentFrameTimes.size() > 1000)
+		{
+			instance->recentFrameTimes.pop_front();
+		}
 	}
 	else
 	{
 		Logger::Log(std::string("Calling TimeManager::RecordUpdateTime() before TimeManager::Initialize()"), Logger::Category::Warning);
 	}
+}
+
+float TimeManager::GetAverageFPS()
+{
+	if (instance == nullptr)
+	{
+		return 0.0f;
+	}
+
+	float averageFrameTime = 0.0f;
+
+	for (const auto& frameTime : instance->recentFrameTimes)
+	{
+		averageFrameTime += frameTime;
+	}
+
+	averageFrameTime /= instance->recentFrameTimes.size();
+
+	return 1 / averageFrameTime;
 }
 
 TimeManager::TimeManager() :

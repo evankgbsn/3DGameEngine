@@ -45,6 +45,10 @@ public:
 
 	void DeregisterCallbackForWindowResize(const std::string& name);
 
+	std::string GetTitle() const;
+
+	void SetTitle(const std::string& newTitle);
+
 private:
 
 	friend class WindowManager;

@@ -85,7 +85,8 @@ void Engine::Run()
 			SceneManager::Update();
 			NetworkManager::Update();
 		}
-		
+
+		WindowManager::SetWindowTitle("Engine", std::string("Engine ") + "FPS: " + std::to_string(TimeManager::GetAverageFPS()) + " Network Latency: " + std::to_string(NetworkManager::GetLatency()) + "ms");
 
 		managePlay();
 	}

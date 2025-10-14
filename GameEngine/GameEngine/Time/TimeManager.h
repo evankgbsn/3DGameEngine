@@ -2,6 +2,7 @@
 #define TIMEMANAGER_H
 
 #include <chrono>
+#include <list>
 
 class TimeManager
 {
@@ -17,6 +18,8 @@ public:
 	static float DeltaTime();
 
 	static void RecordUpdateTime();
+
+	static float GetAverageFPS();
 
 private:
 
@@ -39,6 +42,8 @@ private:
 	std::chrono::high_resolution_clock::time_point lastUpdateTime;
 
 	float deltaTime;
+
+	std::list<float> recentFrameTimes;
 
 };
 

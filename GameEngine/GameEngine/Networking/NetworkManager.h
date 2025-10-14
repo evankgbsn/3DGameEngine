@@ -17,6 +17,8 @@
 #include <functional>
 #include <string>
 #include <unordered_set>
+#include <chrono>
+#include <atomic>
 
 class SingletonHelpers;
 class NetworkObject;
@@ -74,6 +76,8 @@ public:
 	static void Despawn(unsigned long long networkObjectID);
 
 	static void SyncClientWithServer();
+
+	static float GetLatency();
 
 private:
 
@@ -135,6 +139,8 @@ private:
 
 	void SetupSyncCallbacks();
 
+	void SetupLatencyCallbacks();
+
 	static NetworkManager* instance;
 
 	std::string clientIP;
@@ -192,6 +198,14 @@ private:
 	std::thread cleanDisconnectedClientThread;
 
 	unsigned long long networkObjectIDGenerator;
+
+	std::chrono::steady_clock::time_point latencyPacketReceiveTime;
+
+	std::atomic<float> latency;
+
+	std::mutex recentLatencyRecordingsMutex;
+
+	std::list<float> recentLatencyRecordings;
 	
 };
 

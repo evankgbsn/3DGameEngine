@@ -281,3 +281,13 @@ void Window::DeregisterCallbackForWindowResize(const std::string& name)
 {
 	windowResizeCallbacks[glfwWindow][name] = nullptr;
 }
+
+std::string Window::GetTitle() const
+{
+	return std::string(glfwGetWindowTitle(glfwWindow));
+}
+
+void Window::SetTitle(const std::string& newTitle)
+{
+	glfwSetWindowTitle(glfwWindow, newTitle.c_str());
+}

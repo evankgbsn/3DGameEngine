@@ -31,6 +31,33 @@ Window* const WindowManager::GetWindow(const std::string& name)
 	return nullptr;
 }
 
+void WindowManager::SetWindowTitle(const std::string& name, const std::string& newTitle)
+{
+	Window* window = GetWindow(name);
+	if (window != nullptr)
+	{
+		window->SetTitle(newTitle);
+	}
+	else
+	{
+		Logger::Log("WindowManager::SetWindowTitle failed", Logger::Category::Warning);
+	}
+}
+
+std::string WindowManager::GetWindowTitle(const std::string& name)
+{
+	Window* window = GetWindow(name);
+	if (window != nullptr)
+	{
+		return window->GetTitle();
+	}
+	else
+	{
+		Logger::Log("WindowManager::GetWindowTitle failed", Logger::Category::Warning);
+	}
+	return "";
+}
+
 void WindowManager::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<WindowManager>(&instance, "WindowManager");

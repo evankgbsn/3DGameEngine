@@ -13,6 +13,10 @@ public:
 
 	static Window* const GetWindow(const std::string& name);
 
+	static void SetWindowTitle(const std::string& name, const std::string& newTitle);
+
+	static std::string GetWindowTitle(const std::string& name);
+
 private:
 
 	friend class SingletonHelpers;
