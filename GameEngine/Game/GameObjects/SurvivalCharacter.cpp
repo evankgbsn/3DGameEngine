@@ -99,6 +99,8 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 	if (!NetworkManager::IsServer())
 	{
 		receivedPosition = NetworkManager::ConvertDataToVec3(data);
+
+		receivedPositions.push_back(receivedPosition);
 	}
 	else
 	{
@@ -198,18 +200,51 @@ void SurvivalCharacter::GameUpdate()
 			characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
 		}
 
-		characterGraphics->SetPosition(receivedPosition);
+		//characterGraphics->SetPosition(receivedPosition);
 
-		//float movementUnit = walkSpeed * TimeManager::DeltaTime();
-		//glm::vec3 targetVector(receivedPosition - characterGraphics->GetPosition());
-		//glm::vec3 direction = glm::normalize(targetVector);
-		//
-		//if (glm::length(targetVector) > movementUnit)
-		//{
-		//	currentTranslationVector = direction * movementUnit;
-		//
-		//	characterGraphics->Translate(currentTranslationVector);
-		//}
+		static glm::vec3 currentTarget = target;
+
+		if (!receivedPositions.empty())
+		{
+			currentTarget = receivedPositions.front();
+			receivedPositions.pop_front();
+
+			glm::vec3 direction = currentTarget - GetPosition();
+
+			glm::mat4 currentRotation = characterGraphics->GetRotation();
+
+			glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+			glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
+			glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
+
+			glm::mat4 newRotation(
+				right,
+				up,
+				forward,
+				glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+			);
+
+			characterGraphics->SetRotation(newRotation);
+		}
+
+		glm::vec3 targetVector(currentTarget - characterGraphics->GetPosition());
+		glm::vec3 direction = glm::normalize(targetVector);
+		float movementUnit = walkSpeed * TimeManager::DeltaTime() * glm::length(targetVector);
+
+		if (glm::length(targetVector) > movementUnit && glm::length(targetVector))
+		{
+			currentTranslationVector = direction * movementUnit;
+
+			characterGraphics->Translate(currentTranslationVector);
+		}
+		else
+		{
+			if (!receivedPositions.empty())
+			{
+				receivedPositions.pop_front();
+			}
+		}
+		
 	}
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
@@ -384,23 +419,6 @@ void SurvivalCharacter::SetupMovement()
 						{
 							target = terrainPoint;
 
-							glm::vec3 direction = target - GetPosition();
-
-							glm::mat4 currentRotation = characterGraphics->GetRotation();
-
-							glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-							glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
-							glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
-
-							glm::mat4 newRotation(
-								right,
-								up,
-								forward,
-								glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
-							);
-
-							characterGraphics->SetRotation(newRotation);
-
 							ClientSend(NetworkManager::ConvertVec3ToData(target));
 						}
 
@@ -563,11 +581,13 @@ void SurvivalCharacter::MoveToTarget()
 		{
 			static float lastSend = TimeManager::SecondsSinceStart();
 
-			if (TimeManager::SecondsSinceStart() - lastSend >= .01f)
+			if (TimeManager::SecondsSinceStart() - lastSend >= .00001f)
 			{
-				ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+				
 				lastSend = TimeManager::SecondsSinceStart();
 			}
+
+			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
 		}
 
 		if (shouldRotate)
@@ -587,8 +607,9 @@ void SurvivalCharacter::MoveToTarget()
 
 			characterGraphics->SetRotation(newRotation);
 		}
-		
+
 	}
+
 }
 
 void SurvivalCharacter::SetupEditorCallbacks()

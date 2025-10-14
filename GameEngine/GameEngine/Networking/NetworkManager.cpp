@@ -8,7 +8,7 @@
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
-#define SERVER_IP "75.102.226.185"
+#define SERVER_IP "75.102.230.35"
 
 #define DEFAULT_BUFFLEN 512
 
@@ -549,9 +549,10 @@ void NetworkManager::ProcessReceivedData()
 {
 	std::lock_guard<std::mutex> guard(receivedDataMutex);
 
-	if (!receivedData.empty())
+	while (!receivedData.empty())
 	{
 		std::string data = receivedData.front();
+		receivedData.pop_front();
 
 		if (data.size() >= 19)
 		{
@@ -581,12 +582,6 @@ void NetworkManager::ProcessReceivedData()
 				functionID += data[i];
 			}
 
-			if (functionID.empty())
-			{
-				Logger::Log(std::string(functionID));
-			}
-			Logger::Log(std::string(functionID));
-
 			const auto& function = responseFunctions.find(functionID);
 
 			if (function != responseFunctions.end())
@@ -601,8 +596,6 @@ void NetworkManager::ProcessReceivedData()
 				Logger::Log("Cannot Process Packet. Either incorrect function ID or corrupt packet: " + data, Logger::Category::Warning);
 			}
 		}
-
-		receivedData.erase(receivedData.begin());
 	}
 
 }
@@ -1204,6 +1197,8 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 				if (iSendResult == SOCKET_ERROR) {
 					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 					closesocket(clientSocket->second);
+					instance->connectedClientsMutex.unlock();
+					delete[] sendbuf;
 					return;
 				}
 
@@ -1251,8 +1246,6 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 			{
 				*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 			}
-
-			Logger::Log(std::string(receiveFunction));
 
 			int res = send(instance->connectSocket, sendbuf, packetSize, 0);
 			if (res == SOCKET_ERROR) {
@@ -1590,7 +1583,5 @@ void NetworkManager::SyncClientWithServer()
 
 		dataToSend.append(loadedScenes[i]);
 	}
-
-	Logger::Log(std::string("Sending sync request"));
 	ClientSend(dataToSend, "ServerReceiveSyncRequest");
 }

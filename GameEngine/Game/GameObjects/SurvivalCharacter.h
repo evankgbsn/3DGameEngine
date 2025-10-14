@@ -5,6 +5,7 @@
 #include "GameEngine/Networking/NetworkObject.h"
 
 #include <functional>
+#include <list>
 
 class GraphicsObjectTexturedAnimatedLit;
 class CameraComponent;
@@ -116,6 +117,8 @@ private:
 	glm::vec3 currentTranslationVector;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
+
+	std::list<glm::vec3> receivedPositions;
 };
 
 #endif // SURVIVALCHARACTER_H
