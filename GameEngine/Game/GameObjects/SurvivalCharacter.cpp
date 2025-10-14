@@ -228,22 +228,33 @@ void SurvivalCharacter::GameUpdate()
 		}
 
 		glm::vec3 targetVector(currentTarget - characterGraphics->GetPosition());
-		glm::vec3 direction = glm::normalize(targetVector);
-		float movementUnit = walkSpeed * TimeManager::DeltaTime() * glm::length(targetVector);
+		float movementUnit = walkSpeed * TimeManager::DeltaTime();
 
-		if (glm::length(targetVector) > movementUnit && glm::length(targetVector))
+		while (glm::length(targetVector) < movementUnit && !receivedPositions.empty())
 		{
-			currentTranslationVector = direction * movementUnit;
+			targetVector = glm::vec3((currentTarget = receivedPositions.front()) - characterGraphics->GetPosition());
+			receivedPositions.pop_front();
+		}
 
-			characterGraphics->Translate(currentTranslationVector);
-		}
-		else
-		{
-			if (!receivedPositions.empty())
-			{
-				receivedPositions.pop_front();
-			}
-		}
+		characterGraphics->SetPosition(currentTarget);
+
+		//glm::vec3 targetVector(currentTarget - characterGraphics->GetPosition());
+		//glm::vec3 direction = glm::normalize(targetVector);
+		//float movementUnit = (walkSpeed / glm::length(targetVector)) * TimeManager::DeltaTime() * glm::length(targetVector);
+		//
+		//if (glm::length(targetVector) > movementUnit && glm::length(targetVector))
+		//{
+		//	currentTranslationVector = direction * movementUnit;
+		//
+		//	characterGraphics->Translate(currentTranslationVector);
+		//}
+		//else
+		//{
+		//	if (!receivedPositions.empty())
+		//	{
+		//		receivedPositions.pop_front();
+		//	}
+		//}
 		
 	}
 	
