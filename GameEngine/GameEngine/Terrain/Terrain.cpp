@@ -133,7 +133,7 @@ Terrain::Cell Terrain::TestPoint(const glm::vec3& p) const
 	glm::vec3 point = p;
 	point.x += (terrainWidth / 2);
 	point.z += (terrainHeight / 2);
-	return { static_cast<unsigned int>(glm::clamp(point.x / tileWidth, 0.f, tileX - 1.f)), static_cast<unsigned int>(glm::clamp(point.z / tileHeight,0.f, tileY - 1.f)) };
+	return { static_cast<unsigned int>(glm::clamp(point.x / tileWidth, 0.f, tileX - 2.f)), static_cast<unsigned int>(glm::clamp(point.z / tileHeight,0.f, tileY - 2.f)) };
 }
 
 float Terrain::GetCellHeight(const Cell& cell)
@@ -431,7 +431,7 @@ glm::vec3 Terrain::RayIntersect(const Ray& ray) const
 
 	// 2. THE MARCHING LOOP
 	int marchSteps = 0;
-	const int maxMarchSteps = 200; // Safety limit
+	const int maxMarchSteps = tileX * tileY; // Safety limit
 
 	while (marchSteps < maxMarchSteps) {
 		// Check if we are inside the terrain boundaries

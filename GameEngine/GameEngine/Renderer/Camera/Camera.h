@@ -79,7 +79,7 @@ public:
 
 	void SetWindow(Window* const newWindow);
 
-	static LineSegment3D CastLineFromCursorWithActiveCamera();
+	static LineSegment3D CastLineFromCursorWithActiveCamera(float distance = 500000.0f);
 	
 private:
 

@@ -3,6 +3,7 @@
 #include "../Window/Window.h"
 #include "../Window/WindowManager.h"
 #include "CameraManager.h"
+#include "../../Utils/Logger.h"
 
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -168,7 +169,7 @@ void Camera::SetWindow(Window* const newWindow)
 	}
 }
 
-LineSegment3D Camera::CastLineFromCursorWithActiveCamera()
+LineSegment3D Camera::CastLineFromCursorWithActiveCamera(float distance)
 {
 	// Screen space to world space for object picking.
 	Window* window = WindowManager::GetWindow("Engine");
@@ -190,7 +191,9 @@ LineSegment3D Camera::CastLineFromCursorWithActiveCamera()
 	x = invView * x;
 	x /= x.w;
 
-	return LineSegment3D(cam.GetPosition(), glm::vec3(x));
+	glm::vec3 direction = glm::normalize(glm::vec3(x) - cam.GetPosition());
+
+	return LineSegment3D(cam.GetPosition(), cam.GetPosition() + direction * distance);
 }
 
 void Camera::UpdateProjection()
@@ -218,8 +221,8 @@ Camera::Camera(const Camera::Type& t, Window* const w) :
 	window(w),
 	view(glm::mat4(1.0f)),
 	projection(glm::mat4(1.0f)),
-	near(0.01f),
-	far(100000.0f),
+	near(1.0f),
+	far(1000.0f),
 	fov(45.0f),
 	left(-10.0f),
 	right(10.0f),

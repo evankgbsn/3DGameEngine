@@ -100,6 +100,18 @@
     <Filter Include="Source Files\Networking">
       <UniqueIdentifier>{37c6780c-51f7-45dc-9973-588c9904b860}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\sqlite">
+      <UniqueIdentifier>{09f271c2-c195-4a39-9fc3-55258f7d8381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sqlite\SQLiteCpp">
+      <UniqueIdentifier>{8e4069e1-c363-415d-91aa-bda883c6b3e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sqlite\SQLiteCpp\src">
+      <UniqueIdentifier>{01489996-e801-4eac-9d1b-e3b794bec95f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sqlite\SQLiteCpp\include">
+      <UniqueIdentifier>{f4166886-8f02-44da-8726-c0d6cf2fe85e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -410,6 +422,30 @@
     </ClCompile>
     <ClCompile Include="Networking\NetworkObject.cpp">
       <Filter>Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\sqlite3.c">
+      <Filter>Source Files\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Backup.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Column.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Database.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Exception.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Savepoint.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Statement.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\SQLiteCpp\src\Transaction.cpp">
+      <Filter>Source Files\sqlite\SQLiteCpp\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -730,6 +766,48 @@
     </ClInclude>
     <ClInclude Include="Networking\NetworkObject.h">
       <Filter>Source Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\sqlite3.h">
+      <Filter>Source Files\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Assertion.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Backup.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Column.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Database.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Exception.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\ExecuteMany.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Savepoint.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCpp.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCppExport.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Statement.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Transaction.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Utils.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\VariadicBind.h">
+      <Filter>Source Files\sqlite\SQLiteCpp\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -66,6 +66,7 @@ void NetworkManager::Update()
 {
 	if (instance != nullptr)
 	{
+		instance->CheckLatency();
 		instance->ProcessReceivedData();
 		instance->ProcessMainThreadUpdates();
 	}
@@ -75,6 +76,7 @@ void NetworkManager::EditorUpdate()
 {
 	if (instance != nullptr)
 	{
+		instance->CheckLatency();
 		instance->ProcessReceivedData();
 	}
 }
@@ -1119,16 +1121,23 @@ void NetworkManager::SetupLatencyCallbacks()
 			std::lock_guard<std::mutex> guard(recentLatencyRecordingsMutex);
 			recentLatencyRecordings.push_back(latency.load());
 
-			if (recentLatencyRecordings.size() > 1000)
+			if (recentLatencyRecordings.size() > 5)
 			{
 				recentLatencyRecordings.pop_front();
 			}
-
-			ClientSend("", "NetworkManagerServerReceiveLatency");
 		};
 
 	RegisterReceiveDataFunction("NetworkManagerServerReceiveLatency", &serverReceiveLatency);
 	RegisterReceiveDataFunction("NetworkManagerClientReceiveLatency", &clientReceiveLatency);
+}
+
+void NetworkManager::CheckLatency()
+{
+	if (std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime).count() > 3.0f)
+	{
+		latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
+		ClientSend("", "NetworkManagerServerReceiveLatency");
+	}
 }
 
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)

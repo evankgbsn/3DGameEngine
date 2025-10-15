@@ -268,7 +268,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -300,7 +300,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -332,7 +332,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -366,7 +366,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -402,7 +402,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -438,7 +438,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -565,6 +565,14 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="sqlite\sqlite3.c" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Backup.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Column.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Database.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Exception.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Savepoint.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Statement.cpp" />
+    <ClCompile Include="sqlite\SQLiteCpp\src\Transaction.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Time\TimeManager.cpp" />
     <ClCompile Include="UI\Button.cpp" />
@@ -671,6 +679,20 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="sqlite\sqlite3.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Assertion.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Backup.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Column.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Database.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Exception.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\ExecuteMany.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Savepoint.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCpp.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCppExport.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Statement.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Transaction.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Utils.h" />
+    <ClInclude Include="sqlite\SQLiteCpp\inlcude\VariadicBind.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Time\TimeManager.h" />
     <ClInclude Include="UI\Button.h" />

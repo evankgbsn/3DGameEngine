@@ -141,6 +141,8 @@ private:
 
 	void SetupLatencyCallbacks();
 
+	void CheckLatency();
+
 	static NetworkManager* instance;
 
 	std::string clientIP;

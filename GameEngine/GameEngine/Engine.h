@@ -33,6 +33,8 @@ private:
 
 	void EditorPlayToggleInputSetup();
 
+	void TestSQL();
+
 	static Engine* instance;
 
 	bool editorState;

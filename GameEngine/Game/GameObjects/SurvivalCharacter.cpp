@@ -200,62 +200,48 @@ void SurvivalCharacter::GameUpdate()
 			characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
 		}
 
-		//characterGraphics->SetPosition(receivedPosition);
-
 		static glm::vec3 currentTarget = target;
+		
 
 		if (!receivedPositions.empty())
 		{
-			currentTarget = receivedPositions.front();
-			receivedPositions.pop_front();
 
-			glm::vec3 direction = currentTarget - GetPosition();
+			
+			currentTarget = receivedPosition;
 
-			glm::mat4 currentRotation = characterGraphics->GetRotation();
+			glm::vec3 targetVector = currentTarget - characterGraphics->GetPosition();
+			glm::vec3 direction = glm::normalize(targetVector);
+			float targetVectorLength = glm::length(targetVector);
+			float movementUnit = walkSpeed * TimeManager::DeltaTime();
 
-			glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-			glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
-			glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
+			if (abs(targetVectorLength - movementUnit) > movementUnit && characterGraphics->GetPosition() != currentTarget)
+			{
+				glm::mat4 currentRotation = characterGraphics->GetRotation();
 
-			glm::mat4 newRotation(
-				right,
-				up,
-				forward,
-				glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
-			);
+				glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+				glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
+				glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
 
-			characterGraphics->SetRotation(newRotation);
+				glm::mat4 newRotation(
+					right,
+					up,
+					forward,
+					glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+				);
+
+				characterGraphics->SetRotation(newRotation);
+				characterGraphics->Translate(direction * movementUnit);
+			}
+
+			if (targetVectorLength > walkSpeed)
+			{
+				characterGraphics->SetPosition(receivedPosition);
+			}
+			
+			
+
+			
 		}
-
-		glm::vec3 targetVector(currentTarget - characterGraphics->GetPosition());
-		float movementUnit = walkSpeed * TimeManager::DeltaTime();
-
-		while (glm::length(targetVector) < movementUnit && !receivedPositions.empty())
-		{
-			targetVector = glm::vec3((currentTarget = receivedPositions.front()) - characterGraphics->GetPosition());
-			receivedPositions.pop_front();
-		}
-
-		characterGraphics->SetPosition(currentTarget);
-
-		//glm::vec3 targetVector(currentTarget - characterGraphics->GetPosition());
-		//glm::vec3 direction = glm::normalize(targetVector);
-		//float movementUnit = (walkSpeed / glm::length(targetVector)) * TimeManager::DeltaTime() * glm::length(targetVector);
-		//
-		//if (glm::length(targetVector) > movementUnit && glm::length(targetVector))
-		//{
-		//	currentTranslationVector = direction * movementUnit;
-		//
-		//	characterGraphics->Translate(currentTranslationVector);
-		//}
-		//else
-		//{
-		//	if (!receivedPositions.empty())
-		//	{
-		//		receivedPositions.pop_front();
-		//	}
-		//}
-		
 	}
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
@@ -592,13 +578,13 @@ void SurvivalCharacter::MoveToTarget()
 		{
 			static float lastSend = TimeManager::SecondsSinceStart();
 
-			if (TimeManager::SecondsSinceStart() - lastSend >= .00001f)
+			if (TimeManager::SecondsSinceStart() - lastSend >= .01f)
 			{
-				
+				ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
 				lastSend = TimeManager::SecondsSinceStart();
 			}
 
-			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+			
 		}
 
 		if (shouldRotate)
