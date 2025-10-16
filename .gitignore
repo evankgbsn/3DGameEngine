@@ -48,6 +48,10 @@
 !*PhysXPvdSDK_static_64.pdb
 !*PhysXCooking_static_64.lib
 !*PhysXCooking_static_64.pdb
+!*libssl.lib
+!*libcrypto.lib
+!*sqlcipher.lib
+!*SQLiteCpp.lib
 
 #Ignore .vs folder and other generated folders
 *.vs

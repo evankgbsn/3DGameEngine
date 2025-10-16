@@ -280,7 +280,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -312,7 +312,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -344,7 +344,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -380,7 +380,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -416,7 +416,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -452,7 +452,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -473,6 +473,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Collision\OrientedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\SphereWithVisualization.cpp" />
     <ClCompile Include="Collision\StaticCollider.cpp" />
+    <ClCompile Include="Database\DatabaseManager.cpp" />
     <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Editor\Select\SelectionManager.cpp" />
     <ClCompile Include="Editor\UI\EditorUI.cpp" />
@@ -565,14 +566,6 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
-    <ClCompile Include="sqlite\sqlite3.c" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Backup.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Column.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Database.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Exception.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Savepoint.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Statement.cpp" />
-    <ClCompile Include="sqlite\SQLiteCpp\src\Transaction.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Time\TimeManager.cpp" />
     <ClCompile Include="UI\Button.cpp" />
@@ -586,6 +579,7 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Collision\OrientedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\SphereWithVisualization.h" />
     <ClInclude Include="Collision\StaticCollider.h" />
+    <ClInclude Include="Database\DatabaseManager.h" />
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\Select\SelectionManager.h" />
     <ClInclude Include="Editor\UI\EditorUI.h" />
@@ -679,20 +673,6 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
-    <ClInclude Include="sqlite\sqlite3.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Assertion.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Backup.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Column.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Database.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Exception.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\ExecuteMany.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Savepoint.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCpp.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\SQLiteCppExport.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Statement.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Transaction.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\Utils.h" />
-    <ClInclude Include="sqlite\SQLiteCpp\inlcude\VariadicBind.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Time\TimeManager.h" />
     <ClInclude Include="UI\Button.h" />

@@ -24,10 +24,10 @@
 #include "Editor/Editor.h"
 #include "Physics/PhysicsManager.h"
 #include "Networking/NetworkManager.h"
+#include "Database/DatabaseManager.h"
 
 
 #include <GLFW/glfw3.h>
-#include <SQLiteCpp/SQLiteCpp.h>
 
 #include <iostream>
 Engine* Engine::instance = nullptr;
@@ -112,6 +112,7 @@ Window* Engine::GetWindow()
 
 Engine::Engine()
 {
+	DatabaseManager::Initialize();
 	TimeManager::Initialize();
 	Renderer::Initialize();
 	InputManager::Initialize();
@@ -122,7 +123,6 @@ Engine::Engine()
 	EditorPlayToggleInputSetup();
 	//PhysicsManager::Initialize();
 	NetworkManager::Initialize();
-	TestSQL();
 	
 }
 
@@ -135,6 +135,7 @@ Engine::~Engine()
 	Editor::Terminate();
 	Renderer::Terminate();
 	TimeManager::Terminate();
+	DatabaseManager::Terminate();
 }
 
 void Engine::EditorPlayToggleInputSetup()
@@ -152,27 +153,4 @@ void Engine::EditorPlayToggleInputSetup()
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, &tildaPress2, "Play");
-}
-
-void Engine::TestSQL()
-{
-	try {
-		// The wrapper handles opening the database
-		SQLite::Database db("modern_manual_test.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-		std::cout << "Database opened successfully." << std::endl;
-
-		// The wrapper handles executing SQL and throws exceptions on error
-		db.exec("CREATE TABLE IF NOT EXISTS players (id INTEGER PRIMARY KEY, username TEXT, score INTEGER)");
-		std::cout << "Table created successfully." << std::endl;
-
-		// The wrapper provides a clean, type-safe query interface
-		SQLite::Statement query(db, "INSERT INTO players (username, score) VALUES (?, ?)");
-		query.bind(1, "ModernPlayer");
-		query.bind(2, 5000);
-		query.exec();
-	}
-	catch (const std::exception& e) {
-		// Exceptions handle errors automatically
-		std::cerr << "SQLite exception: " << e.what() << std::endl;
-	}
 }
