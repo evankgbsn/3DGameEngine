@@ -6,7 +6,7 @@
 
 #include <glm/glm.hpp>
 
-class GOSprite;
+class Sprite;
 class Texture;
 class Model;
 class Text;
@@ -44,6 +44,8 @@ public:
 
 	const std::string& GetText() const;
 
+	void SetZ(float newZ);
+
 private:
 
 	InputField() = delete;
@@ -60,15 +62,13 @@ private:
 
 	void CleanupEnterCallback();
 
-	GOSprite* background;
+	Sprite* background;
 
 	Texture* base;
 
 	Texture* hovered;
 
 	Texture* pressed;
-
-	Model* model;
 
 	Text* text;
 

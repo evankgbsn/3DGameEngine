@@ -279,7 +279,7 @@ void Window::RegisterCallbackForWindowResize(const std::string& name, std::funct
 
 void Window::DeregisterCallbackForWindowResize(const std::string& name)
 {
-	windowResizeCallbacks[glfwWindow][name] = nullptr;
+	windowResizeCallbacks[glfwWindow].erase(windowResizeCallbacks[glfwWindow].find(name));
 }
 
 std::string Window::GetTitle() const

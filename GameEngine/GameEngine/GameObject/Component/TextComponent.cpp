@@ -7,7 +7,7 @@ TextComponent::TextComponent()
 	RegisterComponentClassType<TextComponent>(this);
 }
 
-TextComponent::TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color, const glm::vec2& position, float scale)
+TextComponent::TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale)
 {
 	RegisterComponentClassType<TextComponent>(this);
 	text = new Text(string, fontName, color, position, scale);
@@ -39,7 +39,7 @@ void TextComponent::Serialize()
 	savedStrings["FontName"] = text->GetFontName();
 	savedVec2s["Position"] = text->GetPosition();
 	savedVec3s["Color"] = text->GetColor();
-	savedFloats["Scale"] = text->GetScale();
+	savedVec2s["Scale"] = text->GetScale();
 }
 
 void TextComponent::Deserialize()
@@ -49,7 +49,7 @@ void TextComponent::Deserialize()
 		delete text;
 	}
 
-	text = new Text(savedStrings["Text"], savedStrings["FontName"], glm::vec4(savedVec3s["Color"], 1.0f), savedVec2s["Position"], savedFloats["Scale"]);
+	text = new Text(savedStrings["Text"], savedStrings["FontName"], glm::vec4(savedVec3s["Color"], 1.0f), savedVec2s["Position"], savedVec2s["Scale"]);
 }
 
 void TextComponent::Update()

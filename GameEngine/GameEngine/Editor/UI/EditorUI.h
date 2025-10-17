@@ -5,8 +5,9 @@
 
 class Button;
 class InputField;
-class GOSprite;
+class Sprite;
 class Text;
+class TextField;
 
 class EditorUI
 {
@@ -54,23 +55,23 @@ private:
 
 	Button* playButton;
 
-	Text* sceneManagementWindowTitle;
+	TextField* sceneManagementWindowTitle;
 
-	Text* sceneName;
+	TextField* sceneName;
 
-	Text* sceneFileName;
+	TextField* sceneFileName;
 
-	Text* sceneLoadingTitle;
+	TextField* sceneLoadingTitle;
 
-	Text* sceneUnloadingTitle;
+	TextField* sceneUnloadingTitle;
 
-	Text* unloadSceneName;
+	TextField* unloadSceneName;
 
-	Text* saveSceneTitle;
+	TextField* saveSceneTitle;
 
-	Text* saveSceneName;
+	TextField* saveSceneName;
 
-	Text* saveSceneFile;
+	TextField* saveSceneFile;
 
 	InputField* loadSceneInputField0;
 
@@ -82,7 +83,7 @@ private:
 
 	InputField* saveSceneInputFieldFile;
 
-	GOSprite* sceneManagementBackground;
+	Sprite* sceneManagementBackground;
 
 	std::function<void()>* loadSceneInputFieldOnEnter;
 

@@ -417,6 +417,12 @@
     <ClCompile Include="Database\DatabaseManager.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="UI\TextField.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Sprite.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -739,6 +745,12 @@
     </ClInclude>
     <ClInclude Include="Database\DatabaseManager.h">
       <Filter>Source Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TextField.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Sprite.h">
+      <Filter>Source Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

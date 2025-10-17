@@ -8,7 +8,7 @@
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
-#define SERVER_IP "192.168.50.3"
+#define SERVER_IP "192.168.50.2"
 
 NetworkManager* NetworkManager::instance = nullptr;
 

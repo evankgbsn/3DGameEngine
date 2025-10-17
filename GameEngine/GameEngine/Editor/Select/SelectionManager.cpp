@@ -43,12 +43,12 @@ void SelectionManager::Update()
 				if (instance->selectionName->GetString() != newText)
 				{
 					delete instance->selectionName;
-					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), glm::vec2(0.05f));
 				}
 			}
 			else
 			{
-				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), glm::vec2(0.05f));
 			}
 			
 
@@ -107,12 +107,12 @@ void SelectionManager::Update()
 				if (instance->selectionName->GetString() != newText)
 				{
 					delete instance->selectionName;
-					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+					instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), glm::vec2(0.05f));
 				}
 			}
 			else
 			{
-				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+				instance->selectionName = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), glm::vec2(0.05f));
 			}
 			
 		}
@@ -141,7 +141,7 @@ SelectionManager::SelectionManager() :
 	selection(nullptr),
 	selectionName(nullptr)
 {
-	selectionName = new Text("Selection: ", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), 0.5f);
+	selectionName = new Text("Selection: ", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(0.0f, WindowManager::GetWindow("Engine")->GetHeight() - 100.f), glm::vec2(0.05f));
 	SetupInput();
 }
 

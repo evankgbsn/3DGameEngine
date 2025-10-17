@@ -10,7 +10,7 @@ class GOGlyph : public GraphicsObject
 {
 public:
 
-	GOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale = 1.0f);
+	GOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale = glm::vec2(1.0f));
 
 	~GOGlyph();
 
@@ -18,9 +18,13 @@ public:
 
 	void SetPosition(const glm::vec2& newPosition);
 
+	void SetScale(const glm::vec2& newScale);
+
 	glm::vec2 GetPosition() const;
 
 	void SetZ(float newZ);
+
+	const Font::Glyph& GetGlyph() const;
 
 private:
 
@@ -47,6 +51,8 @@ private:
 	glm::mat4 projection;
 
 	glm::vec2 position;
+
+	glm::vec2 scale;
 
 	float z;
 

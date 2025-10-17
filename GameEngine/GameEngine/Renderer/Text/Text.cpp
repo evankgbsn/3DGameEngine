@@ -4,7 +4,7 @@
 #include "../Font/FontManager.h"
 #include "../GraphicsObjects/GOGlyph.h"
 
-Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c, const glm::vec2& p, float s) :
+Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c, const glm::vec2& p, const glm::vec2& s) :
 	text(string),
 	scale(s),
 	fontName(fn),
@@ -22,7 +22,7 @@ Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c,
 			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
 			glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(glyph, glm::vec4(color, 1.0f), {x, position.y}, scale));
 
-			x += (glyph.advance >> 6) * scale;
+			x += (glyph.advance >> 6) * scale.x;
 		}
 	}
 }
@@ -39,7 +39,7 @@ void Text::SetPosition(const glm::vec2& newPosition)
 	{
 		const Font::Glyph& glyph = font->GetCharacterGlyph(character);
 		glyphs[index++]->SetPosition({ x, newPosition.y });
-		x += (glyph.advance >> 6) * scale;
+		x += (glyph.advance >> 6) * scale.x;
 	}
 }
 
@@ -63,9 +63,22 @@ glm::vec3 Text::GetColor() const
 	return color;
 }
 
-float Text::GetScale() const
+glm::vec2 Text::GetScale() const
 {
 	return scale;
+}
+
+void Text::SetScale(const glm::vec2& newScale)
+{
+	float x = position.x;
+	for (GOGlyph* glyph : glyphs)
+	{
+		glyph->SetScale(newScale);
+		glyph->SetPosition({ x, position.y });
+		x += (glyph->GetGlyph().advance >> 6) * newScale.x;
+	}
+
+	scale = newScale;
 }
 
 void Text::SetZ(float newZ)

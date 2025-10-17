@@ -86,6 +86,8 @@ private:
 	EditorUI* ui;
 
 	bool cameraMovementEnabled;
+
+	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
 };
 
 #endif // EDITOR_H

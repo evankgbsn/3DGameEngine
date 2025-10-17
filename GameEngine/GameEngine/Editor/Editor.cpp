@@ -42,10 +42,19 @@ void Editor::Initialize()
 {
 	SingletonHelpers::InitializeSingleton(&instance, "Editor");
 	SelectionManager::Initialize();
+
+	instance->windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([](unsigned int w, unsigned int h)
+		{
+			Window* window = WindowManager::GetWindow("Engine");
+			Camera& cam = CameraManager::GetCamera("Editor");
+			cam.SetWindow(window);
+		});
 }
 
 void Editor::Terminate()
 {
+	delete instance->windowResizeCallback;
+
 	SelectionManager::Terminate();
 	SingletonHelpers::TerminateSingleton(&instance, "Editor");
 }
@@ -104,6 +113,9 @@ void Editor::Disable()
 
 		SelectionManager::ClearSelection();
 
+		Window* window = WindowManager::GetWindow("Engine");
+		window->DeregisterCallbackForWindowResize("EditorWindowResize");
+
 		Logger::Log("Disabled Editor", Logger::Category::Info);
 	}
 	else
@@ -133,6 +145,9 @@ void Editor::Enable()
 		{
 			instance->ui->Enable();
 		}
+
+		Window* window = WindowManager::GetWindow("Engine");
+		window->RegisterCallbackForWindowResize("EditorWindowResize", instance->windowResizeCallback);
 
 		Logger::Log("Enabled Editor", Logger::Category::Info);
 	}

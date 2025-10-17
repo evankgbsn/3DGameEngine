@@ -13,7 +13,7 @@ class Text
 
 public:
 
-	Text(const std::string& string, const std::string& fontName, const glm::vec4& color = {1.0f, 1.0f, 1.0f, 1.0f}, const glm::vec2& position = { 50.0f, 50.0f }, float scale = 1.0f);
+	Text(const std::string& string, const std::string& fontName, const glm::vec4& color = {1.0f, 1.0f, 1.0f, 1.0f}, const glm::vec2& position = { 50.0f, 50.0f }, const glm::vec2& scale = glm::vec2(1.0f));
 
 	void SetPosition(const glm::vec2& newPosition);
 
@@ -25,7 +25,9 @@ public:
 
 	glm::vec3 GetColor() const;
 
-	float GetScale() const;
+	glm::vec2 GetScale() const;
+
+	void SetScale(const glm::vec2& newScale);
 
 	void SetZ(float newZ);
 
@@ -53,7 +55,7 @@ private:
 
 	std::string text;
 
-	float scale;
+	glm::vec2 scale;
 
 	glm::vec3 color;
 

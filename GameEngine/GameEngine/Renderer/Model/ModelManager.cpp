@@ -68,7 +68,10 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 		return instance->models[name];
 	}
 
-	return instance->models[name] = new Model(vertices, indices, name);
+	Model* newModel = new Model(vertices, indices, name);
+	instance->models[name] = newModel;
+
+	return newModel;
 }
 
 void ModelManager::UnloadModel(const std::string& name)
@@ -163,10 +166,10 @@ void ModelManager::LoadDefaultModels()
 
 	// Default rectangle.
 	std::vector<Vertex> rectangleVertices = {
-		Vertex(glm::vec3(-1.0f, -1.0f, 0.2f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
-		Vertex(glm::vec3(1.0f, -1.0f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
-		Vertex(glm::vec3(1.0f, 1.0f, 0.2f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, 0.2f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f))
+		Vertex(glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
+		Vertex(glm::vec3(1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
+		Vertex(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f)),
+		Vertex(glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f))
 	};
 
 	std::vector<unsigned int> indices = { 0,1,2,2,3,0 };
@@ -175,9 +178,9 @@ void ModelManager::LoadDefaultModels()
 
 	// Default triangle
 	std::vector<Vertex> triangleVertices = {
-		Vertex(glm::vec3(-1.0f, -1.0f, 0.2f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
-		Vertex(glm::vec3(1.0f, 1.0f, 0.2f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f))
+		Vertex(glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
+		Vertex(glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
+		Vertex(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f))
 	};
 
 	std::vector<unsigned int> triangleIndices = { 0,2,1 };

@@ -48,7 +48,7 @@ public:
 
 	static GOLineColored* const CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 
-	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale);
+	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale);
 
 	static GOSprite* const CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position);
 

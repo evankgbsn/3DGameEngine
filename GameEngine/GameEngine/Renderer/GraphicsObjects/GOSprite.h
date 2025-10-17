@@ -27,6 +27,10 @@ public:
 
 	void SetScale(float x, float y);
 
+	void SetZ(float z);
+
+	glm::vec2 GetScale() const;
+
 	glm::mat4 GetProjection() const;
 
 	glm::mat4 GetModelMat() const;

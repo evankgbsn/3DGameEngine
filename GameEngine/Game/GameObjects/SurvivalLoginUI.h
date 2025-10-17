@@ -6,6 +6,7 @@
 #include <functional>
 
 class InputField;
+class Text;
 
 class SurvivalLoginUI : public GameObject
 {
@@ -38,6 +39,10 @@ private:
 	void Unload() override;
 
 	void Start() override;
+
+	Text* usernameTitle;
+
+	Text* passwordTitle;
 
 	InputField* username;
 

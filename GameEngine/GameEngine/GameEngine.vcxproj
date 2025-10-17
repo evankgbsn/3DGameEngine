@@ -570,6 +570,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClCompile Include="Time\TimeManager.cpp" />
     <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="UI\InputField.cpp" />
+    <ClCompile Include="UI\Sprite.cpp" />
+    <ClCompile Include="UI\TextField.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -677,6 +679,8 @@ Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Pl
     <ClInclude Include="Time\TimeManager.h" />
     <ClInclude Include="UI\Button.h" />
     <ClInclude Include="UI\InputField.h" />
+    <ClInclude Include="UI\Sprite.h" />
+    <ClInclude Include="UI\TextField.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\OpenGLDebug.h" />
     <ClInclude Include="Utils\SingletonHelpers.h" />

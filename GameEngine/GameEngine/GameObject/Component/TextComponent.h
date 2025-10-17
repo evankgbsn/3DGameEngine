@@ -13,7 +13,7 @@ public:
 
 	TextComponent();
 
-	TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec2& position = { 50.0f, 50.0f }, float scale = 1.0f);
+	TextComponent(const std::string& string, const std::string& fontName, const glm::vec4& color = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec2& position = { 50.0f, 50.0f }, const glm::vec2& scale = glm::vec2(1.0f));
 
 	~TextComponent();
 

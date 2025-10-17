@@ -8,24 +8,24 @@
 
 #include <GL/glew.h> 
 
-GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos, float scale) :
-	GraphicsObject(ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(g.size.x * scale) + "H" + std::to_string(g.size.y * scale),
+GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos, const glm::vec2& s) :
+	GraphicsObject(ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(g.size.x * s.x) + "H" + std::to_string(g.size.y * s.y),
 		{
-			Vertex(glm::vec3(g.bearing.x * scale, (position.y - (g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {0.0f, 0.0f}),
-			Vertex(glm::vec3(g.bearing.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {0.0f, 1.0f}),
-			Vertex(glm::vec3((position.x + g.bearing.x * scale) + g.size.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3(g.bearing.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3(g.bearing.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {0.0f, 1.0f}),
+			Vertex(glm::vec3((0.0f + g.bearing.x * s.x) + g.size.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {1.0f, 1.0f}),
 
-			Vertex(glm::vec3(g.bearing.x * scale, (position.y - (g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {0.0f, 0.0f}),
-			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, position.y - (g.size.y - g.bearing.y) * scale, 0.0f), {}, {1.0f, 1.0f}),
-			Vertex(glm::vec3((g.bearing.x * scale) + g.size.x * scale, (position.y - (g.size.y - g.bearing.y) * scale) + g.size.y * scale, 0.0f), {}, {1.0f, 0.0f})
+			Vertex(glm::vec3(g.bearing.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {1.0f, 0.0f})
 		}, 
 		{0,1,2,3,4,5}
 	)),
 	glyph(g),
 	color(c),
-	position(pos)
+	position(pos),
+	scale(s)
 {
-
 	glCreateBuffers(1, &projectionBuffer);
 	glNamedBufferStorage(projectionBuffer, sizeof(projection), &projection, GL_DYNAMIC_STORAGE_BIT);
 
@@ -82,6 +82,29 @@ void GOGlyph::SetPosition(const glm::vec2& newPosition)
 	position = newPosition;
 }
 
+void GOGlyph::SetScale(const glm::vec2& newScale)
+{
+
+	Font::Glyph g = glyph;
+	glm::vec2 s = newScale;
+
+	std::vector<Vertex> vertices = {
+			Vertex(glm::vec3(g.bearing.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3(g.bearing.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {0.0f, 1.0f}),
+			Vertex(glm::vec3((0.0f + g.bearing.x * s.x) + g.size.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {1.0f, 1.0f}),
+
+			Vertex(glm::vec3(g.bearing.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {1.0f, 0.0f})
+	};
+
+	std::vector<unsigned int> indices = { 0,1,2,3,4,5 };
+
+	model = ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(g.size.x * s.x) + "H" + std::to_string(g.size.y * s.y), vertices, indices);
+
+	scale = newScale;
+}
+
 glm::vec2 GOGlyph::GetPosition() const
 {
 	return position;
@@ -90,4 +113,9 @@ glm::vec2 GOGlyph::GetPosition() const
 void GOGlyph::SetZ(float newZ)
 {
 	z = newZ;
+}
+
+const Font::Glyph& GOGlyph::GetGlyph() const
+{
+	return glyph;
 }

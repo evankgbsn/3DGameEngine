@@ -9,11 +9,10 @@
 #include "../../UI/InputField.h"
 #include "../../Scene/SceneManager.h"
 #include "../../Scene/Scene.h"
-#include "../../Renderer/GraphicsObjects/GOSprite.h"
-#include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../../Math/Math.h"
-#include "../../Renderer/Text/Text.h"
+#include "../../UI/TextField.h"
 #include "../../Input/InputManager.h"
+#include "../../UI/Sprite.h"
 
 EditorUI::EditorUI() :
 	disabled(false),
@@ -69,8 +68,11 @@ void EditorUI::CreateLoadSceneInputFields()
 	float windowHeight = (float)window->GetHeight();
 	float windowWidth = (float)window->GetWidth();
 
-	loadSceneInputField0 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.37f }, nullptr, nullptr, true);
-	loadSceneInputField1 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.45f }, nullptr, nullptr, true);
+	loadSceneInputField0 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 0.15625, 0.037037037037037 }, { 0.1f, 0.37f }, nullptr, nullptr, true);
+	loadSceneInputField1 = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 0.15625, 0.037037037037037 }, { 0.1f, 0.45f }, nullptr, nullptr, true);
+
+	loadSceneInputField0->SetZ(0.2f);
+	loadSceneInputField1->SetZ(0.2f);
 
 	loadSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{
@@ -91,7 +93,8 @@ void EditorUI::CreateLoadSceneInputFields()
 
 	loadSceneInputField0->SetOnEnter(loadSceneInputFieldOnEnter);
 
-	unloadSceneInputField = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.57f }, nullptr, nullptr, true);
+	unloadSceneInputField = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 0.15625, 0.037037037037037 }, { 0.1f, 0.57f }, nullptr, nullptr, true);
+	unloadSceneInputField->SetZ(0.2f);
 
 	unloadSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{
@@ -107,8 +110,11 @@ void EditorUI::CreateLoadSceneInputFields()
 
 	unloadSceneInputField->SetOnEnter(unloadSceneInputFieldOnEnter);
 
-	saveSceneInputFieldFile = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.17f }, nullptr, nullptr, true);
-	saveSceneInputFieldName = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 600.0f, 80.0f }, { 0.1f, 0.24f }, nullptr, nullptr, true);
+	saveSceneInputFieldFile = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 0.15625, 0.037037037037037 }, { 0.1f, 0.17f }, nullptr, nullptr, true);
+	saveSceneInputFieldName = new InputField("LoadSceneInputFieldBackground", "LoadSceneInputFieldBackgroundHover", "LoadSceneInputFieldBackgroundPress", { 0.15625, 0.037037037037037 }, { 0.1f, 0.24f }, nullptr, nullptr, true);
+
+	saveSceneInputFieldFile->SetZ(0.2f);
+	saveSceneInputFieldName->SetZ(0.2f);
 
 	saveSceneInputFieldOnEnter = new std::function<void()>([this]()
 		{
@@ -138,89 +144,79 @@ void EditorUI::CreateSceneManagementInterface()
 	float height = static_cast<float>(window->GetHeight());
 
 	// Create the background.
-	float xDimension = 1000.0f;
-	float yDimension = 1500.0f;
+	float xDimension = 500.0f / width;
+	float yDimension = 750.0f / height;
 	float z = 0.02f;
-
-	Model* sceneManagementBackgroundModel = ModelManager::LoadModel("SceneManagementBackground",
-		{
-			Vertex({0.0f, 0.0f, z }, {}, {0.0f, 0.0f}),
-			Vertex({xDimension, 0.0f, z}, {}, {1.0f, 0.0f}),
-			Vertex({xDimension, yDimension, z}, {}, {1.0f, 1.0f}),
-			Vertex({0.0f, yDimension, z}, {}, {0.0f, 1.0f})
-		},
-		{0, 1, 2, 2, 3, 0}
-		);
 
 	Texture* sceneManagementBackgroundTexture = TextureManager::LoadTexture("Assets/Texture/grey.png", "SceneManagementBackground");
 
-	float backgroundXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.05f);
-	float backgroundYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.05f);
+	float backgroundXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.185f * width);
+	float backgroundYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.4f * height);
 
-	sceneManagementBackground = GraphicsObjectManager::CreateGOSprite(sceneManagementBackgroundModel, TextureManager::GetTexture("SceneManagementBackground"), {backgroundXPos, backgroundYPos});
+	sceneManagementBackground = new Sprite("SceneManagementBackground", { backgroundXPos, backgroundYPos }, {xDimension, yDimension});
+	sceneManagementBackground->SetZ(z);
 
 	// Create title.
-	float titleXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
-	float titleYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.7f);
+	float titleXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
+	float titleYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.7f * height);
 
-	sceneManagementWindowTitle = new Text("Scene Management", "arial");
-	sceneManagementWindowTitle->SetPosition({ titleXPos, titleYPos });
+	sceneManagementWindowTitle = new TextField("Scene Management", "arial", { titleXPos, titleYPos }, { 0.001, 0.001 }, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneManagementWindowTitle->SetZ(0.5f);
 
 	// Create input field titles.
-	float sceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
-	float sceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.5f);
+	float sceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
+	float sceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.5f * height);
 
-	sceneName = new Text("Scene Name:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, {sceneNameXPos, sceneNameYPos}, 0.5f);
+	sceneName = new TextField("Scene Name:", "arial", { sceneNameXPos, sceneNameYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneName->SetZ(0.5f);
 
-	float sceneFileXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
-	float sceneFileYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.42f);
+	float sceneFileXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
+	float sceneFileYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.42f * height);
 
-	sceneFileName = new Text("Scene File:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { sceneFileXPos, sceneFileYPos }, 0.5f);
+	sceneFileName = new TextField("Scene File:", "arial", { sceneFileXPos, sceneFileYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneFileName->SetZ(0.5f);
 
 	// Create load scene title.
-	float loadSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
-	float loadSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.53f);
+	float loadSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
+	float loadSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.53f * height);
 
-	sceneLoadingTitle = new Text("Load Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { loadSceneXPos, loadSceneYPos }, 0.7f);
+	sceneLoadingTitle = new TextField("Load Scene:", "arial", { loadSceneXPos, loadSceneYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneLoadingTitle->SetZ(0.5f);
 
 	// Create unload scene title.
-	float unloadingSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
-	float unloadingSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.65f);
+	float unloadingSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
+	float unloadingSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.65f * height);
 
-	sceneUnloadingTitle = new Text("Unload Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { unloadingSceneXPos, unloadingSceneYPos }, 0.7f);
+	sceneUnloadingTitle = new TextField("Unload Scene:", "arial", { unloadingSceneXPos, unloadingSceneYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneUnloadingTitle->SetZ(0.5f);
 
 
 	// Create unload scene name.
-	float unloadingSceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
-	float unloadingSceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.62f);
+	float unloadingSceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
+	float unloadingSceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.62f * height);
 
-	unloadSceneName = new Text("SceneName:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { unloadingSceneNameXPos, unloadingSceneNameYPos }, 0.5f);
+	unloadSceneName = new TextField("SceneName:", "arial", { unloadingSceneNameXPos, unloadingSceneNameYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	unloadSceneName->SetZ(0.5f);
 
 	// Create save scene title.
-	float saveSceneXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.07f);
-	float saveSceneYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.32f);
+	float saveSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
+	float saveSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.32f * height);
 
-	saveSceneTitle = new Text("Save Scene:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneXPos, saveSceneYPos }, 0.7f);
+	saveSceneTitle = new TextField("Save Scene:", "arial", { saveSceneXPos, saveSceneYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneTitle->SetZ(0.5f);
 
 	// Create save scene name.
-	float saveSceneNameXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
-	float saveSceneNameYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.29f);
+	float saveSceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
+	float saveSceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.29f * height);
 
-	saveSceneName = new Text("SceneName:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneNameXPos, saveSceneNameYPos }, 0.5f);
+	saveSceneName = new TextField("SceneName:", "arial", { saveSceneNameXPos, saveSceneNameYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneName->SetZ(0.5f);
 
 	// Create save scene file.
-	float saveSceneFileXPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, 0.1f);
-	float saveSceneFileYPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, 0.21f);
+	float saveSceneFileXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
+	float saveSceneFileYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.21f * height);
 
-	saveSceneFile = new Text("SceneFile:", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, { saveSceneFileXPos, saveSceneFileYPos }, 0.5f);
+	saveSceneFile = new TextField("SceneFile:", "arial", { saveSceneFileXPos, saveSceneFileYPos }, {0.001f, 0.001f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneFile->SetZ(0.5f);
 
 
@@ -273,7 +269,7 @@ void EditorUI::CleanupSceneManagementInterface()
 
 	if (sceneManagementBackground != nullptr)
 	{
-		GraphicsObjectManager::Delete(sceneManagementBackground);
+		delete sceneManagementBackground;
 	}
 
 	if (sceneManagementWindowTitle != nullptr)
@@ -363,7 +359,7 @@ void EditorUI::EnableSceneManagementInterface()
 
 		if (sceneManagementBackground != nullptr)
 		{
-			GraphicsObjectManager::Enable(sceneManagementBackground);
+			sceneManagementBackground;
 		}
 
 		if (sceneManagementWindowTitle != nullptr)
@@ -446,7 +442,7 @@ void EditorUI::DisableSceneManagementInterface()
 
 		if (sceneManagementBackground != nullptr)
 		{
-			GraphicsObjectManager::Disable(sceneManagementBackground);
+			sceneManagementBackground->Disable();
 		}
 
 		if (sceneManagementWindowTitle != nullptr)

@@ -22,8 +22,6 @@ GOSprite::GOSprite(Model* model, Texture* texture, const glm::vec2& initialPosit
 	glNamedBufferStorage(positionBuffer, sizeof(modelMat), &modelMat, GL_DYNAMIC_STORAGE_BIT);
 
 	SetPosition(initialPosition);
-
-	SetScale(.5f, .5f);
 }
 
 GOSprite::~GOSprite()
@@ -83,7 +81,24 @@ void GOSprite::SetTexture(Texture* const newTexture)
 
 void GOSprite::SetScale(float x, float y)
 {
+	glm::vec3 currentScale(glm::length(glm::vec3(modelMat[0])), glm::length(glm::vec3(modelMat[1])), glm::length(glm::vec3(modelMat[2])));
+
+	modelMat = { glm::normalize(modelMat[0]), glm::normalize(modelMat[1]) , glm::normalize(modelMat[2]) , modelMat[3] };
+
 	modelMat = glm::scale(modelMat, glm::vec3(x, y, 1.0f));
+}
+
+void GOSprite::SetZ(float z)
+{
+	modelMat[3][2] = z;
+}
+
+glm::vec2 GOSprite::GetScale() const
+{
+	glm::vec3 x = modelMat[0];
+	glm::vec3 y = modelMat[1];
+
+	return { glm::length(x), glm::length(y) };
 }
 
 glm::mat4 GOSprite::GetProjection() const

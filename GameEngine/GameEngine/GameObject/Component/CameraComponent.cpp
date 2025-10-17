@@ -171,4 +171,6 @@ void CameraComponent::Deserialize()
 
 void CameraComponent::Update()
 {
+	Camera& cam = CameraManager::GetCamera(name);
+	cam.SetWindow(WindowManager::GetWindow("Engine"));
 }

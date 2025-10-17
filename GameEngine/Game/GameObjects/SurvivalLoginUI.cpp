@@ -1,6 +1,7 @@
 #include "SurvivalLoginUI.h"
 
 #include "GameEngine/UI/InputField.h"
+#include "GameEngine/Renderer/Text/Text.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "GameEngine/Scene/SceneManager.h"
@@ -19,8 +20,8 @@ SurvivalLoginUI::~SurvivalLoginUI()
 
 void SurvivalLoginUI::Initialize()
 {
-	username = new InputField("UsernameField", "UsernameFieldHover", "UsernameFieldPress", { 600.0f, 80.0f }, {0.5, 0.5});
-	password = new InputField("UsernameField", "UsernameFieldHover", "UsernameFieldPress", { 600.0f, 80.0f }, { 0.5, 0.4 });
+	username = new InputField("UsernameField", "UsernameFieldHover", "UsernameFieldPress", { 0.15625, 0.037037037037037 }, { 0.5, 0.5 });
+	password = new InputField("UsernameField", "UsernameFieldHover", "UsernameFieldPress", { 0.15625, 0.037037037037037 }, { 0.5, 0.4 });
 
 	passwordOnEnter = new std::function<void()>([this]()
 		{

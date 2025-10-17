@@ -12,6 +12,7 @@
 #include "../Input/InputManager.h"
 #include "../Renderer/Text/Text.h"
 #include "../Editor/Editor.h"
+#include "Sprite.h"
 
 InputField::InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onE, std::function<void()>* onC, bool editor) :
 	onEnter(onE),
@@ -24,17 +25,6 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 	hovered = TextureManager::GetTexture(hoveredTextureName);
 	pressed = TextureManager::GetTexture(pressedTextureName);
 
-	model = ModelManager::LoadModel("InputField_X" + std::to_string(dimensions.x) + "_Y" + std::to_string(dimensions.y),
-		{
-			Vertex({0.0f, 0.0f, 0.02f}, {}, {0.0f, 0.0f}),
-			Vertex({dimensions.x, 0.0f, 0.02f}, {}, {1.0f, 0.0f}),
-			Vertex({dimensions.x, dimensions.y, 0.02f}, {}, {1.0f, 1.0f}),
-			Vertex({0.0f, dimensions.y, 0.02f}, {}, {0.0f, 1.0f})
-		},
-		{
-			0,1,2,2,3,0
-		});
-
 	Window* window = WindowManager::GetWindow("Engine");
 
 	float width = static_cast<float>(window->GetWidth());
@@ -43,11 +33,11 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 	float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
 	float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
 	
-	background = GraphicsObjectManager::CreateGOSprite(model, base, {xPos, yPos});
+	background = new Sprite(base->GetName(), relativePosition, dimensions);
 
 	float textBackgroundOffset = 12.0f;
 
-	text = new Text("", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(xPos, yPos) + textBackgroundOffset, 0.5f);
+	text = new Text("", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(xPos, yPos) + textBackgroundOffset, glm::vec2(0.05f));
 	text->SetPosition(glm::vec2(xPos, yPos) + textBackgroundOffset);
 	text->SetZ(0.5f);
 
@@ -59,8 +49,6 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
 			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
-
-			background->SetPosition({ xPos, yPos });
 
 			text->SetPosition(glm::vec2(xPos, yPos) + textBackgroundOffset);
 		});
@@ -88,7 +76,7 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 					newText = std::string(newText.begin(), newText.begin() + newText.size() - 1);
 
 					delete text;
-					text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, 0.5f);
+					text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, glm::vec2(0.05f));
 					text->SetZ(0.5f);
 				}
 
@@ -114,7 +102,7 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 			newText += newCharacter;
 
 			delete text;
-			text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, 0.5f);
+			text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, glm::vec2(0.5f));
 			text->SetZ(0.5f);
 		});
 
@@ -123,6 +111,9 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 InputField::~InputField()
 {
+	Window* window = WindowManager::GetWindow("Engine");
+	window->DeregisterCallbackForWindowResize("InputField" + std::to_string(ID));
+
 	Disable();
 
 	delete keyPress;
@@ -132,7 +123,7 @@ InputField::~InputField()
 	
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "InputFieldPress");
 
-	GraphicsObjectManager::Delete(background);
+	delete background;
 }
 
 void InputField::Update()
@@ -150,7 +141,7 @@ void InputField::Enable()
 		text->Enable();
 	}
 
-	GraphicsObjectManager::Enable(background);
+	background->Enable();
 }
 
 void InputField::Disable()
@@ -165,7 +156,7 @@ void InputField::Disable()
 		Deselect();
 	}
 
-	GraphicsObjectManager::Disable(background);
+	background->Disable();
 }
 
 void InputField::SetOnEnter(std::function<void()>* onenter)
@@ -421,11 +412,11 @@ bool InputField::Hovered()
 		glm::vec2 cursorPos = window->GetCursorPosition();
 		cursorPos.y = windowHeight - cursorPos.y;
 
-		if (Math::PointIn2DModel(model, glm::mat4(1.0f), background->GetProjection(), background->GetModelMat(), cursorPos, { windowWidth, windowHeight }))
+		if (background->Hovered())
 		{
-			if (background->GetTexture() != hovered)
+			if (background->GetTexture() != hovered->GetName())
 			{
-				background->SetTexture(hovered);
+				background->SetTexture(hovered->GetName());
 				if (isEditor)
 				{
 					InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, mousePress, "InputFieldPress");
@@ -440,9 +431,9 @@ bool InputField::Hovered()
 		}
 		else
 		{
-			if (background->GetTexture() != base)
+			if (background->GetTexture() != base->GetName())
 			{
-				background->SetTexture(base);
+				background->SetTexture(base->GetName());
 
 				if (isEditor)
 				{
@@ -463,9 +454,9 @@ bool InputField::Pressed()
 {
 	if (enabled)
 	{
-		if (background->GetTexture() != pressed)
+		if (background->GetTexture() != pressed->GetName())
 		{
-			background->SetTexture(pressed);
+			background->SetTexture(pressed->GetName());
 			if (pressFunction != nullptr)
 			{
 				(*pressFunction)();
@@ -525,4 +516,11 @@ void InputField::CleanupEnterCallback()
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_ENTER, "InputFieldEnter");
 	}
 	delete enterCallback;
+}
+
+
+void InputField::SetZ(float newZ)
+{
+	background->SetZ(newZ);
+	text->SetZ(newZ + 0.00001f);
 }

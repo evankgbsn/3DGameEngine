@@ -248,7 +248,7 @@ GOLineColored* const GraphicsObjectManager::CreateGOLineColored(const glm::vec3&
 	return result;
 }
 
-GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, float scale)
+GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale)
 {
 	GOGlyph* result = nullptr;
 
