@@ -160,7 +160,7 @@ void EditorUI::CreateSceneManagementInterface()
 	float titleXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.065f * width);
 	float titleYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.7f * height);
 
-	sceneManagementWindowTitle = new TextField("Scene Management", "exo2", { titleXPos, titleYPos }, { 25.0f, 25.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+	sceneManagementWindowTitle = new TextField("Scene Management", "exo2", { titleXPos, titleYPos }, { 25.0f, 25.0f }, { 0.0f, 0.0f, 0.0f, 1.0f });
 	sceneManagementWindowTitle->SetZ(0.5f);
 
 	// Create input field titles.

@@ -128,6 +128,7 @@ void Editor::Enable()
 {
 	if (instance != nullptr)
 	{
+		InputManager::EnableCursor("Engine");
 		instance->enabled = true;
 		CameraManager::SetActiveCamera("Editor");
 

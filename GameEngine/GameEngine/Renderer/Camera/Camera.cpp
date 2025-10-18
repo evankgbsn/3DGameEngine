@@ -11,6 +11,12 @@
 
 Camera::~Camera()
 {
+	if (window != nullptr)
+	{
+		window->DeregisterCallbackForWindowResize("Camera:" + name);
+	}
+
+	delete windowResizeCallback;
 }
 
 void Camera::Rotate(const glm::vec3& axis, const float& angle)
@@ -216,7 +222,7 @@ void Camera::UpdateView()
 	view = glm::lookAt(position, target, GetUpVector());
 }
 
-Camera::Camera(const Camera::Type& t, Window* const w) :
+Camera::Camera(const Camera::Type& t, Window* const w, const std::string& n) :
 	type(t),
 	window(w),
 	view(glm::mat4(1.0f)),
@@ -229,9 +235,20 @@ Camera::Camera(const Camera::Type& t, Window* const w) :
 	top(10.0f),
 	bottom(-10.0f),
 	position(glm::vec3(0.0f,0.0f,0.0f)),
-	target(glm::vec3(0.0f, 0.0f, 1.0f))
+	target(glm::vec3(0.0f, 0.0f, 1.0f)),
+	name(n)
 {
 	SetWindow(w);
 	UpdateProjection();
 	UpdateView();
+
+	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int, unsigned int)
+		{
+			SetWindow(window);
+		});
+
+	if (window != nullptr)
+	{
+		window->RegisterCallbackForWindowResize("Camera:" + name, windowResizeCallback);
+	}
 }

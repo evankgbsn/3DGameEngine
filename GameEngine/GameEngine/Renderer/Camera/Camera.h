@@ -5,6 +5,9 @@
 
 #include <glm/glm.hpp>
 
+#include <functional>
+#include <string>
+
 class Window;
 
 class Camera
@@ -17,7 +20,7 @@ public:
 		PERSPECTIVE
 	};
 
-	Camera(const Camera::Type& type, Window* const window);
+	Camera(const Camera::Type& type, Window* const window, const std::string& name);
 
 	~Camera();
 
@@ -130,6 +133,10 @@ protected:
 	glm::vec3 position;
 
 	glm::vec3 target;
+
+	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
+
+	std::string name;
 
 };
 

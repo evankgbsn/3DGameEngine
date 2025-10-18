@@ -6,7 +6,7 @@
 CameraManager* CameraManager::instance = nullptr;
 
 // A default camera to return as reference during failure.
-static Camera cam(Camera::Type::PERSPECTIVE, nullptr);
+static Camera cam(Camera::Type::PERSPECTIVE, nullptr, "DefaultReturn");
 
 void CameraManager::Initialize()
 {
@@ -39,7 +39,7 @@ Camera& CameraManager::CreateCamera(const Camera::Type& type, const std::string&
 		const auto& camera = instance->cameras.find(cameraName);
 		if (camera == instance->cameras.end())
 		{
-			Camera* const newCamera = new Camera(type, window);
+			Camera* const newCamera = new Camera(type, window, cameraName);
 			instance->cameras.insert(std::make_pair(cameraName, newCamera));
 			return *newCamera;
 		}
@@ -116,7 +116,7 @@ void CameraManager::SetActiveCamera(const std::string& name)
 
 Camera& CameraManager::GetActiveCamera()
 {
-	static Camera defaultReturn(Camera::Type::PERSPECTIVE, nullptr);
+	static Camera defaultReturn(Camera::Type::PERSPECTIVE, nullptr, "Default");
 
 	if (instance != nullptr)
 	{
