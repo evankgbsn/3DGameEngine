@@ -10,16 +10,18 @@
 #include "../Math/Math.h"
 #include "../Renderer/Window/WindowManager.h"
 #include "../Input/InputManager.h"
-#include "../Renderer/Text/Text.h"
 #include "../Editor/Editor.h"
 #include "Sprite.h"
+#include "TextField.h"
+#include "../Time/TimeManager.h"
 
 InputField::InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onE, std::function<void()>* onC, bool editor) :
 	onEnter(onE),
 	onChange(onC),
 	maxCharacterLength(20.0f),
 	relativePosition(position),
-	isEditor(editor)
+	isEditor(editor),
+	shiftPressed(false)
 {
 	base = TextureManager::GetTexture(baseTextureName);
 	hovered = TextureManager::GetTexture(hoveredTextureName);
@@ -32,30 +34,32 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 	float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
 	float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
-	
+
 	background = new Sprite(base->GetName(), relativePosition, dimensions);
 
-	float textBackgroundOffset = 12.0f;
+	glm::vec2 textBackgroundOffset = {-dimensions.x / 2.1, -dimensions.y / 3.8};
 
-	text = new Text("", "arial", {1.0f, 1.0f, 1.0f, 1.0f}, glm::vec2(xPos, yPos) + textBackgroundOffset, glm::vec2(0.05f));
-	text->SetPosition(glm::vec2(xPos, yPos) + textBackgroundOffset);
+	text = new TextField("", "exo2", background->GetPosition() + textBackgroundOffset, glm::vec2(background->GetScale().y, background->GetScale().y) * 350.0f);
 	text->SetZ(0.5f);
 
-
-	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this, textBackgroundOffset](unsigned int w, unsigned int h)
+	backspacePressed = new std::function<void(int)>([this](int keyCode)
 		{
-			float width = static_cast<float>(w);
-			float height = static_cast<float>(h);
-
-			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, relativePosition.x);
-			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, relativePosition.y);
-
-			text->SetPosition(glm::vec2(xPos, yPos) + textBackgroundOffset);
+			if (TimeManager::SecondsSinceStart() - lastBackspacePop > .05f && TimeManager::SecondsSinceStart() - lastBackspacePress > .2)
+			{
+				text->PopBack();
+				lastBackspacePop = TimeManager::SecondsSinceStart();
+			}
 		});
 
-	static unsigned int inputFieldId = 0;
+	shiftPress = new std::function<void(int)>([this](int keyCode)
+		{
+			shiftPressed = true;
+		});
 
-	window->RegisterCallbackForWindowResize("InputField" + std::to_string(ID = inputFieldId++), windowResizeCallback);
+	shiftRelease = new std::function<void(int)>([this](int keyCode)
+		{
+			shiftPressed = false;
+		});
 
 	mousePress = new std::function<void(int)>([this](int keyCode)
 		{
@@ -66,18 +70,15 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 		{
 
 			std::string newText = text->GetString();
-			glm::vec2 pos = text->GetPosition();
 
 
 			if (keyCode == KEY_BACKSPACE)
 			{
 				if (newText.size() > 0)
 				{
-					newText = std::string(newText.begin(), newText.begin() + newText.size() - 1);
-
-					delete text;
-					text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, glm::vec2(0.05f));
-					text->SetZ(0.5f);
+					text->PopBack();
+					lastBackspacePop = TimeManager::SecondsSinceStart();
+					lastBackspacePress = TimeManager::SecondsSinceStart();
 				}
 
 				return;
@@ -90,7 +91,7 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 			std::string newCharacter;
 
-			if (!Editor::ShiftPressed())
+			if (!shiftPressed)
 			{
 				newCharacter = { static_cast<char>(std::tolower(static_cast<char>(keyCode))) };
 			}
@@ -99,11 +100,7 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 				newCharacter = { static_cast<char>(keyCode) };
 			}
 
-			newText += newCharacter;
-
-			delete text;
-			text = new Text(newText, "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, pos, glm::vec2(0.5f));
-			text->SetZ(0.5f);
+			text->Append(newCharacter);
 		});
 
 	enabled = true;
@@ -111,17 +108,23 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 InputField::~InputField()
 {
-	Window* window = WindowManager::GetWindow("Engine");
-	window->DeregisterCallbackForWindowResize("InputField" + std::to_string(ID));
-
 	Disable();
 
 	delete keyPress;
 	delete mousePress;
 	delete text;
-	delete windowResizeCallback;
+	delete shiftPress;
+	delete shiftRelease;
+	delete backspacePressed;
 	
-	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "InputFieldPress");
+	if (isEditor)
+	{
+		InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "InputFieldPress");
+	}
+	else
+	{
+		InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "InputFieldPress");
+	}
 
 	delete background;
 }
@@ -226,6 +229,9 @@ void InputField::Select()
 		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_BACKSLASH, keyPress, "InputField");
 		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_RIGHT_BRACKET, keyPress, "InputField");
 		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, keyPress, "InputField");
+		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, shiftPress, "InputField");
+		InputManager::EditorRegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, shiftRelease, "InputField");
+		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, backspacePressed, "InputField");
 	}
 	else
 	{
@@ -279,6 +285,10 @@ void InputField::Select()
 		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_BACKSLASH, keyPress, "InputField");
 		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_RIGHT_BRACKET, keyPress, "InputField");
 		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, keyPress, "InputField");
+		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, shiftPress, "InputField");
+		InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, shiftRelease, "InputField");
+		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, backspacePressed, "InputField");
+
 	}
 	
 
@@ -342,6 +352,10 @@ void InputField::Deselect()
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_BACKSLASH, "InputField");
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_RIGHT_BRACKET, "InputField");
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, "InputField");
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, "InputField");
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, "InputField");
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, "InputField");
+
 	}
 	else
 	{
@@ -395,6 +409,9 @@ void InputField::Deselect()
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_BACKSLASH, "InputField");
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_RIGHT_BRACKET, "InputField");
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_GRAVE_ACCENT, "InputField");
+		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, "InputField");
+		InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, "InputField");
+		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, "InputField");
 	}
 	
 

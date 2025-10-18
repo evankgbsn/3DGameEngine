@@ -9,6 +9,7 @@
 TextField::TextField(const std::string& t, const std::string& font, const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) :
 	stretch(true)
 {
+
 	Window* window = WindowManager::GetWindow("Engine");
 	float width = static_cast<float>(prevScreenWidth = window->GetWidth());
 	float height = static_cast<float>(prevScreenHeight = window->GetHeight());
@@ -20,8 +21,8 @@ TextField::TextField(const std::string& t, const std::string& font, const glm::v
 	float simplifiedWidth = width / gcd;
 	float simplifiedHeight = height / gcd;
 
-	float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, size.x * simplifiedHeight * 0.05f);
-	float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, size.y * simplifiedWidth * 0.05f);
+	float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, size.x * simplifiedHeight * 0.05f * 0.00005f);
+	float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, size.y * simplifiedWidth * 0.05f * 0.00005f);
 
 	text = new Text(t, font, color, { xPos, yPos }, {xScale, yScale});
 
@@ -133,4 +134,24 @@ void TextField::Enable()
 bool TextField::IsDisabled() const
 {
 	return text->IsDisabled();
+}
+
+void TextField::Append(const std::string& string)
+{
+	text->Append(string);
+}
+
+void TextField::PopBack()
+{
+	text->PopBack();
+}
+
+void TextField::PopFront()
+{
+	text->PopFront();
+}
+
+void TextField::SetText(const std::string& string)
+{
+	text->SetText(string);
 }

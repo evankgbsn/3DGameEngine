@@ -9,7 +9,7 @@
 class Sprite;
 class Texture;
 class Model;
-class Text;
+class TextField;
 
 class InputField
 {
@@ -70,7 +70,7 @@ private:
 
 	Texture* pressed;
 
-	Text* text;
+	TextField* text;
 
 	std::function<void()>* onEnter;
 
@@ -86,6 +86,14 @@ private:
 
 	std::function<void(int)>* keyPress;
 
+	std::function<void(int)>* shiftPress;
+
+	std::function<void(int)>* shiftRelease;
+
+	std::function<void(int)>* backspacePressed;
+
+	bool shiftPressed;
+
 	bool enabled;
 
 	bool selected;
@@ -94,11 +102,13 @@ private:
 
 	glm::vec2 relativePosition;
 
-	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
-
 	unsigned int ID;
 
 	bool isEditor;
+
+	float lastBackspacePop;
+
+	float lastBackspacePress;
 
 };
 

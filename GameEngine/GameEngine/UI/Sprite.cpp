@@ -95,6 +95,20 @@ void Sprite::SetScale(float x, float y)
 	sprite->SetScale(xScale / 2, yScale / 2);
 }
 
+glm::vec2 Sprite::GetScale() const
+{
+	Window* window = WindowManager::GetWindow("Engine");
+	float width = static_cast<float>(window->GetWidth());
+	float height = static_cast<float>(window->GetHeight());
+
+	glm::vec2 currentScale = sprite->GetScale();
+
+	float xScale = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, currentScale.x * 2);
+	float yScale = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, currentScale.y * 2);
+
+	return {xScale, yScale};
+}
+
 void Sprite::Enable()
 {
 	GraphicsObjectManager::Enable(sprite);
@@ -147,4 +161,18 @@ bool Sprite::Hovered() const
 const std::string& Sprite::GetTexture() const
 {
 	return sprite->GetTexture()->GetName();
+}
+
+glm::vec2 Sprite::GetPosition() const
+{
+	Window* window = WindowManager::GetWindow("Engine");
+	float width = static_cast<float>(window->GetWidth());
+	float height = static_cast<float>(window->GetHeight());
+
+	glm::vec2 pos = sprite->GetPosition();
+
+	float xPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, pos.x);
+	float yPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, pos.y);
+
+	return {xPos, yPos};
 }

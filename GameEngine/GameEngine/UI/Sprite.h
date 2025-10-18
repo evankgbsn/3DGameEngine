@@ -28,6 +28,8 @@ public:
 
 	void SetScale(float x, float y);
 
+	glm::vec2 GetScale() const;
+
 	void Enable();
 
 	void Disable();

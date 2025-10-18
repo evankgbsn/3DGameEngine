@@ -36,6 +36,14 @@ public:
 
 	bool IsDisabled() const;
 
+	void Append(const std::string& string);
+
+	void PopBack();
+
+	void PopFront();
+
+	void SetText(const std::string& string);
+
 private:
 
 	TextField(const TextField&) = delete;

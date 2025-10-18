@@ -10,7 +10,8 @@ Text::Text(const std::string& string, const std::string& fn, const glm::vec4& c,
 	fontName(fn),
 	color(c),
 	disabled(false),
-	position(p)
+	position(p),
+	z(0.0f)
 {
 	Font* font = FontManager::GetFont(fontName);
 
@@ -83,6 +84,7 @@ void Text::SetScale(const glm::vec2& newScale)
 
 void Text::SetZ(float newZ)
 {
+	z = newZ;
 	for (auto& glyph : glyphs)
 	{
 		glyph->SetZ(newZ);
@@ -110,6 +112,76 @@ void Text::Enable()
 bool Text::IsDisabled() const
 {
 	return disabled;
+}
+
+void Text::Append(const std::string& string)
+{
+	Font* font = FontManager::GetFont(fontName);
+
+	float x = position.x;
+	for (unsigned int i = 0; i < text.size(); i++)
+	{
+		const Font::Glyph& glyph = font->GetCharacterGlyph(text[i]);
+		x += (glyph.advance >> 6) * scale.x;
+	}
+
+	for (const char& c : string)
+	{
+		text.append(std::string() + c);
+		const Font::Glyph& glyph = font->GetCharacterGlyph(c);
+		glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(glyph, glm::vec4(color, 1.0f), { x, position.y }, scale));
+		x += (glyph.advance >> 6) * scale.x;
+		glyphs.back()->SetZ(z);
+	}
+
+}
+
+void Text::PopBack()
+{
+	if (glyphs.size() > 0)
+	{
+		GraphicsObjectManager::Delete(glyphs.back());
+		glyphs.pop_back();
+		text.pop_back();
+	}
+}
+
+void Text::PopFront()
+{
+	if (glyphs.size() > 0)
+	{
+		GraphicsObjectManager::Delete(glyphs.front());
+		glyphs = std::vector<GOGlyph*>(glyphs.begin() + 1, glyphs.end());
+		text = std::string(text.begin() + 1, text.end());
+	}
+}
+
+void Text::SetText(const std::string& string)
+{
+	for (GOGlyph* glyph : glyphs)
+	{
+		GraphicsObjectManager::Delete(glyph);
+	}
+
+	glyphs.clear();
+
+	text = string;
+
+	Font* font = FontManager::GetFont(fontName);
+
+	if (font != nullptr)
+	{
+		float x = position.x;
+		for (const char& character : text)
+		{
+			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
+			glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(glyph, glm::vec4(color, 1.0f), { x, position.y }, scale));
+
+			x += (glyph.advance >> 6) * scale.x;
+
+			glyphs.back()->SetZ(z);
+		}
+	}
 }
 
 Text::~Text()
