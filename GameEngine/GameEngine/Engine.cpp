@@ -73,6 +73,7 @@ void Engine::Run()
 		if (Editor::IsEnabled())
 		{
 			TimeManager::RecordUpdateTime();
+			ModelManager::Update();
 			Renderer::Update();
 			Editor::Update();
 			InputManager::EditorUpdate();
@@ -82,6 +83,7 @@ void Engine::Run()
 		else
 		{
 			TimeManager::RecordUpdateTime();
+			ModelManager::Update();
 			PhysicsManager::Update();
 			Renderer::Update();
 			InputManager::Update();

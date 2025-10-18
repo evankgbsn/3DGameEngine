@@ -68,6 +68,8 @@ protected:
 
 private:
 
+	friend class ModelManager;
+
 	void CPUSkinMatrices(Armature& armature, Pose& pose);
 
 	void LoadAnimationClips(cgltf_data* data);

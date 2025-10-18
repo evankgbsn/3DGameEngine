@@ -17,17 +17,23 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 	{
 		if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
 		{
-			ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
+			ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf", true, [this](Model* const model)
+				{
+					graphics = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("OrientedBoundingBox"), { 0.0f, 0.0f, 1.0f, 1.0f }, 1);
+					CreateGraphics();
+				});
 		}
-
-		graphics = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("OrientedBoundingBox"), { 0.0f, 0.0f, 1.0f, 1.0f }, 1);
+		else
+		{
+			graphics = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("OrientedBoundingBox"), { 0.0f, 0.0f, 1.0f, 1.0f }, 1);
+			CreateGraphics();
+		}
 	}
 	else
 	{
 		instanceID = graphics->AddInstance();
+		CreateGraphics();
 	}
-
-	CreateGraphics();
 }
 
 void AxisAlignedBoundingBoxWithVisualization::FromOriginAndSize(const glm::vec3& o, const glm::vec3& s)
@@ -49,7 +55,7 @@ void AxisAlignedBoundingBoxWithVisualization::Update()
 
 void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 {
-	if (!isDisabled)
+	if (!isDisabled && graphics != nullptr)
 	{
 		graphics->SetScale({ 0.0f, 0.0f, 0.0f }, instanceID);
 		isDisabled = true;

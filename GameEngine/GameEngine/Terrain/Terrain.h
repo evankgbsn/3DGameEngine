@@ -9,8 +9,10 @@
 #include "glm/vec3.hpp"
 #include "glm/vec2.hpp"
 #include <list>
+#include <atomic>
 
 class GOTerrain;
+class Model;
 
 class Terrain
 {
@@ -45,8 +47,6 @@ public:
 	glm::vec3 GetTerrainPoint(const glm::vec3& point);
 	
 	glm::vec3 GetTerrainNormal(const glm::vec3& point);
-
-	void UpdateHeightByTerrainPoint(const glm::vec3& point, float heightChange);
 	
 	void VisualizeAllCells();
 	
@@ -94,10 +94,6 @@ public:
 
 private:
 
-	GOTerrain* terrainGraphics;
-
-	class Model* terrainModel;
-
 	std::vector<std::vector<class AxisAlignedBoundingBox*>> aabbs;
 
 	std::vector<std::vector<glm::vec3>> tileNormals;
@@ -125,6 +121,10 @@ private:
 	std::list<Cell> highlightedCells;
 
 	std::string heightMapPath;
+
+	std::atomic<Model*> terrainModel;
+
+	std::atomic<GOTerrain*> terrainGraphics;
 
 };
 

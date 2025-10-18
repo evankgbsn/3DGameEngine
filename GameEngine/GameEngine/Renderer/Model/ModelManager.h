@@ -3,6 +3,10 @@
 
 #include <string>
 #include <unordered_map>
+#include <functional>
+#include <thread>
+#include <mutex>
+#include <list>
 
 class Model;
 class Vertex;
@@ -15,9 +19,9 @@ public:
 
 	static void Terminate();
 
-	static Model* const LoadModel(const std::string& name, const std::string& path);
+	static Model* const LoadModel(const std::string& name, const std::string& path, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
 
-	static Model* const LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
+	static Model* const LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
 
 	static void UnloadModel(const std::string& name);
 
@@ -25,7 +29,9 @@ public:
 
 	static bool ModelLoaded(const std::string& name);
 
-	static Model* const CreateModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	static Model* const LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
+
+	static void Update();
 
 private:
 
@@ -41,11 +47,27 @@ private:
 
 	ModelManager& operator=(ModelManager&&) = delete;
 
+	Model* const InternalLoadModelFromPath(const std::string& name, const std::string& path, std::function<void(Model* const)> callback = [](Model* const) {});
+
+	Model* const InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, std::function<void(Model* const)> callback = [](Model* const) {});
+
+	Model* const InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, std::function<void(Model* const)> callback = [](Model* const) {});
+
 	void LoadDefaultModels();
 
 	static ModelManager* instance;
 
+	std::mutex modelsMutex;
+
 	std::unordered_map<std::string, Model*> models;
+
+	std::mutex loadThreadsMutex;
+
+	std::list<std::thread*> loadThreads;
+
+	std::mutex modelLoadCallbacksMutex;
+
+	std::list<std::function<void()>> modelLoadCallbacks;
 
 };
 

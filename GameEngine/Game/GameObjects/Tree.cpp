@@ -77,6 +77,8 @@ void Tree::End()
 
 void Tree::Initialize()
 {
+	while (!ModelManager::ModelLoaded("Tree"));
+
 	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Tree"), TextureManager::GetTexture("CrateTree"), TextureManager::GetTexture("GreyTree"));
 
 	collider = new StaticColliderComponent(graphics);

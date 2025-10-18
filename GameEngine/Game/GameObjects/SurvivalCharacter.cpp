@@ -324,7 +324,7 @@ void SurvivalCharacter::Load()
 {
 	if (!ModelManager::ModelLoaded(CHARACTER_GRAPHICS_MODEL_NAME))
 	{
-		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Woman.gltf");
+		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Woman.gltf", false);
 	}
 
 	if (!TextureManager::TextureLoaded(CHARACTER_GRAPHICS_DIFFUSE_NAME))

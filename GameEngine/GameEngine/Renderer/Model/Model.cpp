@@ -53,7 +53,7 @@ Model::Model() :
 
 	indices = { 0,1,2,2,3,0 };
 
-	CreateVertexArrayBuffer();
+	//CreateVertexArrayBuffer();
 }
 
 Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i, const std::string& n) :
@@ -63,7 +63,7 @@ Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i, c
 	armature(new Armature()),
 	name(n)
 {
-	CreateVertexArrayBuffer();
+	//CreateVertexArrayBuffer();
 }
 
 Model::Model(const std::string& path, const std::string& n) :
@@ -109,7 +109,7 @@ Model::Model(const std::string& path, const std::string& n) :
 
 		BakeAnimations();
 
-		CreateVertexArrayBuffer();
+		//CreateVertexArrayBuffer();
 
 		Logger::Log(std::string("Loaded model from file path ") + path, Logger::Category::Success);
 	}
@@ -314,7 +314,7 @@ void Model::BindBuffer()
 void Model::UpdateBuffer()
 {
 	DestroyVertexArrayBuffer();
-	CreateVertexArrayBuffer();
+	//CreateVertexArrayBuffer();
 }
 
 const std::string& Model::GetName() const
@@ -639,7 +639,7 @@ void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, 
 		vertex.GetNormal() = glm::normalize(vertex.GetNormal());
 	}
 
-	CreateVertexArrayBuffer();
+	//CreateVertexArrayBuffer();
 
 	////  Release resources.
 	stbi_image_free(buffer);
@@ -752,7 +752,7 @@ void Model::CreateTerrainLegacy(const std::string& heightMapPath, float terrainW
 		indices.push_back(i);
 	}
 
-	CreateVertexArrayBuffer();
+	//CreateVertexArrayBuffer();
 
 	////  Release resources.
 	stbi_image_free(buffer);

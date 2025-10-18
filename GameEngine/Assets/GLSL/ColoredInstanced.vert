@@ -14,11 +14,16 @@ layout(location = 5) in vec4 translation;
 layout(location = 6) in vec4 right;
 layout(location = 7) in vec4 up;
 layout(location = 8) in vec4 forward;
+layout(location = 9) in vec4 color;
+
+layout(location = 10) out vec4 fragColor;
 
 void main(void)
 {
     mat4 transformMatrix = mat4(right, up, forward, translation);
 
 	gl_Position = vp.projection * vp.view * transformMatrix * vec4(inPosition, 1.0f);
+
+    fragColor = color;
 }
 

@@ -19,7 +19,8 @@ GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos,
 			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, 0.0f - (g.size.y - g.bearing.y) * s.y, 0.0f), {}, {1.0f, 1.0f}),
 			Vertex(glm::vec3((g.bearing.x * s.x) + g.size.x * s.x, (0.0f - (g.size.y - g.bearing.y) * s.y) + g.size.y * s.y, 0.0f), {}, {1.0f, 0.0f})
 		}, 
-		{0,1,2,3,4,5}
+		{0,1,2,3,4,5},
+		false
 	)),
 	glyph(g),
 	color(c),
@@ -100,7 +101,7 @@ void GOGlyph::SetScale(const glm::vec2& newScale)
 
 	std::vector<unsigned int> indices = { 0,1,2,3,4,5 };
 
-	model = ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(g.size.x * s.x) + "H" + std::to_string(g.size.y * s.y), vertices, indices);
+	model = ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(g.size.x * s.x) + "H" + std::to_string(g.size.y * s.y), vertices, indices, false);
 
 	scale = newScale;
 }

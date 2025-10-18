@@ -24,7 +24,7 @@ void DatabaseManager::OpenDatabase(const std::string& databaseName, const std::s
 		{
 			// 1. Create or open the encrypted database file.
 			// The file on disk ("player_data_encrypted.db") will be fully encrypted.
-			SQLite::Database* db = new SQLite::Database(databaseName + ".db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+			SQLite::Database* db = new SQLite::Database("Assets/DB/" + databaseName + ".db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 			
 			try
 			{

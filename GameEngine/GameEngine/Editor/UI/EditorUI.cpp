@@ -29,12 +29,20 @@ EditorUI::~EditorUI()
 {
 	CleanupInterfaceToggleCallbacks();
 	CleanupSceneManagementInterface();
-	delete playButton;
+
+	if (playButton != nullptr)
+	{
+		delete playButton;
+	}
 }
 
 void EditorUI::Update()
 {
-	playButton->Update();
+	if (playButton != nullptr)
+	{
+		playButton->Update();
+	}
+
 	UpdateSceneManagementInterface();
 }
 
@@ -48,9 +56,9 @@ void EditorUI::CreatePlayButton()
 	TextureManager::LoadTexture("Assets/Texture/Green.png", "Play");
 	TextureManager::LoadTexture("Assets/Texture/grey.png", "PlayPress");
 	TextureManager::LoadTexture("Assets/Texture/grey.png", "PlayIdle");
-	ModelManager::LoadModel("Play", "Assets/Model/PlayButton.gltf");
+	ModelManager::LoadModel("Play", "Assets/Model/PlayButton.gltf", false);
 
-	static std::function<void()> buttonFunc = std::function<void()>([this]() 
+	static std::function<void()> buttonFunc = std::function<void()>([this]()
 		{
 			Editor::Disable();
 		});
@@ -591,7 +599,12 @@ void EditorUI::CleanupInterfaceToggleCallbacks()
 void EditorUI::Disable()
 {
 	disabled = true;
-	playButton->Disable();
+
+	if (playButton != nullptr)
+	{
+		playButton->Disable();
+	}
+
 	DisableSceneManagementInterface();
 	CleanupInterfaceToggleCallbacks();
 }
@@ -605,6 +618,10 @@ void EditorUI::Enable()
 		EnableSceneManagementInterface();
 	}
 
-	playButton->Enable();
+	if (playButton != nullptr)
+	{
+		playButton->Enable();
+	}
+
 	disabled = false;
 }

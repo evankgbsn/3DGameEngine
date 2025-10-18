@@ -11,7 +11,7 @@
 unsigned int GOLineColored::lineModelId = 0;
 
 GOLineColored::GOLineColored(const glm::vec3& s, const glm::vec3& e, const glm::vec4& c) :
-	GraphicsObject(ModelManager::LoadModel(std::string("GOLineColored") + std::to_string(lineModelId++), { Vertex(s, {}, {}), Vertex(e, {}, {}) }, {0, 1})),
+	GraphicsObject(ModelManager::LoadModel(std::string("GOLineColored") + std::to_string(lineModelId++), { Vertex(s, {}, {}), Vertex(e, {}, {}) }, {0, 1}, false)),
 	start(s),
 	end(s),
 	color(c),

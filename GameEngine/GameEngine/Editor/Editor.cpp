@@ -63,14 +63,17 @@ void Editor::Update()
 {
 	if (instance != nullptr)
 	{
-		if (!instance->grid->IsDisabled())
+		if (instance->grid != nullptr)
 		{
-			const glm::vec3& cameraPosition = CameraManager::GetActiveCamera().GetPosition();
-			int x = (int)cameraPosition.x;
-			int z = (int)cameraPosition.z;
-			instance->grid->SetTranslation(glm::vec3(x, instance->grid->GetTranslation().y, z));
+			if (!instance->grid->IsDisabled())
+			{
+				const glm::vec3& cameraPosition = CameraManager::GetActiveCamera().GetPosition();
+				int x = (int)cameraPosition.x;
+				int z = (int)cameraPosition.z;
+				instance->grid->SetTranslation(glm::vec3(x, instance->grid->GetTranslation().y, z));
 
-			instance->FreeCameraMovement();
+				instance->FreeCameraMovement();
+			}
 		}
 
 		SelectionManager::Update();
@@ -96,9 +99,12 @@ void Editor::Disable()
 		instance->enabled = false;
 		CameraManager::SetActiveCamera("Main");
 
-		if (!instance->grid->IsDisabled())
+		if (instance->grid != nullptr)
 		{
-			GraphicsObjectManager::Disable(instance->grid);
+			if (!instance->grid->IsDisabled())
+			{
+				GraphicsObjectManager::Disable(instance->grid);
+			}
 		}
 
 		for (std::function<void()>* func : instance->onEditorDisableCallbacks)
@@ -132,9 +138,12 @@ void Editor::Enable()
 		instance->enabled = true;
 		CameraManager::SetActiveCamera("Editor");
 
-		if (instance->grid->IsDisabled())
+		if (instance->grid != nullptr)
 		{
-			GraphicsObjectManager::Enable(instance->grid);
+			if (instance->grid->IsDisabled())
+			{
+				GraphicsObjectManager::Enable(instance->grid);
+			}
 		}
 
 		for (std::function<void()>* func : instance->onEditorEnableCallbacks)
@@ -501,17 +510,21 @@ void Editor::SetupEditorInput()
 
 void Editor::InitializeGrid()
 {
-	Model* gridModel = ModelManager::CreateModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f);
-
-	grid = GraphicsObjectManager::CreateGO3DColored(gridModel, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-	grid->SetDrawMode(GO3D::Mode::LINE);
-	grid->SetLineWidth(1.0f);
+	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, true, [this](Model* const model)
+		{
+			grid = GraphicsObjectManager::CreateGO3DColored(model, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	
+			grid->SetDrawMode(GO3D::Mode::LINE);
+			grid->SetLineWidth(1.0f);
+		});
 }
 
 void Editor::TerminateGrid()
 {
-	GraphicsObjectManager::Delete(grid);
+	if (grid != nullptr)
+	{
+		GraphicsObjectManager::Delete(grid);
+	}
 }
 
 void Editor::FreeCameraMovement()

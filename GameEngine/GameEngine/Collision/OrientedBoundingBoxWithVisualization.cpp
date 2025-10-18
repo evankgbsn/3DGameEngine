@@ -20,7 +20,10 @@ OrientedBoundingBoxWithVisualization::OrientedBoundingBoxWithVisualization(const
 
 OrientedBoundingBoxWithVisualization::~OrientedBoundingBoxWithVisualization()
 {
-	GraphicsObjectManager::Delete(graphics);
+	if (graphics != nullptr)
+	{
+		GraphicsObjectManager::Delete(graphics);
+	}
 }
 
 void OrientedBoundingBoxWithVisualization::SetOffset(const glm::vec3& offset)
@@ -30,33 +33,43 @@ void OrientedBoundingBoxWithVisualization::SetOffset(const glm::vec3& offset)
 
 void OrientedBoundingBoxWithVisualization::Update(const glm::mat4& transform)
 {
-	glm::mat4 scale(1.0f);
-	scale = glm::scale(scale, GetSize());
+	if (graphics != nullptr)
+	{
+		glm::mat4 scale(1.0f);
+		scale = glm::scale(scale, GetSize());
 
-	glm::mat4 translation(1.0f);
-	translation = glm::translate(translation, GetOffset());
+		glm::mat4 translation(1.0f);
+		translation = glm::translate(translation, GetOffset());
 
-	graphics->SetTransform(transform * translation * scale);
+		graphics->SetTransform(transform * translation * scale);
 
-	SetOrigin(graphics->GetTranslation());
-	SetOrientation(graphics->GetRotation());
+		SetOrigin(graphics->GetTranslation());
+		SetOrientation(graphics->GetRotation());
+	}
 }
 
 void OrientedBoundingBoxWithVisualization::ToggleVisibility()
 {
-	if (graphics->IsDisabled())
+	if (graphics != nullptr)
 	{
-		GraphicsObjectManager::Enable(graphics);
-	}
-	else
-	{
-		GraphicsObjectManager::Disable(graphics);
+		if (graphics->IsDisabled())
+		{
+			GraphicsObjectManager::Enable(graphics);
+		}
+		else
+		{
+			GraphicsObjectManager::Disable(graphics);
+		}
 	}
 }
 
 bool OrientedBoundingBoxWithVisualization::IsVisible() const
 {
-	return !graphics->IsDisabled();
+	if (graphics != nullptr)
+	{
+		return !graphics->IsDisabled();
+	}
+	return false;
 }
 
 void OrientedBoundingBoxWithVisualization::SetColor(const glm::vec4& newColor)
@@ -74,12 +87,7 @@ const glm::vec4 OrientedBoundingBoxWithVisualization::GetColor() const
 
 void OrientedBoundingBoxWithVisualization::CreateGraphics()
 {
-	if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
-	{
-		ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf");
-	}
-
-	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("OrientedBoundingBox"), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	graphics = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf", false), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	graphics->SetDrawMode(GO3D::Mode::LINE);
 	graphics->SetScale(GetSize());
 	graphics->SetTranslation(GetOffset());

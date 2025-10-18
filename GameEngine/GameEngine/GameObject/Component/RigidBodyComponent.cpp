@@ -19,7 +19,8 @@ RigidBodyComponent::RigidBodyComponent() :
 	model(nullptr),
 	type(Type::DYNAMIC),
 	onEditorEnable(nullptr),
-	onEditorDisable(nullptr)
+	onEditorDisable(nullptr),
+	shapeVisuals(nullptr)
 {
 	RegisterComponentClassType<RigidBodyComponent>(this);
 	RegisterEditorCallbacks();
@@ -47,7 +48,11 @@ RigidBodyComponent::~RigidBodyComponent()
 	delete onEditorEnable;
 	delete onEditorDisable;
 	delete body;
-	GraphicsObjectManager::Delete(shapeVisuals);
+
+	if (shapeVisuals != nullptr)
+	{
+		GraphicsObjectManager::Delete(shapeVisuals);
+	}
 }
 
 void RigidBodyComponent::SyncPhysics()
@@ -59,13 +64,21 @@ void RigidBodyComponent::SyncPhysics()
 
 void RigidBodyComponent::SyncPhysicsPosition()
 {
-	shapeVisuals->SetTransform(owner->GetTransform());
+	if (shapeVisuals != nullptr)
+	{
+		shapeVisuals->SetTransform(owner->GetTransform());
+	}
+
 	owner->SetPosition(body->GetPosition());
 }
 
 void RigidBodyComponent::SyncPhysicsRotation()
 {
-	shapeVisuals->SetTransform(owner->GetTransform());
+	if (shapeVisuals != nullptr)
+	{
+		shapeVisuals->SetTransform(owner->GetTransform());
+	}
+
 	owner->SetRotation(body->GetRotation());
 }
 
@@ -168,9 +181,12 @@ void RigidBodyComponent::CreateShapeFromModel()
 			convexShapeIndices.push_back(i);
 		}
 
-		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("CollisionReference" + std::to_string(x++), convexShapeVerts, convexShapeIndices), {0.0f, 0.5f, 0.5f, 1.0f});
-		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
-		shapeVisuals->SetPointSize(4.0f);
+		ModelManager::LoadModel("CollisionReference" + std::to_string(x++), convexShapeVerts, convexShapeIndices, true, [this](Model* const model)
+			{
+				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
+				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
+				shapeVisuals->SetPointSize(4.0f);
+			});
 	}
 	else if (type == Type::STATIC)
 	{
@@ -219,16 +235,18 @@ void RigidBodyComponent::CreateShapeFromModel()
 			triangleMeshVerts.push_back(Vertex(glmVert, {}, {}));
 		}
 
-		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::LoadModel("CollisionReference" + std::to_string(x++), triangleMeshVerts, triangleMeshIndices), { 0.0f, 0.5f, 0.5f, 1.0f });
-		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
-		shapeVisuals->SetPointSize(4.0f);
-	}
-	
-	if (!Editor::IsEnabled())
-	{
-		GraphicsObjectManager::Disable(shapeVisuals);
-	}
+		ModelManager::LoadModel("CollisionReference" + std::to_string(x++), triangleMeshVerts, triangleMeshIndices, true, [this](Model* const model)
+		{
+				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
+				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
+				shapeVisuals->SetPointSize(4.0f);
 
+				if (!Editor::IsEnabled())
+				{
+					GraphicsObjectManager::Disable(shapeVisuals);
+				}
+		});
+	}
 }
 
 void RigidBodyComponent::Serialize()
@@ -256,12 +274,18 @@ void RigidBodyComponent::RegisterEditorCallbacks()
 {
 	onEditorEnable = new std::function<void()>([this]()
 		{
-			GraphicsObjectManager::Enable(shapeVisuals);
+			if (shapeVisuals != nullptr)
+			{
+				GraphicsObjectManager::Enable(shapeVisuals);
+			}
 		});
 
 	onEditorDisable = new std::function<void()>([this]()
 		{
-			GraphicsObjectManager::Disable(shapeVisuals);
+			if (shapeVisuals != nullptr)
+			{
+				GraphicsObjectManager::Disable(shapeVisuals);
+			}
 		});
 
 	Editor::RegisterOnEditorEnable(onEditorEnable);
