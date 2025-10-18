@@ -58,7 +58,7 @@ void SurvivalTree::GameUpdate()
 
 void SurvivalTree::EditorUpdate()
 {
-	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 	if (scene != nullptr)
 	{
 		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
@@ -106,7 +106,7 @@ void SurvivalTree::Start()
 {
 	(*onEditorDisable)();
 
-	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 	if (scene != nullptr)
 	{
 		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));

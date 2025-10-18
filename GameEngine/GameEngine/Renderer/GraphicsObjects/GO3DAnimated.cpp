@@ -86,12 +86,8 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 
 GO3DAnimated::~GO3DAnimated()
 {
-
-	if (Editor::IsEnabled())
-	{
-		Editor::DeregisterOnEditorDisable(onEditorDisable);
-		Editor::DeregisterOnEditorEnable(onEditorEnable);
-	}
+	Editor::DeregisterOnEditorDisable(onEditorDisable);
+	Editor::DeregisterOnEditorEnable(onEditorEnable);
 
 	delete animation;
 	delete onEditorEnable;

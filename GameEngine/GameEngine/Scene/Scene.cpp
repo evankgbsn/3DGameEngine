@@ -46,7 +46,9 @@ namespace rapidxml {
 
 
 Scene::Scene() :
-	started(false)
+	started(false),
+	initialized(false),
+	loaded(false)
 {
 }
 
@@ -97,10 +99,18 @@ void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 
 		object->owningScene = this;
 
-		if (started)
+		if (loaded)
 		{
 			object->Load();
+		}
+
+		if (initialized)
+		{
 			object->Initialize();
+		}
+
+		if (started)
+		{
 			object->Start();
 		}
 	}
@@ -112,9 +122,20 @@ void Scene::DeregisterGameObject(const std::string& name)
 	{
 		const auto& object = objects.find(name);
 
-		object->second->End();
-		object->second->Terminate();
-		object->second->Unload();
+		if (started)
+		{
+			object->second->End();
+		}
+
+		if (initialized)
+		{
+			object->second->Terminate();
+		}
+
+		if (loaded)
+		{
+			object->second->Unload();
+		}
 
 		object->second->owningScene = nullptr;
 		objects.erase(object);
@@ -123,6 +144,15 @@ void Scene::DeregisterGameObject(const std::string& name)
 
 void Scene::Initialize()
 {
+	for (auto& gameObject : objects)
+	{
+		if (gameObject.second != nullptr)
+		{
+			gameObject.second->Initialize();
+		}
+	}
+
+	initialized = true;
 }
 
 void Scene::Terminate()
@@ -131,27 +161,25 @@ void Scene::Terminate()
 	{
 		if (gameObject.second != nullptr)
 		{
-			delete gameObject.second;
+			gameObject.second->Terminate();
 		}
 	}
 
-	objects.clear();
+	initialized = false;
 }
 
 void Scene::Load()
 {
-	Initialize();
-	InitializeObjects();
-	if (!Editor::IsEnabled())
-	{
-		Start();
-	}
+	LoadObjects();
+
+	loaded = true;
 }
 
 void Scene::Unload()
 {
-	TerminateObjects();
-	Terminate();
+	UnloadObjects();
+
+	loaded = false;
 }
 
 void Scene::Deserialize(const std::string& path)
@@ -710,6 +738,21 @@ const std::string& Scene::GetName() const
 	return name;
 }
 
+bool Scene::Loaded() const
+{
+	return loaded;
+}
+
+bool Scene::Started() const
+{
+	return started;
+}
+
+bool Scene::Initialized() const
+{
+	return initialized;
+}
+
 void Scene::Save(const std::string& saveFileName)
 {
 	std::vector<std::string> temp;
@@ -1063,7 +1106,6 @@ void Scene::InitializeObjects()
 {
 	for (auto& object : objects)
 	{
-		object.second->Load();
 		object.second->Initialize();
 	}
 }
@@ -1073,6 +1115,21 @@ void Scene::TerminateObjects()
 	for (auto& object : objects)
 	{
 		object.second->Terminate();
+	}
+}
+
+void Scene::LoadObjects()
+{
+	for (auto& object : objects)
+	{
+		object.second->Load();
+	}
+}
+
+void Scene::UnloadObjects()
+{
+	for (auto& object : objects)
+	{
 		object.second->Unload();
 	}
 }

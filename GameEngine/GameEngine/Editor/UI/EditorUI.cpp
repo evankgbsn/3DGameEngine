@@ -60,8 +60,8 @@ void EditorUI::CreatePlayButton()
 
 void EditorUI::CreateLoadSceneInputFields()
 {
-	TextureManager::LoadTexture("Assets/Texture/UIBackground0.png", "LoadSceneInputFieldBackground");
-	TextureManager::LoadTexture("Assets/Texture/UIBackground0.png", "LoadSceneInputFieldBackgroundHover");
+	TextureManager::LoadTexture("Assets/Texture/Black.png", "LoadSceneInputFieldBackground");
+	TextureManager::LoadTexture("Assets/Texture/Black.png", "LoadSceneInputFieldBackgroundHover");
 	TextureManager::LoadTexture("Assets/Texture/Green.png", "LoadSceneInputFieldBackgroundPress");
 
 	Window* window = WindowManager::GetWindow("Engine");
@@ -100,11 +100,15 @@ void EditorUI::CreateLoadSceneInputFields()
 		{
 			std::string sceneName = unloadSceneInputField->GetText();
 
-			Scene* scene = SceneManager::GetLoadedScene(sceneName);
+			Scene* scene = SceneManager::GetRegisteredScene(sceneName);
 
 			if (scene != nullptr)
 			{
-				SceneManager::UnloadScene(sceneName);
+				if (scene->Loaded())
+				{
+					SceneManager::TerminateScene(sceneName);
+					SceneManager::UnloadScene(sceneName);
+				}
 			}
 		});
 
@@ -121,11 +125,14 @@ void EditorUI::CreateLoadSceneInputFields()
 			std::string fileName = saveSceneInputFieldFile->GetText();
 			std::string sceneName = saveSceneInputFieldName->GetText();
 
-			Scene* scene = SceneManager::GetLoadedScene(sceneName);
+			Scene* scene = SceneManager::GetRegisteredScene(sceneName);
 
 			if (scene != nullptr)
 			{
-				scene->Save(fileName);
+				if (scene->Initialized())
+				{
+					scene->Save(fileName);
+				}
 			}
 
 		});

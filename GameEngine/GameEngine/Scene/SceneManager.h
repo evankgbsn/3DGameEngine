@@ -23,19 +23,35 @@ public:
 
 	static void LoadScene(const std::string& sceneName);
 
+	static void InitializeScene(const std::string& sceneName);
+
+	static void TerminateScene(const std::string& sceneName);
+
+	static void StartScene(const std::string& sceneName);
+
+	static void EndScene(const std::string& sceneName);
+
 	static void UnloadScene(const std::string& sceneName);
 
 	static bool SceneLoaded(const std::string& sceneName);
 
-	static Scene* const GetLoadedScene(const std::string& name);
+	static bool SceneInitialized(const std::string& sceneName);
 
-	static std::vector<Scene*> GetLoadedScenes();
+	static bool SceneStarted(const std::string& sceneName);
 
-	static std::vector<std::string> GetLoadedSceneNames();
+	static std::vector<Scene*> GetRegisteredScenes();
 
-	static void StartLoadedScenes();
+	static std::vector<std::string> GetRegisteredSceneNames();
 
-	static void EndLoadedScenes();
+	static void StartInitializedScenes();
+
+	static void EndStartedScenes();
+
+	static void InitializeLoadedScenes();
+
+	static void TerminateEndedScenes();
+
+	static void UnloadTerminatedScenes();
 
 	static GameObject* FindGameObject(const std::string& name);
 
@@ -68,8 +84,6 @@ private:
 	static SceneManager* instance;
 
 	std::unordered_map<std::string, Scene*> registeredScenes;
-
-	std::unordered_map<std::string, Scene*> loadedScenes;
 
 	std::list<std::string> scenesToUnload;
 };

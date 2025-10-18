@@ -42,23 +42,33 @@ void SurvivalLoginUI::Terminate()
 	if (passwordOnEnter != nullptr)
 	{
 		delete passwordOnEnter;
+		passwordOnEnter = nullptr;
 	}
 
 	if (username != nullptr)
 	{
 		delete username;
+		username = nullptr;
 	}
 
 	if (password != nullptr)
 	{
 		delete password;
+		password = nullptr;
 	}
 }
 
 void SurvivalLoginUI::GameUpdate()
 {
-	username->Update();
-	password->Update();
+	if (username != nullptr)
+	{
+		username->Update();
+	}
+
+	if (password != nullptr)
+	{
+		password->Update();
+	}
 }
 
 void SurvivalLoginUI::EditorUpdate()
@@ -106,6 +116,8 @@ void SurvivalLoginUI::Start()
 	if (!SceneManager::SceneLoaded("SurvivalNetworkManager"))
 	{
 		SceneManager::LoadScene("SurvivalNetworkManager");
+		SceneManager::InitializeScene("SurvivalNetworkManager");
+		SceneManager::StartScene("SurvivalNetworkManager");
 	}
 
 	if (!NetworkManager::IsServer())
@@ -117,6 +129,8 @@ void SurvivalLoginUI::Start()
 		if (!SceneManager::SceneLoaded("SurvivalScene"))
 		{
 			SceneManager::LoadScene("SurvivalScene");
+			SceneManager::InitializeScene("SurvivalScene");
+			SceneManager::StartScene("SurvivalScene");
 		}
 	}
 }

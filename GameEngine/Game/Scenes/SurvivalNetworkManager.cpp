@@ -37,16 +37,22 @@ void SurvivalNetworkManager::Initialize()
 				if (!SceneManager::SceneLoaded("SurvivalScene"))
 				{
 					SceneManager::LoadScene("SurvivalScene");
+					SceneManager::InitializeScene("SurvivalScene");
+					SceneManager::StartScene("SurvivalScene");
 				}
 			}
 		});
 
 	NetworkManager::RegisterReceiveDataFunction("SurvivalNetworkManagerClientLogin", receiveLoginServerResponse);
 	
+
+	Scene::Initialize();
 }
 
 void SurvivalNetworkManager::Terminate()
 {
+	Scene::Terminate();
+
 	NetworkManager::DeregisterReceiveDataFunction("SurvivalNetworkManagerServerLogin");
 	delete receiveLoginInfo;
 

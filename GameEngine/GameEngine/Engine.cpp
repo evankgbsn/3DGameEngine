@@ -58,11 +58,11 @@ void Engine::Run()
 				{
 					if (instance->editorState)
 					{
-						SceneManager::StartLoadedScenes();
+						SceneManager::StartInitializedScenes();
 					}
 					else
 					{
-						SceneManager::EndLoadedScenes();
+						SceneManager::EndStartedScenes();
 					}
 				}
 

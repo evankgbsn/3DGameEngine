@@ -15,8 +15,11 @@ SurvivalLogin::~SurvivalLogin()
 void SurvivalLogin::Initialize()
 {
 	RegisterGameObject(survivalLoginUI, "SurvivalLoginUI");
+
+	Scene::Initialize();
 }
 
 void SurvivalLogin::Terminate()
 {
+	Scene::Terminate();
 }

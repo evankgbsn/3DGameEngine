@@ -19,9 +19,9 @@ public:
 
 	const std::unordered_map<std::string, GameObject*>& GetGameObjects() const;
 
-	void Start();
+	virtual void Start();
 
-	void End();
+	virtual void End();
 
 	void RegisterGameObject(GameObject* object, const std::string& name);
 
@@ -33,15 +33,21 @@ public:
 
 	const std::string& GetName() const;
 
+	bool Loaded() const;
+
+	bool Started() const;
+
+	bool Initialized() const;
+
 protected:
 
 	virtual void Initialize();
 
 	virtual void Terminate();
 
-	void Load();
+	virtual void Load();
 
-	void Unload();
+	virtual void Unload();
 
 private:
 
@@ -63,9 +69,17 @@ private:
 
 	void TerminateObjects();
 
+	void LoadObjects();
+
+	void UnloadObjects();
+
 	std::unordered_map<std::string, GameObject*> objects;
 
 	bool started;
+
+	bool initialized;
+
+	bool loaded;
 
 	std::string name;
 

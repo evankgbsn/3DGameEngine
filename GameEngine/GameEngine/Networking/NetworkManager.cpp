@@ -1003,10 +1003,15 @@ void NetworkManager::SetupSyncCallbacks()
 
 			for (const std::string& sceneName : sceneNames)
 			{
-				Scene* scene = SceneManager::GetLoadedScene(sceneName);
+				Scene* scene = SceneManager::GetRegisteredScene(sceneName);
 
 				if (scene != nullptr)
 				{
+					if (!scene->Initialized())
+					{
+						continue;
+					}
+
 					const auto& gameObjects = scene->GetGameObjects();
 
 					for (const auto& gameObject : gameObjects)
@@ -1083,7 +1088,12 @@ void NetworkManager::SetupSyncCallbacks()
 
 				i++;
 
-				Scene* scene = SceneManager::GetLoadedScene(owningScene);
+				Scene* scene = SceneManager::GetRegisteredScene(owningScene);
+
+				if (!scene->Initialized())
+				{
+					continue;
+				}
 
 				if (scene != nullptr && spawnedNetworkObjects.find(std::stoull(networkObjectID)) == spawnedNetworkObjects.end())
 				{
@@ -1610,13 +1620,15 @@ void NetworkManager::Despawn(unsigned long long networkObjectID)
 
 void NetworkManager::SyncClientWithServer()
 {
-	const std::vector<std::string> loadedScenes = SceneManager::GetLoadedSceneNames();
+	const std::vector<std::string> loadedScenes = SceneManager::GetRegisteredSceneNames();
 
 	std::string dataToSend;
 
 	unsigned int i = 0;
 	for (i; i < loadedScenes.size(); i++)
 	{
+		if(SceneManager::SceneInitialized(loadedScenes[i]))
+
 		if (i != 0)
 		{
 			dataToSend.append(" ");

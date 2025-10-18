@@ -461,10 +461,15 @@ void Editor::SetupEditorInput()
 				if (instance->ctrPressed)
 				{
 					// Save all loaded scenes
-					const std::vector<Scene*>& scenes = SceneManager::GetLoadedScenes();
+					const std::vector<Scene*>& scenes = SceneManager::GetRegisteredScenes();
 
 					for (Scene* scene : scenes)
 					{
+						if (!scene->Initialized())
+						{
+							continue;
+						}
+
 						std::string name = typeid(*scene).name();
 						name.replace(0, 6, "");
 						scene->Save(name);

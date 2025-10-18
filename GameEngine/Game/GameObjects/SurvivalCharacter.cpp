@@ -55,7 +55,7 @@ void SurvivalCharacter::OnSpawn()
 {
 	NetworkObject::OnSpawn();
 
-	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 
 	if (scene != nullptr)
 	{
@@ -246,7 +246,7 @@ void SurvivalCharacter::GameUpdate()
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
 
-	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 
 	if (scene != nullptr)
 	{
@@ -395,7 +395,7 @@ void SurvivalCharacter::SetupMovement()
 
 	clickToMove = new std::function<void(int)>([this](int mouseButton)
 		{
-			Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+			Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 
 			if (scene != nullptr)
 			{
@@ -526,7 +526,7 @@ void SurvivalCharacter::MoveToTarget()
 
 	bool shouldRotate = true;
 
-	Scene* scene = SceneManager::GetLoadedScene("SurvivalScene");
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 
 	if (scene != nullptr)
 	{

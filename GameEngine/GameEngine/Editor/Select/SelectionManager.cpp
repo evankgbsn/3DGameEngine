@@ -158,12 +158,17 @@ void SelectionManager::SetupInput()
 	static std::function<void(int)> click = std::function<void(int)>([this](int mouseButton)
 		{
 			
-			std::vector<Scene*> scenes = SceneManager::GetLoadedScenes();
+			std::vector<Scene*> scenes = SceneManager::GetRegisteredScenes();
 
 			float closestSelection = FLT_MAX;
 
 			for (Scene* const scene : scenes)
 			{
+				if (!scene->Initialized())
+				{
+					continue;
+				}
+
 				const std::unordered_map<std::string, GameObject*>& sceneObjects = scene->GetGameObjects();
 
 				for (auto& object : sceneObjects)

@@ -63,8 +63,10 @@ void SceneManager::LoadScene(const std::string& sceneName)
 	{
 		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
 		{
-			instance->loadedScenes.insert(*instance->registeredScenes.find(sceneName));
-			instance->registeredScenes.find(sceneName)->second->Load();
+			if (!instance->registeredScenes.find(sceneName)->second->Loaded())
+			{
+				instance->registeredScenes.find(sceneName)->second->Load();
+			}
 		}
 		else
 		{
@@ -73,11 +75,93 @@ void SceneManager::LoadScene(const std::string& sceneName)
 	}
 }
 
+void SceneManager::InitializeScene(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			if (!instance->registeredScenes.find(sceneName)->second->Initialized() && instance->registeredScenes.find(sceneName)->second->Loaded())
+			{
+				instance->registeredScenes.find(sceneName)->second->Initialize();
+			}
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::InitializeScene()", Logger::Category::Warning);
+		}
+	}
+}
+
+void SceneManager::TerminateScene(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			if (instance->registeredScenes.find(sceneName)->second->Initialized() && instance->registeredScenes.find(sceneName)->second->Loaded() && !instance->registeredScenes.find(sceneName)->second->Started())
+			{
+				instance->registeredScenes.find(sceneName)->second->Terminate();
+			}
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::TerminateScene()", Logger::Category::Warning);
+		}
+	}
+}
+
+void SceneManager::StartScene(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			if (instance->registeredScenes.find(sceneName)->second->Initialized() && instance->registeredScenes.find(sceneName)->second->Loaded() && !instance->registeredScenes.find(sceneName)->second->Started())
+			{
+				instance->registeredScenes.find(sceneName)->second->Start();
+			}
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::StartScene()", Logger::Category::Warning);
+		}
+	}
+}
+
+void SceneManager::EndScene(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			if (instance->registeredScenes.find(sceneName)->second->Initialized() && instance->registeredScenes.find(sceneName)->second->Loaded() && instance->registeredScenes.find(sceneName)->second->Started())
+			{
+				instance->registeredScenes.find(sceneName)->second->End();
+			}
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::EndScene()", Logger::Category::Warning);
+		}
+	}
+}
+
 void SceneManager::UnloadScene(const std::string& sceneName)
 {
 	if (instance != nullptr)
 	{
-		instance->scenesToUnload.push_back(sceneName);
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			if (instance->registeredScenes.find(sceneName)->second->Loaded() && !instance->registeredScenes.find(sceneName)->second->Started())
+			{
+				instance->scenesToUnload.push_back(sceneName);
+			}
+		}
+		else
+		{
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::UnloadScene()", Logger::Category::Warning);
+		}
 	}
 }
 
@@ -85,7 +169,10 @@ bool SceneManager::SceneLoaded(const std::string& sceneName)
 {
 	if (instance != nullptr)
 	{
-		return instance->loadedScenes.find(sceneName) != instance->loadedScenes.end();
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			return instance->registeredScenes.find(sceneName)->second->Loaded();
+		}
 	}
 	else
 	{
@@ -95,19 +182,53 @@ bool SceneManager::SceneLoaded(const std::string& sceneName)
 	return false;
 }
 
-Scene* const SceneManager::GetLoadedScene(const std::string& name)
+bool SceneManager::SceneInitialized(const std::string& sceneName)
 {
 	if (instance != nullptr)
 	{
-		const auto& query = instance->loadedScenes.find(name);
-		if (query != instance->loadedScenes.end())
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			return instance->registeredScenes.find(sceneName)->second->Initialized();
+		}
+	}
+	else
+	{
+		Logger::Log("Calling SceneManager::SceneInitialized() before SceneManager::Initialize()", Logger::Category::Warning);
+	}
+
+	return false;
+}
+
+bool SceneManager::SceneStarted(const std::string& sceneName)
+{
+	if (instance != nullptr)
+	{
+		if (instance->registeredScenes.find(sceneName) != instance->registeredScenes.end())
+		{
+			return instance->registeredScenes.find(sceneName)->second->Started();
+		}
+	}
+	else
+	{
+		Logger::Log("Calling SceneManager::SceneStarted() before SceneManager::Initialize()", Logger::Category::Warning);
+	}
+
+	return false;
+}
+
+Scene* const SceneManager::GetRegisteredScene(const std::string& name)
+{
+	if (instance != nullptr)
+	{
+		const auto& query = instance->registeredScenes.find(name);
+		if (query != instance->registeredScenes.end())
 		{
 			return query->second;
 		}
 	}
 	else
 	{
-		Logger::Log("Calling SceneManager::GetScene() before SceneManager::Initialize()", Logger::Category::Error);
+		Logger::Log("Calling SceneManager::GetRegisteredScene() before SceneManager::Initialize()", Logger::Category::Error);
 
 		return nullptr;
 	}
@@ -117,14 +238,14 @@ Scene* const SceneManager::GetLoadedScene(const std::string& name)
 	return nullptr;
 }
 
-std::vector<Scene*> SceneManager::GetLoadedScenes()
+std::vector<Scene*> SceneManager::GetRegisteredScenes()
 {
 	std::vector<Scene*> scenes;
 
 	if (instance != nullptr)
 	{
-		scenes.reserve(instance->loadedScenes.size());
-		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		scenes.reserve(instance->registeredScenes.size());
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
 		{
 			scenes.push_back(scene.second);
 		}
@@ -133,14 +254,14 @@ std::vector<Scene*> SceneManager::GetLoadedScenes()
 	return scenes;
 }
 
-std::vector<std::string> SceneManager::GetLoadedSceneNames()
+std::vector<std::string> SceneManager::GetRegisteredSceneNames()
 {
 	std::vector<std::string> scenes;
 
 	if (instance != nullptr)
 	{
-		scenes.reserve(instance->loadedScenes.size());
-		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		scenes.reserve(instance->registeredScenes.size());
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
 		{
 			scenes.push_back(scene.first);
 		}
@@ -149,43 +270,103 @@ std::vector<std::string> SceneManager::GetLoadedSceneNames()
 	return scenes;
 }
 
-void SceneManager::StartLoadedScenes()
+void SceneManager::StartInitializedScenes()
 {
 	if (instance != nullptr)
 	{
 		std::list<std::string> keys;
 
-		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
 		{
 			keys.push_back(scene.first);
 		}
 
 		for (const std::string& scene : keys)
 		{
-			const auto& loadedScene = instance->loadedScenes.find(scene);
+			const auto& initializedScene = instance->registeredScenes.find(scene);
 
-			if (loadedScene != instance->loadedScenes.end())
+			if (initializedScene != instance->registeredScenes.end())
 			{
-				loadedScene->second->Start();
+				if (initializedScene->second->Initialized())
+				{
+					initializedScene->second->Start();
+				}
 			}
 		}
 	}
 }
 
-void SceneManager::EndLoadedScenes()
+void SceneManager::EndStartedScenes()
 {
 	if (instance != nullptr)
 	{
-		for (const std::pair<const std::string&, Scene*>& scene : instance->loadedScenes)
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
 		{
-			scene.second->End();
+			if (scene.second->Started())
+			{
+				scene.second->End();
+			}
+		}
+	}
+}
+
+void SceneManager::InitializeLoadedScenes()
+{
+	if (instance != nullptr)
+	{
+		std::list<std::string> keys;
+
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
+		{
+			keys.push_back(scene.first);
+		}
+
+		for (const std::string& scene : keys)
+		{
+			const auto& loadedScene = instance->registeredScenes.find(scene);
+
+			if (loadedScene != instance->registeredScenes.end())
+			{
+				if (loadedScene->second->Loaded())
+				{
+					loadedScene->second->Initialize();
+				}
+			}
+		}
+	}
+}
+
+void SceneManager::TerminateEndedScenes()
+{
+	if (instance != nullptr)
+	{
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
+		{
+			if (!scene.second->Started() && scene.second->Initialized())
+			{
+				scene.second->Terminate();
+			}
+		}
+	}
+}
+
+void SceneManager::UnloadTerminatedScenes()
+{
+	if (instance != nullptr)
+	{
+		for (const std::pair<const std::string&, Scene*>& scene : instance->registeredScenes)
+		{
+			if (!scene.second->Started() && !scene.second->Initialized() && scene.second->Loaded())
+			{
+				scene.second->Unload();
+			}
 		}
 	}
 }
 
 GameObject* SceneManager::FindGameObject(const std::string& name)
 {
-	for (auto& scene : GetLoadedScenes())
+	for (auto& scene : GetRegisteredScenes())
 	{
 		for (auto& object : scene->objects)
 		{
@@ -193,19 +374,6 @@ GameObject* SceneManager::FindGameObject(const std::string& name)
 			{
 				return object.second;
 			}
-		}
-	}
-
-	return nullptr;
-}
-
-Scene* const SceneManager::GetRegisteredScene(const std::string& name)
-{
-	if (instance != nullptr)
-	{
-		if (instance->registeredScenes.find(name) != instance->registeredScenes.end())
-		{
-			return instance->registeredScenes[name];
 		}
 	}
 
@@ -226,9 +394,12 @@ void SceneManager::Update()
 	{
 		instance->UnloadScenes();
 
-		for (auto& scene : instance->loadedScenes)
+		for (auto& scene : instance->registeredScenes)
 		{
-			scene.second->GameUpdate();
+			if (scene.second->Started())
+			{
+				scene.second->GameUpdate();
+			}
 		}
 	}
 }
@@ -239,9 +410,12 @@ void SceneManager::EditorUpdate()
 	{
 		instance->UnloadScenes();
 
-		for (auto& scene : instance->loadedScenes)
+		for (auto& scene : instance->registeredScenes)
 		{
-			scene.second->EditorUpdate();
+			if (scene.second->Initialized())
+			{
+				scene.second->EditorUpdate();
+			}
 		}
 	}
 }
@@ -250,16 +424,22 @@ void SceneManager::UnloadScenes()
 {
 	for (const std::string& sceneName : scenesToUnload)
 	{
-		const auto& sceneToUnload = loadedScenes.find(sceneName);
+		const auto& sceneToUnload = registeredScenes.find(sceneName);
 
-		if (sceneToUnload != loadedScenes.end())
+		if (sceneToUnload != registeredScenes.end())
 		{
-			sceneToUnload->second->Unload();
-			loadedScenes.erase(sceneToUnload);
+			if (sceneToUnload->second->Loaded())
+			{
+				sceneToUnload->second->Unload();
+			}
+			else
+			{
+				Logger::Log("A scene with the name " + sceneName + " has not been loaded. SceneManager::UnloadScene()", Logger::Category::Warning);
+			}
 		}
 		else
 		{
-			Logger::Log("A scene with the name " + sceneName + " has not been loaded. SceneManager::UnloadScene()", Logger::Category::Warning);
+			Logger::Log("A scene with the name " + sceneName + " has not been registered. SceneManager::UnloadScene()", Logger::Category::Warning);
 		}
 	}
 

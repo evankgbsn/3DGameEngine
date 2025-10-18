@@ -42,6 +42,7 @@ int main(int argc, const char** argv)
 	SceneManager::RegisterScene(survivalNetworkManager, "SurvivalNetworkManager");
 
 	SceneManager::LoadScene("SurvivalLoginScene");
+	SceneManager::InitializeScene("SurvivalLoginScene");
 
 	Engine::Run();
 

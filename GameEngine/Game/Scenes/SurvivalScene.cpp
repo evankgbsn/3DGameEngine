@@ -58,7 +58,10 @@ void SurvivalScene::Initialize()
 {
 	if (SceneManager::SceneLoaded("SurvivalLoginScene"))
 	{
+		SceneManager::EndScene("SurvivalLoginScene");
+		SceneManager::TerminateScene("SurvivalLoginScene");
 		SceneManager::UnloadScene("SurvivalLoginScene");
+		
 	}
 
 	if (!NetworkManager::IsServer())
@@ -81,6 +84,8 @@ void SurvivalScene::Initialize()
 	RegisterGameObject(terrain, "Terrain");
 	RegisterGameObject(tree, "Tree");
 	RegisterGameObject(water, "Water");
+
+	Scene::Initialize();
 }
 
 void SurvivalScene::Terminate()
