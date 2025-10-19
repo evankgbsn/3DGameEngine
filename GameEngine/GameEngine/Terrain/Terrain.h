@@ -10,6 +10,8 @@
 #include "glm/vec2.hpp"
 #include <list>
 #include <atomic>
+#include <thread>
+#include <functional>
 
 class GOTerrain;
 class Model;
@@ -125,6 +127,12 @@ private:
 	std::atomic<Model*> terrainModel;
 
 	std::atomic<GOTerrain*> terrainGraphics;
+
+	std::thread createAABBSThread;
+
+	std::atomic<bool> aabbsCreated;
+
+	std::function<void(Model* const)>* modelLoadCallback;
 
 };
 

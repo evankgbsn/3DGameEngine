@@ -10,7 +10,6 @@ SurvivalSun::SurvivalSun() :
 
 SurvivalSun::~SurvivalSun()
 {
-	Terminate();
 }
 
 void SurvivalSun::Initialize()

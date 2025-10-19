@@ -22,29 +22,61 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 	tileWidth(terrainWidth/tileX),
 	isEnabled(true),
 	highlightedCells(std::list<Cell>()),
-	heightMapPath(hmp)
+	heightMapPath(hmp),
+	aabbsCreated(false),
+	modelLoadCallback(nullptr)
 {
+	if (!ModelManager::ModelLoaded(name))
+	{
+		modelLoadCallback = new std::function<void(Model* const)>([this, heightMaterials](Model* const model)
+			{
+				terrainModel.store(model);
+				terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials));
+				terrainGraphics.load()->SetShine(8.0f);
+				createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
+			});
 
-	ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, true, [heightMaterials, this](Model* const model)
-		{
-			terrainModel.store(model);
-			terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials));
-			terrainGraphics.load()->SetShine(8.0f);
-			CreateAABBs();
-		});
+		ModelManager::RegisterCallbackForModelLoaded(name, "TerrainSetup", modelLoadCallback);
+		ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, true);
+	}
+	else
+	{
+		terrainModel.store(ModelManager::GetModel(name));
+		terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials));
+		terrainGraphics.load()->SetShine(8.0f);
+		createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
+	}
 }
 
 Terrain::~Terrain()
 {
-	for (std::vector<AxisAlignedBoundingBox*>& x : aabbs)
+	if (modelLoadCallback != nullptr)
 	{
-		for (AxisAlignedBoundingBox* y : x)
+		ModelManager::DergisterCallbackForModelLoaded(name, "TerrainSetup");
+
+		delete modelLoadCallback;
+	}
+
+	if (aabbsCreated.load())
+	{
+		for (std::vector<AxisAlignedBoundingBox*>& x : aabbs)
 		{
-			delete y;
+			for (AxisAlignedBoundingBox* y : x)
+			{
+				delete y;
+			}
 		}
 	}
 
-	GraphicsObjectManager::Delete(terrainGraphics);
+	if (terrainGraphics != nullptr)
+	{
+		GraphicsObjectManager::Delete(terrainGraphics);
+	}
+
+	if (createAABBSThread.joinable())
+	{
+		createAABBSThread.join();
+	}
 }
 
 bool Terrain::IsEnabled() const
@@ -124,7 +156,7 @@ float Terrain::GetCellHeight(const Cell& cell)
 
 glm::vec3 Terrain::GetTerrainPoint(const glm::vec3& point)
 {
-	if (terrainModel.load() == nullptr)
+	if (terrainModel.load() == nullptr || !aabbsCreated.load())
 	{
 		return glm::vec3();
 	}
@@ -138,11 +170,6 @@ glm::vec3 Terrain::GetTerrainPoint(const glm::vec3& point)
 	int topRightIdx = topLeftIdx + 1;
 	int bottomLeftIdx = ((cell.y + 1) * tileX) + cell.x;
 	int bottomRightIdx = bottomLeftIdx + 1;
-
-	//glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
-	//glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
-	//glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
-	//glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
 
 	glm::vec3 a = terrainModel.load()->GetVertices()[bottomLeftIdx].GetPosition();
 	glm::vec3 b = terrainModel.load()->GetVertices()[bottomRightIdx].GetPosition();
@@ -169,22 +196,12 @@ glm::vec3 Terrain::GetTerrainPoint(const glm::vec3& point)
 
 glm::vec3 Terrain::GetTerrainNormal(const glm::vec3& point)
 {
-	if (terrainModel.load() == nullptr)
+	if (terrainModel.load() == nullptr || !aabbsCreated.load())
 	{
 		return glm::vec3();
 	}
 
 	Cell cell = TestPoint(point);
-
-	// 4 points of the cell.
-	//glm::vec3 a = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetPosition();
-	//glm::vec3 na = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 1].GetNormal();
-	//glm::vec3 b = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetPosition();
-	//glm::vec3 nb = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 2].GetNormal();
-	//glm::vec3 c = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetPosition();
-	//glm::vec3 nc = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 0].GetNormal();
-	//glm::vec3 d = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetPosition();
-	//glm::vec3 nd = terrainModel->GetVertices()[cell.x * tileY * 6 + cell.y * 6 + 5].GetNormal();
 
 	// Get the indices of the four corners of the quad
 	int topLeftIdx = (cell.y * tileX) + cell.x;
@@ -304,7 +321,7 @@ GOTerrain* Terrain::GetGraphics() const
 
 glm::vec3 Terrain::RayIntersect(const Ray& ray) const
 {
-	if (terrainModel.load() == nullptr)
+	if (terrainModel.load() == nullptr || !aabbsCreated.load())
 	{
 		return glm::vec3();
 	}
@@ -463,4 +480,6 @@ void Terrain::CreateAABBs()
 			aabbs[z].push_back(new AxisAlignedBoundingBox(glm::vec3(xPos, minY, zPos) , glm::vec3(xPos1, maxY, zPos1)));
 		}
 	}
+
+	aabbsCreated.store(true);
 }

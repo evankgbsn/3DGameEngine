@@ -17,11 +17,7 @@ AxisAlignedBoundingBoxWithVisualization::AxisAlignedBoundingBoxWithVisualization
 	{
 		if (!ModelManager::ModelLoaded("OrientedBoundingBox"))
 		{
-			ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf", true, [this](Model* const model)
-				{
-					graphics = GraphicsObjectManager::CreateGO3DColoredInstanced(ModelManager::GetModel("OrientedBoundingBox"), { 0.0f, 0.0f, 1.0f, 1.0f }, 1);
-					CreateGraphics();
-				});
+			ModelManager::LoadModel("OrientedBoundingBox", "Assets/Model/Cube.gltf", false);
 		}
 		else
 		{

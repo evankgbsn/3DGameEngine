@@ -184,7 +184,16 @@ void Scene::Unload()
 
 void Scene::Deserialize(const std::string& path)
 {
-	Terminate();
+	if (Started())
+	{
+		End();
+	}
+
+	if (Initialized())
+	{
+		Terminate();
+	}
+
 	Initialize();
 
 	// Open and parse the xml document.

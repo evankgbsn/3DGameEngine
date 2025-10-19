@@ -14,7 +14,7 @@ SurvivalTerrain::SurvivalTerrain() :
 
 SurvivalTerrain::~SurvivalTerrain()
 {
-	Terminate();
+	
 }
 
 void SurvivalTerrain::Initialize()
@@ -44,6 +44,7 @@ void SurvivalTerrain::Terminate()
 
 	if (terrain != nullptr)
 	{
+		RemoveComponent("SurvivalTerrain");
 		delete terrain;
 	}
 }
@@ -105,11 +106,13 @@ void SurvivalTerrain::CleanupEditorCallbacks()
 	{
 		Editor::DeregisterOnEditorEnable(onEditorEnable);
 		delete onEditorEnable;
+		onEditorEnable = nullptr;
 	}
 
 	if (onEditorDisable != nullptr)
 	{
 		Editor::DeregisterOnEditorDisable(onEditorDisable);
 		delete onEditorDisable;
+		onEditorDisable = nullptr;
 	}
 }

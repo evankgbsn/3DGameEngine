@@ -6,6 +6,7 @@
 #include "../Time/TimeManager.h"
 #include "../Renderer/Window/WindowManager.h"
 #include "../Renderer/Model/ModelManager.h"
+#include "../Renderer/Model/Model.h"
 #include "../Renderer/GraphicsObjects/GOColored.h"
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "Select/SelectionManager.h"
@@ -510,17 +511,25 @@ void Editor::SetupEditorInput()
 
 void Editor::InitializeGrid()
 {
-	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, true, [this](Model* const model)
+	gridModelLoadCallback = new std::function<void(Model* const)>([this](Model* const model)
 		{
 			grid = GraphicsObjectManager::CreateGO3DColored(model, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	
+
 			grid->SetDrawMode(GO3D::Mode::LINE);
 			grid->SetLineWidth(1.0f);
 		});
+
+	ModelManager::RegisterCallbackForModelLoaded("EditorGrid", "InitializeEditorGrid", gridModelLoadCallback);
+
+	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, true);
 }
 
 void Editor::TerminateGrid()
 {
+	ModelManager::DergisterCallbackForModelLoaded("EditorGrid", "InitializeEditorGrid");
+
+	delete gridModelLoadCallback;
+
 	if (grid != nullptr)
 	{
 		GraphicsObjectManager::Delete(grid);

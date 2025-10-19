@@ -100,6 +100,14 @@ private:
 
 	std::function<void()>* onEditorDisable;
 
+	std::function<void(Model* const)>* modelLoadCallbackDynamic;
+
+	std::function<void(Model* const)>* modelLoadCallbackStatic;
+
+	std::string modelNameDynamic;
+
+	std::string modelNameStatic;
+
 	
 };
 

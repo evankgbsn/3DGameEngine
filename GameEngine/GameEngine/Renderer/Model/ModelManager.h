@@ -19,9 +19,9 @@ public:
 
 	static void Terminate();
 
-	static Model* const LoadModel(const std::string& name, const std::string& path, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
+	static Model* const LoadModel(const std::string& name, const std::string& path, bool async);
 
-	static Model* const LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
+	static Model* const LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, bool async);
 
 	static void UnloadModel(const std::string& name);
 
@@ -29,9 +29,13 @@ public:
 
 	static bool ModelLoaded(const std::string& name);
 
-	static Model* const LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async, std::function<void(Model* const)> callback = [](Model* const) {});
+	static Model* const LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async);
 
 	static void Update();
+
+	static void RegisterCallbackForModelLoaded(const std::string& modelName, const std::string& callbackName, std::function<void(Model* const)>* callback);
+
+	static void DergisterCallbackForModelLoaded(const std::string& modelName, const std::string& callbackName);
 
 private:
 
@@ -47,13 +51,15 @@ private:
 
 	ModelManager& operator=(ModelManager&&) = delete;
 
-	Model* const InternalLoadModelFromPath(const std::string& name, const std::string& path, std::function<void(Model* const)> callback = [](Model* const) {});
+	Model* const InternalLoadModelFromPath(const std::string& name, const std::string& path);
 
-	Model* const InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, std::function<void(Model* const)> callback = [](Model* const) {});
+	Model* const InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
-	Model* const InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, std::function<void(Model* const)> callback = [](Model* const) {});
+	Model* const InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
 
 	void LoadDefaultModels();
+
+	void ProcessLoadedModels();
 
 	static ModelManager* instance;
 
@@ -67,7 +73,11 @@ private:
 
 	std::mutex modelLoadCallbacksMutex;
 
-	std::list<std::function<void()>> modelLoadCallbacks;
+	std::unordered_map<std::string, std::unordered_map<std::string, std::function<void(Model* const)>*>> modelLoadCallbacks;
+
+	std::mutex internalModelsLoadedMutex;
+
+	std::list<std::string> internalModelsLoaded;
 
 };
 

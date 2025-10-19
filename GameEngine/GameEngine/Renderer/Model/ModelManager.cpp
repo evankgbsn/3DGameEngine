@@ -33,17 +33,50 @@ void ModelManager::Update()
 		return;
 	}
 
-	std::lock_guard<std::mutex> guard(instance->modelLoadCallbacksMutex);
-
-	for (const auto& callback : instance->modelLoadCallbacks)
-	{
-		callback();
-	}
-
-	instance->modelLoadCallbacks.clear();
+	instance->ProcessLoadedModels();
 }
 
-Model* const ModelManager::LoadModel(const std::string& name, const std::string& path, bool async, std::function<void(Model* const)> callback)
+void ModelManager::RegisterCallbackForModelLoaded(const std::string& modelName, const std::string& callbackName, std::function<void(Model* const)>* callback)
+{
+	std::lock_guard<std::mutex> guard(instance->modelLoadCallbacksMutex);
+
+	if (instance == nullptr)
+	{
+		return;
+	}
+
+	const auto& registeredCallback = instance->modelLoadCallbacks[modelName].find(callbackName);
+	if (registeredCallback == instance->modelLoadCallbacks[modelName].end())
+	{
+		instance->modelLoadCallbacks[modelName].insert(std::make_pair(callbackName, callback));
+	}
+	else
+	{
+		Logger::Log("Callback with name " + callbackName + " has already been registered for model " + modelName, Logger::Category::Warning);
+	}
+}
+
+void ModelManager::DergisterCallbackForModelLoaded(const std::string& modelName, const std::string& callbackName)
+{
+	std::lock_guard<std::mutex> guard(instance->modelLoadCallbacksMutex);
+
+	if (instance->modelLoadCallbacks.find(modelName) ==  instance->modelLoadCallbacks.end())
+	{
+		return;
+	}
+
+	const auto& registeredCallback = instance->modelLoadCallbacks[modelName].find(callbackName);
+	if (registeredCallback != instance->modelLoadCallbacks[modelName].end())
+	{
+		instance->modelLoadCallbacks[modelName].erase(registeredCallback);
+	}
+	else
+	{
+		Logger::Log("Callback with name " + callbackName + " has not been registered for model " + modelName, Logger::Category::Warning);
+	}
+}
+
+Model* const ModelManager::LoadModel(const std::string& name, const std::string& path, bool async)
 {
 	if (instance == nullptr)
 	{
@@ -54,7 +87,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::string&
 	{
 		std::lock_guard<std::mutex> guard(instance->loadThreadsMutex);
 
-		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelFromPath, instance, name, path, callback);
+		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelFromPath, instance, name, path);
 
 		instance->loadThreads.push_back(loadThread);
 
@@ -62,13 +95,13 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::string&
 	}
 	else
 	{
-		return instance->InternalLoadModelFromPath(name, path, callback);
+		return instance->InternalLoadModelFromPath(name, path);
 	}
 	
 
 }
 
-Model* const ModelManager::LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, bool async, std::function<void(Model* const)> callback)
+Model* const ModelManager::LoadModel(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, bool async)
 {
 	if (instance == nullptr)
 	{
@@ -79,7 +112,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 	{
 		std::lock_guard<std::mutex> guard(instance->loadThreadsMutex);
 
-		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelFromData, instance, name, vertices, indices, callback);
+		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelFromData, instance, name, vertices, indices);
 
 		instance->loadThreads.push_back(loadThread);
 
@@ -87,7 +120,7 @@ Model* const ModelManager::LoadModel(const std::string& name, const std::vector<
 	}
 	else
 	{
-		return instance->InternalLoadModelFromData(name, vertices, indices, callback);
+		return instance->InternalLoadModelFromData(name, vertices, indices);
 	}
 }
 
@@ -124,7 +157,7 @@ bool ModelManager::ModelLoaded(const std::string& name)
 	return instance->models.find(name) != instance->models.end();
 }
 
-Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async, std::function<void(Model* const)> callback)
+Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async)
 {
 	if (instance == nullptr)
 	{
@@ -135,7 +168,7 @@ Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::
 	{
 		std::lock_guard<std::mutex> guard(instance->loadThreadsMutex);
 
-		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelTerrain, instance, name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, callback);
+		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelTerrain, instance, name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
 
 		instance->loadThreads.push_back(loadThread);
 
@@ -143,48 +176,43 @@ Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::
 	}
 	else
 	{
-		return instance->InternalLoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, callback);
+		return instance->InternalLoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
 	}
 }
 
-Model* const ModelManager::InternalLoadModelFromPath(const std::string& name, const std::string& path, std::function<void(Model* const)> callback)
+Model* const ModelManager::InternalLoadModelFromPath(const std::string& name, const std::string& path)
 {
-	std::lock_guard<std::mutex> guard(modelsMutex);
-
+	modelsMutex.lock();
 	if (models.find(name) != models.end())
 	{
-		std::function<void()> newCallback = [this, callback, name]()
-			{
-				models[name]->CreateVertexArrayBuffer();
-				callback(models[name]);
-			};
-
-		std::lock_guard<std::mutex> callbackGuard(modelLoadCallbacksMutex);
-		modelLoadCallbacks.push_back(newCallback);
+		modelsMutex.unlock();
 
 		return models[name];
 	}
+	else
+	{
+		modelsMutex.unlock();
+	}
 
+	modelsMutex.lock();
 	models[name] = new Model(path, name);
+	modelsMutex.unlock();
 
-	std::function<void()> newCallback = [this, callback, name]()
-		{
-			models[name]->CreateVertexArrayBuffer();
-			callback(models[name]);
-		};
-
-	std::lock_guard<std::mutex> callbackGuard(modelLoadCallbacksMutex);
-	modelLoadCallbacks.push_back(newCallback);
+	internalModelsLoadedMutex.lock();
+	internalModelsLoaded.push_back(name);
+	internalModelsLoadedMutex.unlock();
 
 	return models[name];
 }
 
-Model* const ModelManager::InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, std::function<void(Model* const)> callback)
+Model* const ModelManager::InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 {
-	std::lock_guard<std::mutex> guard(modelsMutex);
+	modelsMutex.lock();
 
 	if (models.find(name) != models.end())
 	{
+
+		modelsMutex.unlock();
 		std::string glyphName;
 
 		for (unsigned int i = 0; i < 5; i++)
@@ -198,59 +226,51 @@ Model* const ModelManager::InternalLoadModelFromData(const std::string& name, co
 			Logger::Log(std::string("Cannot load model with name ") + name + std::string(". This name is already being used."), Logger::Category::Warning);
 		}
 
-		std::function<void()> newCallback = [this, callback, name]()
-			{
-				models[name]->CreateVertexArrayBuffer();
-				callback(models[name]);
-			};
-
-		std::lock_guard<std::mutex> callbackGuard(modelLoadCallbacksMutex);
-		modelLoadCallbacks.push_back(newCallback);
-
-		return models[name];
-	}
-
-	Model* newModel = new Model(vertices, indices, name);
-
-	models[name] = newModel;
-
-	std::function<void()> newCallback = [this, callback, name]()
-		{
-			models[name]->CreateVertexArrayBuffer();
-			callback(models[name]);
-		};
-
-	std::lock_guard<std::mutex> callbackGuard(modelLoadCallbacksMutex);
-	modelLoadCallbacks.push_back(newCallback);
-
-	return newModel;
-}
-
-Model* const ModelManager::InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, std::function<void(Model* const)> callback)
-{
-	Model* newTerrainModel = nullptr;
-
-	std::lock_guard<std::mutex> guard(modelsMutex);
-
-	if (models.find(name) != models.end())
-	{
-		Logger::Log("The name " + name + " is already being used for a model. ModelManager::CreateModelTerrain()", Logger::Category::Warning);
-		callback(models[name]);
 		return models[name];
 	}
 	else
 	{
+		modelsMutex.unlock();
+	}
+
+	Model* newModel = new Model(vertices, indices, name);
+
+	modelsMutex.lock();
+	models[name] = newModel;
+	modelsMutex.unlock();
+
+	internalModelsLoadedMutex.lock();
+	internalModelsLoaded.push_back(name);
+	internalModelsLoadedMutex.unlock();
+
+	return newModel;
+}
+
+Model* const ModelManager::InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
+{
+	Model* newTerrainModel = nullptr;
+
+	modelsMutex.lock();
+
+	if (models.find(name) != models.end())
+	{
+		Logger::Log("The name " + name + " is already being used for a model. ModelManager::CreateModelTerrain()", Logger::Category::Warning);
+
+		modelsMutex.unlock();
+		return models[name];
+	}
+	else
+	{
+		modelsMutex.unlock();
 		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, name);
+
+		modelsMutex.lock();
 		instance->models.insert(std::pair<std::string, Model*>(name, newTerrainModel));
+		modelsMutex.unlock();
 
-		std::function<void()> newCallback = [this, callback, name]()
-			{
-				models[name]->CreateVertexArrayBuffer();
-				callback(models[name]);
-			};
-
-		std::lock_guard<std::mutex> callbackGuard(modelLoadCallbacksMutex);
-		modelLoadCallbacks.push_back(newCallback);
+		internalModelsLoadedMutex.lock();
+		internalModelsLoaded.push_back(name);
+		internalModelsLoadedMutex.unlock();
 
 		return newTerrainModel;
 	}
@@ -283,6 +303,23 @@ ModelManager::ModelManager() :
 
 ModelManager::~ModelManager()
 {
+	for (const auto& modelCallbacks : modelLoadCallbacks)
+	{
+		Model* const model = GetModel(modelCallbacks.first);
+		if (model != nullptr)
+		{
+			for (const auto& callback : modelCallbacks.second)
+			{
+				if (callback.second != nullptr)
+				{
+					delete callback.second;
+				}
+			}
+		}
+	}
+
+	modelLoadCallbacks.clear();
+
 	for (auto& thread : loadThreads)
 	{
 		if (thread->joinable())
@@ -343,4 +380,32 @@ void ModelManager::LoadDefaultModels()
 	instance->modelsMutex.unlock();
 
 	LoadModel("Sphere", "Assets/Model/Sphere.gltf", false);
+}
+
+void ModelManager::ProcessLoadedModels()
+{
+	std::lock_guard<std::mutex> guard(internalModelsLoadedMutex);
+	std::lock_guard<std::mutex> guard2(modelLoadCallbacksMutex);
+
+	for (const std::string& name : internalModelsLoaded)
+	{
+		Model* const loadedModel = GetModel(name);
+
+		loadedModel->CreateVertexArrayBuffer();
+
+		if (modelLoadCallbacks.find(name) != modelLoadCallbacks.end())
+		{
+			const std::unordered_map<std::string, std::function<void(Model* const)>*>& callbacks = modelLoadCallbacks[name];
+
+			for (const auto& callback : callbacks)
+			{
+				(*callback.second)(loadedModel);
+			}
+			
+			modelLoadCallbacks.erase(modelLoadCallbacks.find(name));
+		}
+
+	}
+
+	internalModelsLoaded.clear();
 }

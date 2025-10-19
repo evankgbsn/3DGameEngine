@@ -18,7 +18,10 @@ SurvivalScene::SurvivalScene() :
 	water(new SurvivalWater()),
 	serverFreeCam(nullptr)
 {
-
+	RegisterGameObject(sun, "Sun");
+	RegisterGameObject(terrain, "Terrain");
+	RegisterGameObject(tree, "Tree");
+	RegisterGameObject(water, "Water");
 }
 
 SurvivalScene::~SurvivalScene()
@@ -80,10 +83,6 @@ void SurvivalScene::Initialize()
 	}
 
 	//RegisterGameObject(player, "Player");
-	RegisterGameObject(sun, "Sun");
-	RegisterGameObject(terrain, "Terrain");
-	RegisterGameObject(tree, "Tree");
-	RegisterGameObject(water, "Water");
 
 	Scene::Initialize();
 }

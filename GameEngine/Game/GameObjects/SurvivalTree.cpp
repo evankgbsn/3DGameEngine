@@ -23,14 +23,11 @@ SurvivalTree::SurvivalTree() :
 
 SurvivalTree::~SurvivalTree()
 {
-	Terminate();
+
 }
 
 void SurvivalTree::Initialize()
 {
-
-	while (!ModelManager::ModelLoaded("SurvivalTree"));
-
 	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
 	graphics->SetShine(32.0f);
 	graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
@@ -83,7 +80,7 @@ void SurvivalTree::Load()
 {
 	if (!ModelManager::ModelLoaded("SurvivalTree"))
 	{
-		ModelManager::LoadModel("SurvivalTree", "Assets/Model/Tree.gltf", true);
+		ModelManager::LoadModel("SurvivalTree", "Assets/Model/Tree.gltf", false);
 	}
 
 	if (!TextureManager::TextureLoaded("SurvivalTree"))

@@ -14,7 +14,7 @@ SurvivalWater::SurvivalWater() :
 
 SurvivalWater::~SurvivalWater()
 {
-	Terminate();
+
 }
 
 void SurvivalWater::Initialize()

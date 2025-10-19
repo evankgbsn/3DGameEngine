@@ -93,6 +93,7 @@ void EditorUI::CreateLoadSceneInputFields()
 				if (!SceneManager::SceneLoaded(sceneName))
 				{
 					SceneManager::LoadScene(sceneName);
+					SceneManager::InitializeScene(sceneName);
 				}
 
 				scene->Deserialize("Assets/Scenes/" + sceneFile);

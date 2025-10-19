@@ -6,6 +6,7 @@
 
 class GOColored;
 class EditorUI;
+class Model;
 
 class Editor
 {
@@ -88,6 +89,8 @@ private:
 	bool cameraMovementEnabled;
 
 	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
+
+	std::function<void(Model* const)>* gridModelLoadCallback;
 };
 
 #endif // EDITOR_H

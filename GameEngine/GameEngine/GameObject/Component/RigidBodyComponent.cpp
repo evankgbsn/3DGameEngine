@@ -20,7 +20,9 @@ RigidBodyComponent::RigidBodyComponent() :
 	type(Type::DYNAMIC),
 	onEditorEnable(nullptr),
 	onEditorDisable(nullptr),
-	shapeVisuals(nullptr)
+	shapeVisuals(nullptr),
+	modelLoadCallbackDynamic(nullptr),
+	modelLoadCallbackStatic(nullptr)
 {
 	RegisterComponentClassType<RigidBodyComponent>(this);
 	RegisterEditorCallbacks();
@@ -32,7 +34,9 @@ RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const M
 	model(m),
 	type(t),
 	onEditorEnable(nullptr),
-	onEditorDisable(nullptr)
+	onEditorDisable(nullptr),
+	modelLoadCallbackDynamic(nullptr),
+	modelLoadCallbackStatic(nullptr)
 {
 	RegisterComponentClassType<RigidBodyComponent>(this);
 	CreateShapeFromModel();
@@ -42,6 +46,19 @@ RigidBodyComponent::RigidBodyComponent(Type t, GameObject* owningObject, const M
 
 RigidBodyComponent::~RigidBodyComponent()
 {
+	if (modelLoadCallbackDynamic != nullptr)
+	{
+		ModelManager::DergisterCallbackForModelLoaded(modelNameDynamic, "RigidBodyDynamicGraphics");
+		delete modelLoadCallbackDynamic;
+	}
+
+	if (modelLoadCallbackStatic != nullptr)
+	{
+		ModelManager::DergisterCallbackForModelLoaded(modelNameStatic, "RigidBodyStaticGraphics");
+		delete modelLoadCallbackStatic;
+	}
+	
+
 	Editor::DeregisterOnEditorEnable(onEditorEnable);
 	Editor::DeregisterOnEditorDisable(onEditorDisable);
 
@@ -181,12 +198,18 @@ void RigidBodyComponent::CreateShapeFromModel()
 			convexShapeIndices.push_back(i);
 		}
 
-		ModelManager::LoadModel("CollisionReference" + std::to_string(x++), convexShapeVerts, convexShapeIndices, true, [this](Model* const model)
+		modelLoadCallbackDynamic = new std::function<void(Model* const)>([this](Model* const model)
 			{
 				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
 				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
 				shapeVisuals->SetPointSize(4.0f);
 			});
+
+		modelNameDynamic = "CollisionReference" + std::to_string(x++);
+
+		ModelManager::RegisterCallbackForModelLoaded(modelNameDynamic, "RigidBodyDynamic", modelLoadCallbackDynamic);
+
+		ModelManager::LoadModel(modelNameDynamic, convexShapeVerts, convexShapeIndices, true);
 	}
 	else if (type == Type::STATIC)
 	{
@@ -235,8 +258,8 @@ void RigidBodyComponent::CreateShapeFromModel()
 			triangleMeshVerts.push_back(Vertex(glmVert, {}, {}));
 		}
 
-		ModelManager::LoadModel("CollisionReference" + std::to_string(x++), triangleMeshVerts, triangleMeshIndices, true, [this](Model* const model)
-		{
+		modelLoadCallbackStatic = new std::function<void(Model* const)>([this](Model* const model)
+			{
 				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
 				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
 				shapeVisuals->SetPointSize(4.0f);
@@ -245,7 +268,13 @@ void RigidBodyComponent::CreateShapeFromModel()
 				{
 					GraphicsObjectManager::Disable(shapeVisuals);
 				}
-		});
+			});
+
+		modelNameStatic = "CollisionReference" + std::to_string(x++);
+
+		ModelManager::RegisterCallbackForModelLoaded(modelNameStatic, "RigidBodyDynamic", modelLoadCallbackDynamic);
+
+		ModelManager::LoadModel(modelNameStatic, triangleMeshVerts, triangleMeshIndices, true);
 	}
 }
 
