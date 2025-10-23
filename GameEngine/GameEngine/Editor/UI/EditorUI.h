@@ -53,8 +53,15 @@ private:
 
 	void CleanupInterfaceToggleCallbacks();
 
+	void CreateObjectManagementInterface();
+
+	void CleanupObjectManagementInterface();
+
+	void UpdateObjectManagementInterface();
+
 	Button* playButton;
 
+	// Scene Management Interface START
 	TextField* sceneManagementWindowTitle;
 
 	TextField* sceneName;
@@ -90,6 +97,25 @@ private:
 	std::function<void()>* unloadSceneInputFieldOnEnter;
 
 	std::function<void()>* saveSceneInputFieldOnEnter;
+	// Scene Management Interface END.
+
+	// Object Management Interface START.
+	Sprite* objectManagementBackground;
+
+	TextField* objectManagementTitle;
+
+	TextField* objectManagementCreateTitle;
+
+	TextField* objectManagementCreateObjectName;
+
+	InputField* objectManagementCreateObjectNameInput;
+
+	TextField* objectManagementCreateObjectParentSceneName;
+
+	InputField* objectManagementCreateObjectParentSceneNameInput;
+
+	std::function<void()>* objectManagementCreateObjectOnEnter;
+	// Object Management Interface END.
 
 	std::function<void(int)>* altPress;
 

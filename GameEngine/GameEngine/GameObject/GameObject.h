@@ -45,9 +45,15 @@ public:
 
 	Scene* GetOwningScene() const;
 
+	unsigned int GetID() const;
+
+	const std::string& GetNameOfType() const;
+
 protected:
 
 	friend class Scene;
+
+	friend class EditorUI;
 
 	GameObject() = delete;
 
@@ -95,6 +101,8 @@ private:
 	std::unordered_map<std::string, Component*> components;
 
 	Scene* owningScene;
+
+	unsigned int ID;
 
 };
 

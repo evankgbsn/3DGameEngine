@@ -50,7 +50,9 @@ GameObject::GameObject(const std::string& n) :
 	name(n),
 	owningScene(nullptr)
 {
-	
+	static unsigned int IDGenerator = 0U;
+
+	ID = IDGenerator++;
 }
 
 GameObject::~GameObject()
@@ -85,6 +87,16 @@ Component* const GameObject::GetComponent(const std::string& component) const
 Scene* GameObject::GetOwningScene() const
 {
 	return owningScene;
+}
+
+unsigned int GameObject::GetID() const
+{
+	return ID;
+}
+
+const std::string& GameObject::GetNameOfType() const
+{
+	return nameOfType;
 }
 
 std::function<void(GameObject**)> GameObject::GetConstructor(const std::string& name)

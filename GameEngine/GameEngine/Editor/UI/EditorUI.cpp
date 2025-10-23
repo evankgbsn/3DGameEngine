@@ -13,6 +13,11 @@
 #include "../../UI/TextField.h"
 #include "../../Input/InputManager.h"
 #include "../../UI/Sprite.h"
+#include "../GameObject/GameObject.h"
+#include "../../Renderer/Camera/CameraManager.h"
+#include "../../Renderer/Camera/Camera.h"
+#include "../../Math/Shapes/Ray.h"
+#include "../../Math/Shapes/Plane.h"
 
 EditorUI::EditorUI() :
 	disabled(false),
@@ -23,10 +28,12 @@ EditorUI::EditorUI() :
 	CreatePlayButton();
 	CreateSceneManagementInterface();
 	CreateInterfaceToggleCallbacks();
+	CreateObjectManagementInterface();
 }
 
 EditorUI::~EditorUI()
 {
+	CleanupObjectManagementInterface();
 	CleanupInterfaceToggleCallbacks();
 	CleanupSceneManagementInterface();
 
@@ -44,6 +51,7 @@ void EditorUI::Update()
 	}
 
 	UpdateSceneManagementInterface();
+	UpdateObjectManagementInterface();
 }
 
 bool EditorUI::IsDisabled() const
@@ -64,6 +72,7 @@ void EditorUI::CreatePlayButton()
 		});
 
 	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { 0.5f, 0.9f }, &buttonFunc);
+	playButton->SetScale(playButton->GetScale() / 2.0f);
 }
 
 void EditorUI::CreateLoadSceneInputFields()
@@ -595,6 +604,148 @@ void EditorUI::CleanupInterfaceToggleCallbacks()
 		sPress = nullptr;
 	}
 
+}
+
+void EditorUI::CreateObjectManagementInterface()
+{
+	// Create the background.
+	Texture* sceneManagementBackgroundTexture = TextureManager::LoadTexture("Assets/Texture/grey.png", "ObjectManagementBackground");
+	objectManagementBackground = new Sprite("ObjectManagementBackground", { 0.8f, 0.5f }, { .3f, .5f });
+	objectManagementBackground->SetZ(0.02f);
+
+	// Create the title
+	objectManagementTitle = new TextField("Object Management", "exo2", { 0.675f, 0.7f }, { 25.0f, 25.0f }, {0.0f, 0.0f, 0.0f, 1.0f});
+	objectManagementTitle->SetZ(0.5f);
+
+	// Create the create object section
+	objectManagementCreateTitle = new TextField("Create:", "exo2", { 0.69f, 0.65f }, { 15.0f, 15.0f }, glm::vec4(1.0f));
+	objectManagementCreateTitle->SetZ(0.5f);
+
+	// Create the create object name title for input field.
+	objectManagementCreateObjectName = new TextField("Object Class Name:", "exo2", { 0.72f, 0.608f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementCreateObjectName->SetZ(0.5f);
+
+	// Create the create object name input field.
+	TextureManager::LoadTexture("Assets/Texture/Black.png", "CreateObjectInputFieldBackground");
+	TextureManager::LoadTexture("Assets/Texture/Black.png", "CreateObjectInputFieldBackgroundHover");
+	TextureManager::LoadTexture("Assets/Texture/Green.png", "CreateObjectInputFieldBackgroundPress");
+
+	objectManagementCreateObjectOnEnter = new std::function<void()>([this]()
+		{
+			std::string objectClass;
+			std::string parentSceneName;
+			
+			if (objectManagementCreateObjectNameInput != nullptr)
+			{
+				objectClass = objectManagementCreateObjectNameInput->GetText();
+			}
+
+			if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+			{
+				parentSceneName = objectManagementCreateObjectParentSceneNameInput->GetText();
+			}
+
+			GameObject* newObject = nullptr;
+			GameObject::GetConstructor(objectClass)(&newObject);
+
+			if (newObject != nullptr)
+			{
+				Scene* parentScene = SceneManager::GetRegisteredScene(parentSceneName);
+				
+				if (parentScene != nullptr)
+				{
+					parentScene->RegisterGameObject(newObject, newObject->GetNameOfType() + std::to_string(newObject->GetID()));
+
+					Camera& cam = CameraManager::GetActiveCamera();
+					
+					Ray ray(cam.GetPosition(), cam.GetForwardVector());
+
+					Plane plane(glm::vec3(0.0f, 1.0f, 0.0f), Editor::GetGridY());
+
+					glm::vec3 planePoint = cam.GetPosition() + cam.GetForwardVector() * plane.RayIntersect(ray);
+
+					newObject->SetPosition(planePoint);
+				}
+			}
+		});
+
+	objectManagementCreateObjectNameInput = new InputField(
+		"CreateObjectInputFieldBackground",
+		"CreateObjectInputFieldBackgroundHover",
+		"CreateObjectInputFieldBackgroundPress",
+		{ 0.15625, 0.037037037037037 },
+		{ 0.8f, 0.575f},
+		objectManagementCreateObjectOnEnter,
+		nullptr,
+		true
+	);
+
+	objectManagementCreateObjectNameInput->SetZ(0.5f);
+
+	// Create the create object parent scene name title.
+	objectManagementCreateObjectParentSceneName = new TextField("Object Parent Scene:", "exo2", { 0.72f, 0.53f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementCreateObjectParentSceneName->SetZ(0.5f);
+
+	// Create the create object parent scene name input field
+	objectManagementCreateObjectParentSceneNameInput = new InputField(
+		"CreateObjectInputFieldBackground",
+		"CreateObjectInputFieldBackgroundHover",
+		"CreateObjectInputFieldBackgroundPress",
+		{ 0.15625, 0.037037037037037 },
+		{ 0.8f, 0.5f },
+		objectManagementCreateObjectOnEnter,
+		nullptr,
+		true
+	);
+	
+	objectManagementCreateObjectParentSceneNameInput->SetZ(0.5f);
+
+}
+
+void EditorUI::CleanupObjectManagementInterface()
+{
+	if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+	{
+		delete objectManagementCreateObjectParentSceneNameInput;
+	}
+
+	if (objectManagementCreateObjectParentSceneName != nullptr)
+	{
+		delete objectManagementCreateObjectParentSceneName;
+	}
+
+	if (objectManagementCreateObjectName != nullptr)
+	{
+		delete objectManagementCreateObjectName;
+	}
+
+	if (objectManagementCreateTitle)
+	{
+		delete objectManagementCreateTitle;
+	}
+	
+	if (objectManagementTitle != nullptr)
+	{
+		delete objectManagementTitle;
+	}
+
+	if (objectManagementCreateObjectName != nullptr)
+	{
+		delete objectManagementBackground;
+	}
+}
+
+void EditorUI::UpdateObjectManagementInterface()
+{
+	if (objectManagementCreateObjectNameInput != nullptr)
+	{
+		objectManagementCreateObjectNameInput->Update();
+	}
+
+	if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+	{
+		objectManagementCreateObjectParentSceneNameInput->Update();
+	}
 }
 
 void EditorUI::Disable()

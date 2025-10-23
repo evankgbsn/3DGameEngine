@@ -250,12 +250,12 @@ void SurvivalCharacter::GameUpdate()
 
 	if (scene != nullptr)
 	{
-		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
-		SurvivalWater* water = static_cast<SurvivalWater*>(scene->GetGameObject("Water"));
+		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+		SurvivalWater* water = dynamic_cast<SurvivalWater*>(scene->GetGameObject("Water"));
 
 		if (terrain != nullptr)
 		{
-			TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+			TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
 
 			if (terrainComponent != nullptr)
 			{
@@ -279,7 +279,7 @@ void SurvivalCharacter::GameUpdate()
 		{
 			if (water != nullptr)
 			{
-				TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+				TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
 
 				if (terrainComponent != nullptr)
 				{
@@ -399,13 +399,13 @@ void SurvivalCharacter::SetupMovement()
 
 			if (scene != nullptr)
 			{
-				SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
-				SurvivalWater* water = static_cast<SurvivalWater*>(scene->GetGameObject("Water"));
+				SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+				SurvivalWater* water = dynamic_cast<SurvivalWater*>(scene->GetGameObject("Water"));
 
 				if (terrain != nullptr && water != nullptr)
 				{
-					TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-					TerrainComponent* waterComponent = static_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+					TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+					TerrainComponent* waterComponent = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
 
 					if (terrainComponent != nullptr && waterComponent != nullptr)
 					{
@@ -530,13 +530,13 @@ void SurvivalCharacter::MoveToTarget()
 
 	if (scene != nullptr)
 	{
-		SurvivalWater* water = static_cast<SurvivalWater*>(scene->GetGameObject("Water"));
-		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+		SurvivalWater* water = dynamic_cast<SurvivalWater*>(scene->GetGameObject("Water"));
+		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
 
 		if (water != nullptr && terrain != nullptr)
 		{
-			TerrainComponent* waterComp = static_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
-			TerrainComponent* terrainComp = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+			TerrainComponent* waterComp = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+			TerrainComponent* terrainComp = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
 
 			if (waterComp != nullptr && terrainComp != nullptr)
 			{
@@ -556,7 +556,7 @@ void SurvivalCharacter::MoveToTarget()
 
 			if (tree != nullptr)
 			{
-				OrientedBoundingBoxComponent* treeCollider = static_cast<OrientedBoundingBoxComponent*>(tree->GetComponent("Collider"));
+				OrientedBoundingBoxComponent* treeCollider = dynamic_cast<OrientedBoundingBoxComponent*>(tree->GetComponent("Collider"));
 				if (characterCollider->Intersect(*treeCollider))
 				{
 					characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);

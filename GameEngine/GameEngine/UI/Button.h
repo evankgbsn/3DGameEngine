@@ -6,7 +6,7 @@
 #include <string>
 #include <functional>
 
-class GOSprite;
+class Sprite;
 class Texture;
 class Model;
 
@@ -23,6 +23,10 @@ public:
 	void Disable();
 
 	void Enable();
+
+	void SetScale(const glm::vec2& newScale);
+
+	glm::vec2 GetScale() const;
 
 private:
 
@@ -46,7 +50,7 @@ private:
 	
 	Texture* pressed;
 
-	GOSprite* sprite;
+	Sprite* sprite;
 
 	Model* model;
 
@@ -54,13 +58,13 @@ private:
 
 	std::function<void()>* hoveredFunction;
 
-	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
-
 	glm::vec2 relativePosition;
 
 	bool enabled;
 
 	unsigned int ID;
+
+	bool stretch;
 };
 
 

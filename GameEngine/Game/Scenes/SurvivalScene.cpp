@@ -91,3 +91,13 @@ void SurvivalScene::Terminate()
 {
 	Scene::Terminate();
 }
+
+void SurvivalScene::Load()
+{
+	Scene::Load();
+}
+
+void SurvivalScene::Unload()
+{
+	Scene::Unload();
+}

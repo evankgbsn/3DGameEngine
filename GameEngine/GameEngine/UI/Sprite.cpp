@@ -8,6 +8,8 @@
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../Renderer/Model/ModelManager.h"
 
+static unsigned int spriteId = 0;
+
 Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale) :
 	stretch(true)
 {
@@ -50,7 +52,49 @@ Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition
 			prevWindowHeight = h;
 		});
 
-	static unsigned int spriteId = 0;
+	window->RegisterCallbackForWindowResize("Sprite" + std::to_string(ID = spriteId++), windowResizeCallback);
+}
+
+Sprite::Sprite(const std::string& modelName, const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale) :
+	stretch(true)
+{
+	Window* window = WindowManager::GetWindow("Engine");
+	float width = static_cast<float>(prevWindowWidth = window->GetWidth());
+	float height = static_cast<float>(prevWindowHeight = window->GetHeight());
+
+	float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, initialPosition.x);
+	float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, initialPosition.y);
+
+	float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, scale.x);
+	float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, scale.y);
+
+	sprite = GraphicsObjectManager::CreateGOSprite(ModelManager::GetModel(modelName), TextureManager::GetTexture(imageTexture), { xPos, yPos });
+
+	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int w, unsigned int h)
+		{
+			float width = static_cast<float>(w);
+			float height = static_cast<float>(h);
+
+			glm::vec2 currentPos = sprite->GetPosition();
+
+			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, currentPos.x / prevWindowWidth);
+			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, currentPos.y / prevWindowHeight);
+
+			sprite->SetPosition({ xPos, yPos });
+
+			glm::vec2 currentScale = sprite->GetScale();
+
+			float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, currentScale.x / prevWindowWidth);
+			float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, currentScale.y / prevWindowHeight);
+
+			if (stretch)
+			{
+				sprite->SetScale(xScale, yScale);
+			}
+
+			prevWindowWidth = w;
+			prevWindowHeight = h;
+		});
 
 	window->RegisterCallbackForWindowResize("Sprite" + std::to_string(ID = spriteId++), windowResizeCallback);
 }

@@ -35,6 +35,10 @@ private:
 
 	SurvivalScene& operator=(SurvivalScene&&) = delete;
 
+	void Load() override;
+
+	void Unload() override;
+
 	SurvivalCharacter* player;
 
 	SurvivalSun* sun;

@@ -58,22 +58,24 @@ void SurvivalTree::GameUpdate()
 
 void SurvivalTree::EditorUpdate()
 {
-	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
-	if (scene != nullptr)
-	{
-		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+	//Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
+	//if (scene != nullptr)
+	//{
+	//	SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+	//
+	//	if (terrain != nullptr)
+	//	{
+	//		TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+	//
+	//		if (terrainComponent != nullptr)
+	//		{
+	//			graphics->SetPosition(terrainComponent->GetTerrainPoint(graphics->GetPosition()));
+	//			collider->UpdateCollider(graphics->GetTransform());
+	//		}
+	//	}
+	//}
 
-		if (terrain != nullptr)
-		{
-			TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-
-			if (terrainComponent != nullptr)
-			{
-				graphics->SetPosition(terrainComponent->GetTerrainPoint(graphics->GetPosition()));
-				collider->UpdateCollider(graphics->GetTransform());
-			}
-		}
-	}
+	collider->UpdateCollider(graphics->GetTransform());
 }
 
 void SurvivalTree::Load()
@@ -109,11 +111,11 @@ void SurvivalTree::Start()
 	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
 	if (scene != nullptr)
 	{
-		SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
+		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
 
 		if (terrain != nullptr)
 		{
-			TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+			TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
 
 			if (terrainComponent != nullptr)
 			{

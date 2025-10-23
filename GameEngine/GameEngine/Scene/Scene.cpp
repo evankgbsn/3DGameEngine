@@ -1085,7 +1085,7 @@ void Scene::Save(const std::string& saveFileName)
 
 	std::string path = "Assets/Scenes/" + saveFileName;
 
-	std::ofstream file((std::ostringstream() << (path)).str() + ".xml", std::ios_base::out);
+	std::ofstream file((std::ostringstream() << (path)).str(), std::ios_base::out);
 	file << document;
 	file.close();
 	doc->clear();

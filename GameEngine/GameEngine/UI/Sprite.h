@@ -14,6 +14,8 @@ public:
 
 	Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale);
 
+	Sprite(const std::string& modelName, const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale);
+
 	~Sprite();
 
 	glm::vec2 GetPosition() const;
