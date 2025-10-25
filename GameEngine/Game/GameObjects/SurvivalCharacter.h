@@ -117,8 +117,6 @@ private:
 	glm::vec3 currentTranslationVector;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
-
-	std::list<glm::vec3> receivedPositions;
 };
 
 #endif // SURVIVALCHARACTER_H

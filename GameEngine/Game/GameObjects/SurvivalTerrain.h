@@ -6,6 +6,7 @@
 #include <functional>
 
 class TerrainComponent;
+class Sprite;
 
 class SurvivalTerrain : public GameObject
 {

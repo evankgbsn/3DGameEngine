@@ -1,6 +1,8 @@
 #ifndef SELECTIONMANAGER_H
 #define SELECTIONMANAGER_H
 
+#include <glm/glm.hpp>
+
 class GameObject;
 class Text;
 
@@ -42,6 +44,8 @@ private:
 	GameObject* selection;
 
 	Text* selectionName;
+
+	glm::vec3 selectionPlanePointDelta;
 
 };
 

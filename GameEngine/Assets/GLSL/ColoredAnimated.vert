@@ -11,6 +11,11 @@ layout(std140, binding = 0) uniform MVP
     mat4 projection;
 } mvp;
 
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
+
 //--------------------------------------------------
 // Animation Data Uniform Buffer Object
 //--------------------------------------------------
@@ -42,5 +47,9 @@ void main(void)
      skin += (anim.pose[inJoints.z] * anim.invBindPose[inJoints.z]) * inWeights.z;
      skin += (anim.pose[inJoints.w] * anim.invBindPose[inJoints.w]) * inWeights.w;
 
-     gl_Position = mvp.projection * mvp.view * mvp.model * skin * vec4(inPosition, 1.0);
+     vec4 worldPosition = mvp.model * skin * vec4(inPosition, 1.0);
+
+     gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+     gl_Position = mvp.projection * mvp.view * worldPosition;
 }

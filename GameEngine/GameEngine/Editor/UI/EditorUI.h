@@ -59,6 +59,10 @@ private:
 
 	void UpdateObjectManagementInterface();
 
+	void EnableObjectManagementInterface();
+
+	void DisableObjectManagementInterface();
+
 	Button* playButton;
 
 	// Scene Management Interface START
@@ -115,6 +119,8 @@ private:
 	InputField* objectManagementCreateObjectParentSceneNameInput;
 
 	std::function<void()>* objectManagementCreateObjectOnEnter;
+
+	TextField* objectManagementSelectedObject;
 	// Object Management Interface END.
 
 	std::function<void(int)>* altPress;
@@ -123,11 +129,15 @@ private:
 
 	std::function<void(int)>* sPress;
 
+	std::function<void(int)>* oPress;
+
 	bool disabled;
 
 	bool altPressed;
 
 	bool sceneManagementInterfaceEnabled;
+
+	bool objectManagementInterfaceEnabled;
 };
 
 #endif //EDITORUI_H

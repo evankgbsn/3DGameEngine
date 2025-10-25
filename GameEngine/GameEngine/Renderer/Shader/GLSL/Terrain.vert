@@ -36,6 +36,8 @@ layout(location = 8) out vec4 outLightSpacePosition;
 
 void main(void)
 {
+    gl_ClipDistance[0] = -1.0;
+
 	gl_Position = mvp.projection * mvp.view * mvp.model * vec4(inPosition, 1.0f);
 
     outUV = inUV;

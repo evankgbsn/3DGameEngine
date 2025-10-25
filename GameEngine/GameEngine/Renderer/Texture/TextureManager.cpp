@@ -2,6 +2,7 @@
 
 #include "../../Utils/Logger.h"
 #include "Texture.h"
+#include "../Shader/ShaderManager.h"
 
 TextureManager* TextureManager::instance = nullptr;
 
@@ -111,6 +112,27 @@ bool TextureManager::TextureLoaded(const std::string& name)
 	}
 }
 
+void TextureManager::CreateTextureFromGLID(const std::string& name, unsigned int textureID)
+{
+	Texture* ret = nullptr;
+	if (instance != nullptr)
+	{
+		if (instance->textures.find(name) == instance->textures.end())
+		{
+			ret = new Texture(name, textureID);
+			instance->textures.insert(std::make_pair(name, ret));
+		}
+		else
+		{
+			Logger::Log(std::string("A texture with the name ") + name + " already exists. TextureManager::CreateTextureFromGLID.", Logger::Category::Warning);
+		}
+	}
+	else
+	{
+		Logger::Log(std::string("Calling TextureManager::CreateTextureFromGLID() before TextureManager::Initialize()."), Logger::Category::Warning);
+	}
+}
+
 TextureManager::TextureManager() :
 	textures(std::unordered_map<std::string, Texture*>())
 {
@@ -131,5 +153,7 @@ TextureManager::~TextureManager()
 
 void TextureManager::LoadDefaultTextures()
 {
+	ShaderManager::CreateWaterTexturesFromIDs();
 	LoadTexture("Assets/Texture/Woman.png", "Woman");
+	LoadTexture("Assets/Texture/DuDvMap.png", "DuDv");
 }

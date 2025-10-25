@@ -3,6 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "../../Utils/Logger.h"
+#include "../Window/WindowManager.h"
 
 #include <stb_image/stb_image.h>
 #include <GL/glew.h>
@@ -44,6 +45,16 @@ void Texture::Bind(unsigned int bindingPoint)
 const std::string& Texture::GetName() const
 {
 	return name;
+}
+
+Texture::Texture(const std::string& n, unsigned int id) :
+	channels(0),
+	width(WindowManager::GetWindow("Engine")->GetWidth()),
+	height(WindowManager::GetWindow("Engine")->GetHeight()),
+	name(n),
+	path(""),
+	textureID(id)
+{
 }
 
 void Texture::LoadTexture()

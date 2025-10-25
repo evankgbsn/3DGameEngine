@@ -4,7 +4,12 @@ layout(binding = 0) uniform UniformBufferObject {
     mat4 model;
     mat4 view;
     mat4 projection;
-} ubo;
+} mvp;
+
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
 
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
@@ -17,7 +22,11 @@ layout(location = 1) out vec2 fragUVCoord;
 
 void main(void) 
 {
-    gl_Position = ubo.projection * ubo.view * ubo.model * vec4(inPosition, 1.0);
+    vec4 worldPosition = ubo.model * vec4(inPosition, 1.0);
+
+    gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+	gl_Position = mvp.projection * mvp.view * worldPosition;
     fragNormal = inNormal;
     fragUVCoord = inUV;
 }

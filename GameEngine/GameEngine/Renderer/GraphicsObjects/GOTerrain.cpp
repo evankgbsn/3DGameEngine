@@ -3,11 +3,14 @@
 #include "../Camera/CameraManager.h"
 #include "../Light/LightManager.h"
 #include "../Light/DirectionalLight.h"
+#include "../Texture/TextureManager.h"
+#include "../Texture/Texture.h"
 #include "../Model/Model.h"
 
-GOTerrain::GOTerrain(Model* const model, const std::vector<Material>& textures) :
+GOTerrain::GOTerrain(Model* const model, const std::vector<Material>& textures, const std::string& blendMap) :
 	GOLit(textures),
-	GO3D(model)
+	GO3D(model),
+	blendMap(TextureManager::GetTexture(blendMap))
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
 	glNamedBufferStorage(lightSpaceMatrixBuffer, sizeof(glm::mat4), nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -25,6 +28,11 @@ void GOTerrain::Update()
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
+	if (blendMap != nullptr)
+	{
+		blendMap->Bind(GL_TEXTURE30);
+	}
+
 	float near_plane = -100.0f, far_plane = 100.0f;
 	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
 
@@ -38,10 +46,6 @@ void GOTerrain::Update()
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
 		glm::vec3(0.0f, 1.0f, 0.0f));
-
-	mvp.view = lightView;
-	mvp.projection = lightProjection;
-	mvp.model = translation * rotation * scale;
 
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 

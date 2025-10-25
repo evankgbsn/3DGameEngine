@@ -4,12 +4,13 @@
 #include "../Renderer/Model/Model.h"
 #include "../Renderer/GraphicsObjects/GraphicsobjectManager.h"
 #include "../Renderer/GraphicsObjects/GOTerrain.h"
+#include "../Renderer/GraphicsObjects/GOWater.h"
 #include "../Renderer/Texture/TextureManager.h"
 #include "../Math/Shapes/AxisAlignedBoundingBox.h"
 #include "../Math/Math.h"
 #include "../Math/Shapes/Triangle.h"
 
-Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo) :
+Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo, unsigned int uvTiling, bool iw) :
 	aabbs(std::vector<std::vector<AxisAlignedBoundingBox*>>()),
 	tileNormals(std::vector<std::vector<glm::vec3>>()),
 	terrainWidth(w),
@@ -24,26 +25,48 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 	highlightedCells(std::list<Cell>()),
 	heightMapPath(hmp),
 	aabbsCreated(false),
-	modelLoadCallback(nullptr)
+	modelLoadCallback(nullptr),
+	isWater(iw),
+	UVTiling(uvTiling),
+	blendMapName(blendMap)
 {
 	if (!ModelManager::ModelLoaded(name))
 	{
-		modelLoadCallback = new std::function<void(Model* const)>([this, heightMaterials](Model* const model)
+		modelLoadCallback = new std::function<void(Model* const)>([this, heightMaterials, blendMap](Model* const model)
 			{
 				terrainModel.store(model);
-				terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials));
-				terrainGraphics.load()->SetShine(8.0f);
+
+				if (isWater)
+				{
+					terrainGraphics.store(GraphicsObjectManager::CreateGOWater(terrainModel));
+				}
+				else
+				{
+					terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
+					static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+				}
+				
 				createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
 			});
 
 		ModelManager::RegisterCallbackForModelLoaded(name, "TerrainSetup", modelLoadCallback);
-		ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, true);
+		ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, true);
 	}
 	else
 	{
 		terrainModel.store(ModelManager::GetModel(name));
-		terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials));
-		terrainGraphics.load()->SetShine(8.0f);
+
+		if (isWater)
+		{
+			terrainGraphics.store(GraphicsObjectManager::CreateGOWater(terrainModel));
+		}
+		else
+		{
+
+			terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
+			static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+		}
+
 		createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
 	}
 }
@@ -68,7 +91,7 @@ Terrain::~Terrain()
 		}
 	}
 
-	if (terrainGraphics != nullptr)
+	if (terrainGraphics.load() != nullptr)
 	{
 		GraphicsObjectManager::Delete(terrainGraphics);
 	}
@@ -274,6 +297,11 @@ const std::string& Terrain::GetName() const
 	return name;
 }
 
+const std::string& Terrain::GetBlendMapName() const
+{
+	return blendMapName;
+}
+
 float Terrain::GetWidth() const
 {
 	return terrainWidth;
@@ -304,17 +332,22 @@ float Terrain::GetYOffset() const
 	return yOffset;
 }
 
+unsigned int Terrain::GetUVTiling() const
+{
+	return UVTiling;
+}
+
 const std::vector<GOLit::Material>& Terrain::GetMaterials() const
 {
-	if (terrainGraphics.load() == nullptr)
+	if (terrainGraphics.load() == nullptr || isWater)
 	{
 		return std::vector<GOLit::Material>();
 	}
 
-	return terrainGraphics.load()->GetMaterials();
+	return static_cast<GOTerrain*>(terrainGraphics.load())->GetMaterials();
 }
 
-GOTerrain* Terrain::GetGraphics() const
+GO3D* Terrain::GetGraphics() const
 {
 	return terrainGraphics;
 }
@@ -440,6 +473,16 @@ glm::vec3 Terrain::RayIntersect(const Ray& ray) const
 	return glm::vec3(0.0f);
 }
 
+bool Terrain::Loaded() const
+{
+	return aabbsCreated.load();
+}
+
+bool Terrain::IsWater() const
+{
+	return isWater;
+}
+
 void Terrain::CreateAABBs()
 {
 	if (terrainModel.load() == nullptr)
@@ -453,9 +496,9 @@ void Terrain::CreateAABBs()
 	aabbs.reserve((tileX - 1) * (tileY - 1));
 
 	// Loop through each tile (quad) on the terrain
-	for (int z = 0; z < tileY - 1; ++z) {
+	for (unsigned int z = 0; z < tileY - 1; ++z) {
 		aabbs.push_back(std::vector<AxisAlignedBoundingBox*>());
-		for (int x = 0; x < tileX - 1; ++x) {
+		for (unsigned int x = 0; x < tileX - 1; ++x) {
 			// Get the indices of the four corners of the quad
 			int topLeftIdx = (z * tileX) + x;
 			int topRightIdx = topLeftIdx + 1;

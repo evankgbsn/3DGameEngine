@@ -29,7 +29,7 @@ public:
 
 	static bool ModelLoaded(const std::string& name);
 
-	static Model* const LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async);
+	static Model* const LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, bool async);
 
 	static void Update();
 
@@ -55,7 +55,7 @@ private:
 
 	Model* const InternalLoadModelFromData(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
-	Model* const InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	Model* const InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling);
 
 	void LoadDefaultModels();
 

@@ -131,7 +131,7 @@ void SurvivalServerFreeCamera::InputDeregistration()
 
 void SurvivalServerFreeCamera::CreateInputFunctions()
 {
-	float cameraSpeed = 5.0f;
+	float cameraSpeed = 15.0f;
 	wPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
 			cam->Translate(cam->GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());

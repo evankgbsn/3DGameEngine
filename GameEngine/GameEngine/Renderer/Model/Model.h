@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <mutex>
 
 class Pose;
 class Armature;
@@ -28,7 +29,7 @@ public:
 
 	Model(const std::string& path, const std::string& name);
 
-	Model(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
+	Model(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, const std::string& name);
 
 	~Model();
 
@@ -84,7 +85,7 @@ private:
 
 	void DestroyVertexArrayBuffer();
 
-	void CreateTerrain(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
+	void CreateTerrain(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, const std::string& name);
 
 	void CreateTerrainLegacy(const std::string& heightMapPath, float terrainWidth, float teraainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name);
 
@@ -109,6 +110,8 @@ private:
 	unsigned int indexArrayBuffer;
 
 	std::string name;
+
+	static std::mutex loadMutex;
 
 };
 

@@ -24,6 +24,7 @@ class GOGlyph;
 class GOTerrain;
 class GOColoredInstanced;
 class GOSprite;
+class GOWater;
 
 
 class GraphicsObjectManager
@@ -42,7 +43,7 @@ public:
 
 	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 
-	static GOTerrain* const CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials);
+	static GOTerrain* const CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials, const std::string& blendMap);
 
 	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
 
@@ -51,6 +52,8 @@ public:
 	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale);
 
 	static GOSprite* const CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position);
+
+	static GOWater* const CreateGOWater(Model* const model);
 
 	static void Disable(GraphicsObject* const go);
 
@@ -96,6 +99,8 @@ private:
 	static GraphicsObjectManager* instance;
 
 	std::vector<GraphicsObject*> graphicsObjects3D;
+
+	std::vector<GraphicsObject*> graphicsObjectsWater;
 
 	std::vector<GraphicsObject*> graphicsObjects2D;
 

@@ -1,6 +1,6 @@
 #include "SurvivalWater.h"
 
-#include "GameEngine/GameObject/Component/TerrainComponent.h"
+#include "GameEngine/GameObject/Component/WaterComponent.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Editor/Editor.h"
@@ -19,17 +19,7 @@ SurvivalWater::~SurvivalWater()
 
 void SurvivalWater::Initialize()
 {
-	Texture* waterDiffuse = TextureManager::GetTexture("Water");
-	Texture* waterSpecular = TextureManager::GetTexture("Water");
-
-	std::vector<GOLit::Material> materials =
-	{
-		GOLit::Material(waterDiffuse, waterSpecular),
-		GOLit::Material(waterDiffuse, waterSpecular),
-		GOLit::Material(waterDiffuse, waterSpecular)
-	};
-
-	waterTerrain = new TerrainComponent("WaterTerrain", "Assets/Texture/grey.png", materials, 500.0f, 500.0f, 10U, 10U, 0.0f, -5.2f);
+	waterTerrain = new WaterComponent("WaterTerrain", 500.0f, 500.0f, 500U, 500U, -5.0f);
 
 	AddComponent(waterTerrain, "WaterTerrain");
 
@@ -58,18 +48,10 @@ void SurvivalWater::EditorUpdate()
 
 void SurvivalWater::Load()
 {
-	if (!TextureManager::TextureLoaded("Water"))
-	{
-		TextureManager::LoadTexture("Assets/Texture/Blue.png", "Water");
-	}
 }
 
 void SurvivalWater::Unload()
 {
-	if (TextureManager::TextureLoaded("Water"))
-	{
-		TextureManager::UnloadTexture("Water");
-	}
 }
 
 void SurvivalWater::Serialize()

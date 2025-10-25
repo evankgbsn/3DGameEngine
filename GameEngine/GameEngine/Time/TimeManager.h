@@ -21,6 +21,8 @@ public:
 
 	static float GetAverageFPS();
 
+	static unsigned long long GetFrameID();
+
 private:
 
 	TimeManager();
@@ -44,6 +46,8 @@ private:
 	float deltaTime;
 
 	std::list<float> recentFrameTimes;
+
+	unsigned long long frameID;
 
 };
 

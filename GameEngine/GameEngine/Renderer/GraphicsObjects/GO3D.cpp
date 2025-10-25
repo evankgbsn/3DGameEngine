@@ -3,6 +3,7 @@
 #include "../Camera/CameraManager.h"
 #include "../Camera/Camera.h"
 #include "../Model/Model.h"
+#include "../Shader/ShaderManager.h"
 
 void GO3D::SetDrawMode(Mode m)
 {
@@ -33,11 +34,15 @@ GO3D::GO3D(Model* const model) :
 {
 	glCreateBuffers(1, &mvpBuffer);
 	glNamedBufferStorage(mvpBuffer, sizeof(mvp), &mvp, GL_DYNAMIC_STORAGE_BIT);
+
+	glCreateBuffers(1, &clipPlaneBuffer);
+	glNamedBufferStorage(clipPlaneBuffer, sizeof(glm::vec4), &clipPlane, GL_DYNAMIC_STORAGE_BIT);
 }
 
 GO3D::~GO3D()
 {
 	glDeleteBuffers(1, &mvpBuffer);
+	glDeleteBuffers(1, &clipPlaneBuffer);
 }
 
 void GO3D::Update()
@@ -45,13 +50,17 @@ void GO3D::Update()
 	model->BindBuffer();
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, mvpBuffer);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 10, clipPlaneBuffer);
 
 	const Camera& cam = CameraManager::GetActiveCamera();
 	mvp.view = cam.GetView();
 	mvp.projection = cam.GetProjection();
 	mvp.model = translation * rotation * scale;
 
+	clipPlane = ShaderManager::GetClipPlane();
+
 	glNamedBufferSubData(mvpBuffer, 0, sizeof(MVP), &mvp);
+	glNamedBufferSubData(clipPlaneBuffer, 0, sizeof(glm::vec4), &clipPlane);
 
 	glLineWidth(lineWidth);
 	glPointSize(pointSize);

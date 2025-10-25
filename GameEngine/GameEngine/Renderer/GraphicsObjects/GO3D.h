@@ -124,9 +124,13 @@ protected:
 
 	glm::mat4 transformation;
 
+	glm::vec4 clipPlane;
+
 	Mode drawMode;
 
 	unsigned int mvpBuffer;
+
+	unsigned int clipPlaneBuffer;
 
 	float lineWidth;
 

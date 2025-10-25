@@ -40,10 +40,10 @@ TerrainComponent::TerrainComponent() :
 	Editor::RegisterOnEditorEnable(onEditorDisable);
 }
 
-TerrainComponent::TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
+TerrainComponent::TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling)
 {
 	RegisterComponentClassType<TerrainComponent>(this);
-	terrain = new Terrain(name, heightMapPath, heightMaterials, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
+	terrain = new Terrain(name, heightMapPath, heightMaterials, blendMap, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling);
 }
 
 TerrainComponent::~TerrainComponent()
@@ -86,6 +86,11 @@ glm::vec3 TerrainComponent::GetLineIntersection(const LineSegment3D& line)
 	return terrain->RayIntersect(ray);
 }
 
+bool TerrainComponent::Loaded() const
+{
+	return terrain->Loaded();
+}
+
 void TerrainComponent::Update()
 {
 }
@@ -94,12 +99,14 @@ void TerrainComponent::Serialize()
 {
 	savedStrings["Name"] = terrain->GetName();
 	savedStrings["HeightMapPath"] = terrain->GetHeightMapPath();
+	savedStrings["BlendMap"] = terrain->GetBlendMapName();
 	savedFloats["Width"] = terrain->GetWidth();
 	savedFloats["Height"] = terrain->GetHeight();
 	savedInts["TileX"] = terrain->GetTileX();
 	savedInts["TileY"] = terrain->GetTileY();
 	savedFloats["MaxHeight"] = terrain->GetMaxHeight();
 	savedFloats["YOffset"] = terrain->GetYOffset();
+	savedInts["UVTiling"] = terrain->GetUVTiling();
 
 	unsigned int matIndex = 0;
 	for (const GOLit::Material& mat : terrain->GetMaterials())
@@ -139,5 +146,5 @@ void TerrainComponent::Deserialize()
 		matIndex++;
 	}
 
-	terrain = new Terrain(savedStrings["Name"], savedStrings["HeightMapPath"], materials, savedFloats["Width"], savedFloats["Height"], savedInts["TileX"], savedInts["TileY"], savedFloats["MaxHeight"], savedFloats["YOffset"]);
+	terrain = new Terrain(savedStrings["Name"], savedStrings["HeightMapPath"], materials, savedStrings["BlendMap"], savedFloats["Width"], savedFloats["Height"], savedInts["TileX"], savedInts["TileY"], savedFloats["MaxHeight"], savedFloats["YOffset"], savedInts["UVTiling"]);
 }

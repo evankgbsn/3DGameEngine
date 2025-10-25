@@ -6,6 +6,7 @@
 #include "../Camera/Camera.h"
 #include "../Camera/CameraManager.h"
 #include "../Window/WindowManager.h"
+#include "../Texture/TextureManager.h"
 
 #include <GLFW/glfw3.h>
 
@@ -75,6 +76,43 @@ void ShaderManager::EndShaderUsage(const std::string& name)
 	}
 }
 
+glm::vec4 ShaderManager::GetClipPlane()
+{
+	if (instance != nullptr)
+	{
+		return instance->clipPlane;
+	}
+	return glm::vec4();
+}
+
+void ShaderManager::SetClipPlane(const glm::vec4& newClipPlane)
+{
+	if (instance != nullptr)
+	{
+		instance->clipPlane = newClipPlane;
+	}
+}
+
+unsigned int ShaderManager::GetRelfectionTexture()
+{
+	if (instance != nullptr)
+	{
+		instance->reflectionTexture;
+	}
+
+	return 0;
+}
+
+unsigned int ShaderManager::GetRelfractionTexture()
+{
+	if (instance != nullptr)
+	{
+		instance->refractionTexture;
+	}
+
+	return 0;
+}
+
 void ShaderManager::Initialize()
 {
 	SingletonHelpers::InitializeSingleton(&instance, "ShaderManager");
@@ -91,6 +129,7 @@ ShaderManager::ShaderManager()
 	LoadShadersFromShaderDirectory();
 	CreateVAO();
 	CreateShadowMapFramebuffer();
+	InitializeWaterFrameBuffers();
 }
 
 ShaderManager::~ShaderManager()
@@ -100,6 +139,7 @@ ShaderManager::~ShaderManager()
 		delete shader;
 	}
 
+	CleanupWaterFrameBuffers();
 	DestroyShadowMapFramebuffer();
 	DestroyVAO();
 	delete debugInfo;
@@ -189,6 +229,7 @@ void ShaderManager::CreateVAO()
 	glEnableVertexArrayAttrib(vertexArrayObject, 3);
 	glEnableVertexArrayAttrib(vertexArrayObject, 4);
 
+	glEnable(GL_CLIP_DISTANCE0);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
@@ -236,6 +277,114 @@ void ShaderManager::DestroyShadowMapFramebuffer()
 void ShaderManager::DestroyVAO()
 {
 	glDeleteVertexArrays(1, &vertexArrayObject);
+}
+
+unsigned int ShaderManager::CreateFrameBuffer()
+{
+	unsigned int frameBuffer;
+	glCreateFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+	return frameBuffer;
+}
+
+unsigned int ShaderManager::CreateTextureAttatchment(unsigned int width, unsigned int height)
+{
+	unsigned int texture;
+	glCreateTextures(GL_TEXTURE_2D, 1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
+	return texture;
+}
+
+unsigned int ShaderManager::CreateDepthTextureAttatchment(unsigned int width, unsigned int height)
+{
+	unsigned int texture;
+	glCreateTextures(GL_TEXTURE_2D, 1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture, 0);
+	return texture;
+}
+
+unsigned int ShaderManager::CreateDepthBufferAttatchment(unsigned int width, unsigned int height)
+{
+	unsigned int depthBuffer;
+	glCreateRenderbuffers(1, &depthBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+	return depthBuffer;
+}
+
+void ShaderManager::BindFrameBuffer(unsigned int frameBuffer, unsigned int width, unsigned int height)
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glViewport(0, 0, width, height);
+}
+
+void ShaderManager::UnbindCurrentFrameBuffer()
+{
+	if (instance != nullptr)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	}
+}
+
+void ShaderManager::InitializeWaterFrameBuffers()
+{
+	reflectionFrameBuffer = CreateFrameBuffer();
+	reflectionTexture = CreateTextureAttatchment(WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	reflectionDepthBuffer = CreateDepthBufferAttatchment(WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	UnbindCurrentFrameBuffer();
+	
+	refractionFrameBuffer = CreateFrameBuffer();
+	refractionTexture = CreateTextureAttatchment(WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	refractionDepthTexture = CreateDepthTextureAttatchment(WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	UnbindCurrentFrameBuffer();
+}
+
+void ShaderManager::CleanupWaterFrameBuffers()
+{
+	glDeleteFramebuffers(1, &reflectionFrameBuffer);
+	glDeleteFramebuffers(1, &refractionFrameBuffer);
+	glDeleteTextures(1, &reflectionTexture);
+	glDeleteTextures(1, &refractionTexture);
+	glDeleteTextures(1, &refractionDepthTexture);
+	glDeleteRenderbuffers(1, &reflectionDepthBuffer);
+}
+
+void ShaderManager::CreateWaterTexturesFromIDs()
+{
+	if (instance != nullptr)
+	{
+		TextureManager::CreateTextureFromGLID("ReflectionTexture", instance->reflectionTexture);
+		TextureManager::CreateTextureFromGLID("RefractionTexture", instance->refractionTexture);
+		TextureManager::CreateTextureFromGLID("DepthBufferTexture", instance->shadowMapFramebufferDepthBufferTexture);
+	}
+}
+
+void ShaderManager::BindReflectionFrameBuffer()
+{
+	if (instance != nullptr)
+	{
+		instance->BindFrameBuffer(instance->reflectionFrameBuffer, WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	}
+}
+
+void ShaderManager::BindRefractionFrameBuffer()
+{
+	if (instance != nullptr)
+	{
+		instance->BindFrameBuffer(instance->refractionFrameBuffer, WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
+	}
 }
 
 unsigned int ShaderManager::GetVAO()

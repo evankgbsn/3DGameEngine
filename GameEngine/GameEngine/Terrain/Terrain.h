@@ -13,7 +13,7 @@
 #include <thread>
 #include <functional>
 
-class GOTerrain;
+class GO3D;
 class Model;
 
 class Terrain
@@ -28,7 +28,7 @@ public:
 
 public:
 
-	Terrain(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	Terrain(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int uvTiling, bool isWater = false);
 
 	~Terrain();
 
@@ -60,6 +60,8 @@ public:
 
 	const std::string& GetName() const;
 
+	const std::string& GetBlendMapName() const;
+
 	float GetWidth() const;
 
 	float GetHeight() const;
@@ -72,11 +74,17 @@ public:
 
 	float GetYOffset() const;
 
+	unsigned int GetUVTiling() const;
+
 	const std::vector<GOLit::Material>& GetMaterials() const;
 
-	GOTerrain* GetGraphics() const;
+	GO3D* GetGraphics() const;
 
 	glm::vec3 RayIntersect(const Ray& ray) const;
+
+	bool Loaded() const;
+
+	bool IsWater() const;
 
 private:
 
@@ -106,6 +114,8 @@ private:
 
 	unsigned int tileY;
 
+	unsigned int UVTiling;
+
 	float terrainWidth;
 
 	float terrainHeight;
@@ -124,9 +134,11 @@ private:
 
 	std::string heightMapPath;
 
+	std::string blendMapName;
+
 	std::atomic<Model*> terrainModel;
 
-	std::atomic<GOTerrain*> terrainGraphics;
+	std::atomic<GO3D*> terrainGraphics;
 
 	std::thread createAABBSThread;
 
@@ -134,6 +146,7 @@ private:
 
 	std::function<void(Model* const)>* modelLoadCallback;
 
+	bool isWater;
 };
 
 #endif // TERRAIN_H

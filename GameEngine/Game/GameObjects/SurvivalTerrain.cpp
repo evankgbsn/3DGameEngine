@@ -19,18 +19,23 @@ SurvivalTerrain::~SurvivalTerrain()
 
 void SurvivalTerrain::Initialize()
 {
-	GOLit::Material baseMaterial = GOLit::Material(TextureManager::GetTexture("TerrainBase"), TextureManager::GetTexture("TerrainBase"));
+	GOLit::Material sandMaterial = GOLit::Material(TextureManager::GetTexture("TerrainSand"), TextureManager::GetTexture("TerrainSand"));
+	GOLit::Material rockMaterial = GOLit::Material(TextureManager::GetTexture("TerrainRock"), TextureManager::GetTexture("TerrainRock"));
+	GOLit::Material grassMaterial = GOLit::Material(TextureManager::GetTexture("TerrainGrass"), TextureManager::GetTexture("TerrainGrass"));
+	GOLit::Material dirtMaterial = GOLit::Material(TextureManager::GetTexture("TerrainDirt"), TextureManager::GetTexture("TerrainDirt"));
 
 	terrain = new TerrainComponent(
 		std::string("SurvivalTerrain"),
 		std::string("Assets/Texture/Noise.png"),
-		{ baseMaterial, baseMaterial, baseMaterial},
+		{  dirtMaterial, sandMaterial, rockMaterial, grassMaterial },
+		std::string("BlendMap"),
 		500.0f,
 		500.0f,
 		500U,
 		500U,
 		20.0f,
-		-10.0f
+		-10.0f,
+		1U
 	);
 
 	AddComponent(terrain, "SurvivalTerrain");
@@ -40,6 +45,7 @@ void SurvivalTerrain::Initialize()
 
 void SurvivalTerrain::Terminate()
 {
+
 	CleanupEditorCallbacks();
 
 	if (terrain != nullptr)
@@ -59,9 +65,29 @@ void SurvivalTerrain::EditorUpdate()
 
 void SurvivalTerrain::Load()
 {
-	if (!TextureManager::TextureLoaded("TerrainBase"))
+	if (!TextureManager::TextureLoaded("TerrainDirt"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Green.png", "TerrainBase");
+		TextureManager::LoadTexture("Assets/Texture/RedBrown.png", "TerrainDirt");
+	}
+
+	if (!TextureManager::TextureLoaded("TerrainRock"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/grey.png", "TerrainRock");
+	}
+
+	if (!TextureManager::TextureLoaded("TerrainGrass"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Green.png", "TerrainGrass");
+	}
+
+	if (!TextureManager::TextureLoaded("TerrainSand"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Beige.png", "TerrainSand");
+	}
+
+	if (!TextureManager::TextureLoaded("BlendMap"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/MyBlendMap.png", "BlendMap");
 	}
 }
 

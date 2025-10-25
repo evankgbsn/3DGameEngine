@@ -17,7 +17,7 @@ public:
 
 	TerrainComponent();
 
-	TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset);
+	TerrainComponent(const std::string& name, const std::string& heightMapPath, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling);
 
 	~TerrainComponent();
 
@@ -32,6 +32,8 @@ public:
 	void ToggleColliderVisibility();
 
 	glm::vec3 GetLineIntersection(const LineSegment3D& line);
+
+	bool Loaded() const;
 
 private:
 

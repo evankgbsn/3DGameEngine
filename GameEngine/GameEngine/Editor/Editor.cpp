@@ -521,7 +521,7 @@ void Editor::InitializeGrid()
 
 	ModelManager::RegisterCallbackForModelLoaded("EditorGrid", "InitializeEditorGrid", gridModelLoadCallback);
 
-	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, true);
+	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, 1U, true);
 }
 
 void Editor::TerminateGrid()

@@ -15,6 +15,11 @@ layout(std140, binding = 8) uniform LightSpcaeMatrixUBO
     mat4 matrix;
 } lightSpaceMatrix;
 
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
+
 //--------------------------------------------------
 // Vertex Buffer Data
 //--------------------------------------------------
@@ -36,7 +41,11 @@ layout(location = 8) out vec4 outLightSpacePosition;
 
 void main(void)
 {
-	gl_Position = mvp.projection * mvp.view * mvp.model * vec4(inPosition, 1.0f);
+    vec4 worldPosition = mvp.model * vec4(inPosition, 1.0);
+
+    gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+	gl_Position = mvp.projection * mvp.view * worldPosition;
 
     outUV = inUV;
 

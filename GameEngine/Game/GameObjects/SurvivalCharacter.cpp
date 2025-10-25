@@ -12,6 +12,7 @@
 #include "GameEngine/Scene/Scene.h"
 #include "SurvivalTerrain.h"
 #include "GameEngine/GameObject/Component/TerrainComponent.h"
+#include "GameEngine/GameObject/Component/WaterComponent.h"
 #include "GameEngine/Renderer/Camera/Camera.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Collision/AxisAlignedBoundingBoxWithVisualization.h"
@@ -99,8 +100,6 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 	if (!NetworkManager::IsServer())
 	{
 		receivedPosition = NetworkManager::ConvertDataToVec3(data);
-
-		receivedPositions.push_back(receivedPosition);
 	}
 	else
 	{
@@ -202,45 +201,35 @@ void SurvivalCharacter::GameUpdate()
 
 		static glm::vec3 currentTarget = target;
 		
+		currentTarget = receivedPosition;
 
-		if (!receivedPositions.empty())
+		glm::vec3 targetVector = currentTarget - characterGraphics->GetPosition();
+		glm::vec3 direction = glm::normalize(targetVector);
+		float targetVectorLength = glm::length(targetVector);
+		float movementUnit = walkSpeed * TimeManager::DeltaTime();
+
+		if (abs(targetVectorLength - movementUnit) > movementUnit && characterGraphics->GetPosition() != currentTarget)
 		{
+			glm::mat4 currentRotation = characterGraphics->GetRotation();
 
-			
-			currentTarget = receivedPosition;
+			glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+			glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
+			glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
 
-			glm::vec3 targetVector = currentTarget - characterGraphics->GetPosition();
-			glm::vec3 direction = glm::normalize(targetVector);
-			float targetVectorLength = glm::length(targetVector);
-			float movementUnit = walkSpeed * TimeManager::DeltaTime();
+			glm::mat4 newRotation(
+				right,
+				up,
+				forward,
+				glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+			);
 
-			if (abs(targetVectorLength - movementUnit) > movementUnit && characterGraphics->GetPosition() != currentTarget)
-			{
-				glm::mat4 currentRotation = characterGraphics->GetRotation();
+			characterGraphics->SetRotation(newRotation);
+			characterGraphics->Translate(direction * movementUnit);
+		}
 
-				glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-				glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
-				glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
-
-				glm::mat4 newRotation(
-					right,
-					up,
-					forward,
-					glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
-				);
-
-				characterGraphics->SetRotation(newRotation);
-				characterGraphics->Translate(direction * movementUnit);
-			}
-
-			if (targetVectorLength > walkSpeed)
-			{
-				characterGraphics->SetPosition(receivedPosition);
-			}
-			
-			
-
-			
+		if (targetVectorLength > walkSpeed)
+		{
+			characterGraphics->SetPosition(receivedPosition);
 		}
 	}
 	
@@ -279,7 +268,7 @@ void SurvivalCharacter::GameUpdate()
 		{
 			if (water != nullptr)
 			{
-				TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+				WaterComponent* terrainComponent = dynamic_cast<WaterComponent*>(water->GetComponent("WaterTerrain"));
 
 				if (terrainComponent != nullptr)
 				{
@@ -405,7 +394,7 @@ void SurvivalCharacter::SetupMovement()
 				if (terrain != nullptr && water != nullptr)
 				{
 					TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-					TerrainComponent* waterComponent = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+					WaterComponent* waterComponent = dynamic_cast<WaterComponent*>(water->GetComponent("WaterTerrain"));
 
 					if (terrainComponent != nullptr && waterComponent != nullptr)
 					{
@@ -535,7 +524,7 @@ void SurvivalCharacter::MoveToTarget()
 
 		if (water != nullptr && terrain != nullptr)
 		{
-			TerrainComponent* waterComp = dynamic_cast<TerrainComponent*>(water->GetComponent("WaterTerrain"));
+			WaterComponent* waterComp = dynamic_cast<WaterComponent*>(water->GetComponent("WaterTerrain"));
 			TerrainComponent* terrainComp = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
 
 			if (waterComp != nullptr && terrainComp != nullptr)
@@ -572,19 +561,18 @@ void SurvivalCharacter::MoveToTarget()
 	{
 		characterGraphics->Translate(direction * movementUnit);
 
-		glm::vec3 newPosition = characterGraphics->GetPosition();
-
 		if (NetworkManager::IsServer())
 		{
 			static float lastSend = TimeManager::SecondsSinceStart();
 
-			if (TimeManager::SecondsSinceStart() - lastSend >= .01f)
+			if (TimeManager::SecondsSinceStart() - lastSend >= .1f)
 			{
-				ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
-				lastSend = TimeManager::SecondsSinceStart();
+
 			}
 
-			
+			glm::vec3 newPosition = characterGraphics->GetPosition();
+			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
+			lastSend = TimeManager::SecondsSinceStart();
 		}
 
 		if (shouldRotate)
@@ -606,7 +594,6 @@ void SurvivalCharacter::MoveToTarget()
 		}
 
 	}
-
 }
 
 void SurvivalCharacter::SetupEditorCallbacks()

@@ -32,6 +32,10 @@ public:
 
 private:
 
+	friend class TextureManager;
+
+	Texture(const std::string& name, unsigned int textureID);
+
 	void LoadTexture();
 
 	std::string path;

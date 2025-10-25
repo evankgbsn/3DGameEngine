@@ -4,6 +4,8 @@
 #include "GO3D.h"
 #include "GOLit.h"
 
+#include <string>
+
 class Model;
 class Texture;
 
@@ -11,7 +13,7 @@ class GOTerrain : public GO3D, public GOLit
 {
 public:
 
-	GOTerrain(Model* const model, const std::vector<Material>& textures);
+	GOTerrain(Model* const model, const std::vector<Material>& textures, const std::string& blendMap);
 
 	~GOTerrain();
 
@@ -34,6 +36,8 @@ private:
 	GOTerrain& operator=(GOTerrain&&) = delete;
 
 	unsigned int lightSpaceMatrixBuffer;
+
+	Texture* blendMap;
 
 };
 

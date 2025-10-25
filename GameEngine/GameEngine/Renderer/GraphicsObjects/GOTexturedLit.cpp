@@ -43,10 +43,6 @@ void GOTexturedLit::Update()
 		position + lightDirection,
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
-	mvp.view = lightView;
-	mvp.projection = lightProjection;
-	mvp.model = translation * rotation * scale;
-
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 8, lightSpaceMatrixBuffer);

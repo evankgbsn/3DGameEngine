@@ -73,6 +73,8 @@ void TimeManager::RecordUpdateTime()
 		{
 			instance->recentFrameTimes.pop_front();
 		}
+
+		instance->frameID++;
 	}
 	else
 	{
@@ -97,6 +99,14 @@ float TimeManager::GetAverageFPS()
 	averageFrameTime /= instance->recentFrameTimes.size();
 
 	return 1 / averageFrameTime;
+}
+
+unsigned long long TimeManager::GetFrameID()
+{
+	if (instance != nullptr)
+	{
+		return instance->frameID;
+	};
 }
 
 TimeManager::TimeManager() :

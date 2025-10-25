@@ -25,6 +25,10 @@ public:
 
 private:
 
+	friend class ShaderManager;
+
+	static void CreateTextureFromGLID(const std::string& name, unsigned int textureID);
+
 	TextureManager();
 
 	~TextureManager();

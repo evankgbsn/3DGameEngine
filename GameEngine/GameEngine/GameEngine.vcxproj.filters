@@ -423,6 +423,12 @@
     <ClCompile Include="UI\Sprite.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOWater.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\WaterComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -752,87 +758,129 @@
     <ClInclude Include="UI\Sprite.h">
       <Filter>Source Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOWater.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\WaterComponent.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Renderer\Shader\GLSL\Colored.frag">
+    <None Include="..\Assets\GLSL\AnimatedShadowMap.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Colored.vert">
+    <None Include="..\Assets\GLSL\AnimatedShadowMap.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredAnimated.frag">
+    <None Include="..\Assets\GLSL\Colored.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert">
+    <None Include="..\Assets\GLSL\Colored.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedLit.frag">
+    <None Include="..\Assets\GLSL\ColoredAnimated.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedLit.vert">
+    <None Include="..\Assets\GLSL\ColoredAnimated.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedAnimated.frag">
+    <None Include="..\Assets\GLSL\ColoredInstanced.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedAnimated.vert">
+    <None Include="..\Assets\GLSL\ColoredInstanced.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Textured.vert">
+    <None Include="..\Assets\GLSL\ColoredStatic.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Textured.frag">
+    <None Include="..\Assets\GLSL\ColoredStatic.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.vert">
+    <None Include="..\Assets\GLSL\Font.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\TexturedAnimatedLit.frag">
+    <None Include="..\Assets\GLSL\Font.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ShadowMap.vert">
+    <None Include="..\Assets\GLSL\Gooch.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ShadowMap.frag">
+    <None Include="..\Assets\GLSL\Gooch.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.vert">
+    <None Include="..\Assets\GLSL\LitTexturedStatic.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\AnimatedShadowMap.frag">
+    <None Include="..\Assets\GLSL\LitTexturedStatic.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\PointLightShadow.vert">
+    <None Include="..\Assets\GLSL\PointLightShadow.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\PointLightShadow.frag">
+    <None Include="..\Assets\GLSL\PointLightShadow.geo">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\PointLightShadow.geo">
+    <None Include="..\Assets\GLSL\PointLightShadow.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Font.vert">
+    <None Include="..\Assets\GLSL\ShadowMap.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Font.frag">
+    <None Include="..\Assets\GLSL\ShadowMap.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Terrain.vert">
+    <None Include="..\Assets\GLSL\Sprite.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Terrain.frag">
+    <None Include="..\Assets\GLSL\Sprite.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredInstanced.vert">
+    <None Include="..\Assets\GLSL\Terrain.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredInstanced.frag">
+    <None Include="..\Assets\GLSL\Terrain.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Sprite.frag">
+    <None Include="..\Assets\GLSL\Test.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\Sprite.vert">
+    <None Include="..\Assets\GLSL\Test.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\Textured.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\Textured.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedAnimated.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedAnimated.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedAnimatedLit.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedAnimatedLit.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedLit.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedLit.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedStatic.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedStatic.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\Water.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\Water.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

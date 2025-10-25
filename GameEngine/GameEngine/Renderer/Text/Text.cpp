@@ -158,6 +158,11 @@ void Text::PopFront()
 
 void Text::SetText(const std::string& string)
 {
+	if (text == string)
+	{
+		return;
+	}
+
 	for (GOGlyph* glyph : glyphs)
 	{
 		GraphicsObjectManager::Delete(glyph);

@@ -5,7 +5,7 @@
 
 #include <functional>
 
-class TerrainComponent;
+class WaterComponent;
 
 class SurvivalWater : public GameObject
 {
@@ -47,7 +47,7 @@ private:
 
 	void CleanupEditorCallbacks();
 
-	TerrainComponent* waterTerrain;
+	WaterComponent* waterTerrain;
 
 	std::function<void()>* onEditorEnable;
 	

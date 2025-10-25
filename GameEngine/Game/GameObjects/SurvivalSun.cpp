@@ -6,6 +6,7 @@ SurvivalSun::SurvivalSun() :
 	GameObject(std::string("Sun")),
 	sun(nullptr)
 {
+	RegisterGameObjectClassType<SurvivalSun>(this);
 }
 
 SurvivalSun::~SurvivalSun()

@@ -18,10 +18,12 @@
 #include "../../Renderer/Camera/Camera.h"
 #include "../../Math/Shapes/Ray.h"
 #include "../../Math/Shapes/Plane.h"
+#include "../Editor/Select/SelectionManager.h"
 
 EditorUI::EditorUI() :
 	disabled(false),
 	sceneManagementInterfaceEnabled(true),
+	objectManagementInterfaceEnabled(true),
 	altPress(nullptr),
 	sPress(nullptr)
 {
@@ -249,29 +251,32 @@ void EditorUI::CreateSceneManagementInterface()
 
 void EditorUI::UpdateSceneManagementInterface()
 {
-	if (loadSceneInputField0 != nullptr)
+	if (sceneManagementInterfaceEnabled)
 	{
-		loadSceneInputField0->Update();
-	}
+		if (loadSceneInputField0 != nullptr)
+		{
+			loadSceneInputField0->Update();
+		}
 
-	if (loadSceneInputField1 != nullptr)
-	{
-		loadSceneInputField1->Update();
-	}
+		if (loadSceneInputField1 != nullptr)
+		{
+			loadSceneInputField1->Update();
+		}
 
-	if (unloadSceneInputField != nullptr)
-	{
-		unloadSceneInputField->Update();
-	}
+		if (unloadSceneInputField != nullptr)
+		{
+			unloadSceneInputField->Update();
+		}
 
-	if (saveSceneInputFieldFile != nullptr)
-	{
-		saveSceneInputFieldFile->Update();
-	}
+		if (saveSceneInputFieldFile != nullptr)
+		{
+			saveSceneInputFieldFile->Update();
+		}
 
-	if (saveSceneInputFieldName != nullptr)
-	{
-		saveSceneInputFieldName->Update();
+		if (saveSceneInputFieldName != nullptr)
+		{
+			saveSceneInputFieldName->Update();
+		}
 	}
 }
 
@@ -571,11 +576,29 @@ void EditorUI::CreateInterfaceToggleCallbacks()
 		});
 
 	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_S, sPress, "EditorUI");
+	
+	oPress = new std::function<void(int)>([this](int keyCode)
+		{
+			if (altPressed)
+			{
+				if (objectManagementInterfaceEnabled)
+				{
+					DisableObjectManagementInterface();
+				}
+				else
+				{
+					EnableObjectManagementInterface();
+				}
+			}
+		});
+
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_O, oPress, "EditorUI");
 }
 
 void EditorUI::CleanupInterfaceToggleCallbacks()
 {
 	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_S, "EditorUI");
+	InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_O, "EditorUI");
 
 	if (altPressed)
 	{
@@ -602,6 +625,12 @@ void EditorUI::CleanupInterfaceToggleCallbacks()
 	{
 		delete sPress;
 		sPress = nullptr;
+	}
+
+	if (oPress != nullptr)
+	{
+		delete oPress;
+		oPress = nullptr;
 	}
 
 }
@@ -700,6 +729,10 @@ void EditorUI::CreateObjectManagementInterface()
 	
 	objectManagementCreateObjectParentSceneNameInput->SetZ(0.5f);
 
+	// Create selected object text
+	objectManagementSelectedObject = new TextField("Selection: ", "exo2", { 0.72f, 0.45f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementSelectedObject->SetZ(0.5f);
+
 }
 
 void EditorUI::CleanupObjectManagementInterface()
@@ -737,15 +770,126 @@ void EditorUI::CleanupObjectManagementInterface()
 
 void EditorUI::UpdateObjectManagementInterface()
 {
-	if (objectManagementCreateObjectNameInput != nullptr)
+	if (objectManagementInterfaceEnabled)
 	{
-		objectManagementCreateObjectNameInput->Update();
+		if (objectManagementCreateObjectNameInput != nullptr)
+		{
+			objectManagementCreateObjectNameInput->Update();
+		}
+
+		if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+		{
+			objectManagementCreateObjectParentSceneNameInput->Update();
+		}
+
+		if (SelectionManager::GetSelection() != nullptr)
+		{
+			if (objectManagementSelectedObject->GetString() != "Selection: " + SelectionManager::GetSelection()->GetName())
+			{
+				objectManagementSelectedObject->SetText("Selection: " + SelectionManager::GetSelection()->GetName());
+			}
+		}
+		else
+		{
+			objectManagementSelectedObject->SetText("Selection: ");
+		}
+	}
+}
+
+void EditorUI::EnableObjectManagementInterface()
+{
+	if (!objectManagementInterfaceEnabled)
+	{
+		if (objectManagementBackground != nullptr)
+		{
+			objectManagementBackground->Enable();
+		}
+
+		if (objectManagementTitle != nullptr)
+		{
+			objectManagementTitle->Enable();
+		}
+
+		if (objectManagementCreateTitle != nullptr)
+		{
+			objectManagementCreateTitle->Enable();
+		}
+
+		if (objectManagementCreateObjectName != nullptr)
+		{
+			objectManagementCreateObjectName->Enable();
+		}
+
+		if (objectManagementCreateObjectNameInput != nullptr)
+		{
+			objectManagementCreateObjectNameInput->Enable();
+		}
+
+		if (objectManagementCreateObjectParentSceneName != nullptr)
+		{
+			objectManagementCreateObjectParentSceneName->Enable();
+		}
+
+		if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+		{
+			objectManagementCreateObjectParentSceneNameInput->Enable();
+		}
+
+		if (objectManagementSelectedObject != nullptr)
+		{
+			objectManagementSelectedObject->Enable();
+		}
 	}
 
-	if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+	objectManagementInterfaceEnabled = true;
+}
+
+void EditorUI::DisableObjectManagementInterface()
+{
+	if (objectManagementInterfaceEnabled)
 	{
-		objectManagementCreateObjectParentSceneNameInput->Update();
+		if (objectManagementBackground != nullptr)
+		{
+			objectManagementBackground->Disable();
+		}
+
+		if (objectManagementTitle != nullptr)
+		{
+			objectManagementTitle->Disable();
+		}
+
+		if (objectManagementCreateTitle != nullptr)
+		{
+			objectManagementCreateTitle->Disable();
+		}
+
+		if (objectManagementCreateObjectName != nullptr)
+		{
+			objectManagementCreateObjectName->Disable();
+		}
+
+		if (objectManagementCreateObjectNameInput != nullptr)
+		{
+			objectManagementCreateObjectNameInput->Disable();
+		}
+
+		if (objectManagementCreateObjectParentSceneName != nullptr)
+		{
+			objectManagementCreateObjectParentSceneName->Disable();
+		}
+
+		if (objectManagementCreateObjectParentSceneNameInput != nullptr)
+		{
+			objectManagementCreateObjectParentSceneNameInput->Disable();
+		}
+
+		if (objectManagementSelectedObject != nullptr)
+		{
+			objectManagementSelectedObject->Disable();
+		}
 	}
+
+	objectManagementInterfaceEnabled = false;
 }
 
 void EditorUI::Disable()
@@ -759,6 +903,7 @@ void EditorUI::Disable()
 
 	DisableSceneManagementInterface();
 	CleanupInterfaceToggleCallbacks();
+	DisableObjectManagementInterface();
 }
 
 void EditorUI::Enable()

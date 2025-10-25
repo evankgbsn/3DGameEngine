@@ -13,10 +13,13 @@
 #include "GOGlyph.h"
 #include "GOTerrain.h"
 #include "GOSprite.h"
+#include "GOWater.h"
 #include "../Font/FontManager.h"
 #include "../../Utils/Logger.h"
 #include "../Shader/ShaderManager.h"
 #include "../Window/WindowManager.h"
+#include "../Camera/CameraManager.h"
+#include "../Camera/Camera.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
@@ -42,11 +45,66 @@ void GraphicsObjectManager::Update()
 			}
 		}
 
+		ShaderManager::BindReflectionFrameBuffer();
+		glClear(GL_COLOR_BUFFER_BIT); 
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glCullFace(GL_BACK);
+		ShaderManager::SetClipPlane({ 0.0f, 1.0f, 0.0f, 5.0f });
+
+		Camera& activeCam = CameraManager::GetActiveCamera();
+		glm::vec3 currentCamPos = activeCam.GetPosition();
+		glm::vec3 currentTarget = activeCam.GetTarget();
+		glm::vec3 currentCamForward = glm::normalize(currentTarget - currentCamPos);
+
+		float distance = 2 * (currentCamPos.y - -5.0f);
+
+		activeCam.SetPosition(currentCamPos + glm::vec3(0.0f, -distance, 0.0f));
+		activeCam.SetTarget(activeCam.GetPosition() + glm::vec3(currentCamForward.x, -currentCamForward.y, currentCamForward.z));
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				graphicsObject->Update();
+			}
+		}
+
+		ShaderManager::UnbindCurrentFrameBuffer();
+
+		activeCam.SetPosition(currentCamPos);
+		activeCam.SetTarget(currentTarget);
+
+		ShaderManager::BindRefractionFrameBuffer();
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glCullFace(GL_BACK);
+		ShaderManager::SetClipPlane({ 0.0f, -1.0f, 0.0f, -5.0f });
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				graphicsObject->Update();
+			}
+		}
+
+		ShaderManager::UnbindCurrentFrameBuffer();
+
+
 		glViewport(0, 0, WindowManager::GetWindow("Engine")->GetWidth(), WindowManager::GetWindow("Engine")->GetHeight());
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glCullFace(GL_BACK);
+		ShaderManager::SetClipPlane({ 0.0f, -1.0f, 0.0f, 100000000.1f});
 		
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				graphicsObject->Update();
+			}
+		}
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjectsWater)
 		{
 			if (IsValid(graphicsObject))
 			{
@@ -197,13 +255,13 @@ GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const m
 	return result;
 }
 
-GOTerrain* const GraphicsObjectManager::CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials)
+GOTerrain* const GraphicsObjectManager::CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials, const std::string& blendMap)
 {
 	GOTerrain* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTerrain(model, materials));
+		instance->graphicsObjects3D.push_back(result = new GOTerrain(model, materials, blendMap));
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
@@ -282,10 +340,29 @@ GOSprite* const GraphicsObjectManager::CreateGOSprite(Model* const model2D, Text
 	return result;
 }
 
+GOWater* const GraphicsObjectManager::CreateGOWater(Model* const model)
+{
+	GOWater* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjectsWater.push_back(result = new GOWater(model));
+		instance->graphicsObjectsWater[instance->graphicsObjectsWater.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjectsWater.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGOWater() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
 void GraphicsObjectManager::Disable(GraphicsObject* const go)
 {
 	if (instance != nullptr)
 	{
+		GOWater* const water = dynamic_cast<GOWater* const>(go);
+
 		if (go->managerVectorDisableIndex != UINT_MAX)
 		{
 			instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = go;
@@ -296,7 +373,15 @@ void GraphicsObjectManager::Disable(GraphicsObject* const go)
 			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects3D.size() - 1);
 		}
 
-		instance->graphicsObjects3D[go->managerVectorIndex] = nullptr;
+		if (water != nullptr)
+		{
+			instance->graphicsObjectsWater[go->managerVectorIndex] = nullptr;
+		}
+		else
+		{
+			instance->graphicsObjects3D[go->managerVectorIndex] = nullptr;
+		}
+		
 		go->isDisabled = true;
 	}
 }
@@ -305,12 +390,27 @@ void GraphicsObjectManager::Enable(GraphicsObject* const go)
 {
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D[go->managerVectorIndex] = go;
+		GOWater* const water = dynamic_cast<GOWater* const>(go);
 
-		if (go->isDisabled)
+		if (water != nullptr)
 		{
-			instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
-			go->isDisabled = false;
+			instance->graphicsObjectsWater[go->managerVectorIndex] = go;
+
+			if (go->isDisabled)
+			{
+				instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
+				go->isDisabled = false;
+			}
+		}
+		else
+		{
+			instance->graphicsObjects3D[go->managerVectorIndex] = go;
+
+			if (go->isDisabled)
+			{
+				instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
+				go->isDisabled = false;
+			}
 		}
 	}
 }
@@ -366,6 +466,19 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				{
 					delete go;
 					instance->disabledGraphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
+				}
+			}
+		}
+
+		for (unsigned int i = 0; i < instance->graphicsObjectsWater.size(); ++i)
+		{
+			if (instance->graphicsObjectsWater[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->graphicsObjectsWater[i] = (GraphicsObject*)ULLONG_MAX;
 					break;
 				}
 			}

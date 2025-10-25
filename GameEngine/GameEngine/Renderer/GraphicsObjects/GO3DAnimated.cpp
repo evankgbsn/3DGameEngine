@@ -4,6 +4,7 @@
 #include "../Animation/Armature.h"
 #include "../../Editor/Editor.h"
 #include "../Model/Model.h"
+#include "../Time/TimeManager.h"
 
 glm::mat4* GO3DAnimated::GetAnimPoseArray()
 {
@@ -17,10 +18,17 @@ glm::mat4* GO3DAnimated::GetAnimInvBindPoseArray()
 
 void GO3DAnimated::Update()
 {	
-	animation->Update(animationData.pose);
+	static unsigned long long lastFrame = TimeManager::GetFrameID();
+	
+	if (lastFrame != TimeManager::GetFrameID())
+	{
+		animation->Update(animationData.pose);
+		glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
+	}
+
+	lastFrame = TimeManager::GetFrameID();
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
-	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
 }
 
 void GO3DAnimated::SetClip(unsigned int clipIndex)

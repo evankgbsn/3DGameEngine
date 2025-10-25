@@ -16,6 +16,8 @@
 
 #include <filesystem>
 
+std::mutex Model::loadMutex = std::mutex();
+
 namespace GLTFHelpers
 {
 	Math::Transform GetLocalTransform(cgltf_node& n);
@@ -75,6 +77,8 @@ Model::Model(const std::string& path, const std::string& n) :
 {
 	if (std::filesystem::exists(path.c_str()))
 	{
+		loadMutex.lock();
+
 		cgltf_options options = {};
 		cgltf_data* data = NULL;
 
@@ -101,6 +105,8 @@ Model::Model(const std::string& path, const std::string& n) :
 			Logger::Log(std::string("Failed to load Model from gltf file.") + path, Logger::Category::Error);
 			return;
 		}
+
+		loadMutex.unlock();
 
 		LoadMeshFromGLTF(data);
 		*armature = GLTFHelpers::LoadArmature(data);
@@ -137,11 +143,11 @@ float MoveToRange(float val, float min, float max, float newMin, float newMax)
 	return (newVal > newMax) ? newMax : newVal;
 }
 
-Model::Model(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& n) :
+Model::Model(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, const std::string& n) :
 	name(n)
 {
 	//CreateTerrainLegacy(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, n);
-	CreateTerrain(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, n);
+	CreateTerrain(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, n);
 }
 
 Model::~Model()
@@ -542,11 +548,15 @@ void Model::DestroyVertexArrayBuffer()
 	glDeleteBuffers(1, &indexArrayBuffer);
 }
 
-void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, const std::string& name)
+void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, const std::string& name)
 {
+	loadMutex.lock();
+
 	// Open the image file and store it in a buffer.
 	int width, height, bitsPerPixel;
 	unsigned char* buffer = stbi_load(heightMapPath.c_str(), &width, &height, &bitsPerPixel, STBI_rgb_alpha);
+	
+	loadMutex.unlock();
 
 	vertices.reserve(tileY * tileX);
 
@@ -570,8 +580,10 @@ void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, 
 			vertex.GetNormal() = {0.0f, 1.0f, 0.0f};
 
 			// Texture Coordinates (maps the texture across the terrain)
-			vertex.GetUV().x = static_cast<float>(x) / (tileX - 1);
-			vertex.GetUV().y = static_cast<float>(z) / (tileY - 1);
+			//vertex.GetUV().x = static_cast<float>(x) / (tileX - 1);
+			vertex.GetUV().x = static_cast<float>(x) / ((tileX - 1) / UVTiling);
+			//vertex.GetUV().y = static_cast<float>(z) / (tileY - 1);
+			vertex.GetUV().y = static_cast<float>(z) / ((tileY - 1) / UVTiling);
 
 			vertices.push_back(vertex);
 		}

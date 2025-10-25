@@ -30,7 +30,7 @@ void SurvivalTree::Initialize()
 {
 	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
 	graphics->SetShine(32.0f);
-	graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+	graphics->SetPosition({ 0.0f, 0.0f, 20.0f });
 
 	AddComponent(graphics, "Graphics");
 
@@ -54,28 +54,31 @@ void SurvivalTree::Terminate()
 
 void SurvivalTree::GameUpdate()
 {
+	
 }
 
 void SurvivalTree::EditorUpdate()
 {
-	//Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
-	//if (scene != nullptr)
-	//{
-	//	SurvivalTerrain* terrain = static_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
-	//
-	//	if (terrain != nullptr)
-	//	{
-	//		TerrainComponent* terrainComponent = static_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-	//
-	//		if (terrainComponent != nullptr)
-	//		{
-	//			graphics->SetPosition(terrainComponent->GetTerrainPoint(graphics->GetPosition()));
-	//			collider->UpdateCollider(graphics->GetTransform());
-	//		}
-	//	}
-	//}
+	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
+	if (scene != nullptr)
+	{
+		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
 
-	collider->UpdateCollider(graphics->GetTransform());
+		if (terrain != nullptr)
+		{
+			TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
+
+			if (terrainComponent != nullptr)
+			{
+				if (terrainComponent->Loaded())
+				{
+					glm::vec3 terrainPoint = terrainComponent->GetTerrainPoint(graphics->GetPosition());
+					graphics->SetPosition(terrainPoint);
+					collider->UpdateCollider(graphics->GetTransform());
+				}
+			}
+		}
+	}
 }
 
 void SurvivalTree::Load()
@@ -107,23 +110,6 @@ void SurvivalTree::Unload()
 void SurvivalTree::Start()
 {
 	(*onEditorDisable)();
-
-	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
-	if (scene != nullptr)
-	{
-		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
-
-		if (terrain != nullptr)
-		{
-			TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-
-			if (terrainComponent != nullptr)
-			{
-				graphics->SetPosition(terrainComponent->GetTerrainPoint(graphics->GetPosition()));
-				collider->UpdateCollider(graphics->GetTransform());
-			}
-		}
-	}
 }
 
 void SurvivalTree::SetPosition(const glm::vec3& newPosition)

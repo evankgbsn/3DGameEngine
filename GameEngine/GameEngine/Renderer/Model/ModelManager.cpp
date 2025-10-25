@@ -157,7 +157,7 @@ bool ModelManager::ModelLoaded(const std::string& name)
 	return instance->models.find(name) != instance->models.end();
 }
 
-Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, bool async)
+Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, bool async)
 {
 	if (instance == nullptr)
 	{
@@ -168,7 +168,7 @@ Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::
 	{
 		std::lock_guard<std::mutex> guard(instance->loadThreadsMutex);
 
-		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelTerrain, instance, name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
+		std::thread* loadThread = new std::thread(&ModelManager::InternalLoadModelTerrain, instance, name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling);
 
 		instance->loadThreads.push_back(loadThread);
 
@@ -176,7 +176,7 @@ Model* const ModelManager::LoadModelTerrain(const std::string& name, const std::
 	}
 	else
 	{
-		return instance->InternalLoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset);
+		return instance->InternalLoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling);
 	}
 }
 
@@ -246,7 +246,7 @@ Model* const ModelManager::InternalLoadModelFromData(const std::string& name, co
 	return newModel;
 }
 
-Model* const ModelManager::InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset)
+Model* const ModelManager::InternalLoadModelTerrain(const std::string& name, const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling)
 {
 	Model* newTerrainModel = nullptr;
 
@@ -262,7 +262,7 @@ Model* const ModelManager::InternalLoadModelTerrain(const std::string& name, con
 	else
 	{
 		modelsMutex.unlock();
-		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, name);
+		newTerrainModel = new Model(heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, name);
 
 		modelsMutex.lock();
 		instance->models.insert(std::pair<std::string, Model*>(name, newTerrainModel));
