@@ -5,6 +5,7 @@
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Scene/Scene.h"
 
 SurvivalLoginUI::SurvivalLoginUI() :
 	GameObject("SurvivalLoginUI"),
@@ -126,11 +127,17 @@ void SurvivalLoginUI::Start()
 	}
 	else
 	{
-		if (!SceneManager::SceneLoaded("SurvivalScene"))
+		std::string sceneName = "SurvivalScene";
+
+		if (!SceneManager::SceneLoaded(sceneName))
 		{
-			SceneManager::LoadScene("SurvivalScene");
-			SceneManager::InitializeScene("SurvivalScene");
-			SceneManager::StartScene("SurvivalScene");
+			if (!SceneManager::SceneLoaded(sceneName))
+			{
+				SceneManager::LoadScene(sceneName);
+			}
+
+			SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Main.xml");
+			SceneManager::StartScene(sceneName);
 		}
 	}
 }

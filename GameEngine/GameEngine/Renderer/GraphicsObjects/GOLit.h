@@ -107,6 +107,14 @@ private:
 
 	unsigned int materialBuffer;
 
+	unsigned int fogBuffer;
+
+	struct FogEffect
+	{
+		float fogDensity;
+		float fogGradient;
+	} fog;
+
 };
 
 #endif // GOLIT_H

@@ -17,19 +17,24 @@ GOWater::GOWater(Model* const model) :
 			0.003f,
 			.5f
 		}
-	)
+	),
+	fog({ 0.007f, 2.5f })
 {
 	glCreateBuffers(1, &effectsBuffer);
 	glNamedBufferStorage(effectsBuffer, sizeof(Effects), &effects, GL_DYNAMIC_STORAGE_BIT);
 
 	glCreateBuffers(1, &camPositionBuffer);
 	glNamedBufferStorage(camPositionBuffer, sizeof(glm::vec4), &camPosition, GL_DYNAMIC_STORAGE_BIT);
+
+	glCreateBuffers(1, &fogBuffer);
+	glNamedBufferStorage(fogBuffer, sizeof(FogEffect), &fog, GL_DYNAMIC_STORAGE_BIT);
 }
 
 GOWater::~GOWater()
 {
 	glDeleteBuffers(1, &effectsBuffer);
 	glDeleteBuffers(1, &camPositionBuffer);
+	glDeleteBuffers(1, &fogBuffer);
 }
 
 void GOWater::Update()
@@ -54,6 +59,9 @@ void GOWater::Update()
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, camPositionBuffer);
 	glNamedBufferSubData(camPositionBuffer, 0, sizeof(glm::vec4), &camPosition);
+
+	glBindBufferBase(GL_UNIFORM_BUFFER, 11, fogBuffer);
+	glNamedBufferSubData(fogBuffer, 0, sizeof(FogEffect), &fog);
 
 	GO3D::Update();
 

@@ -8,6 +8,7 @@
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "../GameObjects/SurvivalServerFreeCamera.h"
+#include "../GameObjects/SurvivalCrate.h"
 
 
 SurvivalScene::SurvivalScene() :
@@ -16,12 +17,14 @@ SurvivalScene::SurvivalScene() :
 	terrain(new SurvivalTerrain()),
 	tree(new SurvivalTree()),
 	water(new SurvivalWater()),
-	serverFreeCam(nullptr)
+	serverFreeCam(nullptr),
+	crate(new SurvivalCrate())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(terrain, "Terrain");
 	RegisterGameObject(tree, "Tree");
 	RegisterGameObject(water, "Water");
+	RegisterGameObject(crate, "Crate");
 }
 
 SurvivalScene::~SurvivalScene()
@@ -54,6 +57,11 @@ SurvivalScene::~SurvivalScene()
 	if (serverFreeCam != nullptr)
 	{
 		delete serverFreeCam;
+	}
+
+	if (crate != nullptr)
+	{
+		delete crate;
 	}
 }
 

@@ -22,7 +22,8 @@ GOLit::GOLit(const std::vector<Material>& mats) :
 	ambientBuffer(),
 	viewPositionBuffer(),
 	materialBuffer(),
-	materials(mats)
+	materials(mats),
+	fog({ 0.007f, 2.5f })
 {
 	glCreateBuffers(1, &directionalLightBuffer);
 	glNamedBufferStorage(directionalLightBuffer, sizeof(directionalLight), &directionalLight, GL_DYNAMIC_STORAGE_BIT);
@@ -41,6 +42,9 @@ GOLit::GOLit(const std::vector<Material>& mats) :
 
 	glCreateBuffers(1, &materialBuffer);
 	glNamedBufferStorage(materialBuffer, sizeof(MaterialUBO), &material, GL_DYNAMIC_STORAGE_BIT);
+	
+	glCreateBuffers(1, &fogBuffer);
+	glNamedBufferStorage(fogBuffer, sizeof(FogEffect), &fog, GL_DYNAMIC_STORAGE_BIT);
 }
 
 GOLit::~GOLit()
@@ -51,6 +55,7 @@ GOLit::~GOLit()
 	glDeleteBuffers(1, &pointLightBuffer);
 	glDeleteBuffers(1, &ambientBuffer);
 	glDeleteBuffers(1, &directionalLightBuffer);
+	glDeleteBuffers(1, &fogBuffer);
 }
 
 void GOLit::UpdateLighting()
@@ -123,6 +128,9 @@ void GOLit::UpdateLighting()
 	
 	glBindBufferBase(GL_UNIFORM_BUFFER, 7, materialBuffer);
 	glNamedBufferSubData(materialBuffer, 0, sizeof(MaterialUBO), &material);
+
+	glBindBufferBase(GL_UNIFORM_BUFFER, 11, fogBuffer);
+	glNamedBufferSubData(fogBuffer, 0, sizeof(FogEffect), &fog);
 
 }
 

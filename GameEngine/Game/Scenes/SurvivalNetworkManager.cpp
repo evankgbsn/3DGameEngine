@@ -34,11 +34,17 @@ void SurvivalNetworkManager::Initialize()
 		{
 			if (NetworkManager::GetDataBlockFromData(data) == "Login Success")
 			{
-				if (!SceneManager::SceneLoaded("SurvivalScene"))
+				std::string sceneName = "SurvivalScene";
+
+				if (!SceneManager::SceneLoaded(sceneName))
 				{
-					SceneManager::LoadScene("SurvivalScene");
-					SceneManager::InitializeScene("SurvivalScene");
-					SceneManager::StartScene("SurvivalScene");
+					if (!SceneManager::SceneLoaded(sceneName))
+					{
+						SceneManager::LoadScene(sceneName);
+					}
+
+					SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Main.xml");
+					SceneManager::StartScene(sceneName);
 				}
 			}
 		});

@@ -26,15 +26,15 @@ void SurvivalTerrain::Initialize()
 
 	terrain = new TerrainComponent(
 		std::string("SurvivalTerrain"),
-		std::string("Assets/Texture/Noise.png"),
+		std::string("Assets/Texture/IslandHeightMap.png"),
 		{  dirtMaterial, sandMaterial, rockMaterial, grassMaterial },
 		std::string("BlendMap"),
 		500.0f,
 		500.0f,
 		500U,
 		500U,
-		20.0f,
-		-10.0f,
+		25.0f,
+		-13.0f,
 		1U
 	);
 
@@ -87,7 +87,7 @@ void SurvivalTerrain::Load()
 
 	if (!TextureManager::TextureLoaded("BlendMap"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/MyBlendMap.png", "BlendMap");
+		TextureManager::LoadTexture("Assets/Texture/IslandBlendMap.png", "BlendMap");
 	}
 }
 

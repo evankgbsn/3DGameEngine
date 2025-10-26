@@ -710,8 +710,6 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <None Include="..\Assets\GLSL\Font.vert" />
     <None Include="..\Assets\GLSL\Gooch.frag" />
     <None Include="..\Assets\GLSL\Gooch.vert" />
-    <None Include="..\Assets\GLSL\LitTexturedStatic.frag" />
-    <None Include="..\Assets\GLSL\LitTexturedStatic.vert" />
     <None Include="..\Assets\GLSL\PointLightShadow.frag" />
     <None Include="..\Assets\GLSL\PointLightShadow.geo" />
     <None Include="..\Assets\GLSL\PointLightShadow.vert" />

@@ -110,5 +110,5 @@ void WaterComponent::Deserialize()
 		delete terrain;
 	}
 
-	terrain = new Terrain(savedStrings["Name"], savedStrings["HeightMapPath"], {}, "", savedFloats["Width"], savedFloats["Height"], savedInts["TileX"], savedInts["TileY"], savedFloats["MaxHeight"], savedFloats["YOffset"], true);
+	terrain = new Terrain(savedStrings["Name"], savedStrings["HeightMapPath"], {}, "", savedFloats["Width"], savedFloats["Height"], savedInts["TileX"], savedInts["TileY"], savedFloats["MaxHeight"], savedFloats["YOffset"], 1U, true);
 }

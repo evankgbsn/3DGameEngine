@@ -14,6 +14,7 @@ layout(location = 4) in ivec4 inJoints;
 
 layout(location = 0) out vec3 fragNormal;
 layout(location = 1) out vec2 fragUVCoord;
+layout(location = 2) out vec4 inPosition;
 
 void main(void) 
 {

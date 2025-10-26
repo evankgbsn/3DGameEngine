@@ -48,6 +48,14 @@ private:
 		
 	} effects;
 
+	unsigned int fogBuffer;
+
+	struct FogEffect
+	{
+		float fogDensity;
+		float fogGradient;
+	} fog;
+
 };
 
 #endif //GOWATER_H

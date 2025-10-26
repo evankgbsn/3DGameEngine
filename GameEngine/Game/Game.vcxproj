@@ -496,6 +496,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GameObjects\SurvivalCharacter.cpp" />
+    <ClCompile Include="GameObjects\SurvivalCrate.cpp" />
     <ClCompile Include="GameObjects\SurvivalLoginUI.cpp" />
     <ClCompile Include="GameObjects\SurvivalServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\SurvivalSun.cpp" />
@@ -629,6 +630,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="GameObjects\SurvivalCharacter.h" />
+    <ClInclude Include="GameObjects\SurvivalCrate.h" />
     <ClInclude Include="GameObjects\SurvivalLoginUI.h" />
     <ClInclude Include="GameObjects\SurvivalServerFreeCamera.h" />
     <ClInclude Include="GameObjects\SurvivalSun.h" />

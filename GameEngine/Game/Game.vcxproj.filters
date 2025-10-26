@@ -108,6 +108,9 @@
     <ClCompile Include="GameObjects\SurvivalServerFreeCamera.cpp">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\SurvivalCrate.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\MainScene.h">
@@ -183,6 +186,9 @@
       <Filter>Source Files\Scenes\SurvivalGame</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\SurvivalServerFreeCamera.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalCrate.h">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
   </ItemGroup>

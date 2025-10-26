@@ -61,6 +61,8 @@ layout(std140, binding = 6) uniform ViewPositionUBO { ViewPosition pos; } viewPo
 
 layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
+layout(std140, binding = 11) uniform FogUBO { float fogDensity; float fogGradient; } fog;
+
 
 //--------------------------------------------------
 // Image Texture Data Samplers
@@ -113,6 +115,12 @@ void main(void)
 	}
 
 	color += CalcAmbientLight(ambient.light);
+
+	float distance = length(viewPosition.pos.position.xyz - inPosition.xyz);
+	float visibility = exp(-pow((distance * fog.fogDensity), fog.fogGradient));
+	visibility = clamp(visibility, 0.0f, 1.0f);
+
+	color = mix(vec4(1.0f, 1.0f, 1.0f, 1.0f), color, visibility);
 };
 
 vec4 CalcAmbientLight(Ambient light)

@@ -14,6 +14,8 @@ GOTerrain::GOTerrain(Model* const model, const std::vector<Material>& textures, 
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
 	glNamedBufferStorage(lightSpaceMatrixBuffer, sizeof(glm::mat4), nullptr, GL_DYNAMIC_STORAGE_BIT);
+
+	
 }
 
 GOTerrain::~GOTerrain()

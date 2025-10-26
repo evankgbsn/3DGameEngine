@@ -16,6 +16,8 @@ layout(std140, binding = 1) uniform EffectsUBO {
 	float reflectionStrength;
 } effectsUBO;
 
+layout(std140, binding = 11) uniform FogUBO { float fogDensity; float fogGradient; } fog;
+
 out vec4 color;
 
 void main(void)
@@ -47,5 +49,12 @@ void main(void)
 
 	color = mix(reflColor, refrColor, refractiveFactor);
 	color = mix(color, effectsUBO.tint, effectsUBO.tintStrength);
+
+
+	float distance = length(toCamera);
+	float visibility = exp(-pow((distance * fog.fogDensity), fog.fogGradient));
+	visibility = clamp(visibility, 0.0f, 1.0f);
+
+	color = mix(vec4(1.0f, 1.0f, 1.0f, 1.0f), color, visibility);
 }
 

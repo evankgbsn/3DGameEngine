@@ -808,12 +808,6 @@
     <None Include="..\Assets\GLSL\Gooch.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="..\Assets\GLSL\LitTexturedStatic.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="..\Assets\GLSL\LitTexturedStatic.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
     <None Include="..\Assets\GLSL\PointLightShadow.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
