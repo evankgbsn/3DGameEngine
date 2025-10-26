@@ -16,6 +16,10 @@ public:
 
 	SphereWithVisualization* GetCollider() const;
 
+	bool Hovered() const;
+
+	void SetColliderVisibility(bool visibility);
+
 protected:
 
 	Light(const glm::vec4& color);

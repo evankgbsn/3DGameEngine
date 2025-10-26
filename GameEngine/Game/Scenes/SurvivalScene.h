@@ -13,6 +13,7 @@ class SurvivalTree;
 class SurvivalWater;
 class SurvivalServerFreeCamera;
 class SurvivalCrate;
+class SurvivalPointLight;
 
 class SurvivalScene : public Scene
 {
@@ -53,6 +54,8 @@ private:
 	SurvivalServerFreeCamera* serverFreeCam;
 
 	SurvivalCrate* crate;
+
+	SurvivalPointLight* pointLight;
 
 };
 

@@ -56,7 +56,11 @@ private:
 
 	void Deserialize() override;
 
-	GraphicsObjectTexturedLit* graphics;
+	GraphicsObjectTexturedLit* trunkGraphics;
+
+	GraphicsObjectTexturedLit* branchesGraphics;
+
+	GraphicsObjectTexturedLit* leavesGraphics;
 
 	OrientedBoundingBoxComponent* collider;
 

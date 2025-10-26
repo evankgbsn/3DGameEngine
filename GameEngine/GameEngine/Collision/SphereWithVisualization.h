@@ -22,6 +22,8 @@ public:
 
 	void ToggleVisibility();
 
+	bool IsVisible() const;
+
 private:
 
 	void InitializeGraphics();
@@ -39,6 +41,8 @@ private:
 	GraphicsObject* wrapedGraphics;
 
 	GOColored* graphics;
+
+	bool visible;
 
 };
 

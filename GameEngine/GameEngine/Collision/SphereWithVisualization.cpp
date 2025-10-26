@@ -8,13 +8,15 @@
 
 SphereWithVisualization::SphereWithVisualization(GraphicsObject* go) :
 	Sphere(go->GetModel()->GetVertices()),
-	wrapedGraphics(go)
+	wrapedGraphics(go),
+	visible(true)
 {
 	InitializeGraphics();
 }
 
 SphereWithVisualization::SphereWithVisualization(float radius) :
-	Sphere(ModelManager::GetModel("Sphere")->GetVertices())
+	Sphere(ModelManager::GetModel("Sphere")->GetVertices()),
+	visible(true)
 {
 	SetRadius(radius);
 	InitializeGraphics();
@@ -52,11 +54,18 @@ void SphereWithVisualization::ToggleVisibility()
 	if (graphics->IsDisabled())
 	{
 		GraphicsObjectManager::Enable(graphics);
+		visible = true;
 	}
 	else
 	{
 		GraphicsObjectManager::Disable(graphics);
+		visible = false;
 	}
+}
+
+bool SphereWithVisualization::IsVisible() const
+{
+	return visible;
 }
 
 void SphereWithVisualization::InitializeGraphics()

@@ -50,6 +50,12 @@ const float& PointLight::GetQuadratic() const
 void PointLight::SetPosition(const glm::vec3& newPosition)
 {
 	position = newPosition;
+
+	glm::mat4 transform(1.0f);
+	transform = glm::translate(transform, position);
+
+	collider->Transform(transform);
+	collider->Update(transform);
 }
 
 void PointLight::SetConstant(const float& newConstant)

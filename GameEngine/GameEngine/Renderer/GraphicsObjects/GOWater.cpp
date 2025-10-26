@@ -14,7 +14,7 @@ GOWater::GOWater(Model* const model) :
 			glm::vec4(0.0f, 0.5f, 0.8f, 1.0f),
 			0.6f,
 			0.0f,
-			0.003f,
+			0.03f,
 			.5f
 		}
 	),

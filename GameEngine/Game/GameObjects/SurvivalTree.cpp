@@ -28,13 +28,23 @@ SurvivalTree::~SurvivalTree()
 
 void SurvivalTree::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
-	graphics->SetShine(32.0f);
-	graphics->SetPosition({ 0.0f, 0.0f, 20.0f });
+	trunkGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeTrunk"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
+	trunkGraphics->SetShine(32.0f);
+	trunkGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
 
-	AddComponent(graphics, "Graphics");
+	branchesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeBranches"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
+	branchesGraphics->SetShine(32.0f);
+	branchesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
 
-	collider = new OrientedBoundingBoxComponent(graphics->GetModel()->GetVertices());
+	leavesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
+	leavesGraphics->SetShine(32.0f);
+	leavesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
+
+	AddComponent(trunkGraphics, "TrunkGraphics");
+	AddComponent(branchesGraphics, "BranchesGraphics");
+	AddComponent(leavesGraphics, "LeavesGraphics");
+
+	collider = new OrientedBoundingBoxComponent(trunkGraphics->GetModel()->GetVertices());
 
 	AddComponent(collider, "Collider");
 
@@ -49,7 +59,9 @@ void SurvivalTree::Terminate()
 	RemoveComponent("Collider");
 
 	delete collider;
-	delete graphics;
+	delete trunkGraphics;
+	delete branchesGraphics;
+	delete leavesGraphics;
 }
 
 void SurvivalTree::GameUpdate()
@@ -72,9 +84,8 @@ void SurvivalTree::EditorUpdate()
 			{
 				if (terrainComponent->Loaded())
 				{
-					glm::vec3 terrainPoint = terrainComponent->GetTerrainPoint(graphics->GetPosition());
-					graphics->SetPosition(terrainPoint);
-					collider->UpdateCollider(graphics->GetTransform());
+					glm::vec3 terrainPoint = terrainComponent->GetTerrainPoint(trunkGraphics->GetPosition());
+					SetPosition(terrainPoint);
 				}
 			}
 		}
@@ -83,9 +94,19 @@ void SurvivalTree::EditorUpdate()
 
 void SurvivalTree::Load()
 {
-	if (!ModelManager::ModelLoaded("SurvivalTree"))
+	if (!ModelManager::ModelLoaded("SurvivalTreeTrunk"))
 	{
-		ModelManager::LoadModel("SurvivalTree", "Assets/Model/Tree.gltf", false);
+		ModelManager::LoadModel("SurvivalTreeTrunk", "Assets/Model/TreeTrunk.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("SurvivalTreeBranches"))
+	{
+		ModelManager::LoadModel("SurvivalTreeBranches", "Assets/Model/TreeBranches.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("SurvivalTreeLeaves"))
+	{
+		ModelManager::LoadModel("SurvivalTreeLeaves", "Assets/Model/TreeLeaves.gltf", false);
 	}
 
 	if (!TextureManager::TextureLoaded("SurvivalTree"))
@@ -114,24 +135,28 @@ void SurvivalTree::Start()
 
 void SurvivalTree::SetPosition(const glm::vec3& newPosition)
 {
-	graphics->SetPosition(newPosition);
-	collider->UpdateCollider(graphics->GetTransform());
+	trunkGraphics->SetPosition(newPosition);
+	branchesGraphics->SetPosition(newPosition);
+	leavesGraphics->SetPosition(newPosition);
+	collider->UpdateCollider(trunkGraphics->GetTransform());
 }
 
 glm::vec3 SurvivalTree::GetPosition() const
 {
-	return graphics->GetPosition();
+	return trunkGraphics->GetPosition();
 }
 
 void SurvivalTree::SetRotation(const glm::mat4& newRotation)
 {
-	graphics->SetRotation(newRotation);
-	collider->UpdateCollider(graphics->GetTransform());
+	trunkGraphics->SetRotation(newRotation);
+	branchesGraphics->SetRotation(newRotation);
+	leavesGraphics->SetRotation(newRotation);
+	collider->UpdateCollider(trunkGraphics->GetTransform());
 }
 
 glm::mat4 SurvivalTree::GetRotation() const
 {
-	return graphics->GetRotation();
+	return trunkGraphics->GetRotation();
 }
 
 bool SurvivalTree::Hovered() const
@@ -187,10 +212,12 @@ void SurvivalTree::Deserialize()
 {
 	GameObject::Deserialize();
 
-	graphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("Graphics"));
+	trunkGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("TrunkGraphics"));
+	branchesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("BranchesGraphics"));
+	leavesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("LeavesGraphics"));
 	collider = static_cast<OrientedBoundingBoxComponent*>(GetComponent("Collider"));
 
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider(trunkGraphics->GetTransform());
 
 	CleanupEditorCallbacks();
 	SetupEditorCallbacks();

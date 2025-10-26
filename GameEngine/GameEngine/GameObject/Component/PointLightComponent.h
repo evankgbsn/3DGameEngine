@@ -26,6 +26,22 @@ public:
 
 	glm::vec3 GetPosition() const;
 
+	void SetConstant(const float& newConstant);
+
+	void SetLinear(const float& newLinear);
+
+	void SetQuadratic(const float& newQuadratic);
+
+	const float& GetConstant() const;
+
+	const float& GetLinear() const;
+
+	const float& GetQuadratic() const;
+
+	bool Hovered() const;
+
+	void SetColliderVisibility(bool visibility);
+
 private:
 
 	PointLightComponent(const PointLightComponent&) = delete;
