@@ -20,6 +20,7 @@
 #include "GameEngine/Editor/Editor.h"
 #include "SurvivalWater.h"
 #include "SurvivalTree.h"
+#include "SurvivalCrate.h"
 #include "GameEngine/Networking/NetworkManager.h"
 
 #include <glm/gtx/transform.hpp>
@@ -526,6 +527,7 @@ void SurvivalCharacter::MoveToTarget()
 			for (auto& gameObject : scene->GetGameObjects())
 			{
 				SurvivalTree* tree = dynamic_cast<SurvivalTree*>(gameObject.second);
+				SurvivalCrate* crate = dynamic_cast<SurvivalCrate*>(gameObject.second);
 
 				if (tree != nullptr)
 				{
@@ -533,6 +535,18 @@ void SurvivalCharacter::MoveToTarget()
 					if (characterCollider->Intersect(*treeCollider))
 					{
 						characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						shouldRotate = false;
+						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+						target = glm::vec3(0.0f);
+						ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(target));
+					}
+				}
+				else if (crate != nullptr)
+				{
+					OrientedBoundingBoxComponent* crateCollider = dynamic_cast<OrientedBoundingBoxComponent*>(crate->GetComponent("Collider"));
+					if (characterCollider->Intersect(*crateCollider))
+					{
+						characterGraphics->Translate(-glm::normalize(crateCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);
