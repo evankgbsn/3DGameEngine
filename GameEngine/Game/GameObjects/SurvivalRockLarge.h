@@ -6,7 +6,7 @@
 #include <functional>
 
 class GraphicsObjectTexturedLit;
-class OrientedBoundingBoxComponent;
+class StaticColliderComponent;
 
 class SurvivalRockLarge : public GameObject
 {
@@ -15,6 +15,8 @@ public:
 	SurvivalRockLarge();
 
 	~SurvivalRockLarge();
+
+	glm::vec3 GetPosition() const override;
 
 private:
 
@@ -48,8 +50,6 @@ private:
 
 	void SetPosition(const glm::vec3& newPos) override;
 
-	glm::vec3 GetPosition() const override;
-
 	void SetRotation(const glm::mat4& newRot) override;
 
 	glm::mat4 GetRotation() const override;
@@ -60,7 +60,7 @@ private:
 
 	GraphicsObjectTexturedLit* graphics;
 
-	OrientedBoundingBoxComponent* collider;
+	StaticColliderComponent* collider;
 
 	std::function<void()>* onEditorEnable;
 

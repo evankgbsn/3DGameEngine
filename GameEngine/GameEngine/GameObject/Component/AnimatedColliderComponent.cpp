@@ -62,9 +62,24 @@ bool AnimatedColliderComponent::Intersect(const LineSegment3D& lineSegment) cons
 	return collider->Intersect(lineSegment);
 }
 
-bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other) const
+bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other, glm::vec3& outHit) const
 {
-	return collider->Intersect(*other.GetCollider());
+	return collider->Intersect(*other.GetCollider(), outHit);
+}
+
+bool AnimatedColliderComponent::SphereIntersect(const StaticColliderComponent& other) const
+{
+	return collider->Intersect(*other.GetSphere());
+}
+
+bool AnimatedColliderComponent::BoxIntersect(const StaticColliderComponent& other) const
+{
+	if (SphereIntersect(other))
+	{
+		return collider->Intersect(*other.GetBox());
+	}
+
+	return false;
 }
 
 void AnimatedColliderComponent::SetGraphics(GraphicsObjectTexturedAnimated* const graphicsObject)

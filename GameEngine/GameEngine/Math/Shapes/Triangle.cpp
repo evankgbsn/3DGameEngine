@@ -7,8 +7,11 @@
 #include "OrientedBoundingBox.h"
 #include "../Math.h"
 #include "Ray.h"
+#include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 
 #include <glm/gtc/matrix_access.hpp>
+
+#include <cmath>
 
 Triangle::Triangle(const glm::vec3& intitialPoint0, const glm::vec3& initialPoint1, const glm::vec3& intitialPoint2) :
 	point0(intitialPoint0),
@@ -147,7 +150,7 @@ bool Triangle::PlaneIntersect(const Plane& plane) const
 	return true;
 }
 
-bool Triangle::TriangleIntersect(const Triangle& other) const
+bool Triangle::TriangleIntersect(const Triangle& other, glm::vec3& outHit) const
 {
 	const glm::vec3 t1_f0 = point1 - point0;
 	const glm::vec3 t1_f1 = point2 - point1;
@@ -175,6 +178,79 @@ bool Triangle::TriangleIntersect(const Triangle& other) const
 			return false;
 		}
 	}
+
+	// === Step 1: Compute Planes ===
+	Plane P1 = ConstructPlane();
+	Plane P2 = other.ConstructPlane();
+
+	// === Step 2: Handle Parallel / Coplanar Cases ===
+	if (std::abs(glm::dot(P1.GetNormal(), P2.GetNormal())) > 1.0 - FLT_EPSILON) {
+		// Planes are parallel
+		// Check if T2 is on P1
+		if (std::abs(P1.SignedDistance(other.point0)) < FLT_EPSILON) {
+			// Planes are coplanar. This is a 2D problem.
+			// We do not handle this case as requested.
+			return false;
+		}
+		// Planes are parallel and distinct. No intersection.
+		return false;
+	}
+
+	// === Step 3: Clip T1 against P2 ===
+	LineSegment3D S1; // The intersection segment of T1 and P2
+	if (!ClipTriangleAgainstPlane(P2, S1)) {
+		// T1 is entirely on one side of P2 or intersection is degenerate
+		return false;
+	}
+
+	// === Step 4: Clip T2 against P1 ===
+	LineSegment3D S2; // The intersection segment of T2 and P1
+	if (!other.ClipTriangleAgainstPlane(P1, S2)) {
+		// T2 is entirely on one side of P1 or intersection is degenerate
+		return false;
+	}
+
+	// === Step 5: Find 1D Overlap of S1 and S2 ===
+	// Both S1 and S2 lie on the same infinite line (the intersection of P1 and P2).
+	// We can project them onto that line (represented by S1's direction)
+	// and find the 1D interval overlap.
+
+	glm::vec3 L_dir = glm::normalize(S1.GetEnd() - S1.GetStart());
+	float L_len_sq = glm::dot(S1.GetStart() - S1.GetEnd(),S1.GetStart() - S1.GetEnd());
+
+	if (L_len_sq < FLT_EPSILON) {
+		// S1 is a single point. Degenerate.
+		return false;
+	}
+
+	// Parameterize the line L as: P(t) = S1[0] + L_dir * t
+	// Project S1 onto this line. By definition, its interval is [0, length(S1)].
+	float t_S1_start = 0.0;
+	float t_S1_end = glm::length(S1.GetEnd() - S1.GetStart());
+
+	// Project S2 onto the same line
+	float t_S2_start = glm::dot(S2.GetStart() - S1.GetStart(), L_dir);
+	float t_S2_end = glm::dot(S2.GetEnd() - S1.GetStart(), L_dir);
+
+	// Ensure S2 interval is correctly ordered
+	if (t_S2_start > t_S2_end) {
+		std::swap(t_S2_start, t_S2_end);
+	}
+
+	// === Step 6: Find the overlap of [t_S1_start, t_S1_end] and [t_S2_start, t_S2_end] ===
+	float t_overlap_start = std::max(t_S1_start, t_S2_start);
+	float t_overlap_end = std::min(t_S1_end, t_S2_end);
+
+	// Check if there is a valid overlap
+	if (t_overlap_start > t_overlap_end - FLT_EPSILON) {
+		// No overlap
+		return false;
+	}
+
+	// === Step 7: Convert 1D overlap back to 3D points ===
+	LineSegment3D intersectionLine(S1.GetStart() + L_dir * t_overlap_start, S1.GetStart() + L_dir * t_overlap_end);
+
+	outHit = (intersectionLine.GetStart() + intersectionLine.GetEnd()) / 2.0f;
 
 	return true;
 }
@@ -269,6 +345,63 @@ float Triangle::Raycast(const Ray& ray) const
 	}
 	
 	return -1;
+}
+
+bool Triangle::ClipTriangleAgainstPlane(const Plane& plane, LineSegment3D& outSegment) const
+{
+	std::vector<glm::vec3> triangle = { point0, point1, point2 };
+
+	// 1. Get signed distances for all 3 vertices
+	float dists[3];
+	for (int i = 0; i < 3; ++i) {
+		dists[i] = plane.SignedDistance(triangle[i]);
+	}
+
+	// 2. Find intersection points
+	// We iterate through the triangle's edges (0-1, 1-2, 2-0)
+	std::vector<glm::vec3> intersectionPoints;
+	for (int i = 0; i < 3; ++i) {
+		int j = (i + 1) % 3; // The next vertex in the loop
+
+		const glm::vec3& p1 = triangle[i];
+		const glm::vec3& p2 = triangle[j];
+		float d1 = dists[i];
+		float d2 = dists[j];
+
+		// If signs are different, the edge crosses the plane
+		if (d1 * d2 < 0.0) {
+			// Find the intersection point using linear interpolation
+			float t = d1 / (d1 - d2); // Interpolation factor
+			glm::vec3 intersection = p1 + (p2 - p1) * t;
+			intersectionPoints.push_back(intersection);
+		}
+		// Else if a vertex is *on* the plane, add it
+		// We check for duplicates, though unlikely with < 0 check above
+		else if (std::abs(d1) < FLT_EPSILON) {
+			bool found = false;
+			for (const auto& p : intersectionPoints) {
+				if ((p - p1).length() < FLT_EPSILON) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				intersectionPoints.push_back(p1);
+			}
+		}
+	}
+
+	// A valid intersection must be a line segment (2 points).
+	// 3 points can happen if one vertex is on the plane and two edges cross,
+	// but the two edge-crossing points and the vertex will form a single line.
+	// For this implementation, we'll assume the robust case finds 2 points.
+	if (intersectionPoints.size() == 2) {
+		outSegment = LineSegment3D(intersectionPoints[0], intersectionPoints[1]);
+		return true;
+	}
+
+	// Other cases (e.g., 0, 1, or 3+ points) are degenerate or coplanar.
+	return false;
 }
 
 bool Triangle::OverlapOnAxis(const AxisAlignedBoundingBox& aabb, const glm::vec3& axis) const

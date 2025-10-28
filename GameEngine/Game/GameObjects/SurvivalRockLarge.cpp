@@ -1,7 +1,7 @@
 #include "SurvivalRockLarge.h"
 
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
-#include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -22,8 +22,8 @@ void SurvivalRockLarge::Initialize()
 {
 	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("RockLarge"), TextureManager::GetTexture("Rock"), TextureManager::GetTexture("Rock"));
 	graphics->SetShine(32.0f);
-	collider = new OrientedBoundingBoxComponent(ModelManager::GetModel("RockLarge")->GetVertices());
-	collider->UpdateCollider(graphics->GetTransform());
+	collider = new StaticColliderComponent(graphics);
+	collider->UpdateCollider();
 	SetupEditorCallbacks();
 
 	AddComponent(graphics, "Graphics");
@@ -41,12 +41,12 @@ void SurvivalRockLarge::Terminate()
 
 void SurvivalRockLarge::GameUpdate()
 {
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 void SurvivalRockLarge::EditorUpdate()
 {
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 void SurvivalRockLarge::Load()
@@ -81,9 +81,10 @@ void SurvivalRockLarge::Deserialize()
 	GameObject::Deserialize();
 
 	graphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("Graphics"));
-	collider = static_cast<OrientedBoundingBoxComponent*>(GetComponent("Collider"));
+	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
 
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->SetGraphics(graphics);
+	collider->UpdateCollider();
 
 	CleanupEditorCallbacks();
 	SetupEditorCallbacks();
@@ -95,7 +96,7 @@ bool SurvivalRockLarge::Hovered() const
 
 	if (collider != nullptr)
 	{
-		return collider->LineIntersect(line);
+		return collider->Intersect(line);
 	}
 
 	return false;
@@ -104,7 +105,7 @@ bool SurvivalRockLarge::Hovered() const
 void SurvivalRockLarge::SetPosition(const glm::vec3& newPos)
 {
 	graphics->SetPosition(newPos);
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::vec3 SurvivalRockLarge::GetPosition() const
@@ -115,7 +116,7 @@ glm::vec3 SurvivalRockLarge::GetPosition() const
 void SurvivalRockLarge::SetRotation(const glm::mat4& newRot)
 {
 	graphics->SetRotation(newRot);
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::mat4 SurvivalRockLarge::GetRotation() const

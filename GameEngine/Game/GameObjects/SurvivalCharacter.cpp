@@ -8,6 +8,7 @@
 #include "GameEngine/GameObject/Component/CameraComponent.h"
 #include "GameEngine/GameObject/Component/AnimatedColliderComponent.h"
 #include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
@@ -551,10 +552,13 @@ void SurvivalCharacter::MoveToTarget()
 
 				if (tree != nullptr)
 				{
-					OrientedBoundingBoxComponent* treeCollider = dynamic_cast<OrientedBoundingBoxComponent*>(tree->GetComponent("Collider"));
-					if (characterCollider->Intersect(*treeCollider))
+					StaticColliderComponent* treeCollider = dynamic_cast<StaticColliderComponent*>(tree->GetComponent("Collider"));
+					if (characterCollider->BoxIntersect(*treeCollider))
 					{
-						characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						glm::vec3 hit;
+						characterCollider->Intersect(*treeCollider, hit);
+
+						characterGraphics->Translate(-glm::normalize(tree->GetPosition() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);
@@ -563,10 +567,10 @@ void SurvivalCharacter::MoveToTarget()
 				}
 				else if (crate != nullptr)
 				{
-					OrientedBoundingBoxComponent* crateCollider = dynamic_cast<OrientedBoundingBoxComponent*>(crate->GetComponent("Collider"));
-					if (characterCollider->Intersect(*crateCollider))
+					StaticColliderComponent* crateCollider = dynamic_cast<StaticColliderComponent*>(crate->GetComponent("Collider"));
+					if (characterCollider->BoxIntersect(*crateCollider))
 					{
-						characterGraphics->Translate(-glm::normalize(crateCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						characterGraphics->Translate(-glm::normalize(crate->GetPosition() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);
@@ -575,10 +579,10 @@ void SurvivalCharacter::MoveToTarget()
 				}
 				else if (rock != nullptr)
 				{
-					OrientedBoundingBoxComponent* rockCollider = dynamic_cast<OrientedBoundingBoxComponent*>(rock->GetComponent("Collider"));
-					if (characterCollider->Intersect(*rockCollider))
+					StaticColliderComponent* rockCollider = dynamic_cast<StaticColliderComponent*>(rock->GetComponent("Collider"));
+					if (characterCollider->BoxIntersect(*rockCollider))
 					{
-						characterGraphics->Translate(-glm::normalize(rockCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						characterGraphics->Translate(-glm::normalize(rock->GetPosition() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);

@@ -134,9 +134,10 @@ void SurvivalLoginUI::Start()
 			if (!SceneManager::SceneLoaded(sceneName))
 			{
 				SceneManager::LoadScene(sceneName);
+				SceneManager::InitializeScene(sceneName);
 			}
 
-			SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Main.xml");
+			//SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Main.xml");
 			SceneManager::StartScene(sceneName);
 		}
 	}

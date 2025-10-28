@@ -36,7 +36,11 @@ public:
 
 	bool Intersect(const LineSegment3D& lineSegement) const;
 
-	bool Intersect(const StaticColliderComponent& other) const;
+	bool Intersect(const StaticColliderComponent& other, glm::vec3& outHit) const;
+
+	bool SphereIntersect(const StaticColliderComponent& other) const;
+
+	bool BoxIntersect(const StaticColliderComponent& other) const;
 
 	void SetGraphics(GraphicsObjectTexturedAnimated* const graphicsObject);
 

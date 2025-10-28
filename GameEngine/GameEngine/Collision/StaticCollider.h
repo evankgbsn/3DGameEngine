@@ -35,7 +35,7 @@ public:
 
 	bool Intersect(const LineSegment3D& other) const;
 
-	bool Intersect(const AnimatedCollider& other) const;
+	bool Intersect(const AnimatedCollider& other, glm::vec3& outHit) const;
 
 	float Intersect(const Ray& ray) const;
 
@@ -47,29 +47,17 @@ public:
 
 	glm::mat4 GetTransform() const;
 
-	void Translate(const glm::vec3& translation);
-
 	const Model* const GetWrapedGraphicsModel() const;
 
 	std::vector<Triangle> GetTriangles() const;
 
+	glm::vec3 GetSphereOrigin() const;
+
+	glm::vec3 GetBoxOrigin() const;
+
 private:
 
 	friend class AnimatedCollider;
-
-	struct BVHNode
-	{
-		BVHNode() :
-			children(nullptr),
-			numTriangles(0),
-			triangles(nullptr)
-		{
-		};
-		AxisAlignedBoundingBoxWithVisualization bounds;
-		BVHNode* children;
-		int numTriangles;
-		int* triangles;
-	};
 
 	StaticCollider(const StaticCollider&) = delete;
 
@@ -79,14 +67,6 @@ private:
 
 	StaticCollider& operator=(StaticCollider&&) = delete;
 
-	void AccelerateMesh();
-
-	void SplitBVHNode(BVHNode* node, int depth);
-
-	void FreeBVHNode(BVHNode* node);
-
-	BVHNode* accelerator;
-
 	GO3D* wrapedGraphics;
 
 	OrientedBoundingBoxWithVisualization* obb;
@@ -95,7 +75,7 @@ private:
 
 	GOColored* trianglesColliderVisualization;
 
-
+	glm::vec3 lastTranslation;
 
 };
 

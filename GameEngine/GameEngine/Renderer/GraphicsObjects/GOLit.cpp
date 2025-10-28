@@ -8,6 +8,7 @@
 #include "../Camera/CameraManager.h"
 #include "../Texture/Texture.h"
 #include "../GraphicsObjects/GO3D.h"
+#include "../Renderer/Renderer.h"
 
 #include <GL/glew.h>
 
@@ -60,6 +61,11 @@ GOLit::~GOLit()
 
 void GOLit::UpdateLighting()
 {
+	if (!Renderer::ShouldDraw())
+	{
+		return;
+	}
+
 	unsigned int textureSlotId = GL_TEXTURE0;
 
 	for (const Material& mat : materials)

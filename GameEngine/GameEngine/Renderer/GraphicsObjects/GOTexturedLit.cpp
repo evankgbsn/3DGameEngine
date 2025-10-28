@@ -8,6 +8,7 @@
 #include "../Model/Model.h"
 #include "../Camera/Camera.h"
 #include "../Camera/CameraManager.h"
+#include "../Renderer/Renderer.h"
 
 GOTexturedLit::GOTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap) :
 	GOLit(std::vector<Material>( {Material(diffuseMap, specularMap)})),
@@ -24,6 +25,11 @@ GOTexturedLit::~GOTexturedLit()
 
 void GOTexturedLit::Update()
 {
+	if (!Renderer::ShouldDraw())
+	{
+		return;
+	}
+
 	ShaderManager::StartShaderUsage("TexturedLit");
 
 	glActiveTexture(GL_TEXTURE31);
@@ -56,6 +62,11 @@ void GOTexturedLit::Update()
 
 void GOTexturedLit::RenderToShadowMap()
 {
+	if (!Renderer::ShouldDraw())
+	{
+		return;
+	}
+
 	ShaderManager::StartShaderUsage("ShadowMap");
 	
 	float near_plane = -100.0f, far_plane = 100.0f;

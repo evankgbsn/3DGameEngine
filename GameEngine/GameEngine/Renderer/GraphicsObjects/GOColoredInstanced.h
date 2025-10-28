@@ -120,6 +120,11 @@ private:
 		glm::mat4 projection;
 	} vp;
 
+	struct ClipPlaneUBO
+	{
+		glm::vec4 plane;
+	} clipPlane;
+
 	GOColoredInstanced() = delete;
 
 	GOColoredInstanced(const GOColoredInstanced&) = delete;
@@ -143,6 +148,8 @@ private:
 	unsigned int upBuffer;
 
 	unsigned int forwardBuffer;
+
+	unsigned int clipPlaneBuffer;
 
 	std::vector<glm::mat4> translations;
 

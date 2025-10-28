@@ -29,8 +29,6 @@ SphereWithVisualization::~SphereWithVisualization()
 
 void SphereWithVisualization::Update(const glm::mat4& transformation)
 {
-
-
 	glm::mat4 rotation(1.0f);
 	rotation[0] = glm::normalize(transformation[0]);
 	rotation[1] = glm::normalize(transformation[1]);

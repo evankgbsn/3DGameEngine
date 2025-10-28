@@ -1,0 +1,5151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="Island.xml" type="class SurvivalScene">
+	<Object type="SurvivalTree" name="SurvivalTree15">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.469211"/>
+				<float XY="0.000000"/>
+				<float XZ="0.883087"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.883087"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.469211"/>
+				<float ZW="0.000000"/>
+				<float WX="101.633972"/>
+				<float WY="0.500263"/>
+				<float WZ="-45.432518"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.469211"/>
+				<float XY="0.000000"/>
+				<float XZ="0.883087"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.883087"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.469211"/>
+				<float ZW="0.000000"/>
+				<float WX="101.633972"/>
+				<float WY="0.500263"/>
+				<float WZ="-45.432518"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.469211"/>
+				<float XY="0.000000"/>
+				<float XZ="0.883087"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.883087"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.469211"/>
+				<float ZW="0.000000"/>
+				<float WX="101.633972"/>
+				<float WY="0.500263"/>
+				<float WZ="-45.432518"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalSun" name="Sun">
+		<Component type="DirectionalLightComponent" name="Sun">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="1.500000"/>
+				<float Y="0.500000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="-0.500000"/>
+				<float Y="-0.500000"/>
+				<float Z="-0.500000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="Terrain">
+		<Component type="TerrainComponent" name="SurvivalTerrain">
+			<Variable type="float" name="YOffset">
+				<float val="-13.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="UVTiling">
+				<int val="1"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture1">
+				<string val="TerrainSand"/>
+			</Variable>
+			<Variable type="string" name="BlendMap">
+				<string val="BlendMap"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="SurvivalTerrain"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture2">
+				<string val="TerrainRock"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/IslandHeightMap.png"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture0">
+				<string val="TerrainDirt"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture0">
+				<string val="TerrainDirt"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture1">
+				<string val="TerrainSand"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture2">
+				<string val="TerrainRock"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture3">
+				<string val="TerrainGrass"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture3">
+				<string val="TerrainGrass"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree24">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-121.336746"/>
+				<float WY="2.088840"/>
+				<float WZ="53.688015"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-121.336746"/>
+				<float WY="2.088840"/>
+				<float WZ="53.688015"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-121.336746"/>
+				<float WY="2.088840"/>
+				<float WZ="53.688015"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="LargeRock">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.794467"/>
+				<float XY="0.000000"/>
+				<float XZ="0.607307"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.607307"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.794467"/>
+				<float ZW="0.000000"/>
+				<float WX="9.440044"/>
+				<float WY="-1.686483"/>
+				<float WZ="-0.160275"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree42">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.135075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990835"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990835"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.135075"/>
+				<float ZW="0.000000"/>
+				<float WX="-66.483238"/>
+				<float WY="-2.571743"/>
+				<float WZ="180.879761"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.135075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990835"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990835"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.135075"/>
+				<float ZW="0.000000"/>
+				<float WX="-66.483238"/>
+				<float WY="-2.571743"/>
+				<float WZ="180.879761"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.135075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990835"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990835"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.135075"/>
+				<float ZW="0.000000"/>
+				<float WX="-66.483238"/>
+				<float WY="-2.571743"/>
+				<float WZ="180.879761"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree11">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.814010"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.580850"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.580850"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.814010"/>
+				<float ZW="0.000000"/>
+				<float WX="104.735596"/>
+				<float WY="2.304337"/>
+				<float WZ="-15.061396"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.814010"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.580850"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.580850"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.814010"/>
+				<float ZW="0.000000"/>
+				<float WX="104.735596"/>
+				<float WY="2.304337"/>
+				<float WZ="-15.061396"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.814010"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.580850"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.580850"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.814010"/>
+				<float ZW="0.000000"/>
+				<float WX="104.735596"/>
+				<float WY="2.304337"/>
+				<float WZ="-15.061396"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="Tree">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.827601"/>
+				<float XY="0.000000"/>
+				<float XZ="0.561317"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.561317"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.827601"/>
+				<float ZW="0.000000"/>
+				<float WX="3.286943"/>
+				<float WY="-2.179220"/>
+				<float WZ="20.023354"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.827601"/>
+				<float XY="0.000000"/>
+				<float XZ="0.561317"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.561317"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.827601"/>
+				<float ZW="0.000000"/>
+				<float WX="3.286943"/>
+				<float WY="-2.179220"/>
+				<float WZ="20.023354"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.827601"/>
+				<float XY="0.000000"/>
+				<float XZ="0.561317"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.561317"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.827601"/>
+				<float ZW="0.000000"/>
+				<float WX="3.286943"/>
+				<float WY="-2.179220"/>
+				<float WZ="20.023354"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalCrate" name="Crate">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.414417"/>
+				<float XY="0.000000"/>
+				<float XZ="0.910087"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.910087"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.414417"/>
+				<float ZW="0.000000"/>
+				<float WX="-0.025206"/>
+				<float WY="-0.471308"/>
+				<float WZ="28.383995"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="CrateSpec"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree45">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.814712"/>
+				<float XY="0.000000"/>
+				<float XZ="0.579866"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.579866"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.814712"/>
+				<float ZW="0.000000"/>
+				<float WX="-54.927719"/>
+				<float WY="-1.128563"/>
+				<float WZ="89.393433"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.814712"/>
+				<float XY="0.000000"/>
+				<float XZ="0.579866"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.579866"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.814712"/>
+				<float ZW="0.000000"/>
+				<float WX="-54.927719"/>
+				<float WY="-1.128563"/>
+				<float WZ="89.393433"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.814712"/>
+				<float XY="0.000000"/>
+				<float XZ="0.579866"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.579866"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.814712"/>
+				<float ZW="0.000000"/>
+				<float WX="-54.927719"/>
+				<float WY="-1.128563"/>
+				<float WZ="89.393433"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree16">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.705494"/>
+				<float XY="0.000000"/>
+				<float XZ="0.708715"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.708715"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.705494"/>
+				<float ZW="0.000000"/>
+				<float WX="68.805908"/>
+				<float WY="0.000017"/>
+				<float WZ="89.167046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.705494"/>
+				<float XY="0.000000"/>
+				<float XZ="0.708715"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.708715"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.705494"/>
+				<float ZW="0.000000"/>
+				<float WX="68.805908"/>
+				<float WY="0.000017"/>
+				<float WZ="89.167046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.705494"/>
+				<float XY="0.000000"/>
+				<float XZ="0.708715"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.708715"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.705494"/>
+				<float ZW="0.000000"/>
+				<float WX="68.805908"/>
+				<float WY="0.000017"/>
+				<float WZ="89.167046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalWater" name="Water">
+		<Component type="WaterComponent" name="WaterTerrain">
+			<Variable type="float" name="YOffset">
+				<float val="-5.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="500"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="WaterTerrain"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/Black.png"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="PointLight">
+		<Component type="PointLightComponent" name="PointLight">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="10.000000"/>
+				<float Y="10.000000"/>
+				<float Z="10.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="20.211611"/>
+				<float Y="5.000000"/>
+				<float Z="22.514484"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree43">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.557075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.830463"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.830463"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.557075"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.862392"/>
+				<float WY="-1.128561"/>
+				<float WZ="171.923721"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.557075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.830463"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.830463"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.557075"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.862392"/>
+				<float WY="-1.128561"/>
+				<float WZ="171.923721"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.557075"/>
+				<float XY="0.000000"/>
+				<float XZ="0.830463"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.830463"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.557075"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.862392"/>
+				<float WY="-1.128561"/>
+				<float WZ="171.923721"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree10">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.887298"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.461197"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.461197"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.887298"/>
+				<float ZW="0.000000"/>
+				<float WX="7.279831"/>
+				<float WY="3.223570"/>
+				<float WZ="-10.078045"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.887298"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.461197"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.461197"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.887298"/>
+				<float ZW="0.000000"/>
+				<float WX="7.279831"/>
+				<float WY="3.223570"/>
+				<float WZ="-10.078045"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.887298"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.461197"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.461197"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.887298"/>
+				<float ZW="0.000000"/>
+				<float WX="7.279831"/>
+				<float WY="3.223570"/>
+				<float WZ="-10.078045"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree41">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-148.985947"/>
+				<float WY="-2.571758"/>
+				<float WZ="-33.192745"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-148.985947"/>
+				<float WY="-2.571758"/>
+				<float WZ="-33.192745"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-148.985947"/>
+				<float WY="-2.571758"/>
+				<float WZ="-33.192745"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree12">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.899183"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.437573"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.437573"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.899183"/>
+				<float ZW="0.000000"/>
+				<float WX="96.134567"/>
+				<float WY="1.194256"/>
+				<float WZ="14.172856"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.899183"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.437573"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.437573"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.899183"/>
+				<float ZW="0.000000"/>
+				<float WX="96.134567"/>
+				<float WY="1.194256"/>
+				<float WZ="14.172856"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.899183"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.437573"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.437573"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.899183"/>
+				<float ZW="0.000000"/>
+				<float WX="96.134567"/>
+				<float WY="1.194256"/>
+				<float WZ="14.172856"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree40">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.841178"/>
+				<float XY="0.000000"/>
+				<float XZ="0.540759"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.540759"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.841178"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.869110"/>
+				<float WY="-1.863728"/>
+				<float WZ="-28.953541"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.841178"/>
+				<float XY="0.000000"/>
+				<float XZ="0.540759"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.540759"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.841178"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.869110"/>
+				<float WY="-1.863728"/>
+				<float WZ="-28.953541"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.841178"/>
+				<float XY="0.000000"/>
+				<float XZ="0.540759"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.540759"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.841178"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.869110"/>
+				<float WY="-1.863728"/>
+				<float WZ="-28.953541"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree13">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.797242"/>
+				<float XY="0.000000"/>
+				<float XZ="0.603659"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.603659"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.797242"/>
+				<float ZW="0.000000"/>
+				<float WX="73.065392"/>
+				<float WY="-0.000010"/>
+				<float WZ="37.690384"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.797242"/>
+				<float XY="0.000000"/>
+				<float XZ="0.603659"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.603659"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.797242"/>
+				<float ZW="0.000000"/>
+				<float WX="73.065392"/>
+				<float WY="-0.000010"/>
+				<float WZ="37.690384"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.797242"/>
+				<float XY="0.000000"/>
+				<float XZ="0.603659"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.603659"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.797242"/>
+				<float ZW="0.000000"/>
+				<float WX="73.065392"/>
+				<float WY="-0.000010"/>
+				<float WZ="37.690384"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree14">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.812396"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.583106"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.583106"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.812396"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.951401"/>
+				<float WY="4.264385"/>
+				<float WZ="136.370575"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.812396"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.583106"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.583106"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.812396"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.951401"/>
+				<float WY="4.264385"/>
+				<float WZ="136.370575"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.812396"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.583106"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.583106"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.812396"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.951401"/>
+				<float WY="4.264385"/>
+				<float WZ="136.370575"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree44">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="14.366812"/>
+				<float WY="-1.128563"/>
+				<float WZ="142.998825"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="14.366812"/>
+				<float WY="-1.128563"/>
+				<float WZ="142.998825"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="14.366812"/>
+				<float WY="-1.128563"/>
+				<float WZ="142.998825"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree17">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-2.815195"/>
+				<float WY="-1.156908"/>
+				<float WZ="71.091553"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-2.815195"/>
+				<float WY="-1.156908"/>
+				<float WZ="71.091553"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-2.815195"/>
+				<float WY="-1.156908"/>
+				<float WZ="71.091553"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree18">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.508075"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.861313"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.861313"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.508075"/>
+				<float ZW="0.000000"/>
+				<float WX="-22.582375"/>
+				<float WY="-0.402035"/>
+				<float WZ="31.693665"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.508075"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.861313"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.861313"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.508075"/>
+				<float ZW="0.000000"/>
+				<float WX="-22.582375"/>
+				<float WY="-0.402035"/>
+				<float WZ="31.693665"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.508075"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.861313"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.861313"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.508075"/>
+				<float ZW="0.000000"/>
+				<float WX="-22.582375"/>
+				<float WY="-0.402035"/>
+				<float WZ="31.693665"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree19">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-38.034637"/>
+				<float WY="-0.778496"/>
+				<float WZ="26.223389"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-38.034637"/>
+				<float WY="-0.778496"/>
+				<float WZ="26.223389"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-38.034637"/>
+				<float WY="-0.778496"/>
+				<float WZ="26.223389"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree20">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.252995"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.967468"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.967468"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.252995"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.509949"/>
+				<float WY="-0.370235"/>
+				<float WZ="1.209511"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.252995"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.967468"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.967468"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.252995"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.509949"/>
+				<float WY="-0.370235"/>
+				<float WZ="1.209511"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.252995"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.967468"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.967468"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.252995"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.509949"/>
+				<float WY="-0.370235"/>
+				<float WZ="1.209511"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree21">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.803159"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.595765"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.595765"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.803159"/>
+				<float ZW="0.000000"/>
+				<float WX="8.477060"/>
+				<float WY="-0.756298"/>
+				<float WZ="45.709064"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.803159"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.595765"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.595765"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.803159"/>
+				<float ZW="0.000000"/>
+				<float WX="8.477060"/>
+				<float WY="-0.756298"/>
+				<float WZ="45.709064"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.803159"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.595765"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.595765"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.803159"/>
+				<float ZW="0.000000"/>
+				<float WX="8.477060"/>
+				<float WY="-0.756298"/>
+				<float WZ="45.709064"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree22">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.793779"/>
+				<float XY="0.000000"/>
+				<float XZ="0.608206"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.608206"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.793779"/>
+				<float ZW="0.000000"/>
+				<float WX="-21.120407"/>
+				<float WY="0.529219"/>
+				<float WZ="65.125839"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.793779"/>
+				<float XY="0.000000"/>
+				<float XZ="0.608206"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.608206"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.793779"/>
+				<float ZW="0.000000"/>
+				<float WX="-21.120407"/>
+				<float WY="0.529219"/>
+				<float WZ="65.125839"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.793779"/>
+				<float XY="0.000000"/>
+				<float XZ="0.608206"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.608206"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.793779"/>
+				<float ZW="0.000000"/>
+				<float WX="-21.120407"/>
+				<float WY="0.529219"/>
+				<float WZ="65.125839"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree25">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.766891"/>
+				<float WY="-1.328079"/>
+				<float WZ="61.055199"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.766891"/>
+				<float WY="-1.328079"/>
+				<float WZ="61.055199"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.766891"/>
+				<float WY="-1.328079"/>
+				<float WZ="61.055199"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree26">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-111.665977"/>
+				<float WY="-1.729811"/>
+				<float WZ="75.062035"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-111.665977"/>
+				<float WY="-1.729811"/>
+				<float WZ="75.062035"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-111.665977"/>
+				<float WY="-1.729811"/>
+				<float WZ="75.062035"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree27">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-86.359856"/>
+				<float WY="-0.910553"/>
+				<float WZ="18.215561"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-86.359856"/>
+				<float WY="-0.910553"/>
+				<float WZ="18.215561"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-86.359856"/>
+				<float WY="-0.910553"/>
+				<float WZ="18.215561"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree28">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.459694"/>
+				<float WY="-0.869540"/>
+				<float WZ="27.937956"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.459694"/>
+				<float WY="-0.869540"/>
+				<float WZ="27.937956"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.459694"/>
+				<float WY="-0.869540"/>
+				<float WZ="27.937956"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree29">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-94.452957"/>
+				<float WY="-0.869539"/>
+				<float WZ="-6.580789"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-94.452957"/>
+				<float WY="-0.869539"/>
+				<float WZ="-6.580789"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-94.452957"/>
+				<float WY="-0.869539"/>
+				<float WZ="-6.580789"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge54">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.132503"/>
+				<float XY="0.000000"/>
+				<float XZ="0.991183"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.991183"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.132503"/>
+				<float ZW="0.000000"/>
+				<float WX="106.126312"/>
+				<float WY="-3.303905"/>
+				<float WZ="111.337090"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree30">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.621856"/>
+				<float XY="0.000000"/>
+				<float XZ="0.783131"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.783131"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.621856"/>
+				<float ZW="0.000000"/>
+				<float WX="-124.713806"/>
+				<float WY="2.255563"/>
+				<float WZ="-50.468559"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.621856"/>
+				<float XY="0.000000"/>
+				<float XZ="0.783131"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.783131"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.621856"/>
+				<float ZW="0.000000"/>
+				<float WX="-124.713806"/>
+				<float WY="2.255563"/>
+				<float WZ="-50.468559"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.621856"/>
+				<float XY="0.000000"/>
+				<float XZ="0.783131"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.783131"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.621856"/>
+				<float ZW="0.000000"/>
+				<float WX="-124.713806"/>
+				<float WY="2.255563"/>
+				<float WZ="-50.468559"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge55">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.156623"/>
+				<float XY="0.000000"/>
+				<float XZ="0.987658"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.987658"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.156623"/>
+				<float ZW="0.000000"/>
+				<float WX="67.161804"/>
+				<float WY="-2.486511"/>
+				<float WZ="114.842972"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree31">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.895791"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.444476"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.444476"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.895791"/>
+				<float ZW="0.000000"/>
+				<float WX="-99.543961"/>
+				<float WY="0.035079"/>
+				<float WZ="-66.152550"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.895791"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.444476"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.444476"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.895791"/>
+				<float ZW="0.000000"/>
+				<float WX="-99.543961"/>
+				<float WY="0.035079"/>
+				<float WZ="-66.152550"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.895791"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.444476"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.444476"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.895791"/>
+				<float ZW="0.000000"/>
+				<float WX="-99.543961"/>
+				<float WY="0.035079"/>
+				<float WZ="-66.152550"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge56">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.177313"/>
+				<float XY="0.000000"/>
+				<float XZ="0.984155"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.984155"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.177313"/>
+				<float ZW="0.000000"/>
+				<float WX="-1.575565"/>
+				<float WY="-1.724653"/>
+				<float WZ="171.372391"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree32">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.426587"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.904447"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.904447"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.426587"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.941326"/>
+				<float WY="7.566326"/>
+				<float WZ="-97.311874"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.426587"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.904447"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.904447"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.426587"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.941326"/>
+				<float WY="7.566326"/>
+				<float WZ="-97.311874"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.426587"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.904447"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.904447"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.426587"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.941326"/>
+				<float WY="7.566326"/>
+				<float WZ="-97.311874"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge57">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.910832"/>
+				<float WY="-3.533562"/>
+				<float WZ="179.858215"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree33">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.615166"/>
+				<float XY="0.000000"/>
+				<float XZ="0.788397"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.788397"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.615166"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.089027"/>
+				<float WY="6.408342"/>
+				<float WZ="-106.498947"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.615166"/>
+				<float XY="0.000000"/>
+				<float XZ="0.788397"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.788397"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.615166"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.089027"/>
+				<float WY="6.408342"/>
+				<float WZ="-106.498947"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.615166"/>
+				<float XY="0.000000"/>
+				<float XZ="0.788397"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.788397"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.615166"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.089027"/>
+				<float WY="6.408342"/>
+				<float WZ="-106.498947"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge50">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="107.612137"/>
+				<float WY="-1.525421"/>
+				<float WZ="-78.824867"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree34">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-17.495285"/>
+				<float WY="5.373241"/>
+				<float WZ="-147.898651"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-17.495285"/>
+				<float WY="5.373241"/>
+				<float WZ="-147.898651"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-17.495285"/>
+				<float WY="5.373241"/>
+				<float WZ="-147.898651"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge51">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.919575"/>
+				<float XY="0.000000"/>
+				<float XZ="0.392913"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.392913"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.919575"/>
+				<float ZW="0.000000"/>
+				<float WX="125.998116"/>
+				<float WY="-0.752201"/>
+				<float WZ="-132.573837"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree35">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.754454"/>
+				<float XY="0.000000"/>
+				<float XZ="0.656353"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.656353"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.754454"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.881916"/>
+				<float WY="-1.247894"/>
+				<float WZ="-153.842178"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.754454"/>
+				<float XY="0.000000"/>
+				<float XZ="0.656353"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.656353"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.754454"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.881916"/>
+				<float WY="-1.247894"/>
+				<float WZ="-153.842178"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.754454"/>
+				<float XY="0.000000"/>
+				<float XZ="0.656353"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.656353"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.754454"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.881916"/>
+				<float WY="-1.247894"/>
+				<float WZ="-153.842178"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge52">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="127.553055"/>
+				<float WY="-1.588227"/>
+				<float WZ="-3.585156"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree36">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.485625"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.874167"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.874167"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.485625"/>
+				<float ZW="0.000000"/>
+				<float WX="-28.302246"/>
+				<float WY="-2.354595"/>
+				<float WZ="-106.278603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.485625"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.874167"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.874167"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.485625"/>
+				<float ZW="0.000000"/>
+				<float WX="-28.302246"/>
+				<float WY="-2.354595"/>
+				<float WZ="-106.278603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.485625"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.874167"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.874167"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.485625"/>
+				<float ZW="0.000000"/>
+				<float WX="-28.302246"/>
+				<float WY="-2.354595"/>
+				<float WZ="-106.278603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge53">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="115.766281"/>
+				<float WY="-1.588570"/>
+				<float WZ="119.557281"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree37">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-81.199387"/>
+				<float WY="-0.543476"/>
+				<float WZ="-141.327286"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-81.199387"/>
+				<float WY="-0.543476"/>
+				<float WZ="-141.327286"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-81.199387"/>
+				<float WY="-0.543476"/>
+				<float WZ="-141.327286"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree38">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.049088"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998795"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998795"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.049088"/>
+				<float ZW="0.000000"/>
+				<float WX="-129.646881"/>
+				<float WY="-1.863766"/>
+				<float WZ="-87.698105"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.049088"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998795"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998795"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.049088"/>
+				<float ZW="0.000000"/>
+				<float WX="-129.646881"/>
+				<float WY="-1.863766"/>
+				<float WZ="-87.698105"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.049088"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998795"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998795"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.049088"/>
+				<float ZW="0.000000"/>
+				<float WX="-129.646881"/>
+				<float WY="-1.863766"/>
+				<float WZ="-87.698105"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree39">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.718143"/>
+				<float XY="0.000000"/>
+				<float XZ="0.695895"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.695895"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.718143"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.778767"/>
+				<float WY="-1.863747"/>
+				<float WZ="-56.255310"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.718143"/>
+				<float XY="0.000000"/>
+				<float XZ="0.695895"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.695895"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.718143"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.778767"/>
+				<float WY="-1.863747"/>
+				<float WZ="-56.255310"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.718143"/>
+				<float XY="0.000000"/>
+				<float XZ="0.695895"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.695895"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.718143"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.778767"/>
+				<float WY="-1.863747"/>
+				<float WZ="-56.255310"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge47">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="30.980022"/>
+				<float WY="-4.093765"/>
+				<float WZ="52.140018"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge48">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.848639"/>
+				<float XY="0.000000"/>
+				<float XZ="0.528974"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.528974"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.848639"/>
+				<float ZW="0.000000"/>
+				<float WX="33.610085"/>
+				<float WY="-4.093766"/>
+				<float WZ="-85.036667"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge49">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.927074"/>
+				<float XY="0.000000"/>
+				<float XZ="0.374878"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.374878"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.927074"/>
+				<float ZW="0.000000"/>
+				<float WX="14.327353"/>
+				<float WY="-4.093771"/>
+				<float WZ="-87.179779"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge58">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-56.430656"/>
+				<float WY="-0.812567"/>
+				<float WZ="117.335838"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge59">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.347317"/>
+				<float XY="0.000000"/>
+				<float XZ="0.937748"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.937748"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.347317"/>
+				<float ZW="0.000000"/>
+				<float WX="-127.340584"/>
+				<float WY="-2.619471"/>
+				<float WZ="97.391594"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge60">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-128.779648"/>
+				<float WY="-2.561745"/>
+				<float WZ="67.891907"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge61">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-171.202652"/>
+				<float WY="-2.561746"/>
+				<float WZ="23.542200"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge62">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.605881"/>
+				<float WY="-4.392517"/>
+				<float WZ="-60.550102"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge63">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-161.850327"/>
+				<float WY="-6.252134"/>
+				<float WZ="-60.419456"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge64">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-151.330597"/>
+				<float WY="-4.355885"/>
+				<float WZ="-165.714722"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge65">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.079375"/>
+				<float XY="0.000000"/>
+				<float XZ="0.996845"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.996845"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.079375"/>
+				<float ZW="0.000000"/>
+				<float WX="-164.516418"/>
+				<float WY="-6.277620"/>
+				<float WZ="-163.779770"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge66">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.435157"/>
+				<float XY="0.000000"/>
+				<float XZ="0.900355"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.900355"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.435157"/>
+				<float ZW="0.000000"/>
+				<float WX="-157.786026"/>
+				<float WY="-3.369455"/>
+				<float WZ="-165.452469"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge67">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-57.868683"/>
+				<float WY="-1.476694"/>
+				<float WZ="-147.222504"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge68">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.988439"/>
+				<float XY="0.000000"/>
+				<float XZ="0.151624"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.151624"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.988439"/>
+				<float ZW="0.000000"/>
+				<float WX="-84.628349"/>
+				<float WY="-1.476694"/>
+				<float WZ="-175.833282"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge69">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="17.117826"/>
+				<float WY="-3.406199"/>
+				<float WZ="-166.125183"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree70">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.595231"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.803555"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.803555"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.595231"/>
+				<float ZW="0.000000"/>
+				<float WX="102.266312"/>
+				<float WY="2.677250"/>
+				<float WZ="-135.428421"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.595231"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.803555"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.803555"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.595231"/>
+				<float ZW="0.000000"/>
+				<float WX="102.266312"/>
+				<float WY="2.677250"/>
+				<float WZ="-135.428421"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.595231"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.803555"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.803555"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.595231"/>
+				<float ZW="0.000000"/>
+				<float WX="102.266312"/>
+				<float WY="2.677250"/>
+				<float WZ="-135.428421"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree71">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.726879"/>
+				<float XY="0.000000"/>
+				<float XZ="0.686764"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.686764"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.726879"/>
+				<float ZW="0.000000"/>
+				<float WX="82.690582"/>
+				<float WY="4.669743"/>
+				<float WZ="-155.139938"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.726879"/>
+				<float XY="0.000000"/>
+				<float XZ="0.686764"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.686764"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.726879"/>
+				<float ZW="0.000000"/>
+				<float WX="82.690582"/>
+				<float WY="4.669743"/>
+				<float WZ="-155.139938"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.726879"/>
+				<float XY="0.000000"/>
+				<float XZ="0.686764"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.686764"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.726879"/>
+				<float ZW="0.000000"/>
+				<float WX="82.690582"/>
+				<float WY="4.669743"/>
+				<float WZ="-155.139938"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree72">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.151612"/>
+				<float XY="0.000000"/>
+				<float XZ="0.988441"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.988441"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.151612"/>
+				<float ZW="0.000000"/>
+				<float WX="64.331833"/>
+				<float WY="4.669746"/>
+				<float WZ="-138.653992"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.151612"/>
+				<float XY="0.000000"/>
+				<float XZ="0.988441"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.988441"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.151612"/>
+				<float ZW="0.000000"/>
+				<float WX="64.331833"/>
+				<float WY="4.669746"/>
+				<float WZ="-138.653992"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.151612"/>
+				<float XY="0.000000"/>
+				<float XZ="0.988441"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.988441"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.151612"/>
+				<float ZW="0.000000"/>
+				<float WX="64.331833"/>
+				<float WY="4.669746"/>
+				<float WZ="-138.653992"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree73">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.745716"/>
+				<float XY="0.000000"/>
+				<float XZ="0.666263"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.666263"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.745716"/>
+				<float ZW="0.000000"/>
+				<float WX="81.300919"/>
+				<float WY="3.719082"/>
+				<float WZ="-121.738564"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.745716"/>
+				<float XY="0.000000"/>
+				<float XZ="0.666263"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.666263"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.745716"/>
+				<float ZW="0.000000"/>
+				<float WX="81.300919"/>
+				<float WY="3.719082"/>
+				<float WZ="-121.738564"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.745716"/>
+				<float XY="0.000000"/>
+				<float XZ="0.666263"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.666263"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.745716"/>
+				<float ZW="0.000000"/>
+				<float WX="81.300919"/>
+				<float WY="3.719082"/>
+				<float WZ="-121.738564"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree74">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="125.598297"/>
+				<float WY="-1.540493"/>
+				<float WZ="-109.147324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="125.598297"/>
+				<float WY="-1.540493"/>
+				<float WZ="-109.147324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="125.598297"/>
+				<float WY="-1.540493"/>
+				<float WZ="-109.147324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge75">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="146.529434"/>
+				<float WY="-3.662678"/>
+				<float WZ="-45.263260"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+</Scene>
+

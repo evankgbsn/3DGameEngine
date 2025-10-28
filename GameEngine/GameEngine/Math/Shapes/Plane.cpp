@@ -76,3 +76,8 @@ bool Plane::LineIntersect(const LineSegment3D& line) const
 
     return t >= 0.0f && t <= 1.0f;
 }
+
+float Plane::SignedDistance(const glm::vec3& point) const
+{
+    return glm::dot(normal, point) - distance;
+}

@@ -4,6 +4,7 @@
 #include "GraphicsObject3DComponent.h"
 #include "OrientedBoundingBoxComponent.h"
 #include "../../Collision/OrientedBoundingBoxWithVisualization.h"
+#include "AnimatedColliderComponent.h"
 
 StaticColliderComponent::StaticColliderComponent() :
 	collider(nullptr)
@@ -59,7 +60,20 @@ bool StaticColliderComponent::Intersect(const LineSegment3D& other) const
 	return false;
 }
 
-bool StaticColliderComponent::Intersect(const AnimatedColliderComponent& other) const
+bool StaticColliderComponent::Intersect(const AnimatedColliderComponent& other, glm::vec3& outHit) const
+{
+	if (collider != nullptr)
+	{
+		return other.Intersect(*this, outHit);
+	}
+}
+
+bool StaticColliderComponent::SphereIntersect(const AnimatedColliderComponent& other) const
+{
+	return false;
+}
+
+bool StaticColliderComponent::BoxIntersect(const AnimatedColliderComponent& other) const
 {
 	return false;
 }
@@ -75,12 +89,12 @@ float StaticColliderComponent::Intersect(const Ray& ray) const
 
 const OrientedBoundingBoxWithVisualization* const StaticColliderComponent::GetBox() const
 {
-	return nullptr;
+	return collider->GetBox();
 }
 
 const SphereWithVisualization* const StaticColliderComponent::GetSphere() const
 {
-	return nullptr;
+	return collider->GetSphere();
 }
 
 const Model* const StaticColliderComponent::GetModel() const
@@ -101,14 +115,6 @@ glm::mat4 StaticColliderComponent::GetTransform() const
 	}
 
 	return glm::mat4(0.0f);
-}
-
-void StaticColliderComponent::Translate(const glm::vec3& translation)
-{
-	if (collider != nullptr)
-	{
-		collider->Translate(translation);
-	}
 }
 
 const Model* const StaticColliderComponent::GetWrapedGraphicsModel() const
@@ -156,6 +162,16 @@ void StaticColliderComponent::SetGraphics(GraphicsObject3DComponent* graphics)
 	collider = new StaticCollider(graphics->GetGraphics());
 }
 
+glm::vec3 StaticColliderComponent::GetSphereOrigin() const
+{
+	return collider->GetSphereOrigin();
+}
+
+glm::vec3 StaticColliderComponent::GetBoxOrigin() const
+{
+	return collider->GetBoxOrigin();
+}
+
 void StaticColliderComponent::Update()
 {
 	if (collider != nullptr)
@@ -166,15 +182,9 @@ void StaticColliderComponent::Update()
 
 void StaticColliderComponent::Serialize()
 {
-	savedBools["IsVisible"] = IsVisible();
 }
 
 void StaticColliderComponent::Deserialize()
 {
-	UpdateCollider();
-
-	if (!savedBools["IsVisible"])
-	{
-		ToggleVisibility();
-	}
+	
 }

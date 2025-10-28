@@ -32,6 +32,8 @@ public:
 
 	bool LineIntersect(const LineSegment3D& line) const;
 
+	float SignedDistance(const glm::vec3& point) const;
+
 private:
 
 	Plane(const Plane&) = delete;

@@ -59,6 +59,7 @@ void AxisAlignedBoundingBoxWithVisualization::ToggleVisibility()
 	else
 	{
 		CreateGraphics();
+		UpdateInstanceTransforms();
 		isDisabled = false;
 	}
 }
@@ -92,4 +93,19 @@ void AxisAlignedBoundingBoxWithVisualization::CreateGraphics()
 {
 	graphics->SetScale(GetSize(), instanceID);
 	graphics->SetTranslation(GetOrigin(), instanceID);
+}
+
+void AxisAlignedBoundingBoxWithVisualization::Translate(const glm::vec3& delta)
+{
+	graphics->Translate(delta, instanceID);
+}
+
+void AxisAlignedBoundingBoxWithVisualization::SetTransform(const glm::mat4& transform)
+{
+	graphics->SetTransform(transform, instanceID);
+}
+
+void AxisAlignedBoundingBoxWithVisualization::SetRotation(const glm::mat4& newRotation)
+{
+	graphics->SetRotation(newRotation, instanceID);
 }

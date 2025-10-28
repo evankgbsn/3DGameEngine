@@ -18,17 +18,14 @@
 #include <atomic>
 
 StaticCollider::StaticCollider(GO3D* const graphicsObject) :
-	wrapedGraphics(graphicsObject)
+	wrapedGraphics(graphicsObject),
+	lastTranslation(graphicsObject->GetTranslation())
 {
 	this->boundingSphere = new SphereWithVisualization(wrapedGraphics);
 	this->obb = new OrientedBoundingBoxWithVisualization(wrapedGraphics->GetModel()->GetVertices());
 
 	trianglesColliderVisualization = GraphicsObjectManager::CreateGO3DColored(const_cast<Model*>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	trianglesColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
-
-	AccelerateMesh();
-
-	//AxisAlignedBoundingBoxWithVisualization::UpdateInstanceTransforms();
 }
 
 StaticCollider::~StaticCollider()
@@ -36,12 +33,6 @@ StaticCollider::~StaticCollider()
 	GraphicsObjectManager::Delete(trianglesColliderVisualization);
 	delete obb;
 	delete boundingSphere;
-
-	if (accelerator != nullptr)
-	{
-		FreeBVHNode(accelerator);
-		delete accelerator;
-	}
 }
 
 void StaticCollider::Update()
@@ -50,29 +41,9 @@ void StaticCollider::Update()
 	obb->Update(wrapedGraphics->GetTransform());
 	trianglesColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
 
+	glm::vec3 translation = wrapedGraphics->GetTranslation() - lastTranslation;
 
-	if (accelerator != nullptr)
-	{
-		//Updated instanced visualized aabbs
-		//Recursively walk the BVH tree.
-		std::list<BVHNode*> toProcess;
-		toProcess.push_front(accelerator);
-		while (!toProcess.empty())
-		{
-			BVHNode* iterator = *(toProcess.begin());
-			toProcess.erase(toProcess.begin());
-
-			iterator->bounds.UpdateGraphicsInstance();
-
-			if (iterator->children != 0)
-			{
-				for (int i = 8 - 1; i >= 0; --i)
-				{
-					toProcess.push_front(&iterator->children[i]);
-				}
-			}
-		}
-	}
+	lastTranslation = wrapedGraphics->GetTranslation();
 }
 
 void StaticCollider::ToggleVisibility()
@@ -100,16 +71,19 @@ bool StaticCollider::Intersect(const LineSegment3D& other) const
 {
 	if (boundingSphere->LineSegmentIntersect(other) && GetBox()->LineIntersect(other))
 	{
-		Ray ray(other.GetStart(), glm::normalize(other.GetEnd() - other.GetStart()));
-		return Intersect(ray) != -1.0f;
+		glm::vec3 lineVector = other.GetEnd() - other.GetStart();
+		glm::vec3 direction = glm::normalize(lineVector);
+		Ray ray(other.GetStart(), direction);
+		float intersectPoint = Intersect(ray);
+		return intersectPoint != -1.0f && glm::length(lineVector) >= glm::length(other.GetEnd() - (other.GetStart() + direction * intersectPoint));
 	}
 
 	return false;
 }
 
-bool StaticCollider::Intersect(const AnimatedCollider& other) const
+bool StaticCollider::Intersect(const AnimatedCollider& other, glm::vec3& outHit) const
 {
-	return other.Intersect(*this);
+	return other.Intersect(*this, outHit);
 }
 
 float StaticCollider::Intersect(const Ray& ray) const
@@ -230,30 +204,6 @@ glm::mat4 StaticCollider::GetTransform() const
 	return wrapedGraphics->GetTransform();
 }
 
-void StaticCollider::Translate(const glm::vec3& translation)
-{
-	std::list<BVHNode*> toProcess;
-	toProcess.push_front(accelerator);
-
-	//Recursively walk the BVH tree.
-	while (!toProcess.empty())
-	{
-		BVHNode* iterator = *(toProcess.begin());
-		toProcess.erase(toProcess.begin());
-
-		iterator->bounds.FromOriginAndSize(iterator->bounds.GetOrigin() + translation, iterator->bounds.GetSize());
-		iterator->bounds.Update();
-
-		if (iterator->children != 0)
-		{
-			for (int i = 8 - 1; i >= 0; --i)
-			{
-				toProcess.push_front(&iterator->children[i]);
-			}
-		}
-	}
-}
-
 const Model* const StaticCollider::GetWrapedGraphicsModel() const
 {
 	return wrapedGraphics->GetModel();
@@ -276,160 +226,12 @@ std::vector<Triangle> StaticCollider::GetTriangles() const
 	return triangles;
 }
 
-void StaticCollider::AccelerateMesh()
+glm::vec3 StaticCollider::GetSphereOrigin() const
 {
-	if (accelerator != nullptr)
-	{
-		return;
-	}
-
-	const std::vector<Vertex>& vertices = wrapedGraphics->GetModel()->GetVertices();
-
-	glm::vec3 min = vertices[0].GetPosition();
-	glm::vec3 max = vertices[0].GetPosition();
-
-	for (unsigned int i = 0; i < vertices.size(); ++i)
-	{
-		min.x = fminf(vertices[i].GetPosition().x, min.x);
-		min.y = fminf(vertices[i].GetPosition().y, min.y);
-		min.z = fminf(vertices[i].GetPosition().z, min.z);
-		max.x = fmaxf(vertices[i].GetPosition().x, max.x);
-		max.y = fmaxf(vertices[i].GetPosition().y, max.y);
-		max.z = fmaxf(vertices[i].GetPosition().z, max.z);
-	}
-
-	accelerator = new BVHNode();
-	accelerator->bounds.FromMinAndMax(wrapedGraphics->GetTransform() * glm::vec4(min, 1.0f), wrapedGraphics->GetTransform() *glm::vec4( max, 1.0f));
-	accelerator->bounds.Update();
-	accelerator->bounds.ToggleVisibility();
-	accelerator->numTriangles = static_cast<int>(vertices.size()) / 3U;
-	accelerator->triangles = new int[accelerator->numTriangles]();
-
-	for (int i = 0; i < accelerator->numTriangles; ++i)
-	{
-		accelerator->triangles[i] = i;
-	}
-
-	SplitBVHNode(accelerator, 2);
+	return boundingSphere->GetOrigin();
 }
 
-void StaticCollider::SplitBVHNode(BVHNode* node, int depth)
+glm::vec3 StaticCollider::GetBoxOrigin() const
 {
-	if (depth-- == 0)
-	{
-		return;
-	}
-
-	if (node->children == nullptr)
-	{
-		if (node->numTriangles > 0)
-		{
-			node->children = new BVHNode[8];
-
-			vec3 c = node->bounds.GetOrigin();
-			vec3 e = node->bounds.GetSize() * 0.5f;
-
-			node->children[0].bounds.FromOriginAndSize(c + vec3(-e.x, +e.y, -e.z), e);
-			node->children[0].bounds.Update();
-			node->children[0].bounds.ToggleVisibility();
-			node->children[1].bounds.FromOriginAndSize(c + vec3(+e.x, +e.y, -e.z), e);
-			node->children[1].bounds.Update();
-			node->children[1].bounds.ToggleVisibility();
-			node->children[2].bounds.FromOriginAndSize(c + vec3(-e.x, +e.y, +e.z), e);
-			node->children[2].bounds.Update();
-			node->children[2].bounds.ToggleVisibility();
-			node->children[3].bounds.FromOriginAndSize(c + vec3(+e.x, +e.y, +e.z), e);
-			node->children[3].bounds.Update();
-			node->children[3].bounds.ToggleVisibility();
-			node->children[4].bounds.FromOriginAndSize(c + vec3(-e.x, -e.y, -e.z), e);
-			node->children[4].bounds.Update();
-			node->children[4].bounds.ToggleVisibility();
-			node->children[5].bounds.FromOriginAndSize(c + vec3(+e.x, -e.y, -e.z), e);
-			node->children[5].bounds.Update();
-			node->children[5].bounds.ToggleVisibility();
-			node->children[6].bounds.FromOriginAndSize(c + vec3(-e.x, -e.y, +e.z), e);
-			node->children[6].bounds.Update();
-			node->children[6].bounds.ToggleVisibility();
-			node->children[7].bounds.FromOriginAndSize(c + vec3(+e.x, -e.y, +e.z), e);
-			node->children[7].bounds.Update();
-			node->children[7].bounds.ToggleVisibility();
-		}
-	}
-
-	if (node->children != 0 && node->numTriangles > 0)
-	{
-		const std::vector<Vertex> vertices = wrapedGraphics->GetModel()->GetVertices();
-		const std::vector<unsigned int> indices = wrapedGraphics->GetModel()->GetIndices();
-
-		std::vector<Triangle> triangles;
-
-		for (unsigned int i = 0; i < indices.size(); i += 3)
-		{
-			Triangle t(wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 1]].GetPosition(), 1.0f), wrapedGraphics->GetTransform() * glm::vec4(vertices[indices[i + 2]].GetPosition(), 1.0f));
-			triangles.push_back(t);
-		}
-
-		for (unsigned int i = 0; i < 8; ++i)
-		{
-			node->children[i].numTriangles = 0;
-			for (int j = 0; j < node->numTriangles; ++j)
-			{
-				const Triangle& t = triangles[node->triangles[j]];
-
-				if (t.AxisAlignedBoundingBoxIntersect(node->children[i].bounds))
-				{
-					node->children[i].numTriangles += 1;
-				}
-			}
-
-			if (node->children[i].numTriangles == 0)
-			{
-				continue;
-			}
-
-			node->children[i].triangles = new int[node->children[i].numTriangles];
-
-			int index = 0;
-			for (int j = 0; j < node->numTriangles; ++j)
-			{
-				const Triangle& t = triangles[node->triangles[j]];
-				if (t.AxisAlignedBoundingBoxIntersect(node->children[i].bounds))
-				{
-					node->children[i].triangles[index++] = node->triangles[j];
-				}
-			}
-		}
-
-		node->numTriangles = 0;
-		delete[] node->triangles;
-		node->triangles = 0;
-
-		for (int i = 0; i < 8; ++i)
-		{
-			SplitBVHNode(&node->children[i], depth);
-		}
-	}
-}
-
-void StaticCollider::FreeBVHNode(BVHNode* node)
-{
-	if (node != nullptr)
-	{
-		if (node->children != nullptr)
-		{
-			for (int i = 0; i < 8; ++i)
-			{
-				FreeBVHNode(&node->children[i]);
-			}
-			delete[] node->children;
-			node->children = 0;
-		}
-
-		if (node->numTriangles != 0 || node->triangles != nullptr)
-		{
-			delete[] node->triangles;
-			node->triangles = nullptr;
-			node->numTriangles = 0;
-		}
-	}
+	return obb->GetOrigin();
 }

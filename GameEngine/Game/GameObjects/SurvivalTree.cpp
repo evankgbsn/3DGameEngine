@@ -1,7 +1,7 @@
 #include "SurvivalTree.h"
 
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
-#include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Camera/Camera.h"
@@ -44,7 +44,8 @@ void SurvivalTree::Initialize()
 	AddComponent(branchesGraphics, "BranchesGraphics");
 	AddComponent(leavesGraphics, "LeavesGraphics");
 
-	collider = new OrientedBoundingBoxComponent(trunkGraphics->GetModel()->GetVertices());
+	collider = new StaticColliderComponent(trunkGraphics);
+	collider->UpdateCollider();
 
 	AddComponent(collider, "Collider");
 
@@ -117,7 +118,7 @@ void SurvivalTree::SetPosition(const glm::vec3& newPosition)
 	trunkGraphics->SetPosition(newPosition);
 	branchesGraphics->SetPosition(newPosition);
 	leavesGraphics->SetPosition(newPosition);
-	collider->UpdateCollider(trunkGraphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::vec3 SurvivalTree::GetPosition() const
@@ -130,7 +131,7 @@ void SurvivalTree::SetRotation(const glm::mat4& newRotation)
 	trunkGraphics->SetRotation(newRotation);
 	branchesGraphics->SetRotation(newRotation);
 	leavesGraphics->SetRotation(newRotation);
-	collider->UpdateCollider(trunkGraphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::mat4 SurvivalTree::GetRotation() const
@@ -144,7 +145,7 @@ bool SurvivalTree::Hovered() const
 
 	if (collider != nullptr)
 	{
-		return collider->LineIntersect(line);
+		return collider->Intersect(line);
 	}
 
 	return false;
@@ -194,9 +195,10 @@ void SurvivalTree::Deserialize()
 	trunkGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("TrunkGraphics"));
 	branchesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("BranchesGraphics"));
 	leavesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("LeavesGraphics"));
-	collider = static_cast<OrientedBoundingBoxComponent*>(GetComponent("Collider"));
+	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
 
-	collider->UpdateCollider(trunkGraphics->GetTransform());
+	collider->SetGraphics(trunkGraphics);
+	collider->UpdateCollider();
 
 	CleanupEditorCallbacks();
 	SetupEditorCallbacks();

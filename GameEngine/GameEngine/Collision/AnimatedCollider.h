@@ -3,6 +3,8 @@
 
 #include "Collider.h"
 
+#include <glm/glm.hpp>
+
 #include <unordered_map>
 #include <vector>
 #include <string>
@@ -38,13 +40,13 @@ public:
 
 	bool Intersect(const AnimatedCollider& other) const;
 
-	bool Intersect(const StaticCollider& other) const;
+	bool Intersect(const StaticCollider& other, glm::vec3& outHit) const;
 
 	bool Intersect(const Ray& other) const;
 
-	const SphereWithVisualization* const GetSphere() const;
+	bool Intersect(const SphereWithVisualization& other) const;
 
-	const std::vector<OrientedBoundingBoxWithVisualization*>& GetBoundingBoxes() const;
+	const SphereWithVisualization* const GetSphere() const;
 
 private:
 

@@ -1,7 +1,7 @@
 #include "SurvivalCrate.h"
 
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
-#include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -22,8 +22,8 @@ void SurvivalCrate::Initialize()
 {
 	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Crate"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpec"));
 	graphics->SetShine(32.0f);
-	collider = new OrientedBoundingBoxComponent(ModelManager::GetModel("Crate")->GetVertices());
-	collider->UpdateCollider(graphics->GetTransform());
+	collider = new StaticColliderComponent(graphics);
+	collider->UpdateCollider();
 	SetupEditorCallbacks();
 
 	AddComponent(graphics, "Graphics");
@@ -41,12 +41,12 @@ void SurvivalCrate::Terminate()
 
 void SurvivalCrate::GameUpdate()
 {
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 void SurvivalCrate::EditorUpdate()
 {
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 void SurvivalCrate::Load()
@@ -86,9 +86,10 @@ void SurvivalCrate::Deserialize()
 	GameObject::Deserialize();
 
 	graphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("Graphics"));
-	collider = static_cast<OrientedBoundingBoxComponent*>(GetComponent("Collider"));
+	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
 
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->SetGraphics(graphics);
+	collider->UpdateCollider();
 
 	CleanupEditorCallbacks();
 	SetupEditorCallbacks();
@@ -100,7 +101,7 @@ bool SurvivalCrate::Hovered() const
 
 	if (collider != nullptr)
 	{
-		return collider->LineIntersect(line);
+		return collider->Intersect(line);
 	}
 
 	return false;
@@ -109,7 +110,7 @@ bool SurvivalCrate::Hovered() const
 void SurvivalCrate::SetPosition(const glm::vec3& newPos)
 {
 	graphics->SetPosition(newPos);
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::vec3 SurvivalCrate::GetPosition() const
@@ -120,7 +121,7 @@ glm::vec3 SurvivalCrate::GetPosition() const
 void SurvivalCrate::SetRotation(const glm::mat4& newRot)
 {
 	graphics->SetRotation(newRot);
-	collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider();
 }
 
 glm::mat4 SurvivalCrate::GetRotation() const

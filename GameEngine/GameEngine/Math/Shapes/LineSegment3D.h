@@ -7,7 +7,7 @@ class LineSegment3D
 {
 public:
 
-	LineSegment3D(const glm::vec3& startPoint, const glm::vec3& endPoint);
+	LineSegment3D(const glm::vec3& startPoint = glm::vec3(0.0f), const glm::vec3& endPoint = glm::vec3(0.0f));
 
 	~LineSegment3D();
 

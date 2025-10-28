@@ -34,7 +34,11 @@ public:
 
 	bool Intersect(const LineSegment3D& other) const;
 
-	bool Intersect(const AnimatedColliderComponent& other) const;
+	bool Intersect(const AnimatedColliderComponent& other, glm::vec3& outHit) const;
+
+	bool SphereIntersect(const AnimatedColliderComponent& other) const;
+
+	bool BoxIntersect(const AnimatedColliderComponent& other) const;
 
 	float Intersect(const Ray& ray) const;
 
@@ -46,8 +50,6 @@ public:
 
 	glm::mat4 GetTransform() const;
 
-	void Translate(const glm::vec3& translation);
-
 	const Model* const GetWrapedGraphicsModel() const;
 
 	std::vector<Triangle> GetTriangles() const;
@@ -57,6 +59,10 @@ public:
 	bool IsVisible() const;
 
 	void SetGraphics(GraphicsObject3DComponent* graphics);
+
+	glm::vec3 GetSphereOrigin() const;
+
+	glm::vec3 GetBoxOrigin() const;
 
 private:
 

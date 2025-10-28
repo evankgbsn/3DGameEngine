@@ -20,10 +20,14 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 	rights(std::vector<glm::vec4>(instanceCount)),
 	ups(std::vector<glm::vec4>(instanceCount)),
 	forwards(std::vector<glm::vec4>(instanceCount)),
-	trans(std::vector<glm::vec4>(instanceCount))
+	trans(std::vector<glm::vec4>(instanceCount)),
+	clipPlane(ShaderManager::GetClipPlane())
 {
 	glCreateBuffers(1, &viewProjectionBuffer);
 	glNamedBufferStorage(viewProjectionBuffer, sizeof(vp), &vp, GL_DYNAMIC_STORAGE_BIT);
+
+	glCreateBuffers(1, &clipPlaneBuffer);
+	glNamedBufferStorage(clipPlaneBuffer, sizeof(clipPlane), &clipPlane, GL_DYNAMIC_STORAGE_BIT);
 
 	glGenBuffers(1, &translationsBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
@@ -89,6 +93,7 @@ GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& init
 GOColoredInstanced::~GOColoredInstanced()
 {
 	glDeleteBuffers(1, &viewProjectionBuffer);
+	glDeleteBuffers(1, &clipPlaneBuffer);
 	glDeleteBuffers(1, &translationsBuffer);
 	glDeleteBuffers(1, &rightBuffer);
 	glDeleteBuffers(1, &upBuffer);
@@ -118,12 +123,16 @@ void GOColoredInstanced::Update()
 	model->BindBuffer();
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, viewProjectionBuffer);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 10, clipPlaneBuffer);
 
 	const Camera& cam = CameraManager::GetActiveCamera();
 	vp.view = cam.GetView();
 	vp.projection = cam.GetProjection();
 
+	clipPlane.plane = ShaderManager::GetClipPlane();
+
 	glNamedBufferSubData(viewProjectionBuffer, 0, sizeof(ViewProjectionUBO), &vp);
+	glNamedBufferSubData(clipPlaneBuffer, 0, sizeof(ClipPlaneUBO), &clipPlane);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
@@ -215,6 +224,10 @@ void GOColoredInstanced::FinalizeTransforms()
 
 	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * forwards.size(), forwards.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, colorsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * colors.size(), colors.data(), GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

@@ -29,6 +29,12 @@ public:
 
 	bool IsVisible() const;
 
+	void Translate(const glm::vec3& delta);
+
+	void SetTransform(const glm::mat4& transform);
+
+	void SetRotation(const glm::mat4& rotation);
+
 private:
 
 	AxisAlignedBoundingBoxWithVisualization(const AxisAlignedBoundingBoxWithVisualization&) = delete;

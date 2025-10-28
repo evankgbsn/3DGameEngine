@@ -48,7 +48,7 @@ public:
 
 	bool PlaneIntersect(const Plane& plane) const;
 
-	bool TriangleIntersect(const Triangle& other) const;
+	bool TriangleIntersect(const Triangle& other, glm::vec3& outHit) const;
 
 	bool TriangleIntersectRobust(const Triangle& other) const;
 
@@ -57,6 +57,8 @@ public:
 	glm::vec3 Barycentric(const glm::vec3& p) const;
 
 	float Raycast(const Ray& ray) const;
+
+	bool ClipTriangleAgainstPlane(const Plane& plane, LineSegment3D& outSegment) const;
 
 private:
 

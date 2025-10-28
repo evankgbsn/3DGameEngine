@@ -111,7 +111,6 @@ void Sphere::SetOrigin(const glm::vec3& newOrigin)
 
 void Sphere::Transform(const glm::mat4& trans)
 {
-
 	transform = trans;
 
 	glm::mat4 rotation(1.0f);
