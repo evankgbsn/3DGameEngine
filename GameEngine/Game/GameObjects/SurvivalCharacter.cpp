@@ -537,8 +537,8 @@ void SurvivalCharacter::MoveToTarget()
 						characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
-						ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);
+						ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(target));
 					}
 				}
 			}
