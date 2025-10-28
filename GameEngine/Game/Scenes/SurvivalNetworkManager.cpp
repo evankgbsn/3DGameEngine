@@ -40,7 +40,7 @@ void SurvivalNetworkManager::Initialize()
 				{
 					SceneManager::LoadScene(sceneName);
 
-					//SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Main.xml");
+					SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Island.xml");
 					SceneManager::StartScene(sceneName);
 				}
 			}
