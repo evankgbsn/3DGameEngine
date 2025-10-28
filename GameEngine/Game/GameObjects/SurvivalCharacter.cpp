@@ -154,13 +154,14 @@ void SurvivalCharacter::Initialize()
 	AddComponent(characterGraphics, "CharacterGraphics");
 	
 	characterGraphics->SetShine(32.0f);
-	characterGraphics->SetClip(4);
+	characterGraphics->SetClip(0);
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
 
 	axe = new GraphicsObjectTexturedLit(ModelManager::GetModel("Axe"), TextureManager::GetTexture("Axe"), TextureManager::GetTexture("Axe"));
 	axe->SetShine(32.0f);
 	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+	AddComponent(axe, "Axe");
 
 
 	if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
@@ -210,6 +211,12 @@ void SurvivalCharacter::Terminate()
 	{
 		RemoveComponent("CharacterCollider");
 		delete characterCollider;
+	}
+
+	if (axe != nullptr)
+	{
+		RemoveComponent("Axe");
+		delete axe;
 	}
 }
 
