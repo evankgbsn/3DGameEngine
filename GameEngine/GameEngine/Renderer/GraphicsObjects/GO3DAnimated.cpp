@@ -18,8 +18,6 @@ glm::mat4* GO3DAnimated::GetAnimInvBindPoseArray()
 
 void GO3DAnimated::Update()
 {	
-	static unsigned long long lastFrame = TimeManager::GetFrameID();
-	
 	if (lastFrame != TimeManager::GetFrameID())
 	{
 		animation->Update(animationData.pose);

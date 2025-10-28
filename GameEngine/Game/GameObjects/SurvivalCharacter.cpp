@@ -79,8 +79,6 @@ void SurvivalCharacter::OnSpawn()
 	{
 		ClientSend(NetworkManager::ConvertVec3ToData(target));
 	}
-
-	currentTranslationVector = glm::vec3(0.0f);
 }
 
 void SurvivalCharacter::OnDespawn()
@@ -564,7 +562,7 @@ void SurvivalCharacter::MoveToTarget()
 				glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
 			);
 
-			characterGraphics->SetRotation(newRotation);
+			//characterGraphics->SetRotation(newRotation);
 		}
 	}
 

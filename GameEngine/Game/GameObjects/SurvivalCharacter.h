@@ -114,8 +114,6 @@ private:
 
 	glm::vec3 receivedPosition;
 
-	glm::vec3 currentTranslationVector;
-
 	std::function<void(const std::string&)>* onClientDisconnect;
 };
 

@@ -69,6 +69,8 @@ private:
 
 	std::function<void()>* onEditorDisable;
 
+	unsigned long long lastFrame
+
 };
 
 #endif // GO3DANIMATED_H
