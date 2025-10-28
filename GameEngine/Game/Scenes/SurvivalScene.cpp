@@ -10,6 +10,7 @@
 #include "../GameObjects/SurvivalServerFreeCamera.h"
 #include "../GameObjects/SurvivalCrate.h"
 #include "../GameObjects/SurvivalPointLight.h"
+#include "../GameObjects/SurvivalRockLarge.h"
 
 
 SurvivalScene::SurvivalScene() :
@@ -20,7 +21,8 @@ SurvivalScene::SurvivalScene() :
 	water(new SurvivalWater()),
 	serverFreeCam(nullptr),
 	crate(new SurvivalCrate()),
-	pointLight(new SurvivalPointLight())
+	pointLight(new SurvivalPointLight()),
+	largeRock(new SurvivalRockLarge())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(terrain, "Terrain");
@@ -28,6 +30,7 @@ SurvivalScene::SurvivalScene() :
 	RegisterGameObject(water, "Water");
 	RegisterGameObject(crate, "Crate");
 	RegisterGameObject(pointLight, "PointLight");
+	RegisterGameObject(largeRock, "LargeRock");
 }
 
 SurvivalScene::~SurvivalScene()

@@ -141,6 +141,224 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge79">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-132.389145"/>
+				<float WY="-1.321745"/>
+				<float WZ="54.699284"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-133.014572"/>
+				<float Y="-0.507587"/>
+				<float Z="47.888992"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree46">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="69.742638"/>
+				<float WY="-1.321835"/>
+				<float WZ="90.518913"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="69.742638"/>
+				<float WY="-1.321835"/>
+				<float WZ="90.518913"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="69.742638"/>
+				<float WY="-1.321835"/>
+				<float WZ="90.518913"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="69.742638"/>
+				<float Y="5.090419"/>
+				<float Z="90.518913"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="SurvivalSun" name="Sun">
 		<Component type="DirectionalLightComponent" name="Sun">
 			<Variable type="vec3" name="ColorIntensity">
@@ -213,37 +431,101 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SurvivalCrate" name="SurvivalCrate9">
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+	<Object type="SurvivalTree" name="SurvivalTree24">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
 			<Variable type="float" name="Shine">
 				<float val="32.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="0.893615"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.448832"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.448832"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.893615"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="0.808091"/>
-				<float WY="-0.550818"/>
-				<float WZ="33.120739"/>
+				<float WX="93.871132"/>
+				<float WY="-0.000001"/>
+				<float WZ="16.608749"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="Crate"/>
+				<string val="SurvivalTreeTrunk"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="Crate"/>
+				<string val="SurvivalTree"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="CrateSpec"/>
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="93.871132"/>
+				<float WY="-0.000001"/>
+				<float WZ="16.608749"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="93.871132"/>
+				<float WY="-0.000001"/>
+				<float WZ="16.608749"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
 			</Variable>
 		</Component>
 		<Component type="OrientedBoundingBoxComponent" name="Collider">
@@ -251,9 +533,9 @@
 				<bool val="1"/>
 			</Variable>
 			<Variable type="vec3" name="Origin">
-				<float X="0.808091"/>
-				<float Y="-0.550818"/>
-				<float Z="33.120739"/>
+				<float X="93.871132"/>
+				<float Y="6.412253"/>
+				<float Z="16.608749"/>
 			</Variable>
 			<Variable type="vec3" name="Color">
 				<float X="0.000000"/>
@@ -262,26 +544,244 @@
 			</Variable>
 			<Variable type="vec3" name="Offset">
 				<float X="0.000000"/>
-				<float Y="0.000000"/>
+				<float Y="6.412254"/>
 				<float Z="0.000000"/>
 			</Variable>
 			<Variable type="vec3" name="Size">
-				<float X="1.000000"/>
-				<float Y="1.000000"/>
-				<float Z="1.000000"/>
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
 			</Variable>
 			<Variable type="mat4" name="Orientation">
-				<float XX="0.893616"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.448832"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.448832"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.893616"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="LargeRock">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.403264"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.915083"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.915083"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.403264"/>
+				<float ZW="0.000000"/>
+				<float WX="25.928747"/>
+				<float WY="-2.068893"/>
+				<float WZ="42.834183"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="19.444553"/>
+				<float Y="-1.254736"/>
+				<float Z="40.660149"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.403264"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.915084"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.915084"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.403264"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree42">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.112621"/>
+				<float WY="-1.321834"/>
+				<float WZ="147.764267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.112621"/>
+				<float WY="-1.321834"/>
+				<float WZ="147.764267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.112621"/>
+				<float WY="-1.321834"/>
+				<float WZ="147.764267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-60.112621"/>
+				<float Y="5.090420"/>
+				<float Z="147.764267"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -649,6 +1149,147 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree45">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-41.733513"/>
+				<float WY="-1.321835"/>
+				<float WZ="119.107864"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-41.733513"/>
+				<float WY="-1.321835"/>
+				<float WZ="119.107864"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-41.733513"/>
+				<float WY="-1.321835"/>
+				<float WZ="119.107864"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-41.733513"/>
+				<float Y="5.090419"/>
+				<float Z="119.107864"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="SurvivalWater" name="Water">
 		<Component type="WaterComponent" name="WaterTerrain">
 			<Variable type="float" name="Width">
@@ -677,6 +1318,83 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge73">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.093537"/>
+				<float XY="0.000000"/>
+				<float XZ="0.995615"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.995615"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.093537"/>
+				<float ZW="0.000000"/>
+				<float WX="-26.170031"/>
+				<float WY="-1.577583"/>
+				<float WZ="-59.980133"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-19.448099"/>
+				<float Y="-0.763426"/>
+				<float Z="-61.239830"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.093537"/>
+				<float XY="0.000000"/>
+				<float XZ="0.995616"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.995616"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.093537"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="" name="PointLight">
 		<Component type="PointLightComponent" name="PointLight">
 			<Variable type="vec3" name="ColorIntensity">
@@ -688,6 +1406,237 @@
 				<float X="5.000000"/>
 				<float Y="5.000000"/>
 				<float Z="5.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge48">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-2.747270"/>
+				<float WY="-1.985342"/>
+				<float WZ="-13.648914"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-3.372691"/>
+				<float Y="-1.171185"/>
+				<float Z="-20.459208"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalCrate" name="SurvivalCrate9">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.893615"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.448832"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.448832"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.893615"/>
+				<float ZW="0.000000"/>
+				<float WX="0.808091"/>
+				<float WY="-0.550818"/>
+				<float WZ="33.120739"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="CrateSpec"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="0.808091"/>
+				<float Y="-0.550818"/>
+				<float Z="33.120739"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="0.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="1.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.893616"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.448832"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.448832"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.893616"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge49">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.970805"/>
+				<float XY="0.000000"/>
+				<float XZ="0.239870"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.239870"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.970805"/>
+				<float ZW="0.000000"/>
+				<float WX="15.037351"/>
+				<float WY="-3.757076"/>
+				<float WZ="-33.756538"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="16.063770"/>
+				<float Y="-2.942919"/>
+				<float Z="-40.518024"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.970805"/>
+				<float XY="0.000000"/>
+				<float XZ="0.239870"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.239870"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.970805"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -986,6 +1935,147 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree40">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-149.037537"/>
+				<float WY="0.374975"/>
+				<float WZ="-46.914417"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-149.037537"/>
+				<float WY="0.374975"/>
+				<float WZ="-46.914417"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-149.037537"/>
+				<float WY="0.374975"/>
+				<float WZ="-46.914417"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-149.037537"/>
+				<float Y="6.787229"/>
+				<float Z="-46.914417"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="SurvivalTree" name="SurvivalTree14">
 		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
 			<Variable type="float" name="Shine">
@@ -1232,6 +2322,147 @@
 				<float X="-46.982048"/>
 				<float Y="4.419412"/>
 				<float Z="71.694847"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree44">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.211128"/>
+				<float WY="-1.321840"/>
+				<float WZ="156.223923"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.211128"/>
+				<float WY="-1.321840"/>
+				<float WZ="156.223923"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-36.211128"/>
+				<float WY="-1.321840"/>
+				<float WZ="156.223923"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-36.211128"/>
+				<float Y="5.090414"/>
+				<float Z="156.223923"/>
 			</Variable>
 			<Variable type="vec3" name="Color">
 				<float X="0.000000"/>
@@ -1973,6 +3204,83 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge47">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.887049"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.461673"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.461673"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.887049"/>
+				<float ZW="0.000000"/>
+				<float WX="20.933258"/>
+				<float WY="-1.985342"/>
+				<float WZ="-0.214172"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="17.234352"/>
+				<float Y="-1.171185"/>
+				<float Z="-5.966497"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.887050"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.461673"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.461673"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.887050"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="SurvivalTree" name="SurvivalTree23">
 		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
 			<Variable type="float" name="Shine">
@@ -2076,7 +3384,7 @@
 			</Variable>
 			<Variable type="vec3" name="Origin">
 				<float X="-33.955597"/>
-				<float Y="7.100997"/>
+				<float Y="7.100998"/>
 				<float Z="-61.246414"/>
 			</Variable>
 			<Variable type="vec3" name="Color">
@@ -2093,6 +3401,4713 @@
 				<float X="0.857597"/>
 				<float Y="6.412254"/>
 				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree25">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="109.185120"/>
+				<float WY="2.319452"/>
+				<float WZ="-15.057673"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="109.185120"/>
+				<float WY="2.319452"/>
+				<float WZ="-15.057673"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="109.185120"/>
+				<float WY="2.319452"/>
+				<float WZ="-15.057673"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="109.185120"/>
+				<float Y="8.731706"/>
+				<float Z="-15.057673"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree26">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="52.909424"/>
+				<float WY="-3.733424"/>
+				<float WZ="-7.719282"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="52.909424"/>
+				<float WY="-3.733424"/>
+				<float WZ="-7.719282"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="52.909424"/>
+				<float WY="-3.733424"/>
+				<float WZ="-7.719282"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="52.909424"/>
+				<float Y="2.678830"/>
+				<float Z="-7.719282"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree27">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="142.117126"/>
+				<float WY="-4.755762"/>
+				<float WZ="-89.815887"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="142.117126"/>
+				<float WY="-4.755762"/>
+				<float WZ="-89.815887"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="142.117126"/>
+				<float WY="-4.755762"/>
+				<float WZ="-89.815887"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="142.117126"/>
+				<float Y="1.656492"/>
+				<float Z="-89.815887"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree28">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="95.942741"/>
+				<float WY="5.053513"/>
+				<float WZ="-134.636795"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="95.942741"/>
+				<float WY="5.053513"/>
+				<float WZ="-134.636795"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="95.942741"/>
+				<float WY="5.053513"/>
+				<float WZ="-134.636795"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="95.942741"/>
+				<float Y="11.465767"/>
+				<float Z="-134.636795"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree29">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="89.214317"/>
+				<float WY="5.053507"/>
+				<float WZ="-145.595093"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="89.214317"/>
+				<float WY="5.053507"/>
+				<float WZ="-145.595093"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="89.214317"/>
+				<float WY="5.053507"/>
+				<float WZ="-145.595093"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="89.214317"/>
+				<float Y="11.465761"/>
+				<float Z="-145.595093"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge54">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.633561"/>
+				<float XY="0.000000"/>
+				<float XZ="0.773692"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.773692"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.633561"/>
+				<float ZW="0.000000"/>
+				<float WX="112.433434"/>
+				<float WY="-2.131436"/>
+				<float WZ="112.361885"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="117.306259"/>
+				<float Y="-1.317279"/>
+				<float Z="107.563263"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.633561"/>
+				<float XY="0.000000"/>
+				<float XZ="0.773693"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.773692"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.633561"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree30">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="76.711685"/>
+				<float WY="5.053509"/>
+				<float WZ="-135.389481"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="76.711685"/>
+				<float WY="5.053509"/>
+				<float WZ="-135.389481"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="76.711685"/>
+				<float WY="5.053509"/>
+				<float WZ="-135.389481"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="76.711685"/>
+				<float Y="11.465763"/>
+				<float Z="-135.389481"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge55">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="80.553185"/>
+				<float WY="-2.131443"/>
+				<float WZ="118.936363"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="79.927765"/>
+				<float Y="-1.317286"/>
+				<float Z="112.126068"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree31">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="87.620216"/>
+				<float WY="5.053507"/>
+				<float WZ="-123.202827"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="87.620216"/>
+				<float WY="5.053507"/>
+				<float WZ="-123.202827"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="87.620216"/>
+				<float WY="5.053507"/>
+				<float WZ="-123.202827"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="87.620216"/>
+				<float Y="11.465761"/>
+				<float Z="-123.202827"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge56">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.487674"/>
+				<float XY="0.000000"/>
+				<float XZ="0.873026"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.873026"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.487674"/>
+				<float ZW="0.000000"/>
+				<float WX="82.955437"/>
+				<float WY="-2.131451"/>
+				<float WZ="57.424026"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="88.596001"/>
+				<float Y="-1.317293"/>
+				<float Z="53.556816"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.487674"/>
+				<float XY="0.000000"/>
+				<float XZ="0.873026"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.873026"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.487674"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree32">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="78.200966"/>
+				<float WY="5.053186"/>
+				<float WZ="-112.183311"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="78.200966"/>
+				<float WY="5.053186"/>
+				<float WZ="-112.183311"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="78.200966"/>
+				<float WY="5.053186"/>
+				<float WZ="-112.183311"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="78.200966"/>
+				<float Y="11.465440"/>
+				<float Z="-112.183311"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge57">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="85.378662"/>
+				<float WY="-2.132318"/>
+				<float WZ="65.293579"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="84.753242"/>
+				<float Y="-1.318161"/>
+				<float Z="58.483288"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree33">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="67.383606"/>
+				<float WY="5.053165"/>
+				<float WZ="-115.541237"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="67.383606"/>
+				<float WY="5.053165"/>
+				<float WZ="-115.541237"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="67.383606"/>
+				<float WY="5.053165"/>
+				<float WZ="-115.541237"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="67.383606"/>
+				<float Y="11.465419"/>
+				<float Z="-115.541237"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge50">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-43.119987"/>
+				<float WY="-0.625713"/>
+				<float WZ="103.169914"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-43.745411"/>
+				<float Y="0.188444"/>
+				<float Z="96.359619"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree34">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-13.433901"/>
+				<float WY="7.955145"/>
+				<float WZ="-145.758362"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-13.433901"/>
+				<float WY="7.955145"/>
+				<float WZ="-145.758362"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-13.433901"/>
+				<float WY="7.955145"/>
+				<float WZ="-145.758362"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-13.433901"/>
+				<float Y="14.367399"/>
+				<float Z="-145.758362"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge51">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.511768"/>
+				<float XY="0.000000"/>
+				<float XZ="0.859124"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.859124"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.511768"/>
+				<float ZW="0.000000"/>
+				<float WX="8.604868"/>
+				<float WY="-1.066978"/>
+				<float WZ="146.791809"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="14.135682"/>
+				<float Y="-0.252821"/>
+				<float Z="142.769211"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.511768"/>
+				<float XY="0.000000"/>
+				<float XZ="0.859124"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.859124"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.511768"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree35">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.025225"/>
+				<float WY="-1.395803"/>
+				<float WZ="-160.271622"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.025225"/>
+				<float WY="-1.395803"/>
+				<float WZ="-160.271622"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.025225"/>
+				<float WY="-1.395803"/>
+				<float WZ="-160.271622"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-31.025225"/>
+				<float Y="5.016451"/>
+				<float Z="-160.271622"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge52">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-47.730049"/>
+				<float WY="-1.066971"/>
+				<float WZ="190.795624"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-48.355473"/>
+				<float Y="-0.252813"/>
+				<float Z="183.985336"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree36">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-77.045616"/>
+				<float WY="-1.791590"/>
+				<float WZ="-141.183655"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-77.045616"/>
+				<float WY="-1.791590"/>
+				<float WZ="-141.183655"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-77.045616"/>
+				<float WY="-1.791590"/>
+				<float WZ="-141.183655"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-77.045616"/>
+				<float Y="4.620664"/>
+				<float Z="-141.183655"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge53">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="104.206894"/>
+				<float WY="-1.066971"/>
+				<float WZ="133.299835"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="103.581474"/>
+				<float Y="-0.252813"/>
+				<float Z="126.489540"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree37">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-78.219276"/>
+				<float WY="-2.215660"/>
+				<float WZ="-165.479538"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-78.219276"/>
+				<float WY="-2.215660"/>
+				<float WZ="-165.479538"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-78.219276"/>
+				<float WY="-2.215660"/>
+				<float WZ="-165.479538"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-78.219276"/>
+				<float Y="4.196594"/>
+				<float Z="-165.479538"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree38">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.109024"/>
+				<float WY="5.343935"/>
+				<float WZ="-106.173653"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.109024"/>
+				<float WY="5.343935"/>
+				<float WZ="-106.173653"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-60.109024"/>
+				<float WY="5.343935"/>
+				<float WZ="-106.173653"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-60.109024"/>
+				<float Y="11.756189"/>
+				<float Z="-106.173653"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree39">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.875862"/>
+				<float WY="0.374973"/>
+				<float WZ="-83.883469"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.875862"/>
+				<float WY="0.374973"/>
+				<float WZ="-83.883469"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.875862"/>
+				<float WY="0.374973"/>
+				<float WZ="-83.883469"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-123.875862"/>
+				<float Y="6.787227"/>
+				<float Z="-83.883469"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree41">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-135.196625"/>
+				<float WY="-1.321833"/>
+				<float WZ="66.509705"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-135.196625"/>
+				<float WY="-1.321833"/>
+				<float WZ="66.509705"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-135.196625"/>
+				<float WY="-1.321833"/>
+				<float WZ="66.509705"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-135.196625"/>
+				<float Y="5.090421"/>
+				<float Z="66.509705"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree43">
+		<Component type="GraphicsObjectTexturedLit" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-56.584373"/>
+				<float WY="-1.321835"/>
+				<float WZ="175.945267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-56.584373"/>
+				<float WY="-1.321835"/>
+				<float WZ="175.945267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-56.584373"/>
+				<float WY="-1.321835"/>
+				<float WZ="175.945267"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-56.584373"/>
+				<float Y="5.090419"/>
+				<float Z="175.945267"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="0.000000"/>
+				<float Y="6.412254"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="0.857597"/>
+				<float Y="6.412254"/>
+				<float Z="0.742701"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge58">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="91.278244"/>
+				<float WY="-4.209103"/>
+				<float WZ="64.249138"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="90.652824"/>
+				<float Y="-3.394945"/>
+				<float Z="57.438847"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge59">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.654402"/>
+				<float XY="0.000000"/>
+				<float XZ="0.756147"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.756147"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.654402"/>
+				<float ZW="0.000000"/>
+				<float WX="99.852348"/>
+				<float WY="0.142502"/>
+				<float WZ="13.293890"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="104.592651"/>
+				<float Y="0.956659"/>
+				<float Z="8.364308"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.654402"/>
+				<float XY="0.000000"/>
+				<float XZ="0.756147"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.756147"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.654402"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge60">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="124.970482"/>
+				<float WY="2.414310"/>
+				<float WZ="-11.543905"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="124.345062"/>
+				<float Y="3.228468"/>
+				<float Z="-18.354198"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge61">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="111.961136"/>
+				<float WY="0.870934"/>
+				<float WZ="-40.468761"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="111.335716"/>
+				<float Y="1.685091"/>
+				<float Z="-47.279053"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge62">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="147.548523"/>
+				<float WY="-0.980145"/>
+				<float WZ="-7.019913"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="146.923096"/>
+				<float Y="-0.165987"/>
+				<float Z="-13.830206"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge63">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.232078"/>
+				<float XY="0.000000"/>
+				<float XZ="0.972697"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.972697"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.232078"/>
+				<float ZW="0.000000"/>
+				<float WX="120.747856"/>
+				<float WY="-1.494091"/>
+				<float WZ="-128.487320"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="127.227058"/>
+				<float Y="-0.679934"/>
+				<float Z="-130.676178"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.232078"/>
+				<float XY="0.000000"/>
+				<float XZ="0.972697"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.972697"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.232078"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge64">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="124.422729"/>
+				<float WY="-1.494089"/>
+				<float WZ="-128.282654"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="123.797310"/>
+				<float Y="-0.679932"/>
+				<float Z="-135.092941"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge65">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.861566"/>
+				<float XY="0.000000"/>
+				<float XZ="0.507645"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.507645"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.861566"/>
+				<float ZW="0.000000"/>
+				<float WX="117.071938"/>
+				<float WY="-1.494089"/>
+				<float WZ="-132.436401"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="119.990303"/>
+				<float Y="-0.679932"/>
+				<float Z="-138.621414"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.861566"/>
+				<float XY="0.000000"/>
+				<float XZ="0.507645"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.507645"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.861566"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge66">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="119.244431"/>
+				<float WY="0.177223"/>
+				<float WZ="-125.948288"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="118.619011"/>
+				<float Y="0.991381"/>
+				<float Z="-132.758575"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge67">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="71.593552"/>
+				<float WY="3.682039"/>
+				<float WZ="-148.746231"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="70.968132"/>
+				<float Y="4.496196"/>
+				<float Z="-155.556519"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge68">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.725262"/>
+				<float XY="0.000000"/>
+				<float XZ="0.688473"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.688473"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.725262"/>
+				<float ZW="0.000000"/>
+				<float WX="78.767311"/>
+				<float WY="3.682037"/>
+				<float WZ="-152.289917"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="83.002419"/>
+				<float Y="4.496195"/>
+				<float Z="-157.659744"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.725262"/>
+				<float XY="0.000000"/>
+				<float XZ="0.688473"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.688473"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.725262"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge69">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="54.335625"/>
+				<float WY="-0.930079"/>
+				<float WZ="-155.609711"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="53.710201"/>
+				<float Y="-0.115921"/>
+				<float Z="-162.419998"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge70">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-3.039177"/>
+				<float WY="-0.930079"/>
+				<float WZ="-152.559952"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-3.664599"/>
+				<float Y="-0.115921"/>
+				<float Z="-159.370239"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge71">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.727381"/>
+				<float XY="0.000000"/>
+				<float XZ="0.686235"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.686235"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.727381"/>
+				<float ZW="0.000000"/>
+				<float WX="-23.877344"/>
+				<float WY="-0.514610"/>
+				<float WZ="-166.679367"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-18.748964"/>
+				<float Y="0.299547"/>
+				<float Z="-162.154877"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="-0.727381"/>
+				<float XY="0.000000"/>
+				<float XZ="0.686234"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.686234"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.727381"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge72">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-13.181385"/>
+				<float WY="-1.577586"/>
+				<float WZ="-111.333443"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-13.806807"/>
+				<float Y="-0.763429"/>
+				<float Z="-118.143738"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge74">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-80.690666"/>
+				<float WY="-1.577578"/>
+				<float WZ="-28.962559"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-81.316086"/>
+				<float Y="-0.763420"/>
+				<float Z="-35.772850"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge75">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-63.426620"/>
+				<float WY="-1.577576"/>
+				<float WZ="-55.220634"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-64.052040"/>
+				<float Y="-0.763418"/>
+				<float Z="-62.030926"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge76">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-140.302719"/>
+				<float WY="-1.992996"/>
+				<float WZ="-66.429977"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-140.928146"/>
+				<float Y="-1.178839"/>
+				<float Z="-73.240273"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge77">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.483728"/>
+				<float XY="0.000000"/>
+				<float XZ="0.875218"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.875218"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.483728"/>
+				<float ZW="0.000000"/>
+				<float WX="-154.465958"/>
+				<float WY="-1.992996"/>
+				<float WZ="-59.177864"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-148.807999"/>
+				<float Y="-1.178839"/>
+				<float Z="-63.019577"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="0.483728"/>
+				<float XY="0.000000"/>
+				<float XZ="0.875218"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.875218"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.483728"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge78">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-115.408936"/>
+				<float WY="-1.993096"/>
+				<float WZ="-94.634201"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-116.034355"/>
+				<float Y="-1.178939"/>
+				<float Z="-101.444496"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge80">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-79.950539"/>
+				<float WY="-1.321746"/>
+				<float WZ="31.957201"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-80.575958"/>
+				<float Y="-0.507588"/>
+				<float Z="25.146908"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
+			</Variable>
+			<Variable type="mat4" name="Orientation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge81">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-17.383503"/>
+				<float WY="-0.600485"/>
+				<float WZ="75.872070"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="RockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Rock"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="Rock"/>
+			</Variable>
+		</Component>
+		<Component type="OrientedBoundingBoxComponent" name="Collider">
+			<Variable type="bool" name="IsVisible">
+				<bool val="1"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-18.008924"/>
+				<float Y="0.213673"/>
+				<float Z="69.061775"/>
+			</Variable>
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.625422"/>
+				<float Y="0.814157"/>
+				<float Z="-6.810293"/>
+			</Variable>
+			<Variable type="vec3" name="Size">
+				<float X="3.473078"/>
+				<float Y="2.853019"/>
+				<float Z="3.844241"/>
 			</Variable>
 			<Variable type="mat4" name="Orientation">
 				<float XX="1.000000"/>

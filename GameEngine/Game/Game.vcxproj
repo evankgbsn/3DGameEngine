@@ -499,6 +499,7 @@
     <ClCompile Include="GameObjects\SurvivalCrate.cpp" />
     <ClCompile Include="GameObjects\SurvivalLoginUI.cpp" />
     <ClCompile Include="GameObjects\SurvivalPointLight.cpp" />
+    <ClCompile Include="GameObjects\SurvivalRockLarge.cpp" />
     <ClCompile Include="GameObjects\SurvivalServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\SurvivalSun.cpp" />
     <ClCompile Include="GameObjects\SurvivalTerrain.cpp" />
@@ -634,6 +635,7 @@
     <ClInclude Include="GameObjects\SurvivalCrate.h" />
     <ClInclude Include="GameObjects\SurvivalLoginUI.h" />
     <ClInclude Include="GameObjects\SurvivalPointLight.h" />
+    <ClInclude Include="GameObjects\SurvivalRockLarge.h" />
     <ClInclude Include="GameObjects\SurvivalServerFreeCamera.h" />
     <ClInclude Include="GameObjects\SurvivalSun.h" />
     <ClInclude Include="GameObjects\SurvivalTerrain.h" />
