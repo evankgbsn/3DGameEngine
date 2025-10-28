@@ -523,19 +523,23 @@ void SurvivalCharacter::MoveToTarget()
 			}
 		}
 
-		for (auto& gameObject : scene->GetGameObjects())
+		if (NetworkManager::IsServer())
 		{
-			SurvivalTree* tree = dynamic_cast<SurvivalTree*>(gameObject.second);
-
-			if (tree != nullptr)
+			for (auto& gameObject : scene->GetGameObjects())
 			{
-				OrientedBoundingBoxComponent* treeCollider = dynamic_cast<OrientedBoundingBoxComponent*>(tree->GetComponent("Collider"));
-				if (characterCollider->Intersect(*treeCollider))
+				SurvivalTree* tree = dynamic_cast<SurvivalTree*>(gameObject.second);
+
+				if (tree != nullptr)
 				{
-					characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
-					shouldRotate = false;
-					ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
-					target = glm::vec3(0.0f);
+					OrientedBoundingBoxComponent* treeCollider = dynamic_cast<OrientedBoundingBoxComponent*>(tree->GetComponent("Collider"));
+					if (characterCollider->Intersect(*treeCollider))
+					{
+						characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						shouldRotate = false;
+						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+						ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+						target = glm::vec3(0.0f);
+					}
 				}
 			}
 		}
