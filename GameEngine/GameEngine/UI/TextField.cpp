@@ -155,3 +155,12 @@ void TextField::SetText(const std::string& string)
 {
 	text->SetText(string);
 }
+
+float TextField::GetCursorPosition() const
+{
+	Window* window = WindowManager::GetWindow("Engine");
+	float width = static_cast<float>(window->GetWidth());
+	float xPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, text->GetCursorPosition());
+
+	return xPos;
+}

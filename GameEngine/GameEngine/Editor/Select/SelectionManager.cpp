@@ -97,6 +97,21 @@ void SelectionManager::Update()
 			}
 			
 		}
+
+		static std::function<void(double, double)> mouseScroll = std::function<void(double, double)>([](double xScroll, double yScroll)
+			{
+				if (instance != nullptr)
+				{
+					float speed = 100.0f;
+					speed *= yScroll;
+					if (instance->selection != nullptr)
+					{
+						instance->selection->SetPosition(instance->selection->GetPosition() + glm::vec3(0.0f, 1.0f, 0.0f) * TimeManager::DeltaTime() * speed);
+					}
+				}
+			});
+
+		InputManager::RegisterCallbackForMouseScroll(&mouseScroll, "SelectionManager");
 	}
 }
 
@@ -222,7 +237,12 @@ void SelectionManager::SetupInput()
 			selectionName = nullptr;
 		});
 
+	static std::function<void()> onEditorEnable = std::function<void()>([this]()
+		{
+		});
+
 	Editor::RegisterOnEditorDisable(&onEditorDisable);
+	Editor::RegisterOnEditorEnable(&onEditorEnable);
 
 	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, &click, "Selection");
 	InputManager::EditorRegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_1, &clickRelease, "Selection");

@@ -39,6 +39,10 @@ public:
 
 	bool Initialized() const;
 
+	void AddToCreatedObjects(const std::string& name, GameObject* obj);
+
+	void RemoveFromCreatedObjects(const std::string& name);
+
 protected:
 
 	virtual void Initialize();
@@ -82,6 +86,9 @@ private:
 	bool loaded;
 
 	std::string name;
+
+	// For cleaning up objects created from deserialization or in editor.
+	std::unordered_map<std::string, GameObject*> createdObjects;
 
 };
 

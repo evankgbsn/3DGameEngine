@@ -224,7 +224,7 @@ vec4 CalcPointLight(PointLight light)
 	diffuseLight *= attenuation;
 	specularLight *= attenuation;
 
-	return diffuseLight + vec4(specularLight, 1.0f);
+	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
 }
 
 vec4 CalcSpotLight(SpotLight light)
@@ -277,7 +277,7 @@ vec4 CalcSpotLight(SpotLight light)
 		lightColor = (diffuseLight + vec4(specularLight, 1.0f));
 	}
 
-	return lightColor;
+	return (1.0f - CalcShadow()) * lightColor;
 }
 
 float CalcShadow()

@@ -50,6 +50,11 @@ void PointLightComponent::Serialize()
 
 void PointLightComponent::Deserialize()
 {
+	if (light != nullptr)
+	{
+		LightManager::Delete(light);
+	}
+
 	light = LightManager::CreatePointLight(glm::vec4(savedVec3s["ColorIntensity"], 1.0f), savedVec3s["Position"]);
 }
 

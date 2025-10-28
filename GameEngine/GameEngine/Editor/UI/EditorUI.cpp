@@ -683,7 +683,34 @@ void EditorUI::CreateObjectManagementInterface()
 				
 				if (parentScene != nullptr)
 				{
-					parentScene->RegisterGameObject(newObject, newObject->GetNameOfType() + std::to_string(newObject->GetID()));
+					const std::unordered_map <std::string, GameObject*>& gameObjects = parentScene->GetGameObjects();
+					std::string newObjectName = newObject->GetNameOfType() + std::to_string(newObject->GetID());
+					std::string takenName;
+					
+					for (const auto& object : gameObjects)
+					{
+						if (object.first == newObjectName)
+						{
+							takenName = newObjectName;
+							break;
+						}
+					}
+
+					unsigned long long id = 0;
+					while (newObjectName == takenName)
+					{
+						for (const auto& object : gameObjects)
+						{
+							if (object.first == newObjectName)
+							{
+								newObjectName = newObject->GetNameOfType() + std::to_string(newObject->GetID() + id++);
+								break;
+							}
+						}
+					}
+
+					parentScene->RegisterGameObject(newObject, newObjectName);
+					parentScene->AddToCreatedObjects(newObjectName, newObject);
 
 					Camera& cam = CameraManager::GetActiveCamera();
 					
@@ -733,10 +760,83 @@ void EditorUI::CreateObjectManagementInterface()
 	objectManagementSelectedObject = new TextField("Selection: ", "exo2", { 0.72f, 0.45f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
 	objectManagementSelectedObject->SetZ(0.5f);
 
+	// Crete the delete object title text
+	objectManagementDeleteTitle = new TextField("Delete:", "exo2", { 0.69f, 0.4f }, { 15.0f, 15.0f }, glm::vec4(1.0f));
+	objectManagementDeleteTitle->SetZ(0.5f);
+
+	objectManagementDeleteNameTitle = new TextField("Object Name:", "exo2", { 0.72f, 0.37f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementDeleteNameTitle->SetZ(0.5f);
+
+	objectManagementDeleteObjectOnEnter = new std::function<void()>([this]()
+		{
+			std::string objectName = objectManagementDeleteName->GetText();
+
+			const std::vector<Scene*>& registeredScenes = SceneManager::GetRegisteredScenes();
+
+			GameObject* objectToDelete = nullptr;
+
+			for (const auto& scene : registeredScenes)
+			{
+				if (scene->Loaded())
+				{
+					const std::unordered_map<std::string, GameObject*>& objects = scene->GetGameObjects();
+
+					for (const auto& object : objects)
+					{
+						if (object.first == objectName)
+						{
+							objectToDelete = object.second;
+							scene->DeregisterGameObject(objectName);
+							scene->RemoveFromCreatedObjects(objectName);
+							break;
+						}
+					}
+				}
+			}
+
+			if (objectToDelete != nullptr)
+			{
+				delete objectToDelete;
+			}
+
+		});
+
+	objectManagementDeleteName = new InputField(
+		"CreateObjectInputFieldBackground",
+		"CreateObjectInputFieldBackgroundHover",
+		"CreateObjectInputFieldBackgroundPress",
+		{ 0.15625, 0.037037037037037 },
+		{ 0.8f, 0.34f },
+		objectManagementDeleteObjectOnEnter,
+		nullptr,
+		true
+	);
+
+	objectManagementDeleteName->SetZ(0.5f);
 }
 
 void EditorUI::CleanupObjectManagementInterface()
 {
+	if (objectManagementDeleteName != nullptr)
+	{
+		delete objectManagementDeleteName;
+	}
+
+	if (objectManagementDeleteObjectOnEnter != nullptr)
+	{
+		delete objectManagementDeleteObjectOnEnter;
+	}
+
+	if (objectManagementDeleteNameTitle != nullptr)
+	{
+		delete objectManagementDeleteNameTitle;
+	}
+
+	if (objectManagementDeleteTitle != nullptr)
+	{
+		delete objectManagementDeleteTitle;
+	}
+
 	if (objectManagementCreateObjectParentSceneNameInput != nullptr)
 	{
 		delete objectManagementCreateObjectParentSceneNameInput;
@@ -777,6 +877,11 @@ void EditorUI::UpdateObjectManagementInterface()
 			objectManagementCreateObjectNameInput->Update();
 		}
 
+		if (objectManagementDeleteName != nullptr)
+		{
+			objectManagementDeleteName->Update();
+		}
+
 		if (objectManagementCreateObjectParentSceneNameInput != nullptr)
 		{
 			objectManagementCreateObjectParentSceneNameInput->Update();
@@ -800,6 +905,21 @@ void EditorUI::EnableObjectManagementInterface()
 {
 	if (!objectManagementInterfaceEnabled)
 	{
+		if (objectManagementDeleteTitle != nullptr)
+		{
+			objectManagementDeleteTitle->Enable();
+		}
+
+		if (objectManagementDeleteNameTitle != nullptr)
+		{
+			objectManagementDeleteNameTitle->Enable();
+		}
+
+		if (objectManagementDeleteName != nullptr)
+		{
+			objectManagementDeleteName->Enable();
+		}
+
 		if (objectManagementBackground != nullptr)
 		{
 			objectManagementBackground->Enable();
@@ -848,6 +968,21 @@ void EditorUI::DisableObjectManagementInterface()
 {
 	if (objectManagementInterfaceEnabled)
 	{
+		if (objectManagementDeleteTitle != nullptr)
+		{
+			objectManagementDeleteTitle->Disable();
+		}
+
+		if (objectManagementDeleteNameTitle != nullptr)
+		{
+			objectManagementDeleteNameTitle->Disable();
+		}
+
+		if (objectManagementDeleteName != nullptr)
+		{
+			objectManagementDeleteName->Disable();
+		}
+
 		if (objectManagementBackground != nullptr)
 		{
 			objectManagementBackground->Disable();

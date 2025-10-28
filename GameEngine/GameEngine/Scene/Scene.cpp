@@ -54,6 +54,10 @@ Scene::Scene() :
 
 Scene::~Scene()
 {
+	for (const auto& obj : createdObjects)
+	{
+		delete obj.second;
+	}
 }
 
 GameObject* const Scene::GetGameObject(const std::string& name) const
@@ -221,6 +225,8 @@ void Scene::Deserialize(const std::string& path)
 
 			GameObject* newObj;
 			constructor(&newObj);
+
+			createdObjects[name] = newObj;
 
 			RegisterGameObject(newObj, name);
 
@@ -760,6 +766,16 @@ bool Scene::Started() const
 bool Scene::Initialized() const
 {
 	return initialized;
+}
+
+void Scene::AddToCreatedObjects(const std::string& name, GameObject* obj)
+{
+	createdObjects[name] = obj;
+}
+
+void Scene::RemoveFromCreatedObjects(const std::string& name)
+{
+	createdObjects.erase(createdObjects.find(name));
 }
 
 void Scene::Save(const std::string& saveFileName)

@@ -189,6 +189,23 @@ void Text::SetText(const std::string& string)
 	}
 }
 
+float Text::GetCursorPosition() const
+{
+	Font* font = FontManager::GetFont(fontName);
+
+	if (font != nullptr)
+	{
+		float x = position.x;
+		for (const char& character : text)
+		{
+			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
+			x += (glyph.advance >> 6) * scale.x;
+		}
+
+		return x;
+	}
+}
+
 Text::~Text()
 {
 	for (GOGlyph* glyph : glyphs)

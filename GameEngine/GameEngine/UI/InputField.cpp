@@ -15,13 +15,16 @@
 #include "TextField.h"
 #include "../Time/TimeManager.h"
 
+InputField* InputField::selectedInputField = nullptr;
+
 InputField::InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onE, std::function<void()>* onC, bool editor) :
 	onEnter(onE),
 	onChange(onC),
 	maxCharacterLength(20U),
 	relativePosition(position),
 	isEditor(editor),
-	shiftPressed(false)
+	shiftPressed(false),
+	lastPressTime(TimeManager::SecondsSinceStart())
 {
 	base = TextureManager::GetTexture(baseTextureName);
 	hovered = TextureManager::GetTexture(hoveredTextureName);
@@ -42,11 +45,17 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 	text = new TextField("", "exo2", background->GetPosition() + textBackgroundOffset, glm::vec2(background->GetScale().y, background->GetScale().y) * 350.0f);
 	text->SetZ(0.5f);
 
+	cursor = new Sprite(TextureManager::LoadTexture("Assets/Texture/White.png", "White")->GetName(), { text->GetCursorPosition(),relativePosition.y }, { 0.001f, dimensions.y });
+	cursor->SetZ(0.5f);
+	cursor->Disable();
+
 	backspacePressed = new std::function<void(int)>([this](int keyCode)
 		{
 			if (TimeManager::SecondsSinceStart() - lastBackspacePop > .05f && TimeManager::SecondsSinceStart() - lastBackspacePress > .2)
 			{
 				text->PopBack();
+				lastPressTime = TimeManager::SecondsSinceStart();
+				cursor->SetPosition({ text->GetCursorPosition(), cursor->GetPosition().y });
 				lastBackspacePop = TimeManager::SecondsSinceStart();
 			}
 		});
@@ -77,8 +86,10 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 				if (newText.size() > 0)
 				{
 					text->PopBack();
+					cursor->SetPosition({ text->GetCursorPosition(), cursor->GetPosition().y });
 					lastBackspacePop = TimeManager::SecondsSinceStart();
 					lastBackspacePress = TimeManager::SecondsSinceStart();
+					lastPressTime = TimeManager::SecondsSinceStart();
 				}
 
 				return;
@@ -101,6 +112,13 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 			}
 
 			text->Append(newCharacter);
+			cursor->SetPosition({ text->GetCursorPosition(), cursor->GetPosition().y });
+			lastPressTime = TimeManager::SecondsSinceStart();
+		});
+
+	escPress = new std::function<void(int keyCode)>([this](int keyCode)
+		{
+			Deselect();
 		});
 
 	enabled = true;
@@ -116,6 +134,7 @@ InputField::~InputField()
 	delete shiftPress;
 	delete shiftRelease;
 	delete backspacePressed;
+	delete escPress;
 	
 	if (isEditor)
 	{
@@ -126,14 +145,47 @@ InputField::~InputField()
 		InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "InputFieldPress");
 	}
 
+	delete cursor;
 	delete background;
 }
 
 void InputField::Update()
 {
+	static float lastUpdate = TimeManager::SecondsSinceStart();
+	static float counter = TimeManager::SecondsSinceStart() - lastUpdate;
+
+	if (selected)
+	{
+		if (TimeManager::SecondsSinceStart() - lastPressTime > 1.0f)
+		{
+			counter += TimeManager::SecondsSinceStart() - lastUpdate;
+
+			if (counter >= 0.5f)
+			{
+				if (cursor->IsDisabled())
+				{
+					cursor->Enable();
+				}
+				else
+				{
+					cursor->Disable();
+				}
+
+				counter = counter - 0.5f;
+			}
+
+			lastUpdate = TimeManager::SecondsSinceStart();
+		}
+		else if (cursor->IsDisabled())
+		{
+			cursor->Enable();
+		}
+		
+	}
+
 	if (!Hovered())
 	{
-
+		
 	}
 }
 
@@ -174,6 +226,18 @@ void InputField::SetOnChange(std::function<void()>* onchange)
 
 void InputField::Select()
 {
+	if (selectedInputField != nullptr)
+	{
+		selectedInputField->Deselect();
+	}
+
+	selectedInputField = this;
+
+	if (cursor->IsDisabled())
+	{
+		cursor->Enable();
+	}
+
 	SetupEnterCallback();
 	
 	if (isEditor)
@@ -232,6 +296,7 @@ void InputField::Select()
 		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, shiftPress, "InputField");
 		InputManager::EditorRegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, shiftRelease, "InputField");
 		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, backspacePressed, "InputField");
+		InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, escPress, "InputField");
 	}
 	else
 	{
@@ -288,6 +353,7 @@ void InputField::Select()
 		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, shiftPress, "InputField");
 		InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, shiftRelease, "InputField");
 		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, backspacePressed, "InputField");
+		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, escPress, "InputField");
 
 	}
 	
@@ -297,6 +363,16 @@ void InputField::Select()
 
 void InputField::Deselect()
 {
+	if (selectedInputField == this)
+	{
+		selectedInputField = nullptr;
+	}
+
+	if (!cursor->IsDisabled())
+	{
+		cursor->Disable();
+	}
+
 	CleanupEnterCallback();
 
 	if (isEditor)
@@ -355,6 +431,7 @@ void InputField::Deselect()
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, "InputField");
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, "InputField");
 		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, "InputField");
+		InputManager::EditorDeregisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, "InputField");
 
 	}
 	else
@@ -412,6 +489,7 @@ void InputField::Deselect()
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_LEFT_SHIFT, "InputField");
 		InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_LEFT_SHIFT, "InputField");
 		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_BACKSPACE, "InputField");
+		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, "InputField");
 	}
 	
 
@@ -540,4 +618,5 @@ void InputField::SetZ(float newZ)
 {
 	background->SetZ(newZ);
 	text->SetZ(newZ + 0.00001f);
+	cursor->SetZ(newZ + 0.00001f);
 }

@@ -45,6 +45,8 @@ public:
 
 	void SetText(const std::string& string);
 
+	float GetCursorPosition() const;
+
 	~Text();
 
 private:

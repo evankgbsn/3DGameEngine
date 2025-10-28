@@ -121,6 +121,14 @@ private:
 	std::function<void()>* objectManagementCreateObjectOnEnter;
 
 	TextField* objectManagementSelectedObject;
+
+	TextField* objectManagementDeleteTitle;
+
+	TextField* objectManagementDeleteNameTitle;
+
+	InputField* objectManagementDeleteName;
+
+	std::function<void()>* objectManagementDeleteObjectOnEnter;
 	// Object Management Interface END.
 
 	std::function<void(int)>* altPress;

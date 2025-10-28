@@ -31,6 +31,8 @@ void SurvivalPointLight::Terminate()
 
     if (light != nullptr)
     {
+        RemoveComponent("PointLight");
+
         delete light;
     }
 }

@@ -33,7 +33,10 @@ void SurvivalCrate::Initialize()
 void SurvivalCrate::Terminate()
 {
 	CleanupEditorCallbacks();
+	RemoveComponent("Graphics");
+	RemoveComponent("Collider");
 	delete graphics;
+	delete collider;
 }
 
 void SurvivalCrate::GameUpdate()

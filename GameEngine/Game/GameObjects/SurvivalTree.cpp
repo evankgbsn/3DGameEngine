@@ -36,7 +36,7 @@ void SurvivalTree::Initialize()
 	branchesGraphics->SetShine(32.0f);
 	branchesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
 
-	leavesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
+	leavesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTreeLeaves"));
 	leavesGraphics->SetShine(32.0f);
 	leavesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
 
@@ -71,25 +71,7 @@ void SurvivalTree::GameUpdate()
 
 void SurvivalTree::EditorUpdate()
 {
-	Scene* scene = SceneManager::GetRegisteredScene("SurvivalScene");
-	if (scene != nullptr)
-	{
-		SurvivalTerrain* terrain = dynamic_cast<SurvivalTerrain*>(scene->GetGameObject("Terrain"));
-
-		if (terrain != nullptr)
-		{
-			TerrainComponent* terrainComponent = dynamic_cast<TerrainComponent*>(terrain->GetComponent("SurvivalTerrain"));
-
-			if (terrainComponent != nullptr)
-			{
-				if (terrainComponent->Loaded())
-				{
-					glm::vec3 terrainPoint = terrainComponent->GetTerrainPoint(trunkGraphics->GetPosition());
-					SetPosition(terrainPoint);
-				}
-			}
-		}
-	}
+	
 }
 
 void SurvivalTree::Load()
@@ -111,21 +93,18 @@ void SurvivalTree::Load()
 
 	if (!TextureManager::TextureLoaded("SurvivalTree"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/grey.png", "SurvivalTree");
+		TextureManager::LoadTexture("Assets/Texture/DarkBrown.png", "SurvivalTree");
+	}
+
+	if (!TextureManager::TextureLoaded("SurvivalTreeLeaves"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Green.png", "SurvivalTreeLeaves");
 	}
 }
 
 void SurvivalTree::Unload()
 {
-	if (ModelManager::ModelLoaded("SurvivalTree"))
-	{
-		ModelManager::UnloadModel("SurvivalTree");
-	}
-
-	if (TextureManager::TextureLoaded("SurvivalTree"))
-	{
-		TextureManager::UnloadTexture("SurvivalTree");
-	}
+	
 }
 
 void SurvivalTree::Start()

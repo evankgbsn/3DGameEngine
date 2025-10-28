@@ -254,7 +254,7 @@ void Window::RegisterCallbackForMouseScroll(const std::string& name, std::functi
 
 void Window::DeregisterCallbackForMouseScroll(const std::string& name)
 {
-	mouseScrollCallbacks[glfwWindow][name] = nullptr;
+	mouseScrollCallbacks[glfwWindow].erase(mouseScrollCallbacks[glfwWindow].find(name));
 }
 
 GLFWwindow* Window::GetGLFWwindow() const

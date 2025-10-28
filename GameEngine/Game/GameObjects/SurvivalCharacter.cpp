@@ -97,21 +97,41 @@ void SurvivalCharacter::OnDataReceived(const std::string& data)
 {
 	NetworkObject::OnDataReceived(data);
 
+	std::string updateType;
+
+	for (const auto& character : data)
+	{
+		if (character == ' ')
+		{
+			break;
+		}
+		updateType += character;
+	}
+
+	std::string updateData;
+
+	for (const auto& character : std::string(data.begin() + updateType.size() + 1, data.end()))
+	{
+		updateData += character;
+	}
+
 	if (!NetworkManager::IsServer())
 	{
-		receivedPosition = NetworkManager::ConvertDataToVec3(data);
+		if (updateType == "Target")
+		{
+			target = NetworkManager::ConvertDataToVec3(updateData);
+		}
+		else if (updateType == "Position")
+		{
+			SetPosition(NetworkManager::ConvertDataToVec3(updateData));
+		}
 	}
 	else
 	{
-		glm::vec3 pos = NetworkManager::ConvertDataToVec3(data);
-
-		if (pos != glm::zero<glm::vec3>())
+		if (updateType == "Target")
 		{
-			target = pos;
-		}
-		else
-		{
-			ServerSendAll(NetworkManager::ConvertVec3ToData(GetPosition()));
+			target = NetworkManager::ConvertDataToVec3(updateData);
+			ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(target));
 		}
 	}
 }
@@ -198,39 +218,6 @@ void SurvivalCharacter::GameUpdate()
 
 			characterCamera->SetPosition(characterCamera->GetTarget() + glm::normalize(cameraPosition) * cameraDistance);
 		}
-
-		static glm::vec3 currentTarget = target;
-		
-		currentTarget = receivedPosition;
-
-		glm::vec3 targetVector = currentTarget - characterGraphics->GetPosition();
-		glm::vec3 direction = glm::normalize(targetVector);
-		float targetVectorLength = glm::length(targetVector);
-		float movementUnit = walkSpeed * TimeManager::DeltaTime();
-
-		if (abs(targetVectorLength - movementUnit) > movementUnit && characterGraphics->GetPosition() != currentTarget)
-		{
-			glm::mat4 currentRotation = characterGraphics->GetRotation();
-
-			glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-			glm::vec4 right = glm::vec4(glm::normalize(glm::cross(glm::vec3(up), direction)), 0.0f);
-			glm::vec4 forward = glm::vec4(glm::normalize(glm::cross(glm::vec3(right), glm::vec3(up))), 0.0f);
-
-			glm::mat4 newRotation(
-				right,
-				up,
-				forward,
-				glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
-			);
-
-			characterGraphics->SetRotation(newRotation);
-			characterGraphics->Translate(direction * movementUnit);
-		}
-
-		if (targetVectorLength > walkSpeed)
-		{
-			characterGraphics->SetPosition(receivedPosition);
-		}
 	}
 	
 	glm::vec3 terrainPoint = characterGraphics->GetPosition();
@@ -288,10 +275,7 @@ void SurvivalCharacter::GameUpdate()
 	
 	characterGraphics->SetPosition(terrainPoint);
 
-	if (NetworkManager::IsServer())
-	{
-		MoveToTarget();
-	}
+	MoveToTarget();
 }
 
 void SurvivalCharacter::Start()
@@ -405,7 +389,7 @@ void SurvivalCharacter::SetupMovement()
 						{
 							target = terrainPoint;
 
-							ClientSend(NetworkManager::ConvertVec3ToData(target));
+							ClientSend("Target " + NetworkManager::ConvertVec3ToData(target));
 						}
 
 					}
@@ -550,7 +534,7 @@ void SurvivalCharacter::MoveToTarget()
 				{
 					characterGraphics->Translate(-glm::normalize(treeCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
 					shouldRotate = false;
-					//ServerSendAll(NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+					ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 					target = glm::vec3(0.0f);
 				}
 			}
@@ -560,20 +544,6 @@ void SurvivalCharacter::MoveToTarget()
 	if (glm::length(targetVector) > movementUnit && target != glm::zero<glm::vec3>())
 	{
 		characterGraphics->Translate(direction * movementUnit);
-
-		if (NetworkManager::IsServer())
-		{
-			static float lastSend = TimeManager::SecondsSinceStart();
-
-			if (TimeManager::SecondsSinceStart() - lastSend >= .1f)
-			{
-
-			}
-
-			glm::vec3 newPosition = characterGraphics->GetPosition();
-			ServerSendAll(NetworkManager::ConvertVec3ToData(newPosition));
-			lastSend = TimeManager::SecondsSinceStart();
-		}
 
 		if (shouldRotate)
 		{
@@ -591,6 +561,17 @@ void SurvivalCharacter::MoveToTarget()
 			);
 
 			characterGraphics->SetRotation(newRotation);
+		}
+	}
+
+	if (NetworkManager::IsServer())
+	{
+		static float lastPositionSend = TimeManager::SecondsSinceStart();
+
+		if (TimeManager::SecondsSinceStart() - lastPositionSend > 0.5f)
+		{
+			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+			lastPositionSend = TimeManager::SecondsSinceStart();
 		}
 
 	}

@@ -11,8 +11,8 @@ GOWater::GOWater(Model* const model) :
 	GO3D(model),
 	effects(
 		{
-			glm::vec4(0.0f, 0.5f, 0.8f, 1.0f),
-			0.6f,
+			glm::vec4(0.0f, 0.3f, .8f, 1.0f),
+			0.8f,
 			0.0f,
 			0.03f,
 			.5f

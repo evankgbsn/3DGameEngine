@@ -62,7 +62,11 @@ private:
 
 	void CleanupEnterCallback();
 
+	static InputField* selectedInputField;
+
 	Sprite* background;
+
+	Sprite* cursor;
 
 	Texture* base;
 
@@ -92,6 +96,8 @@ private:
 
 	std::function<void(int)>* backspacePressed;
 
+	std::function<void(int)>* escPress;
+
 	bool shiftPressed;
 
 	bool enabled;
@@ -109,6 +115,8 @@ private:
 	float lastBackspacePop;
 
 	float lastBackspacePress;
+
+	float lastPressTime;
 
 };
 

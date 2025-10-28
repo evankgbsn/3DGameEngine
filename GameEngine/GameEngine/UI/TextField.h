@@ -44,6 +44,8 @@ public:
 
 	void SetText(const std::string& string);
 
+	float GetCursorPosition() const;
+
 private:
 
 	TextField(const TextField&) = delete;
