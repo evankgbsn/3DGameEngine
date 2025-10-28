@@ -69,7 +69,7 @@ private:
 
 	std::function<void()>* onEditorDisable;
 
-	unsigned long long lastFrame
+	unsigned long long lastFrame;
 
 };
 
