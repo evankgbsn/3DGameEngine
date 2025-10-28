@@ -4,6 +4,9 @@
 #include "../Camera/Camera.h"
 #include "../Model/Model.h"
 #include "../Shader/ShaderManager.h"
+#include "../Renderer/Renderer.h"
+#include "GOWater.h"
+#include "GOTerrain.h"
 
 void GO3D::SetDrawMode(Mode m)
 {
@@ -66,5 +69,20 @@ void GO3D::Update()
 	glPointSize(pointSize);
 
 	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)drawMode);
-	glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
+	
+	if (Renderer::ShouldDraw())
+	{
+		GOWater* water = dynamic_cast<GOWater*>(this);
+		GOTerrain* terrain = dynamic_cast<GOTerrain*>(this);
+		
+
+		if (glm::dot(cam.GetForwardVector(), glm::normalize(cam.GetPosition() - glm::vec3(translation[3]))) < 0)
+		{
+			glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
+		}
+		else if (water != nullptr || terrain != nullptr)
+		{
+			glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
+		}
+	}
 }

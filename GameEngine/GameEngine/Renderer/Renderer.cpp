@@ -14,6 +14,15 @@ void GLFWErrorCallback(int error, const char* description)
 	Logger::Log("Error: " + std::string(description), Logger::Category::Error);
 }
 
+bool Renderer::ShouldDraw()
+{
+	if (instance != nullptr)
+	{
+		return instance->draw;
+	}
+	return false;
+}
+
 void Renderer::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<Renderer>(&instance, "Renderer");
@@ -78,7 +87,8 @@ void Renderer::TerminateGLFW()
 	Logger::Log("Terminated GLFW", Logger::Category::Success);
 }
 
-Renderer::Renderer()
+Renderer::Renderer() :
+	draw(true)
 {
 	InitializeGLFW();
 	WindowManager::Initialize();

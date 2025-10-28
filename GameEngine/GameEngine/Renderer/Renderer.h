@@ -8,6 +8,8 @@ class Renderer
 {
 public:
 
+	static bool ShouldDraw();
+
 private:
 
 	friend class SingletonHelpers;
@@ -35,6 +37,8 @@ private:
 	static Renderer* instance;
 
 	std::atomic<bool> shouldTerminate;
+
+	bool draw;
 };
 
 #endif // RENDERER_H
