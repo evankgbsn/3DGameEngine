@@ -23,6 +23,14 @@ bool Renderer::ShouldDraw()
 	return false;
 }
 
+void Renderer::SetShouldDraw(bool shouldDraw)
+{
+	if (instance != nullptr)
+	{
+		instance->draw = shouldDraw;
+	}
+}
+
 void Renderer::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<Renderer>(&instance, "Renderer");

@@ -23,6 +23,8 @@ public:
 
 	void SetSpeed(float speed);
 
+	glm::mat4 GetJointTransform(const std::string& jointName) const;
+
 private:
 
 	GraphicsObjectTexturedAnimatedLit(const GraphicsObjectTexturedAnimatedLit&) = delete;

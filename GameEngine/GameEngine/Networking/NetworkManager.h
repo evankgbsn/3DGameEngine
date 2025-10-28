@@ -143,6 +143,8 @@ private:
 
 	void CheckLatency();
 
+	void SetupServerRenderToggle();
+
 	static NetworkManager* instance;
 
 	std::string clientIP;

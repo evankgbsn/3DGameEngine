@@ -8,6 +8,7 @@
 #include <list>
 
 class GraphicsObjectTexturedAnimatedLit;
+class GraphicsObjectTexturedLit;
 class CameraComponent;
 class AnimatedColliderComponent;
 
@@ -83,6 +84,8 @@ private:
 	void CleanupEditorCallbacks();
 
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
+
+	GraphicsObjectTexturedLit* axe;
 
 	CameraComponent* characterCamera;
 

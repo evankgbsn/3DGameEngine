@@ -6,6 +6,7 @@
 #include "../../Renderer/Model/ModelManager.h"
 #include "../../Renderer/Texture/Texture.h"
 #include "../../Renderer/Texture/TextureManager.h"
+#include "../../Renderer/Animation/Armature.h"
 
 GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit()
 {
@@ -36,6 +37,25 @@ void GraphicsObjectTexturedAnimatedLit::SetClip(unsigned int clipNum)
 void GraphicsObjectTexturedAnimatedLit::SetSpeed(float speed)
 {
 	static_cast<GOTexturedAnimatedLit*>(graphics)->SetSpeed(speed);
+}
+
+glm::mat4 GraphicsObjectTexturedAnimatedLit::GetJointTransform(const std::string& jointName) const
+{
+	GOTexturedAnimatedLit* g = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	const std::vector<std::string>& jointNames = g->GetModel()->GetArmature()->GetJointNames();
+
+	unsigned int i = 0;
+	for (const auto& name : jointNames)
+	{
+		if (name == jointName)
+		{
+			break;
+		}
+		i++;
+	}
+
+	return g->GetTransform() * g->GetAnimPoseArray()[i] * g->GetAnimInvBindPoseArray()[i];
 }
 
 void GraphicsObjectTexturedAnimatedLit::Serialize()

@@ -5,6 +5,8 @@
 #include "../GameObject/GameObject.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneManager.h"
+#include "../Renderer/Renderer.h"
+#include "../Input/InputManager.h"
 
 #define DEFAULT_PORT "27015"
 //#define SERVER_IP "136.30.15.215"
@@ -23,6 +25,7 @@ void NetworkManager::Initialize()
 	instance->SetupSpawnConfirmationCallbacks();
 	instance->SetupSyncCallbacks();
 	instance->SetupLatencyCallbacks();
+	instance->SetupServerRenderToggle();
 }
 
 void NetworkManager::Terminate()
@@ -1148,6 +1151,17 @@ void NetworkManager::CheckLatency()
 		latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
 		ClientSend("", "NetworkManagerServerReceiveLatency");
 	}
+}
+
+void NetworkManager::SetupServerRenderToggle()
+{
+	static std::function<void(int)> renderToggle = [](int keyCode)
+		{
+			Renderer::SetShouldDraw(!Renderer::ShouldDraw());
+		};
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_F1, &renderToggle, "NetworkManagerServerRenderToggle");
+	InputManager::EditorRegisterCallbackForKeyState(KEY_PRESS, KEY_F1, &renderToggle, "NetworkManagerServerRenderToggle");
 }
 
 void NetworkManager::ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)

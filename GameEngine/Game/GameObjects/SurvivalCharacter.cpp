@@ -2,6 +2,7 @@
 
 
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedAnimatedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/GameObject/Component/CameraComponent.h"
@@ -21,6 +22,7 @@
 #include "SurvivalWater.h"
 #include "SurvivalTree.h"
 #include "SurvivalCrate.h"
+#include "SurvivalRockLarge.h"
 #include "GameEngine/Networking/NetworkManager.h"
 
 #include <glm/gtx/transform.hpp>
@@ -151,10 +153,15 @@ void SurvivalCharacter::Initialize()
 	AddComponent(characterGraphics, "CharacterGraphics");
 	
 	characterGraphics->SetShine(32.0f);
-	characterGraphics->SetClip(0);
+	characterGraphics->SetClip(4);
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
-	
+
+	axe = new GraphicsObjectTexturedLit(ModelManager::GetModel("Axe"), TextureManager::GetTexture("Axe"), TextureManager::GetTexture("Axe"));
+	axe->SetShine(32.0f);
+	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+
+
 	if (!NetworkManager::IsServer() && SpawnedFromLocalSpawnRequest())
 	{
 		characterCamera = new CameraComponent("CharacterCamera");
@@ -207,6 +214,8 @@ void SurvivalCharacter::Terminate()
 
 void SurvivalCharacter::GameUpdate()
 {
+	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+
 	characterCollider->Update();
 
 	if (!NetworkManager::IsServer())
@@ -297,6 +306,16 @@ void SurvivalCharacter::Load()
 	if (!ModelManager::ModelLoaded(CHARACTER_GRAPHICS_MODEL_NAME))
 	{
 		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Woman.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("Axe"))
+	{
+		ModelManager::LoadModel("Axe", "Assets/Model/Axe.gltf", false);
+	}
+
+	if (!TextureManager::TextureLoaded("Axe"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/grey.png", "Axe");
 	}
 
 	if (!TextureManager::TextureLoaded(CHARACTER_GRAPHICS_DIFFUSE_NAME))
@@ -528,6 +547,7 @@ void SurvivalCharacter::MoveToTarget()
 			{
 				SurvivalTree* tree = dynamic_cast<SurvivalTree*>(gameObject.second);
 				SurvivalCrate* crate = dynamic_cast<SurvivalCrate*>(gameObject.second);
+				SurvivalRockLarge* rock = dynamic_cast<SurvivalRockLarge*>(gameObject.second);
 
 				if (tree != nullptr)
 				{
@@ -547,6 +567,18 @@ void SurvivalCharacter::MoveToTarget()
 					if (characterCollider->Intersect(*crateCollider))
 					{
 						characterGraphics->Translate(-glm::normalize(crateCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
+						shouldRotate = false;
+						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
+						target = glm::vec3(0.0f);
+						ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(target));
+					}
+				}
+				else if (rock != nullptr)
+				{
+					OrientedBoundingBoxComponent* rockCollider = dynamic_cast<OrientedBoundingBoxComponent*>(rock->GetComponent("Collider"));
+					if (characterCollider->Intersect(*rockCollider))
+					{
+						characterGraphics->Translate(-glm::normalize(rockCollider->GetOrigin() - characterGraphics->GetPosition()) * movementUnit);
 						shouldRotate = false;
 						ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()));
 						target = glm::vec3(0.0f);

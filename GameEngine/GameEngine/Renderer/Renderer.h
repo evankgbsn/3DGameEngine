@@ -10,6 +10,8 @@ public:
 
 	static bool ShouldDraw();
 
+	static void SetShouldDraw(bool shouldDraw);
+
 private:
 
 	friend class SingletonHelpers;
