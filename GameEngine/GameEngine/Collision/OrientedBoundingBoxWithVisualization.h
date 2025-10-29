@@ -27,6 +27,8 @@ public:
 
 	const glm::vec4 GetColor() const;
 
+	glm::mat4 GetTransform() const;
+
 private:
 
 	void CreateGraphics();

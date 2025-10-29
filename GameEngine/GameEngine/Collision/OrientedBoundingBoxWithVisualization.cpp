@@ -26,6 +26,16 @@ OrientedBoundingBoxWithVisualization::~OrientedBoundingBoxWithVisualization()
 	}
 }
 
+glm::mat4 OrientedBoundingBoxWithVisualization::GetTransform() const
+{
+	if (graphics != nullptr)
+	{
+		return graphics->GetTransform();
+	}
+
+	return glm::mat4();
+}
+
 void OrientedBoundingBoxWithVisualization::SetOffset(const glm::vec3& offset)
 {
 	OrientedBoundingBox::SetOffset(offset);

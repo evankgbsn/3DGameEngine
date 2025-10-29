@@ -112,6 +112,16 @@ void AnimatedColliderComponent::SetGraphics(GraphicsObjectColoredAnimated* const
 	collider = new AnimatedCollider(static_cast<GO3DAnimated*>((void*)graphicsObject->GetGraphics()));
 }
 
+glm::mat4 AnimatedColliderComponent::GetJointTransform(const std::string& jointName) const
+{
+	if (collider != nullptr)
+	{
+		return collider->GetJointTransform(jointName);
+	}
+
+	return glm::mat4(1.0);
+}
+
 void AnimatedColliderComponent::Serialize()
 {
 	savedBools["IsVisible"] = collider->IsVisible();

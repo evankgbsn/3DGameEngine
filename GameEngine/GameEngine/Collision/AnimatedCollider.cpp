@@ -37,6 +37,19 @@ AnimatedCollider::~AnimatedCollider()
 	delete sphere;
 }
 
+glm::mat4 AnimatedCollider::GetJointTransform(const std::string& jointName) const
+{
+	for (unsigned int i = 0; i < jointNames->size(); i++)
+	{
+		if (jointName == (*jointNames)[i])
+		{
+			return obbs[i].first->GetTransform();
+		}
+	}
+
+	return glm::mat4(1.0f);
+}
+
 void AnimatedCollider::InitializeOBBs()
 {
 	arms = wrapedGraphics->GetModel()->GetArmature();

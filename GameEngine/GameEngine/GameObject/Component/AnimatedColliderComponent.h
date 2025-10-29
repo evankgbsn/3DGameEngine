@@ -48,6 +48,8 @@ public:
 
 	void SetGraphics(GraphicsObjectColoredAnimated* const graphicsObject);
 
+	glm::mat4 GetJointTransform(const std::string& jointName) const;
+
 private:
 
 

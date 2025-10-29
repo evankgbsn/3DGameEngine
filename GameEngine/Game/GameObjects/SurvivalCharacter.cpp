@@ -158,9 +158,12 @@ void SurvivalCharacter::Initialize()
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
 
+	characterCollider = new AnimatedColliderComponent(characterGraphics);
+	AddComponent(characterCollider, "CharacterCollider");
+
 	axe = new GraphicsObjectTexturedLit(ModelManager::GetModel("Axe"), TextureManager::GetTexture("Axe"), TextureManager::GetTexture("Axe"));
 	axe->SetShine(32.0f);
-	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+	axe->SetTransform(characterCollider->GetJointTransform("RightHand"));
 	AddComponent(axe, "Axe");
 
 
@@ -179,8 +182,7 @@ void SurvivalCharacter::Initialize()
 		SetupCameraMovement();
 	}
 	
-	characterCollider = new AnimatedColliderComponent(characterGraphics);
-	AddComponent(characterCollider, "CharacterCollider");
+	
 	
 	SetupEditorCallbacks();
 }

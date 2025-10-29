@@ -48,6 +48,8 @@ public:
 
 	const SphereWithVisualization* const GetSphere() const;
 
+	glm::mat4 GetJointTransform(const std::string& jointName) const;
+
 private:
 
 	void InitializeOBBs();
