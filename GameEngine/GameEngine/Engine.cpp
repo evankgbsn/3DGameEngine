@@ -118,7 +118,8 @@ Engine::Engine()
 	TimeManager::Initialize();
 	Renderer::Initialize();
 	InputManager::Initialize();
-	Renderer::CreateMainWindow(1920U, 1080U, "Engine");
+	//Renderer::CreateMainWindow(1920U, 1080U, "Engine");
+	Renderer::CreateMainWindow(1280U, 720U, "Engine");
 	SceneManager::Initialize();
 	Editor::Initialize();
 	Editor::Enable();
