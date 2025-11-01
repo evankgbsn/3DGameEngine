@@ -5,7 +5,7 @@
 
 #include <functional>
 
-class GraphicsObjectTexturedLit;
+class GraphicsObjectTexturedLitInstanced;
 class StaticColliderComponent;
 
 class SurvivalTree : public GameObject
@@ -56,17 +56,19 @@ private:
 
 	void Deserialize() override;
 
-	GraphicsObjectTexturedLit* trunkGraphics;
+	static GraphicsObjectTexturedLitInstanced* trunkGraphics;
 
-	GraphicsObjectTexturedLit* branchesGraphics;
+	static GraphicsObjectTexturedLitInstanced* branchesGraphics;
 
-	GraphicsObjectTexturedLit* leavesGraphics;
+	static GraphicsObjectTexturedLitInstanced* leavesGraphics;
 
 	StaticColliderComponent* collider;
 
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;
+
+	unsigned int instanceID;
 
 };
 

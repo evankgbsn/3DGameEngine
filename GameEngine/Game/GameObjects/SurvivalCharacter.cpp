@@ -163,7 +163,7 @@ void SurvivalCharacter::Initialize()
 
 	axe = new GraphicsObjectTexturedLit(ModelManager::GetModel("Axe"), TextureManager::GetTexture("Axe"), TextureManager::GetTexture("Axe"));
 	axe->SetShine(32.0f);
-	axe->SetTransform(characterCollider->GetJointTransform("RightHand"));
+	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
 	AddComponent(axe, "Axe");
 
 

@@ -38,6 +38,8 @@ private:
 
 	friend class GOTexturedAnimatedLit;
 
+	friend class GOTexturedLitInstanced;
+
 	friend class GOTerrain;
 
 	friend class PointLight;

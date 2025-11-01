@@ -15,6 +15,7 @@ class Ray;
 class OrientedBoundingBoxWithVisualization;
 class SphereWithVisualization;
 class Model;
+class GraphicsObjectTexturedLitInstanced;
 
 class StaticColliderComponent : public Component
 {
@@ -23,6 +24,8 @@ public:
 	StaticColliderComponent();
 
 	StaticColliderComponent(GraphicsObject3DComponent* graphics);
+
+	StaticColliderComponent(GraphicsObjectTexturedLitInstanced* graphics, unsigned int instanceID);
 
 	~StaticColliderComponent();
 
@@ -59,6 +62,8 @@ public:
 	bool IsVisible() const;
 
 	void SetGraphics(GraphicsObject3DComponent* graphics);
+
+	void SetGraphics(GraphicsObjectTexturedLitInstanced* graphics, unsigned int instanceID);
 
 	glm::vec3 GetSphereOrigin() const;
 

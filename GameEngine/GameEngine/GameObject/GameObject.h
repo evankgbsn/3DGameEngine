@@ -49,6 +49,8 @@ public:
 
 	const std::string& GetNameOfType() const;
 
+	bool HasComponent(const std::string& name) const;
+
 protected:
 
 	friend class Scene;

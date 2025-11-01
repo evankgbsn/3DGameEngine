@@ -429,6 +429,12 @@
     <ClCompile Include="GameObject\Component\WaterComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedLitInstanced.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -764,6 +770,12 @@
     <ClInclude Include="GameObject\Component\WaterComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedLitInstanced.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\GLSL\AnimatedShadowMap.frag">
@@ -875,6 +887,18 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="..\Assets\GLSL\Water.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedLitInstanced.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\TexturedLitInstanced.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\ShadowMapInstanced.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="..\Assets\GLSL\ShadowMapInstanced.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

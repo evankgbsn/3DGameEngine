@@ -99,6 +99,17 @@ const std::string& GameObject::GetNameOfType() const
 	return nameOfType;
 }
 
+bool GameObject::HasComponent(const std::string& name) const
+{
+	auto componentIt = components.find(name);
+	if (componentIt != components.end())
+	{
+		return true;
+	}
+
+	return false;
+}
+
 std::function<void(GameObject**)> GameObject::GetConstructor(const std::string& name)
 {
 	if (newFunctions.find(name) != newFunctions.end())

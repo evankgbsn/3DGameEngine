@@ -5,6 +5,7 @@
 #include "OrientedBoundingBoxComponent.h"
 #include "../../Collision/OrientedBoundingBoxWithVisualization.h"
 #include "AnimatedColliderComponent.h"
+#include "GraphicsObjectTexturedLitInstanced.h"
 
 StaticColliderComponent::StaticColliderComponent() :
 	collider(nullptr)
@@ -16,6 +17,12 @@ StaticColliderComponent::StaticColliderComponent(GraphicsObject3DComponent* grap
 {
 	RegisterComponentClassType<StaticColliderComponent>(this);
 	collider = new StaticCollider(graphics->GetGraphics());
+}
+
+StaticColliderComponent::StaticColliderComponent(GraphicsObjectTexturedLitInstanced* graphics, unsigned int instanceID)
+{
+	RegisterComponentClassType<StaticColliderComponent>(this);
+	collider = new StaticCollider(graphics->GetGraphics(), instanceID);
 }
 
 StaticColliderComponent::~StaticColliderComponent()
@@ -160,6 +167,16 @@ void StaticColliderComponent::SetGraphics(GraphicsObject3DComponent* graphics)
 	}
 
 	collider = new StaticCollider(graphics->GetGraphics());
+}
+
+void StaticColliderComponent::SetGraphics(GraphicsObjectTexturedLitInstanced* graphics, unsigned int instanceID)
+{
+	if (collider != nullptr)
+	{
+		delete collider;
+	}
+
+	collider = new StaticCollider(graphics->GetGraphics(), instanceID);
 }
 
 glm::vec3 StaticColliderComponent::GetSphereOrigin() const

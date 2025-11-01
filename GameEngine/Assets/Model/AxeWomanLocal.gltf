@@ -37,29 +37,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":288,
+			"count":310,
 			"max":[
-				1.4883019924163818,
-				0.05195055156946182,
-				0.43820104002952576
+				-1.8023319244384766,
+				4.417778968811035,
+				0.9954190254211426
 			],
 			"min":[
-				-0.01954067312180996,
-				-0.06307411193847656,
-				-0.12523911893367767
+				-2.2677464485168457,
+				3.9383156299591064,
+				-0.5162123441696167
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":288,
+			"count":310,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":288,
+			"count":310,
 			"type":"VEC2"
 		},
 		{
@@ -72,33 +72,33 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":3456,
+			"byteLength":3720,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3456,
-			"byteOffset":3456,
+			"byteLength":3720,
+			"byteOffset":3720,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2304,
-			"byteOffset":6912,
+			"byteLength":2480,
+			"byteOffset":7440,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1308,
-			"byteOffset":9216,
+			"byteOffset":9920,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":10524,
-			"uri":"Axe.bin"
+			"byteLength":11228,
+			"uri":"AxeWomanLocal.bin"
 		}
 	]
 }

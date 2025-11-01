@@ -1,6 +1,6 @@
 #include "SurvivalTree.h"
 
-#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLitInstanced.h"
 #include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -13,12 +13,19 @@
 #include "GameEngine/Editor/Editor.h"
 #include "GameEngine/Renderer/Model/Model.h"
 
+GraphicsObjectTexturedLitInstanced* SurvivalTree::trunkGraphics = nullptr;
+GraphicsObjectTexturedLitInstanced* SurvivalTree::branchesGraphics = nullptr;
+GraphicsObjectTexturedLitInstanced* SurvivalTree::leavesGraphics = nullptr;
+
 SurvivalTree::SurvivalTree() :
 	GameObject("SurvivalTree"),
 	onEditorEnable(nullptr),
 	onEditorDisable(nullptr)
 {
 	RegisterGameObjectClassType<SurvivalTree>(this);
+	static unsigned int instanceIDGen = 0;
+	instanceID = instanceIDGen;
+	instanceIDGen++;
 }
 
 SurvivalTree::~SurvivalTree()
@@ -28,23 +35,31 @@ SurvivalTree::~SurvivalTree()
 
 void SurvivalTree::Initialize()
 {
-	trunkGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeTrunk"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
-	trunkGraphics->SetShine(32.0f);
-	trunkGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
+	if (trunkGraphics == nullptr)
+	{
+		trunkGraphics = new GraphicsObjectTexturedLitInstanced("SurvivalTreeTrunk", "SurvivalTree", "SurvivalTree", 1);
+		trunkGraphics->SetShine(32.0f);
 
-	branchesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeBranches"), TextureManager::GetTexture("SurvivalTree"), TextureManager::GetTexture("SurvivalTree"));
-	branchesGraphics->SetShine(32.0f);
-	branchesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
+		branchesGraphics = new GraphicsObjectTexturedLitInstanced("SurvivalTreeBranches", "SurvivalTree", "SurvivalTree", 1);
+		branchesGraphics->SetShine(32.0f);
 
-	leavesGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTreeLeaves"), TextureManager::GetTexture("SurvivalTreeLeaves"));
-	leavesGraphics->SetShine(32.0f);
-	leavesGraphics->SetPosition({ 0.0f, 0.0f, 20.0f });
+		leavesGraphics = new GraphicsObjectTexturedLitInstanced("SurvivalTreeLeaves", "SurvivalTreeLeaves", "SurvivalTreeLeaves", 1);
+		leavesGraphics->SetShine(32.0f);
 
-	AddComponent(trunkGraphics, "TrunkGraphics");
-	AddComponent(branchesGraphics, "BranchesGraphics");
-	AddComponent(leavesGraphics, "LeavesGraphics");
+		instanceID = 0;
 
-	collider = new StaticColliderComponent(trunkGraphics);
+		AddComponent(trunkGraphics, "TrunkGraphics");
+		AddComponent(branchesGraphics, "BranchesGraphics");
+		AddComponent(leavesGraphics, "LeavesGraphics");
+	}
+	else
+	{
+		instanceID = trunkGraphics->AddInstance();
+		branchesGraphics->AddInstance();
+		leavesGraphics->AddInstance();
+	}
+
+	collider = new StaticColliderComponent(trunkGraphics, instanceID);
 	collider->UpdateCollider();
 
 	AddComponent(collider, "Collider");
@@ -56,13 +71,20 @@ void SurvivalTree::Terminate()
 {
 	CleanupEditorCallbacks();
 
-	RemoveComponent("Graphics");
+	if (trunkGraphics->GetInstanceCount() == 1)
+	{
+		RemoveComponent("TrunkGraphics");
+		RemoveComponent("LeavesGraphics");
+		RemoveComponent("BranchesGraphics");
+
+		delete trunkGraphics;
+		delete branchesGraphics;
+		delete leavesGraphics;
+	}
+
 	RemoveComponent("Collider");
 
 	delete collider;
-	delete trunkGraphics;
-	delete branchesGraphics;
-	delete leavesGraphics;
 }
 
 void SurvivalTree::GameUpdate()
@@ -115,28 +137,28 @@ void SurvivalTree::Start()
 
 void SurvivalTree::SetPosition(const glm::vec3& newPosition)
 {
-	trunkGraphics->SetPosition(newPosition);
-	branchesGraphics->SetPosition(newPosition);
-	leavesGraphics->SetPosition(newPosition);
+	trunkGraphics->SetTranslation(newPosition, instanceID);
+	branchesGraphics->SetTranslation(newPosition, instanceID);
+	leavesGraphics->SetTranslation(newPosition, instanceID);
 	collider->UpdateCollider();
 }
 
 glm::vec3 SurvivalTree::GetPosition() const
 {
-	return trunkGraphics->GetPosition();
+	return trunkGraphics->GetTranslation(instanceID);
 }
 
 void SurvivalTree::SetRotation(const glm::mat4& newRotation)
 {
-	trunkGraphics->SetRotation(newRotation);
-	branchesGraphics->SetRotation(newRotation);
-	leavesGraphics->SetRotation(newRotation);
+	trunkGraphics->SetRotation(newRotation, instanceID);
+	branchesGraphics->SetRotation(newRotation, instanceID);
+	leavesGraphics->SetRotation(newRotation, instanceID);
 	collider->UpdateCollider();
 }
 
 glm::mat4 SurvivalTree::GetRotation() const
 {
-	return trunkGraphics->GetRotation();
+	return trunkGraphics->GetRotation(instanceID);
 }
 
 bool SurvivalTree::Hovered() const
@@ -192,12 +214,12 @@ void SurvivalTree::Deserialize()
 {
 	GameObject::Deserialize();
 
-	trunkGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("TrunkGraphics"));
-	branchesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("BranchesGraphics"));
-	leavesGraphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("LeavesGraphics"));
+	trunkGraphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("TrunkGraphics"));
+	branchesGraphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("BranchesGraphics"));
+	leavesGraphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("LeavesGraphics"));
 	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
 
-	collider->SetGraphics(trunkGraphics);
+	collider->SetGraphics(trunkGraphics, instanceID);
 	collider->UpdateCollider();
 
 	CleanupEditorCallbacks();

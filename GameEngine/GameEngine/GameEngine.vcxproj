@@ -497,6 +497,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimated.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLit.cpp" />
+    <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.cpp" />
     <ClCompile Include="GameObject\Component\WaterComponent.cpp" />
     <ClCompile Include="GameObject\Component\OrientedBoundingBoxComponent.cpp" />
     <ClCompile Include="GameObject\Component\PointLightComponent.cpp" />
@@ -553,6 +554,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOTexturedLit.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GOTexturedLitInstanced.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOWater.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GraphicsObject.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GraphicsObjectManager.cpp" />
@@ -607,6 +609,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimated.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLit.h" />
+    <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.h" />
     <ClInclude Include="GameObject\Component\WaterComponent.h" />
     <ClInclude Include="GameObject\Component\OrientedBoundingBoxComponent.h" />
     <ClInclude Include="GameObject\Component\PointLightComponent.h" />
@@ -664,6 +667,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedAnimatedLit.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOTexturedLit.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GOTexturedLitInstanced.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOWater.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GraphicsObject.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GraphicsObjectManager.h" />
@@ -715,6 +719,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <None Include="..\Assets\GLSL\PointLightShadow.vert" />
     <None Include="..\Assets\GLSL\ShadowMap.frag" />
     <None Include="..\Assets\GLSL\ShadowMap.vert" />
+    <None Include="..\Assets\GLSL\ShadowMapInstanced.frag" />
+    <None Include="..\Assets\GLSL\ShadowMapInstanced.vert" />
     <None Include="..\Assets\GLSL\Sprite.frag" />
     <None Include="..\Assets\GLSL\Sprite.vert" />
     <None Include="..\Assets\GLSL\Terrain.frag" />
@@ -729,6 +735,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <None Include="..\Assets\GLSL\TexturedAnimatedLit.vert" />
     <None Include="..\Assets\GLSL\TexturedLit.frag" />
     <None Include="..\Assets\GLSL\TexturedLit.vert" />
+    <None Include="..\Assets\GLSL\TexturedLitInstanced.frag" />
+    <None Include="..\Assets\GLSL\TexturedLitInstanced.vert" />
     <None Include="..\Assets\GLSL\TexturedStatic.frag" />
     <None Include="..\Assets\GLSL\TexturedStatic.vert" />
     <None Include="..\Assets\GLSL\Water.frag" />

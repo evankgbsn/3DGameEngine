@@ -9,9 +9,9 @@
 #include "../Input/InputManager.h"
 
 #define DEFAULT_PORT "27015"
-//#define SERVER_IP "136.30.15.215"
+#define SERVER_IP "192.168.50.24"
 //#define SERVER_IP "192.168.50.2"
-#define SERVER_IP "192.168.50.100"
+//#define SERVER_IP "192.168.50.100"
 
 NetworkManager* NetworkManager::instance = nullptr;
 

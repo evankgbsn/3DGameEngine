@@ -4,6 +4,7 @@
 #include "GO3D.h"
 #include "GOColored.h"
 #include "GOColoredInstanced.h"
+#include "GOTexturedLitInstanced.h"
 #include "GOTextured.h"
 #include "GOColoredAnimated.h"
 #include "GOTexturedAnimated.h"
@@ -182,6 +183,23 @@ GOColoredInstanced* const GraphicsObjectManager::CreateGO3DColoredInstanced(Mode
 	else
 	{
 		Logger::Log("Calling GraphicsObjectManager::CreateGO3DColoredInstanced() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
+GOTexturedLitInstanced* const GraphicsObjectManager::CreateGO3DTexturedLitInstanced(Model* const model, Texture* diffuse, Texture* specular, unsigned int instanceCount)
+{
+	GOTexturedLitInstanced* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		instance->graphicsObjects3D.push_back(result = new GOTexturedLitInstanced(model, diffuse, specular, instanceCount));
+		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGO3DTexturedLitInstanced() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
 	}
 
 	return result;

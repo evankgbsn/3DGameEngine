@@ -25,6 +25,8 @@ public:
 
 	StaticCollider(GO3D* const graphicsObject);
 
+	StaticCollider(GOTexturedLitInstanced* const graphicsObjectInstanced, unsigned int instanceID);
+
 	~StaticCollider();
 
 	void Update() override;
@@ -68,6 +70,10 @@ private:
 	StaticCollider& operator=(StaticCollider&&) = delete;
 
 	GO3D* wrapedGraphics;
+
+	GOTexturedLitInstanced* wrapedGraphicsInstanced;
+
+	unsigned int instanceID;
 
 	OrientedBoundingBoxWithVisualization* obb;
 

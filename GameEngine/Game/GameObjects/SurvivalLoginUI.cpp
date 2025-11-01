@@ -137,7 +137,7 @@ void SurvivalLoginUI::Start()
 				SceneManager::InitializeScene(sceneName);
 			}
 
-			SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Island.xml");
+			//SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/Island.xml");
 			SceneManager::StartScene(sceneName);
 		}
 	}
