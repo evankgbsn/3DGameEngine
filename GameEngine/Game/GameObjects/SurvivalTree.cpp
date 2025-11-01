@@ -59,6 +59,10 @@ void SurvivalTree::Initialize()
 		leavesGraphics->AddInstance();
 	}
 
+	trunkGraphics->FinalizeTransforms();
+	branchesGraphics->FinalizeTransforms();
+	leavesGraphics->FinalizeTransforms();
+
 	collider = new StaticColliderComponent(trunkGraphics, instanceID);
 	collider->UpdateCollider();
 
@@ -218,6 +222,10 @@ void SurvivalTree::Deserialize()
 	branchesGraphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("BranchesGraphics"));
 	leavesGraphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("LeavesGraphics"));
 	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
+
+	trunkGraphics->FinalizeTransforms();
+	branchesGraphics->FinalizeTransforms();
+	leavesGraphics->FinalizeTransforms();
 
 	collider->SetGraphics(trunkGraphics, instanceID);
 	collider->UpdateCollider();

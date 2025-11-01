@@ -212,3 +212,13 @@ GOTexturedLitInstanced* GraphicsObjectTexturedLitInstanced::GetGraphics() const
 {
 	return graphics;
 }
+
+unsigned int GraphicsObjectTexturedLitInstanced::GetInstanceCount() const
+{
+	if (graphics != nullptr)
+	{
+		return graphics->GetInstanceCount();
+	}
+
+	return 0;
+}

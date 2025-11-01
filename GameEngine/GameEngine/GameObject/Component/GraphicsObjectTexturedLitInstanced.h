@@ -46,7 +46,7 @@ public:
 
 	void RemoveInstanceByID(unsigned int instanceID);
 
-	unsigned int GetInstanceCount();
+	unsigned int GetInstanceCount() const;
 
 	void FinalizeTransforms();
 
