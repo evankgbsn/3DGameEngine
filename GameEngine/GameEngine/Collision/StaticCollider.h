@@ -18,6 +18,7 @@ class LineSegment3D;
 class GOColored;
 class Model;
 class Triangle;
+class GOTexturedLitInstanced;
 
 class StaticCollider : public Collider
 {
