@@ -161,6 +161,7 @@ void GraphicsObjectTexturedLitInstanced::Serialize()
 		for (const auto& transform : graphics->GetInstanceTransforms())
 		{
 			savedMat4s[std::to_string(i)] = transform;
+			i++;
 		}
 	}
 }
@@ -180,6 +181,8 @@ void GraphicsObjectTexturedLitInstanced::Deserialize()
 	}
 
 	SetShine(savedFloats["Shine"]);
+
+	graphics->FinalizeTransforms();
 }
 
 void GraphicsObjectTexturedLitInstanced::SetShine(float shine)

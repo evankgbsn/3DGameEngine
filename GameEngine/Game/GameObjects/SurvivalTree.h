@@ -4,6 +4,7 @@
 #include "GameEngine/GameObject/GameObject.h"
 
 #include <functional>
+#include <list>
 
 class GraphicsObjectTexturedLitInstanced;
 class StaticColliderComponent;
@@ -42,25 +43,25 @@ private:
 
 	void Start() override;
 
-	void SetPosition(const glm::vec3& newPosition) override;
+	void Serialize() override;
 
-	void SetRotation(const glm::mat4& newRotation) override;
-
-	glm::mat4 GetRotation() const override;
+	void Deserialize() override;
 
 	bool Hovered() const override;
+
+	void SetPosition(const glm::vec3& newPos) override;
+
+	void SetRotation(const glm::mat4& newRot) override;
+
+	glm::mat4 GetRotation() const override;
 
 	void SetupEditorCallbacks();
 
 	void CleanupEditorCallbacks();
 
-	void Deserialize() override;
-
-	static GraphicsObjectTexturedLitInstanced* trunkGraphics;
-
-	static GraphicsObjectTexturedLitInstanced* branchesGraphics;
-
-	static GraphicsObjectTexturedLitInstanced* leavesGraphics;
+	static GraphicsObjectTexturedLitInstanced* trunk;
+	static GraphicsObjectTexturedLitInstanced* branches;
+	static GraphicsObjectTexturedLitInstanced* leaves;
 
 	StaticColliderComponent* collider;
 
@@ -69,6 +70,10 @@ private:
 	std::function<void()>* onEditorDisable;
 
 	unsigned int instanceID;
+
+	static unsigned int instanceIDGen;
+
+	static std::list<std::function<void()>*> onGraphicsDeserializedFunctions;
 
 };
 

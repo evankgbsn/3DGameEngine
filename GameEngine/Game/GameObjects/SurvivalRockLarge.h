@@ -5,7 +5,7 @@
 
 #include <functional>
 
-class GraphicsObjectTexturedLit;
+class GraphicsObjectTexturedLitInstanced;
 class StaticColliderComponent;
 
 class SurvivalRockLarge : public GameObject
@@ -58,13 +58,19 @@ private:
 
 	void CleanupEditorCallbacks();
 
-	GraphicsObjectTexturedLit* graphics;
+	static GraphicsObjectTexturedLitInstanced* rock;
 
 	StaticColliderComponent* collider;
 
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;
+
+	unsigned int instanceID;
+
+	static unsigned int instanceIDGen;
+
+	static std::list<std::function<void()>*> onGraphicsDeserializedFunctions;
 
 };
 

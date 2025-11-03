@@ -10,8 +10,6 @@
 
 #include <gl/glew.h>
 
-std::list<unsigned int> GOTexturedLitInstanced::removedInstances;
-
 GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, unsigned int instanceCount) :
 	GraphicsObject(model),
 	GOLit(std::vector<Material>({ Material(diffuseTexture, specularTexture) })),
@@ -27,6 +25,21 @@ GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diff
 	diffuse(diffuseTexture),
 	spec(specularTexture)
 {
+	for (unsigned int i = 0; i < transforms.size(); ++i)
+	{
+		glm::mat4 idMatrix = glm::mat4(1.0f);
+
+		translations[i] = idMatrix;
+		rotations[i] = idMatrix;
+		scales[i] = idMatrix;
+		transforms[i] = idMatrix;
+
+		trans[i] = idMatrix[3];
+		rights[i] = idMatrix[0];
+		ups[i] = idMatrix[1];
+		forwards[i] = idMatrix[2];
+	}
+
 	glCreateBuffers(1, &viewProjectionBuffer);
 	glNamedBufferStorage(viewProjectionBuffer, sizeof(vp), &vp, GL_DYNAMIC_STORAGE_BIT);
 
@@ -38,22 +51,22 @@ GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diff
 
 	glGenBuffers(1, &translationsBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * trans.size(), &trans[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &rightBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * rights.size(), &rights[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &upBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * ups.size(), &ups[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &forwardBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * transforms.size(), &transforms[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * forwards.size(), &forwards[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glEnableVertexAttribArray(5);
@@ -102,8 +115,9 @@ void GOTexturedLitInstanced::Update()
 		return;
 	}
 
-	ShaderManager::StartShaderUsage("TexturedLitInstanced");
+	BindVertexArrayBuffers();
 
+	ShaderManager::StartShaderUsage("TexturedLitInstanced");
 
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
@@ -151,17 +165,19 @@ void GOTexturedLitInstanced::Update()
 
 unsigned int GOTexturedLitInstanced::AddInstance()
 {
+	glm::mat4 idMatrix = glm::mat4(1.0f);
+	
 	if (removedInstances.empty())
 	{
-		translations.push_back(glm::mat4(1.0f));
-		rotations.push_back(glm::mat4(1.0f));
-		scales.push_back(glm::mat4(1.0f));
-		transforms.push_back(glm::mat4(1.0f));
+		translations.push_back(idMatrix);
+		rotations.push_back(idMatrix);
+		scales.push_back(idMatrix);
+		transforms.push_back(idMatrix);
 
-		trans.push_back(glm::vec4(1.0f));
-		rights.push_back(glm::vec4(1.0f));
-		ups.push_back(glm::vec4(1.0f));
-		forwards.push_back(glm::vec4(1.0f));
+		trans.push_back(idMatrix[3]);
+		rights.push_back(idMatrix[0]);
+		ups.push_back(idMatrix[1]);
+		forwards.push_back(idMatrix[2]);
 
 		return translations.size() - 1;
 	}
@@ -169,15 +185,15 @@ unsigned int GOTexturedLitInstanced::AddInstance()
 	unsigned int newInstanceID = removedInstances.front();
 	removedInstances.pop_front();
 
-	translations[newInstanceID] = (glm::mat4(1.0f));
-	rotations[newInstanceID] = (glm::mat4(1.0f));
-	scales[newInstanceID] = (glm::mat4(1.0f));
-	transforms[newInstanceID] = (glm::mat4(1.0f));
+	translations[newInstanceID] = idMatrix;
+	rotations[newInstanceID] = idMatrix;
+	scales[newInstanceID] = idMatrix;
+	transforms[newInstanceID] = idMatrix;
 
-	trans[newInstanceID] = (glm::vec4(1.0f));
-	rights[newInstanceID] = (glm::vec4(1.0f));
-	ups[newInstanceID] = (glm::vec4(1.0f));
-	forwards[newInstanceID] = (glm::vec4(1.0f));
+	trans[newInstanceID] = idMatrix[3];
+	rights[newInstanceID] = idMatrix[0];
+	ups[newInstanceID] = idMatrix[1];
+	forwards[newInstanceID] = idMatrix[2];
 
 	return newInstanceID;
 }
@@ -192,6 +208,8 @@ void GOTexturedLitInstanced::RemoveInstanceByID(unsigned int instanceID)
 	rights[instanceID] = glm::vec4(0.0f);
 	ups[instanceID] = glm::vec4(0.0f);
 	forwards[instanceID] = glm::vec4(0.0f);
+
+	UpdateInstanceByID(instanceID);
 
 	removedInstances.push_back(instanceID);
 }
@@ -237,6 +255,8 @@ void GOTexturedLitInstanced::UpdateInstanceByID(unsigned int instanceID)
 	forwards[instanceID] = transforms[instanceID][2];
 	trans[instanceID] = transforms[instanceID][3];
 
+	BindVertexArrayBuffers();
+
 	glNamedBufferSubData(translationsBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &trans[instanceID]);
 	glNamedBufferSubData(rightBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &rights[instanceID]);
 	glNamedBufferSubData(upBuffer, instanceID * sizeof(glm::vec4), sizeof(glm::vec4), &ups[instanceID]);
@@ -249,6 +269,8 @@ void GOTexturedLitInstanced::RenderToShadowMap()
 	{
 		return;
 	}
+
+	BindVertexArrayBuffers();
 
 	ShaderManager::StartShaderUsage("ShadowMapInstanced");
 
@@ -288,6 +310,25 @@ Texture* GOTexturedLitInstanced::GetDiffuseTexture() const
 Texture* GOTexturedLitInstanced::GetSpecularTexture() const
 {
 	return spec;
+}
+
+void GOTexturedLitInstanced::BindVertexArrayBuffers()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
+	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
+	glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 const std::vector<glm::mat4>& GOTexturedLitInstanced::GetInstanceTransforms() const

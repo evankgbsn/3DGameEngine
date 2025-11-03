@@ -90,9 +90,6 @@
     <ClCompile Include="GameObjects\SurvivalTerrain.cpp">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\SurvivalTree.cpp">
-      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\SurvivalWater.cpp">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
@@ -115,6 +112,9 @@
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\SurvivalRockLarge.cpp">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GAMEOBJECTS\SurvivalTree.cpp">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,9 +176,6 @@
     <ClInclude Include="GameObjects\SurvivalTerrain.h">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\SurvivalTree.h">
-      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\SurvivalWater.h">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
@@ -201,6 +198,9 @@
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\SurvivalRockLarge.h">
+      <Filter>Source Files\GameObjects\SurvivalGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\SurvivalTree.h">
       <Filter>Source Files\GameObjects\SurvivalGame</Filter>
     </ClInclude>
   </ItemGroup>

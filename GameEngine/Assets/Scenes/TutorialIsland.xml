@@ -1,0 +1,4555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="TutorialIsland.xml" type="class SurvivalScene">
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge79">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree46">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree15">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalServerFreeCamera" name="SurvivalServerFreeCamera">
+		<Component type="CameraComponent" name="Camera">
+			<Variable type="vec3" name="Position">
+				<float X="62.174656"/>
+				<float Y="15.862102"/>
+				<float Z="-29.699812"/>
+			</Variable>
+			<Variable type="vec3" name="Target">
+				<float X="61.326115"/>
+				<float Y="15.621656"/>
+				<float Z="-29.228468"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="FreeCamera"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalSun" name="Sun">
+		<Component type="DirectionalLightComponent" name="Sun">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="1.500000"/>
+				<float Y="0.500000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="-0.500000"/>
+				<float Y="-0.500000"/>
+				<float Z="-0.500000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="Terrain">
+		<Component type="TerrainComponent" name="SurvivalTerrain">
+			<Variable type="float" name="YOffset">
+				<float val="-13.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="UVTiling">
+				<int val="1"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture1">
+				<string val="TerrainSand"/>
+			</Variable>
+			<Variable type="string" name="BlendMap">
+				<string val="BlendMap"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="SurvivalTerrain"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture2">
+				<string val="TerrainRock"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/IslandHeightMap.png"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture0">
+				<string val="TerrainDirt"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture0">
+				<string val="TerrainDirt"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture1">
+				<string val="TerrainSand"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture2">
+				<string val="TerrainRock"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTexture3">
+				<string val="TerrainGrass"/>
+			</Variable>
+			<Variable type="string" name="SpecularTexture3">
+				<string val="TerrainGrass"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="LargeRock">
+		<Component type="GraphicsObjectTexturedLitInstanced" name="RockGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="InstanceCount">
+				<int val="51"/>
+			</Variable>
+			<Variable type="mat4" name="46">
+				<float XX="0.064197"/>
+				<float XY="0.000000"/>
+				<float XZ="0.997938"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.997938"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.064197"/>
+				<float ZW="0.000000"/>
+				<float WX="-102.347076"/>
+				<float WY="-5.608583"/>
+				<float WZ="-54.442574"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="37">
+				<float XX="-0.222412"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.974953"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.974953"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.222412"/>
+				<float ZW="0.000000"/>
+				<float WX="101.929413"/>
+				<float WY="-1.628544"/>
+				<float WZ="74.558853"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="0">
+				<float XX="0.037993"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999278"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999278"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.037993"/>
+				<float ZW="0.000000"/>
+				<float WX="19.143881"/>
+				<float WY="-2.626416"/>
+				<float WZ="10.880975"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="47">
+				<float XX="-0.431432"/>
+				<float XY="0.000000"/>
+				<float XZ="0.902145"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.902145"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.431432"/>
+				<float ZW="0.000000"/>
+				<float WX="-7.038864"/>
+				<float WY="-5.608582"/>
+				<float WZ="-43.751698"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="36">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="13.091316"/>
+				<float WY="-1.628532"/>
+				<float WZ="113.088776"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="1">
+				<float XX="0.659731"/>
+				<float XY="0.000000"/>
+				<float XZ="0.751501"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.751501"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.659731"/>
+				<float ZW="0.000000"/>
+				<float WX="29.193100"/>
+				<float WY="-5.168449"/>
+				<float WZ="50.352009"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="2">
+				<float XX="0.457300"/>
+				<float XY="0.000000"/>
+				<float XZ="0.889313"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.889313"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.457300"/>
+				<float ZW="0.000000"/>
+				<float WX="141.628235"/>
+				<float WY="-1.885462"/>
+				<float WZ="19.470406"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="44">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-20.181549"/>
+				<float WY="-1.581478"/>
+				<float WZ="-90.305634"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="35">
+				<float XX="0.115319"/>
+				<float XY="0.000000"/>
+				<float XZ="0.993328"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.993328"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.115319"/>
+				<float ZW="0.000000"/>
+				<float WX="51.310795"/>
+				<float WY="-3.433363"/>
+				<float WZ="145.258453"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="3">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="144.584564"/>
+				<float WY="-3.270224"/>
+				<float WZ="25.662827"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="34">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="55.988712"/>
+				<float WY="-3.433363"/>
+				<float WZ="154.032837"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="45">
+				<float XX="0.191310"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.981529"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.981529"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.191310"/>
+				<float ZW="0.000000"/>
+				<float WX="-47.462879"/>
+				<float WY="-2.212297"/>
+				<float WZ="-33.541309"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="4">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="129.248337"/>
+				<float WY="-1.053703"/>
+				<float WZ="-25.942730"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="33">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="12.900345"/>
+				<float WY="-2.189173"/>
+				<float WZ="168.783340"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="42">
+				<float XX="0.272801"/>
+				<float XY="0.000000"/>
+				<float XZ="0.962070"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.962070"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.272801"/>
+				<float ZW="0.000000"/>
+				<float WX="53.488209"/>
+				<float WY="-2.800478"/>
+				<float WZ="-31.782951"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="5">
+				<float XX="-0.131453"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.991322"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.991322"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.131453"/>
+				<float ZW="0.000000"/>
+				<float WX="117.774673"/>
+				<float WY="-0.554724"/>
+				<float WZ="-107.792084"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="32">
+				<float XX="-0.961866"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.273518"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.273518"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.961866"/>
+				<float ZW="0.000000"/>
+				<float WX="-49.392704"/>
+				<float WY="-2.193516"/>
+				<float WZ="187.080902"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="43">
+				<float XX="-0.213239"/>
+				<float XY="0.000000"/>
+				<float XZ="0.977000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.977000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.213239"/>
+				<float ZW="0.000000"/>
+				<float WX="-35.590164"/>
+				<float WY="-1.581478"/>
+				<float WZ="-78.011383"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="6">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="140.435989"/>
+				<float WY="-2.919031"/>
+				<float WZ="-146.613022"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="31">
+				<float XX="-0.098612"/>
+				<float XY="0.000000"/>
+				<float XZ="0.995125"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.995125"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.098612"/>
+				<float ZW="0.000000"/>
+				<float WX="-26.130718"/>
+				<float WY="-2.193516"/>
+				<float WZ="164.071777"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="40">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="85.098152"/>
+				<float WY="-2.174479"/>
+				<float WZ="122.656693"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="7">
+				<float XX="0.246519"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.969137"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.969137"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.246519"/>
+				<float ZW="0.000000"/>
+				<float WX="69.391113"/>
+				<float WY="-3.827583"/>
+				<float WZ="-167.674591"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="30">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-65.371826"/>
+				<float WY="-1.619665"/>
+				<float WZ="39.734020"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="41">
+				<float XX="0.355393"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.934717"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.934717"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.355393"/>
+				<float ZW="0.000000"/>
+				<float WX="81.604538"/>
+				<float WY="-2.800470"/>
+				<float WZ="24.222752"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="8">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="67.011108"/>
+				<float WY="-4.286622"/>
+				<float WZ="-162.374878"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="9">
+				<float XX="0.936286"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.351240"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.351240"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.936286"/>
+				<float ZW="0.000000"/>
+				<float WX="6.873314"/>
+				<float WY="-1.424820"/>
+				<float WZ="-155.720779"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="10">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="9.127908"/>
+				<float WY="-4.333307"/>
+				<float WZ="-174.296265"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="11">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.857281"/>
+				<float WY="-1.877378"/>
+				<float WZ="-148.775665"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="12">
+				<float XX="-0.921764"/>
+				<float XY="0.000000"/>
+				<float XZ="0.387747"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.387747"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.921764"/>
+				<float ZW="0.000000"/>
+				<float WX="-87.992676"/>
+				<float WY="-1.877390"/>
+				<float WZ="-174.489609"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="13">
+				<float XX="0.538535"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.842603"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.842603"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.538535"/>
+				<float ZW="0.000000"/>
+				<float WX="-136.748779"/>
+				<float WY="-4.432558"/>
+				<float WZ="-162.797607"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="14">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.928040"/>
+				<float WY="-3.917109"/>
+				<float WZ="-159.719589"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="15">
+				<float XX="-0.043002"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999075"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999075"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.043002"/>
+				<float ZW="0.000000"/>
+				<float WX="-141.243820"/>
+				<float WY="-4.919218"/>
+				<float WZ="-174.365372"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="16">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-160.972702"/>
+				<float WY="-5.470825"/>
+				<float WZ="-149.496429"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="17">
+				<float XX="0.542816"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.839851"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.839851"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.542816"/>
+				<float ZW="0.000000"/>
+				<float WX="-126.751404"/>
+				<float WY="-4.925097"/>
+				<float WZ="-143.529953"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="18">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-147.125549"/>
+				<float WY="-3.360294"/>
+				<float WZ="-62.242920"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="19">
+				<float XX="0.463295"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.886203"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.886203"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.463295"/>
+				<float ZW="0.000000"/>
+				<float WX="-134.213699"/>
+				<float WY="-3.360294"/>
+				<float WZ="-100.028786"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="20">
+				<float XX="0.859102"/>
+				<float XY="0.000000"/>
+				<float XZ="0.511803"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.511803"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.859102"/>
+				<float ZW="0.000000"/>
+				<float WX="-194.966385"/>
+				<float WY="-3.360067"/>
+				<float WZ="-18.785320"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="21">
+				<float XX="0.932701"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.360651"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.360651"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.932701"/>
+				<float ZW="0.000000"/>
+				<float WX="-186.189651"/>
+				<float WY="-4.966047"/>
+				<float WZ="-14.538633"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="22">
+				<float XX="0.725074"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.688672"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.688672"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.725074"/>
+				<float ZW="0.000000"/>
+				<float WX="-144.914871"/>
+				<float WY="-3.914539"/>
+				<float WZ="54.069889"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="23">
+				<float XX="0.651960"/>
+				<float XY="0.000000"/>
+				<float XZ="0.758254"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.758254"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.651960"/>
+				<float ZW="0.000000"/>
+				<float WX="-132.479294"/>
+				<float WY="-2.228762"/>
+				<float WZ="47.037437"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="24">
+				<float XX="0.651933"/>
+				<float XY="0.000000"/>
+				<float XZ="0.758278"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.758278"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.651933"/>
+				<float ZW="0.000000"/>
+				<float WX="-128.306549"/>
+				<float WY="-1.616362"/>
+				<float WZ="73.275368"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="25">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-137.265366"/>
+				<float WY="-2.228765"/>
+				<float WZ="127.822212"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="26">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-121.341019"/>
+				<float WY="-4.520340"/>
+				<float WZ="137.895645"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="27">
+				<float XX="0.613415"/>
+				<float XY="0.000000"/>
+				<float XZ="0.789761"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.789761"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.613415"/>
+				<float ZW="0.000000"/>
+				<float WX="-70.877113"/>
+				<float WY="-1.121128"/>
+				<float WZ="83.527771"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="28">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-89.547806"/>
+				<float WY="-1.722607"/>
+				<float WZ="74.377998"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="29">
+				<float XX="0.472637"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.881256"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.881256"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.472637"/>
+				<float ZW="0.000000"/>
+				<float WX="-79.985970"/>
+				<float WY="-2.830233"/>
+				<float WZ="97.518433"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="38">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="124.087761"/>
+				<float WY="-3.457531"/>
+				<float WZ="139.338638"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="49">
+				<float XX="0.458348"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.888772"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.888772"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.458348"/>
+				<float ZW="0.000000"/>
+				<float WX="-23.867599"/>
+				<float WY="-5.608582"/>
+				<float WZ="1.580204"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="39">
+				<float XX="-0.259274"/>
+				<float XY="0.000000"/>
+				<float XZ="0.965804"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.965804"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.259274"/>
+				<float ZW="0.000000"/>
+				<float WX="102.503937"/>
+				<float WY="-3.499969"/>
+				<float WZ="152.615295"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="48">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="2.978073"/>
+				<float WY="-5.608582"/>
+				<float WZ="-38.915424"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="50">
+				<float XX="-0.308591"/>
+				<float XY="0.000000"/>
+				<float XZ="0.951194"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.951194"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.308591"/>
+				<float ZW="0.000000"/>
+				<float WX="23.689671"/>
+				<float WY="-3.324163"/>
+				<float WZ="-93.959633"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalRockLarge"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalRockLarge"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalRockLarge"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree55">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree24">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree42">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree11">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="Tree">
+		<Component type="GraphicsObjectTexturedLitInstanced" name="TrunkGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="InstanceCount">
+				<int val="57"/>
+			</Variable>
+			<Variable type="mat4" name="46">
+				<float XX="0.271997"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.962297"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.962297"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.271997"/>
+				<float ZW="0.000000"/>
+				<float WX="-98.345879"/>
+				<float WY="-0.988110"/>
+				<float WZ="13.514114"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="37">
+				<float XX="0.148436"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988921"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988921"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.148436"/>
+				<float ZW="0.000000"/>
+				<float WX="-88.302818"/>
+				<float WY="0.882042"/>
+				<float WZ="-110.229446"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="0">
+				<float XX="-0.774081"/>
+				<float XY="0.000000"/>
+				<float XZ="0.633086"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.633086"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.774081"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.738260"/>
+				<float WY="-1.651432"/>
+				<float WZ="14.010729"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="47">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-87.594070"/>
+				<float WY="1.199512"/>
+				<float WZ="-6.118287"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="36">
+				<float XX="-0.275187"/>
+				<float XY="0.000000"/>
+				<float XZ="0.961390"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.961390"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.275187"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.484230"/>
+				<float WY="1.250984"/>
+				<float WZ="-128.102478"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="1">
+				<float XX="0.612210"/>
+				<float XY="0.000000"/>
+				<float XZ="0.790695"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.790695"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.612210"/>
+				<float ZW="0.000000"/>
+				<float WX="-18.180666"/>
+				<float WY="-2.128502"/>
+				<float WZ="32.930683"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="35">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-73.751373"/>
+				<float WY="-1.478203"/>
+				<float WZ="-147.569916"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="2">
+				<float XX="0.865912"/>
+				<float XY="0.000000"/>
+				<float XZ="0.500196"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.500196"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.865912"/>
+				<float ZW="0.000000"/>
+				<float WX="-11.799131"/>
+				<float WY="-1.823202"/>
+				<float WZ="52.943779"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="44">
+				<float XX="-0.550264"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.834989"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.834989"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.550264"/>
+				<float ZW="0.000000"/>
+				<float WX="-138.932068"/>
+				<float WY="-1.486942"/>
+				<float WZ="64.107147"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="45">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-114.081528"/>
+				<float WY="-1.486948"/>
+				<float WZ="74.957687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="34">
+				<float XX="0.297028"/>
+				<float XY="0.000000"/>
+				<float XZ="0.954868"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.954868"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.297028"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.483604"/>
+				<float WY="1.016262"/>
+				<float WZ="-152.633179"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="3">
+				<float XX="0.979642"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.200749"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.200749"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.979642"/>
+				<float ZW="0.000000"/>
+				<float WX="8.936857"/>
+				<float WY="-1.823200"/>
+				<float WZ="47.417603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="42">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-116.880966"/>
+				<float WY="2.033787"/>
+				<float WZ="-56.661324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="33">
+				<float XX="0.459956"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.887941"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.887941"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.459956"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.442005"/>
+				<float WY="1.016262"/>
+				<float WZ="-132.343719"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="4">
+				<float XX="0.635920"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.771755"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.771755"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.635920"/>
+				<float ZW="0.000000"/>
+				<float WX="-35.426311"/>
+				<float WY="-0.142739"/>
+				<float WZ="23.713539"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="43">
+				<float XX="0.080923"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.996721"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.996721"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.080923"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.206436"/>
+				<float WY="4.183752"/>
+				<float WZ="48.910877"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="32">
+				<float XX="-0.954298"/>
+				<float XY="0.000000"/>
+				<float XZ="0.298858"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.298858"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.954298"/>
+				<float ZW="0.000000"/>
+				<float WX="-16.487749"/>
+				<float WY="4.553131"/>
+				<float WZ="-149.791687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="5">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.393660"/>
+				<float WY="-0.323082"/>
+				<float WZ="70.717529"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="40">
+				<float XX="-0.754052"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.656813"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.656813"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.754052"/>
+				<float ZW="0.000000"/>
+				<float WX="-145.312027"/>
+				<float WY="2.445005"/>
+				<float WZ="-46.238228"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="31">
+				<float XX="0.707020"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.707193"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.707193"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.707020"/>
+				<float ZW="0.000000"/>
+				<float WX="46.654198"/>
+				<float WY="3.347708"/>
+				<float WZ="-137.253738"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="6">
+				<float XX="0.216640"/>
+				<float XY="0.000000"/>
+				<float XZ="0.976251"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.976251"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.216640"/>
+				<float ZW="0.000000"/>
+				<float WX="-23.362793"/>
+				<float WY="-0.599390"/>
+				<float WZ="67.537292"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="41">
+				<float XX="0.932825"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.360328"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.360328"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.932825"/>
+				<float ZW="0.000000"/>
+				<float WX="-140.389725"/>
+				<float WY="2.445007"/>
+				<float WZ="-62.884083"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="30">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="94.129013"/>
+				<float WY="5.706701"/>
+				<float WZ="-118.958076"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="7">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-44.868908"/>
+				<float WY="-0.599735"/>
+				<float WZ="118.681587"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="8">
+				<float XX="0.152674"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988277"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988277"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.152674"/>
+				<float ZW="0.000000"/>
+				<float WX="-25.126858"/>
+				<float WY="-0.421700"/>
+				<float WZ="113.037857"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="9">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-45.098484"/>
+				<float WY="-0.703392"/>
+				<float WZ="90.375435"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="10">
+				<float XX="0.203580"/>
+				<float XY="0.000000"/>
+				<float XZ="0.979057"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.979057"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.203580"/>
+				<float ZW="0.000000"/>
+				<float WX="-33.669281"/>
+				<float WY="-0.066725"/>
+				<float WZ="130.438690"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="11">
+				<float XX="0.312319"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.949976"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.949976"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.312319"/>
+				<float ZW="0.000000"/>
+				<float WX="-40.315342"/>
+				<float WY="0.022120"/>
+				<float WZ="146.151627"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="12">
+				<float XX="0.057521"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998343"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998343"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.057521"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.168354"/>
+				<float WY="5.912615"/>
+				<float WZ="137.302368"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="13">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-63.433430"/>
+				<float WY="1.147114"/>
+				<float WZ="133.077255"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="14">
+				<float XX="0.133465"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.991053"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.991053"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.133465"/>
+				<float ZW="0.000000"/>
+				<float WX="-69.049316"/>
+				<float WY="-0.204082"/>
+				<float WZ="183.633484"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="15">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.071293"/>
+				<float WY="0.864172"/>
+				<float WZ="167.569489"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="16">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="13.351627"/>
+				<float WY="-0.247668"/>
+				<float WZ="141.087860"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="17">
+				<float XX="0.663175"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.748464"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.748464"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.663175"/>
+				<float ZW="0.000000"/>
+				<float WX="112.322983"/>
+				<float WY="-1.208515"/>
+				<float WZ="129.945312"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="54">
+				<float XX="0.541925"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.840426"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.840426"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.541925"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.102066"/>
+				<float WY="-0.448071"/>
+				<float WZ="4.794471"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="18">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="68.498596"/>
+				<float WY="0.536327"/>
+				<float WZ="89.148399"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="55">
+				<float XX="0.268398"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.963309"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.963309"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.268398"/>
+				<float ZW="0.000000"/>
+				<float WX="7.315220"/>
+				<float WY="2.425028"/>
+				<float WZ="0.330765"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="19">
+				<float XX="-0.139545"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990216"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990216"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.139545"/>
+				<float ZW="0.000000"/>
+				<float WX="79.289551"/>
+				<float WY="-0.063162"/>
+				<float WZ="42.012714"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="20">
+				<float XX="0.320807"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.947145"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.947145"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.320807"/>
+				<float ZW="0.000000"/>
+				<float WX="103.175262"/>
+				<float WY="-0.023180"/>
+				<float WZ="14.094058"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="21">
+				<float XX="-0.289906"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.957056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.957056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.289906"/>
+				<float ZW="0.000000"/>
+				<float WX="115.871223"/>
+				<float WY="7.317747"/>
+				<float WZ="-20.663660"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="22">
+				<float XX="-0.155763"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.987793"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.987793"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.155763"/>
+				<float ZW="0.000000"/>
+				<float WX="140.102127"/>
+				<float WY="1.263935"/>
+				<float WZ="-11.161463"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="23">
+				<float XX="0.377069"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.926184"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.926184"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.377069"/>
+				<float ZW="0.000000"/>
+				<float WX="107.821869"/>
+				<float WY="1.263935"/>
+				<float WZ="-43.838264"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="24">
+				<float XX="0.289253"/>
+				<float XY="0.000000"/>
+				<float XZ="0.957252"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.957252"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.289253"/>
+				<float ZW="0.000000"/>
+				<float WX="116.718399"/>
+				<float WY="-1.543947"/>
+				<float WZ="-79.252159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="25">
+				<float XX="0.446205"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.894931"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.894931"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.446205"/>
+				<float ZW="0.000000"/>
+				<float WX="58.855591"/>
+				<float WY="1.152885"/>
+				<float WZ="-158.929276"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="26">
+				<float XX="-0.530466"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.847707"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.847707"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.530466"/>
+				<float ZW="0.000000"/>
+				<float WX="98.283989"/>
+				<float WY="-0.132431"/>
+				<float WZ="-154.452011"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="27">
+				<float XX="0.068483"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.997652"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.997652"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.068483"/>
+				<float ZW="0.000000"/>
+				<float WX="68.331039"/>
+				<float WY="3.592995"/>
+				<float WZ="-126.970551"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="28">
+				<float XX="-0.468234"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.883604"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.883604"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.468234"/>
+				<float ZW="0.000000"/>
+				<float WX="112.303497"/>
+				<float WY="1.368608"/>
+				<float WZ="-135.871231"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="29">
+				<float XX="0.391786"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.920056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.920056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.391786"/>
+				<float ZW="0.000000"/>
+				<float WX="83.222488"/>
+				<float WY="5.298887"/>
+				<float WZ="-147.731766"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="49">
+				<float XX="0.230397"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.973097"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.973097"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.230397"/>
+				<float ZW="0.000000"/>
+				<float WX="-29.196480"/>
+				<float WY="-2.002956"/>
+				<float WZ="-65.090912"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="38">
+				<float XX="0.695099"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.718914"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.718914"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.695099"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.615921"/>
+				<float WY="4.631948"/>
+				<float WZ="-88.275047"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="48">
+				<float XX="-0.521246"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.853407"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.853407"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.521246"/>
+				<float ZW="0.000000"/>
+				<float WX="-83.009331"/>
+				<float WY="-0.627867"/>
+				<float WZ="-31.293415"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="39">
+				<float XX="0.387505"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.921867"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.921867"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.387505"/>
+				<float ZW="0.000000"/>
+				<float WX="-108.808083"/>
+				<float WY="6.834669"/>
+				<float WZ="-73.489159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="50">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.683418"/>
+				<float WY="-2.920955"/>
+				<float WZ="0.182646"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="51">
+				<float XX="0.527884"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.849316"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.849316"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.527884"/>
+				<float ZW="0.000000"/>
+				<float WX="-64.135399"/>
+				<float WY="-2.920952"/>
+				<float WZ="-26.576408"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="52">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.698044"/>
+				<float WY="-1.929783"/>
+				<float WZ="-49.197769"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="53">
+				<float XX="0.868027"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.496517"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.496517"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.868027"/>
+				<float ZW="0.000000"/>
+				<float WX="9.923805"/>
+				<float WY="-1.929771"/>
+				<float WZ="-17.972046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="56">
+				<float XX="-nan(ind)"/>
+				<float XY="-nan(ind)"/>
+				<float XZ="-nan(ind)"/>
+				<float XW="-nan(ind)"/>
+				<float YX="-nan(ind)"/>
+				<float YY="-nan(ind)"/>
+				<float YZ="-nan(ind)"/>
+				<float YW="-nan(ind)"/>
+				<float ZX="-nan(ind)"/>
+				<float ZY="-nan(ind)"/>
+				<float ZZ="-nan(ind)"/>
+				<float ZW="-nan(ind)"/>
+				<float WX="-nan(ind)"/>
+				<float WY="-nan(ind)"/>
+				<float WZ="-nan(ind)"/>
+				<float WW="-nan(ind)"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeTrunk"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLitInstanced" name="LeavesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="InstanceCount">
+				<int val="57"/>
+			</Variable>
+			<Variable type="mat4" name="46">
+				<float XX="0.271997"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.962297"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.962297"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.271997"/>
+				<float ZW="0.000000"/>
+				<float WX="-98.345879"/>
+				<float WY="-0.988110"/>
+				<float WZ="13.514114"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="37">
+				<float XX="0.148436"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988921"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988921"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.148436"/>
+				<float ZW="0.000000"/>
+				<float WX="-88.302818"/>
+				<float WY="0.882042"/>
+				<float WZ="-110.229446"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="0">
+				<float XX="-0.774081"/>
+				<float XY="0.000000"/>
+				<float XZ="0.633086"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.633086"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.774081"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.738260"/>
+				<float WY="-1.651432"/>
+				<float WZ="14.010729"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="47">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-87.594070"/>
+				<float WY="1.199512"/>
+				<float WZ="-6.118287"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="36">
+				<float XX="-0.275187"/>
+				<float XY="0.000000"/>
+				<float XZ="0.961390"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.961390"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.275187"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.484230"/>
+				<float WY="1.250984"/>
+				<float WZ="-128.102478"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="1">
+				<float XX="0.612210"/>
+				<float XY="0.000000"/>
+				<float XZ="0.790695"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.790695"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.612210"/>
+				<float ZW="0.000000"/>
+				<float WX="-18.180666"/>
+				<float WY="-2.128502"/>
+				<float WZ="32.930683"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="35">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-73.751373"/>
+				<float WY="-1.478203"/>
+				<float WZ="-147.569916"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="2">
+				<float XX="0.865912"/>
+				<float XY="0.000000"/>
+				<float XZ="0.500196"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.500196"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.865912"/>
+				<float ZW="0.000000"/>
+				<float WX="-11.799131"/>
+				<float WY="-1.823202"/>
+				<float WZ="52.943779"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="44">
+				<float XX="-0.550264"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.834989"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.834989"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.550264"/>
+				<float ZW="0.000000"/>
+				<float WX="-138.932068"/>
+				<float WY="-1.486942"/>
+				<float WZ="64.107147"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="45">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-114.081528"/>
+				<float WY="-1.486948"/>
+				<float WZ="74.957687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="34">
+				<float XX="0.297028"/>
+				<float XY="0.000000"/>
+				<float XZ="0.954868"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.954868"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.297028"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.483604"/>
+				<float WY="1.016262"/>
+				<float WZ="-152.633179"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="3">
+				<float XX="0.979642"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.200749"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.200749"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.979642"/>
+				<float ZW="0.000000"/>
+				<float WX="8.936857"/>
+				<float WY="-1.823200"/>
+				<float WZ="47.417603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="42">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-116.880966"/>
+				<float WY="2.033787"/>
+				<float WZ="-56.661324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="33">
+				<float XX="0.459956"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.887941"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.887941"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.459956"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.442005"/>
+				<float WY="1.016262"/>
+				<float WZ="-132.343719"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="4">
+				<float XX="0.635920"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.771755"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.771755"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.635920"/>
+				<float ZW="0.000000"/>
+				<float WX="-35.426311"/>
+				<float WY="-0.142739"/>
+				<float WZ="23.713539"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="43">
+				<float XX="0.080923"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.996721"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.996721"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.080923"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.206436"/>
+				<float WY="4.183752"/>
+				<float WZ="48.910877"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="32">
+				<float XX="-0.954298"/>
+				<float XY="0.000000"/>
+				<float XZ="0.298858"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.298858"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.954298"/>
+				<float ZW="0.000000"/>
+				<float WX="-16.487749"/>
+				<float WY="4.553131"/>
+				<float WZ="-149.791687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="5">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.393660"/>
+				<float WY="-0.323082"/>
+				<float WZ="70.717529"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="40">
+				<float XX="-0.754052"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.656813"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.656813"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.754052"/>
+				<float ZW="0.000000"/>
+				<float WX="-145.312027"/>
+				<float WY="2.445005"/>
+				<float WZ="-46.238228"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="31">
+				<float XX="0.707020"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.707193"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.707193"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.707020"/>
+				<float ZW="0.000000"/>
+				<float WX="46.654198"/>
+				<float WY="3.347708"/>
+				<float WZ="-137.253738"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="6">
+				<float XX="0.216640"/>
+				<float XY="0.000000"/>
+				<float XZ="0.976251"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.976251"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.216640"/>
+				<float ZW="0.000000"/>
+				<float WX="-23.362793"/>
+				<float WY="-0.599390"/>
+				<float WZ="67.537292"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="41">
+				<float XX="0.932825"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.360328"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.360328"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.932825"/>
+				<float ZW="0.000000"/>
+				<float WX="-140.389725"/>
+				<float WY="2.445007"/>
+				<float WZ="-62.884083"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="30">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="94.129013"/>
+				<float WY="5.706701"/>
+				<float WZ="-118.958076"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="7">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-44.868908"/>
+				<float WY="-0.599735"/>
+				<float WZ="118.681587"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="8">
+				<float XX="0.152674"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988277"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988277"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.152674"/>
+				<float ZW="0.000000"/>
+				<float WX="-25.126858"/>
+				<float WY="-0.421700"/>
+				<float WZ="113.037857"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="9">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-45.098484"/>
+				<float WY="-0.703392"/>
+				<float WZ="90.375435"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="10">
+				<float XX="0.203580"/>
+				<float XY="0.000000"/>
+				<float XZ="0.979057"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.979057"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.203580"/>
+				<float ZW="0.000000"/>
+				<float WX="-33.669281"/>
+				<float WY="-0.066725"/>
+				<float WZ="130.438690"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="11">
+				<float XX="0.312319"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.949976"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.949976"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.312319"/>
+				<float ZW="0.000000"/>
+				<float WX="-40.315342"/>
+				<float WY="0.022120"/>
+				<float WZ="146.151627"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="12">
+				<float XX="0.057521"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998343"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998343"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.057521"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.168354"/>
+				<float WY="5.912615"/>
+				<float WZ="137.302368"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="13">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-63.433430"/>
+				<float WY="1.147114"/>
+				<float WZ="133.077255"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="14">
+				<float XX="0.133465"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.991053"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.991053"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.133465"/>
+				<float ZW="0.000000"/>
+				<float WX="-69.049316"/>
+				<float WY="-0.204082"/>
+				<float WZ="183.633484"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="15">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.071293"/>
+				<float WY="0.864172"/>
+				<float WZ="167.569489"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="16">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="13.351627"/>
+				<float WY="-0.247668"/>
+				<float WZ="141.087860"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="17">
+				<float XX="0.663175"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.748464"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.748464"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.663175"/>
+				<float ZW="0.000000"/>
+				<float WX="112.322983"/>
+				<float WY="-1.208515"/>
+				<float WZ="129.945312"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="54">
+				<float XX="0.541925"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.840426"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.840426"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.541925"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.102066"/>
+				<float WY="-0.448071"/>
+				<float WZ="4.794471"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="18">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="68.498596"/>
+				<float WY="0.536327"/>
+				<float WZ="89.148399"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="55">
+				<float XX="0.268398"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.963309"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.963309"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.268398"/>
+				<float ZW="0.000000"/>
+				<float WX="7.315220"/>
+				<float WY="2.425028"/>
+				<float WZ="0.330765"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="19">
+				<float XX="-0.139545"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990216"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990216"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.139545"/>
+				<float ZW="0.000000"/>
+				<float WX="79.289551"/>
+				<float WY="-0.063162"/>
+				<float WZ="42.012714"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="20">
+				<float XX="0.320807"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.947145"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.947145"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.320807"/>
+				<float ZW="0.000000"/>
+				<float WX="103.175262"/>
+				<float WY="-0.023180"/>
+				<float WZ="14.094058"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="21">
+				<float XX="-0.289906"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.957056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.957056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.289906"/>
+				<float ZW="0.000000"/>
+				<float WX="115.871223"/>
+				<float WY="7.317747"/>
+				<float WZ="-20.663660"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="22">
+				<float XX="-0.155763"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.987793"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.987793"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.155763"/>
+				<float ZW="0.000000"/>
+				<float WX="140.102127"/>
+				<float WY="1.263935"/>
+				<float WZ="-11.161463"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="23">
+				<float XX="0.377069"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.926184"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.926184"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.377069"/>
+				<float ZW="0.000000"/>
+				<float WX="107.821869"/>
+				<float WY="1.263935"/>
+				<float WZ="-43.838264"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="24">
+				<float XX="0.289253"/>
+				<float XY="0.000000"/>
+				<float XZ="0.957252"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.957252"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.289253"/>
+				<float ZW="0.000000"/>
+				<float WX="116.718399"/>
+				<float WY="-1.543947"/>
+				<float WZ="-79.252159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="25">
+				<float XX="0.446205"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.894931"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.894931"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.446205"/>
+				<float ZW="0.000000"/>
+				<float WX="58.855591"/>
+				<float WY="1.152885"/>
+				<float WZ="-158.929276"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="26">
+				<float XX="-0.530466"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.847707"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.847707"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.530466"/>
+				<float ZW="0.000000"/>
+				<float WX="98.283989"/>
+				<float WY="-0.132431"/>
+				<float WZ="-154.452011"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="27">
+				<float XX="0.068483"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.997652"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.997652"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.068483"/>
+				<float ZW="0.000000"/>
+				<float WX="68.331039"/>
+				<float WY="3.592995"/>
+				<float WZ="-126.970551"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="28">
+				<float XX="-0.468234"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.883604"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.883604"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.468234"/>
+				<float ZW="0.000000"/>
+				<float WX="112.303497"/>
+				<float WY="1.368608"/>
+				<float WZ="-135.871231"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="29">
+				<float XX="0.391786"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.920056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.920056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.391786"/>
+				<float ZW="0.000000"/>
+				<float WX="83.222488"/>
+				<float WY="5.298887"/>
+				<float WZ="-147.731766"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="49">
+				<float XX="0.230397"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.973097"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.973097"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.230397"/>
+				<float ZW="0.000000"/>
+				<float WX="-29.196480"/>
+				<float WY="-2.002956"/>
+				<float WZ="-65.090912"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="38">
+				<float XX="0.695099"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.718914"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.718914"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.695099"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.615921"/>
+				<float WY="4.631948"/>
+				<float WZ="-88.275047"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="48">
+				<float XX="-0.521246"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.853407"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.853407"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.521246"/>
+				<float ZW="0.000000"/>
+				<float WX="-83.009331"/>
+				<float WY="-0.627867"/>
+				<float WZ="-31.293415"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="39">
+				<float XX="0.387505"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.921867"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.921867"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.387505"/>
+				<float ZW="0.000000"/>
+				<float WX="-108.808083"/>
+				<float WY="6.834669"/>
+				<float WZ="-73.489159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="50">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.683418"/>
+				<float WY="-2.920955"/>
+				<float WZ="0.182646"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="51">
+				<float XX="0.527884"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.849316"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.849316"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.527884"/>
+				<float ZW="0.000000"/>
+				<float WX="-64.135399"/>
+				<float WY="-2.920952"/>
+				<float WZ="-26.576408"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="52">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.698044"/>
+				<float WY="-1.929783"/>
+				<float WZ="-49.197769"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="53">
+				<float XX="0.868027"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.496517"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.496517"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.868027"/>
+				<float ZW="0.000000"/>
+				<float WX="9.923805"/>
+				<float WY="-1.929771"/>
+				<float WZ="-17.972046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="56">
+				<float XX="-nan(ind)"/>
+				<float XY="-nan(ind)"/>
+				<float XZ="-nan(ind)"/>
+				<float XW="-nan(ind)"/>
+				<float YX="-nan(ind)"/>
+				<float YY="-nan(ind)"/>
+				<float YZ="-nan(ind)"/>
+				<float YW="-nan(ind)"/>
+				<float ZX="-nan(ind)"/>
+				<float ZY="-nan(ind)"/>
+				<float ZZ="-nan(ind)"/>
+				<float ZW="-nan(ind)"/>
+				<float WX="-nan(ind)"/>
+				<float WY="-nan(ind)"/>
+				<float WZ="-nan(ind)"/>
+				<float WW="-nan(ind)"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTreeLeaves"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLitInstanced" name="BranchesGraphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="int" name="InstanceCount">
+				<int val="57"/>
+			</Variable>
+			<Variable type="mat4" name="46">
+				<float XX="0.271997"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.962297"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.962297"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.271997"/>
+				<float ZW="0.000000"/>
+				<float WX="-98.345879"/>
+				<float WY="-0.988110"/>
+				<float WZ="13.514114"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="37">
+				<float XX="0.148436"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988921"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988921"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.148436"/>
+				<float ZW="0.000000"/>
+				<float WX="-88.302818"/>
+				<float WY="0.882042"/>
+				<float WZ="-110.229446"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="0">
+				<float XX="-0.774081"/>
+				<float XY="0.000000"/>
+				<float XZ="0.633086"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.633086"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.774081"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.738260"/>
+				<float WY="-1.651432"/>
+				<float WZ="14.010729"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="47">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-87.594070"/>
+				<float WY="1.199512"/>
+				<float WZ="-6.118287"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="36">
+				<float XX="-0.275187"/>
+				<float XY="0.000000"/>
+				<float XZ="0.961390"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.961390"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.275187"/>
+				<float ZW="0.000000"/>
+				<float WX="-72.484230"/>
+				<float WY="1.250984"/>
+				<float WZ="-128.102478"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="1">
+				<float XX="0.612210"/>
+				<float XY="0.000000"/>
+				<float XZ="0.790695"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.790695"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.612210"/>
+				<float ZW="0.000000"/>
+				<float WX="-18.180666"/>
+				<float WY="-2.128502"/>
+				<float WZ="32.930683"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="35">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-73.751373"/>
+				<float WY="-1.478203"/>
+				<float WZ="-147.569916"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="2">
+				<float XX="0.865912"/>
+				<float XY="0.000000"/>
+				<float XZ="0.500196"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.500196"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.865912"/>
+				<float ZW="0.000000"/>
+				<float WX="-11.799131"/>
+				<float WY="-1.823202"/>
+				<float WZ="52.943779"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="44">
+				<float XX="-0.550264"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.834989"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.834989"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.550264"/>
+				<float ZW="0.000000"/>
+				<float WX="-138.932068"/>
+				<float WY="-1.486942"/>
+				<float WZ="64.107147"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="45">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-114.081528"/>
+				<float WY="-1.486948"/>
+				<float WZ="74.957687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="34">
+				<float XX="0.297028"/>
+				<float XY="0.000000"/>
+				<float XZ="0.954868"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.954868"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.297028"/>
+				<float ZW="0.000000"/>
+				<float WX="-34.483604"/>
+				<float WY="1.016262"/>
+				<float WZ="-152.633179"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="3">
+				<float XX="0.979642"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.200749"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.200749"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.979642"/>
+				<float ZW="0.000000"/>
+				<float WX="8.936857"/>
+				<float WY="-1.823200"/>
+				<float WZ="47.417603"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="42">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-116.880966"/>
+				<float WY="2.033787"/>
+				<float WZ="-56.661324"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="33">
+				<float XX="0.459956"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.887941"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.887941"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.459956"/>
+				<float ZW="0.000000"/>
+				<float WX="-31.442005"/>
+				<float WY="1.016262"/>
+				<float WZ="-132.343719"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="4">
+				<float XX="0.635920"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.771755"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.771755"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.635920"/>
+				<float ZW="0.000000"/>
+				<float WX="-35.426311"/>
+				<float WY="-0.142739"/>
+				<float WZ="23.713539"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="43">
+				<float XX="0.080923"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.996721"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.996721"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.080923"/>
+				<float ZW="0.000000"/>
+				<float WX="-123.206436"/>
+				<float WY="4.183752"/>
+				<float WZ="48.910877"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="32">
+				<float XX="-0.954298"/>
+				<float XY="0.000000"/>
+				<float XZ="0.298858"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.298858"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.954298"/>
+				<float ZW="0.000000"/>
+				<float WX="-16.487749"/>
+				<float WY="4.553131"/>
+				<float WZ="-149.791687"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="5">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-5.393660"/>
+				<float WY="-0.323082"/>
+				<float WZ="70.717529"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="40">
+				<float XX="-0.754052"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.656813"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.656813"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.754052"/>
+				<float ZW="0.000000"/>
+				<float WX="-145.312027"/>
+				<float WY="2.445005"/>
+				<float WZ="-46.238228"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="31">
+				<float XX="0.707020"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.707193"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.707193"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.707020"/>
+				<float ZW="0.000000"/>
+				<float WX="46.654198"/>
+				<float WY="3.347708"/>
+				<float WZ="-137.253738"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="6">
+				<float XX="0.216640"/>
+				<float XY="0.000000"/>
+				<float XZ="0.976251"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.976251"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.216640"/>
+				<float ZW="0.000000"/>
+				<float WX="-23.362793"/>
+				<float WY="-0.599390"/>
+				<float WZ="67.537292"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="41">
+				<float XX="0.932825"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.360328"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.360328"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.932825"/>
+				<float ZW="0.000000"/>
+				<float WX="-140.389725"/>
+				<float WY="2.445007"/>
+				<float WZ="-62.884083"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="30">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="94.129013"/>
+				<float WY="5.706701"/>
+				<float WZ="-118.958076"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="7">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-44.868908"/>
+				<float WY="-0.599735"/>
+				<float WZ="118.681587"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="8">
+				<float XX="0.152674"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.988277"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.988277"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.152674"/>
+				<float ZW="0.000000"/>
+				<float WX="-25.126858"/>
+				<float WY="-0.421700"/>
+				<float WZ="113.037857"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="9">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-45.098484"/>
+				<float WY="-0.703392"/>
+				<float WZ="90.375435"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="10">
+				<float XX="0.203580"/>
+				<float XY="0.000000"/>
+				<float XZ="0.979057"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.979057"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.203580"/>
+				<float ZW="0.000000"/>
+				<float WX="-33.669281"/>
+				<float WY="-0.066725"/>
+				<float WZ="130.438690"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="11">
+				<float XX="0.312319"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.949976"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.949976"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.312319"/>
+				<float ZW="0.000000"/>
+				<float WX="-40.315342"/>
+				<float WY="0.022120"/>
+				<float WZ="146.151627"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="12">
+				<float XX="0.057521"/>
+				<float XY="0.000000"/>
+				<float XZ="0.998343"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.998343"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.057521"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.168354"/>
+				<float WY="5.912615"/>
+				<float WZ="137.302368"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="13">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-63.433430"/>
+				<float WY="1.147114"/>
+				<float WZ="133.077255"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="14">
+				<float XX="0.133465"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.991053"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.991053"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.133465"/>
+				<float ZW="0.000000"/>
+				<float WX="-69.049316"/>
+				<float WY="-0.204082"/>
+				<float WZ="183.633484"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="15">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-46.071293"/>
+				<float WY="0.864172"/>
+				<float WZ="167.569489"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="16">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="13.351627"/>
+				<float WY="-0.247668"/>
+				<float WZ="141.087860"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="17">
+				<float XX="0.663175"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.748464"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.748464"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.663175"/>
+				<float ZW="0.000000"/>
+				<float WX="112.322983"/>
+				<float WY="-1.208515"/>
+				<float WZ="129.945312"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="54">
+				<float XX="0.541925"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.840426"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.840426"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.541925"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.102066"/>
+				<float WY="-0.448071"/>
+				<float WZ="4.794471"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="18">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="68.498596"/>
+				<float WY="0.536327"/>
+				<float WZ="89.148399"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="55">
+				<float XX="0.268398"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.963309"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.963309"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.268398"/>
+				<float ZW="0.000000"/>
+				<float WX="7.315220"/>
+				<float WY="2.425028"/>
+				<float WZ="0.330765"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="19">
+				<float XX="-0.139545"/>
+				<float XY="0.000000"/>
+				<float XZ="0.990216"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.990216"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.139545"/>
+				<float ZW="0.000000"/>
+				<float WX="79.289551"/>
+				<float WY="-0.063162"/>
+				<float WZ="42.012714"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="20">
+				<float XX="0.320807"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.947145"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.947145"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.320807"/>
+				<float ZW="0.000000"/>
+				<float WX="103.175262"/>
+				<float WY="-0.023180"/>
+				<float WZ="14.094058"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="21">
+				<float XX="-0.289906"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.957056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.957056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.289906"/>
+				<float ZW="0.000000"/>
+				<float WX="115.871223"/>
+				<float WY="7.317747"/>
+				<float WZ="-20.663660"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="22">
+				<float XX="-0.155763"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.987793"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.987793"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.155763"/>
+				<float ZW="0.000000"/>
+				<float WX="140.102127"/>
+				<float WY="1.263935"/>
+				<float WZ="-11.161463"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="23">
+				<float XX="0.377069"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.926184"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.926184"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.377069"/>
+				<float ZW="0.000000"/>
+				<float WX="107.821869"/>
+				<float WY="1.263935"/>
+				<float WZ="-43.838264"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="24">
+				<float XX="0.289253"/>
+				<float XY="0.000000"/>
+				<float XZ="0.957252"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.957252"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.289253"/>
+				<float ZW="0.000000"/>
+				<float WX="116.718399"/>
+				<float WY="-1.543947"/>
+				<float WZ="-79.252159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="25">
+				<float XX="0.446205"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.894931"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.894931"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.446205"/>
+				<float ZW="0.000000"/>
+				<float WX="58.855591"/>
+				<float WY="1.152885"/>
+				<float WZ="-158.929276"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="26">
+				<float XX="-0.530466"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.847707"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.847707"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.530466"/>
+				<float ZW="0.000000"/>
+				<float WX="98.283989"/>
+				<float WY="-0.132431"/>
+				<float WZ="-154.452011"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="27">
+				<float XX="0.068483"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.997652"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.997652"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.068483"/>
+				<float ZW="0.000000"/>
+				<float WX="68.331039"/>
+				<float WY="3.592995"/>
+				<float WZ="-126.970551"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="28">
+				<float XX="-0.468234"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.883604"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.883604"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.468234"/>
+				<float ZW="0.000000"/>
+				<float WX="112.303497"/>
+				<float WY="1.368608"/>
+				<float WZ="-135.871231"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="29">
+				<float XX="0.391786"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.920056"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.920056"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.391786"/>
+				<float ZW="0.000000"/>
+				<float WX="83.222488"/>
+				<float WY="5.298887"/>
+				<float WZ="-147.731766"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="49">
+				<float XX="0.230397"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.973097"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.973097"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.230397"/>
+				<float ZW="0.000000"/>
+				<float WX="-29.196480"/>
+				<float WY="-2.002956"/>
+				<float WZ="-65.090912"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="38">
+				<float XX="0.695099"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.718914"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.718914"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.695099"/>
+				<float ZW="0.000000"/>
+				<float WX="-53.615921"/>
+				<float WY="4.631948"/>
+				<float WZ="-88.275047"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="48">
+				<float XX="-0.521246"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.853407"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.853407"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.521246"/>
+				<float ZW="0.000000"/>
+				<float WX="-83.009331"/>
+				<float WY="-0.627867"/>
+				<float WZ="-31.293415"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="39">
+				<float XX="0.387505"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.921867"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.921867"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.387505"/>
+				<float ZW="0.000000"/>
+				<float WX="-108.808083"/>
+				<float WY="6.834669"/>
+				<float WZ="-73.489159"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="50">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-68.683418"/>
+				<float WY="-2.920955"/>
+				<float WZ="0.182646"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="51">
+				<float XX="0.527884"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.849316"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.849316"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.527884"/>
+				<float ZW="0.000000"/>
+				<float WX="-64.135399"/>
+				<float WY="-2.920952"/>
+				<float WZ="-26.576408"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="52">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-67.698044"/>
+				<float WY="-1.929783"/>
+				<float WZ="-49.197769"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="53">
+				<float XX="0.868027"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.496517"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.496517"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.868027"/>
+				<float ZW="0.000000"/>
+				<float WX="9.923805"/>
+				<float WY="-1.929771"/>
+				<float WZ="-17.972046"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="56">
+				<float XX="-nan(ind)"/>
+				<float XY="-nan(ind)"/>
+				<float XZ="-nan(ind)"/>
+				<float XW="-nan(ind)"/>
+				<float YX="-nan(ind)"/>
+				<float YY="-nan(ind)"/>
+				<float YZ="-nan(ind)"/>
+				<float YW="-nan(ind)"/>
+				<float ZX="-nan(ind)"/>
+				<float ZY="-nan(ind)"/>
+				<float ZZ="-nan(ind)"/>
+				<float ZW="-nan(ind)"/>
+				<float WX="-nan(ind)"/>
+				<float WY="-nan(ind)"/>
+				<float WZ="-nan(ind)"/>
+				<float WW="-nan(ind)"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="SurvivalTreeBranches"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="SurvivalTree"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalCrate" name="Crate">
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="32.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="4.074936"/>
+				<float WY="-0.570090"/>
+				<float WZ="29.908283"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Crate"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="CrateSpec"/>
+			</Variable>
+		</Component>
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree45">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree16">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalWater" name="Water">
+		<Component type="WaterComponent" name="WaterTerrain">
+			<Variable type="float" name="YOffset">
+				<float val="-5.000000"/>
+			</Variable>
+			<Variable type="float" name="Width">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="Height">
+				<float val="500.000000"/>
+			</Variable>
+			<Variable type="float" name="MaxHeight">
+				<float val="0.000000"/>
+			</Variable>
+			<Variable type="int" name="TileX">
+				<int val="500"/>
+			</Variable>
+			<Variable type="int" name="TileY">
+				<int val="500"/>
+			</Variable>
+			<Variable type="string" name="Name">
+				<string val="WaterTerrain"/>
+			</Variable>
+			<Variable type="string" name="HeightMapPath">
+				<string val="Assets/Texture/Black.png"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="PointLight">
+		<Component type="PointLightComponent" name="PointLight">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="10.000000"/>
+				<float Y="10.000000"/>
+				<float Z="10.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="2.071411"/>
+				<float Y="14.213789"/>
+				<float Z="30.626568"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge73">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree43">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree10">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree41">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree12">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree40">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree13">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge78">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree47">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree14">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree44">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree17">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree18">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree19">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree51">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree20">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree50">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree21">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree53">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree22">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree52">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree23">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree54">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree25">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree57">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree26">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree56">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree27">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree64">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree59">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree28">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree58">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree29">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree30">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree31">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree32">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree33">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree34">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree35">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree36">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree37">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree38">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree39">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge77">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree48">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge76">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree49">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree60">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree61">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree62">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalTree" name="SurvivalTree63">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge68">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge69">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge70">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge71">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge72">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge74">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge75">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge80">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge81">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge82">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge83">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge84">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge85">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge86">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge87">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge88">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge89">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge90">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge91">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge92">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge93">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge94">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge95">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge96">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge97">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge98">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge99">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge100">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge101">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge102">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge103">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge104">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge105">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge106">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge107">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge108">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge109">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge110">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge111">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge112">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge113">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge114">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge115">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge116">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+	<Object type="SurvivalRockLarge" name="SurvivalRockLarge117">
+		<Component type="StaticColliderComponent" name="Collider"/>
+	</Object>
+</Scene>
+

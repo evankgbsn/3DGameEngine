@@ -111,6 +111,8 @@ public:
 
 	Texture* GetSpecularTexture() const;
 
+	void BindVertexArrayBuffers();
+
 	const std::vector<glm::mat4>& GetInstanceTransforms() const;
 
 private:
@@ -141,7 +143,7 @@ private:
 
 	GOTexturedLitInstanced& operator=(GOTexturedLitInstanced&&) = delete;
 
-	static std::list<unsigned int> removedInstances;
+	std::list<unsigned int> removedInstances;
 
 	unsigned int viewProjectionBuffer;
 

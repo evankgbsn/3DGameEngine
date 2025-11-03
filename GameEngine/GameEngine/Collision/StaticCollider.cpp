@@ -30,15 +30,16 @@ StaticCollider::StaticCollider(GO3D* const graphicsObject) :
 	trianglesColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
 }
 
-StaticCollider::StaticCollider(GOTexturedLitInstanced* const graphicsObjectInstanced, unsigned int instanceID)	:
+StaticCollider::StaticCollider(GOTexturedLitInstanced* const graphicsObjectInstanced, unsigned int ID)	:
 	wrapedGraphicsInstanced(graphicsObjectInstanced),
 	lastTranslation(graphicsObjectInstanced->GetTranslation(instanceID)),
-	wrapedGraphics(nullptr)
+	wrapedGraphics(nullptr),
+	instanceID(ID)
 {
-	this->boundingSphere = new SphereWithVisualization(wrapedGraphics);
-	this->obb = new OrientedBoundingBoxWithVisualization(wrapedGraphics->GetModel()->GetVertices());
+	this->boundingSphere = new SphereWithVisualization(wrapedGraphicsInstanced);
+	this->obb = new OrientedBoundingBoxWithVisualization(wrapedGraphicsInstanced->GetModel()->GetVertices());
 
-	trianglesColliderVisualization = GraphicsObjectManager::CreateGO3DColored(const_cast<Model*>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	trianglesColliderVisualization = GraphicsObjectManager::CreateGO3DColored(const_cast<Model*>(wrapedGraphicsInstanced->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	trianglesColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
 }
 

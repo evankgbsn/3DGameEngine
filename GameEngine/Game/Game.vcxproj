@@ -509,7 +509,7 @@
     <ClCompile Include="GameObjects\SurvivalServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\SurvivalSun.cpp" />
     <ClCompile Include="GameObjects\SurvivalTerrain.cpp" />
-    <ClCompile Include="GameObjects\SurvivalTree.cpp" />
+    <ClCompile Include="GAMEOBJECTS\SurvivalTree.cpp" />
     <ClCompile Include="GameObjects\SurvivalWater.cpp" />
     <ClCompile Include="GameObjects\Tree.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

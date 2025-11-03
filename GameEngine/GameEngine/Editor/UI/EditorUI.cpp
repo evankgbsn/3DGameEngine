@@ -773,32 +773,16 @@ void EditorUI::CreateObjectManagementInterface()
 
 			const std::vector<Scene*>& registeredScenes = SceneManager::GetRegisteredScenes();
 
-			GameObject* objectToDelete = nullptr;
-
 			for (const auto& scene : registeredScenes)
 			{
 				if (scene->Loaded())
 				{
-					const std::unordered_map<std::string, GameObject*>& objects = scene->GetGameObjects();
-
-					for (const auto& object : objects)
+					if (scene->GetGameObject(objectName) != nullptr)
 					{
-						if (object.first == objectName)
-						{
-							objectToDelete = object.second;
-							scene->DeregisterGameObject(objectName);
-							scene->RemoveFromCreatedObjects(objectName);
-							break;
-						}
+						scene->RemoveFromCreatedObjects(objectName);
 					}
 				}
 			}
-
-			if (objectToDelete != nullptr)
-			{
-				delete objectToDelete;
-			}
-
 		});
 
 	objectManagementDeleteName = new InputField(

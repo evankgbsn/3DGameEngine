@@ -1,12 +1,19 @@
 #include "SurvivalRockLarge.h"
 
-#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLitInstanced.h"
 #include "GameEngine/GameObject/Component/StaticColliderComponent.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/Renderer/Camera/CameraManager.h"
 #include "GameEngine/Editor/Editor.h"
+#include "GameEngine/Scene/Scene.h"
+
+GraphicsObjectTexturedLitInstanced* SurvivalRockLarge::rock = nullptr;
+
+std::list<std::function<void()>*> SurvivalRockLarge::onGraphicsDeserializedFunctions = std::list<std::function<void()>*>();
+
+unsigned int SurvivalRockLarge::instanceIDGen = 0;
 
 SurvivalRockLarge::SurvivalRockLarge() :
 	GameObject("SurvivalRockLarge")
@@ -20,23 +27,59 @@ SurvivalRockLarge::~SurvivalRockLarge()
 
 void SurvivalRockLarge::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("RockLarge"), TextureManager::GetTexture("Rock"), TextureManager::GetTexture("Rock"));
-	graphics->SetShine(32.0f);
-	collider = new StaticColliderComponent(graphics);
-	collider->UpdateCollider();
-	SetupEditorCallbacks();
+	if (!GetOwningScene()->IsDeserializing())
+	{
+		if (rock == nullptr)
+		{
+			instanceID = 0;
 
-	AddComponent(graphics, "Graphics");
-	AddComponent(collider, "Collider");
+			rock = new GraphicsObjectTexturedLitInstanced("SurvivalRockLarge", "SurvivalRockLarge", "SurvivalRockLarge", 1);
+			rock->SetShine(32.0f);
+
+			AddComponent(rock, "RockGraphics");
+		}
+		else
+		{
+			instanceID = rock->AddInstance();
+			rock->FinalizeTransforms();
+		}
+
+		collider = new StaticColliderComponent(rock, instanceID);
+		collider->UpdateCollider();
+		AddComponent(collider, "Collider");
+	}
+	else
+	{
+
+	}
+
+	SetupEditorCallbacks();
 }
 
 void SurvivalRockLarge::Terminate()
 {
 	CleanupEditorCallbacks();
-	RemoveComponent("Graphics");
-	RemoveComponent("Collider");
-	delete graphics;
-	delete collider;
+
+	if (HasComponent("RockGraphics"))
+	{
+		RemoveComponent("RockGraphics");
+
+		delete rock;
+		rock = nullptr;
+	}
+	else
+	{
+		if (rock != nullptr)
+		{
+			rock->RemoveInstanceByID(instanceID);
+		}
+	}
+
+	if (HasComponent("Collider"))
+	{
+		RemoveComponent("Collider");
+		delete collider;
+	}
 }
 
 void SurvivalRockLarge::GameUpdate()
@@ -51,14 +94,14 @@ void SurvivalRockLarge::EditorUpdate()
 
 void SurvivalRockLarge::Load()
 {
-	if (!ModelManager::ModelLoaded("RockLarge"))
+	if (!ModelManager::ModelLoaded("SurvivalRockLarge"))
 	{
-		ModelManager::LoadModel("RockLarge", "Assets/Model/RockLarge.gltf", false);
+		ModelManager::LoadModel("SurvivalRockLarge", "Assets/Model/RockLarge.gltf", false);
 	}
 
-	if (!TextureManager::TextureLoaded("Rock"))
+	if (!TextureManager::TextureLoaded("SurvivalRockLarge"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/grey.png", "Rock");
+		TextureManager::LoadTexture("Assets/Texture/grey.png", "SurvivalRockLarge");
 	}
 }
 
@@ -80,11 +123,40 @@ void SurvivalRockLarge::Deserialize()
 {
 	GameObject::Deserialize();
 
-	graphics = static_cast<GraphicsObjectTexturedLit*>(GetComponent("Graphics"));
-	collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
+	if (HasComponent("RockGraphics"))
+	{
+		rock = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("RockGraphics"));
 
-	collider->SetGraphics(graphics);
-	collider->UpdateCollider();
+		instanceIDGen = 0;
+
+		for (const auto& function : onGraphicsDeserializedFunctions)
+		{
+			(*function)();
+			delete function;
+		}
+
+		onGraphicsDeserializedFunctions.clear();
+	}
+
+	std::function<void()>* initCollider = new std::function<void()>([this]()
+		{
+			instanceID = instanceIDGen++;
+
+			collider = static_cast<StaticColliderComponent*>(GetComponent("Collider"));
+
+			collider->SetGraphics(rock, instanceID);
+			collider->UpdateCollider();
+		});
+
+	if (rock != nullptr)
+	{
+		(*initCollider)();
+		delete initCollider;
+	}
+	else
+	{
+		onGraphicsDeserializedFunctions.push_back(initCollider);
+	}
 
 	CleanupEditorCallbacks();
 	SetupEditorCallbacks();
@@ -104,24 +176,26 @@ bool SurvivalRockLarge::Hovered() const
 
 void SurvivalRockLarge::SetPosition(const glm::vec3& newPos)
 {
-	graphics->SetPosition(newPos);
+	rock->SetTranslation(newPos, instanceID);
+	rock->UpdateInstanceByID(instanceID);
 	collider->UpdateCollider();
 }
 
 glm::vec3 SurvivalRockLarge::GetPosition() const
 {
-	return graphics->GetPosition();
+	return rock->GetTranslation(instanceID);
 }
 
 void SurvivalRockLarge::SetRotation(const glm::mat4& newRot)
 {
-	graphics->SetRotation(newRot);
+	rock->SetRotation(newRot, instanceID);
+	rock->UpdateInstanceByID(instanceID);
 	collider->UpdateCollider();
 }
 
 glm::mat4 SurvivalRockLarge::GetRotation() const
 {
-	return graphics->GetRotation();
+	return rock->GetRotation(instanceID);
 }
 
 void SurvivalRockLarge::SetupEditorCallbacks()

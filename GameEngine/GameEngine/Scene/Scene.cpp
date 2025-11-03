@@ -48,7 +48,8 @@ namespace rapidxml {
 Scene::Scene() :
 	started(false),
 	initialized(false),
-	loaded(false)
+	loaded(false),
+	deserializing(false)
 {
 }
 
@@ -188,6 +189,8 @@ void Scene::Unload()
 
 void Scene::Deserialize(const std::string& path)
 {
+	deserializing = true;
+
 	if (Started())
 	{
 		End();
@@ -197,6 +200,8 @@ void Scene::Deserialize(const std::string& path)
 	{
 		Terminate();
 	}
+
+	ClearCreatedObjects();
 
 	Initialize();
 
@@ -493,12 +498,12 @@ void Scene::Deserialize(const std::string& path)
 			while (componentNode != nullptr)
 			{
 				std::string componentName = componentNode->first_attribute("name")->value();
-				std::string componenType = componentNode->first_attribute("type")->value();
+				std::string componentType = componentNode->first_attribute("type")->value();
 
 				if (newObj->components.find(componentName) == newObj->components.end())
 				{
 					// Create the new component and add it to the components.
-					std::function<void(Component**)> componentConstructor = Component::GetConstructor(name);
+					std::function<void(Component**)> componentConstructor = Component::GetConstructor(componentType);
 
 					Component* newComponent;
 					componentConstructor(&newComponent);
@@ -746,6 +751,8 @@ void Scene::Deserialize(const std::string& path)
 	delete doc;
 	delete xmlFile;
 	Logger::Log("Deserialized Scene: " + name, Logger::Category::Success);
+
+	deserializing = false;
 }
 
 const std::string& Scene::GetName() const
@@ -775,7 +782,26 @@ void Scene::AddToCreatedObjects(const std::string& name, GameObject* obj)
 
 void Scene::RemoveFromCreatedObjects(const std::string& name)
 {
+	GameObject* objectToRemove = GetGameObject(name);
+	DeregisterGameObject(name);
 	createdObjects.erase(createdObjects.find(name));
+	delete objectToRemove;
+}
+
+void Scene::ClearCreatedObjects()
+{
+	for (const auto& obj : createdObjects)
+	{
+		DeregisterGameObject(obj.first);
+		delete obj.second;
+	}
+
+	createdObjects.clear();
+}
+
+bool Scene::IsDeserializing() const
+{
+	return deserializing;
 }
 
 void Scene::Save(const std::string& saveFileName)

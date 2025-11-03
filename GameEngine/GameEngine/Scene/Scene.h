@@ -43,6 +43,10 @@ public:
 
 	void RemoveFromCreatedObjects(const std::string& name);
 
+	void ClearCreatedObjects();
+
+	bool IsDeserializing() const;
+
 protected:
 
 	virtual void Initialize();
@@ -89,6 +93,8 @@ private:
 
 	// For cleaning up objects created from deserialization or in editor.
 	std::unordered_map<std::string, GameObject*> createdObjects;
+
+	bool deserializing;
 
 };
 
