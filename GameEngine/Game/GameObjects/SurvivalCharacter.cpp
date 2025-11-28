@@ -154,7 +154,7 @@ void SurvivalCharacter::Initialize()
 	AddComponent(characterGraphics, "CharacterGraphics");
 	
 	characterGraphics->SetShine(32.0f);
-	characterGraphics->SetClip(0);
+	//characterGraphics->SetClip(0);
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
 

@@ -41,8 +41,8 @@ protected:
 
 	struct AnimationData
 	{
-		glm::mat4 pose[120];
-		glm::mat4 invBindPose[120];
+		glm::mat4 pose[500];
+		glm::mat4 invBindPose[500];
 	} animationData;
 
 	unsigned int animationBuffer;
