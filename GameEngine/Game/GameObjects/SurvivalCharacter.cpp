@@ -163,7 +163,7 @@ void SurvivalCharacter::Initialize()
 
 	axe = new GraphicsObjectTexturedLit(ModelManager::GetModel("Axe"), TextureManager::GetTexture("Axe"), TextureManager::GetTexture("Axe"));
 	axe->SetShine(32.0f);
-	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+	//axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
 	AddComponent(axe, "Axe");
 
 
@@ -225,7 +225,7 @@ void SurvivalCharacter::Terminate()
 
 void SurvivalCharacter::GameUpdate()
 {
-	axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+	//axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
 
 	characterCollider->Update();
 
@@ -316,7 +316,7 @@ void SurvivalCharacter::Load()
 {
 	if (!ModelManager::ModelLoaded(CHARACTER_GRAPHICS_MODEL_NAME))
 	{
-		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Woman.gltf", false);
+		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Orc.gltf", false);
 	}
 
 	if (!ModelManager::ModelLoaded("Axe"))
