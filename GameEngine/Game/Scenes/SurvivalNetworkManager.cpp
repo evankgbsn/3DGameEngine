@@ -39,7 +39,7 @@ void SurvivalNetworkManager::Initialize()
 				if (!SceneManager::SceneLoaded(sceneName))
 				{
 					SceneManager::LoadScene(sceneName);
-
+					SceneManager::InitializeScene(sceneName);
 					SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/TutorialIsland.xml");
 					SceneManager::StartScene(sceneName);
 				}

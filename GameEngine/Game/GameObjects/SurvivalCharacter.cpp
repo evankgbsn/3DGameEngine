@@ -195,6 +195,7 @@ void SurvivalCharacter::Terminate()
 	{
 		CleanupCameraMovement();
 		CleanupMovement();
+		NetworkManager::Despawn(GetNetworkObjectID());
 	}
 
 	if (characterGraphics != nullptr)

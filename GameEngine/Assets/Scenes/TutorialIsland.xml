@@ -9,23 +9,6 @@
 	<Object type="SurvivalTree" name="SurvivalTree15">
 		<Component type="StaticColliderComponent" name="Collider"/>
 	</Object>
-	<Object type="SurvivalServerFreeCamera" name="SurvivalServerFreeCamera">
-		<Component type="CameraComponent" name="Camera">
-			<Variable type="vec3" name="Position">
-				<float X="62.174656"/>
-				<float Y="15.862102"/>
-				<float Z="-29.699812"/>
-			</Variable>
-			<Variable type="vec3" name="Target">
-				<float X="61.326115"/>
-				<float Y="15.621656"/>
-				<float Z="-29.228468"/>
-			</Variable>
-			<Variable type="string" name="Name">
-				<string val="FreeCamera"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="SurvivalSun" name="Sun">
 		<Component type="DirectionalLightComponent" name="Sun">
 			<Variable type="vec3" name="ColorIntensity">
