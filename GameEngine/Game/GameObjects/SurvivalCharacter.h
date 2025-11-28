@@ -84,6 +84,19 @@ private:
 	void CleanupEditorCallbacks();
 
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
+	GraphicsObjectTexturedAnimatedLit* eyes;
+	GraphicsObjectTexturedAnimatedLit* teeth;
+	GraphicsObjectTexturedAnimatedLit* belt;
+	GraphicsObjectTexturedAnimatedLit* beltBuckle;
+	GraphicsObjectTexturedAnimatedLit* boots;
+	GraphicsObjectTexturedAnimatedLit* bootSole;
+	GraphicsObjectTexturedAnimatedLit* loinCloth;
+	GraphicsObjectTexturedAnimatedLit* lowerBootStrap;
+	GraphicsObjectTexturedAnimatedLit* upperBootStrap;
+	GraphicsObjectTexturedAnimatedLit* shinGuards;
+	GraphicsObjectTexturedAnimatedLit* shoulderArmor;
+	GraphicsObjectTexturedAnimatedLit* shoulderStrap;
+	GraphicsObjectTexturedAnimatedLit* toeCaps;
 
 	GraphicsObjectTexturedLit* axe;
 

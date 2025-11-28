@@ -28,9 +28,9 @@
 
 #include <glm/gtx/transform.hpp>
 
-#define CHARACTER_GRAPHICS_MODEL_NAME std::string("Woman")
-#define CHARACTER_GRAPHICS_DIFFUSE_NAME std::string("Woman")
-#define CHARACTER_GRAPHCIS_SPECULAR_NAME std::string("Woman")
+#define CHARACTER_GRAPHICS_MODEL_NAME std::string("Orc")
+#define CHARACTER_GRAPHICS_DIFFUSE_NAME std::string("Orc")
+#define CHARACTER_GRAPHCIS_SPECULAR_NAME std::string("Orc")
 
 
 SurvivalCharacter::SurvivalCharacter() :
@@ -154,9 +154,115 @@ void SurvivalCharacter::Initialize()
 	AddComponent(characterGraphics, "CharacterGraphics");
 	
 	characterGraphics->SetShine(32.0f);
-	//characterGraphics->SetClip(0);
+	characterGraphics->SetClip(0);
 	characterGraphics->SetSpeed(1.0f);
 	characterGraphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	shoulderArmor = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcShoulderArmor"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "ShoulderArmor");
+
+	shoulderArmor->SetShine(32.0f);
+	shoulderArmor->SetClip(0);
+	shoulderArmor->SetSpeed(1.0f);
+	shoulderArmor->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	boots = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcBoots"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "Boots");
+
+	boots->SetShine(32.0f);
+	boots->SetClip(0);
+	boots->SetSpeed(1.0f);
+	boots->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	shinGuards = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcShinGuards"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "ShinGuards");
+
+	shinGuards->SetShine(32.0f);
+	shinGuards->SetClip(0);
+	shinGuards->SetSpeed(1.0f);
+	shinGuards->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	toeCaps = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcToeCaps"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "ToeCaps");
+
+	toeCaps->SetShine(32.0f);
+	toeCaps->SetClip(0);
+	toeCaps->SetSpeed(1.0f);
+	toeCaps->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	teeth = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcTeeth"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "Teeth");
+
+	teeth->SetShine(32.0f);
+	teeth->SetClip(0);
+	teeth->SetSpeed(1.0f);
+	teeth->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	eyes = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcEyes"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "Eyes");
+
+	eyes->SetShine(32.0f);
+	eyes->SetClip(0);
+	eyes->SetSpeed(1.0f);
+	eyes->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	belt = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcBelt"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "Belt");
+
+	belt->SetShine(32.0f);
+	belt->SetClip(0);
+	belt->SetSpeed(1.0f);
+	belt->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	beltBuckle = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcBeltBuckle"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "BeltBuckle");
+
+	beltBuckle->SetShine(32.0f);
+	beltBuckle->SetClip(0);
+	beltBuckle->SetSpeed(1.0f);
+	beltBuckle->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	shoulderStrap = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcShoulderStrap"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "ShoulderStrap");
+
+	shoulderStrap->SetShine(32.0f);
+	shoulderStrap->SetClip(0);
+	shoulderStrap->SetSpeed(1.0f);
+	shoulderStrap->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	loinCloth = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcLoinCloth"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "LoinCloth");
+
+	loinCloth->SetShine(32.0f);
+	loinCloth->SetClip(0);
+	loinCloth->SetSpeed(1.0f);
+	loinCloth->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	
+
+	upperBootStrap = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcUpperBootStrap"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "UpperBootStrap");
+
+	upperBootStrap->SetShine(32.0f);
+	upperBootStrap->SetClip(0);
+	upperBootStrap->SetSpeed(1.0f);
+	upperBootStrap->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	lowerBootStrap = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcLowerBootStrap"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "LowerBootStrap");
+
+	lowerBootStrap->SetShine(32.0f);
+	lowerBootStrap->SetClip(0);
+	lowerBootStrap->SetSpeed(1.0f);
+	lowerBootStrap->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	bootSole = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("OrcBootSole"), TextureManager::GetTexture("Armor"), TextureManager::GetTexture("ArmorSpec"));
+	AddComponent(characterGraphics, "BootSole");
+
+	bootSole->SetShine(32.0f);
+	bootSole->SetClip(0);
+	bootSole->SetSpeed(1.0f);
+	bootSole->SetPosition({ 0.0f, 0.0f, 0.0f });
 
 	characterCollider = new AnimatedColliderComponent(characterGraphics);
 	AddComponent(characterCollider, "CharacterCollider");
@@ -226,6 +332,21 @@ void SurvivalCharacter::Terminate()
 void SurvivalCharacter::GameUpdate()
 {
 	//axe->SetTransform(characterGraphics->GetJointTransform("RightHand"));
+
+	boots->SetTransform(characterGraphics->GetTransform());
+	shinGuards->SetTransform(characterGraphics->GetTransform());
+	toeCaps->SetTransform(characterGraphics->GetTransform());
+	teeth->SetTransform(characterGraphics->GetTransform());
+	eyes->SetTransform(characterGraphics->GetTransform());
+	belt->SetTransform(characterGraphics->GetTransform());
+	beltBuckle->SetTransform(characterGraphics->GetTransform());
+	shoulderStrap->SetTransform(characterGraphics->GetTransform());
+	loinCloth->SetTransform(characterGraphics->GetTransform());
+	shoulderArmor->SetTransform(characterGraphics->GetTransform());
+	upperBootStrap->SetTransform(characterGraphics->GetTransform());
+	lowerBootStrap->SetTransform(characterGraphics->GetTransform());
+	bootSole->SetTransform(characterGraphics->GetTransform());
+	
 
 	characterCollider->Update();
 
@@ -318,6 +439,71 @@ void SurvivalCharacter::Load()
 	{
 		ModelManager::LoadModel(CHARACTER_GRAPHICS_MODEL_NAME, "Assets/Model/Orc.gltf", false);
 	}
+	
+	if (!ModelManager::ModelLoaded("OrcTeeth"))
+	{
+		ModelManager::LoadModel("OrcTeeth", "Assets/Model/OrcTeeth.gltf", false);
+	}
+	
+	if (!ModelManager::ModelLoaded("OrcEyes"))
+	{
+		ModelManager::LoadModel("OrcEyes", "Assets/Model/OrcEyes.gltf", false);
+	}
+	
+	if (!ModelManager::ModelLoaded("OrcBelt"))
+	{
+		ModelManager::LoadModel("OrcBelt", "Assets/Model/OrcBelt.gltf", false);
+	}
+	
+	if (!ModelManager::ModelLoaded("OrcBeltBuckle"))
+	{
+		ModelManager::LoadModel("OrcBeltBuckle", "Assets/Model/OrcBeltBuckle.gltf", false);
+	}
+	
+	if (!ModelManager::ModelLoaded("OrcBoots"))
+	{
+		ModelManager::LoadModel("OrcBoots", "Assets/Model/OrcBoots.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcBootSole"))
+	{
+		ModelManager::LoadModel("OrcBootSole", "Assets/Model/OrcBootSole.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcShinGuards"))
+	{
+		ModelManager::LoadModel("OrcShinGuards", "Assets/Model/OrcShinGuards.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcToeCaps"))
+	{
+		ModelManager::LoadModel("OrcToeCaps", "Assets/Model/OrcToeCaps.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcShoulderStrap"))
+	{
+		ModelManager::LoadModel("OrcShoulderStrap", "Assets/Model/OrcShoulderStrap.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcShoulderArmor"))
+	{
+		ModelManager::LoadModel("OrcShoulderArmor", "Assets/Model/OrcShoulderArmor.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcLoinCloth"))
+	{
+		ModelManager::LoadModel("OrcLoinCloth", "Assets/Model/OrcLoinCloth.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcUpperBootStrap"))
+	{
+		ModelManager::LoadModel("OrcUpperBootStrap", "Assets/Model/OrcUpperBootStrap.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("OrcLowerBootStrap"))
+	{
+		ModelManager::LoadModel("OrcLowerBootStrap", "Assets/Model/OrcLowerBootStrap.gltf", false);
+	}
 
 	if (!ModelManager::ModelLoaded("Axe"))
 	{
@@ -331,7 +517,17 @@ void SurvivalCharacter::Load()
 
 	if (!TextureManager::TextureLoaded(CHARACTER_GRAPHICS_DIFFUSE_NAME))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Woman.png", CHARACTER_GRAPHICS_DIFFUSE_NAME);
+		TextureManager::LoadTexture("Assets/Texture/OrcColor.png", CHARACTER_GRAPHICS_DIFFUSE_NAME);
+	}
+
+	if (!TextureManager::TextureLoaded("Armor"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/OrcArmorColor.png", "Armor");
+	}
+
+	if (!TextureManager::TextureLoaded("ArmorSpec"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/OrcArmorRoughness.png", "ArmorSpec");
 	}
 }
 

@@ -8,8 +8,8 @@ layout(std140, binding = 0) uniform MVP {
 
 layout(std140, binding = 1) uniform AnimData
 {
-    mat4 pose[120];
-    mat4 invBindPose[120];
+    mat4 pose[500];
+    mat4 invBindPose[500];
 } anim;
 
 layout(location = 0) in vec3 inPosition;
