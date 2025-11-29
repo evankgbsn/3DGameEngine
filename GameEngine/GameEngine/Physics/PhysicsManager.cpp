@@ -7,6 +7,7 @@
 #include "../Renderer/Camera/Camera.h"
 #include "../Renderer/Window/WindowManager.h"
 #include "../Renderer/Window/Window.h"
+#include "CharacterController.h"
 
 PhysicsManager* PhysicsManager::instance = nullptr;
 
@@ -29,6 +30,11 @@ void PhysicsManager::Update()
 			return;
 
 		instance->accumulator -= instance->stepSize;
+
+		for (auto& controller : instance->controllers)
+		{
+			controller.second->Move();
+		}
 
 		instance->scene->simulate(instance->stepSize);
 
@@ -103,6 +109,35 @@ bool PhysicsManager::RaycastFromCursor(float maxDistance, PxRaycastBuffer& outHi
 	return Raycast(cam.GetPosition(), direction, maxDistance, outHit);
 }
 
+CharacterController* PhysicsManager::CreateCharacterController(const std::string& name, float radius, float height, const glm::vec3& position)
+{
+	if (instance != nullptr)
+	{
+		auto exsistingController = instance->controllers.find(name);
+		if (exsistingController == instance->controllers.end())
+		{
+			CharacterController* newController = new CharacterController(radius, height, position);
+
+			return instance->controllers[name] = newController;
+		}
+	}
+
+	return nullptr;
+}
+
+void PhysicsManager::DestroyCharacterController(const std::string& name)
+{
+	if (instance != nullptr)
+	{
+		auto exsistingController = instance->controllers.find(name);
+		if (exsistingController != instance->controllers.end())
+		{
+			delete exsistingController->second;
+			instance->controllers.erase(exsistingController);
+		}
+	}
+}
+
 PhysicsManager::PhysicsManager() :
 	recordMemoryAllocations(true),
 	defaultAllocatorCallback(),
@@ -135,6 +170,10 @@ PhysicsManager::PhysicsManager() :
 			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 
 			scene = physics->createScene(sceneDesc);
+
+			CreateCharacterControllerManager();
+
+			CreateCharacterControllerMaterial();
 		}
 	}
 }
@@ -145,4 +184,20 @@ PhysicsManager::~PhysicsManager()
 	dispatcher->release();
 	physics->release();
 	foundation->release();
+}
+
+void PhysicsManager::CreateCharacterControllerManager()
+{
+	controllerManager = PxCreateControllerManager(*scene);
+}
+
+void PhysicsManager::CreateCharacterControllerMaterial()
+{
+	// Create a material with your desired properties
+	// Parameters are: staticFriction, dynamicFriction, restitution
+	PxReal staticFriction = 0.5f;
+	PxReal dynamicFriction = 0.5f;
+	PxReal restitution = 0.0f; // 0.0 means no bounce
+
+	characterControllerMaterial = physics->createMaterial(staticFriction, dynamicFriction, restitution);
 }

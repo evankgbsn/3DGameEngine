@@ -123,7 +123,7 @@ Engine::Engine()
 	Editor::Initialize();
 	Editor::Enable();
 	EditorPlayToggleInputSetup();
-	//PhysicsManager::Initialize();
+	PhysicsManager::Initialize();
 	NetworkManager::Initialize();
 	
 }
@@ -131,7 +131,7 @@ Engine::Engine()
 Engine::~Engine()
 {
 	NetworkManager::Terminate();
-	//PhysicsManager::Terminate();
+	PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
 	Editor::Terminate();

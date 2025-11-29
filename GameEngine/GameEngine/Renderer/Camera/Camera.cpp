@@ -21,7 +21,7 @@ Camera::~Camera()
 
 void Camera::Rotate(const glm::vec3& axis, const float& angle)
 {	
-	target = position + glm::rotate(GetForwardVector(), angle, axis);
+	target = position + glm::rotate(GetForwardVector(), angle, axis) * 100000.0f;
 	UpdateView();
 }
 

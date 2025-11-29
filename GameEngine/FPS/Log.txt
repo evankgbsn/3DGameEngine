@@ -1,0 +1,25 @@
+Success: Initialized DatabaseManager
+Success: Initialized DatabaseManager
+Success: Initialized DatabaseManager
+Error: Incorrect password for database: NewDatabase
+Info: Database: NewDatabase has not been opened. DatabaseManager::CreateTable
+Warning: Database NewDatabase has not been opened. DatabaseManager::AddTableEntry
+Warning: Database NewDatabase has not been opened. DatabaseManager::GetDataFromTableRow
+Info: Player1 health = 40
+Info: Database: NewDatabase has not been opened. DatabaseManager::CloseDatabase
+Success: Initialized TimeManager.
+Success: Initialized GLFW
+Success: Initialized WindowManager
+Success: Initialized Renderer
+Success: Initialized InputManager
+Info: Status: Using GLEW 2.1.0
+Success: Initialized ShaderManager
+Success: Initialized DatabaseManager
+Success: Initialized DatabaseManager
+Success: Initialized DatabaseManager
+Error: Incorrect password for database: NewDatabase
+Success: Initialized DatabaseManager
+Error: Incorrect password for database: NewDatabase
+Success: Initialized DatabaseManager
+Error: Incorrect password for database: NewDatabase
+Success: Initialized DatabaseManager

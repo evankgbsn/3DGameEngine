@@ -97,6 +97,76 @@ void InputManager::WhenCursorMoved(std::function<void(const glm::vec2& newCursor
 	EnqueueInputCall(getCursorPosition);
 }
 
+void InputManager::RegisterCallbackForGamepadAxis(int axis, std::function<void(int axis, float value)>* const callback, const std::string& name)
+{
+	auto registerCallbackForGamepadAxis = [axis, callback, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int axis, float value)>*>>& map, const std::string& successLog)
+		{
+			if (instance != nullptr)
+			{
+				map[axis][name] = callback;
+
+				char stringBuffer[5] = { '\0','\0','\0','\0','\0' };
+				_itoa_s(axis, stringBuffer, 10);
+				Logger::Log(successLog + std::string(&stringBuffer[0]), Logger::Category::Success);
+			}
+			else
+			{
+				Logger::Log(std::string("Calling InputManager::RegisterCallbackForKeyState before InputManager::Initialize"), Logger::Category::Warning);
+			}
+		};
+
+	static const std::string successLog("Registered callback for gamepad axis code ");
+
+	std::function<void()> inputRegisterFunctionToQueue = [registerCallbackForGamepadAxis]()
+		{
+			if (instance != nullptr)
+			{
+				registerCallbackForGamepadAxis(instance->registeredGamepadAxisEvents, successLog);
+			}
+		};
+
+	EnqueueInputCall(inputRegisterFunctionToQueue);
+}
+
+void InputManager::DeregisterCallbackForGamepadAxis(int axis, const std::string& name)
+{
+	auto deregisterCallbackForGamepadAxis = [axis, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int axis, float value)>*>>& map, const std::string& successLog)
+		{
+			if (instance != nullptr)
+			{
+				const auto& registeredKeys = map.find(axis);
+				if (registeredKeys != map.end())
+				{
+					const auto& registeredKeyCallback = registeredKeys->second.find(name);
+					if (registeredKeyCallback != registeredKeys->second.end())
+					{
+						registeredKeys->second.erase(registeredKeyCallback);
+					}
+				}
+
+				char stringBuffer[5] = { '\0','\0','\0','\0','\0' };
+				_itoa_s(axis, stringBuffer, 10);
+				Logger::Log(successLog + std::string(&stringBuffer[0]), Logger::Category::Success);
+			}
+			else
+			{
+				Logger::Log(std::string("Calling InputManager::DeregisterCallbackForKeyState before InputManager::Initialize"), Logger::Category::Warning);
+			}
+		};
+
+	static const std::string successLog("Deregistered pressed callback for gamepad axis ");
+
+	std::function<void()> inputDeregisterFunctionToQueue = [axis, deregisterCallbackForGamepadAxis]()
+		{
+			if (instance != nullptr)
+			{
+				deregisterCallbackForGamepadAxis(instance->registeredGamepadAxisEvents, successLog);
+			}
+		};
+
+	EnqueueInputCall(inputDeregisterFunctionToQueue);
+}
+
 void InputManager::RegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* callback, const std::string& name)
 {
 	auto registerCallbackForKeyState = [keyCode, callback, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>>& map, const std::string& successLog)
@@ -290,6 +360,31 @@ void InputManager::ProcessKeyEvents() const
 	}
 }
 
+void InputManager::ProcessGamepadEvents() const
+{
+	if (instance != nullptr)
+	{
+		if (instance != nullptr)
+		{
+			for (const auto& axisCallbacks : instance->registeredGamepadAxisEvents)
+			{
+				for (const auto& func : axisCallbacks.second)
+				{
+					if (func.second != nullptr)
+					{
+						GLFWgamepadstate state;
+
+						if (glfwGetGamepadState(GLFW_JOYSTICK_1, &state))
+						{
+							(*func.second)(axisCallbacks.first, state.axes[axisCallbacks.first]);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 void InputManager::EditorProcessKeyEvents() const
 {
 	const Window* const mainWindow = WindowManager::GetWindow(std::string("Engine"));
@@ -395,6 +490,21 @@ void InputManager::EditorProcessMouseButtonEvents() const
 		processMouseButtonEvents(KEY_RELEASED, instance->editorRegisteredMouseButtonReleasedEvents);
 
 		mainWindow->GetMouseButton(MOUSE_BUTTON_1, true);
+	}
+}
+
+void InputManager::SetupController()
+{
+	int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+
+	if (GLFW_TRUE == present)
+	{
+		if (glfwJoystickIsGamepad(GLFW_JOYSTICK_1))
+		{
+			const char* name = glfwGetGamepadName(GLFW_JOYSTICK_1);
+			std::string controllerName = name;
+			controllerName += " ";
+		}
 	}
 }
 
@@ -749,6 +859,7 @@ void InputManager::Update()
 		
 		instance->ProcessKeyEvents();
 		instance->ProcessMouseButtonEvents();
+		instance->ProcessGamepadEvents();
 	}
 	else
 	{
@@ -807,7 +918,7 @@ InputManager::InputManager() :
 	inputQueue(std::list<std::function<void()>>()),
 	keysPressed(std::unordered_set<int>())
 {
-
+	SetupController();
 }
 
 InputManager::~InputManager()

@@ -435,6 +435,12 @@
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\CharacterController.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\CharacterControllerComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -774,6 +780,12 @@
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedLitInstanced.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CharacterController.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\CharacterControllerComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>

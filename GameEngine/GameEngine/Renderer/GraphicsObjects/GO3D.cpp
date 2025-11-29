@@ -84,5 +84,10 @@ void GO3D::Update()
 		{
 			glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 		}
+		else
+		{
+			glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
+		}
+
 	}
 }

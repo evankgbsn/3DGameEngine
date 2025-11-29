@@ -198,18 +198,13 @@ void RigidBodyComponent::CreateShapeFromModel()
 			convexShapeIndices.push_back(i);
 		}
 
-		modelLoadCallbackDynamic = new std::function<void(Model* const)>([this](Model* const model)
-			{
-				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
-				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
-				shapeVisuals->SetPointSize(4.0f);
-			});
-
 		modelNameDynamic = "CollisionReference" + std::to_string(x++);
 
-		ModelManager::RegisterCallbackForModelLoaded(modelNameDynamic, "RigidBodyDynamic", modelLoadCallbackDynamic);
+		ModelManager::LoadModel(modelNameDynamic, convexShapeVerts, convexShapeIndices, false);
 
-		ModelManager::LoadModel(modelNameDynamic, convexShapeVerts, convexShapeIndices, true);
+		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel(modelNameDynamic), {0.0f, 0.5f, 0.5f, 1.0f});
+		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
+		shapeVisuals->SetPointSize(8.0f);
 	}
 	else if (type == Type::STATIC)
 	{
@@ -258,23 +253,18 @@ void RigidBodyComponent::CreateShapeFromModel()
 			triangleMeshVerts.push_back(Vertex(glmVert, {}, {}));
 		}
 
-		modelLoadCallbackStatic = new std::function<void(Model* const)>([this](Model* const model)
-			{
-				shapeVisuals = GraphicsObjectManager::CreateGO3DColored(model, { 0.0f, 0.5f, 0.5f, 1.0f });
-				shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
-				shapeVisuals->SetPointSize(4.0f);
-
-				if (!Editor::IsEnabled())
-				{
-					GraphicsObjectManager::Disable(shapeVisuals);
-				}
-			});
-
 		modelNameStatic = "CollisionReference" + std::to_string(x++);
 
-		ModelManager::RegisterCallbackForModelLoaded(modelNameStatic, "RigidBodyDynamic", modelLoadCallbackDynamic);
+		ModelManager::LoadModel(modelNameStatic, triangleMeshVerts, triangleMeshIndices, false);
 
-		ModelManager::LoadModel(modelNameStatic, triangleMeshVerts, triangleMeshIndices, true);
+		shapeVisuals = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel(modelNameStatic), {0.0f, 0.5f, 0.5f, 1.0f});
+		shapeVisuals->SetDrawMode(GO3D::Mode::POINT);
+		shapeVisuals->SetPointSize(8.0f);
+
+		if (!Editor::IsEnabled())
+		{
+			GraphicsObjectManager::Disable(shapeVisuals);
+		}
 	}
 }
 

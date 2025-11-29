@@ -5,6 +5,11 @@
 #include <PxPhysicsAPI.h>
 #include <glm/glm.hpp>
 
+#include <string>
+#include <unordered_map>
+
+class CharacterController;
+
 using namespace physx;
 
 class PhysicsManager
@@ -26,13 +31,23 @@ public:
 
 	static bool RaycastFromCursor(float maxDistance, PxRaycastBuffer& outHit);
 
+	static CharacterController* CreateCharacterController(const std::string& name, float radius, float height, const glm::vec3& position);
+
+	static void DestroyCharacterController(const std::string& name);
+
 private:
 
 	friend class SingletonHelpers;
 
+	friend class CharacterController;
+
 	PhysicsManager();
 
 	~PhysicsManager();
+
+	void CreateCharacterControllerManager();
+
+	void CreateCharacterControllerMaterial();
 
 	static PhysicsManager* instance;
 
@@ -50,9 +65,15 @@ private:
 
 	PxDefaultCpuDispatcher* dispatcher;
 
+	PxControllerManager* controllerManager;
+
 	float accumulator;
 
 	float stepSize;
+
+	std::unordered_map<std::string, CharacterController*> controllers;
+
+	PxMaterial* characterControllerMaterial;
 };
 
 
