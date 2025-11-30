@@ -41,8 +41,9 @@ void FPSPlayer::Initialize()
 	cam = new CameraComponent("FPS");
 
 	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
 	cam->SetFOV(20.0f);
-	cam->SetNear(0.00001f);
+	cam->SetNear(0.01f);
 
 	AddComponent(cam, "Camera");
 
@@ -61,7 +62,9 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
-	
+	characterGraphics->SetPosition(controller->GetPosition());
+	hitBox->Update();
+
 	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
 
 	glm::vec3 camRight = cam->GetRightVector();
@@ -70,12 +73,7 @@ void FPSPlayer::GameUpdate()
 
 	characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 
-
 	InputManager::WhenCursorMoved(*whenCursorMove);
-
-	characterGraphics->SetPosition(controller->GetPosition());
-
-	hitBox->Update();
 }
 
 void FPSPlayer::EditorUpdate()
@@ -142,15 +140,29 @@ void FPSPlayer::RegisterInput()
 		{
 			static glm::vec2 prevPos = cursorPos;
 			
-			float xspeed = 0.0005f;
-			float yspeed = 0.0005f;
+			float xspeed = 1.0f;
+			float yspeed = 1.0f;
 			if (cursorPos.x != prevPos.x)
 			{
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x));
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x) * TimeManager::DeltaTime());
 			}
 			if (cursorPos.y != prevPos.y)
 			{
-				cam->Rotate(cam->GetRightVector(), yspeed * (float)-(cursorPos.y - prevPos.y));
+				float angle = yspeed * (float)-(cursorPos.y - prevPos.y) * TimeManager::DeltaTime();
+
+				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
+
+				if (dot > -0.9f && angle < 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				if (dot < 0.9f && angle > 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				
 			}
 			
 			prevPos = cursorPos;
@@ -170,25 +182,37 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.05f)
 			{
 				float yspeed = -10.0f;
-				cam->Rotate(cam->GetRightVector(), yspeed * value * TimeManager::DeltaTime());
+				float angle = yspeed * value * TimeManager::DeltaTime();
+
+				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
+
+				if (dot > -0.9f && angle < 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				if (dot < 0.9f && angle > 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
 			}
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.01f)
 			{
-				float xspeed = -1000.0f;
-				//body->AddForce(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
+				float xspeed = -10.0f;
+				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime());
 			}
 		});
 
 	gamepadWalkY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.01f)
 			{
-				float yspeed = -1000.0f;
-				//body->AddForce(glm::normalize(characterGraphics->GetTransform()[2]) * value * yspeed * TimeManager::DeltaTime());
+				float xspeed = -10.0f;
+				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
 			}
 		});
 

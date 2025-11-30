@@ -3,15 +3,18 @@
 #include "../GameObjects/PlaneObj.h"
 #include "../GameObjects/FPSPlayer.h"
 #include "../GameObjects/Sun.h"
+#include "../GameObjects/Crate.h"
 
 Test::Test() :
 	plane(new PlaneObj()),
 	player(new FPSPlayer()),
-	sun(new Sun())
+	sun(new Sun()),
+	crate(new Crate())
 {
 	RegisterGameObject(plane, "Plane");
 	RegisterGameObject(player, "Player");
 	RegisterGameObject(sun, "Sun");
+	RegisterGameObject(crate, "Crate");
 }
 
 Test::~Test()
@@ -29,6 +32,11 @@ Test::~Test()
 	if (sun != nullptr)
 	{
 		delete sun;
+	}
+
+	if (crate != nullptr)
+	{
+		delete crate;
 	}
 }
 

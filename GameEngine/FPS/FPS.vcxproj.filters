@@ -36,6 +36,9 @@
     <ClCompile Include="GameObjects\Sun.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Crate.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\Test.h">
@@ -48,6 +51,9 @@
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Sun.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Crate.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,7 +19,7 @@ public:
 
 	float GetHeight() const;
 
-	void SetDisp(const glm::vec3& newDisp);
+	void AddDisp(const glm::vec3& newDisp);
 
 	glm::vec3 GetPosition() const;
 

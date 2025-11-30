@@ -6,6 +6,7 @@
 class PlaneObj;
 class FPSPlayer;
 class Sun;
+class Crate;
 
 class Test : public Scene
 {
@@ -37,6 +38,7 @@ private:
 	PlaneObj* plane;
 	FPSPlayer* player;
 	Sun* sun;
+	Crate* crate;
 };
 
 #endif // TEST_H

@@ -42,9 +42,9 @@ float CharacterControllerComponent::GetHeight() const
 	return controller->GetHeight();
 }
 
-void CharacterControllerComponent::SetDisp(const glm::vec3& newDisp)
+void CharacterControllerComponent::AddDisp(const glm::vec3& newDisp)
 {
-	controller->SetDisp(newDisp);
+	controller->AddDisp(newDisp);
 }
 
 glm::vec3 CharacterControllerComponent::GetPosition() const

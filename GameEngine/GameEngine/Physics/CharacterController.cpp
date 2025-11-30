@@ -68,9 +68,9 @@ float CharacterController::GetHeight() const
 	return 0.0f;
 }
 
-void CharacterController::SetDisp(const glm::vec3& newDisp)
+void CharacterController::AddDisp(const glm::vec3& newDisp)
 {
-	disp = newDisp;
+	disp += newDisp;
 }
 
 void CharacterController::Move()
