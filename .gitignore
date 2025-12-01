@@ -49,7 +49,7 @@
 !*PhysXCooking_static_64.lib
 !*PhysXCooking_static_64.pdb
 !*PhysXCharacterKinematic_static_64.lib
-!*PhysXCharacterKinematic_static_64.lib
+!*PhysXCharacterKinematic_static_64.pdb
 !*libssl.lib
 !*libcrypto.lib
 !*sqlcipher.lib
