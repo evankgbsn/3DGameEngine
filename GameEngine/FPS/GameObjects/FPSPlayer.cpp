@@ -29,26 +29,29 @@ FPSPlayer::~FPSPlayer()
 
 void FPSPlayer::Initialize()
 {
-	if (SpawnedFromLocalSpawnRequest())
+	characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+	characterGraphics->SetClip(0);
+	characterGraphics->SetShine(32.0f);
+	characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+	characterGraphics->SetSpeed(1.0f);
+
+	AddComponent(characterGraphics, "Graphics");
+
+	hitBox = new AnimatedColliderComponent(characterGraphics);
+	hitBox->Update();
+
+	AddComponent(hitBox, "AnimatedCollider");
+	
+	if (NetworkManager::IsServer())
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterGraphics->SetClip(0);
-		characterGraphics->SetShine(32.0f);
-		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterGraphics->SetSpeed(1.0f);
-
-		AddComponent(characterGraphics, "Graphics");
-
-		hitBox = new AnimatedColliderComponent(characterGraphics);
-		hitBox->Update();
-
-		AddComponent(hitBox, "AnimatedCollider");
-
-		RegisterEditorToggleCallbacks();
-
 		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
 
+		RegisterEditorToggleCallbacks();
+	}
+
+	if (SpawnedFromLocalSpawnRequest())
+	{
 		cam = new CameraComponent("FPS");
 
 		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
@@ -64,27 +67,40 @@ void FPSPlayer::Initialize()
 
 void FPSPlayer::Terminate()
 {
-	DeregisterInput();
+	if (SpawnedFromLocalSpawnRequest())
+	{
+		DeregisterInput();
+		RemoveComponent("Camera");
+		delete cam;
+	}
+
+	if (NetworkManager::IsServer())
+	{
+		RemoveComponent("Controller");
+		delete controller;
+	}
 
 	RemoveComponent("Graphics");
 	RemoveComponent("AnimatedCollider");
-	RemoveComponent("Camera");
-	RemoveComponent("Controller");
 
-	delete controller;
-	delete cam;
 	delete hitBox;
 	delete characterGraphics;
 }
 
 void FPSPlayer::GameUpdate()
 {
-	if (SpawnedFromLocalSpawnRequest())
+	if (NetworkManager::IsServer())
 	{
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
-		hitBox->Update();
 
+		ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()));
+	}
+
+	hitBox->Update();
+
+	if (SpawnedFromLocalSpawnRequest())
+	{
 		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
 
 		glm::vec3 camRight = cam->GetRightVector();
@@ -227,7 +243,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime());
+				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()));
 			}
 		});
 
@@ -236,86 +252,77 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
+				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()));
 			}
 		});
 
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
-			if (!controller->IsFalling())
-			{
-				controller->Jump(0.25f);
-			}
+			ClientSend("Jump ");
 		});
 
 	keyboardMove = new std::function<void(int)>([this](int key)
 		{
-			float xspeed = 10.0f;
-			glm::vec3 disp(0.0f);
-			
-			switch (key)
-			{
-			case KEY_W:
-				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
-				break;
-			case KEY_A:
-				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
-				break;
-			case KEY_S:
-				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
-				break;
-			case KEY_D:
-				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
-				break;
-			default:
-				break;
-			}
-
-			controller->AddDisp(disp);
+			//float xspeed = 10.0f;
+			//glm::vec3 disp(0.0f);
+			//
+			//switch (key)
+			//{
+			//case KEY_W:
+			//	disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+			//	break;
+			//case KEY_A:
+			//	disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+			//	break;
+			//case KEY_S:
+			//	disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+			//	break;
+			//case KEY_D:
+			//	disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+			//	break;
+			//default:
+			//	break;
+			//}
+			//
+			//controller->AddDisp(disp);
 		});
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(0.25f);
+				ClientSend("Jump ");
 			}
 		});
 
-	if (SpawnedFromLocalSpawnRequest())
-	{
-		InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
-		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, keyboardMove, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, keyboardMove, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_X, gamepadLookX, "FPSCharacterLook");
-		InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, gamepadLookY, "FPSCharacterLook");
-		InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, gamepadWalkX, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, gamepadWalkY, "FPSCharacterWalk");
-		InputManager::RegisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, gamepadJump, "FPSCharacterJump");
-	}
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, keyboardMove, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, keyboardMove, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_X, gamepadLookX, "FPSCharacterLook");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, gamepadLookY, "FPSCharacterLook");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, gamepadWalkX, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, gamepadWalkY, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, gamepadJump, "FPSCharacterJump");
 	
 }
 
 void FPSPlayer::DeregisterInput()
 {
-	if (SpawnedFromLocalSpawnRequest())
-	{
-		InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
-		InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
+	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");
 
-		InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_X, "FPSCharacterLook");
-		InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, "FPSCharacterLook");
+	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_X, "FPSCharacterLook");
+	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, "FPSCharacterLook");
 
-		InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, "FPSCharacterWalk");
-		InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, "FPSCharacterWalk");
 
-		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "FPSCharacterWalk");
-		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "FPSCharacterWalk");
-		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "FPSCharacterWalk");
-		InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "FPSCharacterWalk");
-	}
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "FPSCharacterWalk");
 
 	delete keyboardMove;
 
@@ -393,10 +400,56 @@ void FPSPlayer::OnDespawn()
 
 void FPSPlayer::OnDataReceived(const std::string& data)
 {
+	NetworkObject::OnDataReceived(data);
+
+	std::string updateType;
+
+	for (const auto& character : data)
+	{
+		if (character == ' ')
+		{
+			break;
+		}
+		updateType += character;
+	}
+
+	std::string updateData;
+
+	for (const auto& character : std::string(data.begin() + updateType.size() + 1, data.end()))
+	{
+		updateData += character;
+	}
+
+	if (!NetworkManager::IsServer())
+	{
+		if (updateType == "Position")
+		{
+			SetPosition(NetworkManager::ConvertDataToVec3(updateData));
+		}
+		else if (updateType == "Disp")
+		{
+			disp = NetworkManager::ConvertDataToVec3(updateData);
+		}
+	}
+	else
+	{
+		if (updateType == "Disp")
+		{
+			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
+		}
+		else if (updateType == "Jump")
+		{
+			if (!controller->IsFalling())
+			{
+				controller->Jump(0.25f);
+			}
+		}
+	}
 }
 
 void FPSPlayer::OnServerSpawnConfirmation(const std::string& IP)
 {
+	NetworkObject::OnServerSpawnConfirmation(IP);
 }
 
 void FPSPlayer::OnClientSpawnConfirmation()

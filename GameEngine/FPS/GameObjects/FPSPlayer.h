@@ -103,6 +103,8 @@ private:
 
 	std::function<void(const std::string&)>* onClientDisconnect;
 
+	glm::vec3 disp;
+
 };
 
 #endif // FPSPLAYER_H

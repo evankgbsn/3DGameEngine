@@ -77,7 +77,7 @@ void CharacterController::Move()
 {
 	glm::vec3 gravity = glm::vec3(0.0f, 1.0f, 0.0f) * -0.2f;
 
-	collisionFlags = controller->move(PxVec3(disp.x + gravity.x, disp.y + gravity.y, disp.z + gravity.z), 0.001f, TimeManager::DeltaTime(), nullptr, nullptr);
+	collisionFlags = controller->move(PxVec3(disp.x + gravity.x, disp.y + gravity.y, disp.z + gravity.z), 0.00001f, TimeManager::DeltaTime(), nullptr, nullptr);
 
 	disp = glm::vec3(0.0f);
 }
