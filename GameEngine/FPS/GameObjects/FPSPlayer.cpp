@@ -20,6 +20,7 @@ FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer")
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
+	RegisterNetworkObjectClassType<FPSPlayer>(this);
 }
 
 FPSPlayer::~FPSPlayer()
