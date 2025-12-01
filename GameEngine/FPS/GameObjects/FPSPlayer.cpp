@@ -42,20 +42,6 @@ void FPSPlayer::Initialize()
 
 	AddComponent(hitBox, "AnimatedCollider");
 
-	cam = new CameraComponent("FPS");
-
-	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
-	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
-	cam->SetFOV(20.0f);
-	cam->SetNear(0.01f);
-
-	AddComponent(cam, "Camera");
-
-	controller = new CharacterControllerComponent("FPSPlayer", 0.35f, 1.0f, characterGraphics->GetPosition());
-	AddComponent(controller, "Controller");
-
-	RegisterInput();
-
 	RegisterEditorToggleCallbacks();
 }
 
@@ -349,6 +335,24 @@ void FPSPlayer::RegisterEditorToggleCallbacks()
 
 void FPSPlayer::OnSpawn()
 {
+
+	if (SpawnedFromLocalSpawnRequest())
+	{
+		controller = new CharacterControllerComponent("FPSPlayer", 0.35f, 1.0f, characterGraphics->GetPosition());
+		AddComponent(controller, "Controller");
+
+		cam = new CameraComponent("FPS");
+
+		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+		cam->SetTarget({ 0.0f, 0.0f, 30.0f });
+		cam->SetFOV(20.0f);
+		cam->SetNear(0.01f);
+
+		AddComponent(cam, "Camera");
+
+		RegisterInput();
+	}
+
 	NetworkObject::OnSpawn();
 
 	Scene* scene = SceneManager::GetRegisteredScene("Test");
