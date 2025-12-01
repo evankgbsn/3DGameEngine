@@ -25,10 +25,17 @@ Button::Button(const std::string& baseTextureName, const std::string& hoveredTex
 	float height = static_cast<float>(window->GetHeight());
 
 	sprite = new Sprite(model2DName, baseTextureName, position, {1.0f, 1.0f});
+
+	mousePress = new std::function<void(int)>([this](int keyCode)
+		{
+			Pressed();
+		});
 }
 
 Button::~Button()
 {
+	delete mousePress;
+
 	Window* window = WindowManager::GetWindow("Engine");
 
 	delete sprite;
@@ -78,15 +85,10 @@ bool Button::Hovered()
 
 		if (sprite->Hovered())
 		{
-			static std::function<void(int keyCode)> mousePress = [this](int keyCode)
-				{
-					Pressed();
-				};
-
 			if (sprite->GetTexture() != hovered->GetName())
 			{
 				sprite->SetTexture(hovered->GetName());
-				InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, &mousePress, "ButtonPress");
+				InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, mousePress, "ButtonPress");
 			}
 
 			return true;

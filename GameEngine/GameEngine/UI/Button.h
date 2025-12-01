@@ -58,6 +58,8 @@ private:
 
 	std::function<void()>* hoveredFunction;
 
+	std::function<void(int)>* mousePress;
+
 	glm::vec2 relativePosition;
 
 	bool enabled;
