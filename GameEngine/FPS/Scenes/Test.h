@@ -37,6 +37,7 @@ private:
 
 	void Unload() override;
 
+	FPSPlayer* player;
 	Sun* sun;
 	Crate* crate;
 	Ground* ground;

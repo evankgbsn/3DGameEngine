@@ -10,6 +10,7 @@
 #include "../GameObjects/ServerFreeCamera.h"
 
 Test::Test() :
+	player(new FPSPlayer()),
 	sun(new Sun()),
 	crate(new Crate()),
 	ground(new Ground()),
