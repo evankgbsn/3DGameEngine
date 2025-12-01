@@ -73,7 +73,7 @@ void EditorUI::CreatePlayButton()
 			Editor::Disable();
 		});
 
-	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { 0.5f, 0.9f }, &buttonFunc);
+	playButton = new Button("PlayIdle", "Play", "PlayPress", "Play", { 0.5f, 0.9f }, &buttonFunc, true);
 	playButton->SetScale(playButton->GetScale() / 2.0f);
 }
 

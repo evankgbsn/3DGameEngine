@@ -10,14 +10,15 @@
 #include "../Input/InputManager.h"
 #include "Sprite.h"
 
-Button::Button(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const std::string& model2DName, const glm::vec2& position, std::function<void()>* press) :
+Button::Button(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const std::string& model2DName, const glm::vec2& position, std::function<void()>* press, bool e) :
 	base(TextureManager::GetTexture(baseTextureName)),
 	hovered(TextureManager::GetTexture(hoveredTextureName)),
 	pressed(TextureManager::GetTexture(pressedTextureName)),
 	model(ModelManager::GetModel(model2DName)),
 	pressFunction(press),
 	enabled(true),
-	relativePosition(position)
+	relativePosition(position),
+	editor(e)
 {
 	Window* window = WindowManager::GetWindow("Engine");
 
@@ -39,7 +40,15 @@ Button::~Button()
 	Window* window = WindowManager::GetWindow("Engine");
 
 	delete sprite;
-	InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_LEFT, "ButtonPress");
+
+	if (editor)
+	{
+		InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_LEFT, "ButtonPress");
+	}
+	else
+	{
+		InputManager::DeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_LEFT, "ButtonPress");
+	}
 }
 
 void Button::Update()
@@ -88,7 +97,15 @@ bool Button::Hovered()
 			if (sprite->GetTexture() != hovered->GetName())
 			{
 				sprite->SetTexture(hovered->GetName());
-				InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, mousePress, "ButtonPress");
+
+				if (editor)
+				{
+					InputManager::EditorRegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, mousePress, "ButtonPress");
+				}
+				else
+				{
+					InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, mousePress, "ButtonPress");
+				}
 			}
 
 			return true;
@@ -98,7 +115,15 @@ bool Button::Hovered()
 			if (sprite->GetTexture() != base->GetName())
 			{
 				sprite->SetTexture(base->GetName());
-				InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "ButtonPress");
+
+				if (editor)
+				{
+					InputManager::EditorDeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "ButtonPress");
+				}
+				else
+				{
+					InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_LEFT, "ButtonPress");
+				}
 			}
 		}
 	}

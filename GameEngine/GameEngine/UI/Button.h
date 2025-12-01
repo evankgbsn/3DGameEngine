@@ -14,7 +14,7 @@ class Button
 {
 public:
 
-	Button(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const std::string& model2DName, const glm::vec2& position, std::function<void()>* press);
+	Button(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const std::string& model2DName, const glm::vec2& position, std::function<void()>* press, bool editor = false);
 
 	~Button();
 
@@ -67,6 +67,8 @@ private:
 	unsigned int ID;
 
 	bool stretch;
+
+	bool editor;
 };
 
 
