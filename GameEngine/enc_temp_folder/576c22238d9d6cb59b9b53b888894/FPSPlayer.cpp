@@ -130,10 +130,7 @@ bool FPSPlayer::Hovered() const
 
 void FPSPlayer::Start()
 {
-	if (SpawnedFromLocalSpawnRequest())
-	{
-		cam->SetActive();
-	}
+	cam->SetActive();
 }
 
 void FPSPlayer::RegisterInput()
