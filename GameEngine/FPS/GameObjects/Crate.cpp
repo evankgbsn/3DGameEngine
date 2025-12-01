@@ -105,4 +105,5 @@ bool Crate::Hovered() const
 void Crate::Deserialize()
 {
     GameObject::Deserialize();
+    body->SetOwner(this);
 }

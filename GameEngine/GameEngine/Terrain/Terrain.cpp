@@ -10,7 +10,7 @@
 #include "../Math/Math.h"
 #include "../Math/Shapes/Triangle.h"
 
-Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo, unsigned int uvTiling, bool iw) :
+Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector<GOLit::Material>& heightMaterials, const std::string& blendMap, float w, float h, unsigned int tx, unsigned int ty, float maxHeight, float yo, unsigned int uvTiling, bool iw, bool loadAsync) :
 	aabbs(std::vector<std::vector<AxisAlignedBoundingBox*>>()),
 	tileNormals(std::vector<std::vector<glm::vec3>>()),
 	terrainWidth(w),
@@ -32,25 +32,34 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 {
 	if (!ModelManager::ModelLoaded(name))
 	{
-		modelLoadCallback = new std::function<void(Model* const)>([this, heightMaterials, blendMap](Model* const model)
-			{
-				terrainModel.store(model);
-
-				if (isWater)
+		if (loadAsync)
+		{
+			modelLoadCallback = new std::function<void(Model* const)>([this, heightMaterials, blendMap](Model* const model)
 				{
-					terrainGraphics.store(GraphicsObjectManager::CreateGOWater(terrainModel));
-				}
-				else
-				{
-					terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
-					static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
-				}
-				
-				createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
-			});
+					terrainModel.store(model);
 
-		ModelManager::RegisterCallbackForModelLoaded(name, "TerrainSetup", modelLoadCallback);
-		ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, true);
+					if (isWater)
+					{
+						terrainGraphics.store(GraphicsObjectManager::CreateGOWater(terrainModel));
+					}
+					else
+					{
+						terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
+						static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+					}
+
+					createAABBSThread = std::thread(&Terrain::CreateAABBs, this);
+				});
+
+			ModelManager::RegisterCallbackForModelLoaded(name, "TerrainSetup", modelLoadCallback);
+			ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, true);
+		}
+		else
+		{
+			terrainModel.store(ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, false));
+			terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
+			static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+		}
 	}
 	else
 	{

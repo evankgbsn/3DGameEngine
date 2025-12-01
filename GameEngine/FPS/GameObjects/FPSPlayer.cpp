@@ -46,7 +46,7 @@ void FPSPlayer::Initialize()
 
 		RegisterEditorToggleCallbacks();
 
-		controller = new CharacterControllerComponent("FPSPlayer", 0.35f, 1.0f, characterGraphics->GetPosition());
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
 
 		cam = new CameraComponent("FPS");
@@ -64,6 +64,8 @@ void FPSPlayer::Initialize()
 
 void FPSPlayer::Terminate()
 {
+	DeregisterInput();
+
 	RemoveComponent("Graphics");
 	RemoveComponent("AnimatedCollider");
 	RemoveComponent("Camera");

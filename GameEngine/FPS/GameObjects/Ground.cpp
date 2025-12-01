@@ -32,10 +32,15 @@ void Ground::Initialize()
 		500U,
 		25.0f,
 		-13.0f,
-		1U
+		1U,
+		false
 	);
 
 	AddComponent(terrain, "Terrain");
+
+	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, terrain->GetModel());
+	body->SyncPhysics();
+	AddComponent(body, "RigidBody");
 }
 
 void Ground::Terminate()
@@ -53,14 +58,6 @@ void Ground::GameUpdate()
 
 void Ground::EditorUpdate()
 {
-	static bool callOnce = false;
-	if (terrain->Loaded() && !callOnce)
-	{
-		body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, terrain->GetModel());
-		body->SyncPhysics();
-		AddComponent(body, "RigidBody");
-		callOnce = true;
-	}
 }
 
 void Ground::Load()

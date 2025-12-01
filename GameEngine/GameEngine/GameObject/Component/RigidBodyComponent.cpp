@@ -372,11 +372,11 @@ void RigidBodyComponent::CreateShapeFromModel()
 		shapeVisuals->SetDrawMode(GO3D::Mode::LINE);
 		shapeVisuals->SetLineWidth(5.0f);
 		shapeVisuals->SetPointSize(8.0f);
+	}
 
-		if (!Editor::IsEnabled())
-		{
-			GraphicsObjectManager::Disable(shapeVisuals);
-		}
+	if (!Editor::IsEnabled())
+	{
+		GraphicsObjectManager::Disable(shapeVisuals);
 	}
 }
 

@@ -9,6 +9,7 @@ class Sun;
 class Crate;
 class Ground;
 class ServerFreeCamera;
+class NetworkObject;
 
 class Test : public Scene
 {
@@ -37,11 +38,21 @@ private:
 
 	void Unload() override;
 
+	void Start() override;
+
+	void End() override;
+
 	FPSPlayer* player;
+	
 	Sun* sun;
+	
 	Crate* crate;
+	
 	Ground* ground;
+	
 	ServerFreeCamera* serverFreeCam;
+
+	NetworkObject* localPlayer;
 };
 
 #endif // TEST_H

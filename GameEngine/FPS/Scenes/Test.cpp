@@ -14,7 +14,8 @@ Test::Test() :
 	sun(new Sun()),
 	crate(new Crate()),
 	ground(new Ground()),
-	serverFreeCam(nullptr)
+	serverFreeCam(nullptr),
+	localPlayer(nullptr)
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -53,21 +54,6 @@ void Test::Initialize()
 		SceneManager::UnloadScene("JoinScene");
 	}
 
-	if (!NetworkManager::IsServer())
-	{
-		static std::function<void(NetworkObject*)> callback = [](NetworkObject* spawnedObject)
-			{
-				NetworkManager::SyncClientWithServer();
-			};
-
-		NetworkManager::Spawn("FPSPlayer", &callback);
-	}
-	else
-	{
-		serverFreeCam = new ServerFreeCamera();
-		RegisterGameObject(serverFreeCam, "ServerFreeCamera");
-	}
-
 	Scene::Initialize();
 }
 
@@ -84,4 +70,30 @@ void Test::Load()
 void Test::Unload()
 {
 	Scene::Unload();
+}
+
+void Test::Start()
+{
+	Scene::Start();
+
+	if (!NetworkManager::IsServer() && localPlayer == nullptr)
+	{
+		static std::function<void(NetworkObject*)> callback = [this](NetworkObject* spawnedObject)
+			{
+				localPlayer = spawnedObject;
+				NetworkManager::SyncClientWithServer();
+			};
+	
+		NetworkManager::Spawn("FPSPlayer", &callback);
+	}
+	else if(NetworkManager::IsServer() && serverFreeCam == nullptr)
+	{
+		serverFreeCam = new ServerFreeCamera();
+		RegisterGameObject(serverFreeCam, "ServerFreeCamera");
+	}
+}
+
+void Test::End()
+{
+	Scene::End();
 }
