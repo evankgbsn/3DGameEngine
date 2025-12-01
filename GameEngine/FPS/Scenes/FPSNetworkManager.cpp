@@ -66,8 +66,10 @@ void FPSNetworkManager::Terminate()
 
 void FPSNetworkManager::Load()
 {
+	Scene::Load();
 }
 
 void FPSNetworkManager::Unload()
 {
+	Scene::Unload();
 }
