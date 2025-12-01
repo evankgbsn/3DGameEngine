@@ -2,14 +2,17 @@
 
 #include "../Physics/PhysicsManager.h"
 #include "../Physics/CharacterController.h"
+#include "../Time/TimeManager.h"
 
-CharacterControllerComponent::CharacterControllerComponent()
+CharacterControllerComponent::CharacterControllerComponent() :
+	jumpForce(0.0f)
 {
 	RegisterComponentClassType<CharacterControllerComponent>(this);
 }
 
 CharacterControllerComponent::CharacterControllerComponent(const std::string& name, float radius, float height, const glm::vec3& position) :
-	controllerName(name)
+	controllerName(name),
+	jumpForce(0.0f)
 {
 	RegisterComponentClassType<CharacterControllerComponent>(this);
 
@@ -47,6 +50,16 @@ void CharacterControllerComponent::AddDisp(const glm::vec3& newDisp)
 	controller->AddDisp(newDisp);
 }
 
+void CharacterControllerComponent::Jump(float force)
+{
+	jumpForce = force;
+}
+
+bool CharacterControllerComponent::IsFalling() const
+{
+	return !(controller->GetCollisionFlags() & PxControllerCollisionFlag::eCOLLISION_DOWN);
+}
+
 glm::vec3 CharacterControllerComponent::GetPosition() const
 {
 	return controller->GetPosition();
@@ -62,4 +75,13 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
+	if (jumpForce <= 0.0f)
+	{
+		jumpForce = 0;
+	}
+	else
+	{
+		jumpForce -= TimeManager::DeltaTime();
+		controller->AddDisp(glm::vec3(0.0f, jumpForce, 0.0f));
+	}
 }

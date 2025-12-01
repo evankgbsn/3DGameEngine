@@ -7,6 +7,7 @@
 #include "../../Math/Shapes/Ray.h"
 #include "../../Math/Shapes/LineSegment3D.h"
 #include "../../Editor/Editor.h"
+#include "../../Renderer/Model/Model.h"
 
 TerrainComponent::TerrainComponent() :
 	terrain(nullptr)
@@ -89,6 +90,26 @@ glm::vec3 TerrainComponent::GetLineIntersection(const LineSegment3D& line)
 bool TerrainComponent::Loaded() const
 {
 	return terrain->Loaded();
+}
+
+const Model* TerrainComponent::GetModel() const
+{
+	return terrain->GetGraphics()->GetModel();
+}
+
+glm::vec3 TerrainComponent::GetPosition() const
+{
+	return terrain->GetGraphics()->GetTranslation();
+}
+
+glm::mat4 TerrainComponent::GetRotation() const
+{
+	return terrain->GetGraphics()->GetRotation();
+}
+
+glm::mat4 TerrainComponent::GetTransform() const
+{
+	return terrain->GetGraphics()->GetTransform();
 }
 
 void TerrainComponent::Update()

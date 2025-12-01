@@ -59,7 +59,12 @@ public:
 
 	void SetPosition(const glm::vec3& newPosition);
 
+	void SetRotation(const glm::mat4& newRot);
+
 	bool Hovered() const;
+
+	void SetOwner(GameObject* newOwner);
+
 private:
 
 	RigidBodyComponent(const RigidBodyComponent&) = delete;
@@ -81,6 +86,8 @@ private:
 	void RegisterEditorCallbacks();
 
 	void CreatePhysXRigidBody();
+
+	void CreatePhysXRigidBodyWithoutOwner(const glm::vec3& position, const glm::mat4& rotation);
 
 	RigidBody* body;
 

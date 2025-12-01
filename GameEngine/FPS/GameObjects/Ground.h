@@ -1,29 +1,29 @@
-#ifndef CRATE_H
-#define CRATE_H
+#ifndef GROUND_H
+#define GROUND_h
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class GraphicsObjectTexturedLit;
+class TerrainComponent;
 class RigidBodyComponent;
 
-class Crate : public GameObject
+class Ground : public GameObject
 {
 
 public:
 
-	Crate();
+	Ground();
 
-	~Crate();
+	~Ground();
 
 private:
 
-	Crate(const Crate&) = delete;
+	Ground(const Ground&) = delete;
 
-	Crate& operator=(const Crate&) = delete;
+	Ground& operator=(const Ground&) = delete;
 
-	Crate(Crate&&) = delete;
+	Ground(Ground&&) = delete;
 
-	Crate& operator=(Crate&&) = delete;
+	Ground& operator=(Ground&&) = delete;
 
 	// Inherited via GameObject
 	void Initialize() override;
@@ -50,11 +50,9 @@ private:
 
 	bool Hovered() const override;
 
-	void Deserialize() override;
-
-	GraphicsObjectTexturedLit* graphics;
+	TerrainComponent* terrain;
 
 	RigidBodyComponent* body;
 };
 
-#endif // CRATE_H
+#endif // GROUND_H

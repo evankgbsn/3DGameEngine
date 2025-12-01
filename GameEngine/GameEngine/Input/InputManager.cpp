@@ -167,6 +167,113 @@ void InputManager::DeregisterCallbackForGamepadAxis(int axis, const std::string&
 	EnqueueInputCall(inputDeregisterFunctionToQueue);
 }
 
+void InputManager::RegisterCallbackForGamepadButton(int state, int button, std::function<void(int button)>* const callback, const std::string& name)
+{
+	auto registerCallbackForGamepadButton = [button, callback, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>>& map, const std::string& successLog)
+		{
+			if (instance != nullptr)
+			{
+				map[button][name] = callback;
+
+				char stringBuffer[5] = { '\0','\0','\0','\0','\0' };
+				_itoa_s(button, stringBuffer, 10);
+				Logger::Log(successLog + std::string(&stringBuffer[0]), Logger::Category::Success);
+			}
+			else
+			{
+				Logger::Log(std::string("Calling InputManager::RegisterCallbackForGamepadButton before InputManager::Initialize"), Logger::Category::Warning);
+			}
+		};
+
+	static const std::string pressedSuccessLog("Registered pressed callback for gamepad button ");
+	static const std::string pressSuccessLog("Registered press callback for gamepad button ");
+	static const std::string releaseSuccessLog("Registered release callback for gamepad button ");
+	static const std::string releasedSuccessLog("Registered released callback for gamepad button ");
+
+	std::function<void()> inputRegisterFunctionToQueue = [state, registerCallbackForGamepadButton]()
+		{
+			if (instance != nullptr)
+			{
+				switch (state)
+				{
+				case KEY_PRESS:
+					registerCallbackForGamepadButton(instance->registeredGamepadButtonPressEvents, pressSuccessLog);
+					break;
+				case KEY_RELEASE:
+					registerCallbackForGamepadButton(instance->registeredGamepadButtonReleaseEvents, releaseSuccessLog);
+					break;
+				case KEY_PRESSED:
+					registerCallbackForGamepadButton(instance->registeredGamepadButtonPressedEvents, pressedSuccessLog);
+					break;
+				case KEY_RELEASED:
+					registerCallbackForGamepadButton(instance->registeredGamepadButtonReleasedEvents, releasedSuccessLog);
+					break;
+				default:
+					break;
+				}
+			}
+		};
+
+	EnqueueInputCall(inputRegisterFunctionToQueue);
+}
+
+void InputManager::DeregisterCallbackForGamepadButton(int state, int button, const std::string& name)
+{
+	auto deregisterCallbackForGamepadButton = [button, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>>& map, const std::string& successLog)
+		{
+			if (instance != nullptr)
+			{
+				const auto& registeredKeys = map.find(button);
+				if (registeredKeys != map.end())
+				{
+					const auto& registeredKeyCallback = registeredKeys->second.find(name);
+					if (registeredKeyCallback != registeredKeys->second.end())
+					{
+						registeredKeys->second.erase(registeredKeyCallback);
+					}
+				}
+
+				char stringBuffer[5] = { '\0','\0','\0','\0','\0' };
+				_itoa_s(button, stringBuffer, 10);
+				Logger::Log(successLog + std::string(&stringBuffer[0]), Logger::Category::Success);
+			}
+			else
+			{
+				Logger::Log(std::string("Calling InputManager::DeregisterCallbackForGamepadButton before InputManager::Initialize"), Logger::Category::Warning);
+			}
+		};
+
+	static const std::string pressedSuccessLog("Deregistered pressed callback for gamepadButton ");
+	static const std::string pressSuccessLog("Deregistered press callback for gamepadButton ");
+	static const std::string releaseSuccessLog("Deregistered release callback for gamepadButton ");
+
+	std::function<void()> inputDeregisterFunctionToQueue = [state, deregisterCallbackForGamepadButton]()
+		{
+			if (instance != nullptr)
+			{
+				switch (state)
+				{
+				case KEY_PRESS:
+					deregisterCallbackForGamepadButton(instance->registeredGamepadButtonPressEvents, pressSuccessLog);
+					break;
+				case KEY_RELEASE:
+					deregisterCallbackForGamepadButton(instance->registeredGamepadButtonReleaseEvents, releaseSuccessLog);
+					break;
+				case KEY_PRESSED:
+					deregisterCallbackForGamepadButton(instance->registeredGamepadButtonPressedEvents, releaseSuccessLog);
+					break;
+				case KEY_RELEASED:
+					deregisterCallbackForGamepadButton(instance->registeredGamepadButtonReleasedEvents, releaseSuccessLog);
+					break;
+				default:
+					break;
+				}
+			}
+		};
+
+	EnqueueInputCall(inputDeregisterFunctionToQueue);
+}
+
 void InputManager::RegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* callback, const std::string& name)
 {
 	auto registerCallbackForKeyState = [keyCode, callback, name](std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>>& map, const std::string& successLog)
@@ -360,7 +467,43 @@ void InputManager::ProcessKeyEvents() const
 	}
 }
 
-void InputManager::ProcessGamepadEvents() const
+void InputManager::ProcessGamepadButtonEvents() const
+{
+	const Window* const mainWindow = WindowManager::GetWindow(std::string("Engine"));
+	std::function<void(int state, const std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>>&)> processButtonEvents = [mainWindow](int state, const std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>>& map)
+		{
+			if (instance != nullptr)
+			{
+				for (const auto& buttonCallbacks : map)
+				{
+					int keyState = mainWindow->GetGamepadButton(buttonCallbacks.first);
+
+					if (keyState == state)
+					{
+						for (const auto& func : buttonCallbacks.second)
+						{
+							if (func.second != nullptr)
+							{
+								(*func.second)(buttonCallbacks.first);
+							}
+						}
+					}
+				}
+			}
+		};
+
+	if (instance != nullptr)
+	{
+		processButtonEvents(KEY_RELEASE, instance->registeredGamepadButtonReleaseEvents);
+		processButtonEvents(KEY_PRESS, instance->registeredGamepadButtonPressEvents);
+		processButtonEvents(KEY_PRESSED, instance->registeredGamepadButtonPressedEvents);
+		processButtonEvents(KEY_RELEASED, instance->registeredGamepadButtonReleasedEvents);
+
+		mainWindow->GetGamepadButton(GAMEPAD_BUTTON_A, true);
+	}
+}
+
+void InputManager::ProcessGamepadAxisEvents() const
 {
 	if (instance != nullptr)
 	{
@@ -859,7 +1002,8 @@ void InputManager::Update()
 		
 		instance->ProcessKeyEvents();
 		instance->ProcessMouseButtonEvents();
-		instance->ProcessGamepadEvents();
+		instance->ProcessGamepadAxisEvents();
+		instance->ProcessGamepadButtonEvents();
 	}
 	else
 	{

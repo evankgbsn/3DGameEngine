@@ -24,9 +24,15 @@ public:
 
 	void AddDisp(const glm::vec3& newDisp);
 
+	void Jump(float force);
+
+	bool IsFalling() const;
+
 	glm::vec3 GetPosition() const;
 
 	~CharacterControllerComponent();
+
+	void Update() override;
 
 private:
 
@@ -42,11 +48,11 @@ private:
 
 	void Deserialize() override;
 
-	void Update() override;
-
 	CharacterController* controller;
 
 	std::string controllerName;
+
+	float jumpForce;
 
 };
 

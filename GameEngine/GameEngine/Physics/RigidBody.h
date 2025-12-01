@@ -46,6 +46,8 @@ public:
 
 	void SetPosition(const glm::vec3& newPosition);
 
+	void SetRotation(const glm::mat4& newRot);
+
 	bool Hovered() const;
 
 	void SetUserData(void* data);

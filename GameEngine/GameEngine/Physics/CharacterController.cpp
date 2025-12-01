@@ -75,11 +75,16 @@ void CharacterController::AddDisp(const glm::vec3& newDisp)
 
 void CharacterController::Move()
 {
-	glm::vec3 gravity = glm::vec3(0.0f, 1.0f, 0.0f) * -0.098f;
+	glm::vec3 gravity = glm::vec3(0.0f, 1.0f, 0.0f) * -0.2f;
 
-	controller->move(PxVec3(disp.x + gravity.x, disp.y + gravity.y, disp.z + gravity.z), 0.001f, TimeManager::DeltaTime(), nullptr, nullptr);
+	collisionFlags = controller->move(PxVec3(disp.x + gravity.x, disp.y + gravity.y, disp.z + gravity.z), 0.001f, TimeManager::DeltaTime(), nullptr, nullptr);
 
 	disp = glm::vec3(0.0f);
+}
+
+PxControllerCollisionFlags CharacterController::GetCollisionFlags() const
+{
+	return collisionFlags;
 }
 
 glm::vec3 CharacterController::GetPosition() const

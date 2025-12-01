@@ -153,7 +153,7 @@ vec4 CalcAmbientLight(Ambient light)
 	vec4 textureColor3 = texture(diffuseSampler3, tiledTextureCoord) * blendMapColor.b;
 	vec4 textureSpec3 = texture(specularSampler3, tiledTextureCoord) * blendMapColor.b;
 
-	return light.color * textureColor0 + textureColor1 + textureColor2 + textureColor3;
+	return light.color * textureColor0 * textureColor1 * textureColor2 * textureColor3;
 }
 
 vec4 CalcDirectionalLight(DirectionalLight light)

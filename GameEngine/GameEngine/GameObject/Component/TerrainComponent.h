@@ -10,6 +10,7 @@
 class Terrain;
 class AxisAlignedBoundingBox;
 class LineSegment3D;
+class Model;
 
 class TerrainComponent : public Component
 {
@@ -34,6 +35,14 @@ public:
 	glm::vec3 GetLineIntersection(const LineSegment3D& line);
 
 	bool Loaded() const;
+
+	const Model* GetModel() const;
+
+	glm::vec3 GetPosition() const;
+
+	glm::mat4 GetRotation() const;
+
+	glm::mat4 GetTransform() const;
 
 private:
 

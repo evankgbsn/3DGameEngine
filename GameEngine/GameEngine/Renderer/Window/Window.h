@@ -25,6 +25,8 @@ public:
 
 	int GetKey(int keyCode, bool clearFrameKeyStates = false) const;
 
+	int GetGamepadButton(int button, bool clearFrameKeyStates = false) const;
+
 	int GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates = false) const;
 
 	void RegisterCallbackForMouseScroll(const std::string& name, std::function<void(double scrollx, double scrolly)>* const callback);

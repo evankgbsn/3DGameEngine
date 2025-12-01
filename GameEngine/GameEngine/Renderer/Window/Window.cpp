@@ -199,6 +199,63 @@ int Window::GetKey(int keyCode, bool clearFrameKeyStates) const
 	}
 }
 
+int Window::GetGamepadButton(int button, bool clearFrameKeyStates) const
+{
+	static std::unordered_set<int> pressedButtons = {};
+	static std::unordered_set<int> releasedButtons = {};
+
+	static std::unordered_map<int, int> buttonStatesForThisFrame;
+
+	if (clearFrameKeyStates)
+	{
+		buttonStatesForThisFrame.clear();
+		return -1;
+	}
+
+	if (buttonStatesForThisFrame.find(button) != buttonStatesForThisFrame.end())
+	{
+		return buttonStatesForThisFrame[button];
+	}
+	else
+	{
+		GLFWgamepadstate state;
+
+		if (glfwGetGamepadState(GLFW_JOYSTICK_1, &state))
+		{
+			int getKeyResult = state.buttons[GLFW_GAMEPAD_BUTTON_A];
+
+			if (getKeyResult == KEY_PRESS)
+			{
+
+				if (!pressedButtons.contains(button))
+					pressedButtons.insert(button);
+
+				if (releasedButtons.contains(button))
+					releasedButtons.erase(releasedButtons.find(button));
+				else
+					getKeyResult = KEY_PRESSED;
+
+			}
+			else if (getKeyResult == KEY_RELEASE)
+			{
+				if (!releasedButtons.contains(button))
+					releasedButtons.insert(button);
+
+				if (pressedButtons.contains(button))
+					pressedButtons.erase(pressedButtons.find(button));
+				else
+					getKeyResult = KEY_RELEASED;
+			}
+
+			return buttonStatesForThisFrame[button] = getKeyResult;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+}
+
 int Window::GetMouseButton(int mouseButton, bool clearFrameMouseButtonStates) const
 {
 	static std::unordered_set<int> pressedButtons = {};

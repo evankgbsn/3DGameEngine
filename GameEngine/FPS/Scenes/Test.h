@@ -7,6 +7,8 @@ class PlaneObj;
 class FPSPlayer;
 class Sun;
 class Crate;
+class Ground;
+class ServerFreeCamera;
 
 class Test : public Scene
 {
@@ -35,10 +37,10 @@ private:
 
 	void Unload() override;
 
-	PlaneObj* plane;
-	FPSPlayer* player;
 	Sun* sun;
 	Crate* crate;
+	Ground* ground;
+	ServerFreeCamera* serverFreeCam;
 };
 
 #endif // TEST_H

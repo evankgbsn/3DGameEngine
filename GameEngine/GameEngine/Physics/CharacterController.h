@@ -25,6 +25,8 @@ public:
 
 	void Move();
 
+	PxControllerCollisionFlags GetCollisionFlags() const;
+
 	~CharacterController();
 
 private:
@@ -40,6 +42,8 @@ private:
 	CharacterController& operator=(CharacterController&&) = delete;
 
 	PxController* controller;
+
+	PxControllerCollisionFlags collisionFlags;
 
 	glm::vec3 disp;
 

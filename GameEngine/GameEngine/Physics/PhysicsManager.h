@@ -47,6 +47,8 @@ private:
 
 	void CreateCharacterControllerManager();
 
+	void SetupVisualization();
+
 	void CreateCharacterControllerMaterial();
 
 	static PhysicsManager* instance;

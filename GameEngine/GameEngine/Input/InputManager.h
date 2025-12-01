@@ -26,6 +26,10 @@ public:
 
 	static void DeregisterCallbackForGamepadAxis(int axis, const std::string& name);
 
+	static void RegisterCallbackForGamepadButton(int state, int button, std::function<void(int button)>* const callback, const std::string& name);
+
+	static void DeregisterCallbackForGamepadButton(int state, int keyCode, const std::string& name);
+
 	static void RegisterCallbackForKeyState(int state, int keyCode, std::function<void(int keyCode)>* const callback, const std::string& name);
 
 	static void DeregisterCallbackForKeyState(int state, int keyCode, const std::string& name);
@@ -78,7 +82,9 @@ private:
 	
 	void ProcessKeyEvents() const;
 
-	void ProcessGamepadEvents() const;
+	void ProcessGamepadButtonEvents() const;
+
+	void ProcessGamepadAxisEvents() const;
 
 	void EditorProcessKeyEvents() const;
 
@@ -93,6 +99,8 @@ private:
 	std::mutex inputQueueMutex;
 
 	// Game
+	
+	// M&K
 	std::list<std::function<void()>> inputQueue;
 
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int keyCode)>*>> registeredKeyPressEvents;
@@ -111,11 +119,20 @@ private:
 
 	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int MouseButtonCode)>*>> registeredMouseButtonReleasedEvents;
 
-	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int axis, float value)>*>> registeredGamepadAxisEvents;
-
 	std::unordered_map<std::string, std::function<void(double, double)>*> registeredMouseScrollEvents;
 
 	std::unordered_set<int> keysPressed;
+
+	// Gamepad
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>> registeredGamepadButtonPressEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>> registeredGamepadButtonReleaseEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>> registeredGamepadButtonPressedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int button)>*>> registeredGamepadButtonReleasedEvents;
+
+	std::unordered_map<int, std::unordered_map<std::string, std::function<void(int axis, float value)>*>> registeredGamepadAxisEvents;
 
 	// Editor
 	std::list<std::function<void()>> editorInputQueue;

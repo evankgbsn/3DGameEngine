@@ -171,8 +171,8 @@ PhysicsManager::PhysicsManager() :
 
 			scene = physics->createScene(sceneDesc);
 
+			SetupVisualization();
 			CreateCharacterControllerManager();
-
 			CreateCharacterControllerMaterial();
 		}
 	}
@@ -189,6 +189,14 @@ PhysicsManager::~PhysicsManager()
 void PhysicsManager::CreateCharacterControllerManager()
 {
 	controllerManager = PxCreateControllerManager(*scene);
+}
+
+void PhysicsManager::SetupVisualization()
+{
+	scene->setVisualizationParameter(PxVisualizationParameter::eSCALE, 1.0f);
+	scene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_SHAPES, 1.0f);
+	scene->setVisualizationParameter(PxVisualizationParameter::eCONTACT_POINT, 1.0f);
+	scene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LIMITS, 1.0f);
 }
 
 void PhysicsManager::CreateCharacterControllerMaterial()

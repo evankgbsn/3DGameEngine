@@ -1,6 +1,7 @@
 #include "Sun.h"
 
 #include "GameEngine/GameObject/Component/DirectionalLightComponent.h"
+#include "GameEngine/Renderer/Light/LightManager.h"
 
 Sun::Sun() :
     GameObject("Sun")
@@ -15,6 +16,7 @@ Sun::~Sun()
 void Sun::Initialize()
 {
     light = new DirectionalLightComponent({ -0.3, -0.3, -0.3 }, { 0.5, 0.25, 0.25 });
+    LightManager::SetAmbientIntensity(0.5f);
 }
 
 void Sun::Terminate()

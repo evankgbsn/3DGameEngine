@@ -196,6 +196,32 @@ void RigidBody::SetPosition(const glm::vec3& newPosition)
     }
 }
 
+void RigidBody::SetRotation(const glm::mat4& newRot)
+{
+    PxTransform currentTransform;
+
+    // Create a PxMat33 from the 3x3 rotation component of your 4x4 matrix
+    PxMat33 rotationMatrix(
+        PxVec3(newRot[0].x, newRot[0].y, newRot[0].z),   // Column 0
+        PxVec3(newRot[1].x, newRot[1].y, newRot[1].z),   // Column 1
+        PxVec3(newRot[2].x, newRot[2].y, newRot[2].z)   // Column 2
+    );
+
+    // Convert the rotation matrix to a PxQuat
+    PxQuat newRotation(rotationMatrix);
+
+    if (dynamicBody != nullptr)
+    {
+        currentTransform = dynamicBody->getGlobalPose();
+        dynamicBody->setGlobalPose(PxTransform(currentTransform.p, newRotation));
+    }
+    else if (staticBody != nullptr)
+    {
+        currentTransform = staticBody->getGlobalPose();
+        dynamicBody->setGlobalPose(PxTransform(currentTransform.p, newRotation));
+    }
+}
+
 bool RigidBody::Hovered() const
 {
     PxRaycastBuffer hitInfo;

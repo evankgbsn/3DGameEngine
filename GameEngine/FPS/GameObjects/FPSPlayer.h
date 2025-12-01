@@ -2,6 +2,7 @@
 #define FPSPLAYER_H
 
 #include "GameEngine/GameObject/GameObject.h"
+#include "GameEngine/Networking/NetworkObject.h"
 
 #include <functional>
 
@@ -11,7 +12,7 @@ class CameraComponent;
 class AnimatedColliderComponent;
 class CharacterControllerComponent;
 
-class FPSPlayer : public GameObject
+class FPSPlayer : public GameObject, public NetworkObject
 {
 
 public:
@@ -30,7 +31,16 @@ private:
 
 	FPSPlayer& operator=(FPSPlayer&&) = delete;
 
-	// Inherited via GameObject
+	void OnSpawn() override;
+
+	void OnDespawn() override;
+
+	void OnDataReceived(const std::string& data) override;
+
+	void OnServerSpawnConfirmation(const std::string& IP) override;
+
+	void OnClientSpawnConfirmation() override;
+
 	void Initialize() override;
 
 	void Terminate() override;
@@ -84,6 +94,14 @@ private:
 	std::function<void(int axis, float value)>* gamepadWalkX;
 
 	std::function<void(int axis, float value)>* gamepadWalkY;
+
+	std::function<void(int button)>* gamepadJump;
+
+	std::function<void(int key)>* keyboardMove;
+
+	std::function<void(int key)>* keyboardJump;
+
+	std::function<void(const std::string&)>* onClientDisconnect;
 
 };
 

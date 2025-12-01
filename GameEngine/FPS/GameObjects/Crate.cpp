@@ -31,6 +31,11 @@ void Crate::Initialize()
 
 void Crate::Terminate()
 {
+    RemoveComponent("Graphics");
+    RemoveComponent("RigidBody");
+
+    delete graphics;
+    delete body;
 }
 
 void Crate::GameUpdate()
@@ -82,14 +87,22 @@ glm::mat4 Crate::GetTransform() const
 void Crate::SetPosition(const glm::vec3& newPos)
 {
     graphics->SetPosition(newPos);
+    body->SetPosition(newPos);
+
 }
 
 void Crate::SetRotation(const glm::mat4& newRot)
 {
     graphics->SetRotation(newRot);
+    body->SetRotation(newRot);
 }
 
 bool Crate::Hovered() const
 {
-    return false;
+    return body->Hovered();
+}
+
+void Crate::Deserialize()
+{
+    GameObject::Deserialize();
 }

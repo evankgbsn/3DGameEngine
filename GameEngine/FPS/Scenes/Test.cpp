@@ -4,29 +4,27 @@
 #include "../GameObjects/FPSPlayer.h"
 #include "../GameObjects/Sun.h"
 #include "../GameObjects/Crate.h"
+#include "../GameObjects/Ground.h"
+#include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Networking/NetworkManager.h"
+#include "../GameObjects/ServerFreeCamera.h"
 
 Test::Test() :
-	plane(new PlaneObj()),
-	player(new FPSPlayer()),
 	sun(new Sun()),
-	crate(new Crate())
+	crate(new Crate()),
+	ground(new Ground()),
+	serverFreeCam(nullptr)
 {
-	RegisterGameObject(plane, "Plane");
-	RegisterGameObject(player, "Player");
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
+	RegisterGameObject(ground, "Ground");
 }
 
 Test::~Test()
 {
-	if (plane != nullptr)
+	if (serverFreeCam != nullptr)
 	{
-		delete plane;
-	}
-
-	if (player != nullptr)
-	{
-		delete player;
+		delete serverFreeCam;
 	}
 
 	if (sun != nullptr)
@@ -38,10 +36,37 @@ Test::~Test()
 	{
 		delete crate;
 	}
+
+	if (ground != nullptr)
+	{
+		delete ground;
+	}
 }
 
 void Test::Initialize()
 {
+	if (SceneManager::SceneLoaded("JoinScene"))
+	{
+		SceneManager::EndScene("JoinScene");
+		SceneManager::TerminateScene("JoinScene");
+		SceneManager::UnloadScene("JoinScene");
+	}
+
+	if (!NetworkManager::IsServer())
+	{
+		static std::function<void(NetworkObject*)> callback = [](NetworkObject* spawnedObject)
+			{
+				NetworkManager::SyncClientWithServer();
+			};
+
+		NetworkManager::Spawn("FPSPlayer", &callback);
+	}
+	else
+	{
+		serverFreeCam = new ServerFreeCamera();
+		RegisterGameObject(serverFreeCam, "ServerFreeCamera");
+	}
+
 	Scene::Initialize();
 }
 

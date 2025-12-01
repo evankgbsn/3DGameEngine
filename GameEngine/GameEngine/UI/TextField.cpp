@@ -66,6 +66,8 @@ TextField::~TextField()
 
 		delete windowResizeCallback;
 	}
+
+	delete text;
 }
 
 void TextField::SetPosition(const glm::vec2& newPos)
