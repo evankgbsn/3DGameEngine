@@ -42,7 +42,7 @@ WaterComponent::WaterComponent()
 WaterComponent::WaterComponent(const std::string& name, float width, float height, unsigned int tileX, unsigned int tileY, float yOffset)
 {
 	RegisterComponentClassType<WaterComponent>(this);
-	terrain = new Terrain(name, "Assets/Texture/Black.png", {}, "", width, height, tileX, tileY, 0.0f, yOffset, 1U, true);
+	terrain = new Terrain(name, "Assets/Texture/Black.png", {}, "", width, height, tileX, tileY, 0.0f, yOffset, 1U, true, false);
 }
 
 WaterComponent::~WaterComponent()

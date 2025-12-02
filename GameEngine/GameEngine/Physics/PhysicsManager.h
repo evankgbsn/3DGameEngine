@@ -1,6 +1,7 @@
 #ifndef PHYSICSMANAGER_H
 #define PHYSICSMANAGER_H
 
+#include "foundation/PxPreprocessor.h"
 #include <PXConfig.h>
 #include <PxPhysicsAPI.h>
 #include <glm/glm.hpp>
@@ -68,6 +69,8 @@ private:
 	PxDefaultCpuDispatcher* dispatcher;
 
 	PxControllerManager* controllerManager;
+
+	PxCudaContextManager* cudaContextManager;
 
 	float accumulator;
 

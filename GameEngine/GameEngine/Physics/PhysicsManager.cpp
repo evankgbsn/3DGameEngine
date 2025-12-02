@@ -9,6 +9,10 @@
 #include "../Renderer/Window/Window.h"
 #include "CharacterController.h"
 
+
+#include "cudamanager/PxCudaContextManager.h"
+#include "gpu/PxGpu.h"
+
 PhysicsManager* PhysicsManager::instance = nullptr;
 
 void PhysicsManager::Initialize()
@@ -165,9 +169,35 @@ PhysicsManager::PhysicsManager() :
 		{
 			PxSceneDesc sceneDesc(physics->getTolerancesScale());
 			sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
-			dispatcher = PxDefaultCpuDispatcherCreate(2);
+			dispatcher = PxDefaultCpuDispatcherCreate(4);
 			sceneDesc.cpuDispatcher = dispatcher;
 			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+
+			// Assuming m_PxFoundation is your PxFoundation*
+			PxCudaContextManagerDesc cudaDesc;
+			// Configure cudaDesc fields (e.g., interopMode)
+
+			// Create the PxCudaContextManager
+			cudaContextManager = PxCreateCudaContextManager(*foundation, cudaDesc);
+
+			// Check if the context is valid (i.e., a compatible GPU was found)
+			if (cudaContextManager && !cudaContextManager->contextIsValid())
+			{
+				// Handle error: context creation failed (e.g., no CUDA-capable GPU)
+				cudaContextManager->release();
+				cudaContextManager = nullptr;
+			}
+
+			// Enable CUDA GPU support
+			if (cudaContextManager)
+			{
+				// Assign the context manager
+				//sceneDesc.cudaContextManager = cudaContextManager;
+				//sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
+				//sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;
+			}
+
+			
 
 			scene = physics->createScene(sceneDesc);
 

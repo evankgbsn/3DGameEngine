@@ -56,9 +56,17 @@ Terrain::Terrain(const std::string& n, const std::string& hmp, const std::vector
 		}
 		else
 		{
-			terrainModel.store(ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, false));
-			terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
-			static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+			if (isWater)
+			{
+				terrainGraphics.store(GraphicsObjectManager::CreateGOWater(ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, false)));
+			}
+			else
+			{
+				terrainModel.store(ModelManager::LoadModelTerrain(name, heightMapPath, terrainWidth, terrainHeight, tileX, tileY, maxHeight, yOffset, UVTiling, false));
+				terrainGraphics.store(GraphicsObjectManager::CreateGOTerrain(terrainModel, heightMaterials, blendMap));
+				static_cast<GOTerrain*>(terrainGraphics.load())->SetShine(8.0f);
+			}
+			
 		}
 	}
 	else

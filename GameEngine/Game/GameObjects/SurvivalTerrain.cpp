@@ -35,7 +35,8 @@ void SurvivalTerrain::Initialize()
 		500U,
 		25.0f,
 		-13.0f,
-		1U
+		1U,
+		false
 	);
 
 	AddComponent(terrain, "SurvivalTerrain");
