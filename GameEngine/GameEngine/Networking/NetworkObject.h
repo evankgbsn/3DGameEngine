@@ -26,11 +26,11 @@ public:
 
 	unsigned long long GetNetworkObjectID() const;
 
-	void ClientSend(const std::string& data);
+	void ClientSend(const std::string& data, bool reliable = true);
 
-	void ServerSend(const std::string& IP, const std::string& data);
+	void ServerSend(const std::string& IP, const std::string& data, bool reliable = true);
 
-	void ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs = {});
+	void ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs = {}, bool reliable = true);
 
 	bool SpawnedFromLocalSpawnRequest() const;
 
@@ -66,6 +66,8 @@ private:
 	std::string nameOfType;
 
 	std::function<void(const std::string&)>* onReceiveData;
+
+	std::function<void(const std::string&)>* onReceiveDataUDP;
 
 	bool spawnedFromLocalSpawnRequest;
 

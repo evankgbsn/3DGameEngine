@@ -16,33 +16,49 @@ void NetworkObject::OnClientSpawnConfirmation()
 void NetworkObject::OnSpawn()
 {
 	NetworkManager::RegisterReceiveDataFunction("NetworkObject:" + std::to_string(networkObjectID), onReceiveData);
+	NetworkManager::RegisterReceiveDataFunction("NetworkObjectUDP:" + std::to_string(networkObjectID), onReceiveDataUDP);
 }
 
 void NetworkObject::OnDespawn()
 {
+	NetworkManager::DeregisterReceiveDataFunction("NetworkObjectUDP:" + std::to_string(networkObjectID));
 	NetworkManager::DeregisterReceiveDataFunction("NetworkObject:" + std::to_string(networkObjectID));
 }
 
-void NetworkObject::ClientSend(const std::string& data)
+void NetworkObject::ClientSend(const std::string& data, bool reliable)
 {
-	NetworkManager::ClientSend(data, "NetworkObject:" + std::to_string(networkObjectID));
-}
-
-void NetworkObject::ServerSend(const std::string& IP, const std::string& data)
-{
-	if (serverConfirmedIPs.contains(IP))
+	if (reliable)
 	{
-		NetworkManager::ServerSend(IP, data, "NetworkObject:" + std::to_string(networkObjectID));
+		NetworkManager::ClientSend(data, "NetworkObject:" + std::to_string(networkObjectID));
+	}
+	else
+	{
+		NetworkManager::ClientSendUDP(data, "NetworkObjectUDP:" + std::to_string(networkObjectID));
 	}
 }
 
-void NetworkObject::ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs)
+void NetworkObject::ServerSend(const std::string& IP, const std::string& data, bool reliable)
+{
+	if (serverConfirmedIPs.contains(IP))
+	{
+		if (reliable)
+		{
+			NetworkManager::ServerSend(IP, data, "NetworkObject:" + std::to_string(networkObjectID));
+		}
+		else
+		{
+			NetworkManager::ServerSendUDP(IP, data, "NetworkObjectUDP:" + std::to_string(networkObjectID));
+		}
+	}
+}
+
+void NetworkObject::ServerSendAll(const std::string& data, const std::unordered_set<std::string>& excludedIPs, bool reliable)
 {
 	for (const std::string& ip : serverConfirmedIPs)
 	{
 		if (!excludedIPs.contains(ip))
 		{
-			ServerSend(ip, data);
+			ServerSend(ip, data, reliable);
 		}
 	}
 }
@@ -83,9 +99,15 @@ NetworkObject::NetworkObject() :
 		{
 			OnDataReceived(NetworkManager::GetDataBlockFromData(data));
 		});
+
+	onReceiveDataUDP = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			OnDataReceived(NetworkManager::GetDataBlockFromData(data));
+		});
 }
 
 NetworkObject::~NetworkObject()
 {
+	delete onReceiveDataUDP;
 	delete onReceiveData;
 }

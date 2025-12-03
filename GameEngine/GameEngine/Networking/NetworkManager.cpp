@@ -9,6 +9,8 @@
 #include "../Input/InputManager.h"
 
 #define DEFAULT_PORT "27015"
+#define DEFAULT_SERVER_UDP_PORT "54001"
+#define DEFAULT_CLIENT_UDP_PORT "54002"
 //#define SERVER_IP "192.168.50.24"
 #define SERVER_IP "192.168.50.2"
 //#define SERVER_IP "192.168.50.100"
@@ -155,6 +157,12 @@ NetworkManager::~NetworkManager()
 		CleanupClientSpawnRequests();
 	}
 
+	closesocket(UDPSocket);
+	if (UDPReceiveThread.joinable())
+	{
+		UDPReceiveThread.join();
+	}
+
 	WSACleanup();
 }
 
@@ -252,7 +260,11 @@ void NetworkManager::StartClient()
 		connectSocket = INVALID_SOCKET;
 	}
 
+	SetupUDP();
+
 	freeaddrinfo(result);
+
+	UDPReceiveThread = std::thread(&NetworkManager::UDPClientReceive, this);
 }
 
 void NetworkManager::StartServer()
@@ -303,10 +315,157 @@ void NetworkManager::StartServer()
 		return;
 	}
 
+	SetupUDP();
+
 	freeaddrinfo(result);
 
 	listenThread = std::thread(&NetworkManager::ListenForConnections, this);
 	cleanDisconnectedClientThread = std::thread(&NetworkManager::CleanDisconnectedClientThreads, this);
+	UDPReceiveThread = std::thread(&NetworkManager::UDPServerReceive, this);
+}
+
+void NetworkManager::SetupUDP()
+{
+	UDPSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if (UDPSocket == INVALID_SOCKET) {
+		Logger::Log("Failed to create a udp socket");
+	}
+
+	struct sockaddr_in serverAddr;
+	
+	if (IsServer())
+	{
+		serverAddr.sin_family = AF_INET;
+		serverAddr.sin_port = htons(54001); // Port number
+		serverAddr.sin_addr.s_addr = INADDR_ANY; // Listen on all interfaces
+	}
+	else
+	{
+		serverAddr.sin_family = AF_INET;
+		serverAddr.sin_port = htons(54002); // Port number
+		serverAddr.sin_addr.s_addr = INADDR_ANY; // Listen on all interfaces
+	}
+	
+
+	if (bind(UDPSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
+		printf("Bind failed: %d\n", WSAGetLastError());
+		closesocket(UDPSocket);
+	}
+
+	printf("Socket bound to port 54001.\n");
+}
+
+void NetworkManager::UDPClientReceive()
+{
+	while (running.load())
+	{
+		const unsigned int BUFLEN = 500;
+		
+		char buffer[BUFLEN] = {};
+		int recv_len;
+		
+		// Structures to hold the sender's (client's) address
+		sockaddr_in clientAddr;
+		int clientAddrLen = sizeof(clientAddr);
+		
+		// 5. Receive Data
+		// recvfrom is blocking by default. It waits here until a message arrives.
+		recv_len = recvfrom(UDPSocket, buffer, BUFLEN, 0,
+			(SOCKADDR*)&clientAddr, &clientAddrLen);
+		
+		if (recv_len == SOCKET_ERROR) {
+			Logger::Log("recvfrom failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+		}
+		else {
+			// Null-terminate the received data for safe printing
+			buffer[recv_len] = '\0';
+		
+			// Convert sender's IP address from binary to string format
+			char client_ip[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, &clientAddr.sin_addr, client_ip, INET_ADDRSTRLEN);
+		
+			Logger::Log("** Message Received **", Logger::Category::Success);
+			Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
+			Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
+			Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
+			Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
+		}
+
+		unsigned int packetSize = *reinterpret_cast<unsigned int*>(buffer);
+
+		std::string ip = std::string(buffer + 4);
+		std::string functionID = (buffer + 20);
+		std::string data = ip + " " + functionID + " ";
+
+		unsigned int i = 21 + functionID.size();
+		while (i < packetSize)
+		{
+			data += buffer[i];
+			i++;
+		}
+
+		std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+		// Full packet
+		receivedData.push_back(data);
+	}
+}
+
+void NetworkManager::UDPServerReceive()
+{
+	while (running.load())
+	{
+		const unsigned int BUFLEN = 500;
+
+		char buffer[BUFLEN] = {};
+		int recv_len;
+
+		// Structures to hold the sender's (client's) address
+		sockaddr_in clientAddr;
+		int clientAddrLen = sizeof(clientAddr);
+
+		// 5. Receive Data
+		// recvfrom is blocking by default. It waits here until a message arrives.
+		recv_len = recvfrom(UDPSocket, buffer, BUFLEN, 0,
+			(SOCKADDR*)&clientAddr, &clientAddrLen);
+
+		if (recv_len == SOCKET_ERROR) {
+			Logger::Log("recvfrom failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+		}
+		else {
+			// Null-terminate the received data for safe printing
+			buffer[recv_len] = '\0';
+
+			// Convert sender's IP address from binary to string format
+			char client_ip[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, &clientAddr.sin_addr, client_ip, INET_ADDRSTRLEN);
+
+			Logger::Log("** Message Received **", Logger::Category::Success);
+			Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
+			Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
+			Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
+			Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
+		}
+
+
+		unsigned int packetSize = *reinterpret_cast<unsigned int*>(buffer);
+
+		std::string ip = std::string(buffer + 4);
+		std::string functionID = (buffer + 20);
+		std::string data = ip + " " + functionID + " ";
+
+		unsigned int i = 21 + functionID.size();
+		while (i < packetSize)
+		{
+			data += buffer[i];
+			i++;
+		}
+
+		std::lock_guard<std::mutex> guard(receivedDataMutex);
+
+		// Full packet
+		receivedData.push_back(data);
+	}
 }
 
 void NetworkManager::ClientReceive()
@@ -1210,7 +1369,89 @@ void NetworkManager::ServerSendAll(const std::string& data, const std::string& r
 				if (iSendResult == SOCKET_ERROR) {
 					Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 					closesocket(clientSocket.second);
-					return;
+				}
+
+				delete[] sendbuf;
+				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
+			}
+			instance->connectedClientsMutex.unlock();
+		}
+	}
+}
+
+void NetworkManager::ServerSendAllUDP(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs)
+{
+	if (instance != nullptr)
+	{
+		if (IsServer())
+		{
+			instance->connectedClientsMutex.lock();
+			for (auto& clientSocket : instance->connectedClients)
+			{
+				if (excludedIPs.contains(clientSocket.first))
+				{
+					continue;
+				}
+
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
+
+				char* sendbuf = new char[packetSize]('\0');
+				ZeroMemory(sendbuf, packetSize);
+
+				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+				unsigned int i = 4;
+				for (i; i < instance->clientIP.size(); i++)
+				{
+					*(sendbuf + i) = instance->clientIP[i];
+				}
+
+				i = 20;
+				for (i; i < 20 + receiveFunction.size(); i++)
+				{
+					*(sendbuf + i) = receiveFunction[i - 20];
+				}
+
+				*(sendbuf + i) = '\0';
+
+				i = 21 + receiveFunction.size();
+				for (i; i < 21 + receiveFunction.size() + data.size(); i++)
+				{
+					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
+				}
+
+				sockaddr_in destination;
+				destination.sin_family = AF_INET;
+				destination.sin_port = htons(54002);
+
+				// Ptr to the storage for the binary IP (in_addr structure)
+				PVOID addrPtr = &destination.sin_addr;
+
+				// The modern, robust conversion function
+				int result = InetPtonA(
+					AF_INET,        // Address family (IPv4)
+					clientSocket.first.c_str(),      // Narrow string containing the IP address
+					addrPtr         // Destination where the binary address is stored
+				);
+
+				if (result == 1) {
+					// Conversion succeeded
+					// destination.sin_addr now holds the IP address in network byte order
+					//Logger::Log("IP successfully converted.");
+				}
+				else if (result == 0) {
+					// Conversion failed: The string was not a valid IP address format
+					//Logger::Log("Error: Invalid IP address format.");
+				}
+				else { // result == -1
+					// A system error occurred (check WSAGetLastError())
+					//Logger::Log("Error: InetPton failed with system error: ");
+				}
+
+				int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0, (SOCKADDR*)&destination, sizeof(destination));
+
+				if (bytesSent == SOCKET_ERROR) {
+					Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 				}
 
 				delete[] sendbuf;
@@ -1280,6 +1521,90 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 	}
 }
 
+void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& data, const std::string& receiveFunction)
+{
+	if (instance != nullptr)
+	{
+		if (IsServer())
+		{
+			instance->connectedClientsMutex.lock();
+			const auto& clientSocket = instance->connectedClients.find(ip);
+
+			if (clientSocket != instance->connectedClients.end())
+			{
+				unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
+
+				char* sendbuf = new char[packetSize]('\0');
+				ZeroMemory(sendbuf, packetSize);
+
+				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+				unsigned int i = 4;
+				for (i; i < ip.size() + 4; i++)
+				{
+					*(sendbuf + i) = ip[i - 4];
+				}
+
+				i = 20;
+				for (i; i < 20 + receiveFunction.size(); i++)
+				{
+					*(sendbuf + i) = receiveFunction[i - 20];
+				}
+
+				*(sendbuf + i) = '\0';
+
+				i = 21 + receiveFunction.size();
+				for (i; i < 21 + receiveFunction.size() + data.size(); i++)
+				{
+					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
+				}
+
+				sockaddr_in destination;
+				destination.sin_family = AF_INET;
+				destination.sin_port = htons(54002);
+
+				// Ptr to the storage for the binary IP (in_addr structure)
+				PVOID addrPtr = &destination.sin_addr;
+
+				// The modern, robust conversion function
+				int result = InetPtonA(
+					AF_INET,        // Address family (IPv4)
+					ip.c_str(),      // Narrow string containing the IP address
+					addrPtr         // Destination where the binary address is stored
+				);
+
+				if (result == 1) {
+					// Conversion succeeded
+					// destination.sin_addr now holds the IP address in network byte order
+					//Logger::Log("IP successfully converted.");
+				}
+				else if (result == 0) {
+					// Conversion failed: The string was not a valid IP address format
+					//Logger::Log("Error: Invalid IP address format.");
+				}
+				else { // result == -1
+					// A system error occurred (check WSAGetLastError())
+					//Logger::Log("Error: InetPton failed with system error: ");
+				}
+
+				int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0, (SOCKADDR*)&destination, sizeof(destination));
+
+				if (bytesSent == SOCKET_ERROR) {
+					Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+				}
+
+				delete[] sendbuf;
+
+				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket->first, Logger::Category::Success);
+			}
+
+
+
+			instance->connectedClientsMutex.unlock();
+		}
+	}
+}
+
 void NetworkManager::ClientSend(const std::string& data, const std::string& receiveFunction)
 {
 	if (instance != nullptr)
@@ -1318,6 +1643,78 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 				Logger::Log("send failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 				closesocket(instance->connectSocket);
 				return;
+			}
+
+			delete[] sendbuf;
+		}
+	}
+}
+
+void NetworkManager::ClientSendUDP(const std::string& data, const std::string& receiveFunction)
+{
+	if (instance != nullptr)
+	{
+		if (!IsServer())
+		{
+			unsigned int packetSize = 16 + receiveFunction.size() + data.size() + 1 + 4 + 1;
+
+			char* sendbuf = new char[packetSize]('\0');
+			ZeroMemory(sendbuf, packetSize);
+
+			*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
+
+			unsigned int i = 4;
+			for (i; i < instance->clientIP.size() + 4; i++)
+			{
+				*(sendbuf + i) = instance->clientIP[i - 4];
+			}
+
+			i = 20;
+			for (i; i < 20 + receiveFunction.size(); i++)
+			{
+				*(sendbuf + i) = receiveFunction[i - 20];
+			}
+
+			*(sendbuf + i) = '\0';
+
+			i = 21 + receiveFunction.size();
+			for (i; i < 21 + receiveFunction.size() + data.size(); i++)
+			{
+				*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
+			}
+
+			sockaddr_in destination;
+			destination.sin_family = AF_INET;
+			destination.sin_port = htons(54001);
+
+			// Ptr to the storage for the binary IP (in_addr structure)
+			PVOID addrPtr = &destination.sin_addr;
+
+			// The modern, robust conversion function
+			int result = InetPtonA(
+				AF_INET,        // Address family (IPv4)
+				SERVER_IP,      // Narrow string containing the IP address
+				addrPtr         // Destination where the binary address is stored
+			);
+
+			if (result == 1) {
+				// Conversion succeeded
+				// destination.sin_addr now holds the IP address in network byte order
+				//Logger::Log("IP successfully converted.");
+			}
+			else if (result == 0) {
+				// Conversion failed: The string was not a valid IP address format
+				//Logger::Log("Error: Invalid IP address format.");
+			}
+			else { // result == -1
+				// A system error occurred (check WSAGetLastError())
+				//Logger::Log("Error: InetPton failed with system error: ");
+			}
+
+			int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0, (SOCKADDR*)&destination, sizeof(destination));
+
+			if (bytesSent == SOCKET_ERROR) {
+				Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
 			}
 
 			delete[] sendbuf;

@@ -41,9 +41,15 @@ public:
 
 	static void ServerSendAll(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs = {});
 
+	static void ServerSendAllUDP(const std::string& data, const std::string& receiveFunction, const std::unordered_set<std::string>& excludedIPs = {});
+
 	static void ServerSend(const std::string& ip, const std::string& data, const std::string& receiveFunction);
 
+	static void ServerSendUDP(const std::string& ip, const std::string& data, const std::string& receiveFunction);
+
 	static void ClientSend(const std::string& data, const std::string& receiveFunction);
+
+	static void ClientSendUDP(const std::string& data, const std::string& receiveFunction);
 
 	static void RegisterReceiveDataFunction(const std::string& key, std::function<void(const std::string&)>*);
 
@@ -101,6 +107,12 @@ private:
 
 	void StartServer();
 
+	void SetupUDP();
+
+	void UDPClientReceive();
+
+	void UDPServerReceive();
+
 	void ClientReceive();
 
 	void ServerReceive(const std::string& IP);
@@ -157,9 +169,13 @@ private:
 
 	SOCKET listenSocket;
 
+	SOCKET UDPSocket;
+
 	std::thread listenThread;
 
 	std::thread receiveThread;
+
+	std::thread UDPReceiveThread;
 
 	std::mutex connectedClientsMutex;
 

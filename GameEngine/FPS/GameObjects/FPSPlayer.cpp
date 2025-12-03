@@ -94,7 +94,7 @@ void FPSPlayer::GameUpdate()
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
 
-		ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()));
+		ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
 	}
 
 	hitBox->Update();
@@ -243,7 +243,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()));
+				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -252,13 +252,13 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()));
+				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
-			ClientSend("Jump ");
+			ClientSend("Jump ", false);
 		});
 
 	keyboardMove = new std::function<void(int)>([this](int key)
