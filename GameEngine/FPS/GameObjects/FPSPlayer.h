@@ -105,6 +105,8 @@ private:
 
 	glm::vec3 disp;
 
+	glm::vec3 positionToSet;
+
 };
 
 #endif // FPSPLAYER_H

@@ -37,6 +37,8 @@ void FPSPlayer::Initialize()
 
 	AddComponent(characterGraphics, "Graphics");
 
+	positionToSet = characterGraphics->GetPosition();
+
 	hitBox = new AnimatedColliderComponent(characterGraphics);
 	hitBox->Update();
 
@@ -89,6 +91,11 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
+	if (!NetworkManager::IsServer())
+	{
+		SetPosition(positionToSet);
+	}
+
 	hitBox->Update();
 
 	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
@@ -120,6 +127,7 @@ void FPSPlayer::GameUpdate()
 	{
 		InputManager::WhenCursorMoved(*whenCursorMove);
 	}
+
 }
 
 void FPSPlayer::EditorUpdate()
@@ -418,7 +426,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
-			SetPosition(NetworkManager::ConvertDataToVec3(updateData));
+			positionToSet = NetworkManager::ConvertDataToVec3(updateData);
 		}
 		else if (updateType == "Disp")
 		{
