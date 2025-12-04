@@ -12,7 +12,8 @@ CharacterControllerComponent::CharacterControllerComponent() :
 
 CharacterControllerComponent::CharacterControllerComponent(const std::string& name, float radius, float height, const glm::vec3& position) :
 	controllerName(name),
-	jumpForce(0.0f)
+	jumpForce(0.0f),
+	airTime(0.0f)
 {
 	RegisterComponentClassType<CharacterControllerComponent>(this);
 
@@ -50,9 +51,10 @@ void CharacterControllerComponent::AddDisp(const glm::vec3& newDisp)
 	controller->AddDisp(newDisp);
 }
 
-void CharacterControllerComponent::Jump(float force)
+void CharacterControllerComponent::Jump(float force, float at)
 {
 	jumpForce = force;
+	airTime = at;
 }
 
 bool CharacterControllerComponent::IsFalling() const
@@ -75,15 +77,11 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
-	static float airTime = 1.0f;
-
 	if (airTime <= 0.0f)
 	{
-		airTime = 0;
+		airTime = 0.0f;
 	}
-	else
-	{
-		airTime -= TimeManager::DeltaTime();
-		controller->AddDisp(glm::vec3(0.0f, jumpForce * airTime * TimeManager::DeltaTime(), 0.0f));
-	}
+
+	airTime -= TimeManager::DeltaTime();
+	controller->AddDisp(glm::vec3(0.0f, jumpForce * airTime * TimeManager::DeltaTime(), 0.0f));
 }
