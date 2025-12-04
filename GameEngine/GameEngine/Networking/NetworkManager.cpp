@@ -2087,14 +2087,15 @@ void NetworkManager::SyncClientWithServer()
 	unsigned int i = 0;
 	for (i; i < loadedScenes.size(); i++)
 	{
-		if(SceneManager::SceneInitialized(loadedScenes[i]))
-
-		if (i != 0)
+		if (SceneManager::SceneInitialized(loadedScenes[i]))
 		{
-			dataToSend.append(" ");
-		}
+			if (i != 0)
+			{
+				dataToSend.append(" ");
+			}
 
-		dataToSend.append(loadedScenes[i]);
+			dataToSend.append(loadedScenes[i]);
+		}
 	}
 	ClientSend(dataToSend, "ServerReceiveSyncRequest");
 }
