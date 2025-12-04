@@ -89,6 +89,16 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
+	hitBox->Update();
+
+	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+
+	glm::vec3 camRight = cam->GetRightVector();
+	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
+	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
+
+	characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+
 	if (NetworkManager::IsServer())
 	{
 		controller->Update();
@@ -109,16 +119,6 @@ void FPSPlayer::GameUpdate()
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		hitBox->Update();
-
-		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
-
-		glm::vec3 camRight = cam->GetRightVector();
-		glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
-		glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
-
-		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-
 		InputManager::WhenCursorMoved(*whenCursorMove);
 	}
 }
