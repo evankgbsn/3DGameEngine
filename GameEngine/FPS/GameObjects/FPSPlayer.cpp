@@ -94,7 +94,15 @@ void FPSPlayer::GameUpdate()
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
 
-		ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+		static float updateTime = 0.0f;
+		updateTime += TimeManager::DeltaTime();
+
+		if (updateTime >= 0.05f)
+		{
+			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+			updateTime = 0.0f;
+		}
+
 	}
 
 	hitBox->Update();

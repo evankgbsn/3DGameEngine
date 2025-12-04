@@ -384,11 +384,11 @@ void NetworkManager::UDPClientReceive()
 			char client_ip[INET_ADDRSTRLEN];
 			inet_ntop(AF_INET, &clientAddr.sin_addr, client_ip, INET_ADDRSTRLEN);
 		
-			Logger::Log("** Message Received **", Logger::Category::Success);
-			Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
-			Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
-			Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
-			Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
+			//Logger::Log("** Message Received **", Logger::Category::Success);
+			//Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
+			//Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
+			//Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
+			//Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
 		}
 
 		unsigned int packetSize = *reinterpret_cast<unsigned int*>(buffer);
@@ -440,11 +440,11 @@ void NetworkManager::UDPServerReceive()
 			char client_ip[INET_ADDRSTRLEN];
 			inet_ntop(AF_INET, &clientAddr.sin_addr, client_ip, INET_ADDRSTRLEN);
 
-			Logger::Log("** Message Received **", Logger::Category::Success);
-			Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
-			Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
-			Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
-			Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
+			//Logger::Log("** Message Received **", Logger::Category::Success);
+			//Logger::Log("Sender IP: " + std::string(client_ip), Logger::Category::Success);
+			//Logger::Log("Sender Port: " + std::to_string(ntohs(clientAddr.sin_port)), Logger::Category::Success);
+			//Logger::Log("Data: " + std::string(buffer), Logger::Category::Success);
+			//Logger::Log("Bytes received: " + std::to_string(recv_len), Logger::Category::Success);
 		}
 
 
