@@ -447,7 +447,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(100.0f, 0.5f);
+				controller->Jump(100.0f, 0.7f);
 			}
 		}
 		else if (updateType == "LookX")

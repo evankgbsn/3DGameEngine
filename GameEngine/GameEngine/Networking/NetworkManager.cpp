@@ -9,8 +9,7 @@
 #include "../Input/InputManager.h"
 
 #define DEFAULT_PORT "27015"
-#define DEFAULT_SERVER_UDP_PORT "54001"
-#define DEFAULT_CLIENT_UDP_PORT "54002"
+#define DEFAULT_UDP_PORT "54001"
 #define SERVER_IP "192.168.50.24"
 //#define SERVER_IP "192.168.50.2"
 //#define SERVER_IP "192.168.50.100"
@@ -342,7 +341,7 @@ void NetworkManager::SetupUDP()
 	else
 	{
 		serverAddr.sin_family = AF_INET;
-		serverAddr.sin_port = htons(54002); // Port number
+		serverAddr.sin_port = htons(54001); // Port number
 		serverAddr.sin_addr.s_addr = INADDR_ANY; // Listen on all interfaces
 	}
 	
