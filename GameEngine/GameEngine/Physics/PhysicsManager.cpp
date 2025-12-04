@@ -10,8 +10,8 @@
 #include "CharacterController.h"
 
 
-#include "cudamanager/PxCudaContextManager.h"
-#include "gpu/PxGpu.h"
+//#include "cudamanager/PxCudaContextManager.h"
+//#include "gpu/PxGpu.h"
 
 PhysicsManager* PhysicsManager::instance = nullptr;
 

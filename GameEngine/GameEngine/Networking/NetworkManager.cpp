@@ -1946,7 +1946,7 @@ std::string NetworkManager::ConvertMat4ToData(const glm::mat4& mat4)
 			data += " ";
 		}
 
-		data = std::to_string(mat4[i].x) + " " + std::to_string(mat4[i].y) + " " + std::to_string(mat4[i].z) + " " + std::to_string(mat4[i].w);
+		data += std::to_string(mat4[i].x) + " " + std::to_string(mat4[i].y) + " " + std::to_string(mat4[i].z) + " " + std::to_string(mat4[i].w);
 	}
 
 	return data;
