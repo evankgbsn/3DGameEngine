@@ -11,8 +11,8 @@
 #define DEFAULT_PORT "27015"
 #define DEFAULT_SERVER_UDP_PORT "54001"
 #define DEFAULT_CLIENT_UDP_PORT "54002"
-//#define SERVER_IP "192.168.50.24"
-#define SERVER_IP "192.168.50.2"
+#define SERVER_IP "192.168.50.24"
+//#define SERVER_IP "192.168.50.2"
 //#define SERVER_IP "192.168.50.100"
 
 NetworkManager* NetworkManager::instance = nullptr;

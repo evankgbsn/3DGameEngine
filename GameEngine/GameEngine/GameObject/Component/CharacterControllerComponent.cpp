@@ -52,7 +52,7 @@ void CharacterControllerComponent::AddDisp(const glm::vec3& newDisp)
 
 void CharacterControllerComponent::Jump(float force)
 {
-	jumpForce = force;
+	currentJump = force * 10;
 }
 
 bool CharacterControllerComponent::IsFalling() const
@@ -75,13 +75,13 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
-	if (jumpForce <= 0.0f)
+	if (currentJump <= 0.0f)
 	{
-		jumpForce = 0;
+		currentJump = 0;
 	}
 	else
 	{
-		jumpForce -= TimeManager::DeltaTime();
-		controller->AddDisp(glm::vec3(0.0f, jumpForce, 0.0f));
+		currentJump -= jumpForce * TimeManager::DeltaTime();
+		controller->AddDisp(glm::vec3(0.0f, currentJump, 0.0f));
 	}
 }

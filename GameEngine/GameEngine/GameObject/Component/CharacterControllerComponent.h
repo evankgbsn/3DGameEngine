@@ -54,6 +54,8 @@ private:
 
 	float jumpForce;
 
+	float currentJump;
+
 };
 
 #endif // CHARACTERCONTROLLERCOMPONENT_H
