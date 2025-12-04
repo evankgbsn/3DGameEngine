@@ -181,6 +181,11 @@ void FPSPlayer::Start()
 	{
 		cam->SetActive();
 	}
+
+	if (hitBox->IsVisible())
+	{
+		hitBox->ToggleVisibility();
+	}
 }
 
 void FPSPlayer::RegisterInput()
@@ -434,7 +439,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(100.0f, 1.0f);
+				controller->Jump(100.0f, 0.5f);
 			}
 		}
 		else if (updateType == "LookX")
