@@ -173,31 +173,47 @@ PhysicsManager::PhysicsManager() :
 			sceneDesc.cpuDispatcher = dispatcher;
 			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 
-			// Assuming m_PxFoundation is your PxFoundation*
-			PxCudaContextManagerDesc cudaDesc;
-			// Configure cudaDesc fields (e.g., interopMode)
-
-			// Create the PxCudaContextManager
-			cudaContextManager = PxCreateCudaContextManager(*foundation, cudaDesc);
-
-			// Check if the context is valid (i.e., a compatible GPU was found)
-			if (cudaContextManager && !cudaContextManager->contextIsValid())
-			{
-				// Handle error: context creation failed (e.g., no CUDA-capable GPU)
-				cudaContextManager->release();
-				cudaContextManager = nullptr;
-			}
-
-			// Enable CUDA GPU support
-			if (cudaContextManager)
-			{
-				// Assign the context manager
-				//sceneDesc.cudaContextManager = cudaContextManager;
-				//sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
-				//sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;
-			}
-
-			
+			//------------------------------------------------------------
+			//  To enable physx gpu support add these libs.
+			//	Currently running physx on gpu is much slower than cpu.
+			//------------------------------------------------------------
+			// PhysXGpu_static_64.lib
+			// PhysXCommonGpu_static_64.lib
+			// PhysXCudaContextManager_static_64.lib
+			// PhysXNarrowphaseGpu_static_64.lib
+			// PhysXSimulationControllerGpu_static_64.lib
+			// PhysXBroadphaseGpu_static_64.lib
+			// PhysXArticulationGpu_static_64.lib
+			// PhysXSolverGpu_static_64.lib
+			// cuda.lib
+			// cudart.lib
+			//------------------------------------------------------------
+			// And uncomment this
+			//------------------------------------------------------------
+			//// Assuming m_PxFoundation is your PxFoundation*
+			//PxCudaContextManagerDesc cudaDesc;
+			//// Configure cudaDesc fields (e.g., interopMode)
+			//
+			//// Create the PxCudaContextManager
+			//cudaContextManager = PxCreateCudaContextManager(*foundation, cudaDesc);
+			//
+			//// Check if the context is valid (i.e., a compatible GPU was found)
+			//if (cudaContextManager && !cudaContextManager->contextIsValid())
+			//{
+			//	// Handle error: context creation failed (e.g., no CUDA-capable GPU)
+			//	cudaContextManager->release();
+			//	cudaContextManager = nullptr;
+			//}
+			//
+			//// Enable CUDA GPU support
+			//if (cudaContextManager)
+			//{
+			//	// Assign the context manager
+			//	//sceneDesc.cudaContextManager = cudaContextManager;
+			//	//sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
+			//	//sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;
+			//}
+			//------------------------------------------------------------
 
 			scene = physics->createScene(sceneDesc);
 

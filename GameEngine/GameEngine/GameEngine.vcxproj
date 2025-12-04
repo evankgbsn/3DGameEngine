@@ -313,7 +313,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;PhysXGpu_static_64.lib;PhysXCommonGpu_static_64.lib;PhysXCudaContextManager_static_64.lib;PhysXNarrowphaseGpu_static_64.lib;PhysXSimulationControllerGpu_static_64.lib;PhysXBroadphaseGpu_static_64.lib;PhysXArticulationGpu_static_64.lib;PhysXSolverGpu_static_64.lib;cuda.lib;cudart.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -346,7 +346,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;cuda.lib;cudart.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib;PhysXGpu_static_64.lib;PhysXCommonGpu_static_64.lib;PhysXCudaContextManager_static_64.lib;PhysXNarrowphaseGpu_static_64.lib;PhysXSimulationControllerGpu_static_64.lib;PhysXBroadphaseGpu_static_64.lib;PhysXArticulationGpu_static_64.lib;PhysXSolverGpu_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -420,7 +420,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;PhysXGpu_static_64.lib;PhysXCommonGpu_static_64.lib;PhysXCudaContextManager_static_64.lib;PhysXNarrowphaseGpu_static_64.lib;PhysXSimulationControllerGpu_static_64.lib;PhysXBroadphaseGpu_static_64.lib;PhysXArticulationGpu_static_64.lib;PhysXSolverGpu_static_64.lib;cuda.lib;cudart.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -457,7 +457,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;PhysXGpu_static_64.lib;PhysXCommonGpu_static_64.lib;PhysXCudaContextManager_static_64.lib;PhysXNarrowphaseGpu_static_64.lib;PhysXSimulationControllerGpu_static_64.lib;PhysXBroadphaseGpu_static_64.lib;PhysXArticulationGpu_static_64.lib;PhysXSolverGpu_static_64.lib;cuda.lib;cudart.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
