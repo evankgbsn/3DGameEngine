@@ -52,7 +52,7 @@ void CharacterControllerComponent::AddDisp(const glm::vec3& newDisp)
 
 void CharacterControllerComponent::Jump(float force)
 {
-	currentJump = force * 10;
+	currentJump = force;
 }
 
 bool CharacterControllerComponent::IsFalling() const

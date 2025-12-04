@@ -449,7 +449,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(0.25f);
+				controller->Jump(0.0025f);
 			}
 		}
 	}
