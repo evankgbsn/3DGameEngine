@@ -100,6 +100,8 @@ void FPSPlayer::GameUpdate()
 		if (updateTime >= 0.001f)
 		{
 			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+			ServerSendAll("View " + NetworkManager::ConvertMat4ToData(cam->GetView()), {}, false);
+			ServerSendAll("Projection " + NetworkManager::ConvertMat4ToData(cam->GetProjection()), {}, false);
 			updateTime = 0.0f;
 		}
 
@@ -218,32 +220,12 @@ void FPSPlayer::RegisterInput()
 
 	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
-			{
-				float xspeed = -10.0f;
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
-			}
+			
 		});
 
 	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
-			{
-				float yspeed = -10.0f;
-				float angle = yspeed * value * TimeManager::DeltaTime();
-
-				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
-
-				if (dot > -0.9f && angle < 0)
-				{
-					cam->Rotate(cam->GetRightVector(), angle);
-				}
-
-				if (dot < 0.9f && angle > 0)
-				{
-					cam->Rotate(cam->GetRightVector(), angle);
-				}
-			}
+			
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
@@ -438,6 +420,14 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			disp = NetworkManager::ConvertDataToVec3(updateData);
 		}
+		else if (updateType == "View")
+		{
+			cam->SetView(NetworkManager::ConvertDataToMat4(updateData));
+		}
+		else if (updateType == "Projection")
+		{
+			cam->SetProjection(NetworkManager::ConvertDataToMat4(updateData));
+		}
 	}
 	else
 	{
@@ -449,7 +439,39 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(0.0025f);
+				controller->Jump(0.25f);
+			}
+		}
+		else if (updateType == "LookX")
+		{
+			float value = std::stof(updateData);
+
+			if (abs(value) > 0.05f)
+			{
+				float xspeed = -10.0f;
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
+			}
+		}
+		else if (updateType == "LookY")
+		{
+			float value = std::stof(updateData);
+
+			if (abs(value) > 0.05f)
+			{
+				float yspeed = -10.0f;
+				float angle = yspeed * value * TimeManager::DeltaTime();
+
+				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
+
+				if (dot > -0.9f && angle < 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				if (dot < 0.9f && angle > 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
 			}
 		}
 	}

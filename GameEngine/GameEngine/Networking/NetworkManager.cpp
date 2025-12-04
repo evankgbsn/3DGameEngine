@@ -1904,6 +1904,54 @@ glm::vec3 NetworkManager::ConvertDataToVec3(const std::string& data)
 	return glm::vec3(std::stof(x), std::stof(y), std::stof(z));
 }
 
+glm::mat4 NetworkManager::ConvertDataToMat4(const std::string& data)
+{
+	std::vector<std::string> mat4(16);
+
+	unsigned int mat4Index = 0;
+	unsigned int i = 0;
+
+	while (i < data.size())
+	{
+		for (i; i < data.size(); i++)
+		{
+			if (data[i] == ' ')
+			{
+				break;
+			}
+
+			mat4[mat4Index] += data[i];
+		}
+
+		mat4Index++;
+		i++;
+	}
+
+	return glm::mat4(
+		glm::vec4(std::stof(mat4[0]), std::stof(mat4[1]), std::stof(mat4[2]), std::stof(mat4[3])),
+		glm::vec4(std::stof(mat4[4]), std::stof(mat4[5]), std::stof(mat4[6]), std::stof(mat4[7])),
+		glm::vec4(std::stof(mat4[8]), std::stof(mat4[9]), std::stof(mat4[10]), std::stof(mat4[11])),
+		glm::vec4(std::stof(mat4[12]), std::stof(mat4[13]), std::stof(mat4[14]), std::stof(mat4[15]))
+	);
+}
+
+std::string NetworkManager::ConvertMat4ToData(const glm::mat4& mat4)
+{
+	std::string data = "";
+
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		if (i != 0)
+		{
+			data += " ";
+		}
+
+		data = std::to_string(mat4[i].x) + " " + std::to_string(mat4[i].y) + " " + std::to_string(mat4[i].z) + " " + std::to_string(mat4[i].w);
+	}
+
+	return data;
+}
+
 std::string NetworkManager::GetIP()
 {
 	if (instance != nullptr)

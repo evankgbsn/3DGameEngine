@@ -73,6 +73,10 @@ public:
 
 	static glm::vec3 ConvertDataToVec3(const std::string& data);
 
+	static glm::mat4 ConvertDataToMat4(const std::string& data);
+
+	static std::string ConvertMat4ToData(const glm::mat4& mat4);
+
 	static std::string GetIP();
 
 	static unsigned long long GenerateNetworkObjectID();
