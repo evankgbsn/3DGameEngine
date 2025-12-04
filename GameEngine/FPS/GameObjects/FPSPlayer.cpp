@@ -50,17 +50,17 @@ void FPSPlayer::Initialize()
 		RegisterEditorToggleCallbacks();
 	}
 
+	cam = new CameraComponent("FPS");
+
+	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
+	cam->SetFOV(20.0f);
+	cam->SetNear(0.01f);
+
+	AddComponent(cam, "Camera");
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		cam = new CameraComponent("FPS");
-
-		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
-		cam->SetTarget({ 0.0f, 0.0f, 30.0f });
-		cam->SetFOV(20.0f);
-		cam->SetNear(0.01f);
-
-		AddComponent(cam, "Camera");
-
 		RegisterInput();
 	}
 }
