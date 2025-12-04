@@ -220,12 +220,12 @@ void FPSPlayer::RegisterInput()
 
 	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			
+			ClientSend("LookX " + std::to_string(value));
 		});
 
 	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			
+			ClientSend("LookY " + std::to_string(value));
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
