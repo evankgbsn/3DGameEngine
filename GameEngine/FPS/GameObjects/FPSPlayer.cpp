@@ -52,7 +52,7 @@ void FPSPlayer::Initialize()
 		RegisterEditorToggleCallbacks();
 	}
 
-	cam = new CameraComponent("FPS");
+	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
 
 	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
 	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
