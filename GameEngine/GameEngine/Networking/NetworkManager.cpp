@@ -1421,7 +1421,7 @@ void NetworkManager::ServerSendAllUDP(const std::string& data, const std::string
 
 				sockaddr_in destination;
 				destination.sin_family = AF_INET;
-				destination.sin_port = htons(54002);
+				destination.sin_port = htons(54001);
 
 				// Ptr to the storage for the binary IP (in_addr structure)
 				PVOID addrPtr = &destination.sin_addr;
@@ -1560,7 +1560,7 @@ void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& dat
 
 				sockaddr_in destination;
 				destination.sin_family = AF_INET;
-				destination.sin_port = htons(54002);
+				destination.sin_port = htons(54001);
 
 				// Ptr to the storage for the binary IP (in_addr structure)
 				PVOID addrPtr = &destination.sin_addr;
