@@ -110,8 +110,7 @@ void FPSPlayer::GameUpdate()
 		if (updateTime >= 0.001f)
 		{
 			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
-			ServerSendAll("View " + NetworkManager::ConvertMat4ToData(cam->GetView()), {}, false);
-			ServerSendAll("Projection " + NetworkManager::ConvertMat4ToData(cam->GetProjection()), {}, false);
+			ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
 			updateTime = 0.0f;
 		}
 
@@ -420,13 +419,9 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			disp = NetworkManager::ConvertDataToVec3(updateData);
 		}
-		else if (updateType == "View")
+		else if (updateType == "Target")
 		{
-			cam->SetView(NetworkManager::ConvertDataToMat4(updateData));
-		}
-		else if (updateType == "Projection")
-		{
-			cam->SetProjection(NetworkManager::ConvertDataToMat4(updateData));
+			cam->SetTarget(NetworkManager::ConvertDataToVec3(updateData));
 		}
 	}
 	else
