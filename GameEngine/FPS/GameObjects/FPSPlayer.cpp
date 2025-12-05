@@ -116,8 +116,8 @@ void FPSPlayer::GameUpdate()
 
 		if (updateTime >= 0.001f)
 		{
-			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
-			ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
+			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, true);
+			ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, true);
 			updateTime = 0.0f;
 		}
 
