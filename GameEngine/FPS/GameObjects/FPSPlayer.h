@@ -107,6 +107,20 @@ private:
 
 	glm::vec3 positionToSet;
 
+	glm::vec3 targetToSet;
+
+	unsigned int positionPacketNumber = 0;
+
+	unsigned int targetPacketNumber = 0;
+
+	unsigned int dispPacketNumber = 0;
+
+	unsigned int lookXPacketNumber = 0;
+
+	unsigned int lookYPacketNumber = 0;
+
+	unsigned int jumpPacketNumber = 0;
+
 };
 
 #endif // FPSPLAYER_H

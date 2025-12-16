@@ -93,6 +93,7 @@ void FPSPlayer::GameUpdate()
 {
 	if (!NetworkManager::IsServer())
 	{
+		cam->SetTarget(targetToSet);
 		SetPosition(positionToSet);
 	}
 
@@ -116,8 +117,8 @@ void FPSPlayer::GameUpdate()
 
 		if (updateTime >= 0.001f)
 		{
-			ServerSendAll("Position " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
-			ServerSendAll("Target " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
+			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+			ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
 			updateTime = 0.0f;
 		}
 
@@ -232,12 +233,12 @@ void FPSPlayer::RegisterInput()
 
 	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			ClientSend("LookX " + std::to_string(value), false);
+			ClientSend("LookX " + std::to_string(lookXPacketNumber++) + " " + std::to_string(value), false);
 		});
 
 	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			ClientSend("LookY " + std::to_string(value), false);
+			ClientSend("LookY " + std::to_string(lookXPacketNumber++) + " " + std::to_string(value), false);
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
@@ -245,7 +246,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -254,13 +255,13 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("Disp " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
-			ClientSend("Jump ", false);
+			ClientSend("Jump " + std::to_string(jumpPacketNumber++), false);
 		});
 
 	keyboardMove = new std::function<void(int)>([this](int key)
@@ -293,7 +294,7 @@ void FPSPlayer::RegisterInput()
 		{
 			if (!controller->IsFalling())
 			{
-				ClientSend("Jump ");
+				ClientSend("Jump " + std::to_string(jumpPacketNumber++));
 			}
 		});
 
@@ -406,18 +407,32 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 	std::string updateType;
 
-	for (const auto& character : data)
+	unsigned int i = 0;
+	for (i; i < data.size(); i++)
 	{
-		if (character == ' ')
+		if (data[i] == ' ')
 		{
+			i++;
 			break;
 		}
-		updateType += character;
+		updateType += data[i];
+	}
+
+	std::string packetID;
+
+	for (i; i < data.size(); i++)
+	{
+		if (data[i] == ' ')
+		{
+			i++;
+			break;
+		}
+		packetID += data[i];
 	}
 
 	std::string updateData;
 
-	for (const auto& character : std::string(data.begin() + updateType.size() + 1, data.end()))
+	for (const auto& character : std::string(data.begin() + updateType.size() + packetID.size() + 2, data.end()))
 	{
 		updateData += character;
 	}
@@ -426,20 +441,44 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
-			positionToSet = NetworkManager::ConvertDataToVec3(updateData);
+			static unsigned int lastPacket = std::stoi(packetID);
+
+			if(std::stoi(packetID) >= lastPacket)
+				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
+			else
+			{
+				Logger::Log("Lost position packet");
+			}
+
+			lastPacket = std::stoi(packetID);
 		}
 		else if (updateType == "Disp")
 		{
-			disp = NetworkManager::ConvertDataToVec3(updateData);
+			static unsigned int lastPacket = std::stoi(packetID);
+
+			if (std::stoi(packetID) >= lastPacket)
+				disp = NetworkManager::ConvertDataToVec3(updateData);
+				
+			lastPacket = std::stoi(packetID);
 		}
 		else if (updateType == "Target")
 		{
-			cam->SetTarget(NetworkManager::ConvertDataToVec3(updateData));
+			static unsigned int lastPacket = std::stoi(packetID);
+			
+			if (std::stoi(packetID) >= lastPacket)
+				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+				
+				
+			lastPacket = std::stoi(packetID);
 		}
 	}
 	else
 	{
-		if (updateType == "Disp")
+		if (updateType == "DispX")
+		{
+			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
+		}
+		else if (updateType == "DispY")
 		{
 			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
 		}
