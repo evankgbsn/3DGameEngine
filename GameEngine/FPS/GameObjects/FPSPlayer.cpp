@@ -72,8 +72,6 @@ void FPSPlayer::Terminate()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		DeregisterInput();
-		RemoveComponent("Camera");
-		delete cam;
 	}
 
 	if (NetworkManager::IsServer())
@@ -82,24 +80,28 @@ void FPSPlayer::Terminate()
 		delete controller;
 	}
 
+	RemoveComponent("Camera");
 	RemoveComponent("Graphics");
 	RemoveComponent("AnimatedCollider");
 
 	delete hitBox;
 	delete characterGraphics;
+	delete cam;
 }
 
 void FPSPlayer::GameUpdate()
 {
 	if (!NetworkManager::IsServer())
 	{
-		cam->SetTarget(targetToSet);
 		SetPosition(positionToSet);
+		cam->SetTarget(targetToSet);
 	}
 
 	hitBox->Update();
 
 	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+
+	
 
 	glm::vec3 camRight = cam->GetRightVector();
 	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -464,11 +466,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		else if (updateType == "Target")
 		{
 			static unsigned int lastPacket = std::stoi(packetID);
-			
+
 			if (std::stoi(packetID) >= lastPacket)
 				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
-				
-				
+
 			lastPacket = std::stoi(packetID);
 		}
 	}
