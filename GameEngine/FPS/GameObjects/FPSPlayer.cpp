@@ -65,6 +65,8 @@ void FPSPlayer::Initialize()
 	}
 
 	RegisterEditorToggleCallbacks();
+
+	InputManager::DisableCursor("Engine");
 }
 
 void FPSPlayer::Terminate()
@@ -98,11 +100,16 @@ void FPSPlayer::GameUpdate()
 	{
 		SetPosition(positionToSet);
 		SetRotation(rotationToSet);
-		cam->SetTarget(targetToSet);
 		cam->SetPosition(camPositionToSet);
 	}
 
 	hitBox->Update();
+
+	glm::vec3 camRight = cam->GetRightVector();
+	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
+	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
+
+	characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 
 	if (NetworkManager::IsServer())
 	{
@@ -210,15 +217,59 @@ void FPSPlayer::RegisterInput()
 		{
 			static glm::vec2 prevPos = cursorPos;
 			
-			float xspeed = 1.0f;
-			float yspeed = 1.0f;
-			if (cursorPos.x != prevPos.x)
+			float xspeed = 0.250f;
+			float yspeed = 0.250f;
+
+			float value = xspeed * (float)-(cursorPos.x - prevPos.x);
+
+			if (abs(value) > 0.05f)
 			{
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x) * TimeManager::DeltaTime());
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
 			}
-			if (cursorPos.y != prevPos.y)
+
+			value = yspeed * (float)-(cursorPos.y - prevPos.y);
+
+			if (abs(value) > 0.05f)
 			{
-				float angle = yspeed * (float)-(cursorPos.y - prevPos.y) * TimeManager::DeltaTime();
+				float angle = yspeed * value * TimeManager::DeltaTime();
+
+				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
+
+				if (dot > -0.9f && angle < 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				if (dot < 0.9f && angle > 0)
+				{
+					cam->Rotate(cam->GetRightVector(), angle);
+				}
+			}
+
+			ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+			
+			prevPos = cursorPos;
+		});
+
+	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.05f)
+			{
+				float xspeed = -10.0f;
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
+
+				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+			}
+
+
+		});
+
+	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.05f)
+			{
+				float yspeed = -10.0f;
+				float angle = yspeed * value * TimeManager::DeltaTime();
 
 				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
 
@@ -232,20 +283,8 @@ void FPSPlayer::RegisterInput()
 					cam->Rotate(cam->GetRightVector(), angle);
 				}
 
-				
+				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 			}
-			
-			prevPos = cursorPos;
-		});
-
-	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
-		{
-			ClientSend("LookX " + std::to_string(lookXPacketNumber++) + " " + std::to_string(value), false);
-		});
-
-	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
-		{
-			ClientSend("LookY " + std::to_string(lookXPacketNumber++) + " " + std::to_string(value), false);
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
@@ -273,36 +312,35 @@ void FPSPlayer::RegisterInput()
 
 	keyboardMove = new std::function<void(int)>([this](int key)
 		{
-			//float xspeed = 10.0f;
-			//glm::vec3 disp(0.0f);
-			//
-			//switch (key)
-			//{
-			//case KEY_W:
-			//	disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
-			//	break;
-			//case KEY_A:
-			//	disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
-			//	break;
-			//case KEY_S:
-			//	disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
-			//	break;
-			//case KEY_D:
-			//	disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
-			//	break;
-			//default:
-			//	break;
-			//}
-			//
-			//controller->AddDisp(disp);
+			float xspeed = 10.0f;
+			glm::vec3 disp(0.0f);
+			
+			switch (key)
+			{
+			case KEY_W:
+				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
+				break;
+			case KEY_A:
+				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
+				break;
+			case KEY_S:
+				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
+				break;
+			case KEY_D:
+				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
+				break;
+			default:
+				break;
+			}
 		});
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
 		{
-			if (!controller->IsFalling())
-			{
-				ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ");
-			}
+			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ");
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
@@ -359,6 +397,8 @@ void FPSPlayer::RegisterEditorToggleCallbacks()
 			{
 				hitBox->ToggleVisibility();
 			}
+
+			InputManager::EnableCursor("Engine");
 		});
 
 	editorDisable = new std::function<void()>([this]()
@@ -369,6 +409,8 @@ void FPSPlayer::RegisterEditorToggleCallbacks()
 			{
 				hitBox->ToggleVisibility();
 			}
+
+			InputManager::DisableCursor("Engine");
 		});
 
 	Editor::RegisterOnEditorEnable(editorEnable);
@@ -519,37 +561,14 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 				controller->Jump(100.0f, 0.7f);
 			}
 		}
-		else if (updateType == "LookX")
+		else if (updateType == "Target")
 		{
-			float value = std::stof(updateData);
+			static unsigned int lastPacket = std::stoi(packetID);
 
-			if (abs(value) > 0.05f)
-			{
-				float xspeed = -10.0f;
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
-			}
-		}
-		else if (updateType == "LookY")
-		{
-			float value = std::stof(updateData);
+			if (std::stoi(packetID) >= lastPacket)
+				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
 
-			if (abs(value) > 0.05f)
-			{
-				float yspeed = -10.0f;
-				float angle = yspeed * value * TimeManager::DeltaTime();
-
-				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
-
-				if (dot > -0.9f && angle < 0)
-				{
-					cam->Rotate(cam->GetRightVector(), angle);
-				}
-
-				if (dot < 0.9f && angle > 0)
-				{
-					cam->Rotate(cam->GetRightVector(), angle);
-				}
-			}
+			lastPacket = std::stoi(packetID);
 		}
 	}
 }
