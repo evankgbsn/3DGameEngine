@@ -99,11 +99,11 @@ void FPSPlayer::GameUpdate()
 	if (!NetworkManager::IsServer())
 	{
 		SetPosition(positionToSet);
-		SetRotation(rotationToSet);
-		cam->SetPosition(camPositionToSet);
 	}
 
 	hitBox->Update();
+
+	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
 
 	glm::vec3 camRight = cam->GetRightVector();
 	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -113,14 +113,6 @@ void FPSPlayer::GameUpdate()
 
 	if (NetworkManager::IsServer())
 	{
-		cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
-
-		glm::vec3 camRight = cam->GetRightVector();
-		glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
-		glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
-
-		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
 
@@ -130,9 +122,6 @@ void FPSPlayer::GameUpdate()
 		if (updateTime >= 0.001f)
 		{
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
-			ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
-			ServerSendAll("Rotation " + std::to_string(rotationPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(characterGraphics->GetRotation()), {}, false);
-			ServerSendAll("CameraPosition " + std::to_string(cameraPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetPosition()), {}, false);
 			updateTime = 0.0f;
 		}
 
@@ -504,42 +493,6 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			{
 				Logger::Log("Lost position packet");
 			}
-
-			lastPacket = std::stoi(packetID);
-		}
-		else if (updateType == "Disp")
-		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
-				disp = NetworkManager::ConvertDataToVec3(updateData);
-				
-			lastPacket = std::stoi(packetID);
-		}
-		else if (updateType == "Target")
-		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
-				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
-
-			lastPacket = std::stoi(packetID);
-		}
-		else if (updateType == "Rotation")
-		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
-				rotationToSet = NetworkManager::ConvertDataToMat4(updateData);
-
-			lastPacket = std::stoi(packetID);
-		}
-		else if (updateType == "CameraPosition")
-		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
-				camPositionToSet = NetworkManager::ConvertDataToVec3(updateData);
 
 			lastPacket = std::stoi(packetID);
 		}

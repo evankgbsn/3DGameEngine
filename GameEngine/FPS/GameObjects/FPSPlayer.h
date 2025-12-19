@@ -111,25 +111,13 @@ private:
 
 	glm::vec3 targetToSet;
 
-	glm::mat4 rotationToSet;
-
-	glm::vec3 camPositionToSet;
-
 	unsigned int positionPacketNumber = 0;
-
-	unsigned int cameraPositionPacketNumber = 0;
 
 	unsigned int targetPacketNumber = 0;
 
 	unsigned int dispPacketNumber = 0;
 
-	unsigned int lookXPacketNumber = 0;
-
-	unsigned int lookYPacketNumber = 0;
-
 	unsigned int jumpPacketNumber = 0;
-
-	unsigned int rotationPacketNumber = 0;
 
 };
 
