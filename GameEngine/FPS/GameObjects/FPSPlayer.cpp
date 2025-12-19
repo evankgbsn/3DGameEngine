@@ -48,8 +48,6 @@ void FPSPlayer::Initialize()
 	{
 		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
-
-		RegisterEditorToggleCallbacks();
 	}
 
 	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
@@ -65,10 +63,14 @@ void FPSPlayer::Initialize()
 	{
 		RegisterInput();
 	}
+
+	RegisterEditorToggleCallbacks();
 }
 
 void FPSPlayer::Terminate()
 {
+	DeregisterEditorToggleCallbacks();
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		DeregisterInput();
@@ -78,6 +80,7 @@ void FPSPlayer::Terminate()
 	{
 		RemoveComponent("Controller");
 		delete controller;
+		delete onClientDisconnect;
 	}
 
 	RemoveComponent("Camera");
@@ -370,6 +373,12 @@ void FPSPlayer::RegisterEditorToggleCallbacks()
 
 	Editor::RegisterOnEditorEnable(editorEnable);
 	Editor::RegisterOnEditorDisable(editorDisable);
+}
+
+void FPSPlayer::DeregisterEditorToggleCallbacks()
+{
+	Editor::DeregisterOnEditorEnable(editorEnable);
+	Editor::DeregisterOnEditorDisable(editorDisable);
 }
 
 void FPSPlayer::OnSpawn()

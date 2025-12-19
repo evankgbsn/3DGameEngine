@@ -1039,6 +1039,8 @@ void NetworkManager::OnClientDisconnect(const std::string& IP)
 				(*callback.second)(IP);
 			});
 	}
+
+	onClientDisconnectCallbacks.clear();
 }
 
 void NetworkManager::CleanDisconnectedClientThreads()

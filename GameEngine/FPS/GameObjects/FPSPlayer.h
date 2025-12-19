@@ -73,6 +73,8 @@ private:
 
 	void RegisterEditorToggleCallbacks();
 
+	void DeregisterEditorToggleCallbacks();
+
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
 
 	CameraComponent* cam;
