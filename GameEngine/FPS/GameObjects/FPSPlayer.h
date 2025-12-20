@@ -11,6 +11,7 @@ class RigidBodyComponent;
 class CameraComponent;
 class AnimatedColliderComponent;
 class CharacterControllerComponent;
+class GraphicsObjectTexturedLit;
 
 class FPSPlayer : public GameObject, public NetworkObject
 {
@@ -76,6 +77,10 @@ private:
 	void DeregisterEditorToggleCallbacks();
 
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
+
+	GraphicsObjectTexturedLit* characterArmsGraphics;
+
+	GraphicsObjectTexturedAnimatedLit* characterLegsGraphics;
 
 	CameraComponent* cam;
 

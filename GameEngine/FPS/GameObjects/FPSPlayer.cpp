@@ -1,6 +1,7 @@
 #include "FPSPlayer.h"
 
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedAnimatedLit.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
@@ -16,6 +17,8 @@
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer")
 {
@@ -29,33 +32,58 @@ FPSPlayer::~FPSPlayer()
 
 void FPSPlayer::Initialize()
 {
-	characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-	characterGraphics->SetClip(0);
-	characterGraphics->SetShine(32.0f);
-	characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-	characterGraphics->SetSpeed(1.0f);
-
-	AddComponent(characterGraphics, "Graphics");
-
-	positionToSet = characterGraphics->GetPosition();
-
-	hitBox = new AnimatedColliderComponent(characterGraphics);
-	hitBox->Update();
-
-	AddComponent(hitBox, "AnimatedCollider");
-	
-	if (NetworkManager::IsServer())
+	if (SpawnedFromLocalSpawnRequest())
 	{
-		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
-		AddComponent(controller, "Controller");
+		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterLegsGraphics->SetClip(0);
+		characterLegsGraphics->SetShine(32.0f);
+		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterLegsGraphics->SetSpeed(1.0f);
+
+		AddComponent(characterLegsGraphics, "LegsGraphics");
+
+		characterArmsGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("CharacterArms"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterArmsGraphics->SetShine(32.0f);
+
+		AddComponent(characterArmsGraphics, "ArmsGraphics");
+
+		positionToSet = characterLegsGraphics->GetPosition();
+
+		hitBox = new AnimatedColliderComponent(characterLegsGraphics);
+		hitBox->Update();
+
+		AddComponent(hitBox, "AnimatedCollider");
+	}
+	else
+	{
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterGraphics->SetClip(0);
+		characterGraphics->SetShine(32.0f);
+		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterGraphics->SetSpeed(1.0f);
+
+		AddComponent(characterGraphics, "Graphics");
+
+		positionToSet = characterGraphics->GetPosition();
+
+		hitBox = new AnimatedColliderComponent(characterGraphics);
+		hitBox->Update();
+
+		AddComponent(hitBox, "AnimatedCollider");
+
+		if (NetworkManager::IsServer())
+		{
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
+			AddComponent(controller, "Controller");
+		}
 	}
 
 	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
 
-	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
 	cam->SetFOV(20.0f);
-	cam->SetNear(0.01f);
+	cam->SetNear(0.001f);
 
 	AddComponent(cam, "Camera");
 
@@ -76,6 +104,19 @@ void FPSPlayer::Terminate()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		DeregisterInput();
+
+		RemoveComponent("ArmsGraphics");
+		RemoveComponent("LegsGraphics");
+
+		delete characterArmsGraphics;
+		delete characterLegsGraphics;
+	}
+	else
+	{
+
+		RemoveComponent("Graphics");
+
+		delete characterGraphics;
 	}
 
 	if (NetworkManager::IsServer())
@@ -86,11 +127,9 @@ void FPSPlayer::Terminate()
 	}
 
 	RemoveComponent("Camera");
-	RemoveComponent("Graphics");
 	RemoveComponent("AnimatedCollider");
 
 	delete hitBox;
-	delete characterGraphics;
 	delete cam;
 }
 
@@ -103,13 +142,27 @@ void FPSPlayer::GameUpdate()
 
 	hitBox->Update();
 
-	cam->SetPosition(hitBox->GetJointTransform("Head")[3] + glm::normalize(hitBox->GetJointTransform("Head")[0]) * 0.5f);
+	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
 	glm::vec3 camRight = cam->GetRightVector();
 	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
 	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
 
-	characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+	if (SpawnedFromLocalSpawnRequest())
+	{
+		characterLegsGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
+		characterArmsGraphics->SetPosition(cam->GetPosition() + cam->GetUpVector() * -0.25f);
+		glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+
+		glm::mat4 armRotation = glm::mat4(glm::vec4(camRight, 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), -glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
+		characterArmsGraphics->SetRotation(armRotation);
+	}
+	else
+	{
+		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+	}
 
 	if (NetworkManager::IsServer())
 	{
@@ -141,16 +194,35 @@ void FPSPlayer::EditorUpdate()
 
 void FPSPlayer::Load()
 {
-	if (!ModelManager::ModelLoaded("Character"))
+	if (SpawnedFromLocalSpawnRequest())
 	{
-		ModelManager::LoadModel("Character", "Assets/Model/Woman.gltf", false);
-	}
+		if (!ModelManager::ModelLoaded("CharacterArms"))
+		{
+			ModelManager::LoadModel("CharacterArms", "Assets/Model/FPSCharacterArmsNoAnim.gltf", false);
+		}
 
-	if (!TextureManager::TextureLoaded("Character"))
+		if (!ModelManager::ModelLoaded("CharacterLegs"))
+		{
+			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
+		}
+
+		if (!TextureManager::TextureLoaded("Character"))
+		{
+			TextureManager::LoadTexture("Assets/Texture/Grey.png", "Character");
+		}
+	}
+	else
 	{
-		TextureManager::LoadTexture("Assets/Texture/Woman.png", "Character");
-	}
+		if (!ModelManager::ModelLoaded("Character"))
+		{
+			ModelManager::LoadModel("Character", "Assets/Model/FPSCharacter.gltf", false);
+		}
 
+		if (!TextureManager::TextureLoaded("Character"))
+		{
+			TextureManager::LoadTexture("Assets/Texture/Grey.png", "Character");
+		}
+	}
 }
 
 void FPSPlayer::Unload()
@@ -174,7 +246,14 @@ glm::mat4 FPSPlayer::GetTransform() const
 
 void FPSPlayer::SetPosition(const glm::vec3& pos)
 {
-	characterGraphics->SetPosition(pos);
+	if (SpawnedFromLocalSpawnRequest())
+	{
+		characterLegsGraphics->SetPosition(pos);
+	}
+	else
+	{
+		characterGraphics->SetPosition(pos);
+	}
 }
 
 void FPSPlayer::SetRotation(const glm::mat4& rot)
@@ -281,7 +360,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterLegsGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -290,7 +369,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterLegsGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -307,19 +386,19 @@ void FPSPlayer::RegisterInput()
 			switch (key)
 			{
 			case KEY_W:
-				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				disp = glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_A:
-				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				disp = glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_S:
-				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				disp = -glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_D:
-				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				disp = -glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			default:
