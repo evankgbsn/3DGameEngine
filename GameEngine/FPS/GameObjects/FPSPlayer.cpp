@@ -144,6 +144,11 @@ void FPSPlayer::GameUpdate()
 
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
+	if (NetworkManager::IsServer())
+	{
+		cam->SetTarget(targetToSet);
+	}
+
 	glm::vec3 camRight = cam->GetRightVector();
 	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
 	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
