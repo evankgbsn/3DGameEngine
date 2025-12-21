@@ -70,6 +70,8 @@ private:
 	unsigned int positionPacketNumber = 0;
 
 	float speed;
+
+	glm::vec3 direction;
 };
 
 #endif // AK12BULLET_H

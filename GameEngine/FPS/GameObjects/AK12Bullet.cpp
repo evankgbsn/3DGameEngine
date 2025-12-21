@@ -27,6 +27,34 @@ void AK12Bullet::Initialize()
     graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"));
 
     AddComponent(graphics, "Graphics");
+
+	glm::mat4 transform(1.0f);
+
+	Scene* main = SceneManager::GetRegisteredScene("Test");
+
+	if (main != nullptr)
+	{
+		GameObject* localPlayer = nullptr;
+
+		const std::unordered_map<std::string, GameObject*>& gameObjects = main->GetGameObjects();
+
+		for (const auto& obj : gameObjects)
+		{
+			FPSPlayer* player = dynamic_cast<FPSPlayer*>(obj.second);
+
+			if (player != nullptr)
+			{
+				if (GetSpawnerIP() == player->GetSpawnerIP())
+				{
+					transform = player->GetWeaponTransform();
+				}
+			}
+		}
+	}
+
+	graphics->SetTransform(transform);
+
+	direction = glm::normalize(transform[2]);
 }
 
 void AK12Bullet::Terminate()
@@ -43,31 +71,7 @@ void AK12Bullet::GameUpdate()
 	}
 	else
 	{
-		glm::mat4 transform(1.0f);
-
-		Scene* main = SceneManager::GetRegisteredScene("Test");
-
-		if (main != nullptr)
-		{
-			GameObject* localPlayer = nullptr;
-
-			const std::unordered_map<std::string, GameObject*>& gameObjects = main->GetGameObjects();
-
-			for (const auto& obj : gameObjects)
-			{
-				FPSPlayer* player = dynamic_cast<FPSPlayer*>(obj.second);
-
-				if (player != nullptr)
-				{
-					if (GetSpawnerIP() == player->GetSpawnerIP())
-					{
-						transform = player->GetWeaponTransform();
-					}
-				}
-			}
-		}
-
-		graphics->Translate(glm::normalize(transform[2]) * speed * TimeManager::DeltaTime());
+		graphics->Translate(direction * speed * TimeManager::DeltaTime());
 
 		static float updateTime = 0.0f;
 		updateTime += TimeManager::DeltaTime();
