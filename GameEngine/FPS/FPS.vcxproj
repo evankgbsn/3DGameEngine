@@ -230,6 +230,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObjects\AK12Bullet.cpp" />
     <ClCompile Include="GameObjects\Crate.cpp" />
     <ClCompile Include="GameObjects\FPSPlayer.cpp" />
     <ClCompile Include="GameObjects\Ground.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Scenes\Test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObjects\AK12Bullet.h" />
     <ClInclude Include="GameObjects\Crate.h" />
     <ClInclude Include="GameObjects\FPSPlayer.h" />
     <ClInclude Include="GameObjects\Ground.h" />

@@ -452,7 +452,8 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
 		{
-			ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+			NetworkManager::Spawn("AK12Bullet", nullptr);
+			//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 		});
 
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
@@ -655,7 +656,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			if (std::stoi(packetID) >= lastPacket)
 			{
-				NetworkManager::Spawn("AK12Bullet", nullptr);
+				
 			}
 
 			lastPacket = std::stoi(packetID);
