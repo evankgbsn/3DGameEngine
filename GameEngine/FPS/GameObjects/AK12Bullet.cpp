@@ -12,7 +12,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(10.0f)
+	speed(1.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
@@ -59,7 +59,7 @@ void AK12Bullet::GameUpdate()
 
 				if (player != nullptr)
 				{
-					if (player->IsLocal())
+					if (GetSpawnerIP() == player->GetSpawnerIP())
 					{
 						transform = player->GetWeaponTransform();
 					}
