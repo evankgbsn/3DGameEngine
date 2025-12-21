@@ -22,6 +22,10 @@ public:
 
 	~FPSPlayer();
 
+	bool IsLocal() const;
+
+	glm::mat4 GetWeaponTransform();
+
 private:
 
 	FPSPlayer(const FPSPlayer&) = delete;
@@ -80,6 +84,8 @@ private:
 
 	GraphicsObjectTexturedLit* characterArmsGraphics;
 
+	GraphicsObjectTexturedLit* ak12Graphics;
+
 	GraphicsObjectTexturedAnimatedLit* characterLegsGraphics;
 
 	CameraComponent* cam;
@@ -108,6 +114,8 @@ private:
 
 	std::function<void(int key)>* keyboardJump;
 
+	std::function<void(int button)>* keyboardShoot;
+
 	std::function<void(const std::string&)>* onClientDisconnect;
 
 	glm::vec3 disp;
@@ -123,6 +131,8 @@ private:
 	unsigned int dispPacketNumber = 0;
 
 	unsigned int jumpPacketNumber = 0;
+
+	unsigned int shootPacketNumber = 0;
 
 };
 

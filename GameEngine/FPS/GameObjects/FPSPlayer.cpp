@@ -30,6 +30,21 @@ FPSPlayer::~FPSPlayer()
 {
 }
 
+bool FPSPlayer::IsLocal() const
+{
+	return SpawnedFromLocalSpawnRequest();
+}
+
+glm::mat4 FPSPlayer::GetWeaponTransform()
+{
+	if (ak12Graphics != nullptr)
+	{
+		return ak12Graphics->GetTransform();
+	}
+
+	return glm::mat4(1.0f);
+}
+
 void FPSPlayer::Initialize()
 {
 	if (SpawnedFromLocalSpawnRequest())
@@ -77,6 +92,9 @@ void FPSPlayer::Initialize()
 			AddComponent(controller, "Controller");
 		}
 	}
+
+	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+	ak12Graphics->SetShine(32.0f);
 
 	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
 
@@ -157,16 +175,25 @@ void FPSPlayer::GameUpdate()
 	{
 		characterLegsGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
-		characterArmsGraphics->SetPosition(cam->GetPosition() + cam->GetUpVector() * -0.25f);
+		characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
 		glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
 		glm::mat4 armRotation = glm::mat4(glm::vec4(camRight, 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), -glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
 		characterArmsGraphics->SetRotation(armRotation);
+
+		glm::vec3 riflePositionOffset = 
+			(glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[0])) * -0.10f)
+			+ (glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[2])) * .60f)
+			+ (glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[1])) * -0.15f);
+
+		ak12Graphics->SetPosition(characterArmsGraphics->GetPosition() + riflePositionOffset);
+		ak12Graphics->SetRotation(characterArmsGraphics->GetRotation());
 	}
 	else
 	{
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+		ak12Graphics->SetTransform(characterGraphics->GetTransform());
 	}
 
 	if (NetworkManager::IsServer())
@@ -185,6 +212,8 @@ void FPSPlayer::GameUpdate()
 
 	}
 
+	
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		InputManager::WhenCursorMoved(*whenCursorMove);
@@ -199,6 +228,11 @@ void FPSPlayer::EditorUpdate()
 
 void FPSPlayer::Load()
 {
+	if (!ModelManager::ModelLoaded("AK12"))
+	{
+		ModelManager::LoadModel("AK12", "Assets/Model/AK12.gltf", false);
+	}
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		if (!ModelManager::ModelLoaded("CharacterArms"))
@@ -416,6 +450,12 @@ void FPSPlayer::RegisterInput()
 			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ");
 		});
 
+	keyboardShoot = new std::function<void(int button)>([this](int button)
+		{
+			ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+		});
+
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
@@ -431,6 +471,8 @@ void FPSPlayer::RegisterInput()
 
 void FPSPlayer::DeregisterInput()
 {
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
+
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
 	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");
 
@@ -604,6 +646,17 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			if (std::stoi(packetID) >= lastPacket)
 				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+
+			lastPacket = std::stoi(packetID);
+		}
+		else if (updateType == "Shoot")
+		{
+			static unsigned int lastPacket = std::stoi(packetID);
+
+			if (std::stoi(packetID) >= lastPacket)
+			{
+				NetworkManager::Spawn("AK12Bullet", nullptr);
+			}
 
 			lastPacket = std::stoi(packetID);
 		}
