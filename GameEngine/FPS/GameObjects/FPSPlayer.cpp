@@ -452,7 +452,8 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
 		{
-			NetworkManager::Spawn("AK12Bullet", nullptr);
+			static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
+			NetworkManager::Spawn("AK12Bullet", &callback);
 			//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 		});
 

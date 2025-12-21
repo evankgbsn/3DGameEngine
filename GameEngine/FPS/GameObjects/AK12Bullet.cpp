@@ -130,10 +130,12 @@ void AK12Bullet::Deserialize()
 
 void AK12Bullet::OnSpawn()
 {
+	NetworkObject::OnSpawn();
 }
 
 void AK12Bullet::OnDespawn()
 {
+	NetworkObject::OnDespawn();
 }
 
 void AK12Bullet::OnDataReceived(const std::string& data)
@@ -195,4 +197,5 @@ void AK12Bullet::OnServerSpawnConfirmation(const std::string& IP)
 
 void AK12Bullet::OnClientSpawnConfirmation()
 {
+	NetworkObject::OnClientSpawnConfirmation();
 }
