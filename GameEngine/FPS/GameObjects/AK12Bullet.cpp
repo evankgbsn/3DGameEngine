@@ -90,6 +90,11 @@ void AK12Bullet::Load()
     {
         ModelManager::LoadModel("AK12Bullet", "Assets/Model/AK12Bullet.gltf", false);
     }
+
+	if (!TextureManager::TextureLoaded("AK12Bullet"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/grey.png", "AK12Bullet");
+	}
 }
 
 void AK12Bullet::Unload()
