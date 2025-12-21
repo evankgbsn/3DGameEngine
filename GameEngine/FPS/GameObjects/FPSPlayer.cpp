@@ -466,7 +466,7 @@ void FPSPlayer::RegisterInput()
 			//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 		});
 
-	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
@@ -482,7 +482,7 @@ void FPSPlayer::RegisterInput()
 
 void FPSPlayer::DeregisterInput()
 {
-	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "FPSCharacterShoot");
 
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
 	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");
@@ -622,16 +622,14 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if(std::stoi(packetID) >= lastPacket)
+			if(std::stoi(packetID) >= lastPositionPacketNumber)
 				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
 			else
 			{
 				Logger::Log("Lost position packet");
 			}
 
-			lastPacket = std::stoi(packetID);
+			lastPositionPacketNumber = std::stoi(packetID);
 		}
 		else if (updateType == "WeaponPosition")
 		{
@@ -657,36 +655,30 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		}
 		else if (updateType == "Target")
 		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
+			if (std::stoi(packetID) >= lastTargetPacketNumber)
 				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
 
-			lastPacket = std::stoi(packetID);
+			lastTargetPacketNumber = std::stoi(packetID);
 		}
 		else if (updateType == "Shoot")
 		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
+			if (std::stoi(packetID) >= lastShootPacketNumber)
 			{
 				
 			}
 
-			lastPacket = std::stoi(packetID);
+			lastShootPacketNumber = std::stoi(packetID);
 		}
 		else if (updateType == "WeaponPosition")
 		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
+			if (std::stoi(packetID) >= lastWeaponPositionPacketNumber)
 			{
 				weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
 
 				ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerIP() }, false);
 			}
 
-			lastPacket = std::stoi(packetID);
+			lastWeaponPositionPacketNumber = std::stoi(packetID);
 		}
 	}
 }

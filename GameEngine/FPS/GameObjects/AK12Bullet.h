@@ -72,6 +72,8 @@ private:
 
 	unsigned int positionPacketNumber = 0;
 
+	unsigned int lastPositionPacket = 0;
+
 	float speed;
 
 	glm::vec3 direction;

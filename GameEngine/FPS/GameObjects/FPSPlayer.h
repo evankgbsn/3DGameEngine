@@ -128,15 +128,27 @@ private:
 
 	unsigned int positionPacketNumber = 0;
 
+	unsigned int lastPositionPacketNumber = 0;
+
 	unsigned int targetPacketNumber = 0;
+
+	unsigned int lastTargetPacketNumber = 0;
 
 	unsigned int dispPacketNumber = 0;
 
+	unsigned int lastDispPacketNumber = 0;
+
 	unsigned int jumpPacketNumber = 0;
+
+	unsigned int lastJumpPacketNumber = 0;
 
 	unsigned int shootPacketNumber = 0;
 
+	unsigned int lastShootPacketNumber = 0;
+
 	unsigned int weaponPositionPacketNumber = 0;
+
+	unsigned int lastWeaponPositionPacketNumber = 0;
 
 };
 

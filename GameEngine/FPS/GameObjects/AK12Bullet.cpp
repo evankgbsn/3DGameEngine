@@ -83,7 +83,7 @@ void AK12Bullet::GameUpdate()
 		static float updateTime = 0.0f;
 		updateTime += TimeManager::DeltaTime();
 
-		if (updateTime >= 0.001f)
+		if (updateTime >= 0.0001f)
 		{
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
 			updateTime = 0.0f;
@@ -201,14 +201,12 @@ void AK12Bullet::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
-			static unsigned int lastPacket = std::stoi(packetID);
-
-			if (std::stoi(packetID) >= lastPacket)
+			if (std::stoi(packetID) >= lastPositionPacket)
 			{
 				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
 			}
 
-			lastPacket = std::stoi(packetID);
+			lastPositionPacket = std::stoi(packetID);
 		}
 	}
 }
