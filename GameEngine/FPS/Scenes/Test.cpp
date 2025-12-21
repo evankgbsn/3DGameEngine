@@ -8,6 +8,7 @@
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "../GameObjects/ServerFreeCamera.h"
+#include "../GameObjects/AK12Bullet.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -15,7 +16,8 @@ Test::Test() :
 	crate(new Crate()),
 	ground(new Ground()),
 	serverFreeCam(nullptr),
-	localPlayer(nullptr)
+	localPlayer(nullptr),
+	bullet(new AK12Bullet())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");

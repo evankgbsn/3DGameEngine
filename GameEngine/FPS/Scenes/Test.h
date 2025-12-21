@@ -10,6 +10,7 @@ class Crate;
 class Ground;
 class ServerFreeCamera;
 class NetworkObject;
+class AK12Bullet;
 
 class Test : public Scene
 {
@@ -43,6 +44,8 @@ private:
 	void End() override;
 
 	FPSPlayer* player;
+
+	AK12Bullet* bullet;
 	
 	Sun* sun;
 	
