@@ -165,7 +165,6 @@ void FPSPlayer::GameUpdate()
 	if (NetworkManager::IsServer())
 	{
 		cam->SetTarget(targetToSet);
-		ak12Graphics->SetTransform(weaponPositionToSet);
 	}
 
 	glm::vec3 camRight = cam->GetRightVector();
@@ -194,7 +193,7 @@ void FPSPlayer::GameUpdate()
 	else
 	{
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-		ak12Graphics->SetTransform(characterGraphics->GetTransform());
+		ak12Graphics->SetTransform(weaponPositionToSet);
 	}
 
 	if (NetworkManager::IsServer())
@@ -634,6 +633,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			lastPacket = std::stoi(packetID);
 		}
+		else if (updateType == "WeaponPosition")
+		{
+			weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
+		}
 	}
 	else
 	{
@@ -679,6 +682,8 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			if (std::stoi(packetID) >= lastPacket)
 			{
 				weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
+
+				ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerIP() }, false);
 			}
 
 			lastPacket = std::stoi(packetID);
