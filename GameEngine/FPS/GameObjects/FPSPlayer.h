@@ -124,6 +124,8 @@ private:
 
 	glm::vec3 targetToSet;
 
+	glm::mat4 weaponPositionToSet;
+
 	unsigned int positionPacketNumber = 0;
 
 	unsigned int targetPacketNumber = 0;
@@ -133,6 +135,8 @@ private:
 	unsigned int jumpPacketNumber = 0;
 
 	unsigned int shootPacketNumber = 0;
+
+	unsigned int weaponPositionPacketNumber = 0;
 
 };
 

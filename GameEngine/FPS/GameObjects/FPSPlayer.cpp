@@ -165,6 +165,7 @@ void FPSPlayer::GameUpdate()
 	if (NetworkManager::IsServer())
 	{
 		cam->SetTarget(targetToSet);
+		ak12Graphics->SetTransform(weaponPositionToSet);
 	}
 
 	glm::vec3 camRight = cam->GetRightVector();
@@ -211,8 +212,17 @@ void FPSPlayer::GameUpdate()
 		}
 
 	}
+	else
+	{
+		static float updateTime = 0.0f;
+		updateTime += TimeManager::DeltaTime();
 
-	
+		if (updateTime >= 0.001f)
+		{
+			ClientSend("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), false);
+			updateTime = 0.0f;
+		}
+	}
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
@@ -658,6 +668,17 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			if (std::stoi(packetID) >= lastPacket)
 			{
 				
+			}
+
+			lastPacket = std::stoi(packetID);
+		}
+		else if (updateType == "WeaponPosition")
+		{
+			static unsigned int lastPacket = std::stoi(packetID);
+
+			if (std::stoi(packetID) >= lastPacket)
+			{
+				weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
 			}
 
 			lastPacket = std::stoi(packetID);

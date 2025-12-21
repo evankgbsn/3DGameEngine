@@ -131,6 +131,13 @@ void AK12Bullet::Deserialize()
 void AK12Bullet::OnSpawn()
 {
 	NetworkObject::OnSpawn();
+
+	Scene* scene = SceneManager::GetRegisteredScene("Test");
+
+	if (scene != nullptr)
+	{
+		scene->RegisterGameObject(this, "AK12Bullet:" + std::to_string(GetNetworkObjectID()));
+	}
 }
 
 void AK12Bullet::OnDespawn()
