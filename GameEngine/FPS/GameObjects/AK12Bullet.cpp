@@ -1,6 +1,7 @@
 #include "AK12Bullet.h"
 
 #include "GameEngine/Renderer/Model/ModelManager.h"
+#include "GameEngine/Renderer/Model/Model.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/Networking/NetworkManager.h"
@@ -8,6 +9,7 @@
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
 #include "../GameObjects/FPSPlayer.h"
+#include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
 
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
@@ -27,6 +29,10 @@ void AK12Bullet::Initialize()
     graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"));
 
     AddComponent(graphics, "Graphics");
+
+	collider = new OrientedBoundingBoxComponent(graphics->GetModel()->GetVertices(), graphics->GetRotation());
+
+	AddComponent(collider, "Collider");
 }
 
 void AK12Bullet::Terminate()
@@ -37,6 +43,8 @@ void AK12Bullet::Terminate()
 
 void AK12Bullet::GameUpdate()
 {
+	collider->UpdateCollider(graphics->GetTransform());
+
 	if (!NetworkManager::IsServer())
 	{
 		graphics->SetPosition(positionToSet);

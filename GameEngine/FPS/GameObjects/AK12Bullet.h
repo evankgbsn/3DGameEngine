@@ -5,6 +5,7 @@
 #include "GameEngine/Networking/NetworkObject.h"
 
 class GraphicsObjectTexturedLit;
+class OrientedBoundingBoxComponent;
 
 class AK12Bullet : public GameObject, public NetworkObject
 {
@@ -65,11 +66,15 @@ private:
 
 	GraphicsObjectTexturedLit* graphics;
 
+	OrientedBoundingBoxComponent* collider;
+
 	glm::vec3 positionToSet;
 
 	unsigned int positionPacketNumber = 0;
 
 	float speed;
+
+	
 };
 
 #endif // AK12BULLET_H
