@@ -882,7 +882,7 @@ void NetworkManager::SetupServerReceiveDespawnRequestCallback()
 					Scene* owningScene = networkGameObject->GetOwningScene();
 					if (owningScene != nullptr)
 					{
-						owningScene->DeregisterGameObject(networkGameObject->GetName());
+						owningScene->DeregisterGameObject(networkGameObject->GetName(), [](GameObject* networkGameObject) { delete dynamic_cast<NetworkObject*>(networkGameObject); });
 					}
 				}
 

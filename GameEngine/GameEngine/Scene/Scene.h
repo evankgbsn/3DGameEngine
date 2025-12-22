@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
-#include <pair>
+#include <functional>
 
 class GameObject;
 

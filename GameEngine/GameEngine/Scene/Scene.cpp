@@ -762,7 +762,7 @@ void Scene::AddToCreatedObjects(const std::string& name, GameObject* obj)
 void Scene::RemoveFromCreatedObjects(const std::string& name)
 {
 	GameObject* objectToRemove = GetGameObject(name);
-	DeregisterGameObject(name);
+	DeregisterGameObject(name, [](GameObject*) {});
 	createdObjects.erase(createdObjects.find(name));
 	delete objectToRemove;
 }
@@ -771,7 +771,7 @@ void Scene::ClearCreatedObjects()
 {
 	for (const auto& obj : createdObjects)
 	{
-		DeregisterGameObject(obj.first);
+		DeregisterGameObject(obj.first, [](GameObject*) {});
 		delete obj.second;
 	}
 
