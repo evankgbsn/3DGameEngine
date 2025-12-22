@@ -466,7 +466,7 @@ void FPSPlayer::RegisterInput()
 			//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 		});
 
-	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
@@ -482,7 +482,7 @@ void FPSPlayer::RegisterInput()
 
 void FPSPlayer::DeregisterInput()
 {
-	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESS, MOUSE_BUTTON_1, "FPSCharacterShoot");
 
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
 	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");

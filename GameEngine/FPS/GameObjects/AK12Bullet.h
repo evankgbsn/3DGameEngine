@@ -74,6 +74,10 @@ private:
 
 	unsigned int lastPositionPacket = 0;
 
+	float updateTime = 0.0f;
+
+	float spawnTime = 0.0f;
+
 	float speed;
 
 	glm::vec3 direction;

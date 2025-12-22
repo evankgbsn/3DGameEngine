@@ -14,7 +14,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(1.0f)
+	speed(20.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
@@ -80,7 +80,6 @@ void AK12Bullet::GameUpdate()
 	{
 		graphics->Translate(direction * speed * TimeManager::DeltaTime());
 
-		static float updateTime = 0.0f;
 		updateTime += TimeManager::DeltaTime();
 
 		if (updateTime >= 0.0001f)
@@ -88,6 +87,11 @@ void AK12Bullet::GameUpdate()
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
 			updateTime = 0.0f;
 		}
+	}
+
+	if (TimeManager::SecondsSinceStart() - spawnTime > 10.0f)
+	{
+		NetworkManager::Despawn(GetNetworkObjectID());
 	}
 }
 
@@ -154,6 +158,8 @@ void AK12Bullet::OnSpawn()
 	{
 		scene->RegisterGameObject(this, "AK12Bullet:" + std::to_string(GetNetworkObjectID()));
 	}
+
+	spawnTime = TimeManager::SecondsSinceStart();
 }
 
 void AK12Bullet::OnDespawn()
