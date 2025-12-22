@@ -14,7 +14,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(20.0f)
+	speed(100.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
@@ -66,6 +66,9 @@ void AK12Bullet::Terminate()
 {
     RemoveComponent("Graphics");
     delete graphics;
+
+	RemoveComponent("Collider");
+	delete collider;
 }
 
 void AK12Bullet::GameUpdate()

@@ -4,6 +4,8 @@
 #include "Scenes/FPSNetworkManager.h"
 #include "Scenes/JoinScene.h"
 
+#include <mimalloc.h>
+
 class HeapProfile
 {
 public:
@@ -36,6 +38,8 @@ int main(int argc, const char** argv)
 	Engine::Run();
 
 	Engine::Terminate();
+
+	
 
 	return 0;
 }
