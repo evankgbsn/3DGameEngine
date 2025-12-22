@@ -89,9 +89,12 @@ void AK12Bullet::GameUpdate()
 		}
 	}
 
-	if (TimeManager::SecondsSinceStart() - spawnTime > 10.0f)
+	if (NetworkManager::IsServer())
 	{
-		NetworkManager::Despawn(GetNetworkObjectID());
+		if (TimeManager::SecondsSinceStart() - spawnTime > 5.0f)
+		{
+			NetworkManager::Despawn(GetNetworkObjectID());
+		}
 	}
 }
 
