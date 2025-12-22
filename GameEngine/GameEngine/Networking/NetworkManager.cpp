@@ -1004,11 +1004,10 @@ void NetworkManager::SetupReceiveDespawnFromServer()
 					Scene* owningScene = networkGameObject->GetOwningScene();
 					if (owningScene != nullptr)
 					{
-						owningScene->DeregisterGameObject(networkGameObject->GetName());
+						owningScene->DeregisterGameObject(networkGameObject->GetName(), [](GameObject* networkGameObject) { delete dynamic_cast<NetworkObject*>(networkGameObject); });
 					}
 				}
 
-				delete networkObject->second;
 				spawnedNetworkObjects.erase(networkObject);
 			}
 
@@ -2062,13 +2061,12 @@ void NetworkManager::Despawn(unsigned long long networkObjectID)
 				Scene* owningScene = networkGameObject->GetOwningScene();
 				if (owningScene != nullptr)
 				{
-					owningScene->DeregisterGameObject(networkGameObject->GetName());
+					owningScene->DeregisterGameObject(networkGameObject->GetName(), [](GameObject* networkGameObject) { delete dynamic_cast<NetworkObject*>(networkGameObject); });
 				}
 			}
 
 			networkObject->second->OnDespawn();
 
-			delete networkObject->second;
 			instance->spawnedNetworkObjects.erase(networkObject);
 		}
 

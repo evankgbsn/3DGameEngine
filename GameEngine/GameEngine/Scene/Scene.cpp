@@ -121,9 +121,9 @@ void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 	}
 }
 
-void Scene::DeregisterGameObject(const std::string& name)
+void Scene::DeregisterGameObject(const std::string& name, std::function<void(GameObject*)> callback)
 {
-	objectsToDeregister.push_back(name);
+	objectsToDeregister.push_back(std::make_pair(name, callback));
 }
 
 void Scene::Initialize()
@@ -1146,7 +1146,9 @@ void Scene::GameUpdate()
 {
 	for (const auto& objectName : objectsToDeregister)
 	{
-		InternalDeregisterGameObject(objectName);
+		GameObject* obj = objects.find(objectName.first)->second;
+		InternalDeregisterGameObject(objectName.first);
+		objectName.second(obj);
 	}
 
 	objectsToDeregister.clear();
@@ -1161,7 +1163,9 @@ void Scene::EditorUpdate()
 {
 	for (const auto& objectName : objectsToDeregister)
 	{
-		InternalDeregisterGameObject(objectName);
+		GameObject* obj = objects.find(objectName.first)->second;
+		InternalDeregisterGameObject(objectName.first);
+		objectName.second(obj);
 	}
 
 	objectsToDeregister.clear();

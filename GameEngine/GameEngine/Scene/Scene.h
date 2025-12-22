@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <pair>
 
 class GameObject;
 
@@ -26,7 +27,7 @@ public:
 
 	void RegisterGameObject(GameObject* object, const std::string& name);
 
-	void DeregisterGameObject(const std::string& name);
+	void DeregisterGameObject(const std::string& name, std::function<void(GameObject*)> callback);
 	
 	void Save(const std::string& saveFileName);
 
@@ -86,7 +87,7 @@ private:
 
 	std::unordered_map<std::string, GameObject*> objects;
 
-	std::list<std::string> objectsToDeregister;
+	std::list<std::pair<std::string, std::function<void(GameObject*)>>> objectsToDeregister;
 
 	bool started;
 
