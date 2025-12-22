@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <list>
 
 class GameObject;
 
@@ -69,6 +70,8 @@ private:
 
 	Scene& operator=(Scene&&) = delete;
 
+	void InternalDeregisterGameObject(const std::string& name);
+
 	void GameUpdate();
 
 	void EditorUpdate();
@@ -82,6 +85,8 @@ private:
 	void UnloadObjects();
 
 	std::unordered_map<std::string, GameObject*> objects;
+
+	std::list<std::string> objectsToDeregister;
 
 	bool started;
 

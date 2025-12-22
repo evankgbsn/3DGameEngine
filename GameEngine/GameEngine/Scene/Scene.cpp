@@ -123,28 +123,7 @@ void Scene::RegisterGameObject(GameObject* object, const std::string& name)
 
 void Scene::DeregisterGameObject(const std::string& name)
 {
-	if (objects.find(name) != objects.end())
-	{
-		const auto& object = objects.find(name);
-
-		if (started)
-		{
-			object->second->End();
-		}
-
-		if (initialized)
-		{
-			object->second->Terminate();
-		}
-
-		if (loaded)
-		{
-			object->second->Unload();
-		}
-
-		object->second->owningScene = nullptr;
-		objects.erase(object);
-	}
+	objectsToDeregister.push_back(name);
 }
 
 void Scene::Initialize()
@@ -1137,8 +1116,41 @@ void Scene::Save(const std::string& saveFileName)
 	Logger::Log(std::string("Saved Scene: ") + path, Logger::Category::Success);
 }
 
+void Scene::InternalDeregisterGameObject(const std::string& name)
+{
+	if (objects.find(name) != objects.end())
+	{
+		const auto& object = objects.find(name);
+
+		if (started)
+		{
+			object->second->End();
+		}
+
+		if (initialized)
+		{
+			object->second->Terminate();
+		}
+
+		if (loaded)
+		{
+			object->second->Unload();
+		}
+
+		object->second->owningScene = nullptr;
+		objects.erase(object);
+	}
+}
+
 void Scene::GameUpdate()
 {
+	for (const auto& objectName : objectsToDeregister)
+	{
+		InternalDeregisterGameObject(objectName);
+	}
+
+	objectsToDeregister.clear();
+
 	for (auto& object : objects)
 	{
 		object.second->GameUpdate();
@@ -1147,6 +1159,13 @@ void Scene::GameUpdate()
 
 void Scene::EditorUpdate()
 {
+	for (const auto& objectName : objectsToDeregister)
+	{
+		InternalDeregisterGameObject(objectName);
+	}
+
+	objectsToDeregister.clear();
+
 	for (auto& object : objects)
 	{
 		object.second->EditorUpdate();
