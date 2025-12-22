@@ -75,7 +75,7 @@ void AK12Bullet::GameUpdate()
 {
 	graphics->Translate(direction * speed * TimeManager::DeltaTime());
 
-	//collider->UpdateCollider(graphics->GetTransform());
+	collider->UpdateCollider(graphics->GetTransform());
 	//
 	//if (!NetworkManager::IsServer())
 	//{

@@ -150,6 +150,8 @@ private:
 
 	unsigned int lastWeaponPositionPacketNumber = 0;
 
+	float lastShotTime = 0.0f;
+
 };
 
 #endif // FPSPLAYER_H
