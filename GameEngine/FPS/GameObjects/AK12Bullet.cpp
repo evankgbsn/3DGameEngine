@@ -73,24 +73,26 @@ void AK12Bullet::Terminate()
 
 void AK12Bullet::GameUpdate()
 {
-	collider->UpdateCollider(graphics->GetTransform());
+	graphics->Translate(direction * speed * TimeManager::DeltaTime());
 
-	if (!NetworkManager::IsServer())
-	{
-		graphics->SetPosition(positionToSet);
-	}
-	else
-	{
-		graphics->Translate(direction * speed * TimeManager::DeltaTime());
-
-		updateTime += TimeManager::DeltaTime();
-
-		if (updateTime >= 0.0001f)
-		{
-			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
-			updateTime = 0.0f;
-		}
-	}
+	//collider->UpdateCollider(graphics->GetTransform());
+	//
+	//if (!NetworkManager::IsServer())
+	//{
+	//	graphics->SetPosition(positionToSet);
+	//}
+	//else
+	//{
+	//	graphics->Translate(direction * speed * TimeManager::DeltaTime());
+	//
+	//	updateTime += TimeManager::DeltaTime();
+	//
+	//	if (updateTime >= 0.0001f)
+	//	{
+	//		ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
+	//		updateTime = 0.0f;
+	//	}
+	//}
 
 	if (NetworkManager::IsServer())
 	{

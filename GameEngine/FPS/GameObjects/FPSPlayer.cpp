@@ -333,8 +333,8 @@ void FPSPlayer::RegisterInput()
 		{
 			static glm::vec2 prevPos = cursorPos;
 			
-			float xspeed = 0.250f;
-			float yspeed = 0.250f;
+			float xspeed = 2.50f;
+			float yspeed = 2.50f;
 
 			float value = xspeed * (float)-(cursorPos.x - prevPos.x);
 
