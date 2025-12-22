@@ -85,7 +85,7 @@ void AK12Bullet::GameUpdate()
 
 		if (updateTime >= 0.0001f)
 		{
-			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
+			//ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
 			updateTime = 0.0f;
 		}
 	}

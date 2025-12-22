@@ -28,8 +28,10 @@
 
 
 #include <GLFW/glfw3.h>
+#include <mimalloc-new-delete.h>
 
 #include <iostream>
+
 Engine* Engine::instance = nullptr;
 
 void Engine::Initialize()

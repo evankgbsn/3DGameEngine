@@ -54,6 +54,8 @@
 !*libcrypto.lib
 !*sqlcipher.lib
 !*SQLiteCpp.lib
+!*mimalloc.lib
+!*mimalloc.pdb
 
 #Ignore .vs folder and other generated folders
 *.vs
