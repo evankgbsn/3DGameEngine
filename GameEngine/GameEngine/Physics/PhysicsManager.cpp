@@ -144,6 +144,27 @@ void PhysicsManager::DestroyCharacterController(const std::string& name)
 	}
 }
 
+PxFilterFlags MyFilterShader(
+	PxFilterObjectAttributes attributes0, PxFilterData filterData0,
+	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
+	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+{
+	// Let triggers through with default trigger behavior
+	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+	{
+		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		return PxFilterFlag::eDEFAULT;
+	}
+
+	// Default physical collision (bouncing/friction)
+	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+
+	// IMPORTANT: This line enables the onContact callback!
+	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+
+	return PxFilterFlag::eDEFAULT;
+}
+
 PhysicsManager::PhysicsManager() :
 	recordMemoryAllocations(true),
 	defaultAllocatorCallback(),
@@ -173,7 +194,7 @@ PhysicsManager::PhysicsManager() :
 			sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
 			dispatcher = PxDefaultCpuDispatcherCreate(4);
 			sceneDesc.cpuDispatcher = dispatcher;
-			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+			sceneDesc.filterShader = MyFilterShader;
 
 			//------------------------------------------------------------
 			//  To enable physx gpu support add these libs.
