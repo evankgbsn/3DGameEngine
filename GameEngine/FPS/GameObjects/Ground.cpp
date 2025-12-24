@@ -8,6 +8,7 @@
 Ground::Ground() :
     GameObject("Ground")
 {
+	RegisterGameObjectClassType<Ground>(this);
 }
 
 Ground::~Ground()
