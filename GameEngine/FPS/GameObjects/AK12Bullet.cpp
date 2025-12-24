@@ -83,7 +83,7 @@ void AK12Bullet::GameUpdate()
 {
 	body->SyncPhysics();
 
-	collider->UpdateCollider(graphics->GetTransform());
+	//collider->UpdateCollider(graphics->GetTransform());
 
 	if (NetworkManager::IsServer())
 	{
