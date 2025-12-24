@@ -71,6 +71,8 @@ void FPSPlayer::Initialize()
 
 		characterArmsGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("CharacterArms"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterArmsGraphics->SetShine(32.0f);
+		characterArmsGraphics->SetRenderShadow(false);
+		characterArmsGraphics->SetRenderReflection(false);
 
 		AddComponent(characterArmsGraphics, "ArmsGraphics");
 
