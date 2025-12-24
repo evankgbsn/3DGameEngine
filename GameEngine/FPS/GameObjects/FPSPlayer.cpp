@@ -47,13 +47,25 @@ glm::mat4 FPSPlayer::GetWeaponTransform()
 
 void FPSPlayer::Initialize()
 {
+	characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+	characterGraphics->SetClip(0);
+	characterGraphics->SetShine(32.0f);
+	characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+	characterGraphics->SetSpeed(1.0f);
+
+	AddComponent(characterGraphics, "Graphics");
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
+		characterGraphics->SetRenderGraphics(false);
+
 		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterLegsGraphics->SetClip(0);
 		characterLegsGraphics->SetShine(32.0f);
 		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterLegsGraphics->SetSpeed(1.0f);
+		characterLegsGraphics->SetRenderShadow(false);
+		characterLegsGraphics->SetRenderReflection(false);
 
 		AddComponent(characterLegsGraphics, "LegsGraphics");
 
@@ -71,14 +83,6 @@ void FPSPlayer::Initialize()
 	}
 	else
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterGraphics->SetClip(0);
-		characterGraphics->SetShine(32.0f);
-		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterGraphics->SetSpeed(1.0f);
-
-		AddComponent(characterGraphics, "Graphics");
-
 		positionToSet = characterGraphics->GetPosition();
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
@@ -129,13 +133,9 @@ void FPSPlayer::Terminate()
 		delete characterArmsGraphics;
 		delete characterLegsGraphics;
 	}
-	else
-	{
 
-		RemoveComponent("Graphics");
-
-		delete characterGraphics;
-	}
+	RemoveComponent("Graphics");
+	delete characterGraphics;
 
 	if (NetworkManager::IsServer())
 	{

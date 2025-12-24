@@ -25,6 +25,18 @@ public:
 
 	glm::mat4 GetJointTransform(const std::string& jointName) const;
 
+	void SetRenderShadow(bool val);
+
+	void SetRenderReflection(bool val);
+
+	void SetRenderGraphics(bool val);
+
+	bool RenderGraphics() const;
+
+	bool RenderShadow() const;
+
+	bool RenderReflection() const;
+
 private:
 
 	GraphicsObjectTexturedAnimatedLit(const GraphicsObjectTexturedAnimatedLit&) = delete;

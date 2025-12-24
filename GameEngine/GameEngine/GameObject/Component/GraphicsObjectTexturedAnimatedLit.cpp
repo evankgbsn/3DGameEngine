@@ -58,6 +58,36 @@ glm::mat4 GraphicsObjectTexturedAnimatedLit::GetJointTransform(const std::string
 	return g->GetTransform() * g->GetAnimPoseArray()[i] * g->GetAnimInvBindPoseArray()[i];
 }
 
+void GraphicsObjectTexturedAnimatedLit::SetRenderGraphics(bool val)
+{
+	graphics->SetRenderGraphics(val);
+}
+
+void GraphicsObjectTexturedAnimatedLit::SetRenderShadow(bool val)
+{
+	graphics->SetRenderShadow(val);
+}
+
+void GraphicsObjectTexturedAnimatedLit::SetRenderReflection(bool val)
+{
+	graphics->SetRenderReflection(val);
+}
+
+bool GraphicsObjectTexturedAnimatedLit::RenderGraphics() const
+{
+	return graphics->RenderGraphics();
+}
+
+bool GraphicsObjectTexturedAnimatedLit::RenderShadow() const
+{
+	return graphics->RenderShadow();
+}
+
+bool GraphicsObjectTexturedAnimatedLit::RenderReflection() const
+{
+	return graphics->RenderReflection();
+}
+
 void GraphicsObjectTexturedAnimatedLit::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

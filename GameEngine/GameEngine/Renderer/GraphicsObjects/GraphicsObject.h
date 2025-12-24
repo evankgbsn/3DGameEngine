@@ -14,6 +14,18 @@ public:
 
 	bool IsDisabled() const;
 
+	bool RenderShadow() const;
+
+	bool RenderReflection() const;
+
+	bool RenderGraphics() const;
+
+	void SetRenderShadow(bool val);
+
+	void SetRenderReflection(bool val);
+
+	void SetRenderGraphics(bool val);
+
 protected:
 
 	friend class GraphicsObjectManager;
@@ -46,6 +58,12 @@ private:
 	unsigned int managerVectorDisableIndex;
 
 	bool isDisabled;
+
+	bool renderShadow = true;
+
+	bool renderReflection = true;
+
+	bool renderGraphics = true;
 
 };
 

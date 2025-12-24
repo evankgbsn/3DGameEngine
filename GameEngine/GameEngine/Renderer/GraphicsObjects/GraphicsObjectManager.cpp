@@ -40,7 +40,7 @@ void GraphicsObjectManager::Update()
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderShadow())
 			{
 				graphicsObject->RenderToShadowMap();
 			}
@@ -64,7 +64,7 @@ void GraphicsObjectManager::Update()
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
 			{
 				graphicsObject->Update();
 			}
@@ -83,7 +83,7 @@ void GraphicsObjectManager::Update()
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
 			{
 				graphicsObject->Update();
 			}
@@ -99,7 +99,7 @@ void GraphicsObjectManager::Update()
 		
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
 			{
 				graphicsObject->Update();
 			}
@@ -107,7 +107,7 @@ void GraphicsObjectManager::Update()
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjectsWater)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
 			{
 				graphicsObject->Update();
 			}
@@ -115,7 +115,7 @@ void GraphicsObjectManager::Update()
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects2D)
 		{
-			if (IsValid(graphicsObject))
+			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
 			{
 				graphicsObject->Update();
 			}
