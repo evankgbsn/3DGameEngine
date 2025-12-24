@@ -136,6 +136,9 @@ void FPSPlayer::Terminate()
 		delete characterLegsGraphics;
 	}
 
+	RemoveComponent("AnimatedCollider");
+	delete hitBox;
+
 	RemoveComponent("Graphics");
 	delete characterGraphics;
 
@@ -147,9 +150,6 @@ void FPSPlayer::Terminate()
 	}
 
 	RemoveComponent("Camera");
-	RemoveComponent("AnimatedCollider");
-
-	delete hitBox;
 	delete cam;
 }
 
