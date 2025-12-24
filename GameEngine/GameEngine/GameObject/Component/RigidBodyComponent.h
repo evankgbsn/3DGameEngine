@@ -75,6 +75,14 @@ public:
 
 	void SetOwner(GameObject* newOwner);
 
+	void RegisterContact(RigidBodyComponent* other);
+
+	void RegisterContactCallback(const std::string& objTypeName, std::function<void(GameObject*)>* callback);
+
+	void DeregisterContactCallback(const std::string& objTypeName);
+
+	void Update() override;
+
 private:
 
 	RigidBodyComponent(const RigidBodyComponent&) = delete;
@@ -85,13 +93,13 @@ private:
 
 	RigidBodyComponent& operator=(RigidBodyComponent&&) = delete;
 
+	void ProcessContacts();
+
 	void CreateShapeFromModel();
 
 	void Serialize() override;
 
 	void Deserialize() override;
-
-	void Update() override;
 
 	void RegisterEditorCallbacks();
 
@@ -125,6 +133,9 @@ private:
 
 	std::string modelNameStatic;
 
+	std::vector<RigidBodyComponent*> contacts;
+
+	std::unordered_map<std::string, std::function<void(GameObject*)>*> contactCallbacks;
 	
 };
 

@@ -184,8 +184,36 @@ bool RigidBodyComponent::Hovered() const
 void RigidBodyComponent::SetOwner(GameObject* newOwner)
 {
 	owner = newOwner;
-
 	body->SetUserData(static_cast<void*>(owner));
+}
+
+void RigidBodyComponent::RegisterContact(RigidBodyComponent* other)
+{
+	contacts.push_back(other);
+}
+
+void RigidBodyComponent::RegisterContactCallback(const std::string& objTypeName, std::function<void(GameObject*)>* callback)
+{
+	contactCallbacks[objTypeName] = callback;
+}
+
+void RigidBodyComponent::DeregisterContactCallback(const std::string& objTypeName)
+{
+	contactCallbacks.erase(contactCallbacks.find(objTypeName));
+}
+
+void RigidBodyComponent::ProcessContacts()
+{
+	for (const auto& contact : contacts)
+	{
+		const auto& callback = contactCallbacks.find(contact->owner->GetNameOfType());
+		if (callback != contactCallbacks.end())
+		{
+			(*callback->second)(contact->owner);
+		}
+	}
+
+	contacts.clear();
 }
 
 void RigidBodyComponent::CreateShapeFromModel()
@@ -422,6 +450,7 @@ void RigidBodyComponent::Deserialize()
 
 void RigidBodyComponent::Update()
 {
+	ProcessContacts();
 }
 
 void RigidBodyComponent::RegisterEditorCallbacks()

@@ -8,6 +8,8 @@
 #include "../Renderer/Window/WindowManager.h"
 #include "../Renderer/Window/Window.h"
 #include "CharacterController.h"
+#include "../GameObject/GameObject.h"
+#include "../GameObject/Component/RigidBodyComponent.h"
 
 
 //#include "cudamanager/PxCudaContextManager.h"
@@ -215,6 +217,9 @@ PhysicsManager::PhysicsManager() :
 			//}
 			//------------------------------------------------------------
 
+			MyContactCallback* myCallback = new MyContactCallback();
+			sceneDesc.simulationEventCallback = myCallback;
+
 			scene = physics->createScene(sceneDesc);
 
 			SetupVisualization();
@@ -254,4 +259,45 @@ void PhysicsManager::CreateCharacterControllerMaterial()
 	PxReal restitution = 0.0f; // 0.0 means no bounce
 
 	characterControllerMaterial = physics->createMaterial(staticFriction, dynamicFriction, restitution);
+}
+
+void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) {
+	for (PxU32 i = 0; i < nbPairs; i++) {
+		const PxContactPair& cp = pairs[i];
+
+		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND) {
+			// Objects just started touching
+			PxActor* actorA = pairHeader.actors[0];
+			PxActor* actorB = pairHeader.actors[1];
+
+			GameObject* goA = static_cast<GameObject*>(actorA->userData);
+			RigidBodyComponent* rbcA = dynamic_cast<RigidBodyComponent*>(goA->GetComponent("RigidBody"));
+
+			GameObject* goB = static_cast<GameObject*>(actorA->userData);
+			RigidBodyComponent* rbcB = dynamic_cast<RigidBodyComponent*>(goB->GetComponent("RigidBody"));
+
+			rbcA->RegisterContact(rbcB);
+			rbcB->RegisterContact(rbcA);
+		}
+	}
+}
+
+void MyContactCallback::onConstraintBreak(PxConstraintInfo* constraints, PxU32 count)
+{
+}
+
+void MyContactCallback::onWake(PxActor** actors, PxU32 count)
+{
+}
+
+void MyContactCallback::onSleep(PxActor** actors, PxU32 count)
+{
+}
+
+void MyContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
+{
+}
+
+void MyContactCallback::onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count)
+{
 }

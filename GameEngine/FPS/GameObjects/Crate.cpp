@@ -41,6 +41,7 @@ void Crate::Terminate()
 void Crate::GameUpdate()
 {
     body->SyncPhysics();
+    body->Update();
 }
 
 void Crate::EditorUpdate()

@@ -84,6 +84,8 @@ private:
 	float speed;
 
 	glm::vec3 direction;
+
+	std::function<void(GameObject*)>* onImpact;
 };
 
 #endif // AK12BULLET_H

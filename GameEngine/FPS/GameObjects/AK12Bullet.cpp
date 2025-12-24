@@ -65,10 +65,23 @@ void AK12Bullet::Initialize()
 	body->AddForce(graphics->GetForward() * speed, RigidBodyComponent::ForceMode::IMPULSE);
 	AddComponent(body, "RigidBody");
 
+	onImpact = new std::function<void(GameObject*)>([this](GameObject* other)
+		{
+			if (NetworkManager::IsServer())
+			{
+				NetworkManager::Despawn(GetNetworkObjectID());
+			}
+		});
+
+	body->RegisterContactCallback("Ground", onImpact);
 }
 
 void AK12Bullet::Terminate()
 {
+
+	body->DeregisterContactCallback("Ground");
+	delete onImpact;
+
 	RemoveComponent("RigidBody");
 	delete body;
 
@@ -83,15 +96,11 @@ void AK12Bullet::GameUpdate()
 {
 	body->SyncPhysics();
 
-	//collider->UpdateCollider(graphics->GetTransform());
+	body->Update();
 
-	if (NetworkManager::IsServer())
-	{
-		if (TimeManager::SecondsSinceStart() - spawnTime > 5.0f)
-		{
-			//NetworkManager::Despawn(GetNetworkObjectID());
-		}
-	}
+	collider->UpdateCollider(graphics->GetTransform());
+
+	
 }
 
 void AK12Bullet::EditorUpdate()
