@@ -10,6 +10,7 @@
 #include "GameEngine/Scene/Scene.h"
 #include "../GameObjects/FPSPlayer.h"
 #include "GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
@@ -34,6 +35,10 @@ void AK12Bullet::Initialize()
 
 	AddComponent(collider, "Collider");
 	glm::mat4 transform(1.0f);
+
+	body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
+
+	body->AddForce(graphics->GetForward() * speed, RigidBodyComponent::ForceMode::IMPULSE);
 
 	Scene* main = SceneManager::GetRegisteredScene("Test");
 
@@ -73,7 +78,7 @@ void AK12Bullet::Terminate()
 
 void AK12Bullet::GameUpdate()
 {
-	graphics->Translate(direction * speed * TimeManager::DeltaTime());
+	body->SyncPhysics();
 
 	collider->UpdateCollider(graphics->GetTransform());
 

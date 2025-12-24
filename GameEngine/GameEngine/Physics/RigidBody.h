@@ -16,6 +16,14 @@ public:
 		DYNAMIC
 	};
 
+	enum ForceMode
+	{
+		FORCE,				//!< parameter has unit of mass * length / time^2, i.e., a force
+		IMPULSE,			//!< parameter has unit of mass * length / time, i.e., force * time
+		VELOCITY_CHANGE,	//!< parameter has unit of length / time, i.e., the effect is mass independent: a velocity change.
+		ACCELERATION		//!< parameter has unit of length/ time^2, i.e., an acceleration. It gets treated just like a force except the mass is not divided out before integration.
+	};
+
 	RigidBody(Type type, PxGeometry* geometry, const glm::vec3& initialPosition, const glm::mat4& initialRotation);
 
 	~RigidBody();
@@ -40,7 +48,7 @@ public:
 
 	void LockLinearMotionOnAxisZ();
 
-	void AddForce(const glm::vec3& direction);
+	void AddForce(const glm::vec3& direction, const ForceMode& forceMode = ForceMode::FORCE);
 
 	glm::vec3 GetVelocity() const;
 
@@ -51,6 +59,8 @@ public:
 	bool Hovered() const;
 
 	void SetUserData(void* data);
+
+	void SetMass(float newMass);
 
 private:
 

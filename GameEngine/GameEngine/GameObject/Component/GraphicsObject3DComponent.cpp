@@ -74,6 +74,11 @@ glm::mat4 GraphicsObject3DComponent::GetTransform() const
 	return graphics->GetTransform();
 }
 
+glm::vec3 GraphicsObject3DComponent::GetForward() const
+{
+	return glm::normalize(GetTransform()[2]);
+}
+
 void GraphicsObject3DComponent::SetTransform(const glm::mat4& newTransform)
 {
 	graphics->SetTransform(newTransform);

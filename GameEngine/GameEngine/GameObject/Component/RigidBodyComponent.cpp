@@ -132,9 +132,30 @@ void RigidBodyComponent::LockLinearMotionOnAxisZ()
 	body->LockLinearMotionOnAxisZ();
 }
 
-void RigidBodyComponent::AddForce(const glm::vec3& direction)
+void RigidBodyComponent::AddForce(const glm::vec3& direction, const ForceMode& forceMode)
 {
-	body->AddForce(direction);
+	switch (forceMode)
+	{
+	case ForceMode::FORCE:
+		body->AddForce(direction, RigidBody::ForceMode::FORCE);
+		break;
+	case ForceMode::ACCELERATION:
+		body->AddForce(direction, RigidBody::ForceMode::ACCELERATION);
+		break;
+	case ForceMode::VELOCITY_CHANGE:
+		body->AddForce(direction, RigidBody::ForceMode::VELOCITY_CHANGE);
+		break;
+	case ForceMode::IMPULSE:
+		body->AddForce(direction, RigidBody::ForceMode::IMPULSE);
+		break;
+	default:
+		break;
+	}
+}
+
+void RigidBodyComponent::SetMass(float newMass)
+{
+	body->SetMass(newMass);
 }
 
 glm::vec3 RigidBodyComponent::GetVelocity() const

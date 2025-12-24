@@ -159,11 +159,27 @@ void RigidBody::LockLinearMotionOnAxisZ()
     }
 }
 
-void RigidBody::AddForce(const glm::vec3& direction)
+void RigidBody::AddForce(const glm::vec3& direction, const ForceMode& forceMode)
 {
     if (dynamicBody != nullptr)
     {
-        dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z));
+        switch (forceMode)
+        {
+        case ForceMode::FORCE:
+            dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z), PxForceMode::eFORCE);
+            break;
+        case ForceMode::ACCELERATION:
+            dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z), PxForceMode::eACCELERATION);
+            break;
+        case ForceMode::VELOCITY_CHANGE:
+            dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z), PxForceMode::eVELOCITY_CHANGE);
+            break;
+        case ForceMode::IMPULSE:
+            dynamicBody->addForce(PxVec3(direction.x, direction.y, direction.z), PxForceMode::eIMPULSE);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -257,5 +273,13 @@ void RigidBody::SetUserData(void* data)
     else if (staticBody != nullptr)
     {
         staticBody->userData = data;
+    }
+}
+
+void RigidBody::SetMass(float newMass)
+{
+    if (dynamicBody != nullptr)
+    {
+        PxRigidBodyExt::setMassAndUpdateInertia(*dynamicBody, newMass);
     }
 }

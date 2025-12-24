@@ -21,6 +21,8 @@ public:
 
 	glm::mat4 GetTransform() const;
 
+	glm::vec3 GetForward() const;
+
 	void SetTransform(const glm::mat4& newTransform);
 
 	void SetPosition(const glm::vec3& position);

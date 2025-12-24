@@ -6,6 +6,7 @@
 
 class GraphicsObjectTexturedLit;
 class OrientedBoundingBoxComponent;
+class RigidBodyComponent;
 
 class AK12Bullet : public GameObject, public NetworkObject
 {
@@ -67,6 +68,8 @@ private:
 	GraphicsObjectTexturedLit* graphics;
 
 	OrientedBoundingBoxComponent* collider;
+
+	RigidBodyComponent* body;
 
 	glm::vec3 positionToSet;
 
