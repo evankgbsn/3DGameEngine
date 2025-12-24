@@ -107,10 +107,6 @@ private:
 
 	std::vector<GraphicsObject*> graphicsObjects2D;
 
-	std::vector<GraphicsObject*> disabledGraphicsObjects3D;
-
-	std::vector<GraphicsObject*> disabledGraphicsObjects2D;
-
 };
 
 #endif // GRAPHICSOBJECTMANAGER_H

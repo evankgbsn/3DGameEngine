@@ -162,7 +162,6 @@ GOColored* const GraphicsObjectManager::CreateGO3DColored(Model* const model, co
 	{
 		result = new GOColored(model, initialColor);
 		instance->graphicsObjects3D.push_back(result);
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -179,7 +178,6 @@ GOColoredInstanced* const GraphicsObjectManager::CreateGO3DColoredInstanced(Mode
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOColoredInstanced(model, initialColor, instanceCount));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -196,7 +194,6 @@ GOTexturedLitInstanced* const GraphicsObjectManager::CreateGO3DTexturedLitInstan
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedLitInstanced(model, diffuse, specular, instanceCount));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -213,7 +210,6 @@ GOTextured* const GraphicsObjectManager::Create3DGOTextured(Model* const model, 
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTextured(model, texture));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -230,7 +226,6 @@ GOColoredAnimated* const GraphicsObjectManager::CreateGO3DColoredAnimated(Model*
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOColoredAnimated(model, initialColor));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -247,7 +242,6 @@ GOTexturedAnimated* const GraphicsObjectManager::CreateGO3DTexturedAnimated(Mode
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimated(model, texture));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -264,7 +258,6 @@ GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const m
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, diffuseMap, specularMap));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -281,7 +274,6 @@ GOTerrain* const GraphicsObjectManager::CreateGOTerrain(Model* const model, cons
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTerrain(model, materials, blendMap));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -298,7 +290,6 @@ GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLi
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, diffuseMap, specularMap));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -315,7 +306,6 @@ GOLineColored* const GraphicsObjectManager::CreateGOLineColored(const glm::vec3&
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects3D.push_back(result = new GOLineColored(start, end, color));
-		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else
 	{
@@ -332,7 +322,6 @@ GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, co
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects2D.push_back(result = new GOGlyph(glyph, color, position, scale));
-		instance->graphicsObjects2D[instance->graphicsObjects2D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects2D.size() - 1);
 	}
 	else
 	{
@@ -349,7 +338,6 @@ GOSprite* const GraphicsObjectManager::CreateGOSprite(Model* const model2D, Text
 	if (instance != nullptr)
 	{
 		instance->graphicsObjects2D.push_back(result = new GOSprite(model2D, imageTexture, position));
-		instance->graphicsObjects2D[instance->graphicsObjects2D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects2D.size() - 1);
 	}
 	else
 	{
@@ -366,7 +354,6 @@ GOWater* const GraphicsObjectManager::CreateGOWater(Model* const model)
 	if (instance != nullptr)
 	{
 		instance->graphicsObjectsWater.push_back(result = new GOWater(model));
-		instance->graphicsObjectsWater[instance->graphicsObjectsWater.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjectsWater.size() - 1);
 	}
 	else
 	{
@@ -378,60 +365,18 @@ GOWater* const GraphicsObjectManager::CreateGOWater(Model* const model)
 
 void GraphicsObjectManager::Disable(GraphicsObject* const go)
 {
-	if (instance != nullptr)
-	{
-		GOWater* const water = dynamic_cast<GOWater* const>(go);
-
-		if (go->managerVectorDisableIndex != UINT_MAX)
-		{
-			instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = go;
-		}
-		else
-		{
-			instance->disabledGraphicsObjects3D.push_back(go);
-			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects3D.size() - 1);
-		}
-
-		if (water != nullptr)
-		{
-			instance->graphicsObjectsWater[go->managerVectorIndex] = nullptr;
-		}
-		else
-		{
-			instance->graphicsObjects3D[go->managerVectorIndex] = nullptr;
-		}
-		
-		go->isDisabled = true;
-	}
+	go->SetRenderGraphics(false);
+	go->SetRenderReflection(false);
+	go->SetRenderShadow(false);
+	go->isDisabled = true;
 }
 
 void GraphicsObjectManager::Enable(GraphicsObject* const go)
 {
-	if (instance != nullptr)
-	{
-		GOWater* const water = dynamic_cast<GOWater* const>(go);
-
-		if (water != nullptr)
-		{
-			instance->graphicsObjectsWater[go->managerVectorIndex] = go;
-
-			if (go->isDisabled)
-			{
-				instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
-				go->isDisabled = false;
-			}
-		}
-		else
-		{
-			instance->graphicsObjects3D[go->managerVectorIndex] = go;
-
-			if (go->isDisabled)
-			{
-				instance->disabledGraphicsObjects3D[go->managerVectorDisableIndex] = nullptr;
-				go->isDisabled = false;
-			}
-		}
-	}
+	go->SetRenderGraphics(true);
+	go->SetRenderReflection(true);
+	go->SetRenderShadow(true);
+	go->isDisabled = false;
 }
 
 void GraphicsObjectManager::Delete(GraphicsObject* const go)
@@ -451,19 +396,6 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 			}
 		}
 
-		for (unsigned int i = 0; i < instance->disabledGraphicsObjects3D.size(); ++i)
-		{
-			if (instance->disabledGraphicsObjects3D[i] == go)
-			{
-				if (go != nullptr)
-				{
-					delete go;
-					instance->disabledGraphicsObjects3D[i] = (GraphicsObject*)ULLONG_MAX;
-					break;
-				}
-			}
-		}
-
 		for (unsigned int i = 0; i < instance->graphicsObjects2D.size(); ++i)
 		{
 			if (instance->graphicsObjects2D[i] == go)
@@ -472,19 +404,6 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				{
 					delete go;
 					instance->graphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
-					break;
-				}
-			}
-		}
-
-		for (unsigned int i = 0; i < instance->disabledGraphicsObjects2D.size(); ++i)
-		{
-			if (instance->disabledGraphicsObjects2D[i] == go)
-			{
-				if (go != nullptr)
-				{
-					delete go;
-					instance->disabledGraphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
 					break;
 				}
 			}
@@ -507,60 +426,34 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 
 void GraphicsObjectManager::Enable(GOGlyph* const go)
 {
-	if (instance != nullptr)
-	{
-		instance->graphicsObjects2D[go->managerVectorIndex] = go;
-		instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = nullptr;
-		go->isDisabled = false;
-	}
+	go->SetRenderGraphics(true);
+	go->SetRenderReflection(true);
+	go->SetRenderShadow(true);
+	go->isDisabled = false;
 }
 
 void GraphicsObjectManager::Disable(GOGlyph* const go)
 {
-	if (instance != nullptr)
-	{
-		if (go->managerVectorDisableIndex != UINT_MAX)
-		{
-			instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = go;
-		}
-		else
-		{
-			instance->disabledGraphicsObjects2D.push_back(go);
-			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects2D.size() - 1);
-		}
-
-		instance->graphicsObjects2D[go->managerVectorIndex] = nullptr;
-		go->isDisabled = true;
-	}
+	go->SetRenderGraphics(false);
+	go->SetRenderReflection(false);
+	go->SetRenderShadow(false);
+	go->isDisabled = true;
 }
 
 void GraphicsObjectManager::Enable(GOSprite* const go)
 {
-	if (instance != nullptr)
-	{
-		instance->graphicsObjects2D[go->managerVectorIndex] = go;
-		instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = nullptr;
-		go->isDisabled = false;
-	}
+	go->SetRenderGraphics(true);
+	go->SetRenderReflection(true);
+	go->SetRenderShadow(true);
+	go->isDisabled = false;
 }
 
 void GraphicsObjectManager::Disable(GOSprite* const go)
 {
-	if (instance != nullptr)
-	{
-		if (go->managerVectorDisableIndex != UINT_MAX)
-		{
-			instance->disabledGraphicsObjects2D[go->managerVectorDisableIndex] = go;
-		}
-		else
-		{
-			instance->disabledGraphicsObjects2D.push_back(go);
-			go->managerVectorDisableIndex = static_cast<unsigned int>(instance->disabledGraphicsObjects2D.size() - 1);
-		}
-
-		instance->graphicsObjects2D[go->managerVectorIndex] = nullptr;
-		go->isDisabled = true;
-	}
+	go->SetRenderGraphics(false);
+	go->SetRenderReflection(false);
+	go->SetRenderShadow(false);
+	go->isDisabled = true;
 }
 
 GraphicsObjectManager::GraphicsObjectManager() :

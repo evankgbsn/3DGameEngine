@@ -53,10 +53,6 @@ private:
 
 	GraphicsObject& operator=(const GraphicsObject&&) = delete;
 
-	unsigned int managerVectorIndex;
-
-	unsigned int managerVectorDisableIndex;
-
 	bool isDisabled;
 
 	bool renderShadow = true;

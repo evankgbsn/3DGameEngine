@@ -79,7 +79,10 @@ void AnimatedCollider::InitializeOBBs()
 		jointsTriangles[jointNames->at(triangleJointInfluence)].push_back(triangle);
 	}
 
-	obbs.reserve(jointNames->size());
+	for (unsigned int i = 0; i < jointNames->size(); ++i)
+	{
+		obbs.push_back(std::make_pair(nullptr, 0));
+	}
 	
 	for (const std::pair<std::string, std::vector<std::vector<Vertex>>>& jointVerts : jointsTriangles)
 	{

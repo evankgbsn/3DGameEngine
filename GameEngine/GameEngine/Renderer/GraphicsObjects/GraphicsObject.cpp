@@ -43,8 +43,6 @@ GraphicsObject::GraphicsObject()
 
 GraphicsObject::GraphicsObject(Model* const m) :
 	model(m),
-	managerVectorIndex(UINT_MAX),
-	managerVectorDisableIndex(UINT_MAX),
 	isDisabled(false)
 {
 }
