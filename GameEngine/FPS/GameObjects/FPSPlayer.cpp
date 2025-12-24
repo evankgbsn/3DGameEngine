@@ -242,6 +242,11 @@ void FPSPlayer::Load()
 		ModelManager::LoadModel("AK12", "Assets/Model/AK12.gltf", false);
 	}
 
+	if (!ModelManager::ModelLoaded("Character"))
+	{
+		ModelManager::LoadModel("Character", "Assets/Model/FPSCharacter.gltf", false);
+	}
+
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		if (!ModelManager::ModelLoaded("CharacterArms"))
@@ -252,18 +257,6 @@ void FPSPlayer::Load()
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
 		{
 			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
-		}
-
-		if (!TextureManager::TextureLoaded("Character"))
-		{
-			TextureManager::LoadTexture("Assets/Texture/Grey.png", "Character");
-		}
-	}
-	else
-	{
-		if (!ModelManager::ModelLoaded("Character"))
-		{
-			ModelManager::LoadModel("Character", "Assets/Model/FPSCharacter.gltf", false);
 		}
 
 		if (!TextureManager::TextureLoaded("Character"))
