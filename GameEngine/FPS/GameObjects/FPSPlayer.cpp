@@ -182,6 +182,7 @@ void FPSPlayer::GameUpdate()
 		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
 		characterArmsGraphics->SetRotation(armRotation);
 
+
 		glm::vec3 riflePositionOffset = 
 			(glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[0])) * -0.10f)
 			+ (glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[2])) * .60f)
@@ -189,6 +190,8 @@ void FPSPlayer::GameUpdate()
 
 		ak12Graphics->SetPosition(characterArmsGraphics->GetPosition() + riflePositionOffset);
 		ak12Graphics->SetRotation(characterArmsGraphics->GetRotation());
+
+		characterGraphics->SetTransform(characterLegsGraphics->GetTransform());
 	}
 	else
 	{

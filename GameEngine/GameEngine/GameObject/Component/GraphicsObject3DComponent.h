@@ -45,6 +45,18 @@ public:
 
 	void Enable();
 
+	void SetRenderShadow(bool val);
+
+	void SetRenderReflection(bool val);
+
+	void SetRenderGraphics(bool val);
+
+	bool RenderGraphics() const;
+
+	bool RenderShadow() const;
+
+	bool RenderReflection() const;
+
 protected:
 
 	GraphicsObject3DComponent();

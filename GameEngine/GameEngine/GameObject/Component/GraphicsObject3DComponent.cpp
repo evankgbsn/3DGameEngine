@@ -14,6 +14,36 @@ GraphicsObject3DComponent::~GraphicsObject3DComponent()
 	GraphicsObjectManager::Delete(graphics);
 }
 
+void GraphicsObject3DComponent::SetRenderGraphics(bool val)
+{
+	graphics->SetRenderGraphics(val);
+}
+
+void GraphicsObject3DComponent::SetRenderShadow(bool val)
+{
+	graphics->SetRenderShadow(val);
+}
+
+void GraphicsObject3DComponent::SetRenderReflection(bool val)
+{
+	graphics->SetRenderReflection(val);
+}
+
+bool GraphicsObject3DComponent::RenderGraphics() const
+{
+	return graphics->RenderGraphics();
+}
+
+bool GraphicsObject3DComponent::RenderShadow() const
+{
+	return graphics->RenderShadow();
+}
+
+bool GraphicsObject3DComponent::RenderReflection() const
+{
+	return graphics->RenderReflection();
+}
+
 void GraphicsObject3DComponent::Serialize()
 {
 	savedMat4s["Transform"] = GetTransform();
