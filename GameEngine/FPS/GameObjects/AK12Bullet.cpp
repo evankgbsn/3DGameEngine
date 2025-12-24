@@ -89,7 +89,7 @@ void AK12Bullet::GameUpdate()
 	{
 		if (TimeManager::SecondsSinceStart() - spawnTime > 5.0f)
 		{
-			NetworkManager::Despawn(GetNetworkObjectID());
+			//NetworkManager::Despawn(GetNetworkObjectID());
 		}
 	}
 }

@@ -160,7 +160,8 @@ GOColored* const GraphicsObjectManager::CreateGO3DColored(Model* const model, co
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOColored(model, initialColor));
+		result = new GOColored(model, initialColor);
+		instance->graphicsObjects3D.push_back(result);
 		instance->graphicsObjects3D[instance->graphicsObjects3D.size() - 1]->managerVectorIndex = static_cast<unsigned int>(instance->graphicsObjects3D.size() - 1);
 	}
 	else

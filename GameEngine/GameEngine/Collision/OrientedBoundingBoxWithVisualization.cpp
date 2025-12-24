@@ -25,6 +25,7 @@ OrientedBoundingBoxWithVisualization::~OrientedBoundingBoxWithVisualization()
 	if (graphics != nullptr)
 	{
 		GraphicsObjectManager::Delete(graphics);
+		graphics = nullptr;
 	}
 }
 
