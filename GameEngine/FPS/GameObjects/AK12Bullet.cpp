@@ -15,7 +15,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(500.0f)
+	speed(50.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
@@ -114,25 +114,27 @@ void AK12Bullet::Unload()
 
 glm::vec3 AK12Bullet::GetPosition() const
 {
-    return glm::vec3();
+    return graphics->GetPosition();
 }
 
 glm::mat4 AK12Bullet::GetRotation() const
 {
-    return glm::mat4();
+    return graphics->GetRotation();
 }
 
 glm::mat4 AK12Bullet::GetTransform() const
 {
-    return glm::mat4();
+    return graphics->GetTransform();
 }
 
-void AK12Bullet::SetPosition(const glm::vec3&)
+void AK12Bullet::SetPosition(const glm::vec3& pos)
 {
+	graphics->SetPosition(pos);
 }
 
-void AK12Bullet::SetRotation(const glm::mat4&)
+void AK12Bullet::SetRotation(const glm::mat4& rot)
 {
+	graphics->SetRotation(rot);
 }
 
 bool AK12Bullet::Hovered() const
