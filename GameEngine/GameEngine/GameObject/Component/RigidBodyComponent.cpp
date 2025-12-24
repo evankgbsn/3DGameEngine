@@ -69,6 +69,7 @@ RigidBodyComponent::~RigidBodyComponent()
 	if (shapeVisuals != nullptr)
 	{
 		GraphicsObjectManager::Delete(shapeVisuals);
+		shapeVisuals = nullptr;
 	}
 }
 

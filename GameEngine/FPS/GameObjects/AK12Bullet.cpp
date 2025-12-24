@@ -36,10 +36,6 @@ void AK12Bullet::Initialize()
 	AddComponent(collider, "Collider");
 	glm::mat4 transform(1.0f);
 
-	body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
-
-	body->AddForce(graphics->GetForward() * speed, RigidBodyComponent::ForceMode::IMPULSE);
-
 	Scene* main = SceneManager::GetRegisteredScene("Test");
 
 	if (main != nullptr)
@@ -63,12 +59,19 @@ void AK12Bullet::Initialize()
 	}
 
 	graphics->SetTransform(transform);
-
 	direction = glm::normalize(transform[2]);
+
+	body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
+	body->AddForce(graphics->GetForward() * speed, RigidBodyComponent::ForceMode::IMPULSE);
+	AddComponent(body, "RigidBody");
+
 }
 
 void AK12Bullet::Terminate()
 {
+	RemoveComponent("RigidBody");
+	delete body;
+
     RemoveComponent("Graphics");
     delete graphics;
 

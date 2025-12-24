@@ -7,13 +7,15 @@
 
 
 OrientedBoundingBoxWithVisualization::OrientedBoundingBoxWithVisualization(const glm::vec3& initialOrigin, const glm::vec3& initialSize, const glm::mat4& initialOrientation) :
-	OrientedBoundingBox(initialOrigin, initialSize, initialOrientation)
+	OrientedBoundingBox(initialOrigin, initialSize, initialOrientation),
+	graphics(nullptr)
 {
 	CreateGraphics();
 }
 
 OrientedBoundingBoxWithVisualization::OrientedBoundingBoxWithVisualization(const std::vector<Vertex>& vertices, const glm::mat4& initialOrientation) :
-	OrientedBoundingBox(vertices, initialOrientation)
+	OrientedBoundingBox(vertices, initialOrientation),
+	graphics(nullptr)
 {
 	CreateGraphics();
 }
