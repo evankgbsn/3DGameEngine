@@ -15,7 +15,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(50.0f)
+	speed(100.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
@@ -75,6 +75,7 @@ void AK12Bullet::Initialize()
 		});
 
 	body->RegisterContactCallback("Ground", onImpact);
+	updateTime = TimeManager::SecondsSinceStart();
 }
 
 void AK12Bullet::Terminate()
@@ -100,8 +101,12 @@ void AK12Bullet::GameUpdate()
 	body->Update();
 
 	collider->UpdateCollider(graphics->GetTransform());
-
 	
+	if (TimeManager::SecondsSinceStart() - updateTime > 1.0f)
+	{
+		Logger::Log("Bullet Alive");
+		updateTime = TimeManager::SecondsSinceStart();
+	}
 }
 
 void AK12Bullet::EditorUpdate()
