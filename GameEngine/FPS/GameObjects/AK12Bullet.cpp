@@ -15,7 +15,7 @@
 AK12Bullet::AK12Bullet() : 
     GameObject("AK12Bullet"),
     graphics(nullptr),
-	speed(25.0f)
+	speed(50.0f)
 {
     RegisterGameObjectClassType<AK12Bullet>(this);
     RegisterNetworkObjectClassType<AK12Bullet>(this);
