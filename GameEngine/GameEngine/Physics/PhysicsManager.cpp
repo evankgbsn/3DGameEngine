@@ -299,6 +299,8 @@ void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const P
 
 			rbcA->RegisterContact(rbcB);
 			rbcB->RegisterContact(rbcA);
+
+			Logger::Log(goA->GetName() + " : " + goB->GetName());
 		}
 	}
 }

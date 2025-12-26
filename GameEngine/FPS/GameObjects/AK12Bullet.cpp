@@ -67,6 +67,7 @@ void AK12Bullet::Initialize()
 
 	onImpact = new std::function<void(GameObject*)>([this](GameObject* other)
 		{
+			Logger::Log("Contact: " + GetName() + " whth: " + other->GetName());
 			if (NetworkManager::IsServer())
 			{
 				NetworkManager::Despawn(GetNetworkObjectID());

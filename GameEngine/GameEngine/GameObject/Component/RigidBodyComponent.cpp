@@ -206,7 +206,7 @@ void RigidBodyComponent::ProcessContacts()
 {
 	for (const auto& contact : contacts)
 	{
-		const auto& callback = contactCallbacks.find(contact->owner->GetNameOfType());
+		auto callback = contactCallbacks.find(contact->owner->GetNameOfType());
 		if (callback != contactCallbacks.end())
 		{
 			(*callback->second)(contact->owner);
