@@ -43,6 +43,8 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
 
         PhysicsManager::GetScene()->addActor(*dynamicBody);
 
+        dynamicBody->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
+
         break;
     default:
         break;

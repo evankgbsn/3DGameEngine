@@ -162,6 +162,8 @@ PxFilterFlags MyFilterShader(
 	// IMPORTANT: This line enables the onContact callback!
 	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 
+	pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
+
 	return PxFilterFlag::eDEFAULT;
 }
 
@@ -286,7 +288,7 @@ void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const P
 	for (PxU32 i = 0; i < nbPairs; i++) {
 		const PxContactPair& cp = pairs[i];
 
-		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND) {
+		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND || cp.events & PxPairFlag::eDETECT_CCD_CONTACT) {
 			// Objects just started touching
 			PxActor* actorA = pairHeader.actors[0];
 			PxActor* actorB = pairHeader.actors[1];
