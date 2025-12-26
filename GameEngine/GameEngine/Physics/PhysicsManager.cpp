@@ -197,6 +197,7 @@ PhysicsManager::PhysicsManager() :
 			dispatcher = PxDefaultCpuDispatcherCreate(4);
 			sceneDesc.cpuDispatcher = dispatcher;
 			sceneDesc.filterShader = MyFilterShader;
+			sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
 
 			//------------------------------------------------------------
 			//  To enable physx gpu support add these libs.
