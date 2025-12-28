@@ -18,11 +18,6 @@ GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor)
 	glCreateBuffers(1, &animationBuffer);
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
 
-	for (unsigned int i = 0; i < model->GetArmature()->GetInvBindPose().size(); i++)
-	{
-		animationData.invBindPose[i] = model->GetArmature()->GetInvBindPose()[i];
-	}
-
 	mvp.model = glm::mat4(1.0f);
 
 }

@@ -218,7 +218,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other) const
 									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-									const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+									const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
 									glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
 									glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
 									glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
@@ -303,7 +303,7 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 														glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 														glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-														const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+														const std::vector<glm::mat4>& const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
 														glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
 														glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
 														glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
@@ -429,7 +429,7 @@ bool AnimatedCollider::Intersect(const StaticCollider& other, glm::vec3& outHit)
 						glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 						glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-						const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+						const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
 						glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
 						glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
 						glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
@@ -492,7 +492,7 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-									const glm::mat4* const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
+									const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
 									glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
 									glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
 									glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
