@@ -23,7 +23,6 @@ layout(binding = 10) uniform ClipPlaneUBO
 layout(std140, binding = 1) uniform AnimData
 {
     mat4 pose[500];
-    mat4 invBindPose[500];
 } anim;
 
 layout(std140, binding = 8) uniform LightSpcaeMatrixUBO
@@ -52,10 +51,10 @@ layout(location = 8) out vec4 outLightSpacePosition;
 
 void main(void) 
 {
-     mat4 skin = (anim.pose[inJoints.x] * anim.invBindPose[inJoints.x]) * inWeights.x;
-     skin += (anim.pose[inJoints.y] * anim.invBindPose[inJoints.y]) * inWeights.y;
-     skin += (anim.pose[inJoints.z] * anim.invBindPose[inJoints.z]) * inWeights.z;
-     skin += (anim.pose[inJoints.w] * anim.invBindPose[inJoints.w]) * inWeights.w;
+     mat4 skin = (anim.pose[inJoints.x] * ) * inWeights.x;
+     skin += (anim.pose[inJoints.y] * inWeights.y;
+     skin += (anim.pose[inJoints.z] * inWeights.z;
+     skin += (anim.pose[inJoints.w] * inWeights.w;
 
      vec4 worldPosition = mvp.model * skin * vec4(inPosition, 1.0);
 

@@ -20,12 +20,12 @@ GraphicsObjectColoredAnimated::~GraphicsObjectColoredAnimated()
 {
 }
 
-glm::mat4* GraphicsObjectColoredAnimated::GetAnimPoseArray()
+const glm::mat4* const GraphicsObjectColoredAnimated::GetAnimPoseArray() const
 {
 	return static_cast<GOColoredAnimated*>(graphics)->GetAnimPoseArray();
 }
 
-glm::mat4* GraphicsObjectColoredAnimated::GetAnimInvBindPoseArray()
+const std::vector<glm::mat4>& GraphicsObjectColoredAnimated::GetAnimInvBindPoseArray() const
 {
 	return static_cast<GOColoredAnimated*>(graphics)->GetAnimInvBindPoseArray();
 }

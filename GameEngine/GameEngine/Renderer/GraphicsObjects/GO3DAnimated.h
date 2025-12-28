@@ -4,6 +4,7 @@
 #include "GO3D.h"
 
 #include <functional>
+#include <vector>
 
 class Animation;
 
@@ -11,9 +12,9 @@ class GO3DAnimated : public GO3D
 {
 public:
 
-	glm::mat4* GetAnimPoseArray();
+	const glm::mat4* const GetAnimPoseArray() const;
 
-	glm::mat4* GetAnimInvBindPoseArray();
+	const std::vector<glm::mat4>& GetAnimInvBindPoseArray() const;
 
 	virtual void Update() override;
 
@@ -42,7 +43,6 @@ protected:
 	struct AnimationData
 	{
 		glm::mat4 pose[500];
-		glm::mat4 invBindPose[500];
 	} animationData;
 
 	unsigned int animationBuffer;

@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include <vector>
+
 class Model;
 
 class GraphicsObjectColoredAnimated : public GraphicsObject3DComponent
@@ -18,9 +20,9 @@ public:
 
 	~GraphicsObjectColoredAnimated();
 
-	glm::mat4* GetAnimPoseArray();
+	const glm::mat4* const GetAnimPoseArray() const;
 
-	glm::mat4* GetAnimInvBindPoseArray();
+	const std::vector<glm::mat4>& GetAnimInvBindPoseArray() const;
 
 	void SetClip(unsigned int clipIndex);
 

@@ -6,14 +6,14 @@
 #include "../Model/Model.h"
 #include "../Time/TimeManager.h"
 
-glm::mat4* GO3DAnimated::GetAnimPoseArray()
+const glm::mat4* const GO3DAnimated::GetAnimPoseArray() const
 {
 	return animationData.pose;
 }
 
-glm::mat4* GO3DAnimated::GetAnimInvBindPoseArray()
+const std::vector<glm::mat4>& GO3DAnimated::GetAnimInvBindPoseArray() const
 {
-	return animationData.invBindPose;
+	return model->GetArmature()->GetInvBindPose();
 }
 
 void GO3DAnimated::Update()
@@ -85,6 +85,13 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 	glCreateBuffers(1, &animationBuffer);
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
 
+	unsigned int i = 0;
+	for (const glm::mat4& bonePose : model->GetArmature()->GetInvBindPose())
+	{
+		animationData.pose[i] *= bonePose;
+		i++;
+	}
+
 	animation = new Animation(model->GetBakedAnimation(0));
 
 	PauseAnimationOnEditorEnable();
@@ -105,11 +112,6 @@ GO3DAnimated::~GO3DAnimated()
 
 void GO3DAnimated::PauseAnimationOnEditorEnable()
 {
-	for (unsigned int i = 0; i < model->GetArmature()->GetInvBindPose().size(); i++)
-	{
-		animationData.invBindPose[i] = model->GetArmature()->GetInvBindPose()[i];
-	}
-
 	onEditorEnable = new std::function<void()>([this]()
 		{
 			PauseAnimation();

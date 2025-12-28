@@ -17,9 +17,9 @@ public:
 
 	~GraphicsObjectTexturedAnimated();
 
-	glm::mat4* GetAnimPoseArray();
+	const glm::mat4* const GetAnimPoseArray() const;
 
-	glm::mat4* GetAnimInvBindPoseArray();
+	const std::vector<glm::mat4>& GetAnimInvBindPoseArray();
 
 	void SetClip(unsigned int clipIndex);
 

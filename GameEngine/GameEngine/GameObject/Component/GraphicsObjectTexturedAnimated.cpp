@@ -17,12 +17,12 @@ GraphicsObjectTexturedAnimated::~GraphicsObjectTexturedAnimated()
 {
 }
 
-glm::mat4* GraphicsObjectTexturedAnimated::GetAnimPoseArray()
+const glm::mat4* const GraphicsObjectTexturedAnimated::GetAnimPoseArray() const
 {
 	return static_cast<GOTexturedAnimated*>(graphics)->GetAnimPoseArray();
 }
 
-glm::mat4* GraphicsObjectTexturedAnimated::GetAnimInvBindPoseArray()
+const std::vector<glm::mat4>& GraphicsObjectTexturedAnimated::GetAnimInvBindPoseArray()
 {
 	return static_cast<GOTexturedAnimated*>(graphics)->GetAnimInvBindPoseArray();
 }
