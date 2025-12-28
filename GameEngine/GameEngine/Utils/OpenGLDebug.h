@@ -1,6 +1,8 @@
 #ifndef OPENGL_DEBUG_H
 #define OPENGL_DEBUG_H
 
+#include "Logger.h"
+
 #include <cstdio>
 #include "Gl/glew.h"
 
@@ -20,9 +22,15 @@ MessageCallback(GLenum source,
 
 	if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
 	{
-		fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-			(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
-			type, severity, message);
+		switch (type)
+		{
+		case GL_DEBUG_TYPE_ERROR:
+			Logger::Log(std::string("OpenGL: ") + std::string("Severity: ") + std::to_string(severity) + " " + message, Logger::Category::Error);
+			break;
+		default:
+			Logger::Log(std::string("OpenGL: ") + std::string("Severity: ") + std::to_string(severity) + " " + message, Logger::Category::Warning);
+			break;
+		}
 	}
 }
 

@@ -21,6 +21,13 @@ void GO3DAnimated::Update()
 	if (lastFrame != TimeManager::GetFrameID())
 	{
 		animation->Update(animationData.pose);
+
+		const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+		for (unsigned int i = 0; i < invBindPose.size(); i++)
+		{
+			animationData.pose[i] *= invBindPose[i];
+		}
+		
 		glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), &animationData);
 	}
 
@@ -83,16 +90,17 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 	clip(0)
 {
 	glCreateBuffers(1, &animationBuffer);
-	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
-
-	unsigned int i = 0;
-	for (const glm::mat4& bonePose : model->GetArmature()->GetInvBindPose())
-	{
-		animationData.pose[i] *= bonePose;
-		i++;
-	}
 
 	animation = new Animation(model->GetBakedAnimation(0));
+	animation->Update(animationData.pose);
+
+	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+	for (unsigned int i = 0; i < invBindPose.size(); i++)
+	{
+		animationData.pose[i] *= invBindPose[i];
+	}
+
+	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), &animationData, GL_DYNAMIC_STORAGE_BIT);
 
 	PauseAnimationOnEditorEnable();
 }

@@ -116,6 +116,7 @@ Window* Engine::GetWindow()
 
 Engine::Engine()
 {
+	Logger::ClearLog(true);
 	DatabaseManager::Initialize();
 	TimeManager::Initialize();
 	Renderer::Initialize();

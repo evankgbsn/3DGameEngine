@@ -43,10 +43,10 @@ layout(location = 5) out vec2 outUV;
 
 void main(void) 
 {
-     mat4 skin = (anim.pose[inJoints.x] * inWeights.x;
-     skin += (anim.pose[inJoints.y] * inWeights.y;
-     skin += (anim.pose[inJoints.z] * inWeights.z;
-     skin += (anim.pose[inJoints.w] * inWeights.w;
+     mat4 skin = anim.pose[inJoints.x] * inWeights.x;
+     skin += anim.pose[inJoints.y] * inWeights.y;
+     skin += anim.pose[inJoints.z] * inWeights.z;
+     skin += anim.pose[inJoints.w] * inWeights.w;
 
      vec4 worldPosition =  mvp.model * skin * vec4(inPosition, 1.0);
 
