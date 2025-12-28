@@ -65,6 +65,8 @@ private:
 
 	float speed;
 
+	std::vector<glm::mat4> poseData;
+
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;
