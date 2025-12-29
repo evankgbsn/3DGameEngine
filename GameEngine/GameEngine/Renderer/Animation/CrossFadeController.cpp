@@ -33,6 +33,18 @@ void CrossFadeController::Play(FastClip* target)
     time = target->GetStartTime();
 }
 
+void CrossFadeController::SetTime(float newTime)
+{
+    Play(clip);
+    time = 0.0f;
+    Update(newTime, 1.0f);
+}
+
+float CrossFadeController::GetTime() const
+{
+    return time;
+}
+
 void CrossFadeController::FadeTo(FastClip* target, float fadeTime)
 {
     if (clip == nullptr)
@@ -60,7 +72,7 @@ void CrossFadeController::FadeTo(FastClip* target, float fadeTime)
     targets.push_back(CrossFadeTarget(target, armature.GetRestPose(), fadeTime));
 }
 
-void CrossFadeController::Update(float deltaTime)
+void CrossFadeController::Update(float deltaTime, float speed)
 {
     if (clip == nullptr || !wasArmatureSet)
     {
@@ -84,12 +96,12 @@ void CrossFadeController::Update(float deltaTime)
 
     numTargets = targets.size();
     pose = armature.GetRestPose();
-    time = clip->Sample(pose, time + deltaTime);
+    time = clip->Sample(pose, time + deltaTime * speed);
 
     for (unsigned int i = 0; i < numTargets; ++i)
     {
         CrossFadeTarget& t = targets[i];
-        t.time = t.clip->Sample(t.pose, t.time + deltaTime);
+        t.time = t.clip->Sample(t.pose, t.time + deltaTime * speed);
 
         t.elapsed += deltaTime;
         float curT = t.elapsed / t.duration;

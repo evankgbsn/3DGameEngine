@@ -124,9 +124,9 @@ void AnimatedCollider::InitializeMeshColliderVisualization()
 {
 	meshColliderVisualization = GraphicsObjectManager::CreateGO3DColoredAnimated(const_cast<Model* const>(wrapedGraphics->GetModel()), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	meshColliderVisualization->SetDrawMode(GO3D::Mode::LINE);
-	meshColliderVisualization->SetClip(wrapedGraphics->GetClip());
+	meshColliderVisualization->SetClip(wrapedGraphics->GetClipName());
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
-	meshColliderVisualization->SetFrame(wrapedGraphics->GetFrame());
+	meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
 	meshColliderVisualization->SetSpeed(wrapedGraphics->GetSpeed());
 }
 
@@ -147,7 +147,7 @@ void AnimatedCollider::ToggleVisibility()
 	else
 	{
 		GraphicsObjectManager::Enable(meshColliderVisualization);
-		meshColliderVisualization->SetFrame(wrapedGraphics->GetFrame());
+		meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
 		meshColliderVisualization->SetSpeed(wrapedGraphics->GetSpeed());
 	}
 		

@@ -4,6 +4,8 @@
 #include "CrossFadeTarget.h"
 #include "Armature.h"
 
+#include "Clip.h"
+
 #include <vector>
 
 class CrossFadeController
@@ -22,11 +24,15 @@ public:
 
 	void FadeTo(FastClip* target, float fadeTime);
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, float speed);
 
 	const Pose& GetCurrentPose() const;
 
 	FastClip* GetCurrentClip() const;
+
+	float GetTime() const;
+
+	void SetTime(float newTime);
 
 protected:
 

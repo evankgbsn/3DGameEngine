@@ -27,24 +27,24 @@ const std::vector<glm::mat4>& GraphicsObjectTexturedAnimated::GetAnimInvBindPose
 	return static_cast<GOTexturedAnimated*>(graphics)->GetAnimInvBindPoseArray();
 }
 
-void GraphicsObjectTexturedAnimated::SetClip(unsigned int clipIndex)
+void GraphicsObjectTexturedAnimated::SetClip(const std::string& clipName)
 {
-	static_cast<GOTexturedAnimated*>(graphics)->SetClip(clipIndex);
+	static_cast<GOTexturedAnimated*>(graphics)->SetClip(clipName);
 }
 
-unsigned int GraphicsObjectTexturedAnimated::GetClip() const
+const std::string& GraphicsObjectTexturedAnimated::GetClip() const
 {
-	return static_cast<GOTexturedAnimated*>(graphics)->GetClip();
+	return static_cast<GOTexturedAnimated*>(graphics)->GetClipName();
 }
 
-unsigned int GraphicsObjectTexturedAnimated::GetFrame() const
+float GraphicsObjectTexturedAnimated::GetSampleTime() const
 {
-	return static_cast<GOTexturedAnimated*>(graphics)->GetFrame();
+	return static_cast<GOTexturedAnimated*>(graphics)->GetSampleTime();
 }
 
-void GraphicsObjectTexturedAnimated::SetFrame(unsigned int frameIndex)
+void GraphicsObjectTexturedAnimated::SetSampleTime(float sampleTime)
 {
-	static_cast<GOTexturedAnimated*>(graphics)->SetFrame(frameIndex);
+	static_cast<GOTexturedAnimated*>(graphics)->SetSampleTime(sampleTime);
 }
 
 float GraphicsObjectTexturedAnimated::GetSpeed() const
@@ -66,8 +66,8 @@ void GraphicsObjectTexturedAnimated::Serialize()
 	savedStrings["ModelName"] = GetModel()->GetName();
 	savedStrings["TextureName"] = go->GetTexture()->GetName();
 	savedFloats["AnimationSpeed"] = go->GetSpeed();
-	savedInts["AnimationClip"] = go->GetClip();
-	savedInts["AnimationFrame"] = go->GetFrame();
+	savedStrings["AnimationClip"] = go->GetClipName();
+	savedFloats["AnimationFrame"] = go->GetSampleTime();
 }
 
 void GraphicsObjectTexturedAnimated::Deserialize()
@@ -81,8 +81,8 @@ void GraphicsObjectTexturedAnimated::Deserialize()
 
 	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
 
-	go->SetClip(savedInts["AnimationClip"]);
-	go->SetFrame(savedInts["AnimationFrame"]);
+	go->SetClip(savedStrings["AnimationClip"]);
+	go->SetSampleTime(savedFloats["AnimationFrame"]);
 	go->SetSpeed(savedFloats["AnimationSpeed"]);
 	GraphicsObject3DComponent::Deserialize();
 }

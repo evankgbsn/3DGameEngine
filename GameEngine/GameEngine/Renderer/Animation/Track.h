@@ -4,6 +4,10 @@
 #include "Frame.h"
 
 #include <vector>
+
+#include <climits> // Added for UINT_MAX
+#include <algorithm> // Added for std::max if needed
+
 #include <glm/glm.hpp>
 
 template<typename T, size_t N>

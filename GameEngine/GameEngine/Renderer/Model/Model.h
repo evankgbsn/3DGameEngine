@@ -2,7 +2,6 @@
 #define MODEL_H
 
 #include "Vertex.h"
-
 #include "../Animation/Clip.h"
 
 #include <string>

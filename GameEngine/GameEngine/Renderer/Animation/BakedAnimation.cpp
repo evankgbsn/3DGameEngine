@@ -1,5 +1,6 @@
 #include "BakedAnimation.h"
 
+#include "Clip.h"
 #include "Armature.h"
 
 BakedAnimation::BakedAnimation(FastClip* c, Armature* const armature) :

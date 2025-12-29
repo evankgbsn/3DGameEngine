@@ -29,9 +29,9 @@ void GraphicsObjectTexturedAnimatedLit::SetShine(float shine)
 	static_cast<GOTexturedAnimatedLit*>(graphics)->SetShine(shine);
 }
 
-void GraphicsObjectTexturedAnimatedLit::SetClip(unsigned int clipNum)
+void GraphicsObjectTexturedAnimatedLit::SetClip(const std::string& clipName)
 {
-	static_cast<GOTexturedAnimatedLit*>(graphics)->SetClip(clipNum);
+	static_cast<GOTexturedAnimatedLit*>(graphics)->SetClip(clipName);
 }
 
 void GraphicsObjectTexturedAnimatedLit::SetSpeed(float speed)
@@ -68,8 +68,8 @@ void GraphicsObjectTexturedAnimatedLit::Serialize()
 	savedStrings["DiffuseTextureName"] = go->GetDiffuseTexture()->GetName();
 	savedStrings["SpecularTextureName"] = go->GetSpecularTexture()->GetName();
 	savedFloats["AnimationSpeed"] = go->GetSpeed();
-	savedInts["AnimationClip"] = go->GetClip();
-	savedInts["AnimationFrame"] = go->GetFrame();
+	savedStrings["AnimationClip"] = go->GetClipName();
+	savedFloats["AnimationFrame"] = go->GetSampleTime();
 	savedFloats["Shine"] = go->GetShine();
 }
 
@@ -84,8 +84,8 @@ void GraphicsObjectTexturedAnimatedLit::Deserialize()
 
 	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
 
-	go->SetClip(savedInts["AnimationClip"]);
-	go->SetFrame(savedInts["AnimationFrame"]);
+	go->SetClip(savedStrings["AnimationClip"]);
+	go->SetSampleTime(savedFloats["AnimationFrame"]);
 	go->SetSpeed(savedFloats["AnimationSpeed"]);
 	go->SetShine(savedFloats["Shine"]);
 	GraphicsObject3DComponent::Deserialize();

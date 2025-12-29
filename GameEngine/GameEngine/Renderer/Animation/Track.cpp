@@ -352,7 +352,3 @@ inline unsigned int Track<T, N>::FrameIndex(float time, bool isLooping) const
 	return -1;
 
 }
-
-typedef Track<float, 1> ScalarTrack;
-typedef Track<glm::vec3, 3> VectorTrack;
-typedef Track<glm::quat, 4> QuaternionTrack;

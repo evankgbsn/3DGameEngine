@@ -1,11 +1,10 @@
 #include "GO3DAnimated.h"
 
-#include "../Animation/Animation.h"
-#include "../Animation/Armature.h"
+#include "../Animation/AnimationController.h"
 #include "../../Editor/Editor.h"
 #include "../Model/Model.h"
 #include "../Time/TimeManager.h"
-#include "../Animation/CrossFadeController.h"
+#include "../Animation/Armature.h"
 
 const glm::mat4* const GO3DAnimated::GetAnimPoseArray() const
 {
@@ -19,23 +18,11 @@ const std::vector<glm::mat4>& GO3DAnimated::GetAnimInvBindPoseArray() const
 
 void GO3DAnimated::Update()
 {	
-	if (lastFrame != TimeManager::GetFrameID())
-	{
-		//animation->Update(animationData.pose);
-		//
-		//const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
-		//for (unsigned int i = 0; i < invBindPose.size(); i++)
-		//{
-		//	poseData[i] = animationData.pose[i] * invBindPose[i];
-		//}
-
-		
-		//glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
-	}
-
 	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
 	std::vector<glm::mat4> pose(invBindPose.size());
-	crossFadeController->GetCurrentPose().GetJointMatrices(pose);
+
+	animationController->Update(pose.data());
+
 	for (unsigned int i = 0; i < invBindPose.size(); i++)
 	{
 		poseData[i] = pose[i] * invBindPose[i];
@@ -43,75 +30,58 @@ void GO3DAnimated::Update()
 
 	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
 
-	lastFrame = TimeManager::GetFrameID();
-
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
 }
 
-void GO3DAnimated::SetClip(unsigned int clipIndex)
+void GO3DAnimated::SetClip(const std::string& clipName)
 {
-	delete animation;
-	animation = new Animation(model->GetBakedAnimation(clipIndex));
-	clip = clipIndex;
+	animationController->Play(clipName);
 }
 
-unsigned int GO3DAnimated::GetClip() const
+const std::string& GO3DAnimated::GetClipName() const
 {
-	return clip;
+	return animationController->GetCurrentClipName();
 }
 
-unsigned int GO3DAnimated::GetFrame() const
+float GO3DAnimated::GetSampleTime() const
 {
-	return animation->GetFrame();
+	return animationController->GetSampleTime();
 }
 
-void GO3DAnimated::SetFrame(unsigned int frameIndex)
+void GO3DAnimated::SetSampleTime(float time)
 {
-	animation->SetFrame(frameIndex);
+	animationController->SetSampleTime(time);
 }
 
 float GO3DAnimated::GetSpeed() const
 {
-	return speed;
+	return animationController->GetSpeed();
 }
 
 void GO3DAnimated::SetSpeed(float spd)
 {
-	speed = spd;
-
-	if (!Editor::IsEnabled())
-	{
-		animation->SetSpeed(speed);
-	}
+	animationController->SetSpeed(spd);
 }
 
 void GO3DAnimated::PauseAnimation()
 {
-	animation->SetSpeed(0.0f);
+	animationController->Pause();
 }
 
 void GO3DAnimated::ResumeAnimation()
 {
-	SetSpeed(speed);
+	animationController->Resume();
 }
 
 GO3DAnimated::GO3DAnimated(Model* const model) :
 	GO3D(model),
 	animationData(),
-	animationBuffer(),
-	clip(0)
+	animationBuffer()
 {
 	glCreateBuffers(1, &animationBuffer);
 
-	animation = new Animation(model->GetBakedAnimation(0));
-	animation->Update(animationData.pose);
-
-	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
-	poseData.resize(invBindPose.size());
-	for (unsigned int i = 0; i < invBindPose.size(); i++)
-	{
-		poseData[i] = animationData.pose[i] * invBindPose[i];
-	}
+	animationController = new AnimationController(model);
+	poseData.resize(model->GetArmature()->GetInvBindPose().size());
 
 	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), poseData.data(), GL_DYNAMIC_STORAGE_BIT);
 
@@ -123,7 +93,7 @@ GO3DAnimated::~GO3DAnimated()
 	Editor::DeregisterOnEditorDisable(onEditorDisable);
 	Editor::DeregisterOnEditorEnable(onEditorEnable);
 
-	delete animation;
+	delete animationController;
 	delete onEditorEnable;
 	delete onEditorDisable;
 	glDeleteBuffers(1, &animationBuffer);

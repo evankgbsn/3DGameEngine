@@ -19,7 +19,7 @@ public:
 
 	void SetShine(float shine);
 
-	void SetClip(unsigned int clipNum);
+	void SetClip(const std::string& clipName);
 
 	void SetSpeed(float speed);
 

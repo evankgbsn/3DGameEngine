@@ -72,5 +72,4 @@ typedef TClip<FastTransformTrack> FastClip;
 
 FastClip OptimizeClip(Clip& input);
 
-
 #endif // CLIP_H

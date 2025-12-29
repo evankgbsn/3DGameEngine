@@ -444,6 +444,9 @@
     <ClCompile Include="Renderer\Animation\CrossFadeController.cpp">
       <Filter>Source Files\Renderer\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Animation\AnimationController.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -795,6 +798,9 @@
       <Filter>Source Files\Renderer\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Animation\CrossFadeController.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\AnimationController.h">
       <Filter>Source Files\Renderer\Animation</Filter>
     </ClInclude>
   </ItemGroup>

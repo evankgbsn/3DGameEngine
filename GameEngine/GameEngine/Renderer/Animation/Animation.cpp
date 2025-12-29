@@ -2,6 +2,7 @@
 
 #include "BakedAnimation.h"
 #include "../../Time/TimeManager.h"
+#include "AnimationController.h"
 
 Animation::Animation(const BakedAnimation& ba) :
 	playback(ANIMATION_PLAYBACK_FRAME_TIME),

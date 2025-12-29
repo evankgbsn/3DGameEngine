@@ -3,6 +3,8 @@
 
 #include "GraphicsObject3DComponent.h"
 
+#include <string>
+
 class Model;
 class Texture;
 
@@ -21,13 +23,13 @@ public:
 
 	const std::vector<glm::mat4>& GetAnimInvBindPoseArray();
 
-	void SetClip(unsigned int clipIndex);
+	void SetClip(const std::string& clipName);
 
-	unsigned int GetClip() const;
+	const std::string& GetClip() const;
 
-	unsigned int GetFrame() const;
+	float GetSampleTime() const;
 
-	void SetFrame(unsigned int frameIndex);
+	void SetSampleTime(float sampleTime);
 
 	float GetSpeed() const;
 

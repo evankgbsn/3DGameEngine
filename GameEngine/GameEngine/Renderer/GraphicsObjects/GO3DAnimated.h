@@ -5,9 +5,9 @@
 
 #include <functional>
 #include <vector>
+#include <string>
 
-class Animation;
-class CrossFadeController;
+class AnimationController;
 
 class GO3DAnimated : public GO3D
 {
@@ -19,13 +19,13 @@ public:
 
 	virtual void Update() override;
 
-	void SetClip(unsigned int clipIndex);
+	void SetClip(const std::string& clipName);
 
-	unsigned int GetClip() const;
+	const std::string& GetClipName() const;
 
-	unsigned int GetFrame() const;
+	float GetSampleTime() const;
 
-	void SetFrame(unsigned int frameIndex);
+	void SetSampleTime(float sampleTime);
 
 	float GetSpeed() const;
 
@@ -48,8 +48,6 @@ protected:
 
 	unsigned int animationBuffer;
 
-	Animation* animation;
-
 private:
 
 	GO3DAnimated(const GO3DAnimated&) = delete;
@@ -62,19 +60,14 @@ private:
 
 	void PauseAnimationOnEditorEnable();
 
-	unsigned int clip;
-
-	float speed;
-
 	std::vector<glm::mat4> poseData;
 
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;
 
-	unsigned long long lastFrame;
+	AnimationController* animationController;
 
-	CrossFadeController* crossFadeController;
 };
 
 #endif // GO3DANIMATED_H

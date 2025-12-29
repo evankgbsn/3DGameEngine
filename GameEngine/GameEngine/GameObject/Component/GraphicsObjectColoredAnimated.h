@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include <vector>
+#include <string>
 
 class Model;
 
@@ -24,13 +25,13 @@ public:
 
 	const std::vector<glm::mat4>& GetAnimInvBindPoseArray() const;
 
-	void SetClip(unsigned int clipIndex);
+	void SetClip(const std::string& clipIndex);
 
-	unsigned int GetClip() const;
+	const std::string& GetClip() const;
 
-	unsigned int GetFrame() const;
+	float GetSampleTime() const;
 
-	void SetFrame(unsigned int frameIndex);
+	void SetSampleTime(float sampleTime);
 
 	float GetSpeed() const;
 
