@@ -60,8 +60,6 @@ private:
 
 	void PauseAnimationOnEditorEnable();
 
-	std::vector<glm::mat4> poseData;
-
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;

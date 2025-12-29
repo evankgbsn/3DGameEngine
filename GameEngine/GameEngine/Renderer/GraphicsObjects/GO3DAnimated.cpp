@@ -25,10 +25,10 @@ void GO3DAnimated::Update()
 
 	for (unsigned int i = 0; i < invBindPose.size(); i++)
 	{
-		poseData[i] = pose[i] * invBindPose[i];
+		animationData.pose[i] = pose[i] * invBindPose[i];
 	}
 
-	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
+	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), animationData.pose);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
 }
@@ -81,9 +81,18 @@ GO3DAnimated::GO3DAnimated(Model* const model) :
 	glCreateBuffers(1, &animationBuffer);
 
 	animationController = new AnimationController(model);
-	poseData.resize(model->GetArmature()->GetInvBindPose().size());
 
-	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), poseData.data(), GL_DYNAMIC_STORAGE_BIT);
+	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+	std::vector<glm::mat4> pose(invBindPose.size());
+
+	animationController->Update(pose.data());
+
+	for (unsigned int i = 0; i < invBindPose.size(); i++)
+	{
+		animationData.pose[i] = pose[i] * invBindPose[i];
+	}
+
+	glNamedBufferStorage(animationBuffer, sizeof(AnimationData), animationData.pose, GL_DYNAMIC_STORAGE_BIT);
 
 	PauseAnimationOnEditorEnable();
 }
