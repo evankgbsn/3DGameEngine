@@ -31,7 +31,7 @@ public:
 
 	float GetSampleTime() const;
 
-	void SetSampleTime(unsigned int frameIndex);
+	void SetSampleTime(float sampleTime);
 
 	void Pause();
 

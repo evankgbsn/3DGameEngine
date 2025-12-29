@@ -166,6 +166,7 @@ void AnimatedCollider::Update()
 	}
 
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
+	meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
 
 	sphere->Update(wrapedGraphics->GetTransform());
 }

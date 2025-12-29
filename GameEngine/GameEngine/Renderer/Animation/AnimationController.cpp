@@ -108,7 +108,7 @@ float AnimationController::GetSampleTime() const
 	return crossFadeController->GetTime();
 }
 
-void AnimationController::SetSampleTime(unsigned int newTime)
+void AnimationController::SetSampleTime(float newTime)
 {
 	crossFadeController->SetTime(newTime);
 }
