@@ -161,7 +161,7 @@ void AnimatedCollider::Update()
 	for (const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb : obbs)
 	{
 		if(obb. first != nullptr)
-			obb.first->Update(wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i] * wrapedGraphics->GetAnimInvBindPoseArray()[i]);
+			obb.first->Update(wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i]);
 		i++;
 	}
 
