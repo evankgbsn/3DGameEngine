@@ -219,18 +219,12 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other) const
 									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-									const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
-									glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
-									glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
-									glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
-									glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
-
 									const glm::vec4& weights = vert.GetWeights();
 
-									glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
-									skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
-									skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
-									skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+									glm::mat4 skin = animPoseJoint0 * weights[0];
+									skin += animPoseJoint1 * weights[1];
+									skin += animPoseJoint2 * weights[2];
+									skin += animPoseJoint3 * weights[3];
 
 									return skin;
 								};
@@ -304,18 +298,12 @@ bool AnimatedCollider::Intersect(const AnimatedCollider& other) const
 														glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 														glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-														const std::vector<glm::mat4>& const animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
-														glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
-														glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
-														glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
-														glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
-
 														const glm::vec4& weights = vert.GetWeights();
 
-														glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
-														skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
-														skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
-														skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+														glm::mat4 skin = animPoseJoint0 * weights[0];
+														skin += animPoseJoint1 * weights[1];
+														skin += animPoseJoint2 * weights[2];
+														skin += animPoseJoint3 * weights[3];
 
 														return skin;
 													};
@@ -430,18 +418,12 @@ bool AnimatedCollider::Intersect(const StaticCollider& other, glm::vec3& outHit)
 						glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 						glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-						const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
-						glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
-						glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
-						glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
-						glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
-
 						const glm::vec4& weights = vert.GetWeights();
 
-						glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
-						skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
-						skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
-						skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+						glm::mat4 skin = animPoseJoint0 * weights[0];
+						skin += animPoseJoint1 * weights[1];
+						skin += animPoseJoint2 * weights[2];
+						skin += animPoseJoint3 * weights[3];
 
 						return skin;
 					};
@@ -493,18 +475,12 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
 									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
 
-									const std::vector<glm::mat4>& animInvBindPoseMatArray = animatedVisualization->GetAnimInvBindPoseArray();
-									glm::mat4 animInvBindPoseJoint0 = animInvBindPoseMatArray[influences[0]];
-									glm::mat4 animInvBindPoseJoint1 = animInvBindPoseMatArray[influences[1]];
-									glm::mat4 animInvBindPoseJoint2 = animInvBindPoseMatArray[influences[2]];
-									glm::mat4 animInvBindPoseJoint3 = animInvBindPoseMatArray[influences[3]];
-
 									const glm::vec4& weights = vert.GetWeights();
 
-									glm::mat4 skin = animPoseJoint0 * animInvBindPoseJoint0 * weights[0];
-									skin += animPoseJoint1 * animInvBindPoseJoint1 * weights[1];
-									skin += animPoseJoint2 * animInvBindPoseJoint2 * weights[2];
-									skin += animPoseJoint3 * animInvBindPoseJoint3 * weights[3];
+									glm::mat4 skin = animPoseJoint0 * weights[0];
+									skin += animPoseJoint1 * weights[1];
+									skin += animPoseJoint2 * weights[2];
+									skin += animPoseJoint3 * weights[3];
 
 									return skin;
 								};
