@@ -7,6 +7,7 @@
 #include <vector>
 
 class Animation;
+class CrossFadeController;
 
 class GO3DAnimated : public GO3D
 {
@@ -73,6 +74,7 @@ private:
 
 	unsigned long long lastFrame;
 
+	CrossFadeController* crossFadeController;
 };
 
 #endif // GO3DANIMATED_H

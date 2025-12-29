@@ -5,11 +5,11 @@
 #define ANIMATION_PLAYBACK_FRAME_TIME 0.0041666f
 
 #include "Pose.h"
+#include "Clip.h"
 
 #include <vector>
 #include <glm/glm.hpp>
 
-class Clip;
 class Pose;
 class Armature;
 
@@ -19,7 +19,7 @@ public:
 
 	BakedAnimation() = delete;
 
-	BakedAnimation(Clip* c, Armature* const armature);
+	BakedAnimation(FastClip* c, Armature* const armature);
 
 	~BakedAnimation();
 
@@ -39,7 +39,7 @@ private:
 
 	std::vector<std::vector<glm::mat4>> bakedPoses;
 	Pose animatedPose;
-	Clip* clip;
+	FastClip* clip;
 
 };
 

@@ -266,7 +266,7 @@ void FPSPlayer::Load()
 
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
 		{
-			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
+			ModelManager::LoadModel("CharacterLegs", "Assets/Model/Woman.gltf", false);
 		}
 	}
 }

@@ -49,7 +49,9 @@ public:
 
 	Armature* const GetArmature() const;
 
-	const std::vector<Clip>& GetAnimationClips() const;
+	const std::vector<FastClip>& GetAnimationClips() const;
+
+	FastClip* GetAnimationClip(unsigned int index);
 
 	const BakedAnimation& GetBakedAnimation(unsigned int index) const;
 
@@ -95,7 +97,7 @@ private:
 
 	Armature* armature;
 
-	std::vector<Clip> animationClips;
+	std::vector<FastClip> animationClips;
 
 	std::vector<BakedAnimation> bakedAnimations;
 

@@ -41,7 +41,7 @@ namespace GLTFHelpers
 Model::Model() :
 	vertices(std::vector<Vertex>()),
 	indices(std::vector<unsigned int>()),
-	animationClips(std::vector<Clip>()),
+	animationClips(std::vector<FastClip>()),
 	armature(new Armature()),
 	name("DefaultRectangle")
 {
@@ -61,7 +61,7 @@ Model::Model() :
 Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i, const std::string& n) :
 	vertices(v),
 	indices(i),
-	animationClips(std::vector<Clip>()),
+	animationClips(std::vector<FastClip>()),
 	armature(new Armature()),
 	name(n)
 {
@@ -71,7 +71,7 @@ Model::Model(const std::vector<Vertex>& v, const std::vector<unsigned int>& i, c
 Model::Model(const std::string& path, const std::string& n) :
 	vertices(std::vector<Vertex>()),
 	indices(std::vector<unsigned int>()),
-	animationClips(std::vector<Clip>()),
+	animationClips(std::vector<FastClip>()),
 	armature(new Armature()),
 	name(n)
 {
@@ -176,9 +176,14 @@ Armature* const Model::GetArmature() const
 	return armature;
 }
 
-const std::vector<Clip>& Model::GetAnimationClips() const
+const std::vector<FastClip>& Model::GetAnimationClips() const
 {
 	return animationClips;
+}
+
+FastClip* Model::GetAnimationClip(unsigned int index)
+{
+	return &animationClips[index];
 }
 
 Pose GLTFHelpers::LoadRestPose(cgltf_data* data)
@@ -364,10 +369,11 @@ void Model::LoadAnimationClips(cgltf_data* data)
 	unsigned long long numClips = data->animations_count;
 	unsigned long long numNodes = data->nodes_count;
 	animationClips.resize(numClips);
+	std::vector<Clip> slowClips(numClips);
 
 	for (unsigned long long i = 0; i < numClips; i++)
 	{
-		animationClips[i].SetName(data->animations[i].name);
+		slowClips[i].SetName(data->animations[i].name);
 
 		unsigned long long numChannels = data->animations->channels_count;
 
@@ -381,23 +387,29 @@ void Model::LoadAnimationClips(cgltf_data* data)
 			{
 				if (channel.target_path == cgltf_animation_path_type_translation)
 				{
-					VectorTrack& transTrack = animationClips[i][nodeId].GetPositionTrack();
+					VectorTrack& transTrack = slowClips[i][nodeId].GetPositionTrack();
 					GLTFHelpers::TrackFromChannel<glm::vec3, 3U>(transTrack, channel);
 				}
 				else if (channel.target_path == cgltf_animation_path_type_rotation)
 				{
-					QuaternionTrack& rotTrack = animationClips[i][nodeId].GetRotationTrack();
+					QuaternionTrack& rotTrack = slowClips[i][nodeId].GetRotationTrack();
 					GLTFHelpers::TrackFromChannel<glm::quat, 4U>(rotTrack, channel);
 				}
 				else if (channel.target_path == cgltf_animation_path_type_scale)
 				{
-					VectorTrack& scaleTrack = animationClips[i][nodeId].GetScaleTrack();
+					VectorTrack& scaleTrack = slowClips[i][nodeId].GetScaleTrack();
 					GLTFHelpers::TrackFromChannel<glm::vec3, 3U>(scaleTrack, channel);
 				}
 			}
 		}
 
-		animationClips[i].RecalculateDuration();
+		slowClips[i].RecalculateDuration();
+	
+	}
+
+	for (unsigned long long i = 0; i < slowClips.size(); ++i)
+	{
+		animationClips[i] = OptimizeClip(slowClips[i]);
 	}
 
 }

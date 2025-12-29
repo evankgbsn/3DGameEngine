@@ -535,6 +535,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="Renderer\Animation\Armature.cpp" />
     <ClCompile Include="Renderer\Animation\BakedAnimation.cpp" />
     <ClCompile Include="Renderer\Animation\Clip.cpp" />
+    <ClCompile Include="Renderer\Animation\CrossFadeController.cpp" />
     <ClCompile Include="Renderer\Animation\Pose.cpp" />
     <ClCompile Include="Renderer\Animation\Track.cpp" />
     <ClCompile Include="Renderer\Animation\TransformTrack.cpp" />
@@ -649,6 +650,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="Renderer\Animation\Armature.h" />
     <ClInclude Include="Renderer\Animation\BakedAnimation.h" />
     <ClInclude Include="Renderer\Animation\Clip.h" />
+    <ClInclude Include="Renderer\Animation\CrossFadeController.h" />
+    <ClInclude Include="Renderer\Animation\CrossFadeTarget.h" />
     <ClInclude Include="Renderer\Animation\Frame.h" />
     <ClInclude Include="Renderer\Animation\Pose.h" />
     <ClInclude Include="Renderer\Animation\Track.h" />

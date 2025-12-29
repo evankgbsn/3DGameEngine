@@ -10,6 +10,8 @@ class Pose
 
 public:
 
+	static void Blend(Pose& out, Pose& a, Pose& b, float t, int root);
+
 	Pose();
 
 	Pose(unsigned int numJoints);
@@ -48,6 +50,8 @@ public:
 	void GetJointMatrices(std::vector<glm::mat4>& outMatrices) const;
 
 private:
+
+	static bool IsInHierarchy(Pose& pose, unsigned int root, unsigned int search);
 
 	std::vector<Math::Transform> joints;
 

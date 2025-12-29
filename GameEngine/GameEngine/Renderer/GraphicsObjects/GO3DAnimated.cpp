@@ -5,6 +5,7 @@
 #include "../../Editor/Editor.h"
 #include "../Model/Model.h"
 #include "../Time/TimeManager.h"
+#include "../Animation/CrossFadeController.h"
 
 const glm::mat4* const GO3DAnimated::GetAnimPoseArray() const
 {
@@ -20,16 +21,27 @@ void GO3DAnimated::Update()
 {	
 	if (lastFrame != TimeManager::GetFrameID())
 	{
-		animation->Update(animationData.pose);
+		//animation->Update(animationData.pose);
+		//
+		//const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+		//for (unsigned int i = 0; i < invBindPose.size(); i++)
+		//{
+		//	poseData[i] = animationData.pose[i] * invBindPose[i];
+		//}
 
-		const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
-		for (unsigned int i = 0; i < invBindPose.size(); i++)
-		{
-			poseData[i] = animationData.pose[i] * invBindPose[i];
-		}
 		
-		glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
+		//glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
 	}
+
+	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+	std::vector<glm::mat4> pose(invBindPose.size());
+	crossFadeController->GetCurrentPose().GetJointMatrices(pose);
+	for (unsigned int i = 0; i < invBindPose.size(); i++)
+	{
+		poseData[i] = pose[i] * invBindPose[i];
+	}
+
+	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), poseData.data());
 
 	lastFrame = TimeManager::GetFrameID();
 

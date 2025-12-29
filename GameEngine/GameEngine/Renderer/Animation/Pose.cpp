@@ -1,5 +1,24 @@
 #include "Pose.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
+void Pose::Blend(Pose& out, Pose& a, Pose& b, float t, int root)
+{
+	unsigned int numJoints = out.Size();
+	for (unsigned int i = 0; i < numJoints; ++i)
+	{
+		if (root >= 0)
+		{
+			if (!IsInHierarchy(out, root, i))
+			{
+				continue;
+			}
+		}
+
+		out.SetLocalTransform(i, Math::Transform::Mix(a.GetLocalTransform(i), b.GetLocalTransform(i), t));
+	}
+}
+
 Pose::Pose()
 {
 }
@@ -137,4 +156,26 @@ void Pose::GetJointMatrices(std::vector<glm::mat4>& outMatrices) const
 	{
 		outMatrices[i] = GetGlobalTransform(i).ToMat4();
 	}
+}
+
+bool Pose::IsInHierarchy(Pose& pose, unsigned int parent, unsigned int search)
+{
+	if (search == parent)
+	{
+		return true;
+	}
+
+	int p = pose.GetParent(search);
+
+	while (p >= 0)
+	{
+		if (p == (int)parent)
+		{
+			return true;
+		}
+
+		p = pose.GetParent(p);
+	}
+
+	return false;
 }

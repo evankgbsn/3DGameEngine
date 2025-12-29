@@ -7,6 +7,17 @@ template Track<float, 1>;
 template Track<glm::vec3, 3>;
 template Track<glm::quat, 4>;
 
+template FastTrack<float, 1>;
+template FastTrack<glm::vec3, 3>;
+template FastTrack<glm::quat, 4>;
+
+template FastTrack<float, 1>
+OptimizeTrack(Track<float, 1>& input);
+template FastTrack<glm::vec3, 3>
+OptimizeTrack(Track<glm::vec3, 3>& input);
+template FastTrack<glm::quat, 4>
+OptimizeTrack(Track<glm::quat, 4>& input);
+
 namespace TrackHelpers
 {
 

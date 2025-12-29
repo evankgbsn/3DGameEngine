@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 class BakedAnimation;
+class CrossFadeController;
 
 class Animation
 {

@@ -1,6 +1,10 @@
 #include "TransformTrack.h"
 
-TransformTrack::TransformTrack() :
+template TTransformTrack<VectorTrack, QuaternionTrack>;
+template TTransformTrack<VectorFastTrack, QuaternionFastTrack>;
+
+template<typename VTRACK, typename QTRACK>
+TTransformTrack<VTRACK, QTRACK>::TTransformTrack() :
 	id(),
 	position(),
 	rotation(),
@@ -8,36 +12,44 @@ TransformTrack::TransformTrack() :
 {
 }
 
-TransformTrack::~TransformTrack()
+
+template<typename VTRACK, typename QTRACK>
+TTransformTrack<VTRACK, QTRACK>::~TTransformTrack()
 {
 }
 
-unsigned int TransformTrack::GetId() const
+template<typename VTRACK, typename QTRACK>
+unsigned int TTransformTrack<VTRACK, QTRACK>::GetId() const
 {
 	return id;
 }
 
-void TransformTrack::SetId(const unsigned int& newId)
+template<typename VTRACK, typename QTRACK>
+void TTransformTrack<VTRACK, QTRACK>::SetId(const unsigned int& newId)
 {
 	id = newId;
 }
 
-VectorTrack& TransformTrack::GetPositionTrack()
+template<typename VTRACK, typename QTRACK>
+VTRACK& TTransformTrack<VTRACK, QTRACK>::GetPositionTrack()
 {
 	return position;
 }
 
-QuaternionTrack& TransformTrack::GetRotationTrack()
+template<typename VTRACK, typename QTRACK>
+QTRACK& TTransformTrack<VTRACK, QTRACK>::GetRotationTrack()
 {
 	return rotation;
 }
 
-VectorTrack& TransformTrack::GetScaleTrack()
+template<typename VTRACK, typename QTRACK>
+VTRACK& TTransformTrack<VTRACK, QTRACK>::GetScaleTrack()
 {
 	return scale;
 }
 
-float TransformTrack::GetStartTime() const
+template<typename VTRACK, typename QTRACK>
+float TTransformTrack<VTRACK, QTRACK>::GetStartTime() const
 {
 	float result = 0.0f;
 	bool isSet = false;
@@ -71,7 +83,8 @@ float TransformTrack::GetStartTime() const
 	return result;
 }
 
-float TransformTrack::GetEndTime() const
+template<typename VTRACK, typename QTRACK>
+float TTransformTrack<VTRACK, QTRACK>::GetEndTime() const
 {
 	float result = 0.0f;
 	bool isSet = false;
@@ -105,12 +118,14 @@ float TransformTrack::GetEndTime() const
 	return result;
 }
 
-bool TransformTrack::IsValid() const
+template<typename VTRACK, typename QTRACK>
+bool TTransformTrack<VTRACK, QTRACK>::IsValid() const
 {
 	return position.Size() > 1 || rotation.Size() > 1 || scale.Size() > 1;
 }
 
-Math::Transform TransformTrack::Sample(const Math::Transform& refTransform, float time, bool isLooping)
+template<typename VTRACK, typename QTRACK>
+Math::Transform TTransformTrack<VTRACK, QTRACK>::Sample(const Math::Transform& refTransform, float time, bool isLooping)
 {
 	Math::Transform result = refTransform;
 
@@ -128,6 +143,18 @@ Math::Transform TransformTrack::Sample(const Math::Transform& refTransform, floa
 	{
 		result.Scale() = scale.Sample(time, isLooping);
 	}
+
+	return result;
+}
+
+FastTransformTrack OptimizeTransformTrack(TransformTrack& input)
+{
+	FastTransformTrack result;
+
+	result.SetId(input.GetId());
+	result.GetPositionTrack() = OptimizeTrack<glm::vec3, 3>(input.GetPositionTrack());
+	result.GetRotationTrack() = OptimizeTrack<glm::quat, 4>(input.GetRotationTrack());
+	result.GetScaleTrack() = OptimizeTrack<glm::vec3, 3>(input.GetScaleTrack());
 
 	return result;
 }

@@ -8,24 +8,25 @@
 
 class Pose;
 
-class Clip
+template<typename TRACK>
+class TClip
 {
 
 public:
 
-	Clip();
+	TClip();
 
-	~Clip();
+	~TClip();
 
-	Clip(const Clip&) = default;
+	TClip(const TClip&) = default;
 
-	Clip& operator=(const Clip&) = default;
+	TClip& operator=(const TClip&) = default;
 
-	Clip(Clip&&) = delete;
+	TClip(TClip&&) = default;
 
-	Clip& operator=(Clip&&) = default;
+	TClip& operator=(TClip&&) = default;
 
-	TransformTrack& operator[](unsigned int joint);
+	TRACK& operator[](unsigned int joint);
 
 	unsigned int GetIdAtIndex(unsigned int index) const;
 
@@ -57,7 +58,7 @@ private:
 
 	std::string name;
 
-	std::vector<TransformTrack> tracks;
+	std::vector<TRACK> tracks;
 
 	float startTime;
 
@@ -65,6 +66,11 @@ private:
 
 	bool isLooping;
 };
+
+typedef TClip<TransformTrack> Clip;
+typedef TClip<FastTransformTrack> FastClip;
+
+FastClip OptimizeClip(Clip& input);
 
 
 #endif // CLIP_H

@@ -441,6 +441,9 @@
     <ClCompile Include="GameObject\Component\CharacterControllerComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Animation\CrossFadeController.cpp">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -787,6 +790,12 @@
     </ClInclude>
     <ClInclude Include="GameObject\Component\CharacterControllerComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\CrossFadeTarget.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Animation\CrossFadeController.h">
+      <Filter>Source Files\Renderer\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

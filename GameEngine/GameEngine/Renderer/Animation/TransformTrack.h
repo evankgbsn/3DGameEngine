@@ -4,32 +4,33 @@
 #include "Track.h"
 #include "../../Math/Transform.h"
 
-class TransformTrack
+template<typename VTRACK, typename QTRACK>
+class TTransformTrack
 {
 
 public:
 
-	TransformTrack();
+	TTransformTrack();
 
-	~TransformTrack();
+	~TTransformTrack();
 
-	TransformTrack(const TransformTrack&) = default;
+	TTransformTrack(const TTransformTrack&) = default;
 
-	TransformTrack& operator=(const TransformTrack&) = default;
+	TTransformTrack& operator=(const TTransformTrack&) = default;
 
-	TransformTrack(TransformTrack&&) = default;
+	TTransformTrack(TTransformTrack&&) = default;
 
-	TransformTrack& operator=(TransformTrack&&) = default;
+	TTransformTrack& operator=(TTransformTrack&&) = default;
 
 	unsigned int GetId() const;
 
 	void SetId(const unsigned int& newId);
 
-	VectorTrack& GetPositionTrack();
+	VTRACK& GetPositionTrack();
 
-	QuaternionTrack& GetRotationTrack();
+	QTRACK& GetRotationTrack();
 
-	VectorTrack& GetScaleTrack();
+	VTRACK& GetScaleTrack();
 
 	float GetStartTime() const;
 
@@ -39,16 +40,21 @@ public:
 
 	Math::Transform Sample(const Math::Transform& transform, float time, bool isLooping);
 
-private:
+protected:
 
 	unsigned int id;
 
-	VectorTrack position;
+	VTRACK position;
 	
-	QuaternionTrack rotation;
+	QTRACK rotation;
 	
-	VectorTrack scale;
+	VTRACK scale;
 
 };
+
+typedef TTransformTrack<VectorTrack, QuaternionTrack> TransformTrack;
+typedef TTransformTrack<VectorFastTrack, QuaternionFastTrack> FastTransformTrack;
+
+FastTransformTrack OptimizeTransformTrack(TransformTrack& input);
 
 #endif // TRANSFORMTRACK_H

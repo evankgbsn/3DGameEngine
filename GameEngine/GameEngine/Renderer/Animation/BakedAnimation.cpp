@@ -1,9 +1,8 @@
 #include "BakedAnimation.h"
 
 #include "Armature.h"
-#include "Clip.h"
 
-BakedAnimation::BakedAnimation(Clip* c, Armature* const armature) :
+BakedAnimation::BakedAnimation(FastClip* c, Armature* const armature) :
 	animatedPose(armature->GetRestPose()),
 	clip(c),
 	bakedPoses(std::vector<std::vector<glm::mat4>>())

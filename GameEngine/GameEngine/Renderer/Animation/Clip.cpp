@@ -2,7 +2,11 @@
 
 #include "Pose.h"
 
-Clip::Clip() :
+template TClip<TransformTrack>;
+template TClip<FastTransformTrack>;
+
+template<typename TRACK>
+TClip<TRACK>::TClip() :
     name("No name given"),
     startTime(0.0f),
     endTime(0.0f),
@@ -10,11 +14,13 @@ Clip::Clip() :
 {
 }
 
-Clip::~Clip()
+template<typename TRACK>
+TClip<TRACK>::~TClip()
 {
 }
 
-TransformTrack& Clip::operator[](unsigned int joint)
+template<typename TRACK>
+TRACK& TClip<TRACK>::operator[](unsigned int joint)
 {
     for (unsigned int i = 0; i < tracks.size(); i++)
     {
@@ -24,27 +30,31 @@ TransformTrack& Clip::operator[](unsigned int joint)
         }
     }
 
-    tracks.push_back(TransformTrack());
+    tracks.push_back(TRACK());
     tracks[tracks.size() - 1].SetId(joint);
     return tracks[tracks.size() - 1];
 }
 
-unsigned int Clip::GetIdAtIndex(unsigned int index) const
+template<typename TRACK>
+unsigned int TClip<TRACK>::GetIdAtIndex(unsigned int index) const
 {
     return tracks[index].GetId();
 }
 
-void Clip::SetIdAtIndex(unsigned int index, unsigned int id)
+template<typename TRACK>
+void TClip<TRACK>::SetIdAtIndex(unsigned int index, unsigned int id)
 {
     tracks[index].SetId(id);
 }
 
-unsigned int Clip::Size() const
+template<typename TRACK>
+unsigned int TClip<TRACK>::Size() const
 {
-    return 0;
+    return tracks.size();
 }
 
-float Clip::Sample(Pose& outPose, float time)
+template<typename TRACK>
+float TClip<TRACK>::Sample(Pose& outPose, float time)
 {
     if (GetDuration() == 0.0f)
     {
@@ -64,7 +74,8 @@ float Clip::Sample(Pose& outPose, float time)
     return time;
 }
 
-void Clip::RecalculateDuration()
+template<typename TRACK>
+void TClip<TRACK>::RecalculateDuration()
 {
     startTime = 0;
     endTime = 0;
@@ -94,42 +105,50 @@ void Clip::RecalculateDuration()
     }
 }
 
-const std::string& Clip::GetName() const
+template<typename TRACK>
+const std::string& TClip<TRACK>::GetName() const
 {
     return name;
 }
 
-void Clip::SetName(const std::string& n)
+template<typename TRACK>
+void TClip<TRACK>::SetName(const std::string& n)
 {
     name = n;
 }
 
-float Clip::GetDuration() const
+template<typename TRACK>
+float TClip<TRACK>::GetDuration() const
 {
     return endTime - startTime;
 }
 
-float Clip::GetStartTime() const
+template<typename TRACK>
+float TClip<TRACK>::GetStartTime() const
 {
     return startTime;
 }
 
-float Clip::GetEndTime() const
+template<typename TRACK>
+float TClip<TRACK>::GetEndTime() const
 {
     return endTime;
 }
 
-bool Clip::IsLooping() const
+template<typename TRACK>
+bool TClip<TRACK>::IsLooping() const
 {
     return isLooping;
 }
 
-void Clip::SetIsLooping(const bool& loop)
+template<typename TRACK>
+void TClip<TRACK>::SetIsLooping(const bool& loop)
 {
     isLooping = loop;
 }
 
-float Clip::AdjustTimeToFitRange(float time) const
+template<typename TRACK>
+float TClip<TRACK>::AdjustTimeToFitRange(float time) const
 {
     if (isLooping)
     {
@@ -161,4 +180,21 @@ float Clip::AdjustTimeToFitRange(float time) const
     }
 
     return time;
+}
+
+
+FastClip OptimizeClip(Clip& input)
+{
+    FastClip result;
+
+    result.SetName(input.GetName());
+    result.SetIsLooping(input.IsLooping());
+    unsigned int size = input.Size();
+    for (unsigned int i = 0; i < size; ++i)
+    {
+        unsigned int joint = input.GetIdAtIndex(i);
+        result[joint] = OptimizeTransformTrack(input[joint]);
+    }
+    result.RecalculateDuration();
+    return result;
 }
