@@ -60,7 +60,7 @@ void FPSPlayer::Initialize()
 		characterGraphics->SetRenderGraphics(false);
 
 		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterLegsGraphics->SetClip("Running");
+		characterLegsGraphics->SetClip("AimRun");
 		characterLegsGraphics->SetShine(32.0f);
 		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterLegsGraphics->SetSpeed(1.0f);
@@ -266,7 +266,7 @@ void FPSPlayer::Load()
 
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
 		{
-			ModelManager::LoadModel("CharacterLegs", "Assets/Model/Woman.gltf", false);
+			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
 		}
 	}
 }
