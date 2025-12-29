@@ -176,7 +176,7 @@ void FPSPlayer::GameUpdate()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		characterLegsGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
+		characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
 		characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
 		glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
