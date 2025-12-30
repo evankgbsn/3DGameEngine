@@ -404,6 +404,19 @@ void Model::LoadAnimationClips(cgltf_data* data)
 		}
 
 		slowClips[i].RecalculateDuration();
+
+		// ----- INSERT THIS BLOCK -----
+		std::string animName = slowClips[i].GetName();
+		float duration = slowClips[i].GetDuration();
+		float start = slowClips[i].GetStartTime();
+		float end = slowClips[i].GetEndTime();
+
+		std::string msg = "ANIM DIAGNOSTIC: [" + animName + "] " +
+			"Duration: " + std::to_string(duration) + "s " +
+			"(Start: " + std::to_string(start) + "s, End: " + std::to_string(end) + "s)";
+
+		Logger::Log(std::string(msg), Logger::Category::Success);
+		// -----------------------------
 	
 	}
 

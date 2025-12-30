@@ -38,6 +38,7 @@ void GraphicsObjectManager::Update()
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glCullFace(GL_FRONT);
 
+		instance->renderingShadows = true;
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
 			if (IsValid(graphicsObject) && graphicsObject->RenderShadow())
@@ -45,6 +46,7 @@ void GraphicsObjectManager::Update()
 				graphicsObject->RenderToShadowMap();
 			}
 		}
+		instance->renderingShadows = false;
 
 		ShaderManager::BindReflectionFrameBuffer();
 		glClear(GL_COLOR_BUFFER_BIT); 
@@ -62,6 +64,7 @@ void GraphicsObjectManager::Update()
 		activeCam.SetPosition(currentCamPos + glm::vec3(0.0f, -distance, 0.0f));
 		activeCam.SetTarget(activeCam.GetPosition() + glm::vec3(currentCamForward.x, -currentCamForward.y, currentCamForward.z));
 
+		instance->renderingReflections = true;
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
 			if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
@@ -88,6 +91,7 @@ void GraphicsObjectManager::Update()
 				graphicsObject->Update();
 			}
 		}
+		instance->renderingReflections = false;
 
 		ShaderManager::UnbindCurrentFrameBuffer();
 
@@ -97,6 +101,7 @@ void GraphicsObjectManager::Update()
 		glCullFace(GL_BACK);
 		ShaderManager::SetClipPlane({ 0.0f, -1.0f, 0.0f, 100000000.1f});
 		
+		instance->renderingGraphics = true;
 		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
 		{
 			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
@@ -120,7 +125,7 @@ void GraphicsObjectManager::Update()
 				graphicsObject->Update();
 			}
 		}
-		
+		instance->renderingGraphics = false;
 	}
 	else
 	{
@@ -454,6 +459,33 @@ void GraphicsObjectManager::Disable(GOSprite* const go)
 	go->SetRenderReflection(false);
 	go->SetRenderShadow(false);
 	go->isDisabled = true;
+}
+
+bool GraphicsObjectManager::RenderingShadows()
+{
+	if (instance != nullptr)
+	{
+		return instance->renderingShadows;
+	}
+	return false;
+}
+
+bool GraphicsObjectManager::RenderingReflections()
+{
+	if(instance != nullptr)
+	{
+		return instance->renderingReflections;
+	}
+	return false;
+}
+
+bool GraphicsObjectManager::RenderingGraphics()
+{
+	if(instance != nullptr)
+	{
+		return instance->renderingGraphics;
+	}
+	return false;
 }
 
 GraphicsObjectManager::GraphicsObjectManager() :

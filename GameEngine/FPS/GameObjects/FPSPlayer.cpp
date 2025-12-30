@@ -47,18 +47,8 @@ glm::mat4 FPSPlayer::GetWeaponTransform()
 
 void FPSPlayer::Initialize()
 {
-	characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-	characterGraphics->SetClip("AimRun");
-	characterGraphics->SetShine(32.0f);
-	characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-	characterGraphics->SetSpeed(1.0f);
-
-	AddComponent(characterGraphics, "Graphics");
-
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		characterGraphics->SetRenderGraphics(false);
-
 		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterLegsGraphics->SetClip("AimRun");
 		characterLegsGraphics->SetShine(32.0f);
@@ -78,13 +68,31 @@ void FPSPlayer::Initialize()
 
 		positionToSet = characterLegsGraphics->GetPosition();
 
-		hitBox = new AnimatedColliderComponent(characterLegsGraphics);
+		AddComponent(hitBox, "AnimatedCollider");
+
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterGraphics->SetClip("AimRun");
+		characterGraphics->SetShine(32.0f);
+		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterGraphics->SetSpeed(1.0f);
+
+		characterGraphics->SetRenderGraphics(false);
+
+		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
 
-		AddComponent(hitBox, "AnimatedCollider");
+		AddComponent(characterGraphics, "Graphics");
 	}
 	else
 	{
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterGraphics->SetClip("AimRun");
+		characterGraphics->SetShine(32.0f);
+		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterGraphics->SetSpeed(1.0f);
+
+		AddComponent(characterGraphics, "Graphics");
+
 		positionToSet = characterGraphics->GetPosition();
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);

@@ -41,6 +41,12 @@ namespace Math
 
 		glm::mat4 ToMat4() const;
 
+		const glm::vec3& Position() const;
+
+		const glm::quat& Rotation() const;
+
+		const glm::vec3& Scale() const;
+
 		glm::vec3& Position();
 
 		glm::quat& Rotation();

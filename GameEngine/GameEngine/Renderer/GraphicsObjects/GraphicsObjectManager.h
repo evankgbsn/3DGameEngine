@@ -72,6 +72,12 @@ public:
 
 	static void Disable(GOSprite* const go);
 
+	static bool RenderingShadows();
+
+	static bool RenderingReflections();
+
+	static bool RenderingGraphics();
+
 
 private:
 
@@ -107,6 +113,11 @@ private:
 
 	std::vector<GraphicsObject*> graphicsObjects2D;
 
+	bool renderingShadows = false;
+
+	bool renderingGraphics = false;
+
+	bool renderingReflections = false;
 };
 
 #endif // GRAPHICSOBJECTMANAGER_H

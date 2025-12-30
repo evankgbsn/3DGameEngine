@@ -35,9 +35,9 @@ void AnimationController::Update(glm::mat4* posePalette)
 		{
 			fading = false;
 		}
-
-		crossFadeController->Update(TimeManager::DeltaTime(), speed);
 	}
+
+	crossFadeController->Update(TimeManager::DeltaTime(), speed);
 
 	const Pose& pose = crossFadeController->GetCurrentPose();
 

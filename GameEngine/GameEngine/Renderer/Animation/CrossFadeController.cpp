@@ -1,5 +1,7 @@
 #include "CrossFadeController.h"
 
+#include "../../Utils/Logger.h"
+
 CrossFadeController::CrossFadeController() :
     clip(nullptr),
     time(0.0f),

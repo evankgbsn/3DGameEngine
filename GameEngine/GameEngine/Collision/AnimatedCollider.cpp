@@ -43,7 +43,7 @@ glm::mat4 AnimatedCollider::GetJointTransform(const std::string& jointName) cons
 	{
 		if (jointName == (*jointNames)[i])
 		{
-			return wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i];
+			return wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i] * glm::inverse(wrapedGraphics->GetAnimInvBindPoseArray()[i]);
 		}
 	}
 

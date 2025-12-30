@@ -126,6 +126,21 @@ glm::mat4 Math::Transform::ToMat4() const
 	);
 }
 
+const glm::vec3& Math::Transform::Position() const
+{
+	return position;
+}
+
+const glm::quat& Math::Transform::Rotation() const
+{
+	return rotation;
+}
+
+const glm::vec3& Math::Transform::Scale() const
+{
+	return scale;
+}
+
 glm::vec3& Math::Transform::Position()
 {
 	return position;

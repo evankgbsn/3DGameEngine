@@ -66,6 +66,8 @@ private:
 
 	AnimationController* animationController;
 
+	unsigned long long currentFrame;
+
 };
 
 #endif // GO3DANIMATED_H

@@ -5,6 +5,7 @@
 #include "../Model/Model.h"
 #include "../Time/TimeManager.h"
 #include "../Animation/Armature.h"
+#include "GraphicsObjectManager.h"
 
 const glm::mat4* const GO3DAnimated::GetAnimPoseArray() const
 {
@@ -18,6 +19,11 @@ const std::vector<glm::mat4>& GO3DAnimated::GetAnimInvBindPoseArray() const
 
 void GO3DAnimated::Update()
 {	
+	if (TimeManager::GetFrameID() == currentFrame)
+	{
+		return;
+	}
+
 	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
 	std::vector<glm::mat4> pose(invBindPose.size());
 
@@ -31,6 +37,8 @@ void GO3DAnimated::Update()
 	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), animationData.pose);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
+
+	currentFrame = TimeManager::GetFrameID();
 }
 
 void GO3DAnimated::SetClip(const std::string& clipName)
