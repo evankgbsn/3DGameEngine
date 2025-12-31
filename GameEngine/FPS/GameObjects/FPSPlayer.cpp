@@ -492,10 +492,19 @@ void FPSPlayer::RegisterInput()
 			{
 				if (characterGraphics->GetCurrentAnimation() != "Idle")
 				{
-					characterGraphics->FadeAnimationTo("Idle", 0.5f);
+					characterGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
 			}
 		});
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_W, keyboardMovePress, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_A, keyboardMovePress, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_S, keyboardMovePress, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_D, keyboardMovePress, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_W, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_A, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_S, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_D, keyboardMoveRelease, "FPSCharacterWalk");
 
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
@@ -513,6 +522,16 @@ void FPSPlayer::RegisterInput()
 
 void FPSPlayer::DeregisterInput()
 {
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_W, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_A, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_S, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_D, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_W, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_A, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_S, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_D, "FPSCharacterWalk");
+
+
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
 
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
@@ -653,6 +672,13 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
+			if (std::stoi(packetID) >= lastPositionPacketNumber)
+				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
+			else
+			{
+				Logger::Log("Lost position packet");
+			}
+
 			lastPositionPacketNumber = std::stoi(packetID);
 		}
 		else if (updateType == "WeaponPosition")
