@@ -190,7 +190,6 @@ void FPSPlayer::GameUpdate()
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
 
-		static float updateTime = 0.0f;
 		updateTime += TimeManager::DeltaTime();
 
 		if (updateTime >= 0.001f)
@@ -202,7 +201,6 @@ void FPSPlayer::GameUpdate()
 	}
 	else
 	{
-		static float updateTime = 0.0f;
 		updateTime += TimeManager::DeltaTime();
 
 		if (updateTime >= 0.001f)
