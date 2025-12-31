@@ -56,6 +56,11 @@ float GO3DAnimated::GetSampleTime() const
 	return animationController->GetSampleTime();
 }
 
+void GO3DAnimated::FadeTo(const std::string& clipName, float time)
+{
+	animationController->FadeTo(clipName, time);
+}
+
 void GO3DAnimated::SetSampleTime(float time)
 {
 	animationController->SetSampleTime(time);

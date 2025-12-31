@@ -49,27 +49,6 @@ void FPSPlayer::Initialize()
 {
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterLegsGraphics->SetClip("AimRun");
-		characterLegsGraphics->SetShine(32.0f);
-		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterLegsGraphics->SetSpeed(1.0f);
-		characterLegsGraphics->SetRenderShadow(false);
-		characterLegsGraphics->SetRenderReflection(false);
-
-		AddComponent(characterLegsGraphics, "LegsGraphics");
-
-		characterArmsGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("CharacterArms"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterArmsGraphics->SetShine(32.0f);
-		characterArmsGraphics->SetRenderShadow(false);
-		characterArmsGraphics->SetRenderReflection(false);
-
-		AddComponent(characterArmsGraphics, "ArmsGraphics");
-
-		positionToSet = characterLegsGraphics->GetPosition();
-
-		AddComponent(hitBox, "AnimatedCollider");
-
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterGraphics->SetClip("AimRun");
 		characterGraphics->SetShine(32.0f);
@@ -80,6 +59,7 @@ void FPSPlayer::Initialize()
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
+		AddComponent(hitBox, "AnimatedCollider");
 
 		AddComponent(characterGraphics, "Graphics");
 	}
@@ -136,12 +116,6 @@ void FPSPlayer::Terminate()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		DeregisterInput();
-
-		RemoveComponent("ArmsGraphics");
-		RemoveComponent("LegsGraphics");
-
-		delete characterArmsGraphics;
-		delete characterLegsGraphics;
 	}
 
 	RemoveComponent("AnimatedCollider");
@@ -183,25 +157,22 @@ void FPSPlayer::GameUpdate()
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		characterLegsGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-		characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
-		characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
+		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
+		//characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
 		glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
 		glm::mat4 armRotation = glm::mat4(glm::vec4(camRight, 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), -glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
-		characterArmsGraphics->SetRotation(armRotation);
+		//characterArmsGraphics->SetRotation(armRotation);
 
 
-		glm::vec3 riflePositionOffset = 
-			(glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[0])) * -0.10f)
-			+ (glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[2])) * .60f)
-			+ (glm::vec3(glm::normalize(characterArmsGraphics->GetTransform()[1])) * -0.15f);
+		glm::vec3 riflePositionOffset =
+			(glm::vec3(glm::normalize(armRotation[0])) * -0.10f)
+			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
+			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
-		ak12Graphics->SetPosition(characterArmsGraphics->GetPosition() + riflePositionOffset);
-		ak12Graphics->SetRotation(characterArmsGraphics->GetRotation());
-
-		characterGraphics->SetTransform(characterLegsGraphics->GetTransform());
+		ak12Graphics->SetTransform(hitBox->GetJointTransform("hand.r"));
 	}
 	else
 	{
@@ -211,6 +182,11 @@ void FPSPlayer::GameUpdate()
 
 	if (NetworkManager::IsServer())
 	{
+		if (characterGraphics->GetCurrentAnimation() != "Idle")
+		{
+			characterGraphics->FadeAnimationTo("Idle", 0.5f);
+		}
+
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition());
 
@@ -300,14 +276,7 @@ glm::mat4 FPSPlayer::GetTransform() const
 
 void FPSPlayer::SetPosition(const glm::vec3& pos)
 {
-	if (SpawnedFromLocalSpawnRequest())
-	{
-		characterLegsGraphics->SetPosition(pos);
-	}
-	else
-	{
-		characterGraphics->SetPosition(pos);
-	}
+	characterGraphics->SetPosition(pos);
 }
 
 void FPSPlayer::SetRotation(const glm::mat4& rot)
@@ -414,7 +383,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterLegsGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -423,7 +392,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
-				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterLegsGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
+				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
 
@@ -440,19 +409,19 @@ void FPSPlayer::RegisterInput()
 			switch (key)
 			{
 			case KEY_W:
-				disp = glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_A:
-				disp = glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				disp = glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_S:
-				disp = -glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
+				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[2]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			case KEY_D:
-				disp = -glm::vec3(glm::normalize(characterLegsGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
+				disp = -glm::vec3(glm::normalize(characterGraphics->GetTransform()[0]) * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(disp), false);
 				break;
 			default:
@@ -473,6 +442,48 @@ void FPSPlayer::RegisterInput()
 				NetworkManager::Spawn("AK12Bullet", &callback);
 				//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 				lastShotTime = TimeManager::SecondsSinceStart();
+			}
+		});
+
+	keyboardMovePress = new std::function<void(int key)>([this](int key)
+		{
+			switch (key)
+			{
+			case KEY_W:
+				if (characterGraphics->GetCurrentAnimation() != "AimRun")
+				{
+					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
+				}
+				break;
+			case KEY_A:
+				break;
+			case KEY_S:
+				break;
+			case KEY_D:
+				break;
+			default:
+				break;
+			}
+		});
+
+	keyboardMoveRelease = new std::function<void(int key)>([this](int key)
+		{
+			switch (key)
+			{
+			case KEY_W:
+				if (characterGraphics->GetCurrentAnimation() != "AimRun")
+				{
+					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
+				}
+				break;
+			case KEY_A:
+				break;
+			case KEY_S:
+				break;
+			case KEY_D:
+				break;
+			default:
+				break;
 			}
 		});
 
@@ -632,13 +643,6 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "Position")
 		{
-			if(std::stoi(packetID) >= lastPositionPacketNumber)
-				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
-			else
-			{
-				Logger::Log("Lost position packet");
-			}
-
 			lastPositionPacketNumber = std::stoi(packetID);
 		}
 		else if (updateType == "WeaponPosition")
@@ -650,6 +654,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "DispX")
 		{
+			if (characterGraphics->GetCurrentAnimation() != "AimRun")
+			{
+				characterGraphics->FadeAnimationTo("AnimRun", 0.5f);
+			}
 			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
 		}
 		else if (updateType == "DispY")

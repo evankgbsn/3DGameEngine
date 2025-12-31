@@ -58,6 +58,18 @@ glm::mat4 GraphicsObjectTexturedAnimatedLit::GetJointTransform(const std::string
 	return g->GetTransform() * g->GetAnimPoseArray()[i] * g->GetAnimInvBindPoseArray()[i];
 }
 
+const std::string& GraphicsObjectTexturedAnimatedLit::GetCurrentAnimation() const
+{
+	GOTexturedAnimatedLit * go = static_cast<GOTexturedAnimatedLit*>(graphics);
+	return go->GetClipName();
+}
+
+void GraphicsObjectTexturedAnimatedLit::FadeAnimationTo(const std::string& animation, float time)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+	go->FadeTo(animation, time);
+}
+
 void GraphicsObjectTexturedAnimatedLit::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

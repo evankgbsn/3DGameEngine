@@ -25,6 +25,8 @@ public:
 
 	float GetSampleTime() const;
 
+	void FadeTo(const std::string& clipName, float time);
+
 	void SetSampleTime(float sampleTime);
 
 	float GetSpeed() const;

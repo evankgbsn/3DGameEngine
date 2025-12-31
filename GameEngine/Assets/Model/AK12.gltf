@@ -15,12 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"ak_12_low_poly",
-			"translation":[
-				-0.16380956768989563,
-				1.871274471282959,
-				0.6903248429298401
-			]
+			"name":"ak_12_low_poly"
 		}
 	],
 	"materials":[
@@ -79,29 +74,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":116436,
+			"count":116434,
 			"max":[
-				0.0258588045835495,
-				0.14692223072052002,
-				0.7294427156448364
+				0.2052903175354004,
+				0.7294427156448364,
+				0.03860684856772423
 			],
 			"min":[
-				-0.03860677778720856,
-				-0.2052903175354004,
-				-0.461581826210022
+				-0.14692221581935883,
+				-0.461581826210022,
+				-0.025858866050839424
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":116436,
+			"count":116434,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":116436,
+			"count":116434,
 			"type":"VEC2"
 		},
 		{
@@ -114,26 +109,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1397232,
+			"byteLength":1397208,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1397232,
-			"byteOffset":1397232,
+			"byteLength":1397208,
+			"byteOffset":1397208,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":931488,
-			"byteOffset":2794464,
+			"byteLength":931472,
+			"byteOffset":2794416,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1605624,
-			"byteOffset":3725952,
+			"byteOffset":3725888,
 			"target":34963
 		}
 	],
@@ -145,7 +140,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":5331576,
+			"byteLength":5331512,
 			"uri":"AK12.bin"
 		}
 	]

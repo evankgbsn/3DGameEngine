@@ -82,11 +82,7 @@ private:
 
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
 
-	GraphicsObjectTexturedLit* characterArmsGraphics;
-
 	GraphicsObjectTexturedLit* ak12Graphics;
-
-	GraphicsObjectTexturedAnimatedLit* characterLegsGraphics;
 
 	CameraComponent* cam;
 
@@ -117,6 +113,10 @@ private:
 	std::function<void(int button)>* keyboardShoot;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
+
+	std::function<void(int key)>* keyboardMovePress;
+
+	std::function<void(int key)>* keyboardMoveRelease;
 
 	glm::vec3 disp;
 
@@ -151,6 +151,8 @@ private:
 	unsigned int lastWeaponPositionPacketNumber = 0;
 
 	float lastShotTime = 0.0f;
+
+	float updateTime = 0.0f;
 
 };
 

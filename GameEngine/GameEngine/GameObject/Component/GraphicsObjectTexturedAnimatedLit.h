@@ -25,6 +25,10 @@ public:
 
 	glm::mat4 GetJointTransform(const std::string& jointName) const;
 
+	const std::string& GetCurrentAnimation() const;
+
+	void FadeAnimationTo(const std::string& animation, float time);
+
 private:
 
 	GraphicsObjectTexturedAnimatedLit(const GraphicsObjectTexturedAnimatedLit&) = delete;
