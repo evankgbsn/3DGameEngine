@@ -666,7 +666,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (characterGraphics->GetCurrentAnimation() != "AimRun")
 			{
-				characterGraphics->FadeAnimationTo("AnimRun", 0.5f);
+				characterGraphics->FadeAnimationTo("AimRun", 0.5f);
 			}
 			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
 		}
