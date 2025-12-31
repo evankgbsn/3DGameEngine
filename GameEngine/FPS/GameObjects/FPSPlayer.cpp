@@ -50,7 +50,7 @@ void FPSPlayer::Initialize()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterGraphics->SetClip("AimRun");
+		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
@@ -66,7 +66,7 @@ void FPSPlayer::Initialize()
 	else
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
-		characterGraphics->SetClip("AimRun");
+		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
@@ -454,12 +454,16 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
 				}
+				wPressed = true;
 				break;
 			case KEY_A:
+				aPressed = true;
 				break;
 			case KEY_S:
+				sPressed = true;
 				break;
 			case KEY_D:
+				dPressed = true;
 				break;
 			default:
 				break;
@@ -471,19 +475,27 @@ void FPSPlayer::RegisterInput()
 			switch (key)
 			{
 			case KEY_W:
-				if (characterGraphics->GetCurrentAnimation() != "AimRun")
-				{
-					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
-				}
+				wPressed = false;
 				break;
 			case KEY_A:
+				aPressed = false;
 				break;
 			case KEY_S:
+				sPressed = false;
 				break;
 			case KEY_D:
+				dPressed = false;
 				break;
 			default:
 				break;
+			}
+
+			if (!(wPressed || aPressed || sPressed || dPressed))
+			{
+				if (characterGraphics->GetCurrentAnimation() != "Idle")
+				{
+					characterGraphics->FadeAnimationTo("Idle", 0.5f);
+				}
 			}
 		});
 

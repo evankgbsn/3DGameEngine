@@ -118,6 +118,14 @@ private:
 
 	std::function<void(int key)>* keyboardMoveRelease;
 
+	bool wPressed = false;
+
+	bool aPressed = false;
+
+	bool sPressed = false;
+
+	bool dPressed = false;
+
 	glm::vec3 disp;
 
 	glm::vec3 positionToSet;
