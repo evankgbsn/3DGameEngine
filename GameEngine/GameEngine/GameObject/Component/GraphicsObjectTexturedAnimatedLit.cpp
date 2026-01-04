@@ -70,6 +70,18 @@ void GraphicsObjectTexturedAnimatedLit::FadeAnimationTo(const std::string& anima
 	go->FadeTo(animation, time);
 }
 
+void GraphicsObjectTexturedAnimatedLit::InitializeAdditiveAnimation(const std::string& animation)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+	go->InitializeAdditiveAnimation(animation);
+}
+
+void GraphicsObjectTexturedAnimatedLit::SetAdditiveAnimationTime(const std::string& animation, float time)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+	go->SetAdditiveAnimationTime(animation, time);
+}
+
 void GraphicsObjectTexturedAnimatedLit::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

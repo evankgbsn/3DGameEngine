@@ -166,7 +166,11 @@ void AnimatedCollider::Update()
 	}
 
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
-	meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
+	//meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
+
+	std::vector<glm::mat4> pose;
+	wrapedGraphics->GetPose(pose);
+	meshColliderVisualization->SetPose(pose);
 
 	sphere->Update(wrapedGraphics->GetTransform());
 }

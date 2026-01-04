@@ -1,9 +1,12 @@
 #ifndef ANIMATIONCONTROLLER_H
 #define ANIMATIONCONTROLLER_H
 
+#include "Pose.h"
+
 #include <glm/glm.hpp>
 
 #include <string>
+#include <unordered_map>
 
 class CrossFadeController;
 class Armature;
@@ -18,6 +21,8 @@ public:
 	~AnimationController();
 
 	void Update(glm::mat4* posePalette);
+
+	void CurrentPose(glm::mat4* posePalette);
 
 	void Play(const std::string& clipName);
 
@@ -36,6 +41,10 @@ public:
 	void Pause();
 
 	void Resume();
+
+	void InitializeAdditiveAnimation(const std::string& animation);
+
+	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
 	const std::string& GetCurrentClipName() const;
 
@@ -62,6 +71,10 @@ private:
 	float currentFadeTime;
 
 	bool paused;
+
+	std::unordered_map<std::string, Pose> additiveBaseAnimations;
+
+	std::unordered_map<std::string, Pose> additiveAnimations;
 };
 
 #endif //ANIMATIONCONTROLLER_H

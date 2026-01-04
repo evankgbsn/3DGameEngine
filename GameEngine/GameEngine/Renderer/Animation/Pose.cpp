@@ -1,5 +1,8 @@
 #include "Pose.h"
 
+#include "Armature.h"
+#include "../Math/Transform.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
 void Pose::Blend(Pose& out, Pose& a, Pose& b, float t, int root)
@@ -16,6 +19,37 @@ void Pose::Blend(Pose& out, Pose& a, Pose& b, float t, int root)
 		}
 
 		out.SetLocalTransform(i, Math::Transform::Mix(a.GetLocalTransform(i), b.GetLocalTransform(i), t));
+	}
+}
+
+Pose Pose::MakeAdditivePose(Armature& armature, FastClip& clip)
+{
+	Pose result = armature.GetRestPose();
+
+	clip.Sample(result, clip.GetStartTime());
+
+	return result;
+}
+
+void Pose::Add(Pose& out, Pose& in, Pose& addPose, Pose& additiveBasePose, int blendRoot)
+{
+	unsigned int numJoints = addPose.Size();
+
+	for (int i = 0; i < numJoints; ++i)
+	{
+		Math::Transform input = in.GetLocalTransform(i);
+		Math::Transform additive = addPose.GetLocalTransform(i);
+		Math::Transform additiveBase = additiveBasePose.GetLocalTransform(i);
+
+		if (blendRoot >= 0 && !IsInHierarchy(addPose, blendRoot, i))
+		{
+			continue;
+		}
+
+		// out = in + (addPose - basePose)
+		Math::Transform result(input.Position() + (additive.Position() - additiveBase.Position()), glm::normalize(input.Rotation() * (glm::inverse(additiveBase.Rotation()) * additive.Rotation())),
+			input.Scale() + (additive.Scale() - additiveBase.Scale()));
+		out.SetLocalTransform(i, result);
 	}
 }
 

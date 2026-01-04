@@ -39,7 +39,30 @@ void AnimationController::Update(glm::mat4* posePalette)
 
 	crossFadeController->Update(TimeManager::DeltaTime(), speed);
 
-	const Pose& pose = crossFadeController->GetCurrentPose();
+	Pose pose = crossFadeController->GetCurrentPose();
+
+	for (auto& additivePose : additiveAnimations)
+	{
+		Pose::Add(pose, pose, additivePose.second, additiveBaseAnimations[additivePose.first], -1);
+	}
+
+	std::vector<glm::mat4> joints;
+	pose.GetJointMatrices(joints);
+
+	for (unsigned int i = 0; i < joints.size(); i++)
+	{
+		posePalette[i] = joints[i];
+	}
+}
+
+void AnimationController::CurrentPose(glm::mat4* posePalette)
+{
+	Pose pose = crossFadeController->GetCurrentPose();
+
+	for (auto& additivePose : additiveAnimations)
+	{
+		Pose::Add(pose, pose, additivePose.second, additiveBaseAnimations[additivePose.first], -1);
+	}
 
 	std::vector<glm::mat4> joints;
 	pose.GetJointMatrices(joints);
@@ -121,6 +144,52 @@ void AnimationController::Pause()
 void AnimationController::Resume()
 {
 	paused = false;
+}
+
+void AnimationController::InitializeAdditiveAnimation(const std::string& animation)
+{
+	const std::vector<FastClip>& clips = model->GetAnimationClips();
+
+	unsigned int index = 0;
+	for (index; index < clips.size(); ++index)
+	{
+		if (clips[index].GetName() == animation)
+		{
+			break;
+		}
+	}
+
+	FastClip* clip = model->GetAnimationClip(index);
+
+	if (clip != nullptr)
+	{
+		additiveBaseAnimations[animation] = Pose::MakeAdditivePose(*model->GetArmature(), *clip);
+		additiveAnimations[animation] = model->GetArmature()->GetRestPose();
+
+		clip->SetIsLooping(false);
+	}
+}
+
+void AnimationController::SetAdditiveAnimationTime(const std::string& animation, float time)
+{
+	const std::vector<FastClip>& clips = model->GetAnimationClips();
+
+	unsigned int index = 0;
+	for (index; index < clips.size(); ++index)
+	{
+		if (clips[index].GetName() == animation)
+		{
+			break;
+		}
+	}
+
+	FastClip* clip = model->GetAnimationClip(index);
+
+	if (clip != nullptr)
+	{
+		float t = clip->GetStartTime() + (clip->GetDuration() * time);
+		clip->Sample(additiveAnimations[animation], t);
+	}
 }
 
 const std::string& AnimationController::GetCurrentClipName() const

@@ -37,6 +37,16 @@ public:
 
 	void ResumeAnimation();
 
+	void InitializeAdditiveAnimation(const std::string& animation);
+
+	void SetAdditiveAnimationTime(const std::string& animation, float time);
+
+	void GetPose(std::vector<glm::mat4>& pose) const;
+
+	void SetPose(std::vector<glm::mat4>& pose);
+
+	void ClearSetPose();
+
 protected:
 
 	GO3DAnimated(Model* const model);
@@ -69,6 +79,8 @@ private:
 	AnimationController* animationController;
 
 	unsigned long long currentFrame;
+
+	bool poseSet = false;
 
 };
 

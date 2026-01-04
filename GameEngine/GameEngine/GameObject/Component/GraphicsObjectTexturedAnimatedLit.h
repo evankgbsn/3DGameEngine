@@ -3,6 +3,10 @@
 
 #include "GraphicsObject3DComponent.h"
 
+#include <glm/glm.hpp>
+
+#include <vector>
+
 class Model;
 class Texture;
 
@@ -28,6 +32,10 @@ public:
 	const std::string& GetCurrentAnimation() const;
 
 	void FadeAnimationTo(const std::string& animation, float time);
+
+	void InitializeAdditiveAnimation(const std::string& animation);
+
+	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
 private:
 

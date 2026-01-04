@@ -6,6 +6,7 @@
 #include "../Time/TimeManager.h"
 #include "../Animation/Armature.h"
 #include "GraphicsObjectManager.h"
+#include "../../Utils/Logger.h"
 
 const glm::mat4* const GO3DAnimated::GetAnimPoseArray() const
 {
@@ -19,19 +20,24 @@ const std::vector<glm::mat4>& GO3DAnimated::GetAnimInvBindPoseArray() const
 
 void GO3DAnimated::Update()
 {	
-	if (TimeManager::GetFrameID() == currentFrame)
-	{
-		return;
-	}
-
 	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
 	std::vector<glm::mat4> pose(invBindPose.size());
 
-	animationController->Update(pose.data());
-
-	for (unsigned int i = 0; i < invBindPose.size(); i++)
+	if (TimeManager::GetFrameID() != currentFrame)
 	{
-		animationData.pose[i] = pose[i] * invBindPose[i];
+		animationController->Update(pose.data());
+	}
+	else
+	{
+		animationController->CurrentPose(pose.data());
+	}
+
+	if (!poseSet)
+	{
+		for (unsigned int i = 0; i < invBindPose.size(); i++)
+		{
+			animationData.pose[i] = pose[i] * invBindPose[i];
+		}
 	}
 
 	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), animationData.pose);
@@ -84,6 +90,46 @@ void GO3DAnimated::PauseAnimation()
 void GO3DAnimated::ResumeAnimation()
 {
 	animationController->Resume();
+}
+
+void GO3DAnimated::InitializeAdditiveAnimation(const std::string& animation)
+{
+	animationController->InitializeAdditiveAnimation(animation);
+}
+
+void GO3DAnimated::SetAdditiveAnimationTime(const std::string& animation, float time)
+{
+	animationController->SetAdditiveAnimationTime(animation, time);
+}
+
+void GO3DAnimated::GetPose(std::vector<glm::mat4>& pose) const
+{
+	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();
+	pose.resize(invBindPose.size());
+
+	for (unsigned int i = 0; i < invBindPose.size(); i++)
+	{
+		pose[i] = animationData.pose[i];
+	}
+}
+
+void GO3DAnimated::SetPose(std::vector<glm::mat4>& pose)
+{
+	for (unsigned int i = 0; i < pose.size(); i++)
+	{
+		animationData.pose[i] = pose[i];
+	}
+
+	glNamedBufferSubData(animationBuffer, 0, sizeof(AnimationData), animationData.pose);
+
+	glBindBufferBase(GL_UNIFORM_BUFFER, 1, animationBuffer);
+
+	poseSet = true;
+}
+
+void GO3DAnimated::ClearSetPose()
+{
+	poseSet = false;
 }
 
 GO3DAnimated::GO3DAnimated(Model* const model) :

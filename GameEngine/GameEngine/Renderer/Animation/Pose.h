@@ -2,8 +2,12 @@
 #define POSE_H
 
 #include "../../Math/Transform.h"
+#include "Clip.h"
+
 
 #include <vector>
+
+class Armature;
 
 class Pose
 {
@@ -11,6 +15,10 @@ class Pose
 public:
 
 	static void Blend(Pose& out, Pose& a, Pose& b, float t, int root);
+
+	static Pose MakeAdditivePose(Armature& armature, FastClip& clip);
+
+	static void Add(Pose& out, Pose& in, Pose& addPose, Pose& additiveBasePose, int blendRoot);
 
 	Pose();
 

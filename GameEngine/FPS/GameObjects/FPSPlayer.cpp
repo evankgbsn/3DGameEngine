@@ -16,6 +16,7 @@
 #include "GameEngine/Networking/NetworkManager.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
+#include "GameEngine/Math/Math.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -51,10 +52,11 @@ void FPSPlayer::Initialize()
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterGraphics->SetClip("Idle");
+		characterGraphics->InitializeAdditiveAnimation("LookUp");
+		characterGraphics->InitializeAdditiveAnimation("LookDown");
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
-
 		characterGraphics->SetRenderGraphics(false);
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
@@ -220,6 +222,9 @@ void FPSPlayer::GameUpdate()
 void FPSPlayer::EditorUpdate()
 {
 	hitBox->Update();
+
+	float speed = 1.0f;
+	float additiveAnimationTime = 0.0f;
 }
 
 void FPSPlayer::Load()
@@ -236,7 +241,7 @@ void FPSPlayer::Load()
 
 	if (!TextureManager::TextureLoaded("Character"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Grey.png", "Character");
+		TextureManager::LoadTexture("Assets/Texture/grey.png", "Character");
 	}
 
 	if (SpawnedFromLocalSpawnRequest())
@@ -332,6 +337,17 @@ void FPSPlayer::RegisterInput()
 				if (dot < 0.9f && angle > 0)
 				{
 					cam->Rotate(cam->GetRightVector(), angle);
+				}
+
+				if (dot >= 0.0f)
+				{
+					characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+				}
+				else
+				{
+					characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
 				}
 			}
 

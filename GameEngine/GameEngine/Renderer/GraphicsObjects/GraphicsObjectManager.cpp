@@ -21,6 +21,7 @@
 #include "../Window/WindowManager.h"
 #include "../Camera/CameraManager.h"
 #include "../Camera/Camera.h"
+#include "../Time/TimeManager.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
@@ -126,6 +127,18 @@ void GraphicsObjectManager::Update()
 			}
 		}
 		instance->renderingGraphics = false;
+
+		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				GO3DAnimated* anim = dynamic_cast<GO3DAnimated*>(graphicsObject);
+				if (anim != nullptr)
+				{
+					anim->ClearSetPose();
+				}
+			}
+		}
 	}
 	else
 	{

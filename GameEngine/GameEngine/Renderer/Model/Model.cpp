@@ -183,6 +183,12 @@ const std::vector<FastClip>& Model::GetAnimationClips() const
 
 FastClip* Model::GetAnimationClip(unsigned int index)
 {
+	if (animationClips.size() <= index)
+	{
+		Logger::Log("Invalid animation clip index Model: " + GetName(), Logger::Category::Error);
+		return nullptr;
+	}
+
 	return &animationClips[index];
 }
 

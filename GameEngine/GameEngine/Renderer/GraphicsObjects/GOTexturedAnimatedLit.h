@@ -36,10 +36,6 @@ private:
 
 	unsigned int lightSpaceMatrixBuffer;
 
-	Texture* diffuse;
-
-	Texture* specular;
-
 };
 
 #endif // GOTEXTUREDANIMATEDLIT_H
