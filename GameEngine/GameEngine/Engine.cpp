@@ -121,8 +121,10 @@ Engine::Engine()
 	TimeManager::Initialize();
 	Renderer::Initialize();
 	InputManager::Initialize();
-	//Renderer::CreateMainWindow(1920U, 1080U, "Engine");
-	Renderer::CreateMainWindow(1280U, 720U, "Engine");
+
+	glm::vec2 primaryMonitorDimensions = Renderer::GetPrimaryMonitorDimensions();
+
+	Renderer::CreateMainWindow(primaryMonitorDimensions.x / 2, primaryMonitorDimensions.y / 2, "Engine");
 	SceneManager::Initialize();
 	Editor::Initialize();
 	Editor::Enable();

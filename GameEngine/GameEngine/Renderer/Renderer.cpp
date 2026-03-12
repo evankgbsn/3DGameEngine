@@ -31,6 +31,18 @@ void Renderer::SetShouldDraw(bool shouldDraw)
 	}
 }
 
+glm::vec2 Renderer::GetPrimaryMonitorDimensions()
+{
+	glm::vec2 dimensions = {0.0f, 0.0f};
+
+	if (instance != nullptr)
+	{
+		dimensions = Window::GetPrimaryMonitorDimensions();
+	}
+
+	return dimensions;
+}
+
 void Renderer::Initialize()
 {
 	SingletonHelpers::InitializeSingleton<Renderer>(&instance, "Renderer");
@@ -45,8 +57,10 @@ void Renderer::CreateMainWindow(unsigned int width, unsigned int height, const s
 {
 	WindowManager::CreateWindow(width, height, name);
 
-	
-
+	if (instance != nullptr)
+	{
+		instance->mainWindowName = name;
+	}
 }
 
 void Renderer::Update()

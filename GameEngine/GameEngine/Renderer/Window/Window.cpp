@@ -348,3 +348,23 @@ void Window::SetTitle(const std::string& newTitle)
 {
 	glfwSetWindowTitle(glfwWindow, newTitle.c_str());
 }
+
+glm::vec2 Window::GetPrimaryMonitorDimensions()
+{
+	glm::vec2 dimensions = { 0.0f, 0.0f };
+
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+
+	if (monitor != nullptr)
+	{
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+		if (mode != nullptr)
+		{
+			dimensions.x = mode->width;
+			dimensions.y = mode->height;
+		}
+	}
+
+	return dimensions;
+}

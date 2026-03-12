@@ -51,6 +51,8 @@ public:
 
 	void SetTitle(const std::string& newTitle);
 
+	static glm::vec2 GetPrimaryMonitorDimensions();
+
 private:
 
 	friend class WindowManager;

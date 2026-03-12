@@ -1,6 +1,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <glm/glm.hpp>
+
 #include <string>
 #include <atomic>
 
@@ -11,6 +13,8 @@ public:
 	static bool ShouldDraw();
 
 	static void SetShouldDraw(bool shouldDraw);
+
+	static glm::vec2 GetPrimaryMonitorDimensions();
 
 private:
 
@@ -39,6 +43,8 @@ private:
 	static Renderer* instance;
 
 	std::atomic<bool> shouldTerminate;
+
+	std::string mainWindowName;
 
 	bool draw;
 };
