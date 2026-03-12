@@ -86,7 +86,7 @@ const glm::mat4& CameraComponent::GetProjection() const
 	return CameraManager::GetCamera(name).GetProjection();
 }
 
-const glm::vec3& CameraComponent::GetCursorWorldPosition() const
+glm::vec3 CameraComponent::GetCursorWorldPosition() const
 {
 	Camera& cam = CameraManager::GetCamera(name);
 

@@ -44,7 +44,7 @@ public:
 
 	const glm::mat4& GetProjection() const;
 
-	const glm::vec3& GetCursorWorldPosition() const;
+	glm::vec3 GetCursorWorldPosition() const;
 
 	void SetPosition(const glm::vec3& position);
 

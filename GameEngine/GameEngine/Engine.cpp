@@ -124,7 +124,7 @@ Engine::Engine()
 
 	glm::vec2 primaryMonitorDimensions = Renderer::GetPrimaryMonitorDimensions();
 
-	Renderer::CreateMainWindow(primaryMonitorDimensions.x / 2, primaryMonitorDimensions.y / 2, "Engine");
+	Renderer::CreateMainWindow(static_cast<unsigned int>(primaryMonitorDimensions.x / 2), static_cast<unsigned int>(primaryMonitorDimensions.y / 2), "Engine");
 	SceneManager::Initialize();
 	Editor::Initialize();
 	Editor::Enable();
