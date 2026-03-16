@@ -7,9 +7,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="34.603424"/>
-				<float Y="7.611729"/>
-				<float Z="-46.684158"/>
+				<float X="31.651291"/>
+				<float Y="4.260396"/>
+				<float Z="-46.877399"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -50,9 +50,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="34.603424"/>
-				<float WY="7.611729"/>
-				<float WZ="-46.684158"/>
+				<float WX="31.651291"/>
+				<float WY="4.260396"/>
+				<float WZ="-46.877399"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -170,9 +170,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="39.439545"/>
-				<float Y="7.612133"/>
-				<float Z="-157.589447"/>
+				<float X="41.193474"/>
+				<float Y="4.314126"/>
+				<float Z="-157.626740"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -213,9 +213,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="39.439545"/>
-				<float WY="7.612133"/>
-				<float WZ="-157.589447"/>
+				<float WX="41.193474"/>
+				<float WY="4.314126"/>
+				<float WZ="-157.626740"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -235,9 +235,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-8.844515"/>
-				<float Y="5.360241"/>
-				<float Z="32.822849"/>
+				<float X="-8.892378"/>
+				<float Y="4.246880"/>
+				<float Z="32.171967"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -278,9 +278,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-8.844515"/>
-				<float WY="5.360241"/>
-				<float WZ="32.822849"/>
+				<float WX="-8.892378"/>
+				<float WY="4.246880"/>
+				<float WZ="32.171967"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -300,9 +300,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="131.972534"/>
-				<float Y="7.611740"/>
-				<float Z="-87.445183"/>
+				<float X="133.222549"/>
+				<float Y="4.293960"/>
+				<float Z="-87.571800"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -343,9 +343,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="131.972534"/>
-				<float WY="7.611740"/>
-				<float WZ="-87.445183"/>
+				<float WX="133.222549"/>
+				<float WY="4.293960"/>
+				<float WZ="-87.571800"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -365,9 +365,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-8.991554"/>
-				<float Y="5.252589"/>
-				<float Z="18.021048"/>
+				<float X="-8.463713"/>
+				<float Y="4.299448"/>
+				<float Z="17.935402"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -408,9 +408,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-8.991554"/>
-				<float WY="5.252589"/>
-				<float WZ="18.021048"/>
+				<float WX="-8.463713"/>
+				<float WY="4.299448"/>
+				<float WZ="17.935402"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -430,9 +430,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-9.168291"/>
-				<float Y="16.330193"/>
-				<float Z="25.101135"/>
+				<float X="-8.840295"/>
+				<float Y="12.754064"/>
+				<float Z="24.804873"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -473,9 +473,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-9.168291"/>
-				<float WY="16.330193"/>
-				<float WZ="25.101135"/>
+				<float WX="-8.840295"/>
+				<float WY="12.754064"/>
+				<float WZ="24.804873"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -495,9 +495,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="71.026657"/>
-				<float Y="7.611704"/>
-				<float Z="6.067762"/>
+				<float X="67.926620"/>
+				<float Y="4.388689"/>
+				<float Z="6.386175"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -538,9 +538,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="71.026657"/>
-				<float WY="7.611704"/>
-				<float WZ="6.067762"/>
+				<float WX="67.926620"/>
+				<float WY="4.388689"/>
+				<float WZ="6.386175"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -560,9 +560,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="132.454849"/>
-				<float Y="7.611729"/>
-				<float Z="-125.850319"/>
+				<float X="130.864838"/>
+				<float Y="4.421236"/>
+				<float Z="-126.164101"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -603,9 +603,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="132.454849"/>
-				<float WY="7.611729"/>
-				<float WZ="-125.850319"/>
+				<float WX="130.864838"/>
+				<float WY="4.421236"/>
+				<float WZ="-126.164101"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -625,22 +625,22 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="157.629517"/>
-				<float Y="7.611683"/>
-				<float Z="-179.259430"/>
+				<float X="156.538986"/>
+				<float Y="4.344179"/>
+				<float Z="-179.737808"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="0.037608"/>
+				<float XX="0.037609"/>
 				<float XY="0.000000"/>
-				<float XZ="0.999292"/>
+				<float XZ="0.999293"/>
 				<float XW="0.000000"/>
 				<float YX="-0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="-0.999292"/>
+				<float ZX="-0.999293"/>
 				<float ZY="-0.000000"/>
-				<float ZZ="0.037608"/>
+				<float ZZ="0.037609"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -668,9 +668,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="0.037607"/>
 				<float ZW="0.000000"/>
-				<float WX="157.629517"/>
-				<float WY="7.611683"/>
-				<float WZ="-179.259430"/>
+				<float WX="156.538986"/>
+				<float WY="4.344179"/>
+				<float WZ="-179.737808"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -690,9 +690,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="110.380859"/>
-				<float Y="7.611744"/>
-				<float Z="-178.428207"/>
+				<float X="111.023689"/>
+				<float Y="4.472674"/>
+				<float Z="-180.746216"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="-0.004578"/>
@@ -733,9 +733,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="-0.004576"/>
 				<float ZW="0.000000"/>
-				<float WX="110.380859"/>
-				<float WY="7.611744"/>
-				<float WZ="-178.428207"/>
+				<float WX="111.023689"/>
+				<float WY="4.472674"/>
+				<float WZ="-180.746216"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -755,9 +755,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="136.385727"/>
-				<float Y="7.611694"/>
-				<float Z="-35.262100"/>
+				<float X="134.188751"/>
+				<float Y="4.320883"/>
+				<float Z="-36.432228"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="-0.005840"/>
@@ -798,9 +798,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="-0.005839"/>
 				<float ZW="0.000000"/>
-				<float WX="136.385727"/>
-				<float WY="7.611694"/>
-				<float WZ="-35.262100"/>
+				<float WX="134.188751"/>
+				<float WY="4.320883"/>
+				<float WZ="-36.432228"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -820,9 +820,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-26.169968"/>
-				<float Y="7.611626"/>
-				<float Z="-17.136654"/>
+				<float X="-27.940493"/>
+				<float Y="4.269792"/>
+				<float Z="-17.810322"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -863,9 +863,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-26.169968"/>
-				<float WY="7.611626"/>
-				<float WZ="-17.136654"/>
+				<float WX="-27.940493"/>
+				<float WY="4.269792"/>
+				<float WZ="-17.810322"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -885,9 +885,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="71.346252"/>
-				<float Y="7.611664"/>
-				<float Z="75.479523"/>
+				<float X="74.145134"/>
+				<float Y="4.339110"/>
+				<float Z="75.536034"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -928,9 +928,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="71.346252"/>
-				<float WY="7.611664"/>
-				<float WZ="75.479523"/>
+				<float WX="74.145134"/>
+				<float WY="4.339110"/>
+				<float WZ="75.536034"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -950,9 +950,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="71.954697"/>
-				<float Y="7.611732"/>
-				<float Z="57.655289"/>
+				<float X="75.140106"/>
+				<float Y="4.244336"/>
+				<float Z="58.414021"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -993,9 +993,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="71.954697"/>
-				<float WY="7.611732"/>
-				<float WZ="57.655289"/>
+				<float WX="75.140106"/>
+				<float WY="4.244336"/>
+				<float WZ="58.414021"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1015,9 +1015,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-19.434052"/>
-				<float Y="7.611656"/>
-				<float Z="-98.684921"/>
+				<float X="-25.483316"/>
+				<float Y="4.274982"/>
+				<float Z="-99.319267"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -1058,9 +1058,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-19.434052"/>
-				<float WY="7.611656"/>
-				<float WZ="-98.684921"/>
+				<float WX="-25.483316"/>
+				<float WY="4.274982"/>
+				<float WZ="-99.319267"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1080,9 +1080,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="133.467010"/>
-				<float Y="7.611687"/>
-				<float Z="-106.132492"/>
+				<float X="132.172470"/>
+				<float Y="4.353134"/>
+				<float Z="-107.054634"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -1123,9 +1123,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="133.467010"/>
-				<float WY="7.611687"/>
-				<float WZ="-106.132492"/>
+				<float WX="132.172470"/>
+				<float WY="4.353134"/>
+				<float WZ="-107.054634"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1145,9 +1145,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="182.450134"/>
-				<float Y="7.611694"/>
-				<float Z="5.838426"/>
+				<float X="180.025848"/>
+				<float Y="4.275182"/>
+				<float Z="5.388424"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -1188,9 +1188,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="182.450134"/>
-				<float WY="7.611694"/>
-				<float WZ="5.838426"/>
+				<float WX="180.025848"/>
+				<float WY="4.275182"/>
+				<float WZ="5.388424"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1210,9 +1210,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="70.777649"/>
-				<float Y="7.611691"/>
-				<float Z="-10.383611"/>
+				<float X="67.913925"/>
+				<float Y="4.323412"/>
+				<float Z="-10.451243"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -1253,9 +1253,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="70.777649"/>
-				<float WY="7.611691"/>
-				<float WZ="-10.383611"/>
+				<float WX="67.913925"/>
+				<float WY="4.323412"/>
+				<float WZ="-10.451243"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1275,9 +1275,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="39.153137"/>
-				<float Y="7.611561"/>
-				<float Z="-174.387390"/>
+				<float X="41.731030"/>
+				<float Y="4.409928"/>
+				<float Z="-175.258102"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -1318,9 +1318,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="39.153137"/>
-				<float WY="7.611561"/>
-				<float WZ="-174.387390"/>
+				<float WX="41.731030"/>
+				<float WY="4.409928"/>
+				<float WZ="-175.258102"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1340,9 +1340,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="35.057434"/>
-				<float Y="7.611736"/>
-				<float Z="-103.254265"/>
+				<float X="34.708668"/>
+				<float Y="4.257946"/>
+				<float Z="-100.426559"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="-0.006903"/>
@@ -1383,9 +1383,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="-0.006902"/>
 				<float ZW="0.000000"/>
-				<float WX="35.057434"/>
-				<float WY="7.611736"/>
-				<float WZ="-103.254265"/>
+				<float WX="34.708668"/>
+				<float WY="4.257946"/>
+				<float WZ="-100.426559"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -1405,12 +1405,12 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="134.506470"/>
-				<float Y="7.611679"/>
-				<float Z="-178.755051"/>
+				<float X="134.664948"/>
+				<float Y="4.319153"/>
+				<float Z="-179.945084"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="0.017911"/>
+				<float XX="0.017910"/>
 				<float XY="0.000000"/>
 				<float XZ="0.999840"/>
 				<float XW="0.000000"/>
@@ -1420,7 +1420,7 @@
 				<float YW="0.000000"/>
 				<float ZX="-0.999840"/>
 				<float ZY="-0.000000"/>
-				<float ZZ="0.017911"/>
+				<float ZZ="0.017910"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -1448,9 +1448,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="0.017912"/>
 				<float ZW="0.000000"/>
-				<float WX="134.506470"/>
-				<float WY="7.611679"/>
-				<float WZ="-178.755051"/>
+				<float WX="134.664948"/>
+				<float WY="4.319153"/>
+				<float WZ="-179.945084"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
