@@ -7,10 +7,10 @@ class PlaneObj;
 class FPSPlayer;
 class Sun;
 class Crate;
-class Ground;
 class ServerFreeCamera;
 class NetworkObject;
 class AK12Bullet;
+class ShippingContainer;
 
 class Test : public Scene
 {
@@ -51,11 +51,13 @@ private:
 	
 	Crate* crate;
 	
-	Ground* ground;
-	
 	ServerFreeCamera* serverFreeCam;
 
 	NetworkObject* localPlayer;
+
+	PlaneObj* plane;
+
+	ShippingContainer* shippingContainer;
 };
 
 #endif // TEST_H

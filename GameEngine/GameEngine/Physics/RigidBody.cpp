@@ -210,7 +210,7 @@ void RigidBody::SetPosition(const glm::vec3& newPosition)
     else if (staticBody != nullptr)
     {
         currentTransform = staticBody->getGlobalPose();
-        dynamicBody->setGlobalPose(PxTransform(pos, currentTransform.q));
+        staticBody->setGlobalPose(PxTransform(pos, currentTransform.q));
     }
 }
 
@@ -236,7 +236,7 @@ void RigidBody::SetRotation(const glm::mat4& newRot)
     else if (staticBody != nullptr)
     {
         currentTransform = staticBody->getGlobalPose();
-        dynamicBody->setGlobalPose(PxTransform(currentTransform.p, newRotation));
+        staticBody->setGlobalPose(PxTransform(currentTransform.p, newRotation));
     }
 }
 

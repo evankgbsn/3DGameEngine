@@ -50,6 +50,8 @@ private:
 
 	bool Hovered() const override;
 
+	void Deserialize() override;
+
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* body;

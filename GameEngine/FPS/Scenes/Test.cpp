@@ -4,24 +4,26 @@
 #include "../GameObjects/FPSPlayer.h"
 #include "../GameObjects/Sun.h"
 #include "../GameObjects/Crate.h"
-#include "../GameObjects/Ground.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "../GameObjects/ServerFreeCamera.h"
 #include "../GameObjects/AK12Bullet.h"
+#include "../GameObjects/ShippingContainer.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
 	sun(new Sun()),
 	crate(new Crate()),
-	ground(new Ground()),
 	serverFreeCam(nullptr),
 	localPlayer(nullptr),
-	bullet(new AK12Bullet())
+	bullet(new AK12Bullet()),
+	plane(new PlaneObj()),
+	shippingContainer(new ShippingContainer())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
-	RegisterGameObject(ground, "Ground");
+	RegisterGameObject(plane, "Plane");
+	RegisterGameObject(shippingContainer, "ShippingContainer");
 }
 
 Test::~Test()
@@ -41,9 +43,9 @@ Test::~Test()
 		delete crate;
 	}
 
-	if (ground != nullptr)
+	if (plane != nullptr)
 	{
-		delete ground;
+		delete plane;
 	}
 }
 

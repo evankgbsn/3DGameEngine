@@ -22,7 +22,7 @@ void PlaneObj::Initialize()
     graphics->SetShine(32.0f);
 
     body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
-
+    AddComponent(body, "RigidBody");
     body->SyncPhysics();
 }
 
@@ -88,4 +88,10 @@ void PlaneObj::SetRotation(const glm::mat4& rot)
 bool PlaneObj::Hovered() const
 {
     return false;
+}
+
+void PlaneObj::Deserialize()
+{
+    GameObject::Deserialize();
+    body->SetOwner(this);
 }

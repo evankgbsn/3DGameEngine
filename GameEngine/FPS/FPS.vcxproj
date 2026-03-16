@@ -237,6 +237,7 @@
     <ClCompile Include="GameObjects\JoinUI.cpp" />
     <ClCompile Include="GameObjects\PlaneObj.cpp" />
     <ClCompile Include="GameObjects\ServerFreeCamera.cpp" />
+    <ClCompile Include="GameObjects\ShippingContainer.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\FPSNetworkManager.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="GameObjects\JoinUI.h" />
     <ClInclude Include="GameObjects\PlaneObj.h" />
     <ClInclude Include="GameObjects\ServerFreeCamera.h" />
+    <ClInclude Include="GameObjects\ShippingContainer.h" />
     <ClInclude Include="GameObjects\Sun.h" />
     <ClInclude Include="Scenes\FPSNetworkManager.h" />
     <ClInclude Include="Scenes\JoinScene.h" />
