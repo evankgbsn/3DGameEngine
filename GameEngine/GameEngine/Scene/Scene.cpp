@@ -771,7 +771,7 @@ void Scene::ClearCreatedObjects()
 {
 	for (const auto& obj : createdObjects)
 	{
-		DeregisterGameObject(obj.first, [](GameObject*) {});
+		InternalDeregisterGameObject(obj.first);
 		delete obj.second;
 	}
 
