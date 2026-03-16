@@ -18,8 +18,8 @@ PlaneObj::~PlaneObj()
 
 void PlaneObj::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Plane"), TextureManager::GetTexture("Plane"), TextureManager::GetTexture("Plane"));
-    graphics->SetShine(32.0f);
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseGround"), TextureManager::GetTexture("WarehouseGround"), TextureManager::GetTexture("WarehouseGroundSpec"));
+    graphics->SetShine(4.0f);
 
     body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
     AddComponent(body, "RigidBody");
@@ -45,14 +45,19 @@ void PlaneObj::EditorUpdate()
 
 void PlaneObj::Load()
 {
-    if (!ModelManager::ModelLoaded("Plane"))
+    if (!ModelManager::ModelLoaded("WarehouseGround"))
     {
-        ModelManager::LoadModel("Plane", "Assets/Model/Plane.gltf", false);
+        ModelManager::LoadModel("WarehouseGround", "Assets/Model/WarehouseMapGround.gltf", false);
     }
 
-    if (!TextureManager::TextureLoaded("Plane"))
+    if (!TextureManager::TextureLoaded("WarehouseGround"))
     {
-        TextureManager::LoadTexture("Assets/Texture/grey.png", "Plane");
+        TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTexture.png", "WarehouseGround");
+    }
+
+    if (!TextureManager::TextureLoaded("WarehouseGroundSpec"))
+    {
+        TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTextureSpec.png", "WarehouseGroundSpec");
     }
 }
 
