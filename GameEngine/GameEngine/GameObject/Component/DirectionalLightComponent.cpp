@@ -65,3 +65,11 @@ void DirectionalLightComponent::SetAmbientIntensity(float intensity)
 {
 	LightManager::SetAmbientIntensity(intensity);
 }
+
+void DirectionalLightComponent::SetColliderVisibility(bool visibility)
+{
+	if (light != nullptr)
+	{
+		return light->SetColliderVisibility(visibility);
+	}
+}

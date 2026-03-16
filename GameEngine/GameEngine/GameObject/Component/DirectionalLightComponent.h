@@ -33,6 +33,8 @@ public:
 
 	void Update() override;
 
+	void SetColliderVisibility(bool visibility);
+
 private:
 
 	DirectionalLightComponent(const DirectionalLightComponent&) = delete;
