@@ -131,6 +131,39 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="PlaneObj" name="Plane">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="0.000000"/>
+				<float Y="0.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseGround"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer30">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -196,15 +229,15 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="PlaneObj" name="Plane">
+	<Object type="ShippingContainer" name="ShippingContainer">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="0.000000"/>
-				<float Y="0.000000"/>
-				<float Z="0.000000"/>
+				<float X="-8.844515"/>
+				<float Y="5.360241"/>
+				<float Z="32.822849"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -225,7 +258,39 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseGround"/>
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-8.844515"/>
+				<float WY="5.360241"/>
+				<float WZ="32.822849"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -294,80 +359,15 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="-7.688822"/>
-				<float Y="7.589772"/>
-				<float Z="34.918716"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="-7.688822"/>
-				<float WY="7.589772"/>
-				<float WZ="34.918716"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer13">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-6.703678"/>
-				<float Y="7.611729"/>
-				<float Z="12.851591"/>
+				<float X="-8.991554"/>
+				<float Y="5.252589"/>
+				<float Z="18.021048"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -408,9 +408,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-6.703678"/>
-				<float WY="7.611729"/>
-				<float WZ="12.851591"/>
+				<float WX="-8.991554"/>
+				<float WY="5.252589"/>
+				<float WZ="18.021048"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -430,9 +430,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="-7.519815"/>
-				<float Y="22.574474"/>
-				<float Z="24.636013"/>
+				<float X="-9.168291"/>
+				<float Y="16.330193"/>
+				<float Z="25.101135"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -473,9 +473,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="-7.519815"/>
-				<float WY="22.574474"/>
-				<float WZ="24.636013"/>
+				<float WX="-9.168291"/>
+				<float WY="16.330193"/>
+				<float WZ="25.101135"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -495,9 +495,9 @@
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="71.020882"/>
-				<float Y="7.611706"/>
-				<float Z="6.102754"/>
+				<float X="71.026657"/>
+				<float Y="7.611704"/>
+				<float Z="6.067762"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -538,9 +538,9 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="71.020882"/>
-				<float WY="7.611706"/>
-				<float WZ="6.102754"/>
+				<float WX="71.026657"/>
+				<float WY="7.611704"/>
+				<float WZ="6.067762"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -632,13 +632,13 @@
 			<Variable type="mat4" name="Rotation">
 				<float XX="0.037608"/>
 				<float XY="0.000000"/>
-				<float XZ="0.999293"/>
+				<float XZ="0.999292"/>
 				<float XW="0.000000"/>
 				<float YX="-0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="-0.999293"/>
+				<float ZX="-0.999292"/>
 				<float ZY="-0.000000"/>
 				<float ZZ="0.037608"/>
 				<float ZW="0.000000"/>
@@ -1410,7 +1410,7 @@
 				<float Z="-178.755051"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="0.017912"/>
+				<float XX="0.017911"/>
 				<float XY="0.000000"/>
 				<float XZ="0.999840"/>
 				<float XW="0.000000"/>
@@ -1420,7 +1420,7 @@
 				<float YW="0.000000"/>
 				<float ZX="-0.999840"/>
 				<float ZY="-0.000000"/>
-				<float ZZ="0.017912"/>
+				<float ZZ="0.017911"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
