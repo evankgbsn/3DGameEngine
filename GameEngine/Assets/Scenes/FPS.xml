@@ -489,23 +489,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ServerFreeCamera" name="ServerFreeCamera">
-		<Component type="CameraComponent" name="Camera">
-			<Variable type="vec3" name="Position">
-				<float X="123.649803"/>
-				<float Y="21.963589"/>
-				<float Z="-135.332382"/>
-			</Variable>
-			<Variable type="vec3" name="Target">
-				<float X="-86610.609375"/>
-				<float Y="-42200.164062"/>
-				<float Z="26217.267578"/>
-			</Variable>
-			<Variable type="string" name="Name">
-				<string val="FreeCamera"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer18">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
