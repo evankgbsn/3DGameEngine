@@ -28,7 +28,7 @@ void ShippingContainer::Initialize()
 
 	AddComponent(graphics, "Graphics");
 
-	body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
+	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	body->SyncPhysics();
 
 	AddComponent(body, "RigidBody");

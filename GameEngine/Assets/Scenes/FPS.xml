@@ -102,7 +102,7 @@
 	<Object type="ShippingContainer" name="ShippingContainer">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
-				<bool val="1"/>
+				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
 				<float X="-8.442574"/>
@@ -167,7 +167,7 @@
 	<Object type="ShippingContainer" name="ShippingContainer13">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
-				<bool val="1"/>
+				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
 				<float X="-7.862221"/>
@@ -232,7 +232,7 @@
 	<Object type="ShippingContainer" name="ShippingContainer14">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
-				<bool val="1"/>
+				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
 				<float X="-8.284197"/>
