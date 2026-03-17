@@ -1361,22 +1361,5 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ServerFreeCamera" name="ServerFreeCamera">
-		<Component type="CameraComponent" name="Camera">
-			<Variable type="vec3" name="Position">
-				<float X="11.348102"/>
-				<float Y="3.257623"/>
-				<float Z="9.134109"/>
-			</Variable>
-			<Variable type="vec3" name="Target">
-				<float X="-99519.359375"/>
-				<float Y="-2986.014893"/>
-				<float Z="-9194.175781"/>
-			</Variable>
-			<Variable type="string" name="Name">
-				<string val="FreeCamera"/>
-			</Variable>
-		</Component>
-	</Object>
 </Scene>
 
