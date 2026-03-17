@@ -24,8 +24,6 @@ void ShippingContainer::Initialize()
 		TextureManager::GetTexture("ShippingContainerRed"), 
 		TextureManager::GetTexture("ShippingContainerSpec"));
 
-	new GraphicsObjectTexturedLit(ModelManager::LoadModel("RefPlayer", "Assets/Model/FPSCharacter.gltf", false), TextureManager::GetTexture("ShippingContainerRed"), TextureManager::GetTexture("ShippingContainerRed"));
-
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");
