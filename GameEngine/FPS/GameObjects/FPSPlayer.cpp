@@ -190,7 +190,7 @@ void FPSPlayer::GameUpdate()
 		}
 
 		controller->Update();
-		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, .5f, 0.0f));
+		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 2.0f, 0.0f));
 
 		updateTime += TimeManager::DeltaTime();
 
