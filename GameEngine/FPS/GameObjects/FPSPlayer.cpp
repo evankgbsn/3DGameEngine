@@ -70,7 +70,7 @@ void FPSPlayer::Initialize()
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
 		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
-		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterGraphics->SetPosition({ 0.0f, 0.0f, 5.0f });
 		characterGraphics->SetSpeed(1.0f);
 
 		AddComponent(characterGraphics, "Graphics");
@@ -84,7 +84,7 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, .75f, characterGraphics->GetPosition());
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
 			AddComponent(controller, "Controller");
 		}
 	}
@@ -190,7 +190,7 @@ void FPSPlayer::GameUpdate()
 		}
 
 		controller->Update();
-		characterGraphics->SetPosition(controller->GetPosition());
+		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, .5f, 0.0f));
 
 		updateTime += TimeManager::DeltaTime();
 
