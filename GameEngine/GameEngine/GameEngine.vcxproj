@@ -473,6 +473,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio\AudioManager.cpp" />
+    <ClCompile Include="Audio\miniaudio.c" />
     <ClCompile Include="Collision\AnimatedCollider.cpp" />
     <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
@@ -589,6 +591,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio\AudioManager.h" />
     <ClInclude Include="Collision\AnimatedCollider.h" />
     <ClInclude Include="Collision\AxisAlignedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\Collider.h" />

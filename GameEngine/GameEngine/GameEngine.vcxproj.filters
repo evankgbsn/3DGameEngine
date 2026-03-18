@@ -103,6 +103,9 @@
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{cf80b7fe-9961-4778-8cf3-d7241dba8eca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{ec6b416b-418a-40df-820d-af62eafe34f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -446,6 +449,12 @@
     </ClCompile>
     <ClCompile Include="Renderer\Animation\AnimationController.cpp">
       <Filter>Source Files\Renderer\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\AudioManager.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\miniaudio.c">
+      <Filter>Source Files\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -802,6 +811,9 @@
     </ClInclude>
     <ClInclude Include="Renderer\Animation\AnimationController.h">
       <Filter>Source Files\Renderer\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\AudioManager.h">
+      <Filter>Source Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

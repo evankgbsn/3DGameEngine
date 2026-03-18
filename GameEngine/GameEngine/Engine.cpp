@@ -25,6 +25,7 @@
 #include "Physics/PhysicsManager.h"
 #include "Networking/NetworkManager.h"
 #include "Database/DatabaseManager.h"
+#include "Audio/AudioManager.h"
 
 
 #include <GLFW/glfw3.h>
@@ -81,6 +82,7 @@ void Engine::Run()
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
 			NetworkManager::EditorUpdate();
+			AudioManager::EditorUpdate();
 		}
 		else
 		{
@@ -91,6 +93,7 @@ void Engine::Run()
 			InputManager::Update();
 			SceneManager::Update();
 			NetworkManager::Update();
+			AudioManager::GameUpdate();
 		}
 
 		WindowManager::SetWindowTitle("Engine", std::string("Engine ") + "FPS: " + std::to_string(TimeManager::GetAverageFPS()) + " Network Latency: " + std::to_string(NetworkManager::GetLatency()) + "ms");
@@ -131,11 +134,13 @@ Engine::Engine()
 	EditorPlayToggleInputSetup();
 	PhysicsManager::Initialize();
 	NetworkManager::Initialize();
+	AudioManager::Initialize();
 	
 }
 
 Engine::~Engine()
 {
+	AudioManager::Terminate();
 	NetworkManager::Terminate();
 	PhysicsManager::Terminate();
 	SceneManager::Terminate();
