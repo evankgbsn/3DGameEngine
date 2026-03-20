@@ -56,6 +56,11 @@
 !*SQLiteCpp.lib
 !*mimalloc.lib
 !*mimalloc.pdb
+!*ispckernels.lib
+!*ispckernels.pdb
+!*phonon.lib
+!*phonon.pdb
+
 
 #Ignore .vs folder and other generated folders
 *.vs
