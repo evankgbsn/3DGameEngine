@@ -70,6 +70,9 @@ void FPSPlayer::Initialize()
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
+
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
+		AddComponent(controller, "Controller");
 	}
 	else
 	{
@@ -124,6 +127,7 @@ void FPSPlayer::Terminate()
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		delete crosshair;
+		delete controller;
 		DeregisterInput();
 	}
 
@@ -146,9 +150,14 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
-	if (!NetworkManager::IsServer())
+	if (!NetworkManager::IsServer() && newPositionFromServer.load())
 	{
 		SetPosition(positionToSet);
+		newPositionFromServer.store(false);
+	}
+	else
+	{
+		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 1.12f, 0.0f));
 	}
 
 	hitBox->Update();
@@ -166,6 +175,8 @@ void FPSPlayer::GameUpdate()
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
+		controller->Update();
+
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
 		//characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
@@ -423,6 +434,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
+				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispX " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
@@ -432,6 +444,7 @@ void FPSPlayer::RegisterInput()
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
+				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
 			}
 		});
@@ -467,6 +480,8 @@ void FPSPlayer::RegisterInput()
 			default:
 				break;
 			}
+
+			controller->AddDisp(disp);
 		});
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
@@ -729,7 +744,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		if (updateType == "Position")
 		{
 			if (std::stoi(packetID) >= lastPositionPacketNumber)
+			{
 				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
+				newPositionFromServer = true;
+			}
 			else
 			{
 				Logger::Log("Lost position packet");

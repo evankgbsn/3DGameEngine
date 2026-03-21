@@ -5,6 +5,7 @@
 #include "GameEngine/Networking/NetworkObject.h"
 
 #include <functional>
+#include <atomic>
 
 class GraphicsObjectTexturedAnimatedLit;
 class RigidBodyComponent;
@@ -168,6 +169,8 @@ private:
 	Sprite* crosshair;
 
 	glm::vec3 lastPosition;
+
+	std::atomic<bool> newPositionFromServer = false;
 
 };
 
