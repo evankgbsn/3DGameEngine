@@ -19,6 +19,7 @@
 #include "GameEngine/Math/Math.h"
 #include "GameEngine/UI/Sprite.h"
 #include "GameEngine/Renderer/Window/Window.h"
+#include "GameEngine/Renderer/Window/WindowManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -467,7 +468,42 @@ void FPSPlayer::RegisterInput()
 		{
 			float xspeed = 10.0f;
 			glm::vec3 disp(0.0f);
-			
+
+			Window* window = WindowManager::GetWindow("Engine");
+
+			bool isWPressed = false;
+			bool isAPressed = false;
+			bool isSPressed = false;
+			bool isDPressed = false;
+
+			if (window != nullptr)
+			{
+				isWPressed = KEY_PRESSED == window->GetKey(KEY_W);
+				isAPressed = KEY_PRESSED == window->GetKey(KEY_A);
+				isSPressed = KEY_PRESSED == window->GetKey(KEY_S);
+				isDPressed = KEY_PRESSED == window->GetKey(KEY_D);
+			}
+
+			if (isWPressed && isAPressed || isWPressed && isDPressed)
+			{
+				xspeed /= 2.0f;
+			}
+
+			if (isSPressed && isAPressed || isSPressed && isDPressed)
+			{
+				xspeed /= 2.0f;
+			}
+
+			if (isAPressed && isWPressed || isAPressed && isSPressed)
+			{
+				xspeed /= 2.0f;
+			}
+
+			if (isDPressed && isWPressed || isDPressed && isSPressed)
+			{
+				xspeed /= 2.0f;
+			}
+
 			switch (key)
 			{
 			case KEY_W:
