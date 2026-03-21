@@ -142,7 +142,7 @@ void CharacterController::InitializeCapsule()
 
 	// Apply to your Transform component
 	// Assuming your Unit Capsule is 2.0 units tall total in Blender
-	capsule->Scale(glm::vec3(r, totalHeight / 2.0f, r));
+	capsule->SetScale(glm::vec3(r * 2, totalHeight / 2.0f, r * 2));
 }
 
 glm::vec3 CharacterController::GetFootPosition() const
