@@ -52,7 +52,7 @@ void PlaneObj::Load()
 
     if (!TextureManager::TextureLoaded("WarehouseGround"))
     {
-        TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTexture.png", "WarehouseGround");
+        TextureManager::LoadTexture("Assets/Texture/Black.png", "WarehouseGround");
     }
 
     if (!TextureManager::TextureLoaded("WarehouseGroundSpec"))

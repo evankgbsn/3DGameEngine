@@ -54,7 +54,7 @@ void FPSPlayer::Initialize()
 {
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
 		characterGraphics->SetClip("Idle");
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
@@ -78,7 +78,7 @@ void FPSPlayer::Initialize()
 	}
 	else
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
 		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
@@ -100,7 +100,7 @@ void FPSPlayer::Initialize()
 		}
 	}
 
-	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("Character"));
+	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
 	ak12Graphics->SetShine(32.0f);
 
 	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
@@ -272,7 +272,12 @@ void FPSPlayer::Load()
 
 	if (!TextureManager::TextureLoaded("Character"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/grey.png", "Character");
+		TextureManager::LoadTexture("Assets/Texture/Black.png", "Character");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterSpec"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTextureSpec.png", "CharacterSpec");
 	}
 
 	if (SpawnedFromLocalSpawnRequest())
