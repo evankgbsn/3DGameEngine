@@ -12,6 +12,7 @@ class CameraComponent;
 class AnimatedColliderComponent;
 class CharacterControllerComponent;
 class GraphicsObjectTexturedLit;
+class Sprite;
 
 class FPSPlayer : public GameObject, public NetworkObject
 {
@@ -163,6 +164,8 @@ private:
 	float lastShotTime = 0.0f;
 
 	float updateTime = 0.0f;
+
+	Sprite* crosshair;
 
 };
 

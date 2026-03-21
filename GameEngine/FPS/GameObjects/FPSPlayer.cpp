@@ -17,6 +17,8 @@
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
 #include "GameEngine/Math/Math.h"
+#include "GameEngine/UI/Sprite.h"
+#include "GameEngine/Renderer/Window/Window.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -64,6 +66,10 @@ void FPSPlayer::Initialize()
 		AddComponent(hitBox, "AnimatedCollider");
 
 		AddComponent(characterGraphics, "Graphics");
+
+		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
+
+		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
 	}
 	else
 	{
@@ -117,6 +123,7 @@ void FPSPlayer::Terminate()
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
+		delete crosshair;
 		DeregisterInput();
 	}
 
@@ -173,8 +180,15 @@ void FPSPlayer::GameUpdate()
 			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
 			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
+		glm::mat4 handTransform = hitBox->GetJointTransform("hand.r");
 
-		ak12Graphics->SetTransform(ConvertRightHandTransformToWeaponTransform());
+		glm::mat4 weaponRot(glm::vec4(-cam->GetRightVector(), 0.0f),
+			glm::vec4(cam->GetUpVector(), 0.0f),
+			glm::vec4(cam->GetForwardVector(), 0.0f),
+			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+		ak12Graphics->SetRotation(weaponRot);
+		ak12Graphics->SetPosition(glm::vec3(handTransform[3]));
 	}
 	else
 	{
@@ -254,6 +268,11 @@ void FPSPlayer::Load()
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
 		{
 			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
+		}
+
+		if (!TextureManager::TextureLoaded("Crosshair"))
+		{
+			TextureManager::LoadTexture("Assets/Texture/Crosshair.png", "Crosshair");
 		}
 	}
 }
