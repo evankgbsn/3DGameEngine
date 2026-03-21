@@ -488,18 +488,15 @@ void FPSPlayer::RegisterInput()
 			{
 				xspeed /= 2.0f;
 			}
-
-			if (isSPressed && isAPressed || isSPressed && isDPressed)
+			else if (isSPressed && isAPressed || isSPressed && isDPressed)
 			{
 				xspeed /= 2.0f;
 			}
-
-			if (isAPressed && isWPressed || isAPressed && isSPressed)
+			else if (isAPressed && isWPressed || isAPressed && isSPressed)
 			{
 				xspeed /= 2.0f;
 			}
-
-			if (isDPressed && isWPressed || isDPressed && isSPressed)
+			else if (isDPressed && isWPressed || isDPressed && isSPressed)
 			{
 				xspeed /= 2.0f;
 			}
