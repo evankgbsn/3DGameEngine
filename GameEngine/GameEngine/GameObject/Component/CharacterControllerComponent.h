@@ -24,7 +24,7 @@ public:
 
 	void AddDisp(const glm::vec3& newDisp);
 
-	void Jump(float force, float airTime);
+	void Jump(float force);
 
 	bool IsFalling() const;
 
