@@ -11,7 +11,6 @@ class ServerFreeCamera;
 class NetworkObject;
 class AK12Bullet;
 class ShippingContainer;
-class PointLightObject;
 
 class Test : public Scene
 {
@@ -59,8 +58,6 @@ private:
 	PlaneObj* plane;
 
 	ShippingContainer* shippingContainer;
-
-	PointLightObject* pointLight;
 };
 
 #endif // TEST_H

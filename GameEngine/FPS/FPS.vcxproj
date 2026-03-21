@@ -236,7 +236,6 @@
     <ClCompile Include="GameObjects\Ground.cpp" />
     <ClCompile Include="GameObjects\JoinUI.cpp" />
     <ClCompile Include="GameObjects\PlaneObj.cpp" />
-    <ClCompile Include="GameObjects\PointLightObject.cpp" />
     <ClCompile Include="GameObjects\ServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\ShippingContainer.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
@@ -252,7 +251,6 @@
     <ClInclude Include="GameObjects\Ground.h" />
     <ClInclude Include="GameObjects\JoinUI.h" />
     <ClInclude Include="GameObjects\PlaneObj.h" />
-    <ClInclude Include="GameObjects\PointLightObject.h" />
     <ClInclude Include="GameObjects\ServerFreeCamera.h" />
     <ClInclude Include="GameObjects\ShippingContainer.h" />
     <ClInclude Include="GameObjects\Sun.h" />

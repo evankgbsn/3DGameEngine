@@ -9,7 +9,6 @@
 #include "../GameObjects/ServerFreeCamera.h"
 #include "../GameObjects/AK12Bullet.h"
 #include "../GameObjects/ShippingContainer.h"
-#include "../GameObjects/PointLightObject.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -19,14 +18,12 @@ Test::Test() :
 	localPlayer(nullptr),
 	bullet(new AK12Bullet()),
 	plane(new PlaneObj()),
-	shippingContainer(new ShippingContainer()),
-	pointLight(new PointLightObject())
+	shippingContainer(new ShippingContainer())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
 	RegisterGameObject(plane, "Plane");
 	RegisterGameObject(shippingContainer, "ShippingContainer");
-	RegisterGameObject(pointLight, "PointLight");
 }
 
 Test::~Test()
