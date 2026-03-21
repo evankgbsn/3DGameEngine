@@ -772,10 +772,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 	{
 		if (updateType == "DispX")
 		{
-			if (characterGraphics->GetCurrentAnimation() != "AimRun")
-			{
-				characterGraphics->FadeAnimationTo("AimRun", 0.5f);
-			}
+			//if (characterGraphics->GetCurrentAnimation() != "AimRun")
+			//{
+			//	characterGraphics->FadeAnimationTo("AimRun", 0.5f);
+			//}
 			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
 		}
 		else if (updateType == "DispY")
