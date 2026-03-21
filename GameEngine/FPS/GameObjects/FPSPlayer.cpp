@@ -319,7 +319,7 @@ void FPSPlayer::SetPosition(const glm::vec3& pos)
 
 	if (controller != nullptr)
 	{
-		controller->SetPosition(pos + glm::vec3(0.0f, 1.12f, 0.0f));
+		controller->SetPosition(pos);
 	}
 }
 
