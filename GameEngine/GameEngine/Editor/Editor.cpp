@@ -30,6 +30,7 @@ Editor::Editor() :
 	Camera& cam = CameraManager::CreateCamera(Camera::Type::PERSPECTIVE, "Editor", WindowManager::GetWindow("Engine"));
 	cam.SetPosition(glm::vec3(25.0f, 25.0f, 25.0f));
 	cam.SetTarget(glm::vec3(0.0f));
+	cam.SetNear(0.001f);
 	SetupEditorInput();
 	InitializeGrid();
 }
@@ -64,6 +65,7 @@ void Editor::Update()
 {
 	if (instance != nullptr)
 	{
+
 		if (instance->grid != nullptr)
 		{
 			if (!instance->grid->IsDisabled())
@@ -253,7 +255,7 @@ void Editor::EnableCameraMovement()
 
 void Editor::SetupEditorInput()
 {
-	float cameraSpeed = 25.0f;
+	float cameraSpeed = 15.0f;
 	static std::function<void(int)> wPress = std::function<void(int)>([cameraSpeed](int keyCode)
 		{
 			if (instance != nullptr)
@@ -521,7 +523,7 @@ void Editor::InitializeGrid()
 
 	ModelManager::RegisterCallbackForModelLoaded("EditorGrid", "InitializeEditorGrid", gridModelLoadCallback);
 
-	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, 1U, true);
+	ModelManager::LoadModelTerrain("EditorGrid", "Assets/Texture/planeHeightMap.png", 1000.0f, 1000.0f, 1000U, 1000U, 100.0f, 0.0f, 1U, false);
 }
 
 void Editor::TerminateGrid()

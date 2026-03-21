@@ -97,6 +97,7 @@ void AnimatedCollider::InitializeOBBs()
 		}
 
 		OrientedBoundingBoxWithVisualization* newObb = new OrientedBoundingBoxWithVisualization(verts);
+		newObb->SetColor({ 0.0f, 0.5f, 0.5f, 1.0f });
 	
 		for (unsigned int i = 0; i < jointNames->size(); ++i)
 		{
@@ -118,6 +119,7 @@ void AnimatedCollider::InitializeOBBs()
 void AnimatedCollider::InitializeSphere()
 {
 	sphere = new SphereWithVisualization(wrapedGraphics);
+	sphere->SetColor({ 0.15f, 0.15f, 0.15f });
 }
 
 void AnimatedCollider::InitializeMeshColliderVisualization()
@@ -128,6 +130,7 @@ void AnimatedCollider::InitializeMeshColliderVisualization()
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
 	meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
 	meshColliderVisualization->SetSpeed(wrapedGraphics->GetSpeed());
+	meshColliderVisualization->SetColor({ 0.05f, 0.05f, 0.05f, 1.0f });
 }
 
 void AnimatedCollider::ToggleVisibility()

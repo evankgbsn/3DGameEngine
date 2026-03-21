@@ -180,7 +180,7 @@ void FPSPlayer::GameUpdate()
 			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
 			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
-		glm::mat4 handTransform = hitBox->GetJointTransform("hand.r");
+		glm::mat4 handTransform = hitBox->GetJointTransform("middle1.r");
 
 		glm::mat4 weaponRot(glm::vec4(-cam->GetRightVector(), 0.0f),
 			glm::vec4(cam->GetUpVector(), 0.0f),
@@ -206,14 +206,20 @@ void FPSPlayer::GameUpdate()
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 1.12f, 0.0f));
 
-		updateTime += TimeManager::DeltaTime();
+		//updateTime += TimeManager::DeltaTime();
+		//
+		//if (updateTime >= 0.001f)
+		//{
+		//	ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
+		//	updateTime = 0.0f;
+		//}
 
-		if (updateTime >= 0.001f)
+		if (characterGraphics->GetPosition() != lastPosition)
 		{
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
-			updateTime = 0.0f;
 		}
 
+		lastPosition = characterGraphics->GetPosition();
 	}
 	else
 	{
@@ -330,21 +336,22 @@ void FPSPlayer::RegisterInput()
 		{
 			static glm::vec2 prevPos = cursorPos;
 			
-			float xspeed = 2.50f;
-			float yspeed = 2.50f;
+			float xspeed = 1.0f;
+			float yspeed = 1.0f;
 
 			float value = xspeed * (float)-(cursorPos.x - prevPos.x);
 
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.005f)
 			{
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), value * TimeManager::DeltaTime());
+				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 			}
 
 			value = yspeed * (float)-(cursorPos.y - prevPos.y);
 
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.005f)
 			{
-				float angle = yspeed * value * TimeManager::DeltaTime();
+				float angle = value * TimeManager::DeltaTime();
 
 				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
 
@@ -368,9 +375,9 @@ void FPSPlayer::RegisterInput()
 					characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 					characterGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
 				}
-			}
 
-			ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+			}
 			
 			prevPos = cursorPos;
 		});
@@ -636,7 +643,7 @@ void FPSPlayer::DeregisterEditorToggleCallbacks()
 
 glm::mat4 FPSPlayer::ConvertRightHandTransformToWeaponTransform() const
 {
-	glm::mat4 handTransform = hitBox->GetJointTransform("hand.r");
+	glm::mat4 handTransform = hitBox->GetJointTransform("middle1.r");
 
 
 	glm::vec4 weaponup = -handTransform[0];

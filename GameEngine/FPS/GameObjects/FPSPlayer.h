@@ -167,6 +167,8 @@ private:
 
 	Sprite* crosshair;
 
+	glm::vec3 lastPosition;
+
 };
 
 #endif // FPSPLAYER_H
