@@ -295,15 +295,18 @@ void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const P
 			PxActor* actorB = pairHeader.actors[1];
 
 			GameObject* goA = static_cast<GameObject*>(actorA->userData);
-			RigidBodyComponent* rbcA = dynamic_cast<RigidBodyComponent*>(goA->GetComponent("RigidBody"));
-
 			GameObject* goB = static_cast<GameObject*>(actorB->userData);
-			RigidBodyComponent* rbcB = dynamic_cast<RigidBodyComponent*>(goB->GetComponent("RigidBody"));
 
-			rbcA->RegisterContact(rbcB);
-			rbcB->RegisterContact(rbcA);
+			if (goA != nullptr && goB != nullptr)
+			{
+				RigidBodyComponent* rbcA = dynamic_cast<RigidBodyComponent*>(goA->GetComponent("RigidBody"));
+				RigidBodyComponent* rbcB = dynamic_cast<RigidBodyComponent*>(goB->GetComponent("RigidBody"));
 
-			Logger::Log(goA->GetName() + " : " + goB->GetName());
+				rbcA->RegisterContact(rbcB);
+				rbcB->RegisterContact(rbcA);
+
+				Logger::Log(goA->GetName() + " : " + goB->GetName());
+			}
 		}
 	}
 }
