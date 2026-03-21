@@ -27,7 +27,7 @@ private:
 
 	static void Terminate();
 
-	static void CreateWindow(unsigned int width, unsigned int height, const std::string& name);
+	static void InitializeWindow(unsigned int width, unsigned int height, const std::string& name);
 
 	static void Update();
 

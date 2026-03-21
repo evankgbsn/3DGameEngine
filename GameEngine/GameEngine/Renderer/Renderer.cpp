@@ -55,7 +55,7 @@ void Renderer::Terminate()
 
 void Renderer::CreateMainWindow(unsigned int width, unsigned int height, const std::string& name)
 {
-	WindowManager::CreateWindow(width, height, name);
+	WindowManager::InitializeWindow(width, height, name);
 
 	if (instance != nullptr)
 	{

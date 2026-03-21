@@ -68,7 +68,7 @@ void WindowManager::Terminate()
 	SingletonHelpers::TerminateSingleton<WindowManager>(&instance, "WindowManager");
 }
 
-void WindowManager::CreateWindow(unsigned int width, unsigned int height, const std::string& name)
+void WindowManager::InitializeWindow(unsigned int width, unsigned int height, const std::string& name)
 {
 	if (instance != nullptr)
 	{
