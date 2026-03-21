@@ -80,6 +80,8 @@ private:
 
 	void DeregisterEditorToggleCallbacks();
 
+	glm::mat4 ConvertRightHandTransformToWeaponTransform() const;
+
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
 
 	GraphicsObjectTexturedLit* ak12Graphics;

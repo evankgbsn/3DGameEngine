@@ -168,13 +168,13 @@ void FPSPlayer::GameUpdate()
 		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
 		//characterArmsGraphics->SetRotation(armRotation);
 
-
 		glm::vec3 riflePositionOffset =
 			(glm::vec3(glm::normalize(armRotation[0])) * -0.10f)
 			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
 			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
-		ak12Graphics->SetTransform(hitBox->GetJointTransform("hand.r"));
+
+		ak12Graphics->SetTransform(ConvertRightHandTransformToWeaponTransform());
 	}
 	else
 	{
@@ -613,6 +613,20 @@ void FPSPlayer::DeregisterEditorToggleCallbacks()
 {
 	Editor::DeregisterOnEditorEnable(editorEnable);
 	Editor::DeregisterOnEditorDisable(editorDisable);
+}
+
+glm::mat4 FPSPlayer::ConvertRightHandTransformToWeaponTransform() const
+{
+	glm::mat4 handTransform = hitBox->GetJointTransform("hand.r");
+
+
+	glm::vec4 weaponup = -handTransform[0];
+	glm::vec4 weaponforward = handTransform[1];
+	glm::vec4 weaponright = handTransform[2];
+
+	weaponright = glm::vec4(glm::normalize(glm::cross(glm::vec3(weaponup), glm::vec3(weaponforward))), 0.0f);
+
+	return glm::mat4(weaponright, weaponup, weaponforward, glm::vec4(glm::vec3(handTransform[3]), 1.0f));
 }
 
 void FPSPlayer::OnSpawn()
