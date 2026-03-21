@@ -30,6 +30,8 @@ public:
 
 	glm::vec3 GetPosition() const;
 
+	glm::vec3 GetFootPosition() const;
+
 	void SetPosition(const glm::vec3& newPosition);
 
 	~CharacterControllerComponent();

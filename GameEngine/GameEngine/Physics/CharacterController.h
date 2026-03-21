@@ -40,6 +40,8 @@ public:
 
 	void InitializeCapsule();
 
+	glm::vec3 GetFootPosition() const;
+
 private:
 
 	CharacterController() = delete;

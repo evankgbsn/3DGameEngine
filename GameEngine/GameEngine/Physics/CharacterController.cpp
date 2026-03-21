@@ -144,3 +144,9 @@ void CharacterController::InitializeCapsule()
 	// Assuming your Unit Capsule is 2.0 units tall total in Blender
 	capsule->Scale(glm::vec3(r, totalHeight / 2.0f, r));
 }
+
+glm::vec3 CharacterController::GetFootPosition() const
+{
+	PxExtendedVec3 pos = controller->getFootPosition();
+	return { pos.x, pos.y, pos.z };
+}

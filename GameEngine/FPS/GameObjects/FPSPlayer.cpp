@@ -159,7 +159,7 @@ void FPSPlayer::GameUpdate()
 	}
 	else
 	{
-		characterGraphics->SetPosition(controller->GetPosition());
+		characterGraphics->SetPosition(controller->GetFootPosition());
 	}
 
 	hitBox->Update();
@@ -217,7 +217,7 @@ void FPSPlayer::GameUpdate()
 		}
 
 		controller->Update();
-		characterGraphics->SetPosition(controller->GetPosition());
+		characterGraphics->SetPosition(controller->GetFootPosition());
 
 		updateTime += TimeManager::DeltaTime();
 		
@@ -315,11 +315,10 @@ glm::mat4 FPSPlayer::GetTransform() const
 
 void FPSPlayer::SetPosition(const glm::vec3& pos)
 {
-	characterGraphics->SetPosition(pos);
-
 	if (controller != nullptr)
 	{
 		controller->SetPosition(pos);
+		characterGraphics->SetPosition(controller->GetFootPosition());
 	}
 }
 
