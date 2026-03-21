@@ -217,17 +217,15 @@ void FPSPlayer::GameUpdate()
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 1.12f, 0.0f));
 
-		//updateTime += TimeManager::DeltaTime();
-		//
-		//if (updateTime >= 0.001f)
-		//{
-		//	ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
-		//	updateTime = 0.0f;
-		//}
-
-		if (characterGraphics->GetPosition() != lastPosition)
+		updateTime += TimeManager::DeltaTime();
+		
+		if (updateTime >= 0.001f)
 		{
-			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
+			if (characterGraphics->GetPosition() != lastPosition)
+			{
+				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
+			}
+			updateTime = 0.0f;
 		}
 
 		lastPosition = characterGraphics->GetPosition();
