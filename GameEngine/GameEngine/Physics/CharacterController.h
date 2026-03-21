@@ -23,6 +23,8 @@ public:
 
 	glm::vec3 GetPosition() const;
 
+	void SetPosition(const glm::vec3& newPosition);
+
 	void Move();
 
 	PxControllerCollisionFlags GetCollisionFlags() const;

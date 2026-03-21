@@ -93,6 +93,12 @@ glm::vec3 CharacterController::GetPosition() const
 	return { pos.x, pos.y, pos.z };
 }
 
+void CharacterController::SetPosition(const glm::vec3& newPosition)
+{
+	PxExtendedVec3 newPos(newPosition.x, newPosition.y, newPosition.z);
+	controller->setPosition(newPos);
+}
+
 CharacterController::~CharacterController()
 {
 	controller->release();

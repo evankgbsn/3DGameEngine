@@ -23,7 +23,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 FPSPlayer::FPSPlayer() :
-	GameObject("FPSPlayer")
+	GameObject("FPSPlayer"),
+	controller(nullptr)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
@@ -314,6 +315,11 @@ glm::mat4 FPSPlayer::GetTransform() const
 void FPSPlayer::SetPosition(const glm::vec3& pos)
 {
 	characterGraphics->SetPosition(pos);
+
+	if (controller != nullptr)
+	{
+		controller->SetPosition(pos);
+	}
 }
 
 void FPSPlayer::SetRotation(const glm::mat4& rot)

@@ -66,6 +66,11 @@ glm::vec3 CharacterControllerComponent::GetPosition() const
 	return controller->GetPosition();
 }
 
+void CharacterControllerComponent::SetPosition(const glm::vec3& newPosition)
+{
+	controller->SetPosition(newPosition);
+}
+
 void CharacterControllerComponent::Serialize()
 {
 }
