@@ -107,7 +107,7 @@ void FPSPlayer::Initialize()
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
 	cam->SetFOV(20.0f);
-	cam->SetNear(0.001f);
+	cam->SetNear(0.01f);
 
 	AddComponent(cam, "Camera");
 
@@ -459,7 +459,7 @@ void FPSPlayer::RegisterInput()
 
 			if (!controller->IsFalling())
 			{
-				controller->Jump(100.0f);
+				controller->Jump(50.0f);
 			}
 		});
 
@@ -499,7 +499,7 @@ void FPSPlayer::RegisterInput()
 			
 			if (!controller->IsFalling())
 			{
-				controller->Jump(100.0f);
+				controller->Jump(50.0f);
 			}
 		});
 
@@ -792,7 +792,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(100.0f);
+				controller->Jump(50.0f);
 			}
 		}
 		else if (updateType == "Target")
