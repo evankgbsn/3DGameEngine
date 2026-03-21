@@ -225,7 +225,7 @@ void FPSPlayer::GameUpdate()
 		{
 			if (characterGraphics->GetPosition() != lastPosition)
 			{
-				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(characterGraphics->GetPosition()), {}, false);
+				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
 			}
 			updateTime = 0.0f;
 		}
