@@ -81,12 +81,20 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
-	jumpForce -= 200 * TimeManager::DeltaTime();
+	float dt = TimeManager::DeltaTime();
 
-	if (jumpForce <= 0.0f)
-	{
+	// 1. Apply acceleration (gravity/deceleration) to Velocity
+	// Velocity changes by (Acceleration * Time)
+	if (jumpForce > 0.0f) {
+		jumpForce -= 200.0f * dt;
+	}
+	else {
 		jumpForce = 0.0f;
 	}
 
-	controller->AddDisp(glm::vec3(0.0f, jumpForce * TimeManager::DeltaTime(), 0.0f));
+	// 2. Apply Velocity to Position
+	// Displacement changes by (Velocity * Time)
+	float verticalDisplacement = jumpForce * dt;
+
+	controller->AddDisp(glm::vec3(0.0f, verticalDisplacement, 0.0f));
 }
