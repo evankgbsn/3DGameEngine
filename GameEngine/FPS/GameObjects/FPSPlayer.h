@@ -108,6 +108,8 @@ private:
 
 	std::function<void(int axis, float value)>* gamepadWalkY;
 
+	std::function<void(int axis, float value)>* gamepadShoot;
+
 	std::function<void(int button)>* gamepadJump;
 
 	std::function<void(int key)>* keyboardMove;
@@ -152,9 +154,9 @@ private:
 
 	unsigned int jumpPacketNumber = 0;
 
-	unsigned int lastJumpPacketNumber = 0;
-
 	unsigned int shootPacketNumber = 0;
+
+	unsigned int lastJumpPacketNumber = 0;
 
 	unsigned int lastShootPacketNumber = 0;
 

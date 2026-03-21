@@ -73,7 +73,7 @@ void FPSPlayer::Initialize()
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
 
-		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.75f, 0.50f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
 	}
 	else
@@ -95,7 +95,7 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.35f, 1.0f, characterGraphics->GetPosition());
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), 0.75f, 0.50f, characterGraphics->GetPosition());
 			AddComponent(controller, "Controller");
 		}
 	}
@@ -159,7 +159,7 @@ void FPSPlayer::GameUpdate()
 	}
 	else
 	{
-		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 1.12f, 0.0f));
+		characterGraphics->SetPosition(controller->GetPosition());
 	}
 
 	hitBox->Update();
@@ -217,7 +217,7 @@ void FPSPlayer::GameUpdate()
 		}
 
 		controller->Update();
-		characterGraphics->SetPosition(controller->GetPosition() - glm::vec3(0.0f, 1.12f, 0.0f));
+		characterGraphics->SetPosition(controller->GetPosition());
 
 		updateTime += TimeManager::DeltaTime();
 		
@@ -454,6 +454,24 @@ void FPSPlayer::RegisterInput()
 			}
 		});
 
+	gamepadShoot = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (value > 0.0f)
+			{
+				if (TimeManager::SecondsSinceStart() - lastShotTime > 0.05f)
+				{
+					// Projectile.
+					//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
+					//NetworkManager::Spawn("AK12Bullet", &callback);
+					////ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+					//lastShotTime = TimeManager::SecondsSinceStart();
+
+					// Hit-Scan.
+					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+				}
+			}
+		});
+
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
 			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
@@ -540,10 +558,14 @@ void FPSPlayer::RegisterInput()
 		{
 			if (TimeManager::SecondsSinceStart() - lastShotTime > 0.05f)
 			{
-				static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
-				NetworkManager::Spawn("AK12Bullet", &callback);
-				//ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
-				lastShotTime = TimeManager::SecondsSinceStart();
+				// Projectile.
+				//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
+				//NetworkManager::Spawn("AK12Bullet", &callback);
+				////ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+				//lastShotTime = TimeManager::SecondsSinceStart();
+
+				// Hit-Scan.
+				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 			}
 		});
 
@@ -620,6 +642,7 @@ void FPSPlayer::RegisterInput()
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, gamepadLookY, "FPSCharacterLook");
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, gamepadWalkX, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, gamepadWalkY, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_TRIGGER, gamepadShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, gamepadJump, "FPSCharacterJump");
 	
 }
@@ -647,6 +670,8 @@ void FPSPlayer::DeregisterInput()
 	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, "FPSCharacterWalk");
 
+	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_TRIGGER, "FPSCharacterShoot");
+
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "FPSCharacterWalk");
@@ -661,6 +686,8 @@ void FPSPlayer::DeregisterInput()
 	delete gamepadLookY;
 	delete gamepadWalkX;
 	delete gamepadWalkY;
+
+	delete gamepadShoot;
 
 	delete whenCursorMove;
 	delete editorEnable;

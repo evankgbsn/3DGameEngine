@@ -1,6 +1,9 @@
 #include "CharacterController.h"
 
 #include "../Time/TimeManager.h"
+#include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
+#include "../Renderer/GraphicsObjects/GOColored.h"
+#include "../Renderer/Model/ModelManager.h"
 
 CharacterController::CharacterController(float radius, float height, const glm::vec3& position)
 {
@@ -27,6 +30,8 @@ CharacterController::CharacterController(float radius, float height, const glm::
 	desc.isValid();
 
 	controller = PhysicsManager::instance->controllerManager->createController(desc);
+
+	InitializeCapsule();
 }
 
 void CharacterController::SetHeight(float newHeight)
@@ -36,7 +41,7 @@ void CharacterController::SetHeight(float newHeight)
 
 void CharacterController::SetRadius(float newRadius)
 {
-	PxCapsuleController* capsuleController = dynamic_cast<PxCapsuleController*>(controller);
+	PxCapsuleController* capsuleController = static_cast<PxCapsuleController*>(controller);
 	
 	if (capsuleController != nullptr)
 	{
@@ -46,7 +51,7 @@ void CharacterController::SetRadius(float newRadius)
 
 float CharacterController::GetRadius() const
 {
-	PxCapsuleController* capsuleController = dynamic_cast<PxCapsuleController*>(controller);
+	PxCapsuleController* capsuleController = static_cast<PxCapsuleController*>(controller);
 
 	if (capsuleController != nullptr)
 	{
@@ -58,7 +63,7 @@ float CharacterController::GetRadius() const
 
 float CharacterController::GetHeight() const
 {
-	PxCapsuleController* capsuleController = dynamic_cast<PxCapsuleController*>(controller);
+	PxCapsuleController* capsuleController = static_cast<PxCapsuleController*>(controller);
 
 	if (capsuleController != nullptr)
 	{
@@ -80,6 +85,8 @@ void CharacterController::Move()
 	collisionFlags = controller->move(PxVec3(disp.x + gravity.x, disp.y + gravity.y, disp.z + gravity.z), 0.00001f, TimeManager::DeltaTime(), nullptr, nullptr);
 
 	disp = glm::vec3(0.0f);
+
+	capsule->SetTranslation(GetPosition());
 }
 
 PxControllerCollisionFlags CharacterController::GetCollisionFlags() const
@@ -97,9 +104,43 @@ void CharacterController::SetPosition(const glm::vec3& newPosition)
 {
 	PxExtendedVec3 newPos(newPosition.x, newPosition.y, newPosition.z);
 	controller->setPosition(newPos);
+	capsule->SetTranslation(newPosition);
 }
 
 CharacterController::~CharacterController()
 {
+	GraphicsObjectManager::Delete(capsule);
 	controller->release();
+}
+
+void CharacterController::SetOwner(GameObject* owner)
+{
+	controller->getActor()->userData = owner;
+}
+
+GameObject* CharacterController::GetOwner() const
+{
+	return reinterpret_cast<GameObject*>(controller->getActor()->userData);
+}
+
+void CharacterController::InitializeCapsule()
+{
+	if (!ModelManager::ModelLoaded("Capsule"))
+	{
+		ModelManager::LoadModel("Capsule", "Assets/Model/Capsule.gltf", false);
+	}
+
+	capsule = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Capsule"), { 1.0f, 0.5f, 0.0f, 1.0f });
+	capsule->SetDrawMode(GO3D::Mode::LINE);
+
+	// Get dimensions from PhysX
+	float r = GetRadius();
+	float h = GetHeight(); // Distance between centers
+
+	// Calculate total height
+	float totalHeight = h + (2.0f * r);
+
+	// Apply to your Transform component
+	// Assuming your Unit Capsule is 2.0 units tall total in Blender
+	capsule->Scale(glm::vec3(r, totalHeight / 2.0f, r));
 }

@@ -5,6 +5,9 @@
 
 #include <glm/glm.hpp>
 
+class GameObject;
+class GOColored;
+
 class CharacterController
 {
 public:
@@ -31,6 +34,12 @@ public:
 
 	~CharacterController();
 
+	void SetOwner(GameObject*);
+
+	GameObject* GetOwner() const;
+
+	void InitializeCapsule();
+
 private:
 
 	CharacterController() = delete;
@@ -48,6 +57,8 @@ private:
 	PxControllerCollisionFlags collisionFlags;
 
 	glm::vec3 disp;
+
+	GOColored* capsule;
 
 };
 
