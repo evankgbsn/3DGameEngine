@@ -20,6 +20,15 @@ PointLightObject::~PointLightObject()
 void PointLightObject::Initialize()
 {
 	light = new PointLightComponent({ 3.0f, 3.0f, 3.0f }, { 0.0f, 0.0f, 0.0f });
+	
+	if (Editor::IsEnabled())
+	{
+		light->SetColliderVisibility(true);
+	}
+	else
+	{
+		light->SetColliderVisibility(false);
+	}
 
 	AddComponent(light, "Light");
 

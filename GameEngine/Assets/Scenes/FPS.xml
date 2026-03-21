@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene name="FPS.xml" type="class Test">
+	<Object type="Sun" name="Sun">
+		<Component type="DirectionalLightComponent" name="Light">
+			<Variable type="vec3" name="Direction">
+				<float X="-0.330000"/>
+				<float Y="-0.330000"/>
+				<float Z="-0.330000"/>
+			</Variable>
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="0.500000"/>
+				<float Y="0.250000"/>
+				<float Z="0.250000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Sun" name="Sun1">
+		<Component type="DirectionalLightComponent" name="Light">
+			<Variable type="vec3" name="Direction">
+				<float X="0.330000"/>
+				<float Y="-0.33000"/>
+				<float Z="0.330000"/>
+			</Variable>
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="0.050000"/>
+				<float Y="0.025000"/>
+				<float Z="0.025000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="PointLightObject" name="PointLight">
+		<Component type="PointLightComponent" name="Light">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="3.000000"/>
+				<float Y="3.000000"/>
+				<float Z="3.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="0.000000"/>
+				<float Y="0.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer16">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -62,20 +104,6 @@
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
 				<string val="ShippingContainerSpec"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="Sun" name="Sun">
-		<Component type="DirectionalLightComponent" name="Light">
-			<Variable type="vec3" name="Direction">
-				<float X="0.000000"/>
-				<float Y="0.000000"/>
-				<float Z="0.000000"/>
-			</Variable>
-			<Variable type="vec3" name="ColorIntensity">
-				<float X="0.000000"/>
-				<float Y="0.000000"/>
-				<float Z="0.000000"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -369,20 +397,6 @@
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
 				<string val="ShippingContainerSpec"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="PointLightObject" name="PointLight">
-		<Component type="PointLightComponent" name="Light">
-			<Variable type="vec3" name="ColorIntensity">
-				<float X="3.000000"/>
-				<float Y="3.000000"/>
-				<float Z="3.000000"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="0.000000"/>
-				<float Y="0.000000"/>
-				<float Z="0.000000"/>
 			</Variable>
 		</Component>
 	</Object>

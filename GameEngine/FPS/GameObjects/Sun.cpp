@@ -20,6 +20,15 @@ void Sun::Initialize()
 {
     light = new DirectionalLightComponent({ -0.3, -0.3, -0.3 }, { 0.5, 0.25, 0.25 });
     LightManager::SetAmbientIntensity(0.5f);
+	
+	if (Editor::IsEnabled())
+	{
+		light->SetColliderVisibility(true);
+	}
+	else
+	{
+		light->SetColliderVisibility(false);
+	}
 
 	AddComponent(light, "Light");
 
