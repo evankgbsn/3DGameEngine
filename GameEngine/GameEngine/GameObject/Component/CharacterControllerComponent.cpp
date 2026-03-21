@@ -81,7 +81,7 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
-	jumpForce -= 100 * TimeManager::DeltaTime();
+	jumpForce -= 1000 * TimeManager::DeltaTime();
 
 	if (jumpForce <= 0.0f)
 	{
