@@ -86,7 +86,7 @@ void CharacterControllerComponent::Update()
 	// 1. Apply acceleration (gravity/deceleration) to Velocity
 	// Velocity changes by (Acceleration * Time)
 	if (jumpForce > 0.0f) {
-		jumpForce -= 200.0f * dt;
+		jumpForce -= 150.0f * dt;
 	}
 	else {
 		jumpForce = 0.0f;
