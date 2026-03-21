@@ -18,7 +18,7 @@ CharacterController::CharacterController(float radius, float height, const glm::
 	// --- BEHAVIOR ---
 	desc.slopeLimit = cosf(PxDegToRad(45.0f)); // 45 degree slope limit
 	desc.stepOffset = 0.3f;             // Can step over 30 cm obstacles
-	desc.contactOffset = 0.001f;          // 10 cm skin width
+	desc.contactOffset = 0.1f;          // 10 cm skin width
 	desc.material = PhysicsManager::instance->characterControllerMaterial;
 	//desc.reportCallback = new MyControllerHitReport(); // Custom collision handler
 	desc.behaviorCallback = nullptr;    // Use nullptr for default behavior
