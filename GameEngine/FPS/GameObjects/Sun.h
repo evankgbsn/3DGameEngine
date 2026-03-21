@@ -49,7 +49,15 @@ private:
 
 	bool Hovered() const override;
 
+	void InitializeEditorCallbacks();
+
+	void TerminateEditorCallbacks();
+
 	DirectionalLightComponent* light;
+
+	std::function<void()>* onEditorEnable;
+
+	std::function<void()>* onEditorDisable;
 };
 
 #endif // SUN_H
