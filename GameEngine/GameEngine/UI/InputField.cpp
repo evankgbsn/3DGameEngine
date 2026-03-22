@@ -20,7 +20,7 @@ InputField* InputField::selectedInputField = nullptr;
 InputField::InputField(const std::string& baseTextureName, const std::string& hoveredTextureName, const std::string& pressedTextureName, const glm::vec2& dimensions, const glm::vec2& position, std::function<void()>* onE, std::function<void()>* onC, bool editor) :
 	onEnter(onE),
 	onChange(onC),
-	maxCharacterLength(20U),
+	maxCharacterLength(50U),
 	relativePosition(position),
 	isEditor(editor),
 	shiftPressed(false),

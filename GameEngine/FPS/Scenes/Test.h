@@ -15,6 +15,9 @@ class PointLightObject;
 class WarehouseDoorway;
 class WarehouseBrickWall;
 class WarehouseWindowWall;
+class WarehouseHorizontalBeam;
+class WarehouseVerticalBeam;
+class WarehouseVerticalBeamCorner;
 
 class Test : public Scene
 {
@@ -70,6 +73,12 @@ private:
 	WarehouseBrickWall* warehouseBrickWall;
 
 	WarehouseWindowWall* warehouseWindowWall;
+
+	WarehouseHorizontalBeam* warehouseHorizontalBeam;
+
+	WarehouseVerticalBeam* warehouseVerticalBeam;
+
+	WarehouseVerticalBeamCorner* warehouseVerticalBeamCorner;
 };
 
 #endif // TEST_H

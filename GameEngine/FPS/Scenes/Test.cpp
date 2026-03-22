@@ -13,6 +13,9 @@
 #include "../GameObjects/WarehouseDoorway.h"
 #include "../GameObjects/WarehouseBrickWall.h"
 #include "../GameObjects/WarehouseWindowWall.h"
+#include "../GameObjects/WarehouseHorizontalBeam.h"
+#include "../GameObjects/WarehouseVerticalBeam.h"
+#include "../GameObjects/WarehouseVerticalBeamCorner.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -26,7 +29,10 @@ Test::Test() :
 	pointLight(new PointLightObject()),
 	warehouseDoorway(new WarehouseDoorway()),
 	warehouseBrickWall(new WarehouseBrickWall()),
-	warehouseWindowWall(new WarehouseWindowWall())
+	warehouseWindowWall(new WarehouseWindowWall()),
+	warehouseHorizontalBeam(new WarehouseHorizontalBeam()),
+	warehouseVerticalBeam(new WarehouseVerticalBeam()),
+	warehouseVerticalBeamCorner(new WarehouseVerticalBeamCorner())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -36,6 +42,9 @@ Test::Test() :
 	RegisterGameObject(warehouseDoorway, "WarehouseDoorway");
 	RegisterGameObject(warehouseBrickWall, "WarehouseBrickWall");
 	RegisterGameObject(warehouseWindowWall, "WarehouseWindowWall");
+	RegisterGameObject(warehouseHorizontalBeam, "WarehouseHorizontalBeam");
+	RegisterGameObject(warehouseVerticalBeam, "WarehouseVerticalBeam");
+	RegisterGameObject(warehouseVerticalBeamCorner, "WarehouseVerticalBeamCorner");
 }
 
 Test::~Test()
@@ -78,6 +87,21 @@ Test::~Test()
 	if (warehouseWindowWall != nullptr)
 	{
 		delete warehouseWindowWall;
+	}
+
+	if (warehouseHorizontalBeam != nullptr)
+	{
+		delete warehouseHorizontalBeam;
+	}
+
+	if (warehouseVerticalBeam != nullptr)
+	{
+		delete warehouseVerticalBeam;
+	}
+
+	if (warehouseVerticalBeamCorner != nullptr)
+	{
+		delete warehouseVerticalBeamCorner;
 	}
 }
 
