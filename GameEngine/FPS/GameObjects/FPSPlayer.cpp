@@ -84,7 +84,7 @@ void FPSPlayer::Initialize()
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
 
-		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .750f, .750f, characterGraphics->GetPosition());
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .50f, 1.250f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
 	}
 	else
@@ -106,7 +106,7 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .750f, .750f, characterGraphics->GetPosition());
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .50f, 1.250f, characterGraphics->GetPosition());
 			AddComponent(controller, "Controller");
 		}
 	}
