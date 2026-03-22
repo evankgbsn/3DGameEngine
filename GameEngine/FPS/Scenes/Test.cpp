@@ -10,6 +10,7 @@
 #include "../GameObjects/AK12Bullet.h"
 #include "../GameObjects/ShippingContainer.h"
 #include "../GameObjects/PointLightObject.h"
+#include "../GameObjects/WarehouseDoorway.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -20,13 +21,15 @@ Test::Test() :
 	bullet(new AK12Bullet()),
 	plane(new PlaneObj()),
 	shippingContainer(new ShippingContainer()),
-	pointLight(new PointLightObject())
+	pointLight(new PointLightObject()),
+	warehouseDoorway(new WarehouseDoorway())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
 	RegisterGameObject(plane, "Plane");
 	RegisterGameObject(shippingContainer, "ShippingContainer");
 	RegisterGameObject(pointLight, "PointLight");
+	RegisterGameObject(warehouseDoorway, "WarehouseDoorway");
 }
 
 Test::~Test()
@@ -49,6 +52,21 @@ Test::~Test()
 	if (plane != nullptr)
 	{
 		delete plane;
+	}
+
+	if (shippingContainer != nullptr)
+	{
+		delete shippingContainer;
+	}
+
+	if (pointLight != nullptr)
+	{
+		delete pointLight;
+	}
+
+	if (warehouseDoorway != nullptr)
+	{
+		delete warehouseDoorway;
 	}
 }
 

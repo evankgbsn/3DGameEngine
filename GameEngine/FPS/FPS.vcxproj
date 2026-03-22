@@ -240,6 +240,7 @@
     <ClCompile Include="GameObjects\ServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\ShippingContainer.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
+    <ClCompile Include="GameObjects\WarehouseDoorway.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\FPSNetworkManager.cpp" />
     <ClCompile Include="Scenes\JoinScene.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="GameObjects\ServerFreeCamera.h" />
     <ClInclude Include="GameObjects\ShippingContainer.h" />
     <ClInclude Include="GameObjects\Sun.h" />
+    <ClInclude Include="GameObjects\WarehouseDoorway.h" />
     <ClInclude Include="Scenes\FPSNetworkManager.h" />
     <ClInclude Include="Scenes\JoinScene.h" />
     <ClInclude Include="Scenes\Test.h" />
