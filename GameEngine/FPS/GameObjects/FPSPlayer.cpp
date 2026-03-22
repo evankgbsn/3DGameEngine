@@ -69,6 +69,17 @@ void FPSPlayer::Initialize()
 
 		AddComponent(characterGraphics, "Graphics");
 
+		characterArmsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterArms"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
+		characterArmsGraphics->SetClip("Idle");
+		characterArmsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterArmsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterArmsGraphics->SetShine(32.0f);
+		characterArmsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterArmsGraphics->SetSpeed(1.0f);
+		characterArmsGraphics->SetRenderShadow(false);
+		characterArmsGraphics->SetRenderReflection(false);
+		AddComponent(characterArmsGraphics, "ArmsGraphics");
+
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
@@ -128,6 +139,10 @@ void FPSPlayer::Terminate()
 
 	if (SpawnedFromLocalSpawnRequest())
 	{
+		RemoveComponent("ArmsGraphics");
+
+		delete characterArmsGraphics;
+
 		delete crosshair;
 		delete controller;
 		DeregisterInput();
@@ -179,6 +194,8 @@ void FPSPlayer::GameUpdate()
 	{
 		controller->Update();
 
+		characterArmsGraphics->SetTransform(characterGraphics->GetTransform());
+
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
 		//characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
@@ -193,15 +210,34 @@ void FPSPlayer::GameUpdate()
 			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
 			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
-		glm::mat4 handTransform = hitBox->GetJointTransform("middle1.r");
+		glm::mat4 rightHandTransform = hitBox->GetJointTransform("middle1.r");
+		glm::mat4 leftHandTransform = hitBox->GetJointTransform("middle1.l");
 
-		glm::mat4 weaponRot(glm::vec4(-cam->GetRightVector(), 0.0f),
+		glm::vec3 fromRtoL = glm::normalize(leftHandTransform[3] - rightHandTransform[3]);
+		glm::vec3 newRight = glm::normalize(glm::cross(cam->GetUpVector(), fromRtoL));
+
+		glm::mat4 weaponRot(1.0f);
+
+		if (characterArmsGraphics->GetCurrentAnimation() == "AimRun")
+		{
+			weaponRot = { glm::vec4(newRight, 0.0f),
+			glm::vec4(cam->GetUpVector(), 0.0f),
+			glm::vec4(fromRtoL, 0.0f),
+			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+			};
+		}
+		else
+		{
+			weaponRot = { -glm::vec4(cam->GetRightVector(), 0.0f),
 			glm::vec4(cam->GetUpVector(), 0.0f),
 			glm::vec4(cam->GetForwardVector(), 0.0f),
-			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+			};
+		}
+		
 
 		ak12Graphics->SetRotation(weaponRot);
-		ak12Graphics->SetPosition(glm::vec3(handTransform[3]));
+		ak12Graphics->SetPosition(glm::vec3(rightHandTransform[3]));
 	}
 	else
 	{
@@ -284,7 +320,7 @@ void FPSPlayer::Load()
 	{
 		if (!ModelManager::ModelLoaded("CharacterArms"))
 		{
-			ModelManager::LoadModel("CharacterArms", "Assets/Model/FPSCharacterArmsNoAnim.gltf", false);
+			ModelManager::LoadModel("CharacterArms", "Assets/Model/FPSCharacterArms.gltf", false);
 		}
 
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
@@ -389,11 +425,17 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 					characterGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+
+					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
 				}
 				else
 				{
 					characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 					characterGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
+
+					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
 				}
 
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
@@ -582,6 +624,11 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
 				}
+
+				if (characterArmsGraphics->GetCurrentAnimation() != "AimRun")
+				{
+					characterArmsGraphics->FadeAnimationTo("AimRun", 0.5f);
+				}
 				wPressed = true;
 				break;
 			case KEY_A:
@@ -623,6 +670,11 @@ void FPSPlayer::RegisterInput()
 				if (characterGraphics->GetCurrentAnimation() != "Idle")
 				{
 					characterGraphics->FadeAnimationTo("Idle", 0.05f);
+				}
+
+				if (characterArmsGraphics->GetCurrentAnimation() != "Idle")
+				{
+					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
 			}
 		});
