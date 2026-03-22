@@ -242,6 +242,7 @@
     <ClCompile Include="GameObjects\Sun.cpp" />
     <ClCompile Include="GameObjects\WarehouseBrickWall.cpp" />
     <ClCompile Include="GameObjects\WarehouseDoorway.cpp" />
+    <ClCompile Include="GameObjects\WarehouseWindowWall.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\FPSNetworkManager.cpp" />
     <ClCompile Include="Scenes\JoinScene.cpp" />
@@ -260,6 +261,7 @@
     <ClInclude Include="GameObjects\Sun.h" />
     <ClInclude Include="GameObjects\WarehouseBrickWall.h" />
     <ClInclude Include="GameObjects\WarehouseDoorway.h" />
+    <ClInclude Include="GameObjects\WarehouseWindowWall.h" />
     <ClInclude Include="Scenes\FPSNetworkManager.h" />
     <ClInclude Include="Scenes\JoinScene.h" />
     <ClInclude Include="Scenes\Test.h" />

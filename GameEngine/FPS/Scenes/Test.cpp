@@ -12,6 +12,7 @@
 #include "../GameObjects/PointLightObject.h"
 #include "../GameObjects/WarehouseDoorway.h"
 #include "../GameObjects/WarehouseBrickWall.h"
+#include "../GameObjects/WarehouseWindowWall.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -24,7 +25,8 @@ Test::Test() :
 	shippingContainer(new ShippingContainer()),
 	pointLight(new PointLightObject()),
 	warehouseDoorway(new WarehouseDoorway()),
-	warehouseBrickWall(new WarehouseBrickWall())
+	warehouseBrickWall(new WarehouseBrickWall()),
+	warehouseWindowWall(new WarehouseWindowWall())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -33,6 +35,7 @@ Test::Test() :
 	RegisterGameObject(pointLight, "PointLight");
 	RegisterGameObject(warehouseDoorway, "WarehouseDoorway");
 	RegisterGameObject(warehouseBrickWall, "WarehouseBrickWall");
+	RegisterGameObject(warehouseWindowWall, "WarehouseWindowWall");
 }
 
 Test::~Test()
@@ -70,6 +73,11 @@ Test::~Test()
 	if (warehouseDoorway != nullptr)
 	{
 		delete warehouseDoorway;
+	}
+
+	if (warehouseWindowWall != nullptr)
+	{
+		delete warehouseWindowWall;
 	}
 }
 
