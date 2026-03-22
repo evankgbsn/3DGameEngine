@@ -13,6 +13,7 @@ class AK12Bullet;
 class ShippingContainer;
 class PointLightObject;
 class WarehouseDoorway;
+class WarehouseBrickWall;
 
 class Test : public Scene
 {
@@ -64,6 +65,8 @@ private:
 	PointLightObject* pointLight;
 
 	WarehouseDoorway* warehouseDoorway;
+
+	WarehouseBrickWall* warehouseBrickWall;
 };
 
 #endif // TEST_H

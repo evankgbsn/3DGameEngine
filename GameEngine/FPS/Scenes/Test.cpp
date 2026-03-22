@@ -11,6 +11,7 @@
 #include "../GameObjects/ShippingContainer.h"
 #include "../GameObjects/PointLightObject.h"
 #include "../GameObjects/WarehouseDoorway.h"
+#include "../GameObjects/WarehouseBrickWall.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -22,7 +23,8 @@ Test::Test() :
 	plane(new PlaneObj()),
 	shippingContainer(new ShippingContainer()),
 	pointLight(new PointLightObject()),
-	warehouseDoorway(new WarehouseDoorway())
+	warehouseDoorway(new WarehouseDoorway()),
+	warehouseBrickWall(new WarehouseBrickWall())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -30,6 +32,7 @@ Test::Test() :
 	RegisterGameObject(shippingContainer, "ShippingContainer");
 	RegisterGameObject(pointLight, "PointLight");
 	RegisterGameObject(warehouseDoorway, "WarehouseDoorway");
+	RegisterGameObject(warehouseBrickWall, "WarehouseBrickWall");
 }
 
 Test::~Test()

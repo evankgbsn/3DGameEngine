@@ -10,6 +10,7 @@ WarehouseDoorway::WarehouseDoorway() :
 	doorwayGraphics(nullptr),
 	doorwayBody(nullptr)
 {
+	RegisterGameObjectClassType<WarehouseDoorway>(this);
 }
 
 WarehouseDoorway::~WarehouseDoorway()
