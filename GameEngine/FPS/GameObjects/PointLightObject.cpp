@@ -19,7 +19,7 @@ PointLightObject::~PointLightObject()
 
 void PointLightObject::Initialize()
 {
-	light = new PointLightComponent({ 3.0f, 3.0f, 3.0f }, { 0.0f, 0.0f, 0.0f });
+	light = new PointLightComponent({ 1.50f, 3.0f, 3.0f }, { 0.0f, 0.0f, 0.0f });
 	
 	if (Editor::IsEnabled())
 	{
