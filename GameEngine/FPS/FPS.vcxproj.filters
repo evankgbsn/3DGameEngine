@@ -81,6 +81,15 @@
     <ClCompile Include="GameObjects\WarehouseHorizontalBeam.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\WarehouseRoofWall.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WarehouseRoofHorizontalBeam.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WarehouseVerticalBeamHalf.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\Test.h">
@@ -139,6 +148,15 @@
     </ClInclude>
     <ClInclude Include="GameObjects\WarehouseHorizontalBeam.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WarehouseRoofWall.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WarehouseRoofHorizontalBeam.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WarehouseVerticalBeamHalf.h">
+      <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
