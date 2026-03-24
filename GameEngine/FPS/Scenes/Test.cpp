@@ -19,6 +19,7 @@
 #include "../GameObjects/WarehouseRoofWall.h"
 #include "../GameObjects/WarehouseRoofHorizontalBeam.h"
 #include "../GameObjects/WarehouseVerticalBeamHalf.h"
+#include "../GameObjects/WarehouseRoofPannel.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -38,7 +39,8 @@ Test::Test() :
 	warehouseVerticalBeamCorner(new WarehouseVerticalBeamCorner()),
 	warehouseRoofWall(new WarehouseRoofWall()),
 	warehouseRoofHorizontalBeam(new WarehouseRoofHorizontalBeam()),
-	warehouseVerticalBeamHalf(new WarehouseVerticalBeamHalf())
+	warehouseVerticalBeamHalf(new WarehouseVerticalBeamHalf()),
+	warehouseRoofPannel(new WarehouseRoofPannel())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -54,6 +56,7 @@ Test::Test() :
 	RegisterGameObject(warehouseRoofWall, "WarehouseRoofWall");
 	RegisterGameObject(warehouseRoofHorizontalBeam, "WarehouseRoofHorizontalBeam");
 	RegisterGameObject(warehouseVerticalBeamHalf, "WarehouseVerticalBeamHalf");
+	RegisterGameObject(warehouseRoofPannel, "WarehouseRoofPannel");
 }
 
 Test::~Test()
@@ -126,6 +129,11 @@ Test::~Test()
 	if (warehouseVerticalBeamHalf != nullptr)
 	{
 		delete warehouseVerticalBeamHalf;
+	}
+
+	if (warehouseRoofPannel != nullptr)
+	{
+		delete warehouseRoofPannel;
 	}
 }
 

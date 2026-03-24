@@ -244,6 +244,7 @@
     <ClCompile Include="GameObjects\WarehouseDoorway.cpp" />
     <ClCompile Include="GameObjects\WarehouseHorizontalBeam.cpp" />
     <ClCompile Include="GameObjects\WarehouseRoofHorizontalBeam.cpp" />
+    <ClCompile Include="GameObjects\WarehouseRoofPannel.cpp" />
     <ClCompile Include="GameObjects\WarehouseRoofWall.cpp" />
     <ClCompile Include="GameObjects\WarehouseVerticalBeam.cpp" />
     <ClCompile Include="GameObjects\WarehouseVerticalBeamCorner.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="GameObjects\WarehouseDoorway.h" />
     <ClInclude Include="GameObjects\WarehouseHorizontalBeam.h" />
     <ClInclude Include="GameObjects\WarehouseRoofHorizontalBeam.h" />
+    <ClInclude Include="GameObjects\WarehouseRoofPannel.h" />
     <ClInclude Include="GameObjects\WarehouseRoofWall.h" />
     <ClInclude Include="GameObjects\WarehouseVerticalBeam.h" />
     <ClInclude Include="GameObjects\WarehouseVerticalBeamCorner.h" />
