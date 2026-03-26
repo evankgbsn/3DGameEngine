@@ -210,8 +210,8 @@ void FPSPlayer::GameUpdate()
 			+ (glm::vec3(glm::normalize(armRotation[2])) * .60f)
 			+ (glm::vec3(glm::normalize(armRotation[1])) * -0.15f);
 
-		glm::mat4 rightHandTransform = hitBox->GetJointTransform("middle1.r");
-		glm::mat4 leftHandTransform = hitBox->GetJointTransform("middle1.l");
+		glm::mat4 rightHandTransform = characterArmsGraphics->GetJointTransform("middle1.r");
+		glm::mat4 leftHandTransform = characterArmsGraphics->GetJointTransform("middle1.l");
 
 		glm::vec3 fromRtoL = glm::normalize(leftHandTransform[3] - rightHandTransform[3]);
 		glm::vec3 newRight = glm::normalize(glm::cross(cam->GetUpVector(), fromRtoL));
@@ -604,6 +604,9 @@ void FPSPlayer::RegisterInput()
 		{
 			if (TimeManager::SecondsSinceStart() - lastShotTime > 0.05f)
 			{
+				characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
+				characterArmsGraphics->SetSpeed(5.0f);
+
 				// Projectile.
 				//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
 				//NetworkManager::Spawn("AK12Bullet", &callback);
@@ -613,6 +616,12 @@ void FPSPlayer::RegisterInput()
 				// Hit-Scan.
 				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 			}
+		});
+
+	keyboardShootRelease = new std::function<void(int button)>([this](int button)
+		{
+			characterArmsGraphics->FadeAnimationTo("Idle", 0.1f);
+			characterArmsGraphics->SetSpeed(1.0f);
 		});
 
 	keyboardMovePress = new std::function<void(int key)>([this](int key)
@@ -689,6 +698,7 @@ void FPSPlayer::RegisterInput()
 	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_D, keyboardMoveRelease, "FPSCharacterWalk");
 
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
+	InputManager::RegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_1, keyboardShootRelease, "FPSCharacterShootRelease");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, keyboardJump, "FPSCharacterJump");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, keyboardMove, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, keyboardMove, "FPSCharacterWalk");
@@ -716,6 +726,7 @@ void FPSPlayer::DeregisterInput()
 
 
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
+	InputManager::DeregisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_1, "FPSCharacterShoot");
 
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_SPACE, "FPSCharacterJump");
 	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, "FPSCharacterJump");
@@ -734,6 +745,8 @@ void FPSPlayer::DeregisterInput()
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "FPSCharacterWalk");
 
 	delete keyboardMove;
+	delete keyboardShoot;
+	delete keyboardShootRelease;
 
 	delete gamepadJump;
 	delete keyboardJump;

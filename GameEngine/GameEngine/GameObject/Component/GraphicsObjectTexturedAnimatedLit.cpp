@@ -45,17 +45,15 @@ glm::mat4 GraphicsObjectTexturedAnimatedLit::GetJointTransform(const std::string
 
 	const std::vector<std::string>& jointNames = g->GetModel()->GetArmature()->GetJointNames();
 
-	unsigned int i = 0;
-	for (const auto& name : jointNames)
+	for (unsigned int i = 0; i < jointNames.size(); i++)
 	{
-		if (name == jointName)
+		if (jointName == jointNames[i])
 		{
-			break;
+			return g->GetTransform() * g->GetAnimPoseArray()[i] * glm::inverse(g->GetAnimInvBindPoseArray()[i]);
 		}
-		i++;
 	}
 
-	return g->GetTransform() * g->GetAnimPoseArray()[i] * g->GetAnimInvBindPoseArray()[i];
+	return glm::mat4(1.0f);
 }
 
 const std::string& GraphicsObjectTexturedAnimatedLit::GetCurrentAnimation() const

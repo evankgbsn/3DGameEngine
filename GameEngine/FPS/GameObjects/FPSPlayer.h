@@ -120,6 +120,8 @@ private:
 
 	std::function<void(int button)>* keyboardShoot;
 
+	std::function<void(int button)>* keyboardShootRelease;
+
 	std::function<void(const std::string&)>* onClientDisconnect;
 
 	std::function<void(int key)>* keyboardMovePress;
