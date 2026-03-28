@@ -7,6 +7,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <functional>
 
 class CrossFadeController;
 class Armature;
@@ -30,6 +31,8 @@ public:
 
 	bool Fading() const;
 
+	float GetFadeTime() const;
+
 	void SetSpeed(float newSpeed);
 
 	float GetSpeed() const;
@@ -48,6 +51,16 @@ public:
 
 	const std::string& GetCurrentClipName() const;
 
+	const std::string& GetFadeToClipName() const;
+
+	void RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStartCallback(const std::string& name);
+
+	void RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStopCallback(const std::string& name);
+
 private:
 
 	AnimationController(const AnimationController&) = delete;
@@ -64,6 +77,8 @@ private:
 
 	std::string currentClipName;
 
+	std::string fadeToClipName;
+
 	float speed;
 
 	bool fading;
@@ -75,6 +90,10 @@ private:
 	std::unordered_map<std::string, Pose> additiveBaseAnimations;
 
 	std::unordered_map<std::string, Pose> additiveAnimations;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> animationStartCallbacks;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> animationStopCallbacks;
 };
 
 #endif //ANIMATIONCONTROLLER_H

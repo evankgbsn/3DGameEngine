@@ -60,6 +60,54 @@ void GraphicsObjectColoredAnimated::SetSpeed(float speed)
 	static_cast<GOColoredAnimated*>(graphics)->SetSpeed(speed);
 }
 
+bool GraphicsObjectColoredAnimated::isFading() const
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	return go->isFading();
+}
+
+float GraphicsObjectColoredAnimated::GetFadeToTime() const
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+	return 0.0f;
+}
+
+const std::string& GraphicsObjectColoredAnimated::GetFadeToClipName() const
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	return go->GetFadeToClipName();
+}
+
+void GraphicsObjectColoredAnimated::RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	go->RegisterAnimationStartCallback(name, callback);
+}
+
+void GraphicsObjectColoredAnimated::DeregisterAnimationStartCallback(const std::string& name)
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	go->DeregisterAnimationStartCallback(name);
+}
+
+void GraphicsObjectColoredAnimated::RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	go->RegisterAnimationStopCallback(name, callback);
+}
+
+void GraphicsObjectColoredAnimated::DeregisterAnimationStopCallback(const std::string& name)
+{
+	GOColoredAnimated* go = static_cast<GOColoredAnimated*>(graphics);
+
+	go->DeregisterAnimationStopCallback(name);
+}
+
 void GraphicsObjectColoredAnimated::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

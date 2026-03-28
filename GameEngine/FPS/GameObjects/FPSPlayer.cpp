@@ -674,7 +674,7 @@ void FPSPlayer::RegisterInput()
 				break;
 			}
 
-			if (!(wPressed || aPressed || sPressed || dPressed))
+			if (!wPressed && !aPressed && !sPressed && !dPressed)
 			{
 				if (characterGraphics->GetCurrentAnimation() != "Idle")
 				{

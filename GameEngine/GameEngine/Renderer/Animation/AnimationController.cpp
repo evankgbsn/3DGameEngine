@@ -4,6 +4,7 @@
 #include "CrossFadeController.h"
 #include "../Model/Model.h"
 #include "../../Time/TimeManager.h"
+#include "../../Utils/Logger.h"
 
 AnimationController::AnimationController(Model* m) :
 	model(m),
@@ -31,9 +32,16 @@ void AnimationController::Update(glm::mat4* posePalette)
 	{
 		currentFadeTime -= TimeManager::DeltaTime();
 
-		if (currentFadeTime <= 0.0f)
+		if (currentFadeTime <= 0.0f && fading)
 		{
+			for (auto& callback : animationStopCallbacks)
+			{
+				(*callback.second)(currentClipName);
+			}
+
 			fading = false;
+			currentClipName = fadeToClipName;
+			fadeToClipName = "";
 		}
 	}
 
@@ -86,9 +94,19 @@ void AnimationController::Play(const std::string& clipName)
 		}
 	}
 
-	currentClipName = clipName;
-
 	crossFadeController->Play(model->GetAnimationClip(index));
+
+	for (auto& callback : animationStartCallbacks)
+	{
+		(*callback.second)(clipName);
+	}
+
+	for (auto& callback : animationStopCallbacks)
+	{
+		(*callback.second)(currentClipName);
+	}
+
+	currentClipName = clipName;
 }
 
 void AnimationController::FadeTo(const std::string& clipName, float time)
@@ -108,12 +126,17 @@ void AnimationController::FadeTo(const std::string& clipName, float time)
 
 	fading = true;
 	currentFadeTime = time;
-	currentClipName = clipName;
+	fadeToClipName = clipName;
 }
 
 bool AnimationController::Fading() const
 {
 	return fading;
+}
+
+float AnimationController::GetFadeTime() const
+{
+	return currentFadeTime;
 }
 
 void AnimationController::SetSpeed(float newSpeed)
@@ -195,4 +218,53 @@ void AnimationController::SetAdditiveAnimationTime(const std::string& animation,
 const std::string& AnimationController::GetCurrentClipName() const
 {
 	return currentClipName;
+}
+
+const std::string& AnimationController::GetFadeToClipName() const
+{
+	return fadeToClipName;
+}
+
+void AnimationController::RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	if (animationStartCallbacks.find(name) != animationStartCallbacks.end())
+	{
+		Logger::Log(std::string("There is already an animation start callback with name: ") + name, Logger::Category::Warning);
+		return;
+	}
+
+	animationStartCallbacks[name] = callback;
+}
+
+void AnimationController::DeregisterAnimationStartCallback(const std::string& name)
+{
+	if (animationStartCallbacks.find(name) == animationStartCallbacks.end())
+	{
+		Logger::Log(std::string("Could not find animation start callback with name: ") + name, Logger::Category::Warning);
+		return;
+	}
+
+	animationStartCallbacks.erase(animationStartCallbacks.find(name));
+}
+
+void AnimationController::RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	if (animationStopCallbacks.find(name) != animationStopCallbacks.end())
+	{
+		Logger::Log(std::string("There is already an animation stop callback with name: ") + name, Logger::Category::Warning);
+		return;
+	}
+
+	animationStopCallbacks[name] = callback;
+}
+
+void AnimationController::DeregisterAnimationStopCallback(const std::string& name)
+{
+	if (animationStopCallbacks.find(name) == animationStopCallbacks.end())
+	{
+		Logger::Log(std::string("Could not find animation stop callback with name: ") + name, Logger::Category::Warning);
+		return;
+	}
+
+	animationStopCallbacks.erase(animationStopCallbacks.find(name));
 }

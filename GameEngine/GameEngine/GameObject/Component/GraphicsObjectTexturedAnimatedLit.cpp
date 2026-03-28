@@ -80,6 +80,55 @@ void GraphicsObjectTexturedAnimatedLit::SetAdditiveAnimationTime(const std::stri
 	go->SetAdditiveAnimationTime(animation, time);
 }
 
+bool GraphicsObjectTexturedAnimatedLit::isFading() const
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	return go->isFading();
+}
+
+float GraphicsObjectTexturedAnimatedLit::GetFadeToTime() const
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	return go->GetFadeToTime();
+}
+
+const std::string& GraphicsObjectTexturedAnimatedLit::GetFadeToClipName() const
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	return go->GetFadeToClipName();
+}
+
+void GraphicsObjectTexturedAnimatedLit::RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	go->RegisterAnimationStartCallback(name, callback);
+}
+
+void GraphicsObjectTexturedAnimatedLit::DeregisterAnimationStartCallback(const std::string& name)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	go->DeregisterAnimationStartCallback(name);
+}
+
+void GraphicsObjectTexturedAnimatedLit::RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	go->RegisterAnimationStopCallback(name, callback);
+}
+
+void GraphicsObjectTexturedAnimatedLit::DeregisterAnimationStopCallback(const std::string& name)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	go->DeregisterAnimationStopCallback(name);
+}
+
 void GraphicsObjectTexturedAnimatedLit::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

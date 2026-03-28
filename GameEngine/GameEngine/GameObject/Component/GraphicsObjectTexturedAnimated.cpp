@@ -57,6 +57,55 @@ void GraphicsObjectTexturedAnimated::SetSpeed(float speed)
 	static_cast<GOTexturedAnimated*>(graphics)->SetSpeed(speed);
 }
 
+bool GraphicsObjectTexturedAnimated::isFading() const
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	return go->isFading();
+}
+
+float GraphicsObjectTexturedAnimated::GetFadeToTime() const
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	return go->GetFadeToTime();
+}
+
+const std::string& GraphicsObjectTexturedAnimated::GetFadeToClipName() const
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	return go->GetFadeToClipName();
+}
+
+void GraphicsObjectTexturedAnimated::RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	go->RegisterAnimationStartCallback(name, callback);
+}
+
+void GraphicsObjectTexturedAnimated::DeregisterAnimationStartCallback(const std::string& name)
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	go->DeregisterAnimationStartCallback(name);
+}
+
+void GraphicsObjectTexturedAnimated::RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	go->RegisterAnimationStopCallback(name, callback);
+}
+
+void GraphicsObjectTexturedAnimated::DeregisterAnimationStopCallback(const std::string& name)
+{
+	GOTexturedAnimated* go = static_cast<GOTexturedAnimated*>(graphics);
+
+	go->DeregisterAnimationStopCallback(name);
+}
+
 void GraphicsObjectTexturedAnimated::Serialize()
 {
 	GraphicsObject3DComponent::Serialize();

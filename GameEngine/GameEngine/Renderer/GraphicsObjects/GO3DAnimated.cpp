@@ -132,6 +132,41 @@ void GO3DAnimated::ClearSetPose()
 	poseSet = false;
 }
 
+bool GO3DAnimated::isFading() const
+{
+	return animationController->Fading();
+}
+
+float GO3DAnimated::GetFadeToTime() const
+{
+	return animationController->GetFadeTime();
+}
+
+const std::string& GO3DAnimated::GetFadeToClipName() const
+{
+	return animationController->GetFadeToClipName();
+}
+
+void GO3DAnimated::RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	animationController->RegisterAnimationStartCallback(name, callback);
+}
+
+void GO3DAnimated::DeregisterAnimationStartCallback(const std::string& name)
+{
+	animationController->DeregisterAnimationStartCallback(name);
+}
+
+void GO3DAnimated::RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback)
+{
+	animationController->RegisterAnimationStopCallback(name, callback);
+}
+
+void GO3DAnimated::DeregisterAnimationStopCallback(const std::string& name)
+{
+	animationController->DeregisterAnimationStopCallback(name);
+}
+
 GO3DAnimated::GO3DAnimated(Model* const model) :
 	GO3D(model),
 	animationData(),

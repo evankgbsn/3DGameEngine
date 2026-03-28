@@ -37,6 +37,20 @@ public:
 
 	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
+	bool isFading() const;
+
+	float GetFadeToTime() const;
+
+	const std::string& GetFadeToClipName() const;
+
+	void RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStartCallback(const std::string& name);
+
+	void RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStopCallback(const std::string& name);
+
 private:
 
 	GraphicsObjectTexturedAnimatedLit(const GraphicsObjectTexturedAnimatedLit&) = delete;

@@ -47,6 +47,20 @@ public:
 
 	void ClearSetPose();
 
+	bool isFading() const;
+
+	float GetFadeToTime() const;
+
+	const std::string& GetFadeToClipName() const;
+
+	void RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStartCallback(const std::string& name);
+
+	void RegisterAnimationStopCallback(const std::string& name, std::function<void(const std::string&)>* callback);
+
+	void DeregisterAnimationStopCallback(const std::string& name);
+
 protected:
 
 	GO3DAnimated(Model* const model);
@@ -81,7 +95,6 @@ private:
 	unsigned long long currentFrame;
 
 	bool poseSet = false;
-
 };
 
 #endif // GO3DANIMATED_H
