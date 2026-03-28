@@ -218,7 +218,7 @@ void FPSPlayer::GameUpdate()
 
 		glm::mat4 weaponRot(1.0f);
 
-		if (characterArmsGraphics->GetCurrentAnimation() == "AimRun")
+		if (characterArmsGraphics->GetCurrentAnimation() == "AimRun" || characterArmsGraphics->GetFadeToClipName() == "AimRun")
 		{
 			weaponRot = { glm::vec4(newRight, 0.0f),
 			glm::vec4(cam->GetUpVector(), 0.0f),
