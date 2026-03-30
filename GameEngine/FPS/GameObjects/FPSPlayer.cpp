@@ -117,6 +117,8 @@ void FPSPlayer::Initialize()
 	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
 	ak12Graphics->SetShine(32.0f);
 
+	AddComponent(ak12Graphics, "WeaponGraphics");
+
 	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
 
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
@@ -166,6 +168,9 @@ void FPSPlayer::Terminate()
 
 	RemoveComponent("Camera");
 	delete cam;
+
+	RemoveComponent("WeaponGraphics");
+	delete ak12Graphics;
 }
 
 void FPSPlayer::GameUpdate()
@@ -227,13 +232,11 @@ void FPSPlayer::GameUpdate()
 		characterArmsGraphics->SetTransform(characterGraphics->GetTransform());
 
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-		//characterArmsGraphics->SetPosition(hitBox->GetJointTransform("c_spine_03.x")[3] + glm::normalize(hitBox->GetJointTransform("c_spine_03.x")[2]) * 0.25f);
-		//characterArmsGraphics->SetPosition(cam->GetPosition() + (cam->GetUpVector() * -0.15f) + cam->GetForwardVector() * -0.08f);
+
 		glm::vec4 up = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
 		glm::mat4 armRotation = glm::mat4(glm::vec4(camRight, 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), -glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 		armRotation = glm::rotate(armRotation, glm::radians(180.0f), glm::vec3(up));
-		//characterArmsGraphics->SetRotation(armRotation);
 
 		glm::vec3 riflePositionOffset =
 			(glm::vec3(glm::normalize(armRotation[0])) * -0.10f)
@@ -299,7 +302,7 @@ void FPSPlayer::GameUpdate()
 
 		lastPosition = characterGraphics->GetPosition();
 	}
-	else
+	else if(SpawnedFromLocalSpawnRequest())
 	{
 		updateTime += TimeManager::DeltaTime();
 
