@@ -1196,8 +1196,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			{
 				healthBar->SetScale(healthBar->GetScale().x, healthBar->GetScale().y * (std::stof(updateData) * 0.01f));
 
-				if (healthBar->GetScale().y <= 0.0f)
+				if (healthBar->GetScale().y <= 0.0f && shouldDie == false)
 				{
+					shouldDie = true;
+
 					NetworkManager::Despawn(GetNetworkObjectID());
 
 					static std::function<void(NetworkObject*)> callback = [this](NetworkObject* spawnedObject)

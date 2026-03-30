@@ -227,6 +227,8 @@ private:
 
 	Sprite* healthBar;
 
+	bool shouldDie = false;
+
 };
 
 #endif // FPSPLAYER_H
