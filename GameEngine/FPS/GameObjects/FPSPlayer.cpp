@@ -26,7 +26,8 @@
 
 FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer"),
-	controller(nullptr)
+	controller(nullptr),
+	shotCast(nullptr)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
