@@ -610,7 +610,6 @@ void FPSPlayer::RegisterInput()
 					characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
 					characterArmsGraphics->SetSpeed(5.0f);
 
-
 					shooting = true;
 
 					// Projectile.
