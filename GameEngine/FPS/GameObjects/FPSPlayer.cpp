@@ -955,27 +955,45 @@ void FPSPlayer::Shoot()
 
 	bool status = PhysicsManager::Raycast(origin, direction, 10000.0f, outHit);
 
-	if (status || outHit.hasBlock) {
-		// getNbAnyHits() returns the total number of hits found
-		for (PxU32 i = 0; i < outHit.getNbAnyHits(); i++) {
-			const PxRaycastHit& hit = outHit.getAnyHit(i);
+	if (outHit.hasBlock)
+	{
+		PxRigidActor* actor = outHit.block.actor;
+	
+		if (actor) 
+		{
+			GameObject* go = static_cast<GameObject*>(actor->userData);
 
-			// Access the actor
-			PxRigidActor* actor = hit.actor;
-
-			if (actor) {
-				// Do something with the actor
-
-				GameObject* go = static_cast<GameObject*>(actor->userData);
-
-				if (go != nullptr)
-				{
-					Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
-				}
-
+			FPSPlayer* player = dynamic_cast<FPSPlayer*>(go);
+	
+			if (player != this && player != nullptr)
+			{
+				Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
 			}
+	
 		}
 	}
+
+	//if (status || outHit.hasBlock) {
+	//	// getNbAnyHits() returns the total number of hits found
+	//	for (PxU32 i = 0; i < outHit.getNbAnyHits(); i++) {
+	//		const PxRaycastHit& hit = outHit.getAnyHit(i);
+	//
+	//		// Access the actor
+	//		PxRigidActor* actor = hit.actor;
+	//
+	//		if (actor) {
+	//			// Do something with the actor
+	//
+	//			GameObject* go = static_cast<GameObject*>(actor->userData);
+	//
+	//			if (go != nullptr)
+	//			{
+	//				Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
+	//			}
+	//
+	//		}
+	//	}
+	//}
 
 
 }
