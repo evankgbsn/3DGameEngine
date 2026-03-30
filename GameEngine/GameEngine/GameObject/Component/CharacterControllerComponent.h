@@ -34,6 +34,8 @@ public:
 
 	void SetPosition(const glm::vec3& newPosition);
 
+	void SetOwner(GameObject* owner);
+
 	~CharacterControllerComponent();
 
 	void Update() override;

@@ -71,6 +71,11 @@ glm::vec3 CharacterControllerComponent::GetFootPosition() const
 	return controller->GetFootPosition();
 }
 
+void CharacterControllerComponent::SetOwner(GameObject* owner)
+{
+	controller->SetOwner(owner);
+}
+
 void CharacterControllerComponent::SetPosition(const glm::vec3& newPosition)
 {
 	controller->SetPosition(newPosition);
