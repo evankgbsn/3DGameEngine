@@ -887,7 +887,6 @@ void NetworkManager::SetupServerReceiveDespawnRequestCallback()
 					}
 				}
 
-				delete networkObject->second;
 				spawnedNetworkObjects.erase(networkObject);
 
 				std::string targetIP = GetIPFromData(data);
