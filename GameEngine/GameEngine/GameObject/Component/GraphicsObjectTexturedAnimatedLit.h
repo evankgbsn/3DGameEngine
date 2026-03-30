@@ -37,6 +37,8 @@ public:
 
 	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
+	float GetAdditiveAnimationTime(const std::string& animation) const;
+
 	bool isFading() const;
 
 	float GetFadeToTime() const;

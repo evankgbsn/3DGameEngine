@@ -102,6 +102,11 @@ void GO3DAnimated::SetAdditiveAnimationTime(const std::string& animation, float 
 	animationController->SetAdditiveAnimationTime(animation, time);
 }
 
+float GO3DAnimated::GetAdditiveAnimationTime(const std::string& animation) const
+{
+	return animationController->GetAdditiveAnimationTime(animation);
+}
+
 void GO3DAnimated::GetPose(std::vector<glm::mat4>& pose) const
 {
 	const std::vector<glm::mat4>& invBindPose = model->GetArmature()->GetInvBindPose();

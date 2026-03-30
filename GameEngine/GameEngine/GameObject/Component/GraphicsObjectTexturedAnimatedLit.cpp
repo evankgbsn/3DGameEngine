@@ -80,6 +80,12 @@ void GraphicsObjectTexturedAnimatedLit::SetAdditiveAnimationTime(const std::stri
 	go->SetAdditiveAnimationTime(animation, time);
 }
 
+float GraphicsObjectTexturedAnimatedLit::GetAdditiveAnimationTime(const std::string& animation) const
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+	return go->GetAdditiveAnimationTime(animation);
+}
+
 bool GraphicsObjectTexturedAnimatedLit::isFading() const
 {
 	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);

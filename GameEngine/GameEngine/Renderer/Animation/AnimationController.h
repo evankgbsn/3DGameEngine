@@ -49,6 +49,8 @@ public:
 
 	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
+	float GetAdditiveAnimationTime(const std::string& animation) const;
+
 	const std::string& GetCurrentClipName() const;
 
 	const std::string& GetFadeToClipName() const;
@@ -90,6 +92,8 @@ private:
 	std::unordered_map<std::string, Pose> additiveBaseAnimations;
 
 	std::unordered_map<std::string, Pose> additiveAnimations;
+
+	std::unordered_map<std::string, float> additiveAnimationTimes;
 
 	std::unordered_map<std::string, std::function<void(const std::string&)>*> animationStartCallbacks;
 

@@ -189,10 +189,16 @@ void FPSPlayer::GameUpdate()
 	}
 	else
 	{
-		if (!NetworkManager::IsServer() && newFootPositionFromServer.load())
+		if (!NetworkManager::IsServer())
 		{
-			SetPosition(footPositionToSet);
-			newFootPositionFromServer.store(false);
+			if (newFootPositionFromServer.load())
+			{
+				SetPosition(footPositionToSet);
+				newFootPositionFromServer.store(false);
+			}
+
+			characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+			characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
 		}
 	}
 	
@@ -309,6 +315,8 @@ void FPSPlayer::GameUpdate()
 		if (updateTime >= 0.001f)
 		{
 			ClientSend("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), false);
+			ClientSend("AdditiveAnimationUp " + std::to_string(lookUpPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookUp")), false);
+			ClientSend("AdditiveAnimationDown " + std::to_string(lookDownPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookDown")), false);
 			updateTime = 0.0f;
 		}
 	}
@@ -514,6 +522,23 @@ void FPSPlayer::RegisterInput()
 					cam->Rotate(cam->GetRightVector(), angle);
 				}
 
+				if (dot >= 0.0f)
+				{
+					characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+
+					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+				}
+				else
+				{
+					characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
+
+					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
+				}
+
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 			}
 		});
@@ -530,20 +555,54 @@ void FPSPlayer::RegisterInput()
 
 	gamepadWalkY = new std::function<void(int, float)>([this](int axis, float value)
 		{
+			static bool walking = false;
+
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;
+
+				if (value < 0.0f && !walking)
+				{
+					walking = true;
+					if (characterGraphics->GetCurrentAnimation() != "AimRun" && characterGraphics->GetFadeToClipName() != "AimRun")
+					{
+						characterGraphics->FadeAnimationTo("AimRun", 0.05f);
+					}
+
+					if (characterArmsGraphics->GetCurrentAnimation() != "AimRun" && characterArmsGraphics->GetFadeToClipName() != "AimRun")
+					{
+						characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
+					}
+				}
+
 				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
 				ClientSend("DispY " + std::to_string(dispPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime()), false);
+			} 
+			else if (walking)
+			{
+				walking = false;
+				if (characterGraphics->GetCurrentAnimation() != "Idle" && characterGraphics->GetFadeToClipName() != "Idle")
+				{
+					characterGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
+				}
 			}
 		});
 
 	gamepadShoot = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (value > 0.0f)
+			static bool shooting = false;
+
+			if (value > 0.0f && !shooting)
 			{
 				if (TimeManager::SecondsSinceStart() - lastShotTime > 0.05f)
 				{
+					characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
+					characterArmsGraphics->SetSpeed(5.0f);
+
+
+					shooting = true;
+
 					// Projectile.
 					//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
 					//NetworkManager::Spawn("AK12Bullet", &callback);
@@ -553,6 +612,12 @@ void FPSPlayer::RegisterInput()
 					// Hit-Scan.
 					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 				}
+			}
+			else if(shooting)
+			{
+				shooting = false;
+				characterArmsGraphics->FadeAnimationTo("Idle", 0.1f);
+				characterArmsGraphics->SetSpeed(1.0f);
 			}
 		});
 
@@ -715,7 +780,7 @@ void FPSPlayer::RegisterInput()
 			std::string log = "release ";
 
 
-			if (!wPressed && !aPressed && !sPressed && !dPressed)
+			if (!wPressed && !aPressed && !sPressed && !dPressed && !InputManager::IsGamepadConnected())
 			{
 				if (characterGraphics->GetCurrentAnimation() != "Idle" && characterGraphics->GetFadeToClipName() != "Idle")
 				{
@@ -1017,6 +1082,32 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			lastTargetPacketNumber = std::stoi(packetID);
 		}
+		else if (updateType == "AdditiveAnimationUp")
+		{
+			if (std::stoi(packetID) >= lastAdditiveAnimationUpPacketNumber)
+			{
+				additiveUpToSet = std::stof(updateData);
+			}
+			else
+			{
+				Logger::Log("Lost additiveAnimationUp packet");
+			}
+
+			lastAdditiveAnimationUpPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "AdditiveAnimationDown")
+		{
+			if (std::stoi(packetID) >= lastAdditiveAnimationDownPacketNumber)
+			{
+				additiveDownToSet = std::stof(updateData);
+			}
+			else
+			{
+				Logger::Log("Lost additiveAnimationDown packet");
+			}
+
+			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
+		}
 	}
 	else
 	{
@@ -1065,6 +1156,28 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			}
 
 			lastWeaponPositionPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "AdditiveAnimationUp")
+		{
+			if (std::stoi(packetID) >= lastAdditiveAnimationUpPacketNumber)
+			{
+				additiveUpToSet = std::stof(updateData);
+
+				ServerSendAll("AdditiveAnimationUp " + std::to_string(additiveAnimationUpPacketNumber++) + " " + updateData, {GetSpawnerIP()}, false);
+			}
+
+			lastAdditiveAnimationUpPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "AdditiveAnimationDown")
+		{
+			if (std::stoi(packetID) >= lastAdditiveAnimationDownPacketNumber)
+			{
+				additiveDownToSet = std::stof(updateData);
+
+				ServerSendAll("AdditiveAnimationDown " + std::to_string(additiveAnimationDownPacketNumber++) + " " + updateData, { GetSpawnerIP() }, false);
+			}
+
+			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
 		}
 	}
 }

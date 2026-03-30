@@ -1058,6 +1058,18 @@ void InputManager::EnableCursor(const std::string& window)
 	}
 }
 
+bool InputManager::IsGamepadConnected()
+{
+	if (instance != nullptr)
+	{
+		GLFWgamepadstate state;
+
+		return GLFW_FALSE != glfwGetGamepadState(GLFW_JOYSTICK_1, &state);
+	}
+	
+	return false;
+}
+
 InputManager::InputManager() :
 	inputQueue(std::list<std::function<void()>>()),
 	keysPressed(std::unordered_set<int>())

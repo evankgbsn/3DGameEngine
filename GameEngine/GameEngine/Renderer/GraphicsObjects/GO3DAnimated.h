@@ -41,6 +41,8 @@ public:
 
 	void SetAdditiveAnimationTime(const std::string& animation, float time);
 
+	float GetAdditiveAnimationTime(const std::string& animation) const;
+
 	void GetPose(std::vector<glm::mat4>& pose) const;
 
 	void SetPose(std::vector<glm::mat4>& pose);

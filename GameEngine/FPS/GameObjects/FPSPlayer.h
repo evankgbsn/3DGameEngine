@@ -149,6 +149,10 @@ private:
 
 	glm::mat4 weaponPositionToSet;
 
+	float additiveUpToSet;
+
+	float additiveDownToSet;
+
 	unsigned int positionPacketNumber = 0;
 
 	unsigned int footPositionPacketNumber = 0;
@@ -175,7 +179,19 @@ private:
 
 	unsigned int weaponPositionPacketNumber = 0;
 
+	unsigned int additiveAnimationUpPacketNumber = 0;
+
+	unsigned int additiveAnimationDownPacketNumber = 0;
+
+	unsigned int lookUpPacketNumber = 0;
+
+	unsigned int lookDownPacketNumber = 0;
+
 	unsigned int lastWeaponPositionPacketNumber = 0;
+
+	unsigned int lastAdditiveAnimationUpPacketNumber = 0;
+
+	unsigned int lastAdditiveAnimationDownPacketNumber = 0;
 
 	float lastShotTime = 0.0f;
 

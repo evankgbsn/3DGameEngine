@@ -188,6 +188,7 @@ void AnimationController::InitializeAdditiveAnimation(const std::string& animati
 	{
 		additiveBaseAnimations[animation] = Pose::MakeAdditivePose(*model->GetArmature(), *clip);
 		additiveAnimations[animation] = model->GetArmature()->GetRestPose();
+		additiveAnimationTimes[animation] = 0.0f;
 
 		clip->SetIsLooping(false);
 	}
@@ -212,7 +213,13 @@ void AnimationController::SetAdditiveAnimationTime(const std::string& animation,
 	{
 		float t = clip->GetStartTime() + (clip->GetDuration() * time);
 		clip->Sample(additiveAnimations[animation], t);
+		additiveAnimationTimes[animation] = t;
 	}
+}
+
+float AnimationController::GetAdditiveAnimationTime(const std::string& animation) const
+{
+	return additiveAnimationTimes.find(animation)->second;
 }
 
 const std::string& AnimationController::GetCurrentClipName() const
