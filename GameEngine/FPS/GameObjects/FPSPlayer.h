@@ -189,6 +189,8 @@ private:
 
 	unsigned int lookDownPacketNumber = 0;
 
+	unsigned int damagePacketNumber = 0;
+
 	unsigned int lastWeaponPositionPacketNumber = 0;
 
 	unsigned int lastAdditiveAnimationUpPacketNumber = 0;

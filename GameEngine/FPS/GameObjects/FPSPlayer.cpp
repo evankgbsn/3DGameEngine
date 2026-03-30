@@ -91,7 +91,7 @@ void FPSPlayer::Initialize()
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
-		healthBar = new Sprite("HealthBar", { 0.01f, 0.01f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x });
+		healthBar = new Sprite("HealthBar", { 0.01f, 0.01f }, { 0.0001f * dimensions.x, 0.0001f * dimensions.y});
 	}
 	else
 	{
@@ -1010,7 +1010,7 @@ void FPSPlayer::Shoot()
 					if (player != this)
 					{
 						Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
-						ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(10.0f));
+						ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
 						break;
 					}
 					else
