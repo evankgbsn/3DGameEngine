@@ -847,10 +847,10 @@ void FPSPlayer::DeregisterInput()
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_A, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_S, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_D, "FPSCharacterWalk");
-	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_W, "FPSCharacterWalk");
-	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_A, "FPSCharacterWalk");
-	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_S, "FPSCharacterWalk");
-	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_D, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASED, KEY_W, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASED, KEY_A, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASED, KEY_S, "FPSCharacterWalk");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASED, KEY_D, "FPSCharacterWalk");
 
 
 	InputManager::DeregisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, "FPSCharacterShoot");
