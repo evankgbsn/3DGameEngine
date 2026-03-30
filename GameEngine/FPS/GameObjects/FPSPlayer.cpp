@@ -1010,7 +1010,7 @@ void FPSPlayer::Shoot()
 					if (player != this)
 					{
 						Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
-						ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
+						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
 						break;
 					}
 					else
