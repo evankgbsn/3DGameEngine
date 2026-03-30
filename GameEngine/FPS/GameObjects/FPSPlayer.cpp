@@ -986,7 +986,7 @@ void FPSPlayer::Shoot()
 
 	for (const auto& hit : allHits)
 	{
-		PxRigidActor* actor = outHit.block.actor;
+		PxRigidActor* actor = hit.actor;
 
 		if (actor)
 		{
