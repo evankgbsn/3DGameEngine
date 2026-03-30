@@ -90,6 +90,8 @@ void FPSPlayer::Initialize()
 		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
+
+		healthBar = new Sprite("HealthBar", { 0.01f, 0.01f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x });
 	}
 	else
 	{
@@ -154,6 +156,7 @@ void FPSPlayer::Terminate()
 
 		delete crosshair;
 		delete controller;
+		delete healthBar;
 		DeregisterInput();
 	}
 
@@ -373,6 +376,12 @@ void FPSPlayer::Load()
 		{
 			TextureManager::LoadTexture("Assets/Texture/Crosshair.png", "Crosshair");
 		}
+
+		if (!TextureManager::TextureLoaded("HealthBar"))
+		{
+			TextureManager::LoadTexture("Assets/Texture/Red.png", "HealthBar");
+		}
+
 	}
 }
 
@@ -1001,6 +1010,7 @@ void FPSPlayer::Shoot()
 					if (player != this)
 					{
 						Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
+						ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(10.0f));
 						break;
 					}
 					else
@@ -1176,6 +1186,29 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			}
 
 			lastAnimationClipPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "Damage")
+		{
+			if (std::stoi(packetID) >= lastDamagePacketNumber)
+			{
+				healthBar->SetScale(healthBar->GetScale().x, healthBar->GetScale().y * (std::stof(updateData) * 0.01f));
+
+				if (healthBar->GetScale().y <= 0.0f)
+				{
+					NetworkManager::Despawn(GetNetworkObjectID());
+					SceneManager::EndScene("Test");
+					SceneManager::TerminateScene("Test");
+					SceneManager::InitializeScene("Test");
+					SceneManager::GetRegisteredScene("Test")->Deserialize("Assets/Scenes/FPS.xml");
+					SceneManager::StartScene("Test");
+				}
+			}
+			else
+			{
+				Logger::Log("Lost damage packet");
+			}
+
+			lastDamagePacketNumber = std::stoi(packetID);
 		}
 	}
 	else

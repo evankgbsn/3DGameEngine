@@ -197,6 +197,8 @@ private:
 
 	unsigned int lastAnimationClipPacketNumber = 0;
 
+	unsigned int lastDamagePacketNumber = 0;
+
 	float lastShotTime = 0.0f;
 
 	float updateTime = 0.0f;
@@ -218,6 +220,10 @@ private:
 	std::function<void(const std::string&)>* animationStartCallback;
 
 	std::function<void(const std::string&)>* animationStopCallback;
+
+	float health = 100.0f;
+
+	Sprite* healthBar;
 
 };
 

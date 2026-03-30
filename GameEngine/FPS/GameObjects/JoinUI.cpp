@@ -110,11 +110,8 @@ void JoinUI::Start()
 
 		if (!SceneManager::SceneLoaded(sceneName))
 		{
-			if (!SceneManager::SceneLoaded(sceneName))
-			{
-				SceneManager::LoadScene(sceneName);
-				SceneManager::InitializeScene(sceneName);
-			}
+			SceneManager::LoadScene(sceneName);
+			SceneManager::InitializeScene(sceneName);
 
 			SceneManager::GetRegisteredScene(sceneName)->Deserialize("Assets/Scenes/FPS.xml");
 			SceneManager::StartScene(sceneName);
