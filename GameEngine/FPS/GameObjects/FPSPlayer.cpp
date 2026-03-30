@@ -851,7 +851,14 @@ void FPSPlayer::Shoot()
 
 			if (actor) {
 				// Do something with the actor
-				printf("Hit actor: %p\n", actor);
+
+				GameObject* go = static_cast<GameObject*>(actor->userData);
+
+				if (go != nullptr)
+				{
+					Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
+				}
+
 			}
 		}
 	}
