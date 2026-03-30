@@ -143,13 +143,19 @@ private:
 
 	glm::vec3 positionToSet;
 
+	glm::vec3 footPositionToSet;
+
 	glm::vec3 targetToSet;
 
 	glm::mat4 weaponPositionToSet;
 
 	unsigned int positionPacketNumber = 0;
 
+	unsigned int footPositionPacketNumber = 0;
+
 	unsigned int lastPositionPacketNumber = 0;
+
+	unsigned int lastFootPositionPacketNumber = 0;
 
 	unsigned int targetPacketNumber = 0;
 
@@ -180,6 +186,8 @@ private:
 	glm::vec3 lastPosition;
 
 	std::atomic<bool> newPositionFromServer = false;
+
+	std::atomic<bool> newFootPositionFromServer = false;
 
 	GraphicsObjectLine* shotCast;
 

@@ -170,16 +170,27 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
-	if (!NetworkManager::IsServer() && newPositionFromServer.load())
+	if (SpawnedFromLocalSpawnRequest())
 	{
-		SetPosition(positionToSet);
-		newPositionFromServer.store(false);
+		if (!NetworkManager::IsServer() && newPositionFromServer.load())
+		{
+			SetPosition(positionToSet);
+			newPositionFromServer.store(false);
+		}
+		else
+		{
+			characterGraphics->SetPosition(controller->GetFootPosition());
+		}
 	}
-	else if(SpawnedFromLocalSpawnRequest())
+	else
 	{
-		characterGraphics->SetPosition(controller->GetFootPosition());
+		if (!NetworkManager::IsServer() && newFootPositionFromServer.load())
+		{
+			SetPosition(footPositionToSet);
+			newFootPositionFromServer.store(false);
+		}
 	}
-
+	
 	hitBox->Update();
 
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
@@ -265,6 +276,7 @@ void FPSPlayer::GameUpdate()
 			if (characterGraphics->GetPosition() != lastPosition)
 			{
 				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+				ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
 			}
 			updateTime = 0.0f;
 		}
@@ -363,6 +375,10 @@ void FPSPlayer::SetPosition(const glm::vec3& pos)
 	{
 		controller->SetPosition(pos);
 		characterGraphics->SetPosition(controller->GetFootPosition());
+	}
+	else
+	{
+		characterGraphics->SetPosition(pos);
 	}
 }
 
@@ -954,6 +970,20 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		else if (updateType == "WeaponPosition")
 		{
 			weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
+		}
+		else if (updateType == "FootPosition")
+		{
+			if (std::stoi(packetID) >= lastFootPositionPacketNumber)
+			{
+				footPositionToSet = NetworkManager::ConvertDataToVec3(updateData);
+				newFootPositionFromServer = true;
+			}
+			else
+			{
+				Logger::Log("Lost foot position packet");
+			}
+
+			lastFootPositionPacketNumber = std::stoi(packetID);
 		}
 	}
 	else
