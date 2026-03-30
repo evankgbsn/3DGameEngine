@@ -213,7 +213,7 @@ void AnimationController::SetAdditiveAnimationTime(const std::string& animation,
 	{
 		float t = clip->GetStartTime() + (clip->GetDuration() * time);
 		clip->Sample(additiveAnimations[animation], t);
-		additiveAnimationTimes[animation] = t;
+		additiveAnimationTimes[animation] = time;
 	}
 }
 
