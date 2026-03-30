@@ -1196,11 +1196,17 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 				if (healthBar->GetScale().y <= 0.0f)
 				{
 					NetworkManager::Despawn(GetNetworkObjectID());
-					SceneManager::EndScene("Test");
-					SceneManager::TerminateScene("Test");
-					SceneManager::InitializeScene("Test");
-					SceneManager::GetRegisteredScene("Test")->Deserialize("Assets/Scenes/FPS.xml");
-					SceneManager::StartScene("Test");
+
+					static std::function<void(NetworkObject*)> callback = [this](NetworkObject* spawnedObject)
+						{
+						};
+
+					NetworkManager::Spawn("FPSPlayer", &callback);
+					//SceneManager::EndScene("Test");
+					//SceneManager::TerminateScene("Test");
+					//SceneManager::InitializeScene("Test");
+					//SceneManager::GetRegisteredScene("Test")->Deserialize("Assets/Scenes/FPS.xml");
+					//SceneManager::StartScene("Test");
 				}
 			}
 			else
