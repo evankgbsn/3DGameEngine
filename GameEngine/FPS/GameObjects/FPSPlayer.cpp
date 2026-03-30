@@ -195,9 +195,25 @@ void FPSPlayer::GameUpdate()
 
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
-	if (NetworkManager::IsServer())
+	if (!SpawnedFromLocalSpawnRequest())
 	{
 		cam->SetTarget(targetToSet);
+
+		if (NetworkManager::IsServer())
+		{
+			camUpdateTime += TimeManager::DeltaTime();
+
+			if (camUpdateTime >= 0.001f)
+			{
+				if (cam->GetTarget() != lastPosition)
+				{
+					ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
+				}
+				camUpdateTime = 0.0f;
+			}
+
+			lastTarget = cam->GetTarget();
+		}
 	}
 
 	glm::vec3 camRight = cam->GetRightVector();
@@ -984,6 +1000,19 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			}
 
 			lastFootPositionPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "Target")
+		{
+			if (std::stoi(packetID) >= lastTargetPacketNumber)
+			{
+				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+			}
+			else
+			{
+				Logger::Log("Lost target packet");
+			}
+
+			lastTargetPacketNumber = std::stoi(packetID);
 		}
 	}
 	else

@@ -181,9 +181,13 @@ private:
 
 	float updateTime = 0.0f;
 
+	float camUpdateTime = 0.0f;
+
 	Sprite* crosshair;
 
 	glm::vec3 lastPosition;
+
+	glm::vec3 lastTarget;
 
 	std::atomic<bool> newPositionFromServer = false;
 
