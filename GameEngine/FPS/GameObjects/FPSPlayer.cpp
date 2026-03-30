@@ -198,10 +198,10 @@ void FPSPlayer::GameUpdate()
 				SetPosition(footPositionToSet);
 				newFootPositionFromServer.store(false);
 			}
-
-			characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
-			characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
 		}
+
+		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
 	}
 	
 	hitBox->Update();
