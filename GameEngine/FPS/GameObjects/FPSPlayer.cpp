@@ -95,6 +95,8 @@ void FPSPlayer::Initialize()
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), TextureManager::GetTexture("Character"), TextureManager::GetTexture("CharacterSpec"));
 		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
+		characterGraphics->InitializeAdditiveAnimation("LookUp");
+		characterGraphics->InitializeAdditiveAnimation("LookDown");
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
 
