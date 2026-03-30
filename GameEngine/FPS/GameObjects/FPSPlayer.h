@@ -215,6 +215,10 @@ private:
 
 	GraphicsObjectLine* shotCast;
 
+	std::function<void(const std::string&)>* animationStartCallback;
+
+	std::function<void(const std::string&)>* animationStopCallback;
+
 };
 
 #endif // FPSPLAYER_H

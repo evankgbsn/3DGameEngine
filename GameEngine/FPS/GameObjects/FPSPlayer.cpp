@@ -299,7 +299,6 @@ void FPSPlayer::GameUpdate()
 			{
 				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
 				ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
-				ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), {}, false);
 			}
 			updateTime = 0.0f;
 		}
@@ -315,7 +314,6 @@ void FPSPlayer::GameUpdate()
 			ClientSend("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), false);
 			ClientSend("AdditiveAnimationUp " + std::to_string(lookUpPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookUp")), false);
 			ClientSend("AdditiveAnimationDown " + std::to_string(lookDownPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookDown")), false);
-			ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), false);
 			updateTime = 0.0f;
 		}
 	}
@@ -433,6 +431,19 @@ void FPSPlayer::Start()
 
 void FPSPlayer::RegisterInput()
 {
+	animationStartCallback = new std::function<void(const std::string&)>([this](const std::string&)
+		{
+			ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), false);
+		});
+
+	characterGraphics->RegisterAnimationStartCallback("NetworkSync", animationStartCallback);
+
+	animationStopCallback = new std::function<void(const std::string&)>([this](const std::string&)
+		{
+		});
+
+	characterGraphics->RegisterAnimationStartCallback("NetworkSync", animationStopCallback);
+
 	whenCursorMove = new std::function<void(const glm::vec2&)>([this](const glm::vec2& cursorPos)
 		{
 			static glm::vec2 prevPos = cursorPos;
@@ -819,6 +830,9 @@ void FPSPlayer::RegisterInput()
 
 void FPSPlayer::DeregisterInput()
 {
+	delete animationStartCallback;
+	delete animationStopCallback;
+
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_W, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_A, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESS, KEY_S, "FPSCharacterWalk");
@@ -1201,6 +1215,8 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 				if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
 				{
 					characterGraphics->SetClip(updateData);
+
+					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, {}, false);
 				}
 			}
 			else
