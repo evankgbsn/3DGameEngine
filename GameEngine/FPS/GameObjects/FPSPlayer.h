@@ -85,6 +85,8 @@ private:
 
 	glm::mat4 ConvertRightHandTransformToWeaponTransform() const;
 
+	void Shoot();
+
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
 
 	GraphicsObjectTexturedAnimatedLit* characterArmsGraphics;

@@ -21,6 +21,7 @@
 #include "GameEngine/Renderer/Window/Window.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectLine.h"
+#include "GameEngine/Physics/PhysicsManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -86,7 +87,7 @@ void FPSPlayer::Initialize()
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
 
-		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .50f, 1.250f, characterGraphics->GetPosition());
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 		AddComponent(controller, "Controller");
 	}
 	else
@@ -108,7 +109,7 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .50f, 1.250f, characterGraphics->GetPosition());
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 			AddComponent(controller, "Controller");
 		}
 	}
@@ -817,6 +818,47 @@ glm::mat4 FPSPlayer::ConvertRightHandTransformToWeaponTransform() const
 	return glm::mat4(weaponright, weaponup, weaponforward, glm::vec4(glm::vec3(handTransform[3]), 1.0f));
 }
 
+void FPSPlayer::Shoot()
+{
+	glm::vec3 origin = cam->GetPosition();
+	glm::vec3 target = origin + cam->GetForwardVector() * 100.0f;
+	glm::vec3 direction = cam->GetForwardVector();
+
+	if (shotCast == nullptr)
+	{
+		shotCast = new GraphicsObjectLine(origin, target, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	}
+	else
+	{
+		shotCast->SetStart(origin);
+		shotCast->SetEnd(target);
+	}
+
+
+	const unsigned int maxHits = 10;
+	physx::PxRaycastHit hits[maxHits];
+	physx::PxRaycastBuffer outHit(hits, maxHits);
+
+	bool status = PhysicsManager::Raycast(origin, direction, 10000.0f, outHit);
+
+	if (status || outHit.hasBlock) {
+		// getNbAnyHits() returns the total number of hits found
+		for (PxU32 i = 0; i < outHit.getNbAnyHits(); i++) {
+			const PxRaycastHit& hit = outHit.getAnyHit(i);
+
+			// Access the actor
+			PxRigidActor* actor = hit.actor;
+
+			if (actor) {
+				// Do something with the actor
+				printf("Hit actor: %p\n", actor);
+			}
+		}
+	}
+
+
+}
+
 void FPSPlayer::OnSpawn()
 {
 	NetworkObject::OnSpawn();
@@ -939,15 +981,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastShootPacketNumber)
 			{
-				if (shotCast == nullptr)
-				{
-					shotCast = new GraphicsObjectLine(cam->GetPosition(), cam->GetPosition() + cam->GetForwardVector() * 100.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-				}
-				else
-				{
-					shotCast->SetStart(cam->GetPosition());
-					shotCast->SetEnd(cam->GetPosition() + cam->GetForwardVector() * 100.0f);
-				}
+				Shoot();
 			}
 
 			lastShootPacketNumber = std::stoi(packetID);

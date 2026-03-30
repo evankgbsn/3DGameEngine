@@ -77,10 +77,11 @@ bool PhysicsManager::Raycast(const glm::vec3& o, const glm::vec3& direction, flo
 		PxVec3 origin(o.x, o.y, o.z);                 // [in] Ray origin
 		PxVec3 unitDir(direction.x, direction.y, direction.z);                // [in] Normalized ray direction
 		PxReal maxDistance(dist);            // [in] Raycast max distance
+		PxQueryFilterData filterData(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC);
 
 		// Raycast against all static & dynamic objects (no filtering)
 		// The main result from this call is the closest hit, stored in the 'hit.block' structure
-		status = instance->scene->raycast(origin, unitDir, maxDistance, outHit);
+		status = instance->scene->raycast(origin, unitDir, maxDistance, outHit, PxHitFlag::eDEFAULT, filterData);
 	}
 
 	return status;
