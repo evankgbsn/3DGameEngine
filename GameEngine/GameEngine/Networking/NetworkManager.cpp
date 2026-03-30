@@ -2062,7 +2062,7 @@ void NetworkManager::Despawn(unsigned long long networkObjectID)
 				Scene* owningScene = networkGameObject->GetOwningScene();
 				if (owningScene != nullptr)
 				{
-					owningScene->DeregisterGameObject(networkGameObject->GetName(), [](GameObject* networkGameObject) { delete dynamic_cast<NetworkObject*>(networkGameObject); });
+					owningScene->DeregisterGameObject(networkGameObject->GetName(), [](GameObject* networkGameObject) { Logger::Log("Deleted Network Object ", Logger::Category::Error);  delete dynamic_cast<NetworkObject*>(networkGameObject); });
 				}
 			}
 
