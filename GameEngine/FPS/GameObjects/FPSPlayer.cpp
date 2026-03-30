@@ -631,6 +631,8 @@ void FPSPlayer::RegisterInput()
 
 					// Hit-Scan.
 					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+
+					lastShotTime = TimeManager::SecondsSinceStart();
 				}
 			}
 			else if(shooting)
@@ -738,6 +740,8 @@ void FPSPlayer::RegisterInput()
 
 				// Hit-Scan.
 				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+
+				lastShotTime = TimeManager::SecondsSinceStart();
 			}
 		});
 
