@@ -1060,6 +1060,9 @@ void FPSPlayer::OnSpawn()
 
 void FPSPlayer::OnDespawn()
 {
+	NetworkManager::DeregisterOnClientDisconnectFunction("FPSPlayer:" + std::to_string(GetNetworkObjectID()));
+
+	NetworkObject::OnDespawn();
 }
 
 void FPSPlayer::OnDataReceived(const std::string& data)
