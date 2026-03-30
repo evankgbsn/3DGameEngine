@@ -15,6 +15,22 @@ public:
 
 	void Update() override;
 
+	void SetColor(const glm::vec4& color);
+
+	glm::vec4 GetColor() const;
+
+	void SetLineWidth(float width);
+
+	float GetLineWidth() const;
+
+	void SetStart(const glm::vec3& point0);
+
+	void SetEnd(const glm::vec3& point1);
+
+	glm::vec3 GetStart() const;
+
+	glm::vec3 GetEnd() const;
+
 private:
 
 	GOLineColored() = delete;

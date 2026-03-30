@@ -60,3 +60,45 @@ void GOLineColored::Update()
 
 	ShaderManager::EndShaderUsage("Colored");
 }
+
+void GOLineColored::SetColor(const glm::vec4& c)
+{
+	color = c;
+}
+
+glm::vec4 GOLineColored::GetColor() const
+{
+	return color;
+}
+
+void GOLineColored::SetLineWidth(float width)
+{
+	lineWidth = width;
+}
+
+float GOLineColored::GetLineWidth() const
+{
+	return lineWidth;
+}
+
+void GOLineColored::SetStart(const glm::vec3& point0)
+{
+	model->GetVertices().front() = Vertex(point0, {}, {});
+	model->UpdateBuffer();
+}
+
+void GOLineColored::SetEnd(const glm::vec3& point1)
+{
+	model->GetVertices().back() = Vertex(point1, {}, {});
+	model->UpdateBuffer();
+}
+
+glm::vec3 GOLineColored::GetStart() const
+{
+	return model->GetVertices().front().GetPosition();
+}
+
+glm::vec3 GOLineColored::GetEnd() const
+{
+	return model->GetVertices().back().GetPosition();
+}

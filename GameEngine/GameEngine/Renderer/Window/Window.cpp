@@ -176,23 +176,35 @@ int Window::GetKey(int keyCode, bool clearFrameKeyStates) const
 		{
 
 			if (!pressedKeys.contains(keyCode))
+			{
 				pressedKeys.insert(keyCode);
+			}
 
 			if (releasedKeys.contains(keyCode))
+			{
 				releasedKeys.erase(releasedKeys.find(keyCode));
+			}
 			else
+			{
 				getKeyResult = KEY_PRESSED;
+			}
 
 		}
 		else if (getKeyResult == KEY_RELEASE)
 		{
 			if (!releasedKeys.contains(keyCode))
+			{
 				releasedKeys.insert(keyCode);
+			}
 
 			if (pressedKeys.contains(keyCode))
+			{
 				pressedKeys.erase(pressedKeys.find(keyCode));
+			}
 			else
+			{
 				getKeyResult = KEY_RELEASED;
+			}
 		}
 
 		return keyStatesForThisFrame[keyCode] = getKeyResult;

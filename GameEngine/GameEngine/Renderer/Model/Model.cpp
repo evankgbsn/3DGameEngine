@@ -331,7 +331,7 @@ void Model::BindBuffer()
 void Model::UpdateBuffer()
 {
 	DestroyVertexArrayBuffer();
-	//CreateVertexArrayBuffer();
+	CreateVertexArrayBuffer();
 }
 
 const std::string& Model::GetName() const

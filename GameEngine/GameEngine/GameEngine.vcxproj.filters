@@ -459,6 +459,9 @@
     <ClCompile Include="Audio\Sound.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Component\GraphicsObjectLine.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -820,6 +823,9 @@
     </ClInclude>
     <ClInclude Include="Audio\Sound.h">
       <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\GraphicsObjectLine.h">
+      <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

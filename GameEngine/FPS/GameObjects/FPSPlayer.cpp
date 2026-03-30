@@ -20,6 +20,7 @@
 #include "GameEngine/UI/Sprite.h"
 #include "GameEngine/Renderer/Window/Window.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectLine.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -629,14 +630,14 @@ void FPSPlayer::RegisterInput()
 			switch (key)
 			{
 			case KEY_W:
-				if (characterGraphics->GetCurrentAnimation() != "AimRun")
+				if (characterGraphics->GetCurrentAnimation() != "AimRun" && characterGraphics->GetFadeToClipName() != "AimRun")
 				{
-					characterGraphics->FadeAnimationTo("AimRun", 0.5f);
+					characterGraphics->FadeAnimationTo("AimRun", 0.05f);
 				}
 
-				if (characterArmsGraphics->GetCurrentAnimation() != "AimRun")
+				if (characterArmsGraphics->GetCurrentAnimation() != "AimRun" && characterArmsGraphics->GetFadeToClipName() != "AimRun")
 				{
-					characterArmsGraphics->FadeAnimationTo("AimRun", 0.5f);
+					characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
 				}
 				wPressed = true;
 				break;
@@ -674,28 +675,30 @@ void FPSPlayer::RegisterInput()
 				break;
 			}
 
+			std::string log = "release ";
+
+
 			if (!wPressed && !aPressed && !sPressed && !dPressed)
 			{
-				if (characterGraphics->GetCurrentAnimation() != "Idle")
+				if (characterGraphics->GetCurrentAnimation() != "Idle" && characterGraphics->GetFadeToClipName() != "Idle")
 				{
 					characterGraphics->FadeAnimationTo("Idle", 0.05f);
-				}
-
-				if (characterArmsGraphics->GetCurrentAnimation() != "Idle")
-				{
 					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
+				
+				log += std::string("Fading");
 			}
+
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_W, keyboardMovePress, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_A, keyboardMovePress, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_S, keyboardMovePress, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_D, keyboardMovePress, "FPSCharacterWalk");
-	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_W, keyboardMoveRelease, "FPSCharacterWalk");
-	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_A, keyboardMoveRelease, "FPSCharacterWalk");
-	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_S, keyboardMoveRelease, "FPSCharacterWalk");
-	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_D, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASED, KEY_W, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASED, KEY_A, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASED, KEY_S, keyboardMoveRelease, "FPSCharacterWalk");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASED, KEY_D, keyboardMoveRelease, "FPSCharacterWalk");
 
 	InputManager::RegisterCallbackForMouseButtonState(KEY_PRESSED, MOUSE_BUTTON_1, keyboardShoot, "FPSCharacterShoot");
 	InputManager::RegisterCallbackForMouseButtonState(KEY_RELEASE, MOUSE_BUTTON_1, keyboardShootRelease, "FPSCharacterShootRelease");
@@ -935,7 +938,15 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastShootPacketNumber)
 			{
-				
+				if (shotCast == nullptr)
+				{
+					shotCast = new GraphicsObjectLine(cam->GetPosition(), cam->GetPosition() + cam->GetForwardVector() * 100.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+				}
+				else
+				{
+					shotCast->SetStart(cam->GetPosition());
+					shotCast->SetEnd(cam->GetPosition() + cam->GetForwardVector() * 100.0f);
+				}
 			}
 
 			lastShootPacketNumber = std::stoi(packetID);

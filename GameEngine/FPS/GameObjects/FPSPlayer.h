@@ -14,6 +14,7 @@ class AnimatedColliderComponent;
 class CharacterControllerComponent;
 class GraphicsObjectTexturedLit;
 class Sprite;
+class GraphicsObjectLine;
 
 class FPSPlayer : public GameObject, public NetworkObject
 {
@@ -177,6 +178,8 @@ private:
 	glm::vec3 lastPosition;
 
 	std::atomic<bool> newPositionFromServer = false;
+
+	GraphicsObjectLine* shotCast;
 
 };
 

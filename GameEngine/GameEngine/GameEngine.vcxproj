@@ -497,6 +497,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="GameObject\Component\GraphicsObject3DComponent.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectColored.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectColoredAnimated.cpp" />
+    <ClCompile Include="GameObject\Component\GraphicsObjectLine.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTextured.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimated.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.cpp" />
@@ -615,6 +616,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="GameObject\Component\GraphicsObject3DComponent.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectColored.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectColoredAnimated.h" />
+    <ClInclude Include="GameObject\Component\GraphicsObjectLine.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTextured.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimated.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectTexturedAnimatedLit.h" />
