@@ -175,7 +175,7 @@ void FPSPlayer::GameUpdate()
 		SetPosition(positionToSet);
 		newPositionFromServer.store(false);
 	}
-	else
+	else if(SpawnedFromLocalSpawnRequest())
 	{
 		characterGraphics->SetPosition(controller->GetFootPosition());
 	}
