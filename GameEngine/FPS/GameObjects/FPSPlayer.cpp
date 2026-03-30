@@ -288,11 +288,6 @@ void FPSPlayer::GameUpdate()
 
 	if (NetworkManager::IsServer())
 	{
-		if (characterGraphics->GetCurrentAnimation() != "Idle")
-		{
-			characterGraphics->FadeAnimationTo("Idle", 0.5f);
-		}
-
 		controller->Update();
 		characterGraphics->SetPosition(controller->GetFootPosition());
 
@@ -304,6 +299,7 @@ void FPSPlayer::GameUpdate()
 			{
 				ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
 				ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
+				ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), {}, false);
 			}
 			updateTime = 0.0f;
 		}
@@ -319,6 +315,7 @@ void FPSPlayer::GameUpdate()
 			ClientSend("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), false);
 			ClientSend("AdditiveAnimationUp " + std::to_string(lookUpPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookUp")), false);
 			ClientSend("AdditiveAnimationDown " + std::to_string(lookDownPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookDown")), false);
+			ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), false);
 			updateTime = 0.0f;
 		}
 	}
@@ -1110,6 +1107,19 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
 		}
+		else if (updateType == "AnimationClip")
+		{
+			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
+			{
+				characterGraphics->SetClip(updateData);
+			}
+			else
+			{
+				Logger::Log("Lost animation clip packet");
+			}
+
+			lastAnimationClipPacketNumber = std::stoi(packetID);
+		}
 	}
 	else
 	{
@@ -1180,6 +1190,19 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			}
 
 			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
+		}
+		else if (updateType == "AnimationClip")
+		{
+			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
+			{
+				characterGraphics->SetClip(updateData);
+			}
+			else
+			{
+				Logger::Log("Lost animation clip packet");
+			}
+
+			lastAnimationClipPacketNumber = std::stoi(packetID);
 		}
 	}
 }

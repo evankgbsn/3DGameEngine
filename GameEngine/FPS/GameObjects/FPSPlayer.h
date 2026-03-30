@@ -157,6 +157,8 @@ private:
 
 	unsigned int footPositionPacketNumber = 0;
 
+	unsigned int animationClipPacketNumber = 0;
+
 	unsigned int lastPositionPacketNumber = 0;
 
 	unsigned int lastFootPositionPacketNumber = 0;
@@ -192,6 +194,8 @@ private:
 	unsigned int lastAdditiveAnimationUpPacketNumber = 0;
 
 	unsigned int lastAdditiveAnimationDownPacketNumber = 0;
+
+	unsigned int lastAnimationClipPacketNumber = 0;
 
 	float lastShotTime = 0.0f;
 
