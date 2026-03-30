@@ -1111,7 +1111,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
 			{
-				characterGraphics->SetClip(updateData);
+				if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
+				{
+					characterGraphics->SetClip(updateData);
+				}
 			}
 			else
 			{
@@ -1195,7 +1198,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
 			{
-				characterGraphics->SetClip(updateData);
+				if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
+				{
+					characterGraphics->SetClip(updateData);
+				}
 			}
 			else
 			{
