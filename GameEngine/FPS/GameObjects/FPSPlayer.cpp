@@ -1198,9 +1198,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastDamagePacketNumber)
 			{
-				healthBar->SetScale(healthBar->GetScale().x * (std::stof(updateData) * 0.01f), healthBar->GetScale().y);
+				health -= std::stof(updateData);
+				healthBar->SetScale(healthBar->GetScale().x * (health * 0.01f), healthBar->GetScale().y);
 
-				if (healthBar->GetScale().x <= 0.0f && shouldDie == false)
+				if (healthBar->GetScale().x <= 0.01f && shouldDie == false)
 				{
 					shouldDie = true;
 
