@@ -91,7 +91,7 @@ void FPSPlayer::Initialize()
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
-		healthBar = new Sprite("HealthBar", { 0.01f, 0.01f }, { 0.0001f * dimensions.x, 0.0001f * dimensions.y});
+		healthBar = new Sprite("HealthBar", { 0.2f, 0.1f }, { 0.0001f * dimensions.x, 0.00005f * dimensions.y});
 	}
 	else
 	{
@@ -1064,8 +1064,6 @@ void FPSPlayer::OnSpawn()
 
 void FPSPlayer::OnDespawn()
 {
-	NetworkManager::DeregisterOnClientDisconnectFunction("FPSPlayer:" + std::to_string(GetNetworkObjectID()));
-
 	NetworkObject::OnDespawn();
 }
 
