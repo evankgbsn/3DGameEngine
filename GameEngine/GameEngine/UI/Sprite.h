@@ -7,12 +7,13 @@
 #include <functional>
 
 class GOSprite;
+class Model;
 
 class Sprite
 {
 public:
 
-	Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale);
+	Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale, const glm::vec2& origin = glm::vec2(0.0f, 0.0f));
 
 	Sprite(const std::string& modelName, const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale);
 
@@ -53,6 +54,10 @@ private:
 	Sprite& operator=(Sprite&&) = delete;
 
 	GOSprite* sprite;
+
+	Model* model;
+
+	glm::vec2 origin;
 	
 	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
 

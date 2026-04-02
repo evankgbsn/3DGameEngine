@@ -91,7 +91,7 @@ void FPSPlayer::Initialize()
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
-		healthBar = new Sprite("HealthBar", { 0.2f, 0.1f }, { 0.0001f * dimensions.x, 0.00005f * dimensions.y});
+		healthBar = new Sprite("HealthBar", glm::vec2( 0.2f, 0.1f ), glm::vec2( 0.0001f * dimensions.x, 0.00005f * dimensions.y ), glm::vec2(-1.0f, 0.0f));
 	}
 	else
 	{

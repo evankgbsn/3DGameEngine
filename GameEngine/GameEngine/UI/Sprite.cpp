@@ -7,11 +7,13 @@
 #include "../Math/Math.h"
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../Renderer/Model/ModelManager.h"
+#include "../Renderer/Model/Model.h"
 
 static unsigned int spriteId = 0;
 
-Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale) :
-	stretch(true)
+Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition, const glm::vec2& scale, const glm::vec2& o) :
+	stretch(true),
+	origin(o)
 {
 	Window* window = WindowManager::GetWindow("Engine");
 	float width = static_cast<float>(prevWindowWidth = window->GetWidth());
@@ -23,7 +25,16 @@ Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition
 	float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, scale.x);
 	float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, scale.y);
 
-	sprite = GraphicsObjectManager::CreateGOSprite(ModelManager::GetModel("RectangleWithDepth"), TextureManager::GetTexture(imageTexture), { xPos, yPos });
+
+	Model* rectangleModel = ModelManager::GetModel("RectangleWithDepth");
+	std::vector<Vertex> verts = rectangleModel->GetVertices();
+
+	for (auto& vert : verts)
+	{
+		vert.GetPosition() += glm::vec3(origin, 0.0f);
+	}
+
+	sprite = GraphicsObjectManager::CreateGOSprite(ModelManager::LoadModel("Sprite" + std::to_string(spriteId + 1), verts, rectangleModel->GetIndices(), false), TextureManager::GetTexture(imageTexture), {xPos, yPos});
 	sprite->SetScale(xScale / 2, yScale / 2);
 
 	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int w, unsigned int h)
