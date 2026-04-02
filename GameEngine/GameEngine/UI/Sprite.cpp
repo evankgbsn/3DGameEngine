@@ -31,7 +31,7 @@ Sprite::Sprite(const std::string& imageTexture, const glm::vec2& initialPosition
 
 	for (auto& vert : verts)
 	{
-		vert.GetPosition() += glm::vec3(origin, 0.0f);
+		vert.GetPosition() -= glm::vec3(origin, 0.0f);
 	}
 
 	sprite = GraphicsObjectManager::CreateGOSprite(ModelManager::LoadModel("Sprite" + std::to_string(spriteId + 1), verts, rectangleModel->GetIndices(), false), TextureManager::GetTexture(imageTexture), {xPos, yPos});
