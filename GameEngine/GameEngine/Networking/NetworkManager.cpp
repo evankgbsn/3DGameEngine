@@ -1753,7 +1753,11 @@ void NetworkManager::DeregisterOnClientDisconnectFunction(const std::string& key
 	if (instance != nullptr)
 	{
 		std::lock_guard<std::mutex> guard(instance->onClientDisconnectCallbacksMutex);
-		instance->onClientDisconnectCallbacks.erase(instance->onClientDisconnectCallbacks.find(key));
+
+		if (instance->onClientDisconnectCallbacks.find(key) != instance->onClientDisconnectCallbacks.end())
+		{
+			instance->onClientDisconnectCallbacks.erase(instance->onClientDisconnectCallbacks.find(key));
+		}
 	}
 }
 
