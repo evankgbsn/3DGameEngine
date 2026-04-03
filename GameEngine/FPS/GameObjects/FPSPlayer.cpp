@@ -440,7 +440,15 @@ void FPSPlayer::RegisterInput()
 {
 	animationStartCallback = new std::function<void(const std::string&)>([this](const std::string&)
 		{
-			ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), false);
+			if (characterGraphics->isFading())
+			{
+				ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetFadeToClipName(), false);
+			}
+			else
+			{
+				ClientSend("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + characterGraphics->GetCurrentAnimation(), false);
+			}
+
 		});
 
 	characterGraphics->RegisterAnimationStartCallback("NetworkSync", animationStartCallback);
