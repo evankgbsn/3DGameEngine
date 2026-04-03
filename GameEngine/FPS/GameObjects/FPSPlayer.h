@@ -141,9 +141,9 @@ private:
 
 	glm::vec3 disp;
 
-	glm::vec3 positionToSet;
+	glm::vec3 positionToSet = { 0.0f, 20.0f, 0.0f };
 
-	glm::vec3 footPositionToSet;
+	glm::vec3 footPositionToSet = { 0.0f, 20.0f, 0.0f };
 
 	glm::vec3 targetToSet;
 
