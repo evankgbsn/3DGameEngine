@@ -185,7 +185,7 @@ void FPSPlayer::GameUpdate()
 {
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		if (!NetworkManager::IsServer() && newPositionFromServer.load())
+		if (!NetworkManager::IsServer())
 		{
 			SetPosition(positionToSet);
 			newPositionFromServer.store(false);
@@ -199,11 +199,8 @@ void FPSPlayer::GameUpdate()
 	{
 		if (!NetworkManager::IsServer())
 		{
-			if (newFootPositionFromServer.load())
-			{
-				SetPosition(footPositionToSet);
-				newFootPositionFromServer.store(false);
-			}
+			SetPosition(footPositionToSet);
+			newFootPositionFromServer.store(false);
 		}
 
 		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
@@ -1330,9 +1327,4 @@ void FPSPlayer::OnServerSpawnConfirmation(const std::string& IP)
 
 void FPSPlayer::OnClientSpawnConfirmation()
 {
-	if (!SpawnedFromLocalSpawnRequest())
-	{
-		newFootPositionFromServer.store(true);
-		newPositionFromServer.store(true);
-	}
 }
