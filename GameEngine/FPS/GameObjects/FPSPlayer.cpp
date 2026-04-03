@@ -572,8 +572,6 @@ void FPSPlayer::RegisterInput()
 
 	gamepadWalkY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			static bool walking = false;
-
 			if (abs(value) > 0.01f)
 			{
 				float xspeed = -10.0f;

@@ -124,6 +124,11 @@ void AnimationController::FadeTo(const std::string& clipName, float time)
 
 	crossFadeController->FadeTo(model->GetAnimationClip(index), time);
 
+	for (auto& callback : animationStartCallbacks)
+	{
+		(*callback.second)(clipName);
+	}
+
 	fading = true;
 	currentFadeTime = time;
 	fadeToClipName = clipName;

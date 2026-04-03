@@ -229,6 +229,8 @@ private:
 
 	bool shouldDie = false;
 
+	bool walking = false;
+
 };
 
 #endif // FPSPLAYER_H
