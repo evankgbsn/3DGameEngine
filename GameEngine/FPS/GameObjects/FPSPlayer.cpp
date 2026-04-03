@@ -22,6 +22,7 @@
 #include "GameEngine/Renderer/Window/WindowManager.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectLine.h"
 #include "GameEngine/Physics/PhysicsManager.h"
+#include "GameEngine/Math/Shapes/LineSegment3D.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -1014,6 +1015,13 @@ void FPSPlayer::Shoot()
 					if (player != this)
 					{
 						Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
+
+						LineSegment3D line(origin, origin + direction * 1000.0f);
+						std::string outBoxName;
+
+						player->hitBox->Intersect(line, outBoxName);
+						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
+
 						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
 						break;
 					}

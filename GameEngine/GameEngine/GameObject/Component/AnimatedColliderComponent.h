@@ -34,7 +34,7 @@ public:
 
 	bool IsVisible() const;
 
-	bool Intersect(const LineSegment3D& lineSegement) const;
+	bool Intersect(const LineSegment3D& lineSegement, std::string& outBoxName) const;
 
 	bool Intersect(const StaticColliderComponent& other, glm::vec3& outHit) const;
 

@@ -60,6 +60,11 @@ void PointLightObject::Unload()
 {
 }
 
+void PointLightObject::Start()
+{
+	light->SetColliderVisibility(false);
+}
+
 void PointLightObject::SetPosition(const glm::vec3& pos)
 {
 	light->SetPosition(pos);

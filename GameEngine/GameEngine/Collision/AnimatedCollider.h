@@ -36,7 +36,7 @@ public:
 
 	bool Intersect(const OrientedBoundingBox& other) const;
 
-	bool Intersect(const LineSegment3D& other) const;
+	bool Intersect(const LineSegment3D& other, std::string& outJointName) const;
 
 	bool Intersect(const AnimatedCollider& other) const;
 

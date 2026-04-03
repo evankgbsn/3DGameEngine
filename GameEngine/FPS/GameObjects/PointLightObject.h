@@ -36,6 +36,8 @@ private:
 
 	void Unload() override;
 
+	void Start() override;
+
 	void SetPosition(const glm::vec3& pos) override;
 
 	glm::vec3 GetPosition() const override;

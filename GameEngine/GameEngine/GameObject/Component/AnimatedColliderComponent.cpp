@@ -57,9 +57,9 @@ bool AnimatedColliderComponent::IsVisible() const
 	return collider->IsVisible();
 }
 
-bool AnimatedColliderComponent::Intersect(const LineSegment3D& lineSegment) const
+bool AnimatedColliderComponent::Intersect(const LineSegment3D& lineSegment, std::string& outBoxName) const
 {
-	return collider->Intersect(lineSegment);
+	return collider->Intersect(lineSegment, outBoxName);
 }
 
 bool AnimatedColliderComponent::Intersect(const StaticColliderComponent& other, glm::vec3& outHit) const
