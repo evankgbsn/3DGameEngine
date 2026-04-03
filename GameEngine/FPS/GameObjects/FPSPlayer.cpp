@@ -92,7 +92,7 @@ void FPSPlayer::Initialize()
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
-		healthBar = new Sprite("HealthBar", glm::vec2( 0.1f, 0.1f ), glm::vec2( 0.0001f * dimensions.x, 0.000025f * dimensions.y ), glm::vec2(-1.0f, 0.0f));
+		healthBar = new Sprite("HealthBar", glm::vec2( 0.05f, 0.1f ), glm::vec2( 0.0001f * dimensions.x, 0.000025f * dimensions.y ), glm::vec2(-1.0f, 0.0f));
 	}
 	else
 	{
@@ -1330,4 +1330,9 @@ void FPSPlayer::OnServerSpawnConfirmation(const std::string& IP)
 
 void FPSPlayer::OnClientSpawnConfirmation()
 {
+	if (!SpawnedFromLocalSpawnRequest())
+	{
+		newFootPositionFromServer.store(true);
+		newPositionFromServer.store(true);
+	}
 }

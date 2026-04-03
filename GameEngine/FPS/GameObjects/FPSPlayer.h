@@ -213,9 +213,9 @@ private:
 
 	glm::vec3 lastTarget;
 
-	std::atomic<bool> newPositionFromServer = true;
+	std::atomic<bool> newPositionFromServer = false;
 
-	std::atomic<bool> newFootPositionFromServer = true;
+	std::atomic<bool> newFootPositionFromServer = false;
 
 	GraphicsObjectLine* shotCast;
 
