@@ -286,13 +286,19 @@ bool Triangle::TriangleIntersectRobust(const Triangle& other) const
 	return true;
 }
 
-bool Triangle::LineIntersect(const LineSegment3D& line) const
+bool Triangle::LineIntersect(const LineSegment3D& line, glm::vec3& outHit) const
 {
 	Ray ray(line.GetStart(), glm::normalize(line.GetEnd() - line.GetStart()));
 
 	float t = Raycast(ray);
 
-	return t >= 0.0f && t * t <= line.GetLengthSq();
+	if (t >= 0.0f && t * t <= line.GetLengthSq())
+	{
+		outHit = ray.GetOrigin() + ray.GetDirection() * t;
+		return true;
+	}
+
+	return false;
 }
 
 glm::vec3 Triangle::Barycentric(const glm::vec3& p) const

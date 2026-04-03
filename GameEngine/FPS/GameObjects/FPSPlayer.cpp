@@ -88,7 +88,7 @@ void FPSPlayer::Initialize()
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
 
-		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .80f, 1.40f, characterGraphics->GetPosition());
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
@@ -115,7 +115,7 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .80f, 1.40f, characterGraphics->GetPosition());
+			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 			controller->SetOwner(this);
 			AddComponent(controller, "Controller");
 		}
@@ -962,83 +962,52 @@ void FPSPlayer::Shoot()
 		shotCast->SetEnd(target);
 	}
 
+	Scene* scene = SceneManager::GetRegisteredScene("Test");
 
-	const unsigned int maxHits = 10;
-	physx::PxRaycastHit hits[maxHits];
-	physx::PxRaycastBuffer outHit(hits, maxHits);
-
-	bool status = PhysicsManager::Raycast(origin, direction, 10000.0f, outHit);
-
-	if (outHit.hasBlock)
+	if (scene != nullptr)
 	{
-		PxRigidActor* actor = outHit.block.actor;
-	
-		if (actor) 
+		const std::unordered_map<std::string, GameObject*> objects = scene->GetGameObjects();
+
+		for (const auto& object : objects)
 		{
-			GameObject* go = static_cast<GameObject*>(actor->userData);
-	
-			FPSPlayer* player = dynamic_cast<FPSPlayer*>(go);
-	
-			if (player != this && player != nullptr)
+			FPSPlayer* player = dynamic_cast<FPSPlayer*>(object.second);
+
+			if (player != nullptr)
 			{
-				Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
-			}
-	
-		}
-	}
+				LineSegment3D line(origin, origin + direction * 1000.0f);
+				std::string outBoxName;
+				glm::vec3 outHit;
 
-	uint32_t totalHits = outHit.getNbAnyHits();
-	std::vector<PxRaycastHit> allHits;
+				const unsigned int maxHits = 10;
+				physx::PxRaycastHit hits[maxHits];
+				physx::PxRaycastBuffer outHits(hits, maxHits);
 
-	for (uint32_t i = 0; i < totalHits; i++) {
-		allHits.push_back(outHit.getAnyHit(i));
-	}
+				bool status = PhysicsManager::Raycast(origin, direction, 10000.0f, outHits);
 
-	std::sort(allHits.begin(), allHits.end(), [](const PxRaycastHit& a, const PxRaycastHit& b) {
-		return a.distance < b.distance;
-		});
+				bool hit = player->hitBox->Intersect(line, outBoxName, outHit);
 
-	for (const auto& hit : allHits)
-	{
-		PxRigidActor* actor = hit.actor;
-
-		if (actor)
-		{
-			GameObject* go = static_cast<GameObject*>(actor->userData);
-
-			if (go != nullptr)
-			{
-				FPSPlayer* player = dynamic_cast<FPSPlayer*>(go);
-
-				if (player != nullptr)
+				if (hit)
 				{
-					if (player != this)
+					if (outHits.hasBlock)
 					{
-						Logger::Log(std::string("Object Hit: ") + go->GetName(), Logger::Category::Info);
+						if (glm::length(origin - outHit) < outHits.block.distance)
+						{
+							Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
 
-						LineSegment3D line(origin, origin + direction * 1000.0f);
-						std::string outBoxName;
-
-						player->hitBox->Intersect(line, outBoxName);
-						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
-
-						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
-						break;
+							player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
+						}
 					}
 					else
 					{
-						continue;
+						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
+
+						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
 					}
-				}
-				else
-				{
-					break;
+					
 				}
 			}
 		}
 	}
-
-
 }
 
 void FPSPlayer::OnSpawn()

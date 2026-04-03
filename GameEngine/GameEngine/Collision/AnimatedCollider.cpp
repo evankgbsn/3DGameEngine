@@ -201,12 +201,12 @@ bool AnimatedCollider::Intersect(const OrientedBoundingBox& other) const
 	return intersect;
 }
 
-bool AnimatedCollider::Intersect(const LineSegment3D& other, std::string& outBoxName) const
+bool AnimatedCollider::Intersect(const LineSegment3D& other, std::string& outBoxName, glm::vec3& outHit) const
 {
 	bool intersect = false;
 
 	std::for_each(std::execution::par, obbs.begin(), obbs.end(),
-		[this, &other, &intersect, &outBoxName](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+		[this, &other, &intersect, &outBoxName, &outHit](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
 		{
 			if (obb.first != nullptr)
 			{
@@ -214,7 +214,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other, std::string& outBox
 				{
 					const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
 
-					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect, &obb, &outBoxName](const std::vector<Vertex>& triangleVerts)
+					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect, &obb, &outBoxName, &outHit](const std::vector<Vertex>& triangleVerts)
 						{
 							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
 								{
@@ -241,7 +241,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other, std::string& outBox
 								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
 								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
 
-							if (t1.LineIntersect(other))
+							if (t1.LineIntersect(other, outHit))
 							{
 								intersect = true;
 								outBoxName = (*jointNames)[obb.second];

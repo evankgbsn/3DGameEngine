@@ -52,7 +52,7 @@ public:
 
 	bool TriangleIntersectRobust(const Triangle& other) const;
 
-	bool LineIntersect(const LineSegment3D& line) const;
+	bool LineIntersect(const LineSegment3D& line, glm::vec3& outHit) const;
 
 	glm::vec3 Barycentric(const glm::vec3& p) const;
 
