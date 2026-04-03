@@ -982,9 +982,39 @@ void FPSPlayer::Shoot()
 				physx::PxRaycastHit hits[maxHits];
 				physx::PxRaycastBuffer outHits(hits, maxHits);
 
-				bool status = PhysicsManager::Raycast(origin, direction, 10000.0f, outHits);
+				bool status = PhysicsManager::Raycast(origin, direction, 1000.0f, outHits);
 
 				bool hit = player->hitBox->Intersect(line, outBoxName, outHit);
+
+				auto dealDamage = [this, player, outBoxName]()
+					{
+						float damage = 0.0f;
+
+						if (outBoxName == "head.x")
+						{
+							damage = 100.0f;
+						}
+						else if (outBoxName == "spine_01.x")
+						{
+							damage = 20.0f;
+						}
+						else if (outBoxName == "spine_02.x")
+						{
+							damage = 30.0f;
+						}
+						else if (outBoxName == "spine_03.x")
+						{
+							damage = 40.0f;
+						}
+						else
+						{
+							damage = 10.0f;
+						}
+
+						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
+
+						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(damage));
+					};
 
 				if (hit)
 				{
@@ -992,16 +1022,12 @@ void FPSPlayer::Shoot()
 					{
 						if (glm::length(origin - outHit) < outHits.block.distance)
 						{
-							Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
-
-							player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
+							dealDamage();
 						}
 					}
 					else
 					{
-						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
-
-						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(10.0f));
+						dealDamage();
 					}
 					
 				}
