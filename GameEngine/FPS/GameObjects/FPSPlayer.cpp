@@ -1059,10 +1059,6 @@ void FPSPlayer::OnSpawn()
 
 		NetworkManager::RegisterOnClientDisconnectFunction("FPSPlayer:" + std::to_string(GetNetworkObjectID()), onClientDisconnect);
 	}
-	else
-	{
-		//ClientSend(NetworkManager::ConvertVec3ToData(target));
-	}
 }
 
 void FPSPlayer::OnDespawn()
