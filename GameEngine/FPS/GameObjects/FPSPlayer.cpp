@@ -1303,7 +1303,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 				{
 					characterGraphics->SetClip(updateData);
 
-					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, {}, false);
+					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerIP() }, false);
 				}
 			}
 			else
