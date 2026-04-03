@@ -14,6 +14,7 @@
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
 #include "../Collision/StaticCollider.h"
+#include "../Utils/Logger.h"
 
 #include <execution>
 #include <mutex>
@@ -113,6 +114,10 @@ void AnimatedCollider::InitializeOBBs()
 		}
 	}
 
+	//for (const auto& obb : obbs)
+	//{
+	//	Logger::Log(std::string((*jointNames)[obb.second]));
+	//}
 	
 }
 
