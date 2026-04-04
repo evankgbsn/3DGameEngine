@@ -69,6 +69,7 @@ Texture* const TextureManager::GetTexture(const std::string& name)
 		else
 		{
 			Logger::Log(std::string("A texture with the name ") + name + " deos not exists. TextureManager::GetTexture.", Logger::Category::Warning);
+			ret = instance->textures.find("Default")->second;
 		}
 	}
 	else
@@ -156,4 +157,5 @@ void TextureManager::LoadDefaultTextures()
 	ShaderManager::CreateWaterTexturesFromIDs();
 	LoadTexture("Assets/Texture/Woman.png", "Woman");
 	LoadTexture("Assets/Texture/DuDvMap.png", "DuDv");
+	LoadTexture("Assets/Texutre/Default.png", "Default");
 }

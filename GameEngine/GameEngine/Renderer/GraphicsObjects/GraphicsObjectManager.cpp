@@ -205,13 +205,13 @@ GOColoredInstanced* const GraphicsObjectManager::CreateGO3DColoredInstanced(Mode
 	return result;
 }
 
-GOTexturedLitInstanced* const GraphicsObjectManager::CreateGO3DTexturedLitInstanced(Model* const model, Texture* diffuse, Texture* specular, unsigned int instanceCount)
+GOTexturedLitInstanced* const GraphicsObjectManager::CreateGO3DTexturedLitInstanced(Model* const model, Texture* const diffuse, Texture* const specular, Texture* const normal, unsigned int instanceCount)
 {
 	GOTexturedLitInstanced* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTexturedLitInstanced(model, diffuse, specular, instanceCount));
+		instance->graphicsObjects3D.push_back(result = new GOTexturedLitInstanced(model, diffuse, specular, normal, instanceCount));
 	}
 	else
 	{
@@ -269,13 +269,13 @@ GOTexturedAnimated* const GraphicsObjectManager::CreateGO3DTexturedAnimated(Mode
 	return result;
 }
 
-GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap)
+GOTexturedLit* const GraphicsObjectManager::CreateGO3DTexturedLit(Model* const model, const GOLit::Material& material)
 {
 	GOTexturedLit* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, diffuseMap, specularMap));
+		instance->graphicsObjects3D.push_back(result = new GOTexturedLit(model, material));
 	}
 	else
 	{
@@ -301,13 +301,13 @@ GOTerrain* const GraphicsObjectManager::CreateGOTerrain(Model* const model, cons
 	return result;
 }
 
-GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap)
+GOTexturedAnimatedLit* const GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap, Texture* const normalMap)
 {
 	GOTexturedAnimatedLit* result = nullptr;
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, diffuseMap, specularMap));
+		instance->graphicsObjects3D.push_back(result = new GOTexturedAnimatedLit(model, diffuseMap, specularMap, normalMap));
 	}
 	else
 	{

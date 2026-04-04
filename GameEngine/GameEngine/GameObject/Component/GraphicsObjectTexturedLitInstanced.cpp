@@ -13,7 +13,7 @@ GraphicsObjectTexturedLitInstanced::GraphicsObjectTexturedLitInstanced() :
 	RegisterComponentClassType<GraphicsObjectTexturedLitInstanced>(this);
 }
 
-GraphicsObjectTexturedLitInstanced::GraphicsObjectTexturedLitInstanced(const std::string& modelName, const std::string& diffuseTextureName, const std::string& specularTextureName, unsigned int instanceCount) :
+GraphicsObjectTexturedLitInstanced::GraphicsObjectTexturedLitInstanced(const std::string& modelName, const std::string& diffuseTextureName, const std::string& specularTextureName, const std::string& normalTextureName, unsigned int instanceCount) :
 	Component(),
 	graphics(nullptr)
 {
@@ -21,9 +21,10 @@ GraphicsObjectTexturedLitInstanced::GraphicsObjectTexturedLitInstanced(const std
 
 	Texture* diffuse = TextureManager::GetTexture(diffuseTextureName);
 	Texture* specular = TextureManager::GetTexture(specularTextureName);
+	Texture* normal = TextureManager::GetTexture(normalTextureName);
 	Model* model = ModelManager::GetModel(modelName);
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedLitInstanced(model, diffuse, specular, instanceCount);
+	graphics = GraphicsObjectManager::CreateGO3DTexturedLitInstanced(model, diffuse, specular, normal, instanceCount);
 }
 
 GraphicsObjectTexturedLitInstanced::~GraphicsObjectTexturedLitInstanced()
@@ -154,6 +155,7 @@ void GraphicsObjectTexturedLitInstanced::Serialize()
 		savedStrings["ModelName"] = graphics->GetModel()->GetName();
 		savedStrings["DiffuseTextureName"] = graphics->GetDiffuseTexture()->GetName();
 		savedStrings["SpecularTextureName"] = graphics->GetSpecularTexture()->GetName();
+		savedStrings["NormalTextureName"] = graphics->GetNormalTexture()->GetName();
 		savedFloats["Shine"] = graphics->GetShine();
 		savedInts["InstanceCount"] = graphics->GetInstanceCount();
 
@@ -173,7 +175,7 @@ void GraphicsObjectTexturedLitInstanced::Deserialize()
 		GraphicsObjectManager::Delete(graphics);
 	}
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedLitInstanced(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]), savedInts["InstanceCount"]);
+	graphics = GraphicsObjectManager::CreateGO3DTexturedLitInstanced(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]), TextureManager::GetTexture(savedStrings["NormalTextureName"]), savedInts["InstanceCount"]);
 
 	for (unsigned int i = 0; i < graphics->GetInstanceCount(); i++)
 	{

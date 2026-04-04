@@ -17,7 +17,7 @@ public:
 
 	GraphicsObjectTexturedAnimatedLit();
 
-	GraphicsObjectTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular);
+	GraphicsObjectTexturedAnimatedLit(Model* const model, const std::string& diffuse, const std::string& specular, const std::string& normal);
 
 	~GraphicsObjectTexturedAnimatedLit();
 

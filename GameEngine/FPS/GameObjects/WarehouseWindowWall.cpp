@@ -19,7 +19,7 @@ WarehouseWindowWall::~WarehouseWindowWall()
 
 void WarehouseWindowWall::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseWindowWall"), TextureManager::GetTexture("WarehouseWindowWall"), TextureManager::GetTexture("WarehouseWindowWallSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseWindowWall"), "WarehouseWindowWall", "WarehouseWindowWallSpec", "WarehouseWindowWall");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");

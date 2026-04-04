@@ -13,10 +13,10 @@ GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit()
 	RegisterComponentClassType<GraphicsObjectTexturedAnimatedLit>(this);
 }
 
-GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular)
+GraphicsObjectTexturedAnimatedLit::GraphicsObjectTexturedAnimatedLit(Model* const model, const std::string& diffuse, const std::string& specular, const std::string& normal)
 {
 	RegisterComponentClassType<GraphicsObjectTexturedAnimatedLit>(this);
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(model, diffuse, specular);
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(model, TextureManager::GetTexture(diffuse), TextureManager::GetTexture(specular), TextureManager::GetTexture(normal));
 }
 
 GraphicsObjectTexturedAnimatedLit::~GraphicsObjectTexturedAnimatedLit()
@@ -144,6 +144,7 @@ void GraphicsObjectTexturedAnimatedLit::Serialize()
 	savedStrings["ModelName"] = go->GetModel()->GetName();
 	savedStrings["DiffuseTextureName"] = go->GetDiffuseTexture()->GetName();
 	savedStrings["SpecularTextureName"] = go->GetSpecularTexture()->GetName();
+	savedStrings["NormalTextureName"] = go->GetSpecularTexture()->GetName();
 	savedFloats["AnimationSpeed"] = go->GetSpeed();
 	savedStrings["AnimationClip"] = go->GetClipName();
 	savedFloats["AnimationFrame"] = go->GetSampleTime();
@@ -157,7 +158,7 @@ void GraphicsObjectTexturedAnimatedLit::Deserialize()
 		GraphicsObjectManager::Delete(graphics);
 	}
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedAnimatedLit(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]), TextureManager::GetTexture(savedStrings["NormalTextureName"]));
 
 	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
 

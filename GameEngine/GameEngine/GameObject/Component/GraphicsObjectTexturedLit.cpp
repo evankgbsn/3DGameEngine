@@ -7,10 +7,10 @@
 #include "../../Renderer/Texture/Texture.h"
 #include "../../Renderer/Texture/TextureManager.h"
 
-GraphicsObjectTexturedLit::GraphicsObjectTexturedLit(Model* const model, Texture* const diffuse, Texture* const specular)
+GraphicsObjectTexturedLit::GraphicsObjectTexturedLit(Model* const model, const std::string& diffuse, const std::string& specular, const std::string& normal)
 {
 	RegisterComponentClassType<GraphicsObjectTexturedLit>(this);
-	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(model, diffuse, specular);
+	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(model, GOLit::Material(TextureManager::GetTexture(diffuse), TextureManager::GetTexture(specular), TextureManager::GetTexture(normal)));
 }
 
 GraphicsObjectTexturedLit::~GraphicsObjectTexturedLit()
@@ -31,6 +31,7 @@ void GraphicsObjectTexturedLit::Serialize()
 	savedStrings["ModelName"] = GetModel()->GetName();
 	savedStrings["DiffuseTextureName"] = go->GetDiffuseTexture()->GetName();
 	savedStrings["SpecularTextureName"] = go->GetSpecularTexture()->GetName();
+	savedStrings["NormalTextureName"] = go->GetNormalTexture()->GetName();
 	savedFloats["Shine"] = go->GetShine();
 }
 
@@ -41,7 +42,7 @@ void GraphicsObjectTexturedLit::Deserialize()
 		GraphicsObjectManager::Delete(graphics);
 	}
 
-	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel(savedStrings["ModelName"]), TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]));
+	graphics = GraphicsObjectManager::CreateGO3DTexturedLit(ModelManager::GetModel(savedStrings["ModelName"]), GOLit::Material(TextureManager::GetTexture(savedStrings["DiffuseTextureName"]), TextureManager::GetTexture(savedStrings["SpecularTextureName"]), TextureManager::GetTexture(savedStrings["NormalTextureName"])));
 
 	SetShine(savedFloats["Shine"]);
 

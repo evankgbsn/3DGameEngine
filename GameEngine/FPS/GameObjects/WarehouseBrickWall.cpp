@@ -19,7 +19,7 @@ WarehouseBrickWall::~WarehouseBrickWall()
 
 void WarehouseBrickWall::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseBrickWall"), TextureManager::GetTexture("WarehouseBrickWall"), TextureManager::GetTexture("WarehouseBrickWallSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseBrickWall"), "WarehouseBrickWall", "WarehouseBrickWallSpec", "WarehouseBrickWallNormal");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");
@@ -64,6 +64,11 @@ void WarehouseBrickWall::Load()
 	if (!TextureManager::TextureLoaded("WarehouseBrickWallSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Black.png", "WarehouseBrickWallSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("WarehouseBrickWallNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseBrickWallNormal.png", "WarehouseBrickWallNormal");
 	}
 }
 

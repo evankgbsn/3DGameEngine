@@ -26,9 +26,10 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3
+					"indices":4
 				}
 			]
 		}
@@ -37,7 +38,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":548,
+			"count":564,
 			"max":[
 				2.318187952041626,
 				4.604010581970215,
@@ -53,17 +54,23 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":548,
+			"count":564,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":548,
+			"count":564,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":564,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5123,
 			"count":1392,
 			"type":"SCALAR"
@@ -72,32 +79,38 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":6576,
+			"byteLength":6768,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6576,
-			"byteOffset":6576,
+			"byteLength":6768,
+			"byteOffset":6768,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4384,
-			"byteOffset":13152,
+			"byteLength":4512,
+			"byteOffset":13536,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":9024,
+			"byteOffset":18048,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":2784,
-			"byteOffset":17536,
+			"byteOffset":27072,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":20320,
+			"byteLength":29856,
 			"uri":"WarehouseWindowWall.bin"
 		}
 	]

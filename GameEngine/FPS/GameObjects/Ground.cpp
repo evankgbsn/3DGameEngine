@@ -17,10 +17,10 @@ Ground::~Ground()
 
 void Ground::Initialize()
 {
-	GOLit::Material sandMaterial = GOLit::Material(TextureManager::GetTexture("TerrainSand"), TextureManager::GetTexture("TerrainSand"));
-	GOLit::Material rockMaterial = GOLit::Material(TextureManager::GetTexture("TerrainRock"), TextureManager::GetTexture("TerrainRock"));
-	GOLit::Material grassMaterial = GOLit::Material(TextureManager::GetTexture("TerrainGrass"), TextureManager::GetTexture("TerrainGrass"));
-	GOLit::Material dirtMaterial = GOLit::Material(TextureManager::GetTexture("TerrainDirt"), TextureManager::GetTexture("TerrainDirt"));
+	GOLit::Material sandMaterial = GOLit::Material(TextureManager::GetTexture("TerrainSand"), TextureManager::GetTexture("TerrainSand"), TextureManager::GetTexture("TerrainSand"));
+	GOLit::Material rockMaterial = GOLit::Material(TextureManager::GetTexture("TerrainRock"), TextureManager::GetTexture("TerrainRock"), TextureManager::GetTexture("TerrainRock"));
+	GOLit::Material grassMaterial = GOLit::Material(TextureManager::GetTexture("TerrainGrass"), TextureManager::GetTexture("TerrainGrass"), TextureManager::GetTexture("TerrainGrass"));
+	GOLit::Material dirtMaterial = GOLit::Material(TextureManager::GetTexture("TerrainDirt"), TextureManager::GetTexture("TerrainDirt"), TextureManager::GetTexture("TerrainDirt"));
 
 	terrain = new TerrainComponent(
 		std::string("Terrain"),

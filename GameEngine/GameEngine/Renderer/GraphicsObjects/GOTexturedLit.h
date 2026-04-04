@@ -11,7 +11,7 @@ class GOTexturedLit : public GO3D, public GOLit
 {
 public:
 
-	GOTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap);
+	GOTexturedLit(Model* const model, const GOLit::Material& material);
 
 	~GOTexturedLit();
 
@@ -22,6 +22,8 @@ public:
 	Texture* const GetDiffuseTexture() const;
 
 	Texture* const GetSpecularTexture() const;
+
+	Texture* const GetNormalTexture() const;
 
 protected:
 

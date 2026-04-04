@@ -10,8 +10,8 @@
 #include "../Camera/CameraManager.h"
 #include "../Renderer/Renderer.h"
 
-GOTexturedLit::GOTexturedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap) :
-	GOLit(std::vector<Material>( {Material(diffuseMap, specularMap)})),
+GOTexturedLit::GOTexturedLit(Model* const model, const GOLit::Material& material) :
+	GOLit(std::vector<Material>({ material })),
 	GO3D(model)
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
@@ -106,4 +106,9 @@ Texture* const GOTexturedLit::GetDiffuseTexture() const
 Texture* const GOTexturedLit::GetSpecularTexture() const
 {
 	return materials.front().specularMap;
+}
+
+Texture* const GOTexturedLit::GetNormalTexture() const
+{
+	return materials.front().normalMap;
 }

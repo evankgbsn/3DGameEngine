@@ -15,21 +15,18 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Cube"
-		}
-	],
-	"materials":[
-		{
-			"doubleSided":true,
-			"name":"Material",
-			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":0
-				},
-				"metallicRoughnessTexture":{
-					"index":1
-				}
-			}
+			"name":"ShippingContainer",
+			"rotation":[
+				0,
+				0.7071068286895752,
+				0,
+				0.7071067094802856
+			],
+			"translation":[
+				7.852402687072754,
+				1.600000023841858,
+				0
+			]
 		}
 	],
 	"meshes":[
@@ -40,41 +37,19 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3,
-					"material":0
+					"indices":4
 				}
 			]
-		}
-	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		},
-		{
-			"sampler":0,
-			"source":1
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/png",
-			"name":"RedDiffuse",
-			"uri":"RedDiffuse.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"RoughnessMap",
-			"uri":"RoughnessMap.png"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":8592,
+			"count":9963,
 			"max":[
 				5.302483558654785,
 				1.5816782712936401,
@@ -90,17 +65,23 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":8592,
+			"count":9963,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":8592,
+			"count":9963,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":9963,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5123,
 			"count":19044,
 			"type":"SCALAR"
@@ -109,38 +90,38 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":103104,
+			"byteLength":119556,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":103104,
-			"byteOffset":103104,
+			"byteLength":119556,
+			"byteOffset":119556,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":68736,
-			"byteOffset":206208,
+			"byteLength":79704,
+			"byteOffset":239112,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":159408,
+			"byteOffset":318816,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":38088,
-			"byteOffset":274944,
+			"byteOffset":478224,
 			"target":34963
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":313032,
+			"byteLength":516312,
 			"uri":"ShippingContainer.bin"
 		}
 	]

@@ -14,7 +14,7 @@ public:
 
 	GraphicsObjectTexturedLitInstanced();
 
-	GraphicsObjectTexturedLitInstanced(const std::string& modelName, const std::string& diffuseTextureName, const std::string& specularTextureName, unsigned int instanceCount);
+	GraphicsObjectTexturedLitInstanced(const std::string& modelName, const std::string& diffuseTextureName, const std::string& specularTextureName, const std::string& normalTextureName, unsigned int instanceCount);
 
 	~GraphicsObjectTexturedLitInstanced();
 

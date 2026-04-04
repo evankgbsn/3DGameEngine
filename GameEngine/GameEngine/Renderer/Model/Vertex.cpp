@@ -60,6 +60,11 @@ vec2& Vertex::GetUV()
 	return uv;
 }
 
+vec4& Vertex::GetTangent()
+{
+	return tangent;
+}
+
 const vec4& Vertex::GetWeights() const
 {
 	return weights;
@@ -83,4 +88,9 @@ const vec3& Vertex::GetNormal() const
 const vec2& Vertex::GetUV() const
 {
 	return uv;
+}
+
+const vec4& Vertex::GetTangent() const
+{
+	return tangent;
 }

@@ -36,7 +36,7 @@ public:
 
 	static GOColoredInstanced* const CreateGO3DColoredInstanced(Model* const model, const glm::vec4& initialColor, unsigned int instanceCount);
 
-	static GOTexturedLitInstanced* const CreateGO3DTexturedLitInstanced(Model* const model, Texture* diffuse, Texture* specular, unsigned int instanceCount);
+	static GOTexturedLitInstanced* const CreateGO3DTexturedLitInstanced(Model* const model, Texture* const diffuse, Texture* const specular, Texture* const normal, unsigned int instanceCount);
 
 	static GOTextured* const Create3DGOTextured(Model* const model, Texture* const texture);
 
@@ -44,11 +44,11 @@ public:
 
 	static GOTexturedAnimated* const CreateGO3DTexturedAnimated(Model* const model, Texture* const texture);
 
-	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
+	static GOTexturedLit* const CreateGO3DTexturedLit(Model* const model, const GOLit::Material& material);
 
 	static GOTerrain* const CreateGOTerrain(Model* const model, const std::vector<GOLit::Material>& materials, const std::string& blendMap);
 
-	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap);
+	static GOTexturedAnimatedLit* const CreateGO3DTexturedAnimatedLit(Model* const model, Texture* const difuseMap, Texture* const specularMap, Texture* const normalMap);
 
 	static GOLineColored* const CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 

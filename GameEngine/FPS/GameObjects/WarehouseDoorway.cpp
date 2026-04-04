@@ -19,7 +19,7 @@ WarehouseDoorway::~WarehouseDoorway()
 
 void WarehouseDoorway::Initialize()
 {
-	doorwayGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseDoorway"), TextureManager::GetTexture("WarehouseDoorway"), TextureManager::GetTexture("WarehouseDoorwaySpec"));
+	doorwayGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseDoorway"), "WarehouseDoorway", "WarehouseDoorwaySpec", "WarehouseDoorway");
 	doorwayGraphics->SetShine(4.0f);
 
 	AddComponent(doorwayGraphics, "DoorwayGraphics");

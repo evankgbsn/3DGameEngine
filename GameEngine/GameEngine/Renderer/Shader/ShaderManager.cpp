@@ -222,12 +222,15 @@ void ShaderManager::CreateVAO()
 	glVertexArrayAttribBinding(vertexArrayObject, 2, 0);
 	glVertexArrayAttribFormat(vertexArrayObject, 2, 2, GL_FLOAT, GL_FALSE, 56);
 
+	glVertexArrayAttribBinding(vertexArrayObject, 5, 0);
+	glVertexArrayAttribFormat(vertexArrayObject, 5, 4, GL_FLOAT, GL_FALSE, 64);
 
 	glEnableVertexArrayAttrib(vertexArrayObject, 0);
 	glEnableVertexArrayAttrib(vertexArrayObject, 1);
 	glEnableVertexArrayAttrib(vertexArrayObject, 2);
 	glEnableVertexArrayAttrib(vertexArrayObject, 3);
 	glEnableVertexArrayAttrib(vertexArrayObject, 4);
+	glEnableVertexArrayAttrib(vertexArrayObject, 5);
 
 	glEnable(GL_CLIP_DISTANCE0);
 	glEnable(GL_CULL_FACE);

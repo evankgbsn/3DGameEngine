@@ -12,7 +12,7 @@ class GOTexturedAnimatedLit : public GO3DAnimated, public GOLit
 
 public:
 
-	GOTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular);
+	GOTexturedAnimatedLit(Model* const model, Texture* const diffuse, Texture* const specular, Texture* const normal);
 
 	~GOTexturedAnimatedLit();
 

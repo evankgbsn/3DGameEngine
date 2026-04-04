@@ -26,9 +26,10 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3
+					"indices":4
 				}
 			]
 		}
@@ -64,6 +65,12 @@
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":116,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5123,
 			"count":276,
 			"type":"SCALAR"
@@ -90,14 +97,20 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":552,
+			"byteLength":1856,
 			"byteOffset":3712,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":552,
+			"byteOffset":5568,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":4264,
+			"byteLength":6120,
 			"uri":"WarehouseVerticalBeamCorner.bin"
 		}
 	]

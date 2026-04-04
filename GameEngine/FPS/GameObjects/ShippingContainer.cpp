@@ -21,8 +21,9 @@ void ShippingContainer::Initialize()
 {
 	graphics = new GraphicsObjectTexturedLit(
 		ModelManager::GetModel("ShippingContainer"), 
-		TextureManager::GetTexture("ShippingContainerRed"), 
-		TextureManager::GetTexture("ShippingContainerSpec"));
+		"ShippingContainerRed", 
+		"ShippingContainerSpec",
+		"ShippingContainerRed");
 
 	graphics->SetShine(4.0f);
 

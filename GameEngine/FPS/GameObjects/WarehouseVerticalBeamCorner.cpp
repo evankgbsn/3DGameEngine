@@ -19,7 +19,7 @@ WarehouseVerticalBeamCorner::~WarehouseVerticalBeamCorner()
 
 void WarehouseVerticalBeamCorner::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseVerticalBeamCorner"), TextureManager::GetTexture("WarehouseVerticalBeamCorner"), TextureManager::GetTexture("WarehouseVerticalBeamCornerSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseVerticalBeamCorner"), "WarehouseVerticalBeamCorner", "WarehouseVerticalBeamCornerSpec", "WarehouseVerticalBeamCorner");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");

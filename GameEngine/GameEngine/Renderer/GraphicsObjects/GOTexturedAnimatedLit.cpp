@@ -13,8 +13,8 @@
 
 #include <GL/glew.h>
 
-GOTexturedAnimatedLit::GOTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap) :
-	GOLit(std::vector<Material>({ Material(diffuseMap, specularMap) })),
+GOTexturedAnimatedLit::GOTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap, Texture* const normalMap) :
+	GOLit(std::vector<Material>({ Material(diffuseMap, specularMap, normalMap) })),
 	GO3DAnimated(model)
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);

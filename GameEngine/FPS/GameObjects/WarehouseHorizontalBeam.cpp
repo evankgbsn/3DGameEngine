@@ -19,7 +19,7 @@ WarehouseHorizontalBeam::~WarehouseHorizontalBeam()
 
 void WarehouseHorizontalBeam::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseHorizontalBeam"), TextureManager::GetTexture("WarehouseHorizontalBeam"), TextureManager::GetTexture("WarehouseHorizontalBeamSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseHorizontalBeam"), "WarehouseHorizontalBeam", "WarehouseHorizontalBeamSpec", "WarehouseHorizontalBeam");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");

@@ -134,6 +134,7 @@ void TerrainComponent::Serialize()
 	{
 		savedStrings["DiffuseTexture" + std::to_string(matIndex)] = mat.diffuseMap->GetName();
 		savedStrings["SpecularTexture" + std::to_string(matIndex)] = mat.specularMap->GetName();
+		savedStrings["NormalTexture" + std::to_string(matIndex)] = mat.normalMap->GetName();
 		matIndex++;
 	}
 	
@@ -154,10 +155,11 @@ void TerrainComponent::Deserialize()
 	{
 		std::string difTextureKey = "DiffuseTexture" + std::to_string(matIndex);
 		std::string specTexureKey = "SpecularTexture" + std::to_string(matIndex);
+		std::string normalTexureKey = "NormalTexture" + std::to_string(matIndex);
 
 		if (savedStrings.find(difTextureKey) != savedStrings.end())
 		{
-			materials.push_back(GOLit::Material(TextureManager::GetTexture(savedStrings[difTextureKey]), TextureManager::GetTexture(savedStrings[specTexureKey])));
+			materials.push_back(GOLit::Material(TextureManager::GetTexture(savedStrings[difTextureKey]), TextureManager::GetTexture(savedStrings[specTexureKey]), TextureManager::GetTexture(savedStrings[normalTexureKey])));
 		}
 		else
 		{

@@ -18,7 +18,7 @@ PlaneObj::~PlaneObj()
 
 void PlaneObj::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseGround"), TextureManager::GetTexture("WarehouseGround"), TextureManager::GetTexture("WarehouseGroundSpec"));
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseGround"), "WarehouseGround", "WarehouseGroundSpec", "WarehouseGround");
     graphics->SetShine(4.0f);
 
     body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());

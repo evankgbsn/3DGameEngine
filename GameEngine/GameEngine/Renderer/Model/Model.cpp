@@ -492,6 +492,9 @@ void Model::ModelFromAttribute(cgltf_attribute& attribute, cgltf_skin* skin, cgl
 				vertices[i].GetNormal() = glm::vec3(0, 1, 0);
 			}
 			break;
+		case cgltf_attribute_type_tangent:
+			vertices[i].GetTangent() = glm::vec4(values[index], values[index + 1], values[index + 2], values[index + 3]);
+			break;
 		case cgltf_attribute_type_joints:
 			/*
 				These indices are skin relative. This function has no information about

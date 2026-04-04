@@ -72,6 +72,7 @@ void GOLit::UpdateLighting()
 	{
 		mat.diffuseMap->Bind(textureSlotId++);
 		mat.specularMap->Bind(textureSlotId++);
+		mat.normalMap->Bind(textureSlotId++);
 	}
 
 	ambient.ambient = glm::vec4(1.0f) * LightManager::GetAmbientIntensity();

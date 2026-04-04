@@ -19,7 +19,7 @@ WarehouseRoofWall::~WarehouseRoofWall()
 
 void WarehouseRoofWall::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofWall"), TextureManager::GetTexture("WarehouseRoofWall"), TextureManager::GetTexture("WarehouseRoofWallSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofWall"), "WarehouseRoofWall", "WarehouseRoofWallSpec", "WarehouseRoofWall");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");

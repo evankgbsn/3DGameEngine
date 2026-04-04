@@ -19,7 +19,7 @@ WarehouseRoofPannel::~WarehouseRoofPannel()
 
 void WarehouseRoofPannel::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofPannel"), TextureManager::GetTexture("WarehouseRoofPannel"), TextureManager::GetTexture("WarehouseRoofPannelSpec"));
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofPannel"), "WarehouseRoofPannel", "WarehouseRoofPannelSpec", "WarehouseRoofPannel");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");

@@ -27,7 +27,7 @@ AK12Bullet::~AK12Bullet()
 
 void AK12Bullet::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"), TextureManager::GetTexture("AK12Bullet"));
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12Bullet"), "AK12Bullet", "AK12Bullet", "AK12Bullet");
 
     AddComponent(graphics, "Graphics");
 

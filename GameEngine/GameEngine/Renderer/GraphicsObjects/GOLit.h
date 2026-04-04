@@ -12,15 +12,17 @@ public:
 
 	struct Material
 	{
-		Material(Texture* const diff, Texture* const spec) :
+		Material(Texture* const diff, Texture* const spec, Texture* const normal) :
 			diffuseMap(diff),
-			specularMap(spec)
+			specularMap(spec),
+			normalMap(normal)
 		{
 
 		};
 
 		Texture* const diffuseMap;
 		Texture* const specularMap;
+		Texture* const normalMap;
 	};
 
 	virtual ~GOLit();

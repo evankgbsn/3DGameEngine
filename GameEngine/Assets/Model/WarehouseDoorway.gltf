@@ -26,9 +26,10 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3
+					"indices":4
 				}
 			]
 		}
@@ -37,7 +38,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":336,
+			"count":340,
 			"max":[
 				2.320000171661377,
 				4.600000381469727,
@@ -53,17 +54,23 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":336,
+			"count":340,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":336,
+			"count":340,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":340,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5123,
 			"count":780,
 			"type":"SCALAR"
@@ -72,32 +79,38 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":4032,
+			"byteLength":4080,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4032,
-			"byteOffset":4032,
+			"byteLength":4080,
+			"byteOffset":4080,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2688,
-			"byteOffset":8064,
+			"byteLength":2720,
+			"byteOffset":8160,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":5440,
+			"byteOffset":10880,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1560,
-			"byteOffset":10752,
+			"byteOffset":16320,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":12312,
+			"byteLength":17880,
 			"uri":"WarehouseDoorway.bin"
 		}
 	]

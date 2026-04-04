@@ -10,9 +10,9 @@
 
 #include <gl/glew.h>
 
-GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, unsigned int instanceCount) :
+GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, Texture* normalTexture, unsigned int instanceCount) :
 	GraphicsObject(model),
-	GOLit(std::vector<Material>({ Material(diffuseTexture, specularTexture) })),
+	GOLit(std::vector<Material>({ Material(diffuseTexture, specularTexture, normalTexture) })),
 	translations(std::vector<glm::mat4>(instanceCount)),
 	rotations(std::vector<glm::mat4>(instanceCount)),
 	scales(std::vector<glm::mat4>(instanceCount)),
@@ -23,7 +23,8 @@ GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diff
 	trans(std::vector<glm::vec4>(instanceCount)),
 	clipPlane(ShaderManager::GetClipPlane()),
 	diffuse(diffuseTexture),
-	spec(specularTexture)
+	spec(specularTexture),
+	normal(normalTexture)
 {
 	for (unsigned int i = 0; i < transforms.size(); ++i)
 	{
@@ -310,6 +311,11 @@ Texture* GOTexturedLitInstanced::GetDiffuseTexture() const
 Texture* GOTexturedLitInstanced::GetSpecularTexture() const
 {
 	return spec;
+}
+
+Texture* GOTexturedLitInstanced::GetNormalTexture() const
+{
+	return normal;
 }
 
 void GOTexturedLitInstanced::BindVertexArrayBuffers()

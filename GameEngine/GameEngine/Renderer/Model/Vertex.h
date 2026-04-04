@@ -40,6 +40,8 @@ public:
 
 	vec2& GetUV();
 
+	vec4& GetTangent();
+
 	const vec4& GetWeights() const;
 
 	const ivec4& GetInfluences() const;
@@ -50,6 +52,8 @@ public:
 
 	const vec2& GetUV() const;
 
+	const vec4& GetTangent() const;
+
 private:
 
 	vec4 weights;
@@ -57,6 +61,8 @@ private:
 	vec3 normal;
 	vec3 position;
 	vec2 uv;
+	vec4 tangent;
+
 };
 
 namespace std {
@@ -67,6 +73,7 @@ namespace std {
 			return	(hash<glm::vec3>()(vertex.GetPosition()) ^ 
 					(hash<glm::vec3>()(vertex.GetNormal()) << 1) ^ 
 					(hash<glm::vec2>()(vertex.GetUV()) << 1) ^
+					(hash<glm::vec4>()(vertex.GetTangent()) << 1) ^
 					(hash<glm::vec2>()(vertex.GetWeights()) << 1) ^
 					(hash<glm::vec2>()(vertex.GetInfluences()) << 1));
 		}

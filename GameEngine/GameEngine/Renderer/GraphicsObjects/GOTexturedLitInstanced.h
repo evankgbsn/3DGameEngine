@@ -89,7 +89,7 @@ public:
 		return transforms[instanceID];
 	};
 
-	GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, unsigned int instanceCount);
+	GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, Texture* normalTexture, unsigned int instanceCount);
 
 	~GOTexturedLitInstanced();
 
@@ -110,6 +110,8 @@ public:
 	Texture* GetDiffuseTexture() const;
 
 	Texture* GetSpecularTexture() const;
+
+	Texture* GetNormalTexture() const;
 
 	void BindVertexArrayBuffers();
 
@@ -162,6 +164,8 @@ private:
 	Texture* diffuse;
 
 	Texture* spec;
+
+	Texture* normal;
 
 	std::vector<glm::mat4> translations;
 

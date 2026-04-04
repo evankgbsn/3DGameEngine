@@ -64,6 +64,14 @@ void Texture::LoadTexture()
 	if (!pixels)
 	{
 		Logger::Log(std::string("Failed to load image texture ") + path, Logger::Category::Error);
+
+		path = "Assets/Texture/Default.png";
+		pixels = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+	}
+
+	if (!pixels)
+	{
+		Logger::Log(std::string("Failed to load DEFAULT image texture ") + path, Logger::Category::Error);
 		return;
 	}
 

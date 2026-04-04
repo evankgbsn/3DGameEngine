@@ -17,7 +17,7 @@ Crate::~Crate()
 
 void Crate::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Crate"), TextureManager::GetTexture("Crate"), TextureManager::GetTexture("CrateSpec"));
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Crate"), "Crate", "CrateSpec", "Crate");
     graphics->SetShine(32.0f);
     graphics->SetPosition({ 0.0f, 3.0f, 0.0f });
    

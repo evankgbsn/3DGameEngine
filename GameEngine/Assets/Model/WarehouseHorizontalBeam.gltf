@@ -31,9 +31,10 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3
+					"indices":4
 				}
 			]
 		}
@@ -69,6 +70,12 @@
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":88,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5123,
 			"count":180,
 			"type":"SCALAR"
@@ -95,14 +102,20 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":360,
+			"byteLength":1408,
 			"byteOffset":2816,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":360,
+			"byteOffset":4224,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":3176,
+			"byteLength":4584,
 			"uri":"WarehouseHorizontalBeam.bin"
 		}
 	]

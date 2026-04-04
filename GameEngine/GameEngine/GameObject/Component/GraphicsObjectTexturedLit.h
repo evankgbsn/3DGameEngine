@@ -13,7 +13,7 @@ public:
 
 	GraphicsObjectTexturedLit() = default;
 
-	GraphicsObjectTexturedLit(Model* const model, Texture* const diffuse, Texture* const specular);
+	GraphicsObjectTexturedLit(Model* const model, const std::string& diffuse, const std::string& specular, const std::string& normal);
 
 	~GraphicsObjectTexturedLit();
 
