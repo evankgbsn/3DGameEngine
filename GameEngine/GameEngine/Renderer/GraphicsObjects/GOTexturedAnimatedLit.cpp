@@ -81,7 +81,6 @@ void GOTexturedAnimatedLit::RenderToShadowMap()
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
 	model->BindBuffer();
-	//const Camera& cam = CameraManager::GetCamera("ShadowMapDepth");
 	mvp.view = lightView;
 	mvp.projection = lightProjection;
 	mvp.model = translation * rotation * scale;
@@ -107,3 +106,9 @@ Texture* const GOTexturedAnimatedLit::GetSpecularTexture() const
 {
 	return materials.front().specularMap;
 }
+
+Texture* const GOTexturedAnimatedLit::GetNormalTexture() const
+{
+	return materials.front().normalMap;
+}
+

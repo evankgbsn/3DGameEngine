@@ -19,7 +19,7 @@ WarehouseVerticalBeamHalf::~WarehouseVerticalBeamHalf()
 
 void WarehouseVerticalBeamHalf::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseVerticalBeamHalf"), "WarehouseVerticalBeamHalf", "WarehouseVerticalBeamHalfSpec", "WarehouseVerticalBeamHalf");
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseVerticalBeamHalf"), "WarehouseVerticalBeamHalf", "WarehouseVerticalBeamHalfSpec", "WarehouseVerticalBeamHalfNormal");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");
@@ -64,6 +64,11 @@ void WarehouseVerticalBeamHalf::Load()
 	if (!TextureManager::TextureLoaded("WarehouseVerticalBeamHalfSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Black.png", "WarehouseVerticalBeamHalfSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("WarehouseVerticalBeamHalfNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseVerticalBeamHalfNormal.png", "WarehouseVerticalBeamHalfNormal");
 	}
 }
 

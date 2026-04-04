@@ -23,7 +23,7 @@ void ShippingContainer::Initialize()
 		ModelManager::GetModel("ShippingContainer"), 
 		"ShippingContainerRed", 
 		"ShippingContainerSpec",
-		"ShippingContainerRed");
+		"ShippingContainerNormal");
 
 	graphics->SetShine(4.0f);
 
@@ -71,6 +71,11 @@ void ShippingContainer::Load()
 	if (!TextureManager::TextureLoaded("ShippingContainerSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/RoughnessMap.png", "ShippingContainerSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("ShippingContainerNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/ShippingContainerNormal.png", "ShippingContainerNormal");
 	}
 }
 

@@ -144,7 +144,7 @@ void GraphicsObjectTexturedAnimatedLit::Serialize()
 	savedStrings["ModelName"] = go->GetModel()->GetName();
 	savedStrings["DiffuseTextureName"] = go->GetDiffuseTexture()->GetName();
 	savedStrings["SpecularTextureName"] = go->GetSpecularTexture()->GetName();
-	savedStrings["NormalTextureName"] = go->GetSpecularTexture()->GetName();
+	savedStrings["NormalTextureName"] = go->GetNormalTexture()->GetName();
 	savedFloats["AnimationSpeed"] = go->GetSpeed();
 	savedStrings["AnimationClip"] = go->GetClipName();
 	savedFloats["AnimationFrame"] = go->GetSampleTime();

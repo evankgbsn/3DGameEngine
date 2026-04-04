@@ -11,14 +11,18 @@ layout(std140, binding = 0) uniform MVP
     mat4 projection;
 } mvp;
 
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
+
 //--------------------------------------------------
 // Animation Data Uniform Buffer Object
 //--------------------------------------------------
 
 layout(std140, binding = 1) uniform AnimData
 {
-    mat4 pose[120];
-    mat4 invBindPose[120];
+    mat4 pose[500];
 } anim;
 
 //--------------------------------------------------
@@ -39,12 +43,16 @@ layout(location = 5) out vec2 outUV;
 
 void main(void) 
 {
-     mat4 skin = (anim.pose[inJoints.x] * anim.invBindPose[inJoints.x]) * inWeights.x;
-     skin += (anim.pose[inJoints.y] * anim.invBindPose[inJoints.y]) * inWeights.y;
-     skin += (anim.pose[inJoints.z] * anim.invBindPose[inJoints.z]) * inWeights.z;
-     skin += (anim.pose[inJoints.w] * anim.invBindPose[inJoints.w]) * inWeights.w;
+     mat4 skin = anim.pose[inJoints.x] * inWeights.x;
+     skin += anim.pose[inJoints.y] * inWeights.y;
+     skin += anim.pose[inJoints.z] * inWeights.z;
+     skin += anim.pose[inJoints.w] * inWeights.w;
 
-     gl_Position = mvp.projection * mvp.view * mvp.model * skin * vec4(inPosition, 1.0);
+     vec4 worldPosition =  mvp.model * skin * vec4(inPosition, 1.0);
+
+     gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+     gl_Position = mvp.projection * mvp.view * worldPosition;
 
      outUV = inUV;
 }

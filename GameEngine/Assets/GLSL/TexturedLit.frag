@@ -90,10 +90,10 @@ layout(location = 10) in mat3 inTBN;
 out vec4 color;
 
 vec4 CalcAmbientLight(Ambient light);
-vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal);
+vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal, float shadow);
 vec4 CalcPointLight(PointLight light, vec4 normalMapNormal);
 vec4 CalcSpotLight(SpotLight light, vec4 normalMapNormal);
-float CalcShadow();
+float CalcShadow(vec4 normalMapNormal);
 float CalcPointShadow();
 
 void main(void)
@@ -108,11 +108,15 @@ void main(void)
     // Use this 'worldNormal' instead of 'inNormal' in all CalcLight functions
     vec3 worldNormal = normalize(inTBN * normal);
 
+	float shadow = CalcShadow(vec4(worldNormal, 0.0f)); 
+
 	for(int i = 0; i < 20; ++i)
 	{
-		if(directionalLight.light[i].lightOn)
+		if(directionalLight.light[i].lightOn) 
 		{
-			color += CalcDirectionalLight(directionalLight.light[i], vec4(worldNormal, 0.0f));
+			// Only apply the shadow to the first light (the one that generated the map)
+			float s = (i == 0) ? shadow : 0.0; 
+			color += CalcDirectionalLight(directionalLight.light[i], vec4(worldNormal, 0.0f), s);
 		}
 
 		if(pointLight.light[i].lightOn)
@@ -140,7 +144,7 @@ vec4 CalcAmbientLight(Ambient light)
 	return light.color * texture(diffuseSampler, inUV);
 }
 
-vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal)
+vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal, float shadow)
 {
 	float diff = max(dot(normalMapNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
 	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
@@ -150,7 +154,7 @@ vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal)
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
 	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
-	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
+	return (1.0f - shadow) * (diffuseLight + vec4(specularLight, 0.0f)); // Use 0.0 alpha here
 }
 
 vec4 CalcPointLight(PointLight light, vec4 normalMapNormal)
@@ -210,7 +214,7 @@ vec4 CalcSpotLight(SpotLight light, vec4 normalMapNormal)
 	return lightColor;
 }
 
-float CalcShadow()
+float CalcShadow(vec4 normalMapNormal)
 {
 	// perform perspective divide
 	vec3 projCoords = inLightSpacePosition.xyz / inLightSpacePosition.w;
@@ -230,7 +234,7 @@ float CalcShadow()
 	float currentDepth = projCoords.z;
 
 	// check whether current frag pos is in shadow
-	float bias =0.000005f; //max(0.05 * (1.0 - dot(inNormal, directionalLight.light[0].direction)), 0.005); 
+	float bias = max(0.0005 * (1.0 - dot(normalMapNormal.xyz, normalize(-directionalLight.light[0].direction.xyz))), 0.00005);
 	//float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 
 

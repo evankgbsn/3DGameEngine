@@ -263,12 +263,6 @@ void ShaderManager::CreateShadowMapFramebuffer()
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	Camera& depthOrtho = CameraManager::CreateCamera(Camera::Type::ORTHOGRAPHIC, "ShadowMapDepth", WindowManager::GetWindow("Engine"));
-	depthOrtho.SetNear(1.0f);
-	depthOrtho.SetFar(7.5f);
-	depthOrtho.SetPosition({ 50.f, 50.f, -50.f });
-	depthOrtho.SetTarget(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 void ShaderManager::DestroyShadowMapFramebuffer()

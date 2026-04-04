@@ -24,6 +24,8 @@ public:
 
 	Texture* const GetSpecularTexture() const;
 
+	Texture* const GetNormalTexture() const;
+
 private:
 
 	GOTexturedAnimatedLit(const GOTexturedAnimatedLit&) = delete;

@@ -19,7 +19,7 @@ WarehouseDoorway::~WarehouseDoorway()
 
 void WarehouseDoorway::Initialize()
 {
-	doorwayGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseDoorway"), "WarehouseDoorway", "WarehouseDoorwaySpec", "WarehouseDoorway");
+	doorwayGraphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseDoorway"), "WarehouseDoorway", "WarehouseDoorwaySpec", "WarehouseDoorwayNormal");
 	doorwayGraphics->SetShine(4.0f);
 
 	AddComponent(doorwayGraphics, "DoorwayGraphics");
@@ -64,6 +64,11 @@ void WarehouseDoorway::Load()
 	if (!ModelManager::ModelLoaded("WarehouseDoorway"))
 	{
 		ModelManager::LoadModel("WarehouseDoorway", "Assets/Model/WarehouseDoorway.gltf", false);
+	}
+
+	if (!TextureManager::TextureLoaded("WarehouseDoorwayNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseDoorwayNormal.png", "WarehouseDoorwayNormal");
 	}
 }
 

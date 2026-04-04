@@ -10,6 +10,11 @@ layout(std140, binding = 0) uniform MVP {
     mat4 projection;
 } mvp;
 
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
+
 //--------------------------------------------------
 // Vertex Buffer Data
 //--------------------------------------------------
@@ -28,7 +33,11 @@ layout(location = 5) out vec2 outUV;
 
 void main(void)
 {
-	gl_Position = mvp.projection * mvp.view * mvp.model * vec4(inPosition, 1.0f);
+	vec4 worldPosition = mvp.model * vec4(inPosition, 1.0);
+
+    gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+	gl_Position = mvp.projection * mvp.view * worldPosition;
 
     outUV = inUV;
 }

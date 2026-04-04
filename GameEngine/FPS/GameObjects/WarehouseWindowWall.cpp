@@ -19,7 +19,7 @@ WarehouseWindowWall::~WarehouseWindowWall()
 
 void WarehouseWindowWall::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseWindowWall"), "WarehouseWindowWall", "WarehouseWindowWallSpec", "WarehouseWindowWall");
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseWindowWall"), "WarehouseWindowWall", "WarehouseWindowWallSpec", "WarehouseWindowWallNormal");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");
@@ -64,6 +64,11 @@ void WarehouseWindowWall::Load()
 	if(!TextureManager::TextureLoaded("WarehouseWindowWallSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Black.png", "WarehouseWindowWallSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("WarehouseWindowWallNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseWindowWallNormal.png", "WarehouseWindowWallNormal");
 	}
 }
 

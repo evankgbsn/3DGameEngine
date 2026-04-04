@@ -19,7 +19,7 @@ WarehouseRoofHorizontalBeam::~WarehouseRoofHorizontalBeam()
 
 void WarehouseRoofHorizontalBeam::Initialize()
 {
-	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofHorizontalBeam"), "WarehouseRoofHorizontalBeam", "WarehouseRoofHorizontalBeamSpec", "WarehouseRoofHorizontalBeam");
+	graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseRoofHorizontalBeam"), "WarehouseRoofHorizontalBeam", "WarehouseRoofHorizontalBeamSpec", "WarehouseRoofHorizontalBeamNormal");
 	graphics->SetShine(4.0f);
 
 	AddComponent(graphics, "Graphics");
@@ -64,6 +64,11 @@ void WarehouseRoofHorizontalBeam::Load()
 	if (!TextureManager::TextureLoaded("WarehouseRoofHorizontalBeamSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Black.png", "WarehouseRoofHorizontalBeamSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("WarehouseRoofHorizontalBeamNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/WarehouseRoofHorizontalBeamNormal.png", "WarehouseRoofHorizontalBeamNormal");
 	}
 }
 

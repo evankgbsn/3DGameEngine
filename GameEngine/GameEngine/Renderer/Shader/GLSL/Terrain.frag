@@ -61,6 +61,8 @@ layout(std140, binding = 6) uniform ViewPositionUBO { ViewPosition pos; } viewPo
 
 layout(std140, binding = 7) uniform MaterialUBO { Material mat; } material;
 
+layout(std140, binding = 11) uniform FogUBO { float fogDensity; float fogGradient; } fog;
+
 
 //--------------------------------------------------
 // Image Texture Data Samplers
@@ -70,6 +72,12 @@ layout(binding = 0) uniform sampler2D diffuseSampler0;
 layout(binding = 1) uniform sampler2D specularSampler0;
 layout(binding = 2) uniform sampler2D diffuseSampler1;
 layout(binding = 3) uniform sampler2D specularSampler1;
+layout(binding = 4) uniform sampler2D diffuseSampler2;
+layout(binding = 5) uniform sampler2D specularSampler2;
+layout(binding = 6) uniform sampler2D diffuseSampler3;
+layout(binding = 7) uniform sampler2D specularSampler3;
+
+layout(binding = 30) uniform sampler2D blendMap;
 layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
@@ -87,12 +95,14 @@ layout(location = 8) in vec4 inLightSpacePosition;
 
 out vec4 color;
 
-vec4 CalcAmbientLight(Ambient light, sampler2D diffuse);
-vec4 CalcDirectionalLight(DirectionalLight light, sampler2D diffuse, sampler2D specular);
-vec4 CalcPointLight(PointLight light, sampler2D diffuse, sampler2D specular);
-vec4 CalcSpotLight(SpotLight light, sampler2D diffuse, sampler2D specular);
+vec4 CalcAmbientLight(Ambient light);
+vec4 CalcDirectionalLight(DirectionalLight light);
+vec4 CalcPointLight(PointLight light);
+vec4 CalcSpotLight(SpotLight light);
 float CalcShadow();
 float CalcPointShadow();
+
+const float tiling = 100.0f;
 
 void main(void)
 {
@@ -100,82 +110,113 @@ void main(void)
 	{
 		if(directionalLight.light[i].lightOn)
 		{
-			if(inPosition.y > -8.2f)
-			{
-				color += CalcDirectionalLight(directionalLight.light[i], diffuseSampler0, specularSampler0);
-			}
-			else
-			{
-				color += CalcDirectionalLight(directionalLight.light[i], diffuseSampler1, specularSampler1);
-			}
+			color += CalcDirectionalLight(directionalLight.light[i]);
 		}
 
 		if(pointLight.light[i].lightOn)
 		{
-			if(inPosition.y > -8.2f)
-			{
-				color += CalcPointLight(pointLight.light[i], diffuseSampler0, specularSampler0);
-			}
-			else
-			{
-				color += CalcPointLight(pointLight.light[i], diffuseSampler1, specularSampler1);
-			}
+			color += CalcPointLight(pointLight.light[i]);
 		}
 
 		if(spotLight.light[i].lightOn)
 		{
-			if(inPosition.y > -8.2f)
-			{
-				color += CalcSpotLight(spotLight.light[i], diffuseSampler0, specularSampler0);
-			}
-			else
-			{
-				color += CalcSpotLight(spotLight.light[i], diffuseSampler1, specularSampler1);
-			}
+			color += CalcSpotLight(spotLight.light[i]);
 		}
 	}
 
+	color += CalcAmbientLight(ambient.light);
 
-	if(inPosition.y > -8.2f)
-	{
-		color += CalcAmbientLight(ambient.light, diffuseSampler0);
-	}
-	else
-	{
-		color += CalcAmbientLight(ambient.light, diffuseSampler1);
-	}
+	float distance = length(viewPosition.pos.position.xyz - inPosition.xyz);
+	float visibility = exp(-pow((distance * fog.fogDensity), fog.fogGradient));
+	visibility = clamp(visibility, 0.0f, 1.0f);
+
+	color = mix(vec4(1.0f, 1.0f, 1.0f, 1.0f), color, visibility);
 };
 
-vec4 CalcAmbientLight(Ambient light, sampler2D diffMap)
+vec4 CalcAmbientLight(Ambient light)
 {
-	return light.color * texture(diffMap, inUV);
+	vec4 blendMapColor = texture(blendMap, inUV);
+
+	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+	vec2 tiledTextureCoord = inUV * tiling;
+
+	vec4 textureColor0 = texture(diffuseSampler0, tiledTextureCoord) * backTextureAmount;
+	vec4 textureSpec0 = texture(specularSampler0, tiledTextureCoord) * backTextureAmount;
+
+	vec4 textureColor1 = texture(diffuseSampler1, tiledTextureCoord) * blendMapColor.r;
+	vec4 textureSpec1 = texture(specularSampler1, tiledTextureCoord) * blendMapColor.r;
+
+	vec4 textureColor2 = texture(diffuseSampler2, tiledTextureCoord) * blendMapColor.g;
+	vec4 textureSpec2 = texture(specularSampler2, tiledTextureCoord) * blendMapColor.g;
+
+	vec4 textureColor3 = texture(diffuseSampler3, tiledTextureCoord) * blendMapColor.b;
+	vec4 textureSpec3 = texture(specularSampler3, tiledTextureCoord) * blendMapColor.b;
+
+	return light.color * textureColor0 * textureColor1 * textureColor2 * textureColor3;
 }
 
-vec4 CalcDirectionalLight(DirectionalLight light, sampler2D diffMap, sampler2D specMap)
+vec4 CalcDirectionalLight(DirectionalLight light)
 {
+	vec4 blendMapColor = texture(blendMap, inUV);
+
+	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+	vec2 tiledTextureCoord = inUV * tiling;
+
+	vec4 textureColor0 = texture(diffuseSampler0, tiledTextureCoord) * backTextureAmount;
+	vec4 textureSpec0 = texture(specularSampler0, tiledTextureCoord) * backTextureAmount;
+
+	vec4 textureColor1 = texture(diffuseSampler1, tiledTextureCoord) * blendMapColor.r;
+	vec4 textureSpec1 = texture(specularSampler1, tiledTextureCoord) * blendMapColor.r;
+
+	vec4 textureColor2 = texture(diffuseSampler2, tiledTextureCoord) * blendMapColor.g;
+	vec4 textureSpec2 = texture(specularSampler2, tiledTextureCoord) * blendMapColor.g;
+
+	vec4 textureColor3 = texture(diffuseSampler3, tiledTextureCoord) * blendMapColor.b;
+	vec4 textureSpec3 = texture(specularSampler3, tiledTextureCoord) * blendMapColor.b;
+
 	float diff = max(dot(inNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
-	vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
+	vec4 diffuseLight = light.color * (diff * (textureColor0 + textureColor1 + textureColor2 + textureColor3));
 
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 	vec3 reflectDir = reflect(light.direction.xyz, inNormal.xyz);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
-	vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
+	vec3 specularLight = (textureSpec0.xyz + textureSpec1.xyz + textureSpec2.xyz + textureSpec3.xyz) * spec * light.color.xyz;
 
 	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
 }
 
-vec4 CalcPointLight(PointLight light, sampler2D diffMap, sampler2D specMap)
+vec4 CalcPointLight(PointLight light)
 {
+	vec4 blendMapColor = texture(blendMap, inUV);
+
+	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+	vec2 tiledTextureCoord = inUV * tiling;
+
+	vec4 textureColor0 = texture(diffuseSampler0, tiledTextureCoord) * backTextureAmount;
+	vec4 textureSpec0 = texture(specularSampler0, tiledTextureCoord) * backTextureAmount;
+
+	vec4 textureColor1 = texture(diffuseSampler1, tiledTextureCoord) * blendMapColor.r;
+	vec4 textureSpec1 = texture(specularSampler1, tiledTextureCoord) * blendMapColor.r;
+
+	vec4 textureColor2 = texture(diffuseSampler2, tiledTextureCoord) * blendMapColor.g;
+	vec4 textureSpec2 = texture(specularSampler2, tiledTextureCoord) * blendMapColor.g;
+
+	vec4 textureColor3 = texture(diffuseSampler3, tiledTextureCoord) * blendMapColor.b;
+	vec4 textureSpec3 = texture(specularSampler3, tiledTextureCoord) * blendMapColor.b;
+
 	// Point Light
 	vec3 normal = normalize(light.position - inPosition).xyz;
 	float diff = max(dot(inNormal.xyz, normal), 0.0f);
-	vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
+	vec4 diffuseLight = light.color * (diff * (textureColor0 + textureColor1 + textureColor2 + textureColor3));
 
 	vec3 lightDir = normalize(light.position - inPosition).xyz;
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 	vec3 halfwayDir = normalize(lightDir + viewDir);
 	float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
-	vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
+	vec3 specularLight = (textureSpec0.xyz + textureSpec1.xyz + textureSpec2.xyz + textureSpec3.xyz) * spec * light.color.xyz;
 
 	float distance = length(light.position - inPosition);
 	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
@@ -183,11 +224,29 @@ vec4 CalcPointLight(PointLight light, sampler2D diffMap, sampler2D specMap)
 	diffuseLight *= attenuation;
 	specularLight *= attenuation;
 
-	return diffuseLight + vec4(specularLight, 1.0f);
+	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
 }
 
-vec4 CalcSpotLight(SpotLight light, sampler2D diffMap, sampler2D specMap)
+vec4 CalcSpotLight(SpotLight light)
 {
+	vec4 blendMapColor = texture(blendMap, inUV);
+
+	float backTextureAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+	vec2 tiledTextureCoord = inUV * tiling;
+
+	vec4 textureColor0 = texture(diffuseSampler0, tiledTextureCoord) * backTextureAmount;
+	vec4 textureSpec0 = texture(specularSampler0, tiledTextureCoord) * backTextureAmount;
+
+	vec4 textureColor1 = texture(diffuseSampler1, tiledTextureCoord) * blendMapColor.r;
+	vec4 textureSpec1 = texture(specularSampler1, tiledTextureCoord) * blendMapColor.r;
+
+	vec4 textureColor2 = texture(diffuseSampler2, tiledTextureCoord) * blendMapColor.g;
+	vec4 textureSpec2 = texture(specularSampler2, tiledTextureCoord) * blendMapColor.g;
+
+	vec4 textureColor3 = texture(diffuseSampler3, tiledTextureCoord) * blendMapColor.b;
+	vec4 textureSpec3 = texture(specularSampler3, tiledTextureCoord) * blendMapColor.b;
+
 	float theta = dot(normalize(light.position - inPosition), -light.direction);
 	float epsilon = light.cutoff - light.outerCutoff;
 	float fadeIntensity = clamp((theta - light.outerCutoff)/ epsilon, 0.0f, 1.0f);
@@ -198,13 +257,13 @@ vec4 CalcSpotLight(SpotLight light, sampler2D diffMap, sampler2D specMap)
 	{
 		vec3 normal = normalize(light.position - inPosition).xyz;
 		float diff = max(dot(inNormal.xyz, normalize(light.position - inPosition).xyz), 0.0f);
-		vec4 diffuseLight = light.color * (diff * texture(diffMap, inUV));
+		vec4 diffuseLight = light.color * (diff * (textureColor0 + textureColor1 + textureColor2 + textureColor3));
 
 		vec3 lightDir = normalize(light.position - inPosition).xyz;
 		vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 		vec3 halfwayDir = normalize(lightDir + viewDir);
 		float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
-		vec3 specularLight = texture(specMap, inUV).xyz * spec * light.color.xyz;
+		vec3 specularLight = (textureSpec0.xyz + textureSpec1.xyz + textureSpec2.xyz + textureSpec3.xyz) * spec * light.color.xyz;
 
 		float distance = length(light.position - inPosition);
 		float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
@@ -218,7 +277,7 @@ vec4 CalcSpotLight(SpotLight light, sampler2D diffMap, sampler2D specMap)
 		lightColor = (diffuseLight + vec4(specularLight, 1.0f));
 	}
 
-	return lightColor;
+	return (1.0f - CalcShadow()) * lightColor;
 }
 
 float CalcShadow()

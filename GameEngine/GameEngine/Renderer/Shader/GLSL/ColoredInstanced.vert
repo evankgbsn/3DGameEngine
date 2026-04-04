@@ -5,6 +5,11 @@ layout(std140, binding = 0) uniform ViewProjection {
     mat4 projection;
 } vp;
 
+layout(binding = 10) uniform ClipPlaneUBO
+{
+    vec4 plane;
+} clipPlaneUBO;
+
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec2 inUV;
@@ -22,7 +27,11 @@ void main(void)
 {
     mat4 transformMatrix = mat4(right, up, forward, translation);
 
-	gl_Position = vp.projection * vp.view * transformMatrix * vec4(inPosition, 1.0f);
+    vec4 worldPosition = transformMatrix * vec4(inPosition, 1.0f);
+
+    gl_ClipDistance[0] = dot(worldPosition, clipPlaneUBO.plane);
+
+	gl_Position = vp.projection * vp.view * worldPosition;
 
     fragColor = color;
 }
