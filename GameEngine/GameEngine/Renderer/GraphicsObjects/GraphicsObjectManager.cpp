@@ -22,6 +22,7 @@
 #include "../Camera/CameraManager.h"
 #include "../Camera/Camera.h"
 #include "../Time/TimeManager.h"
+#include "../Light/LightManager.h"
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
@@ -139,6 +140,8 @@ void GraphicsObjectManager::Update()
 				}
 			}
 		}
+
+		LightManager::ClearLightingUpdateBools();
 	}
 	else
 	{

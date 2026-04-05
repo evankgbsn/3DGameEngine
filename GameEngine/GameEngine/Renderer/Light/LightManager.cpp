@@ -333,6 +333,70 @@ void LightManager::Delete(SpotLight* light)
 	}
 }
 
+bool LightManager::DirectionalLightUpdated()
+{
+	if (instance != nullptr)
+	{
+		return instance->directionalLightUpdated.load();
+	}
+
+	return false;
+}
+
+bool LightManager::PointLightUpdated()
+{
+	if (instance != nullptr)
+	{
+		return instance->pointLightUpdated.load();
+	}
+
+	return false;
+}
+
+bool LightManager::SpotLightUpdated()
+{
+	if (instance != nullptr)
+	{
+		return instance->spotLightUpdated.load();
+	}
+
+	return false;
+}
+
+void LightManager::SetDirectionalLightUpdated(bool updated)
+{
+	if (instance != nullptr)
+	{
+		instance->directionalLightUpdated.store(updated);
+	}
+}
+
+void LightManager::SetPointLightUpdated(bool updated)
+{
+	if (instance != nullptr)
+	{
+		instance->pointLightUpdated.store(updated);
+	}
+}
+
+void LightManager::SetSpotLightUpdated(bool updated)
+{
+	if (instance != nullptr)
+	{
+		instance->spotLightUpdated.store(updated);
+	}
+}
+
+void LightManager::ClearLightingUpdateBools()
+{
+	if (instance != nullptr)
+	{
+		instance->directionalLightUpdated.store(false);
+		instance->pointLightUpdated.store(false);
+		instance->spotLightUpdated.store(false);
+	}
+}
+
 LightManager::LightManager() :
 	directionalLights(std::vector<DirectionalLight*>()),
 	pointLights(std::vector<PointLight*>()),

@@ -46,6 +46,10 @@ GOLit::GOLit(const std::vector<Material>& mats) :
 	
 	glCreateBuffers(1, &fogBuffer);
 	glNamedBufferStorage(fogBuffer, sizeof(FogEffect), &fog, GL_DYNAMIC_STORAGE_BIT);
+
+	LightManager::SetDirectionalLightUpdated(true);
+	LightManager::SetPointLightUpdated(true);
+	LightManager::SetSpotLightUpdated(true);
 }
 
 GOLit::~GOLit()
@@ -78,67 +82,104 @@ void GOLit::UpdateLighting()
 	ambient.ambient = glm::vec4(1.0f) * LightManager::GetAmbientIntensity();
 
 	unsigned int i = 0;
-	for (DirectionalLight* dLight : LightManager::GetDirectionalLights(100))
+	
+	if (LightManager::DirectionalLightUpdated())
 	{
-		directionalLight[i].direction = dLight->GetDirection();
-		directionalLight[i].color = dLight->GetColor();
-		directionalLight[i].lightOn = true;
-		i++;
+		for (DirectionalLight* dLight : LightManager::GetDirectionalLights(100))
+		{
+			directionalLight[i].direction = dLight->GetDirection();
+			directionalLight[i].color = dLight->GetColor();
+			directionalLight[i].lightOn = true;
+			i++;
+		}
+
+		glNamedBufferSubData(directionalLightBuffer, 0, sizeof(directionalLight), &directionalLight);
 	}
 
 	Camera& cam = CameraManager::GetActiveCamera();
 
-	i = 0;
-	for (PointLight* pLight : LightManager::GetPointLights(cam.GetPosition(), 100.0f, 20))
+	if (LightManager::PointLightUpdated())
 	{
-		pointLight[i].position = glm::vec4(pLight->GetPosition(), 1.0f);
-		pointLight[i].color = pLight->GetColor();
-		pointLight[i].constant = pLight->GetConstant();
-		pointLight[i].linear = pLight->GetLinear();
-		pointLight[i].quadratic = pLight->GetQuadratic();
-		pointLight[i].lightOn = true;
-		i++;
+		i = 0;
+		for (PointLight* pLight : LightManager::GetPointLights(cam.GetPosition(), 100.0f, 20))
+		{
+			pointLight[i].position = glm::vec4(pLight->GetPosition(), 1.0f);
+			pointLight[i].color = pLight->GetColor();
+			pointLight[i].constant = pLight->GetConstant();
+			pointLight[i].linear = pLight->GetLinear();
+			pointLight[i].quadratic = pLight->GetQuadratic();
+			pointLight[i].lightOn = true;
+			i++;
+		}
+
+		glNamedBufferSubData(pointLightBuffer, 0, sizeof(pointLight), &pointLight);
 	}
 
-	i = 0;
-	std::vector<SpotLight*> spotLights = LightManager::GetSpotLights(cam.GetPosition(), 100.0f, 20);
-	for (SpotLight* sLight : spotLights)
+	if (LightManager::SpotLightUpdated())
 	{
-		spotLight[i].position = glm::vec4(sLight->GetPosition(), 1.0f);
-		spotLight[i].color = sLight->GetColor();
-		spotLight[i].constant = sLight->GetConstant();
-		spotLight[i].linear = sLight->GetLinear();
-		spotLight[i].quadratic = sLight->GetQuadratic();
-		spotLight[i].cutoff = glm::cos(glm::radians(sLight->GetCutoff()));
-		spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
-		spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
-		spotLight[i].lightOn = true;
-		i++;
+		i = 0;
+		for (SpotLight* sLight : LightManager::GetSpotLights(cam.GetPosition(), 100.0f, 20))
+		{
+			spotLight[i].position = glm::vec4(sLight->GetPosition(), 1.0f);
+			spotLight[i].color = sLight->GetColor();
+			spotLight[i].constant = sLight->GetConstant();
+			spotLight[i].linear = sLight->GetLinear();
+			spotLight[i].quadratic = sLight->GetQuadratic();
+			spotLight[i].cutoff = glm::cos(glm::radians(sLight->GetCutoff()));
+			spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
+			spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
+			spotLight[i].lightOn = true;
+			i++;
+		}
+
+		glNamedBufferSubData(spotLightBuffer, 0, sizeof(SpotLightUBO), &spotLight);
 	}
 
 	glm::vec4 viewPosition = glm::vec4(CameraManager::GetActiveCamera().GetPosition(), 1.0f);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, directionalLightBuffer);
-	glNamedBufferSubData(directionalLightBuffer, 0, sizeof(directionalLight), &directionalLight);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, ambientBuffer);
-	glNamedBufferSubData(ambientBuffer, 0, sizeof(AmbientUBO), &ambient);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 4, pointLightBuffer);
-	glNamedBufferSubData(pointLightBuffer, 0, sizeof(pointLight), &pointLight);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 5, spotLightBuffer);
-	glNamedBufferSubData(spotLightBuffer, 0, sizeof(SpotLightUBO) * 20, &spotLight);
 	
 	glBindBufferBase(GL_UNIFORM_BUFFER, 6, viewPositionBuffer);
-	glNamedBufferSubData(viewPositionBuffer, 0, sizeof(glm::vec4), &viewPosition);
 	
 	glBindBufferBase(GL_UNIFORM_BUFFER, 7, materialBuffer);
-	glNamedBufferSubData(materialBuffer, 0, sizeof(MaterialUBO), &material);
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 11, fogBuffer);
-	glNamedBufferSubData(fogBuffer, 0, sizeof(FogEffect), &fog);
 
+	if (viewPosition != lastViewPos)
+	{
+		glNamedBufferSubData(viewPositionBuffer, 0, sizeof(glm::vec4), &viewPosition);
+	}
+
+	if (lastAmbient != ambient.ambient)
+	{
+		glNamedBufferSubData(ambientBuffer, 0, sizeof(AmbientUBO), &ambient);
+	}
+
+	if (lastShine != material.shine)
+	{
+		glNamedBufferSubData(materialBuffer, 0, sizeof(MaterialUBO), &material);
+	}
+
+	if (lastfogDensity != fog.fogDensity || lastFogGradient != fog.fogGradient)
+	{
+		glNamedBufferSubData(fogBuffer, 0, sizeof(FogEffect), &fog);
+	}
+
+	lastViewPos = viewPosition;
+
+	lastAmbient = ambient.ambient;
+
+	lastfogDensity = fog.fogDensity;
+
+	lastFogGradient = fog.fogGradient;
+
+	lastShine = GetShine();
 }
 
 void GOLit::SetShine(float shine)

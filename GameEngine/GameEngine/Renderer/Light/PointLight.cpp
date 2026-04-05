@@ -2,6 +2,7 @@
 
 #include "../../Collision/SphereWithVisualization.h"
 #include "../Shader/ShaderManager.h"
+#include "LightManager.h"
 
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,6 +22,8 @@ PointLight::PointLight(const glm::vec4& initialColor, const glm::vec3& initialPo
 
 	collider->Transform(transform);
 	collider->Update(transform);
+
+	LightManager::SetPointLightUpdated(true);
 }
 
 PointLight::~PointLight()
@@ -56,19 +59,27 @@ void PointLight::SetPosition(const glm::vec3& newPosition)
 
 	collider->Transform(transform);
 	collider->Update(transform);
+
+	LightManager::SetPointLightUpdated(true);
 }
 
 void PointLight::SetConstant(const float& newConstant)
 {
 	constant = newConstant;
+
+	LightManager::SetPointLightUpdated(true);
 }
 
 void PointLight::SetLinear(const float& newLinear)
 {
 	linear = newLinear;
+
+	LightManager::SetPointLightUpdated(true);
 }
 
 void PointLight::SetQuadratic(const float& newQuadratic)
 {
 	quadratic = newQuadratic;
+
+	LightManager::SetPointLightUpdated(true);
 }

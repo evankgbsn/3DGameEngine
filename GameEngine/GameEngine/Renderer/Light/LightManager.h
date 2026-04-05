@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include <vector>
+#include <atomic>
 
 class DirectionalLight;
 class PointLight;
@@ -47,6 +48,20 @@ public:
 
 	static void Delete(SpotLight* light);
 
+	static bool DirectionalLightUpdated();
+
+	static bool PointLightUpdated();
+
+	static bool SpotLightUpdated();
+
+	static void SetDirectionalLightUpdated(bool updated);
+
+	static void SetPointLightUpdated(bool updated);
+
+	static void SetSpotLightUpdated(bool updated);
+
+	static void ClearLightingUpdateBools();
+
 private:
 
 	friend class SingletonHelpers;
@@ -74,6 +89,12 @@ private:
 	std::vector<PointLight*> pointLights;
 
 	float ambientIntensity;
+
+	std::atomic<bool> directionalLightUpdated = true;
+
+	std::atomic<bool> pointLightUpdated = true;
+
+	std::atomic<bool> spotLightUpdated = true;
 
 };
 

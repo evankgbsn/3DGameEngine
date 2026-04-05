@@ -1,6 +1,7 @@
 #include "SpotLight.h"
 
 #include "../../Collision/SphereWithVisualization.h"
+#include "LightManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -19,6 +20,8 @@ SpotLight::SpotLight(const glm::vec4& initialColor, const glm::vec3& initialPosi
 
 	collider->Transform(transform);
 	collider->Update(transform);
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 SpotLight::~SpotLight()
@@ -43,16 +46,20 @@ const float& SpotLight::GetCutoff() const
 void SpotLight::SetCutoff(float newCutoff)
 {
 	cutoff = glm::cos(glm::radians(newCutoff));
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 const float& SpotLight::GetOuterCuttoff() const
 {
-	return glm::degrees(glm::acos(outerCutoff));;
+	return glm::degrees(glm::acos(outerCutoff));
 }
 
 void SpotLight::SetOuterCutoff(float newOuterCutoff)
 {
 	outerCutoff = glm::cos(glm::radians(newOuterCutoff));
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 const float& SpotLight::GetConstant() const
@@ -62,6 +69,10 @@ const float& SpotLight::GetConstant() const
 
 void SpotLight::SetConstant(float newConstant)
 {
+
+	constant = newConstant;
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 const float& SpotLight::GetLinear() const
@@ -72,6 +83,8 @@ const float& SpotLight::GetLinear() const
 void SpotLight::SetLinear(float newLinear)
 {
 	linear = newLinear;
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 const float& SpotLight::GetQuadratic() const
@@ -82,6 +95,8 @@ const float& SpotLight::GetQuadratic() const
 void SpotLight::SetQuadratic(float newQuadratic)
 {
 	quadratic = newQuadratic;
+
+	LightManager::SetSpotLightUpdated(true);
 }
 
 void SpotLight::SetPosition(const glm::vec3& pos)
@@ -93,4 +108,6 @@ void SpotLight::SetPosition(const glm::vec3& pos)
 	collider->Update(transform);
 
 	position = pos;
+
+	LightManager::SetSpotLightUpdated(true);
 }

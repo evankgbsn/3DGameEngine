@@ -117,6 +117,16 @@ private:
 		float fogGradient;
 	} fog;
 
+	glm::vec4 lastViewPos;
+
+	glm::vec4 lastAmbient;
+
+	float lastfogDensity;
+
+	float lastFogGradient;
+	
+	float lastShine;
+
 };
 
 #endif // GOLIT_H

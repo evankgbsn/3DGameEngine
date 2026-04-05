@@ -3,6 +3,10 @@
 #include "../../Collision/SphereWithVisualization.h"
 #include "../Math/Shapes/LineSegment3D.h"
 #include "../Camera/Camera.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
+#include "SpotLight.h"
+#include "LightManager.h"
 
 const glm::vec4& Light::GetColor() const
 {
@@ -11,6 +15,31 @@ const glm::vec4& Light::GetColor() const
 
 void Light::SetColor(const glm::vec4& newColor)
 {
+	DirectionalLight* dLight = dynamic_cast<DirectionalLight*>(this);
+
+	if (dLight != nullptr)
+	{
+		LightManager::SetDirectionalLightUpdated(true);
+	}
+	else
+	{
+		PointLight* pLight = dynamic_cast<PointLight*>(this);
+
+		if (pLight != nullptr)
+		{
+			LightManager::SetPointLightUpdated(true);
+		}
+		else
+		{
+			SpotLight* sLight = dynamic_cast<SpotLight*>(this);
+
+			if (sLight != nullptr)
+			{
+				LightManager::SetSpotLightUpdated(true);
+			}
+		}
+	}
+
 	color = newColor;
 }
 
