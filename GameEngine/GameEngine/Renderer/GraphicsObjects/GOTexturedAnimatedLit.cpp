@@ -30,18 +30,15 @@ void GOTexturedAnimatedLit::Update()
 {
 	ShaderManager::StartShaderUsage("TexturedAnimatedLit");
 
-
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
-	float near_plane = -100.0f, far_plane = 100.0f;
-	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
+	float near_plane = 0.10f, far_plane = 150.0f;
+	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
 
-	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
-	position.y = 10.0f;
-	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f) + -lightDirection * (far_plane / 2.0f);
 
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
@@ -67,14 +64,12 @@ void GOTexturedAnimatedLit::RenderToShadowMap()
 {
 	ShaderManager::StartShaderUsage("AnimatedShadowMap");
 
-	float near_plane = -100.0f, far_plane = 100.0f;
-	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
+	float near_plane = 0.10f, far_plane = 150.0f;
+	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
 
-	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
-	position.y = 10.0f;
-	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f) + -lightDirection * (far_plane / 2.0f);
 
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
