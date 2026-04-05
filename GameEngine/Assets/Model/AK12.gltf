@@ -18,20 +18,6 @@
 			"name":"ak_12_low_poly"
 		}
 	],
-	"materials":[
-		{
-			"doubleSided":true,
-			"name":"ak_12_PBS",
-			"normalTexture":{
-				"index":0
-			},
-			"pbrMetallicRoughness":{
-				"metallicRoughnessTexture":{
-					"index":1
-				}
-			}
-		}
-	],
 	"meshes":[
 		{
 			"name":"Cylinder.003",
@@ -40,41 +26,19 @@
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
-						"TEXCOORD_0":2
+						"TEXCOORD_0":2,
+						"TANGENT":3
 					},
-					"indices":3,
-					"material":0
+					"indices":4
 				}
 			]
-		}
-	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		},
-		{
-			"sampler":0,
-			"source":1
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/png",
-			"name":"ak_12_transmissive_norm",
-			"uri":"ak_12_transmissive_norm.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"ak_12_transmissive_metal-ak_12_rough",
-			"uri":"ak_12_transmissive_metal-ak_12_rough.png"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":116434,
+			"count":116518,
 			"max":[
 				0.025858882814645767,
 				0.20800788700580597,
@@ -90,57 +54,63 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":116434,
+			"count":116518,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":116434,
+			"count":116518,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
+			"componentType":5126,
+			"count":116518,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":4,
 			"componentType":5125,
-			"count":401406,
+			"count":401382,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1397208,
+			"byteLength":1398216,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1397208,
-			"byteOffset":1397208,
+			"byteLength":1398216,
+			"byteOffset":1398216,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":931472,
-			"byteOffset":2794416,
+			"byteLength":932144,
+			"byteOffset":2796432,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1605624,
-			"byteOffset":3725888,
+			"byteLength":1864288,
+			"byteOffset":3728576,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1605528,
+			"byteOffset":5592864,
 			"target":34963
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":5331512,
+			"byteLength":7198392,
 			"uri":"AK12.bin"
 		}
 	]
