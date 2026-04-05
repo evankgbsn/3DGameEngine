@@ -58,7 +58,7 @@ void FPSPlayer::Initialize()
 {
 	if (SpawnedFromLocalSpawnRequest())
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "Character");
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
@@ -73,7 +73,7 @@ void FPSPlayer::Initialize()
 
 		AddComponent(characterGraphics, "Graphics");
 
-		characterArmsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterArms"), "Character", "CharacterSpec", "Character");
+		characterArmsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterArms"), "Character", "CharacterSpec", "CharacterNormal");
 		characterArmsGraphics->SetClip("Idle");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookUp");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookDown");
@@ -96,7 +96,7 @@ void FPSPlayer::Initialize()
 	}
 	else
 	{
-		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "Character");
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
@@ -121,7 +121,7 @@ void FPSPlayer::Initialize()
 		}
 	}
 
-	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "Character");
+	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "CharacterNormal");
 	ak12Graphics->SetShine(32.0f);
 
 	AddComponent(ak12Graphics, "WeaponGraphics");
@@ -354,6 +354,11 @@ void FPSPlayer::Load()
 	if (!TextureManager::TextureLoaded("CharacterSpec"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTextureSpec.png", "CharacterSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Normal.png", "CharacterNormal");
 	}
 
 	if (SpawnedFromLocalSpawnRequest())
