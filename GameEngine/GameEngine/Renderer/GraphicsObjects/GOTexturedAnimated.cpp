@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 
 GOTexturedAnimated::GOTexturedAnimated(Model* const model, Texture* const tex) :
-	GO3DAnimated(model),
+	GO3DAnimated(model, "TexturedAnimated"),
 	texture(tex)
 {
 	
@@ -21,14 +21,10 @@ GOTexturedAnimated::~GOTexturedAnimated()
 
 void GOTexturedAnimated::Update()
 {
-	ShaderManager::StartShaderUsage("TexturedAnimated");
-
 	texture->Bind(GL_TEXTURE0);
 
 	GO3DAnimated::Update();
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("TexturedAnimated");
 }
 
 Texture* const GOTexturedAnimated::GetTexture() const

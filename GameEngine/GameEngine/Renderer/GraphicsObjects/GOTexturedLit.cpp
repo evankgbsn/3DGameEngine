@@ -12,7 +12,7 @@
 
 GOTexturedLit::GOTexturedLit(Model* const model, const GOLit::Material& material) :
 	GOLit(std::vector<Material>({ material })),
-	GO3D(model)
+	GO3D(model, "TexturedLit")
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
 	glNamedBufferStorage(lightSpaceMatrixBuffer, sizeof(glm::mat4), nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -29,8 +29,6 @@ void GOTexturedLit::Update()
 	{
 		return;
 	}
-
-	ShaderManager::StartShaderUsage("TexturedLit");
 
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
@@ -53,8 +51,6 @@ void GOTexturedLit::Update()
 
 	GOLit::UpdateLighting();
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("TexturedLit");
 }
 
 void GOTexturedLit::RenderToShadowMap()

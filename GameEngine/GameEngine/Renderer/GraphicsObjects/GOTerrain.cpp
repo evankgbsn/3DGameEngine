@@ -9,7 +9,7 @@
 
 GOTerrain::GOTerrain(Model* const model, const std::vector<Material>& textures, const std::string& blendMap) :
 	GOLit(textures),
-	GO3D(model),
+	GO3D(model, "Terrain"),
 	blendMap(TextureManager::GetTexture(blendMap))
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
@@ -25,8 +25,6 @@ GOTerrain::~GOTerrain()
 
 void GOTerrain::Update()
 {
-	ShaderManager::StartShaderUsage("Terrain");
-
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
@@ -56,8 +54,6 @@ void GOTerrain::Update()
 
 	GOLit::UpdateLighting();
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("Terrain");
 }
 
 void GOTerrain::RenderToShadowMap()

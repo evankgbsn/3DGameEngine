@@ -11,7 +11,7 @@
 #include <gl/glew.h>
 
 GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diffuseTexture, Texture* specularTexture, Texture* normalTexture, unsigned int instanceCount) :
-	GraphicsObject(model),
+	GraphicsObject(model, "TexturedLitInstanced"),
 	GOLit(std::vector<Material>({ Material(diffuseTexture, specularTexture, normalTexture) })),
 	translations(std::vector<glm::mat4>(instanceCount)),
 	rotations(std::vector<glm::mat4>(instanceCount)),
@@ -118,8 +118,6 @@ void GOTexturedLitInstanced::Update()
 
 	BindVertexArrayBuffers();
 
-	ShaderManager::StartShaderUsage("TexturedLitInstanced");
-
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
@@ -160,8 +158,6 @@ void GOTexturedLitInstanced::Update()
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawElementsInstanced(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0, (unsigned int)transforms.size());
-
-	ShaderManager::EndShaderUsage("TexturedLitInstanced");
 }
 
 unsigned int GOTexturedLitInstanced::AddInstance()

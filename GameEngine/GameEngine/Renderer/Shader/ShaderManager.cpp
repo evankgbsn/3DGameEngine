@@ -125,7 +125,11 @@ void ShaderManager::Terminate()
 
 ShaderManager::ShaderManager()
 {
+
+#ifdef _DEBUG
 	debugInfo = new GLDebug();
+#endif
+
 	LoadShadersFromShaderDirectory();
 	CreateVAO();
 	CreateShadowMapFramebuffer();

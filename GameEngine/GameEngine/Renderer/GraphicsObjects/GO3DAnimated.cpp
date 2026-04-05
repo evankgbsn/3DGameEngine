@@ -172,8 +172,8 @@ void GO3DAnimated::DeregisterAnimationStopCallback(const std::string& name)
 	animationController->DeregisterAnimationStopCallback(name);
 }
 
-GO3DAnimated::GO3DAnimated(Model* const model) :
-	GO3D(model),
+GO3DAnimated::GO3DAnimated(Model* const model, const std::string& shader) :
+	GO3D(model, shader),
 	animationData(),
 	animationBuffer()
 {

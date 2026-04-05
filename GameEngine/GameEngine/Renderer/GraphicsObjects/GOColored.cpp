@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 
 GOColored::GOColored(Model* const model, const glm::vec4& initialColor) :
-	GO3D(model),
+	GO3D(model, "Colored"),
 	color(initialColor),
 	colorBuffer(0)
 {
@@ -31,12 +31,7 @@ const glm::vec4& GOColored::GetColor() const
 
 void GOColored::Update()
 {
-	ShaderManager::StartShaderUsage("Colored");
-
 	glBindBufferBase(GL_UNIFORM_BUFFER, 1, colorBuffer);
 	
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("Colored");
-
 }

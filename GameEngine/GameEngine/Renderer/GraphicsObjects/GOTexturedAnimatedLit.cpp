@@ -15,7 +15,7 @@
 
 GOTexturedAnimatedLit::GOTexturedAnimatedLit(Model* const model, Texture* const diffuseMap, Texture* const specularMap, Texture* const normalMap) :
 	GOLit(std::vector<Material>({ Material(diffuseMap, specularMap, normalMap) })),
-	GO3DAnimated(model)
+	GO3DAnimated(model, "TexturedAnimatedLit")
 {
 	glCreateBuffers(1, &lightSpaceMatrixBuffer);
 	glNamedBufferStorage(lightSpaceMatrixBuffer, sizeof(glm::mat4), nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -28,8 +28,6 @@ GOTexturedAnimatedLit::~GOTexturedAnimatedLit()
 
 void GOTexturedAnimatedLit::Update()
 {
-	ShaderManager::StartShaderUsage("TexturedAnimatedLit");
-
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
@@ -56,8 +54,6 @@ void GOTexturedAnimatedLit::Update()
 	GOLit::UpdateLighting();
 	GO3DAnimated::Update();
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("TexturedAnimatedLit");
 }
 
 void GOTexturedAnimatedLit::RenderToShadowMap()

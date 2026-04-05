@@ -8,7 +8,7 @@
 #include "../Camera/Camera.h"
 
 GOWater::GOWater(Model* const model) :
-	GO3D(model),
+	GO3D(model, "Water"),
 	effects(
 		{
 			glm::vec4(0.0f, 0.3f, .8f, 1.0f),
@@ -39,8 +39,6 @@ GOWater::~GOWater()
 
 void GOWater::Update()
 {
-	ShaderManager::StartShaderUsage("Water");
-
 	TextureManager::GetTexture("ReflectionTexture")->Bind(GL_TEXTURE0);
 	TextureManager::GetTexture("RefractionTexture")->Bind(GL_TEXTURE1);
 	TextureManager::GetTexture("DuDv")->Bind(GL_TEXTURE2);
@@ -64,6 +62,4 @@ void GOWater::Update()
 	glNamedBufferSubData(fogBuffer, 0, sizeof(FogEffect), &fog);
 
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("Water");
 }

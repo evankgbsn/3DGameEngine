@@ -32,6 +32,25 @@ void GraphicsObjectManager::Update()
 {
 	if (instance != nullptr)
 	{
+		std::unordered_map<std::string, std::vector<GraphicsObject*>> sortedObjects3D;
+		std::unordered_map<std::string, std::vector<GraphicsObject*>> sortedObjects2D;
+
+		for (const auto& graphicsObject : instance->graphicsObjects3D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				sortedObjects3D[graphicsObject->GetShaderName()].push_back(graphicsObject);
+			}
+		}
+
+		for (const auto& graphicsObject : instance->graphicsObjects2D)
+		{
+			if (IsValid(graphicsObject))
+			{
+				sortedObjects2D[graphicsObject->GetShaderName()].push_back(graphicsObject);
+			}
+		}
+
 		GLint maxTextureSize;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
 
@@ -67,12 +86,19 @@ void GraphicsObjectManager::Update()
 		activeCam.SetTarget(activeCam.GetPosition() + glm::vec3(currentCamForward.x, -currentCamForward.y, currentCamForward.z));
 
 		instance->renderingReflections = true;
-		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		for (const auto& shader : sortedObjects3D)
 		{
-			if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
+			ShaderManager::StartShaderUsage(shader.first);
+
+			for (GraphicsObject* graphicsObject : shader.second)
 			{
-				graphicsObject->Update();
+				if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
+				{
+					graphicsObject->Update();
+				}
 			}
+
+			ShaderManager::EndShaderUsage(shader.first);
 		}
 
 		ShaderManager::UnbindCurrentFrameBuffer();
@@ -86,12 +112,19 @@ void GraphicsObjectManager::Update()
 		glCullFace(GL_BACK);
 		ShaderManager::SetClipPlane({ 0.0f, -1.0f, 0.0f, -5.0f });
 
-		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		for (const auto& shader : sortedObjects3D)
 		{
-			if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
+			ShaderManager::StartShaderUsage(shader.first);
+
+			for (GraphicsObject* graphicsObject : shader.second)
 			{
-				graphicsObject->Update();
+				if (IsValid(graphicsObject) && graphicsObject->RenderReflection())
+				{
+					graphicsObject->Update();
+				}
 			}
+
+			ShaderManager::EndShaderUsage(shader.first);
 		}
 		instance->renderingReflections = false;
 
@@ -104,13 +137,22 @@ void GraphicsObjectManager::Update()
 		ShaderManager::SetClipPlane({ 0.0f, -1.0f, 0.0f, 100000000.1f});
 		
 		instance->renderingGraphics = true;
-		for (GraphicsObject* graphicsObject : instance->graphicsObjects3D)
+		for (const auto& shader : sortedObjects3D)
 		{
-			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
+			ShaderManager::StartShaderUsage(shader.first);
+
+			for (GraphicsObject* graphicsObject : shader.second)
 			{
-				graphicsObject->Update();
+				if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
+				{
+					graphicsObject->Update();
+				}
 			}
+
+			ShaderManager::EndShaderUsage(shader.first);
 		}
+
+		ShaderManager::StartShaderUsage("Water");
 
 		for (GraphicsObject* graphicsObject : instance->graphicsObjectsWater)
 		{
@@ -120,12 +162,21 @@ void GraphicsObjectManager::Update()
 			}
 		}
 
-		for (GraphicsObject* graphicsObject : instance->graphicsObjects2D)
+		ShaderManager::EndShaderUsage("Water");
+
+		for (const auto& shader : sortedObjects2D)
 		{
-			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
+			ShaderManager::StartShaderUsage(shader.first);
+
+			for (GraphicsObject* graphicsObject : shader.second)
 			{
-				graphicsObject->Update();
+				if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
+				{
+					graphicsObject->Update();
+				}
 			}
+
+			ShaderManager::EndShaderUsage(shader.first);
 		}
 		instance->renderingGraphics = false;
 

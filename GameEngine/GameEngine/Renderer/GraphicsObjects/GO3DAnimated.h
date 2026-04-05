@@ -65,7 +65,7 @@ public:
 
 protected:
 
-	GO3DAnimated(Model* const model);
+	GO3DAnimated(Model* const model, const std::string& shader);
 
 	virtual ~GO3DAnimated();
 

@@ -11,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 GOSprite::GOSprite(Model* model, Texture* texture, const glm::vec2& initialPosition) :
-	GraphicsObject(model),
+	GraphicsObject(model, "Sprite"),
 	modelMat(1.0f),
 	imageTexture(texture)
 {
@@ -42,8 +42,6 @@ void GOSprite::SetPosition(const glm::vec2& newPosition)
 
 void GOSprite::Update()
 {
-	ShaderManager::StartShaderUsage("Sprite");
-
 	model->BindBuffer();
 
 	imageTexture->Bind(GL_TEXTURE0);
@@ -65,8 +63,6 @@ void GOSprite::Update()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 	glDisable(GL_BLEND);
-
-	ShaderManager::EndShaderUsage("Sprite");
 }
 
 void GOSprite::Translate(const glm::vec2& translation)

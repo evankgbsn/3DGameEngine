@@ -8,7 +8,7 @@
 #include <GL/glew.h>
 
 GOColoredAnimated::GOColoredAnimated(Model* const model, glm::vec4 initialColor) :
-	GO3DAnimated(model),
+	GO3DAnimated(model, "ColoredAnimated"),
 	color(initialColor),
 	colorBuffer()
 {
@@ -30,15 +30,11 @@ GOColoredAnimated::~GOColoredAnimated()
 
 void GOColoredAnimated::Update()
 {
-	ShaderManager::StartShaderUsage("ColoredAnimated");
-
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, colorBuffer);
 	glNamedBufferSubData(colorBuffer, 0, sizeof(glm::vec4), &color);
 
 	GO3DAnimated::Update();
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("ColoredAnimated");
 }
 
 const glm::vec4& GOColoredAnimated::GetColor() const

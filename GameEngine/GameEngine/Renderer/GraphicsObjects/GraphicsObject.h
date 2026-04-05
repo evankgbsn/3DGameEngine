@@ -2,6 +2,7 @@
 #define GRAPHICSOBJECT_H
 
 #include <vector>
+#include <string>
 
 class Model;
 
@@ -26,20 +27,21 @@ public:
 
 	void SetRenderGraphics(bool val);
 
+	const std::string& GetShaderName() const;
+
 protected:
 
 	friend class GraphicsObjectManager;
 
 	GraphicsObject();
 
-	GraphicsObject(Model* const model);
+	GraphicsObject(Model* const model, const std::string& shader);
 
 	virtual ~GraphicsObject();
 
 	virtual void Update() = 0;
 
 	virtual void RenderToShadowMap();
-
 
 	Model* model;
 
@@ -60,6 +62,8 @@ private:
 	bool renderReflection = true;
 
 	bool renderGraphics = true;
+
+	const std::string shaderName;
 
 };
 

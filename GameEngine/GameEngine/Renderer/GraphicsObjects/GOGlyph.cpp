@@ -21,7 +21,7 @@ GOGlyph::GOGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& pos,
 		}, 
 		{0,1,2,3,4,5},
 		false
-	)),
+	), "Font"),
 	glyph(g),
 	color(c),
 	position(pos),
@@ -50,8 +50,6 @@ GOGlyph::~GOGlyph()
 
 void GOGlyph::Update()
 {
-	ShaderManager::StartShaderUsage("Font");
-
 	model->BindBuffer();
 
 	glActiveTexture(GL_TEXTURE0);
@@ -74,8 +72,6 @@ void GOGlyph::Update()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDisable(GL_BLEND);
-
-	ShaderManager::EndShaderUsage("Font");
 }
 
 void GOGlyph::SetPosition(const glm::vec2& newPosition)

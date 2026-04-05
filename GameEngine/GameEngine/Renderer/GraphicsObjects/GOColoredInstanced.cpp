@@ -11,7 +11,7 @@
 std::list<unsigned int> GOColoredInstanced::removedInstances;
 
 GOColoredInstanced::GOColoredInstanced(Model* const model, const glm::vec4& initialColor, unsigned int instanceCount) :
-	GraphicsObject(model),
+	GraphicsObject(model, "ColoredInstanced"),
 	translations(std::vector<glm::mat4>(instanceCount)),
 	rotations(std::vector<glm::mat4>(instanceCount)),
 	scales(std::vector<glm::mat4>(instanceCount)),
@@ -119,8 +119,6 @@ const glm::vec4& GOColoredInstanced::GetColor(unsigned int instanceID) const
 
 void GOColoredInstanced::Update()
 {
-	ShaderManager::StartShaderUsage("ColoredInstanced");
-
 	model->BindBuffer();
 
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, viewProjectionBuffer);
@@ -138,8 +136,6 @@ void GOColoredInstanced::Update()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glDrawElements(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 	glDrawElementsInstanced(GL_TRIANGLES, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0, (unsigned int)transforms.size());
-
-	ShaderManager::EndShaderUsage("ColoredInstanced");
 }
 
 unsigned int GOColoredInstanced::AddInstance()

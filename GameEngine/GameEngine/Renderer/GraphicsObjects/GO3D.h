@@ -103,7 +103,7 @@ protected:
 
 	friend class GraphicsObjectManager;
 
-	GO3D(Model* const model);
+	GO3D(Model* const model, const std::string& shader);
 
 	virtual ~GO3D();
 

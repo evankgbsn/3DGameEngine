@@ -23,8 +23,8 @@ void GO3D::SetPointSize(float size)
 	pointSize = size;
 }
 
-GO3D::GO3D(Model* const model) :
-	GraphicsObject(model),
+GO3D::GO3D(Model* const model, const std::string& shader) :
+	GraphicsObject(model, shader),
 	mvp({ glm::mat4(1.0f), glm::mat4(1.0f), glm::mat4(1.0f) }),
 	mvpBuffer(),
 	translation(glm::mat4(1.0f)),

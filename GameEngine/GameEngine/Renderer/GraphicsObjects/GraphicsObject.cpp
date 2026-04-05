@@ -37,13 +37,19 @@ void GraphicsObject::SetRenderGraphics(bool val)
 	renderGraphics = val;
 }
 
+const std::string& GraphicsObject::GetShaderName() const
+{
+	return shaderName;
+}
+
 GraphicsObject::GraphicsObject()
 {
 }
 
-GraphicsObject::GraphicsObject(Model* const m) :
+GraphicsObject::GraphicsObject(Model* const m, const std::string& shader) :
 	model(m),
-	isDisabled(false)
+	isDisabled(false),
+	shaderName(shader)
 {
 }
 

@@ -33,6 +33,13 @@
 
 #include <iostream>
 
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include "Windows.h"
+#endif
+
 Engine* Engine::instance = nullptr;
 
 void Engine::Initialize()
@@ -47,6 +54,9 @@ void Engine::Initialize()
 
 #ifdef _CLIENT
 	NetworkManager::Start(false);
+#ifdef _WIN32
+	FreeConsole();
+#endif
 #endif
 
 }

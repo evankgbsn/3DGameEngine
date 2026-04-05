@@ -6,7 +6,7 @@
 #include "GL/glew.h"
 
 GOTextured::GOTextured(Model* const model, Texture* const tex) :
-	GO3D(model),
+	GO3D(model, "Textured"),
 	texture(tex)
 {
 }
@@ -22,11 +22,7 @@ Texture* const GOTextured::GetTexture() const
 
 void GOTextured::Update()
 {
-	ShaderManager::StartShaderUsage("Textured");
-
 	texture->Bind(GL_TEXTURE0);
 
 	GO3D::Update();
-
-	ShaderManager::EndShaderUsage("Textured");
 }

@@ -11,7 +11,7 @@
 unsigned int GOLineColored::lineModelId = 0;
 
 GOLineColored::GOLineColored(const glm::vec3& s, const glm::vec3& e, const glm::vec4& c) :
-	GraphicsObject(ModelManager::LoadModel(std::string("GOLineColored") + std::to_string(lineModelId++), { Vertex(s, {}, {}), Vertex(e, {}, {}) }, {0, 1}, false)),
+	GraphicsObject(ModelManager::LoadModel(std::string("GOLineColored") + std::to_string(lineModelId++), { Vertex(s, {}, {}), Vertex(e, {}, {}) }, {0, 1}, false), "Colored"),
 	start(s),
 	end(s),
 	color(c),
@@ -35,8 +35,6 @@ GOLineColored::~GOLineColored()
 
 void GOLineColored::Update()
 {
-	ShaderManager::StartShaderUsage("Colored");
-
 	GLfloat currentLineWidth;
 	glGetFloatv(GL_LINE_WIDTH, &currentLineWidth);
 	glLineWidth(lineWidth);
@@ -57,8 +55,6 @@ void GOLineColored::Update()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_LINE_STRIP, (int)model->GetIndices().size(), GL_UNSIGNED_INT, 0);
 	glLineWidth(currentLineWidth);
-
-	ShaderManager::EndShaderUsage("Colored");
 }
 
 void GOLineColored::SetColor(const glm::vec4& c)

@@ -284,6 +284,8 @@
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -317,6 +319,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -350,6 +354,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -387,6 +393,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -424,6 +432,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -461,6 +471,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Lib>
     <PreBuildEvent>
       <Command>
