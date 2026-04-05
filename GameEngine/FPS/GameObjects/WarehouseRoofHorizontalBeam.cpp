@@ -68,7 +68,7 @@ void WarehouseRoofHorizontalBeam::Load()
 
 	if (!TextureManager::TextureLoaded("WarehouseRoofHorizontalBeamNormal"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/WarehouseRoofHorizontalBeamNormal.png", "WarehouseRoofHorizontalBeamNormal");
+		TextureManager::LoadTexture("Assets/Texture/Normal.png", "WarehouseRoofHorizontalBeamNormal");
 	}
 }
 

@@ -17,7 +17,7 @@ Crate::~Crate()
 
 void Crate::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Crate"), "Crate", "CrateSpec", "Crate");
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("Crate"), "Crate", "CrateSpec", "CrateNormal");
     graphics->SetShine(32.0f);
     graphics->SetPosition({ 0.0f, 3.0f, 0.0f });
    
@@ -63,6 +63,11 @@ void Crate::Load()
     if (!TextureManager::TextureLoaded("CrateSpec"))
     {
         TextureManager::LoadTexture("Assets/Texture/container2_specular.png", "CrateSpec");
+    }
+
+    if (!TextureManager::TextureLoaded("CrateNormal"))
+    {
+        TextureManager::LoadTexture("Assets/Texture/Normal.png", "CrateNormal");
     }
 }
 

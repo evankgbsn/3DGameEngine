@@ -108,9 +108,9 @@ void GOLit::UpdateLighting()
 		spotLight[i].color = sLight->GetColor();
 		spotLight[i].constant = sLight->GetConstant();
 		spotLight[i].linear = sLight->GetLinear();
-		spotLight[i].quadratic = sLight->GetQudratic();
-		spotLight[i].cutoff = sLight->GetCutoff();
-		spotLight[i].outerCutoff = sLight->GetOuterCuttoff();
+		spotLight[i].quadratic = sLight->GetQuadratic();
+		spotLight[i].cutoff = glm::cos(glm::radians(sLight->GetCutoff()));
+		spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
 		spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
 		spotLight[i].lightOn = true;
 		i++;

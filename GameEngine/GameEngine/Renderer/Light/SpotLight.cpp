@@ -37,12 +37,22 @@ const glm::vec3& SpotLight::GetDirection() const
 
 const float& SpotLight::GetCutoff() const
 {
-	return cutoff;
+	return glm::degrees(glm::acos(cutoff));
+}
+
+void SpotLight::SetCutoff(float newCutoff)
+{
+	cutoff = glm::cos(glm::radians(newCutoff));
 }
 
 const float& SpotLight::GetOuterCuttoff() const
 {
-	return outerCutoff;
+	return glm::degrees(glm::acos(outerCutoff));;
+}
+
+void SpotLight::SetOuterCutoff(float newOuterCutoff)
+{
+	outerCutoff = glm::cos(glm::radians(newOuterCutoff));
 }
 
 const float& SpotLight::GetConstant() const
@@ -50,14 +60,28 @@ const float& SpotLight::GetConstant() const
 	return constant;
 }
 
+void SpotLight::SetConstant(float newConstant)
+{
+}
+
 const float& SpotLight::GetLinear() const
 {
 	return linear;
 }
 
-const float& SpotLight::GetQudratic() const
+void SpotLight::SetLinear(float newLinear)
+{
+	linear = newLinear;
+}
+
+const float& SpotLight::GetQuadratic() const
 {
 	return quadratic;
+}
+
+void SpotLight::SetQuadratic(float newQuadratic)
+{
+	quadratic = newQuadratic;
 }
 
 void SpotLight::SetPosition(const glm::vec3& pos)

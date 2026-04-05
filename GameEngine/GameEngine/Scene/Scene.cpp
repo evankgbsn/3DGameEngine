@@ -761,10 +761,11 @@ void Scene::AddToCreatedObjects(const std::string& name, GameObject* obj)
 
 void Scene::RemoveFromCreatedObjects(const std::string& name)
 {
-	GameObject* objectToRemove = GetGameObject(name);
-	DeregisterGameObject(name, [](GameObject*) {});
+	DeregisterGameObject(name, [name](GameObject* object) {
+			delete object;
+		});
+
 	createdObjects.erase(createdObjects.find(name));
-	delete objectToRemove;
 }
 
 void Scene::ClearCreatedObjects()

@@ -18,13 +18,23 @@ public:
 
 	const float& GetCutoff() const;
 
+	void SetCutoff(float newCutoff);
+
 	const float& GetOuterCuttoff() const;
+
+	void SetOuterCutoff(float newOuterCutoff);
 
 	const float& GetConstant() const;
 
+	void SetConstant(float newConstant);
+
 	const float& GetLinear() const;
 
-	const float& GetQudratic() const;
+	void SetLinear(float newLinear);
+
+	const float& GetQuadratic() const;
+
+	void SetQuadratic(float newQuadratic);
 
 	void SetPosition(const glm::vec3& pos);
 

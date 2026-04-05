@@ -68,7 +68,7 @@ void WarehouseVerticalBeamCorner::Load()
 
 	if (!TextureManager::TextureLoaded("WarehouseVerticalBeamCornerNormal"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/WarehouseVerticalBeamCornerNormal.png", "WarehouseVerticalBeamCornerNormal");
+		TextureManager::LoadTexture("Assets/Texture/Normal.png", "WarehouseVerticalBeamCornerNormal");
 	}
 }
 

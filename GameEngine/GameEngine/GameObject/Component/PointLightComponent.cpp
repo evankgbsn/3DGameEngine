@@ -46,6 +46,9 @@ void PointLightComponent::Serialize()
 {
 	savedVec3s["ColorIntensity"] = GetColor();
 	savedVec3s["Position"] = GetPosition();
+	savedFloats["Linear"] = GetLinear();
+	savedFloats["Constant"] = GetConstant();
+	savedFloats["Quadratic"] = GetQuadratic();
 }
 
 void PointLightComponent::Deserialize()
@@ -56,6 +59,9 @@ void PointLightComponent::Deserialize()
 	}
 
 	light = LightManager::CreatePointLight(glm::vec4(savedVec3s["ColorIntensity"], 1.0f), savedVec3s["Position"]);
+	//light->SetLinear(savedFloats["Linear"]);
+	//light->SetConstant(savedFloats["Constant"]);
+	//light->SetQuadratic(savedFloats["Quadratic"]);
 }
 
 void PointLightComponent::Update()
