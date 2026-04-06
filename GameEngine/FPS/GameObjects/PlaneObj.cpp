@@ -18,7 +18,7 @@ PlaneObj::~PlaneObj()
 
 void PlaneObj::Initialize()
 {
-    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseGround"), "WarehouseGround", "WarehouseGroundSpec", "WarehouseGround");
+    graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("WarehouseGround"), "WarehouseGround", "WarehouseGroundSpec", "WarehouseGroundNormal");
     graphics->SetShine(4.0f);
 
     body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
@@ -58,6 +58,11 @@ void PlaneObj::Load()
     if (!TextureManager::TextureLoaded("WarehouseGroundSpec"))
     {
         TextureManager::LoadTexture("Assets/Texture/WarehouseGroundTextureSpec.png", "WarehouseGroundSpec");
+    }
+
+    if (!TextureManager::TextureLoaded("WarehouseGroundNormal"))
+    {
+        TextureManager::LoadTexture("Assets/Texture/Normal.png", "WarehouseGroundNormal");
     }
 }
 

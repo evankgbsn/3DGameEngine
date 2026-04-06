@@ -185,15 +185,15 @@ std::vector<SpotLight*> LightManager::GetSpotLights(const glm::vec3& fromPositio
 
 	if (instance != nullptr)
 	{
-		for (SpotLight* pLight : instance->spotLights)
+		for (SpotLight* sLight : instance->spotLights)
 		{
-			if (IsValid(pLight))
+			if (IsValid(sLight))
 			{
-				float distance = glm::length(fromPosition - pLight->GetPosition());
+				float distance = glm::length(fromPosition - sLight->GetPosition());
 
 				if (distance < maxDistance)
 				{
-					lights.push_back(pLight);
+					lights.push_back(sLight);
 				}
 			}
 		}

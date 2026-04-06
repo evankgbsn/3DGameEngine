@@ -132,7 +132,7 @@ void GOLit::UpdateLighting()
 			i++;
 		}
 
-		glNamedBufferSubData(spotLightBuffer, 0, sizeof(SpotLightUBO), &spotLight);
+		glNamedBufferSubData(spotLightBuffer, 0, sizeof(spotLight), &spotLight);
 	}
 
 	glm::vec4 viewPosition = glm::vec4(CameraManager::GetActiveCamera().GetPosition(), 1.0f);
