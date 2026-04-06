@@ -443,6 +443,24 @@ void FPSPlayer::Start()
 
 void FPSPlayer::RegisterInput()
 {
+	static std::function<void(int)> escapeCursor = [](int keyCode)
+		{
+			static bool enabled = false;
+
+			if (!enabled)
+			{
+				InputManager::EnableCursor("Engine");
+				enabled = true;
+			}
+			else
+			{
+				InputManager::DisableCursor("Engine");
+				enabled = false;
+			}
+		};
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, &escapeCursor, "FreeCursor");
+
 	animationStartCallback = new std::function<void(const std::string&)>([this](const std::string&)
 		{
 			if (characterGraphics->isFading())

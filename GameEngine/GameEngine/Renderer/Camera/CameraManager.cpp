@@ -2,6 +2,7 @@
 
 #include "../../Utils/Logger.h"
 #include "../Window/Window.h"
+#include "../Window/WindowManager.h"
 
 CameraManager* CameraManager::instance = nullptr;
 
@@ -13,6 +14,8 @@ void CameraManager::Initialize()
 	if (instance == nullptr)
 	{
 		instance = new CameraManager();
+		CreateCamera(Camera::Type::PERSPECTIVE, "Main", WindowManager::GetWindow("Engine"));
+		SetActiveCamera("Main");
 	}
 	else
 	{
@@ -132,7 +135,7 @@ Camera& CameraManager::GetActiveCamera()
 CameraManager::CameraManager() :
 	cameras(std::unordered_map<std::string, Camera* const>())
 {
-
+	
 }
 
 CameraManager::~CameraManager()
