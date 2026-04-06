@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene name="FPS.xml" type="class Test">
+	<Object type="WarehouseBrickWall" name="WarehouseBrickWall79">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="24.323090"/>
+				<float Y="-0.000545"/>
+				<float Z="-30.320286"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="24.323090"/>
+				<float WY="-0.000545"/>
+				<float WZ="-30.320286"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseBrickWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseBrickWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="WarehouseBrickWall" name="WarehouseBrickWall">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -65,6 +133,142 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseBrickWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer16">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="12.196140"/>
+				<float Y="1.637039"/>
+				<float Z="17.771225"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="12.196140"/>
+				<float WY="1.637039"/>
+				<float WZ="17.771225"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam51">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="24.146845"/>
+				<float Y="4.851015"/>
+				<float Z="-4.750228"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="24.146845"/>
+				<float WY="4.851015"/>
+				<float WZ="-4.750228"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseHorizontalBeamSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseHorizontalBeamNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -218,6 +422,74 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer30">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="12.194038"/>
+				<float Y="4.815748"/>
+				<float Z="19.276564"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="12.194038"/>
+				<float WY="4.815748"/>
+				<float WZ="19.276564"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="PlaneObj" name="Plane">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -248,6 +520,205 @@
 			</Variable>
 			<Variable type="string" name="ModelName">
 				<string val="WarehouseGround"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="SpawnPoint" name="SpawnPoint">
+		<Component type="GraphicsObjectColored" name="ArrowGraphics">
+			<Variable type="vec3" name="Color">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.855616"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.517609"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.517609"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.855616"/>
+				<float ZW="0.000000"/>
+				<float WX="-1.607767"/>
+				<float WY="4.052539"/>
+				<float WZ="19.546007"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Arrow"/>
+			</Variable>
+		</Component>
+		<Component type="BoundingSphereComponent" name="BoundingSphere">
+			<Variable type="float" name="Radius">
+				<float val="1.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Origin">
+				<float X="-1.607767"/>
+				<float Y="4.052539"/>
+				<float Z="19.546007"/>
+			</Variable>
+			<Variable type="vec3" name="Offset">
+				<float X="-0.000000"/>
+				<float Y="0.000000"/>
+				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-1.607767"/>
+				<float WY="4.052539"/>
+				<float WZ="19.546007"/>
+				<float WW="1.000000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseWindowWall" name="WarehouseWindowWall64">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="31.955357"/>
+				<float Y="5.073905"/>
+				<float Z="-12.507792"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.010594"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999944"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999944"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.010594"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.010593"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999943"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999943"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.010593"/>
+				<float ZW="0.000000"/>
+				<float WX="31.955357"/>
+				<float WY="5.073905"/>
+				<float WZ="-12.507792"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseWindowWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseWindowWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer17">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="12.216258"/>
+				<float Y="1.636689"/>
+				<float Z="21.181156"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="12.216258"/>
+				<float WY="1.636689"/>
+				<float WZ="21.181156"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -478,6 +949,74 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer20">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-15.621830"/>
+				<float Y="1.636028"/>
+				<float Z="0.419774"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.015659"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999877"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999877"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.015659"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.015659"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999878"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999878"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.015659"/>
+				<float ZW="0.000000"/>
+				<float WX="-15.621830"/>
+				<float WY="1.636028"/>
+				<float WZ="0.419774"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="WarehouseWindowWall" name="WarehouseWindowWall">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -543,6 +1082,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseWindowWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseBrickWall" name="WarehouseBrickWall57">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="31.913767"/>
+				<float Y="0.000018"/>
+				<float Z="-7.391227"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.007499"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999972"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999972"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.007499"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.007499"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999971"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999971"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.007499"/>
+				<float ZW="0.000000"/>
+				<float WX="31.913767"/>
+				<float WY="0.000018"/>
+				<float WZ="-7.391227"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseBrickWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseBrickWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -818,6 +1425,74 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer28">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-10.376473"/>
+				<float Y="1.636652"/>
+				<float Z="-11.009168"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-10.376473"/>
+				<float WY="1.636652"/>
+				<float WZ="-11.009168"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -888,30 +1563,30 @@
 	</Object>
 	<Object type="SpotLightObject" name="SpotLight">
 		<Component type="SpotLightComponent" name="Light">
-			<Variable type="float" name="Linear">
-				<float val="0.090000"/>
-			</Variable>
 			<Variable type="float" name="Cutoff">
 				<float val="45.697620"/>
+			</Variable>
+			<Variable type="float" name="Linear">
+				<float val="0.090000"/>
 			</Variable>
 			<Variable type="float" name="Constant">
 				<float val="1.000000"/>
 			</Variable>
-			<Variable type="float" name="Quadratic">
-				<float val="0.032000"/>
-			</Variable>
 			<Variable type="float" name="OuterCutoff">
 				<float val="70.333191"/>
 			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="16.366413"/>
-				<float Y="5.976761"/>
-				<float Z="-12.393476"/>
+			<Variable type="float" name="Quadratic">
+				<float val="0.032000"/>
 			</Variable>
 			<Variable type="vec3" name="Direction">
 				<float X="0.000000"/>
 				<float Y="-1.000000"/>
 				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="16.366413"/>
+				<float Y="5.976761"/>
+				<float Z="-12.393476"/>
 			</Variable>
 			<Variable type="vec3" name="ColorIntensity">
 				<float X="3.000000"/>
@@ -920,615 +1595,17 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall79">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="24.323090"/>
-				<float Y="-0.000545"/>
-				<float Z="-30.320286"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="24.323090"/>
-				<float WY="-0.000545"/>
-				<float WZ="-30.320286"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseBrickWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseBrickWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam51">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="24.146845"/>
-				<float Y="4.851015"/>
-				<float Z="-4.750228"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="24.146845"/>
-				<float WY="4.851015"/>
-				<float WZ="-4.750228"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseHorizontalBeamSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseHorizontalBeamNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer16">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="12.196140"/>
-				<float Y="1.637039"/>
-				<float Z="17.771225"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="12.196140"/>
-				<float WY="1.637039"/>
-				<float WZ="17.771225"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer30">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="12.194038"/>
-				<float Y="4.815748"/>
-				<float Z="19.276564"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="12.194038"/>
-				<float WY="4.815748"/>
-				<float WZ="19.276564"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer17">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="12.216258"/>
-				<float Y="1.636689"/>
-				<float Z="21.181156"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="12.216258"/>
-				<float WY="1.636689"/>
-				<float WZ="21.181156"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall64">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="31.955357"/>
-				<float Y="5.073905"/>
-				<float Z="-12.507792"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.010594"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999944"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999944"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.010594"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.010593"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999943"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999943"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.010593"/>
-				<float ZW="0.000000"/>
-				<float WX="31.955357"/>
-				<float WY="5.073905"/>
-				<float WZ="-12.507792"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseWindowWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseWindowWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer20">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="-15.621830"/>
-				<float Y="1.636028"/>
-				<float Z="0.419774"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.015659"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999877"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999877"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.015659"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.015659"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999878"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999878"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.015659"/>
-				<float ZW="0.000000"/>
-				<float WX="-15.621830"/>
-				<float WY="1.636028"/>
-				<float WZ="0.419774"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall57">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="31.913767"/>
-				<float Y="0.000018"/>
-				<float Z="-7.391227"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.007499"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999972"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999972"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.007499"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.007499"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999971"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999971"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.007499"/>
-				<float ZW="0.000000"/>
-				<float WX="31.913767"/>
-				<float WY="0.000018"/>
-				<float WZ="-7.391227"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseBrickWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseBrickWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer28">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="-10.376473"/>
-				<float Y="1.636652"/>
-				<float Z="-11.009168"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="-10.376473"/>
-				<float WY="1.636652"/>
-				<float WZ="-11.009168"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
+	<Object type="Sun" name="Sun1">
+		<Component type="DirectionalLightComponent" name="Light">
+			<Variable type="vec3" name="Direction">
+				<float X="0.330000"/>
+				<float Y="-0.330000"/>
+				<float Z="0.330000"/>
+			</Variable>
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="0.250000"/>
+				<float Y="0.125000"/>
+				<float Z="0.125000"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -1597,20 +1674,6 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseWindowWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="Sun" name="Sun1">
-		<Component type="DirectionalLightComponent" name="Light">
-			<Variable type="vec3" name="Direction">
-				<float X="0.330000"/>
-				<float Y="-0.330000"/>
-				<float Z="0.330000"/>
-			</Variable>
-			<Variable type="vec3" name="ColorIntensity">
-				<float X="0.250000"/>
-				<float Y="0.125000"/>
-				<float Z="0.125000"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -1750,28 +1813,28 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall75">
+	<Object type="ShippingContainer" name="ShippingContainer19">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="32.005604"/>
-				<float Y="5.073889"/>
-				<float Z="-27.709837"/>
+				<float X="12.356253"/>
+				<float Y="1.636686"/>
+				<float Z="24.604893"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="0.001608"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999999"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999999"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.001608"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -1779,7 +1842,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainer"/>
 			</Variable>
 		</Component>
 		<Component type="GraphicsObjectTexturedLit" name="Graphics">
@@ -1787,34 +1850,34 @@
 				<float val="4.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="0.001607"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999998"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999998"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.001607"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="32.005604"/>
-				<float WY="5.073889"/>
-				<float WZ="-27.709837"/>
+				<float WX="12.356253"/>
+				<float WY="1.636686"/>
+				<float WZ="24.604893"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainer"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainerRed"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseWindowWallSpec"/>
+				<string val="ShippingContainerSpec"/>
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseWindowWallNormal"/>
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -1886,86 +1949,18 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer19">
+	<Object type="WarehouseWindowWall" name="WarehouseWindowWall75">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="12.356253"/>
-				<float Y="1.636686"/>
-				<float Z="24.604893"/>
+				<float X="32.005604"/>
+				<float Y="5.073889"/>
+				<float Z="-27.709837"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="12.356253"/>
-				<float WY="1.636686"/>
-				<float WZ="24.604893"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner56">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="31.901077"/>
-				<float Y="0.000000"/>
-				<float Z="-4.827831"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.001050"/>
+				<float XX="0.001608"/>
 				<float XY="0.000000"/>
 				<float XZ="-0.999999"/>
 				<float XW="0.000000"/>
@@ -1975,7 +1970,7 @@
 				<float YW="0.000000"/>
 				<float ZX="0.999999"/>
 				<float ZY="0.000000"/>
-				<float ZZ="-0.001050"/>
+				<float ZZ="0.001608"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -1983,7 +1978,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseVerticalBeamCorner"/>
+				<string val="WarehouseWindowWall"/>
 			</Variable>
 		</Component>
 		<Component type="GraphicsObjectTexturedLit" name="Graphics">
@@ -1991,7 +1986,7 @@
 				<float val="4.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="-0.001051"/>
+				<float XX="0.001607"/>
 				<float XY="0.000000"/>
 				<float XZ="-0.999998"/>
 				<float XW="0.000000"/>
@@ -2001,24 +1996,24 @@
 				<float YW="0.000000"/>
 				<float ZX="0.999998"/>
 				<float ZY="0.000000"/>
-				<float ZZ="-0.001051"/>
+				<float ZZ="0.001607"/>
 				<float ZW="0.000000"/>
-				<float WX="31.901077"/>
-				<float WY="0.000000"/>
-				<float WZ="-4.827831"/>
+				<float WX="32.005604"/>
+				<float WY="5.073889"/>
+				<float WZ="-27.709837"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseVerticalBeamCorner"/>
+				<string val="WarehouseWindowWall"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseVerticalBeamCorner"/>
+				<string val="WarehouseWindowWall"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseVerticalBeamCornerSpec"/>
+				<string val="WarehouseWindowWallSpec"/>
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseVerticalBeamCornerNormal"/>
+				<string val="WarehouseWindowWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -2087,6 +2082,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner56">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="31.901077"/>
+				<float Y="0.000000"/>
+				<float Z="-4.827831"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.001051"/>
+				<float XY="0.000000"/>
+				<float XZ="-1.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="1.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.001051"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseVerticalBeamCorner"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.001051"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999998"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999998"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.001051"/>
+				<float ZW="0.000000"/>
+				<float WX="31.901077"/>
+				<float WY="0.000000"/>
+				<float WZ="-4.827831"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseVerticalBeamCorner"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseVerticalBeamCorner"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseVerticalBeamCornerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseVerticalBeamCornerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -2210,6 +2273,74 @@
 				<float WX="-28.096426"/>
 				<float WY="1.637556"/>
 				<float WZ="9.252624"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer24">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-10.484039"/>
+				<float Y="1.636694"/>
+				<float Z="-14.473693"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-10.484039"/>
+				<float WY="1.636694"/>
+				<float WZ="-14.473693"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -2362,74 +2493,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer24">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="-10.484039"/>
-				<float Y="1.636694"/>
-				<float Z="-14.473693"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="-10.484039"/>
-				<float WY="1.636694"/>
-				<float WZ="-14.473693"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer25">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -2482,74 +2545,6 @@
 				<float WX="-27.469936"/>
 				<float WY="1.636686"/>
 				<float WZ="-14.308907"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer26">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="12.112967"/>
-				<float Y="7.998096"/>
-				<float Z="24.329613"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="12.112967"/>
-				<float WY="7.998096"/>
-				<float WZ="24.329613"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -2631,6 +2626,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseVerticalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer26">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="12.112967"/>
+				<float Y="7.998096"/>
+				<float Z="24.329613"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="12.112967"/>
+				<float WY="7.998096"/>
+				<float WZ="24.329613"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -2838,74 +2901,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall77">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="29.407143"/>
-				<float Y="-0.010485"/>
-				<float Z="-30.326180"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="29.407143"/>
-				<float WY="-0.010485"/>
-				<float WZ="-30.326180"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseBrickWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseBrickWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="ShippingContainer" name="ShippingContainer32">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -2971,6 +2966,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseBrickWall" name="WarehouseBrickWall77">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="29.407143"/>
+				<float Y="-0.010485"/>
+				<float Z="-30.326180"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="29.407143"/>
+				<float WY="-0.010485"/>
+				<float WZ="-30.326180"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseBrickWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseBrickWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -3654,74 +3717,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseDoorway" name="WarehouseDoorway65">
-		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.015053"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999886"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999886"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.015053"/>
-				<float ZW="0.000000"/>
-				<float WX="32.010101"/>
-				<float WY="0.000010"/>
-				<float WZ="-17.571930"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseDoorway"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseDoorway"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseDoorwaySpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseDoorwayNormal"/>
-			</Variable>
-		</Component>
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="32.010101"/>
-				<float Y="0.000010"/>
-				<float Z="-17.571930"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.015054"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999887"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999887"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.015054"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseDoorway"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseWindowWall" name="WarehouseWindowWall59">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -3790,28 +3785,63 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam60">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
+	<Object type="WarehouseDoorway" name="WarehouseDoorway65">
+		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
 			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="31.920624"/>
-				<float Y="4.852058"/>
-				<float Z="-7.502588"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="0.007119"/>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.015053"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999975"/>
+				<float XZ="0.999886"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999975"/>
+				<float ZX="-0.999886"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.007119"/>
+				<float ZZ="-0.015053"/>
+				<float ZW="0.000000"/>
+				<float WX="32.010101"/>
+				<float WY="0.000010"/>
+				<float WZ="-17.571930"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseDoorway"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseDoorway"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseDoorwaySpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseDoorwayNormal"/>
+			</Variable>
+		</Component>
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="32.010101"/>
+				<float Y="0.000010"/>
+				<float Z="-17.571930"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.015054"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999887"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999887"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.015054"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -3819,42 +3849,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="0.007119"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999974"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999974"/>
-				<float ZY="0.000000"/>
-				<float ZZ="0.007119"/>
-				<float ZW="0.000000"/>
-				<float WX="31.920624"/>
-				<float WY="4.852058"/>
-				<float WZ="-7.502588"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseHorizontalBeam"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseHorizontalBeamSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseHorizontalBeamNormal"/>
+				<string val="WarehouseDoorway"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -3923,6 +3918,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseBrickWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam60">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="31.920624"/>
+				<float Y="4.852058"/>
+				<float Z="-7.502588"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="0.007119"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999975"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999975"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.007119"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.007119"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999974"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999974"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.007119"/>
+				<float ZW="0.000000"/>
+				<float WX="31.920624"/>
+				<float WY="4.852058"/>
+				<float WZ="-7.502588"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseHorizontalBeam"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseHorizontalBeamSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseHorizontalBeamNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -4062,74 +4125,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall121">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="25.015783"/>
-				<float Y="9.590433"/>
-				<float Z="-30.341139"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseRoofWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="25.015783"/>
-				<float WY="9.590433"/>
-				<float WZ="-30.341139"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseRoofWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseRoofWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseRoofWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseRoofWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam74">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -4198,15 +4193,15 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer266">
+	<Object type="WarehouseRoofWall" name="WarehouseRoofWall121">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="25.796080"/>
-				<float Y="1.635675"/>
-				<float Z="-41.384567"/>
+				<float X="25.015783"/>
+				<float Y="9.590433"/>
+				<float Z="-30.341139"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
 				<float XX="1.000000"/>
@@ -4227,7 +4222,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
+				<string val="WarehouseRoofWall"/>
 			</Variable>
 		</Component>
 		<Component type="GraphicsObjectTexturedLit" name="Graphics">
@@ -4247,22 +4242,22 @@
 				<float ZY="0.000000"/>
 				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="25.796080"/>
-				<float WY="1.635675"/>
-				<float WZ="-41.384567"/>
+				<float WX="25.015783"/>
+				<float WY="9.590433"/>
+				<float WZ="-30.341139"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
+				<string val="WarehouseRoofWall"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
+				<string val="WarehouseRoofWall"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
+				<string val="WarehouseRoofWallSpec"/>
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
+				<string val="WarehouseRoofWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -4331,6 +4326,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseVerticalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer266">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="25.796080"/>
+				<float Y="1.635675"/>
+				<float Z="-41.384567"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="25.796080"/>
+				<float WY="1.635675"/>
+				<float WZ="-41.384567"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -4538,74 +4601,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall69">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="32.038166"/>
-				<float Y="0.002423"/>
-				<float Z="-22.649948"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="0.016546"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999863"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999863"/>
-				<float ZY="0.000000"/>
-				<float ZZ="0.016546"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="0.016546"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999863"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999863"/>
-				<float ZY="0.000000"/>
-				<float ZZ="0.016546"/>
-				<float ZW="0.000000"/>
-				<float WX="32.038166"/>
-				<float WY="0.002423"/>
-				<float WZ="-22.649948"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseBrickWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseBrickWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseBrickWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam85">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -4671,6 +4666,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseHorizontalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseBrickWall" name="WarehouseBrickWall69">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="32.038166"/>
+				<float Y="0.002423"/>
+				<float Z="-22.649948"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="0.016546"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999863"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999863"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.016546"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.016546"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999863"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999863"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.016546"/>
+				<float ZW="0.000000"/>
+				<float WX="32.038166"/>
+				<float WY="0.002423"/>
+				<float WZ="-22.649948"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseBrickWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseBrickWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseBrickWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -4810,74 +4873,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer259">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="24.274849"/>
-				<float Y="4.815748"/>
-				<float Z="10.390443"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="0.011433"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999935"/>
-				<float XW="0.000000"/>
-				<float YX="-0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999935"/>
-				<float ZY="-0.000000"/>
-				<float ZZ="0.011433"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="0.011434"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999936"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999936"/>
-				<float ZY="0.000000"/>
-				<float ZZ="0.011434"/>
-				<float ZW="0.000000"/>
-				<float WX="24.274849"/>
-				<float WY="4.815748"/>
-				<float WZ="10.390443"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam78">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -4943,6 +4938,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseVerticalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer259">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="24.274849"/>
+				<float Y="4.815748"/>
+				<float Z="10.390443"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="0.011432"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999935"/>
+				<float XW="0.000000"/>
+				<float YX="-0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999935"/>
+				<float ZY="-0.000000"/>
+				<float ZZ="0.011432"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.011434"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999936"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999936"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.011434"/>
+				<float ZW="0.000000"/>
+				<float WX="24.274849"/>
+				<float WY="4.815748"/>
+				<float WZ="10.390443"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -5490,74 +5553,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer292">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="55.921108"/>
-				<float Y="8.110810"/>
-				<float Z="-34.795368"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="0.018029"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999838"/>
-				<float XW="0.000000"/>
-				<float YX="-0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999838"/>
-				<float ZY="-0.000000"/>
-				<float ZZ="0.018029"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="0.018029"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999838"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999838"/>
-				<float ZY="0.000000"/>
-				<float ZZ="0.018029"/>
-				<float ZW="0.000000"/>
-				<float WX="55.921108"/>
-				<float WY="8.110810"/>
-				<float WZ="-34.795368"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseWindowWall" name="WarehouseWindowWall89">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -5626,28 +5621,28 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall90">
+	<Object type="ShippingContainer" name="ShippingContainer292">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="19.276667"/>
-				<float Y="5.073561"/>
-				<float Z="-30.346600"/>
+				<float X="55.921108"/>
+				<float Y="8.110810"/>
+				<float Z="-34.795368"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
+				<float XX="0.018029"/>
 				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
+				<float XZ="0.999837"/>
 				<float XW="0.000000"/>
-				<float YX="0.000000"/>
+				<float YX="-0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
+				<float ZX="-0.999837"/>
+				<float ZY="-0.000000"/>
+				<float ZZ="0.018029"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -5655,7 +5650,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainer"/>
 			</Variable>
 		</Component>
 		<Component type="GraphicsObjectTexturedLit" name="Graphics">
@@ -5663,34 +5658,34 @@
 				<float val="4.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
+				<float XX="0.018029"/>
 				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
+				<float XZ="0.999838"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
+				<float ZX="-0.999838"/>
 				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
+				<float ZZ="0.018029"/>
 				<float ZW="0.000000"/>
-				<float WX="19.276667"/>
-				<float WY="5.073561"/>
-				<float WZ="-30.346600"/>
+				<float WX="55.921108"/>
+				<float WY="8.110810"/>
+				<float WZ="-34.795368"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainer"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseWindowWall"/>
+				<string val="ShippingContainerRed"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseWindowWallSpec"/>
+				<string val="ShippingContainerSpec"/>
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseWindowWallNormal"/>
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -5759,6 +5754,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseRoofWallNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseWindowWall" name="WarehouseWindowWall90">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="19.276667"/>
+				<float Y="5.073561"/>
+				<float Z="-30.346600"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="19.276667"/>
+				<float WY="5.073561"/>
+				<float WZ="-30.346600"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseWindowWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseWindowWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -5966,74 +6029,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer275">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="54.089569"/>
-				<float Y="1.637039"/>
-				<float Z="-20.257378"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
-				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
-				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
-				<float ZW="0.000000"/>
-				<float WX="54.089569"/>
-				<float WY="1.637039"/>
-				<float WZ="-20.257378"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam94">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -6099,6 +6094,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseVerticalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer275">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="54.089569"/>
+				<float Y="1.637039"/>
+				<float Z="-20.257378"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="54.089569"/>
+				<float WY="1.637039"/>
+				<float WZ="-20.257378"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -6374,28 +6437,28 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer278">
+	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam99">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="54.045284"/>
-				<float Y="1.637022"/>
-				<float Z="-3.795979"/>
+				<float X="11.592926"/>
+				<float Y="-0.000683"/>
+				<float Z="-20.112320"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="1.000000"/>
+				<float XX="-0.022526"/>
 				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
+				<float XZ="-0.999746"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
+				<float ZX="0.999746"/>
 				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
+				<float ZZ="-0.022526"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -6403,7 +6466,7 @@
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
+				<string val="WarehouseVerticalBeam"/>
 			</Variable>
 		</Component>
 		<Component type="GraphicsObjectTexturedLit" name="Graphics">
@@ -6411,34 +6474,34 @@
 				<float val="4.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="1.000000"/>
+				<float XX="-0.022526"/>
 				<float XY="0.000000"/>
-				<float XZ="0.000000"/>
+				<float XZ="-0.999746"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.000000"/>
+				<float ZX="0.999746"/>
 				<float ZY="0.000000"/>
-				<float ZZ="1.000000"/>
+				<float ZZ="-0.022526"/>
 				<float ZW="0.000000"/>
-				<float WX="54.045284"/>
-				<float WY="1.637022"/>
-				<float WZ="-3.795979"/>
+				<float WX="11.592926"/>
+				<float WY="-0.000683"/>
+				<float WZ="-20.112320"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
+				<string val="WarehouseVerticalBeam"/>
 			</Variable>
 			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
+				<string val="WarehouseVerticalBeam"/>
 			</Variable>
 			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
+				<string val="WarehouseVerticalBeamSpec"/>
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
+				<string val="WarehouseVerticalBeamNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -6510,96 +6573,28 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam99">
+	<Object type="ShippingContainer" name="ShippingContainer278">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
 			</Variable>
 			<Variable type="vec3" name="Position">
-				<float X="11.592926"/>
-				<float Y="-0.000683"/>
-				<float Z="-20.112320"/>
+				<float X="54.045284"/>
+				<float Y="1.637022"/>
+				<float Z="-3.795979"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="-0.022526"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999746"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999746"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="-0.022526"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseVerticalBeam"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.022526"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999746"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999746"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.022526"/>
-				<float ZW="0.000000"/>
-				<float WX="11.592926"/>
-				<float WY="-0.000683"/>
-				<float WZ="-20.112320"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseVerticalBeam"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseVerticalBeam"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseVerticalBeamSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseVerticalBeamNormal"/>
-			</Variable>
-		</Component>
-	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer279">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="41.637836"/>
-				<float Y="1.636480"/>
-				<float Z="-23.640146"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="0.010499"/>
-				<float XY="0.000000"/>
-				<float XZ="0.999945"/>
-				<float XW="0.000000"/>
-				<float YX="-0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="-0.999945"/>
-				<float ZY="-0.000000"/>
-				<float ZZ="0.010499"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -6615,21 +6610,21 @@
 				<float val="4.000000"/>
 			</Variable>
 			<Variable type="mat4" name="Transform">
-				<float XX="0.010499"/>
+				<float XX="1.000000"/>
 				<float XY="0.000000"/>
-				<float XZ="0.999945"/>
+				<float XZ="0.000000"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="-0.999945"/>
+				<float ZX="0.000000"/>
 				<float ZY="0.000000"/>
-				<float ZZ="0.010499"/>
+				<float ZZ="1.000000"/>
 				<float ZW="0.000000"/>
-				<float WX="41.637836"/>
-				<float WY="1.636480"/>
-				<float WZ="-23.640146"/>
+				<float WX="54.045284"/>
+				<float WY="1.637022"/>
+				<float WZ="-3.795979"/>
 				<float WW="1.000000"/>
 			</Variable>
 			<Variable type="string" name="ModelName">
@@ -6711,6 +6706,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseVerticalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer279">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="41.637836"/>
+				<float Y="1.636480"/>
+				<float Z="-23.640146"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="0.010499"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999945"/>
+				<float XW="0.000000"/>
+				<float YX="-0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999945"/>
+				<float ZY="-0.000000"/>
+				<float ZZ="0.010499"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="0.010499"/>
+				<float XY="0.000000"/>
+				<float XZ="0.999945"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="-0.999945"/>
+				<float ZY="0.000000"/>
+				<float ZZ="0.010499"/>
+				<float ZW="0.000000"/>
+				<float WX="41.637836"/>
+				<float WY="1.636480"/>
+				<float WZ="-23.640146"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -7122,74 +7185,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall108">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="11.534677"/>
-				<float Y="5.073950"/>
-				<float Z="-22.655775"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.011263"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999937"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999937"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.011263"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.011263"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999935"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999935"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.011263"/>
-				<float ZW="0.000000"/>
-				<float WX="11.534677"/>
-				<float WY="5.073950"/>
-				<float WZ="-22.655775"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="WarehouseWindowWall"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="WarehouseWindowWallSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="WarehouseWindowWallNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam116">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -7255,6 +7250,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseRoofHorizontalBeamNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="WarehouseWindowWall" name="WarehouseWindowWall108">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="11.534677"/>
+				<float Y="5.073950"/>
+				<float Z="-22.655775"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.011263"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999937"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999937"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.011263"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.011263"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999935"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999935"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.011263"/>
+				<float ZW="0.000000"/>
+				<float WX="11.534677"/>
+				<float WY="5.073950"/>
+				<float WZ="-22.655775"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="WarehouseWindowWall"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="WarehouseWindowWallSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="WarehouseWindowWallNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -7339,13 +7402,13 @@
 			<Variable type="mat4" name="Rotation">
 				<float XX="0.017858"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999840"/>
+				<float XZ="-0.999841"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999840"/>
+				<float ZX="0.999841"/>
 				<float ZY="0.000000"/>
 				<float ZZ="0.017858"/>
 				<float ZW="0.000000"/>
@@ -8278,74 +8341,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer285">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="52.284821"/>
-				<float Y="1.636469"/>
-				<float Z="-34.947479"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.002979"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999996"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999996"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.002979"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.002978"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999995"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999995"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.002978"/>
-				<float ZW="0.000000"/>
-				<float WX="52.284821"/>
-				<float WY="1.636469"/>
-				<float WZ="-34.947479"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel140">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -8411,6 +8406,74 @@
 			</Variable>
 			<Variable type="string" name="NormalTextureName">
 				<string val="WarehouseRoofPannelNormal"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer285">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="52.284821"/>
+				<float Y="1.636469"/>
+				<float Z="-34.947479"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.002979"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999996"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999996"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.002979"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.002978"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999995"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999995"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.002978"/>
+				<float ZW="0.000000"/>
+				<float WX="52.284821"/>
+				<float WY="1.636469"/>
+				<float WZ="-34.947479"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
 			</Variable>
 		</Component>
 	</Object>
@@ -8550,74 +8613,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer286">
-		<Component type="RigidBodyComponent" name="RigidBody">
-			<Variable type="bool" name="IsDynamic">
-				<bool val="0"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="55.720337"/>
-				<float Y="1.636465"/>
-				<float Z="-34.901070"/>
-			</Variable>
-			<Variable type="mat4" name="Rotation">
-				<float XX="-0.016086"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999871"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999871"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.016086"/>
-				<float ZW="0.000000"/>
-				<float WX="0.000000"/>
-				<float WY="0.000000"/>
-				<float WZ="0.000000"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-		</Component>
-		<Component type="GraphicsObjectTexturedLit" name="Graphics">
-			<Variable type="float" name="Shine">
-				<float val="4.000000"/>
-			</Variable>
-			<Variable type="mat4" name="Transform">
-				<float XX="-0.016085"/>
-				<float XY="0.000000"/>
-				<float XZ="-0.999869"/>
-				<float XW="0.000000"/>
-				<float YX="0.000000"/>
-				<float YY="1.000000"/>
-				<float YZ="0.000000"/>
-				<float YW="0.000000"/>
-				<float ZX="0.999869"/>
-				<float ZY="0.000000"/>
-				<float ZZ="-0.016085"/>
-				<float ZW="0.000000"/>
-				<float WX="55.720337"/>
-				<float WY="1.636465"/>
-				<float WZ="-34.901070"/>
-				<float WW="1.000000"/>
-			</Variable>
-			<Variable type="string" name="ModelName">
-				<string val="ShippingContainer"/>
-			</Variable>
-			<Variable type="string" name="DiffuseTextureName">
-				<string val="ShippingContainerRed"/>
-			</Variable>
-			<Variable type="string" name="SpecularTextureName">
-				<string val="ShippingContainerSpec"/>
-			</Variable>
-			<Variable type="string" name="NormalTextureName">
-				<string val="ShippingContainerNormal"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel143">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
@@ -8686,32 +8681,100 @@
 			</Variable>
 		</Component>
 	</Object>
+	<Object type="ShippingContainer" name="ShippingContainer286">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="55.720337"/>
+				<float Y="1.636465"/>
+				<float Z="-34.901070"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="-0.016086"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999871"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999871"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.016086"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="-0.016085"/>
+				<float XY="0.000000"/>
+				<float XZ="-0.999869"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.999869"/>
+				<float ZY="0.000000"/>
+				<float ZZ="-0.016085"/>
+				<float ZW="0.000000"/>
+				<float WX="55.720337"/>
+				<float WY="1.636465"/>
+				<float WZ="-34.901070"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="ShippingContainer"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="ShippingContainerRed"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="ShippingContainerSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="ShippingContainerNormal"/>
+			</Variable>
+		</Component>
+	</Object>
 	<Object type="SpotLightObject" name="SpotLightObject661">
 		<Component type="SpotLightComponent" name="Light">
-			<Variable type="float" name="Linear">
-				<float val="0.090000"/>
-			</Variable>
 			<Variable type="float" name="Cutoff">
 				<float val="45.697620"/>
+			</Variable>
+			<Variable type="float" name="Linear">
+				<float val="0.090000"/>
 			</Variable>
 			<Variable type="float" name="Constant">
 				<float val="1.000000"/>
 			</Variable>
-			<Variable type="float" name="Quadratic">
-				<float val="0.032000"/>
-			</Variable>
 			<Variable type="float" name="OuterCutoff">
 				<float val="70.333191"/>
 			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="26.615404"/>
-				<float Y="5.976761"/>
-				<float Z="-25.292288"/>
+			<Variable type="float" name="Quadratic">
+				<float val="0.032000"/>
 			</Variable>
 			<Variable type="vec3" name="Direction">
 				<float X="0.000000"/>
 				<float Y="-1.000000"/>
 				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="26.615404"/>
+				<float Y="5.976761"/>
+				<float Z="-25.292288"/>
 			</Variable>
 			<Variable type="vec3" name="ColorIntensity">
 				<float X="3.000000"/>
@@ -8722,30 +8785,30 @@
 	</Object>
 	<Object type="SpotLightObject" name="SpotLightObject662">
 		<Component type="SpotLightComponent" name="Light">
-			<Variable type="float" name="Linear">
-				<float val="0.090000"/>
-			</Variable>
 			<Variable type="float" name="Cutoff">
 				<float val="45.697620"/>
+			</Variable>
+			<Variable type="float" name="Linear">
+				<float val="0.090000"/>
 			</Variable>
 			<Variable type="float" name="Constant">
 				<float val="1.000000"/>
 			</Variable>
-			<Variable type="float" name="Quadratic">
-				<float val="0.032000"/>
-			</Variable>
 			<Variable type="float" name="OuterCutoff">
 				<float val="70.333191"/>
 			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="26.669592"/>
-				<float Y="5.976761"/>
-				<float Z="-12.472824"/>
+			<Variable type="float" name="Quadratic">
+				<float val="0.032000"/>
 			</Variable>
 			<Variable type="vec3" name="Direction">
 				<float X="0.000000"/>
 				<float Y="-1.000000"/>
 				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="26.669592"/>
+				<float Y="5.976761"/>
+				<float Z="-12.472824"/>
 			</Variable>
 			<Variable type="vec3" name="ColorIntensity">
 				<float X="3.000000"/>
@@ -8756,30 +8819,30 @@
 	</Object>
 	<Object type="SpotLightObject" name="SpotLightObject663">
 		<Component type="SpotLightComponent" name="Light">
-			<Variable type="float" name="Linear">
-				<float val="0.090000"/>
-			</Variable>
 			<Variable type="float" name="Cutoff">
 				<float val="45.697620"/>
+			</Variable>
+			<Variable type="float" name="Linear">
+				<float val="0.090000"/>
 			</Variable>
 			<Variable type="float" name="Constant">
 				<float val="1.000000"/>
 			</Variable>
-			<Variable type="float" name="Quadratic">
-				<float val="0.032000"/>
-			</Variable>
 			<Variable type="float" name="OuterCutoff">
 				<float val="70.333191"/>
 			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="16.498014"/>
-				<float Y="5.976761"/>
-				<float Z="-25.376717"/>
+			<Variable type="float" name="Quadratic">
+				<float val="0.032000"/>
 			</Variable>
 			<Variable type="vec3" name="Direction">
 				<float X="0.000000"/>
 				<float Y="-1.000000"/>
 				<float Z="0.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="16.498014"/>
+				<float Y="5.976761"/>
+				<float Z="-25.376717"/>
 			</Variable>
 			<Variable type="vec3" name="ColorIntensity">
 				<float X="3.000000"/>
@@ -9413,13 +9476,13 @@
 			<Variable type="mat4" name="Rotation">
 				<float XX="-0.024352"/>
 				<float XY="0.000000"/>
-				<float XZ="0.999704"/>
+				<float XZ="0.999703"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="-0.999704"/>
+				<float ZX="-0.999703"/>
 				<float ZY="0.000000"/>
 				<float ZZ="-0.024352"/>
 				<float ZW="0.000000"/>
@@ -10839,17 +10902,17 @@
 				<float Z="-34.969643"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="-0.011367"/>
+				<float XX="-0.011368"/>
 				<float XY="0.000000"/>
-				<float XZ="-0.999935"/>
+				<float XZ="-0.999936"/>
 				<float XW="0.000000"/>
 				<float YX="0.000000"/>
 				<float YY="1.000000"/>
 				<float YZ="0.000000"/>
 				<float YW="0.000000"/>
-				<float ZX="0.999935"/>
+				<float ZX="0.999936"/>
 				<float ZY="0.000000"/>
-				<float ZZ="-0.011367"/>
+				<float ZZ="-0.011368"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
@@ -11587,7 +11650,7 @@
 				<float Z="-41.739166"/>
 			</Variable>
 			<Variable type="mat4" name="Rotation">
-				<float XX="0.908195"/>
+				<float XX="0.908196"/>
 				<float XY="0.000000"/>
 				<float XZ="0.418546"/>
 				<float XW="0.000000"/>
@@ -11597,7 +11660,7 @@
 				<float YW="0.000000"/>
 				<float ZX="-0.418546"/>
 				<float ZY="-0.000000"/>
-				<float ZZ="0.908195"/>
+				<float ZZ="0.908196"/>
 				<float ZW="0.000000"/>
 				<float WX="0.000000"/>
 				<float WY="0.000000"/>
