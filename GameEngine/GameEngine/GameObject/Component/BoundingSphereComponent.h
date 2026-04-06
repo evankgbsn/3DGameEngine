@@ -31,6 +31,8 @@ public:
 
 	void ToggleVisibility();
 
+	bool IsVisible() const;
+
 	const glm::vec3& GetOrigin() const;
 
 	const glm::vec3& GetOffset() const;

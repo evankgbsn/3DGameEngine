@@ -1,6 +1,8 @@
 #include "BoundingSphereComponent.h"
 
 #include "../../GameEngine/Collision/SphereWithVisualization.h"
+#include "../../GameEngine/GameObject/Component/OrientedBoundingBoxComponent.h"
+#include "../../GameEngine/Collision/OrientedBoundingBoxWithVisualization.h"
 
 BoundingSphereComponent::BoundingSphereComponent()
 {
@@ -21,6 +23,7 @@ BoundingSphereComponent::BoundingSphereComponent(GraphicsObject* graphics) :
 
 BoundingSphereComponent::~BoundingSphereComponent()
 {
+	delete sphere;
 }
 
 void BoundingSphereComponent::UpdateTransform(const glm::mat4& transform)
@@ -36,6 +39,11 @@ void BoundingSphereComponent::SetColor(const glm::vec3& color)
 void BoundingSphereComponent::ToggleVisibility()
 {
 	sphere->ToggleVisibility();
+}
+
+bool BoundingSphereComponent::IsVisible() const
+{
+	return sphere->IsVisible();
 }
 
 const glm::vec3& BoundingSphereComponent::GetOrigin() const
@@ -90,22 +98,22 @@ bool BoundingSphereComponent::AxisAlignedBoundingBoxIntersect(const AxisAlignedB
 
 bool BoundingSphereComponent::OrientedBoundingBoxIntersect(const OrientedBoundingBoxComponent& obb) const
 {
-	return false;
+	return sphere->OrientedBoundingBoxIntersect(*obb.GetCollider());
 }
 
 bool BoundingSphereComponent::PlaneIntersect(const Plane& plane) const
 {
-	return false;
+	return sphere->PlaneIntersect(plane);
 }
 
 float BoundingSphereComponent::RayIntersect(const Ray& ray) const
 {
-	return 0.0f;
+	return sphere->RayIntersect(ray);
 }
 
 bool BoundingSphereComponent::LineSegmentIntersect(const LineSegment3D& line) const
 {
-	return false;
+	return sphere->LineSegmentIntersect(line);
 }
 
 glm::vec3 BoundingSphereComponent::ClosestPoint(const glm::vec3& point) const
@@ -131,4 +139,5 @@ void BoundingSphereComponent::Deserialize()
 
 void BoundingSphereComponent::Update()
 {
+
 }

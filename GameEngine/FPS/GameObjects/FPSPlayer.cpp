@@ -23,8 +23,11 @@
 #include "GameEngine/GameObject/Component/GraphicsObjectLine.h"
 #include "GameEngine/Physics/PhysicsManager.h"
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
+#include "SpawnPoint.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <random>
 
 FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer"),
@@ -115,6 +118,14 @@ void FPSPlayer::Initialize()
 
 		if (NetworkManager::IsServer())
 		{
+			glm::vec3 position;
+			glm::mat4 rotation;
+
+			GetSpawnPositionAndRotation(position, rotation);
+
+			characterGraphics->SetPosition(position);
+			characterGraphics->SetRotation(rotation);
+
 			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 			controller->SetOwner(this);
 			AddComponent(controller, "Controller");
@@ -1058,6 +1069,31 @@ void FPSPlayer::Shoot()
 			}
 		}
 	}
+}
+
+void FPSPlayer::GetSpawnPositionAndRotation(glm::vec3& position, glm::mat4& rotation)
+{
+	std::vector<SpawnPoint*> spawnPoints;
+
+	for (const auto& object : GetOwningScene()->GetGameObjects())
+	{
+		SpawnPoint* point = dynamic_cast<SpawnPoint*>(object.second);
+
+		if (point != nullptr)
+		{
+			spawnPoints.push_back(point);
+		}
+	}
+
+	// Seed the random number generator with the current time
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine generator(seed);
+
+	// Shuffle the elements
+	std::shuffle(spawnPoints.begin(), spawnPoints.end(), generator);
+
+	position = spawnPoints.front()->GetPosition();
+	rotation = spawnPoints.front()->GetRotation();
 }
 
 void FPSPlayer::OnSpawn()

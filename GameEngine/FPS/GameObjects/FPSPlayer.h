@@ -87,6 +87,8 @@ private:
 
 	void Shoot();
 
+	void GetSpawnPositionAndRotation(glm::vec3& position, glm::mat4& rotation);
+
 	GraphicsObjectTexturedAnimatedLit* characterGraphics;
 
 	GraphicsObjectTexturedAnimatedLit* characterArmsGraphics;

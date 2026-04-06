@@ -5,8 +5,8 @@
 
 #include <glm/glm.hpp>
 
-class GO3D;
 class Model;
+class GO3D;
 
 class GraphicsObject3DComponent : public Component
 {
@@ -58,6 +58,15 @@ public:
 	bool RenderShadow() const;
 
 	bool RenderReflection() const;
+
+	enum Mode
+	{
+		FILL = 0x1B02,
+		LINE = 0x1B01,
+		POINT = 0x1B00
+	};
+
+	void SetRenderMode(const Mode& mode) const;
 
 protected:
 

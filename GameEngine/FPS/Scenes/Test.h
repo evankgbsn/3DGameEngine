@@ -23,6 +23,7 @@ class WarehouseRoofHorizontalBeam;
 class WarehouseVerticalBeamHalf;
 class WarehouseRoofPannel;
 class SpotLightObject;
+class SpawnPoint;
 
 class Test : public Scene
 {
@@ -94,6 +95,8 @@ private:
 	WarehouseRoofPannel* warehouseRoofPannel;
 
 	SpotLightObject* spotLight;
+
+	SpawnPoint* spawnPoint;
 };
 
 #endif // TEST_H

@@ -263,6 +263,7 @@
     <ClCompile Include="GameObjects\PointLightObject.cpp" />
     <ClCompile Include="GameObjects\ServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\ShippingContainer.cpp" />
+    <ClCompile Include="GameObjects\SpawnPoint.cpp" />
     <ClCompile Include="GameObjects\SpotLightObject.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
     <ClCompile Include="GameObjects\WarehouseBrickWall.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="GameObjects\PointLightObject.h" />
     <ClInclude Include="GameObjects\ServerFreeCamera.h" />
     <ClInclude Include="GameObjects\ShippingContainer.h" />
+    <ClInclude Include="GameObjects\SpawnPoint.h" />
     <ClInclude Include="GameObjects\SpotLightObject.h" />
     <ClInclude Include="GameObjects\Sun.h" />
     <ClInclude Include="GameObjects\WarehouseBrickWall.h" />

@@ -4,6 +4,26 @@
 #include "../../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../../Renderer/Model/Model.h"
 
+void GraphicsObject3DComponent::SetRenderMode(const Mode& mode) const
+{
+	GO3D::Mode m = GO3D::Mode::FILL;
+
+	switch (mode)
+	{
+	case FILL:
+		m = GO3D::Mode::FILL;
+		break;
+	case LINE:
+		m = GO3D::Mode::LINE;
+		break;
+	case POINT:
+		m = GO3D::Mode::POINT;
+		break;
+	}
+
+	graphics->SetDrawMode(m);
+}
+
 GraphicsObject3DComponent::GraphicsObject3DComponent() :
 	graphics(nullptr)
 {

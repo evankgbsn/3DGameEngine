@@ -21,6 +21,7 @@
 #include "../GameObjects/WarehouseVerticalBeamHalf.h"
 #include "../GameObjects/WarehouseRoofPannel.h"
 #include "../GameObjects/SpotLightObject.h"
+#include "../GameObjects/SpawnPoint.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -42,7 +43,8 @@ Test::Test() :
 	warehouseRoofHorizontalBeam(new WarehouseRoofHorizontalBeam()),
 	warehouseVerticalBeamHalf(new WarehouseVerticalBeamHalf()),
 	warehouseRoofPannel(new WarehouseRoofPannel()),
-	spotLight(new SpotLightObject())
+	spotLight(new SpotLightObject()),
+	spawnPoint(new SpawnPoint())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -60,6 +62,7 @@ Test::Test() :
 	RegisterGameObject(warehouseVerticalBeamHalf, "WarehouseVerticalBeamHalf");
 	RegisterGameObject(warehouseRoofPannel, "WarehouseRoofPannel");
 	RegisterGameObject(spotLight, "SpotLight");
+	RegisterGameObject(spawnPoint, "SpawnPoint");
 }
 
 Test::~Test()
