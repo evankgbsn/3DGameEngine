@@ -35,6 +35,11 @@ int main(int argc, const char** argv)
 	SceneManager::LoadScene("JoinScene");
 	SceneManager::InitializeScene("JoinScene");
 
+	if (!Engine::IsEditorBuild())
+	{
+		SceneManager::StartInitializedScenes();
+	}
+
 	Engine::Run();
 
 	Engine::Terminate();

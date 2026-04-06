@@ -82,7 +82,7 @@ void Engine::Run()
 				instance->editorState = Editor::IsEnabled();
 			};
 
-
+#ifndef GAME
 		if (Editor::IsEnabled())
 		{
 			TimeManager::RecordUpdateTime();
@@ -95,6 +95,7 @@ void Engine::Run()
 			AudioManager::EditorUpdate();
 		}
 		else
+#endif
 		{
 			TimeManager::RecordUpdateTime();
 			ModelManager::Update();
@@ -127,6 +128,16 @@ Window* Engine::GetWindow()
 	return WindowManager::GetWindow("Engine");
 }
 
+bool Engine::IsEditorBuild()
+{
+	if (instance != nullptr)
+	{
+		return instance->isEditorBuild;
+	}
+
+	return false;
+}
+
 Engine::Engine()
 {
 	Logger::ClearLog(true);
@@ -139,13 +150,17 @@ Engine::Engine()
 
 	Renderer::CreateMainWindow(static_cast<unsigned int>(primaryMonitorDimensions.x / 2), static_cast<unsigned int>(primaryMonitorDimensions.y / 2), "Engine");
 	SceneManager::Initialize();
+
+#ifndef GAME
 	Editor::Initialize();
 	Editor::Enable();
+	isEditorBuild = true;
 	EditorPlayToggleInputSetup();
+#endif
+
 	PhysicsManager::Initialize();
 	NetworkManager::Initialize();
 	AudioManager::Initialize();
-	
 }
 
 Engine::~Engine()
@@ -155,7 +170,11 @@ Engine::~Engine()
 	PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();
+
+#ifndef GAME
 	Editor::Terminate();
+#endif
+
 	Renderer::Terminate();
 	TimeManager::Terminate();
 	DatabaseManager::Terminate();

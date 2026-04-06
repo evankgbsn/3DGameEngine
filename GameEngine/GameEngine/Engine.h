@@ -23,6 +23,8 @@ public:
 
 	static Window* GetWindow();
 
+	static bool IsEditorBuild();
+
 private:
 
 	friend class SingletonHelpers;
@@ -38,6 +40,8 @@ private:
 	static Engine* instance;
 
 	bool editorState;
+
+	bool isEditorBuild = false;
 };
 
 #endif // ENGINE_H
