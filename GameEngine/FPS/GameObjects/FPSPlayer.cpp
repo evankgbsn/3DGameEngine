@@ -1288,6 +1288,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			lastDamagePacketNumber = std::stoi(packetID);
 		}
+		else if (updateType == "InitialSpawnTarget")
+		{
+			targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+		}
 	}
 	else
 	{
@@ -1377,6 +1381,10 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 
 			lastAnimationClipPacketNumber = std::stoi(packetID);
 		}
+		else if (updateType == "InitialSpawnTarget")
+		{
+			ServerSend(GetSpawnerIP(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+		}
 	}
 }
 
@@ -1387,4 +1395,5 @@ void FPSPlayer::OnServerSpawnConfirmation(const std::string& IP)
 
 void FPSPlayer::OnClientSpawnConfirmation()
 {
+	ClientSend("InitialSpawnTarget " + std::to_string(0U) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 }

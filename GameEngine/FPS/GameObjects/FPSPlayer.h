@@ -233,6 +233,8 @@ private:
 
 	bool walking = false;
 
+	bool firstTargetSet = false;
+
 };
 
 #endif // FPSPLAYER_H
