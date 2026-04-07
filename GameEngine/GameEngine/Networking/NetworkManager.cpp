@@ -10,8 +10,8 @@
 
 #define DEFAULT_PORT "27015"
 #define DEFAULT_UDP_PORT "54001"
-//#define SERVER_IP "10.112.0.188"
-#define SERVER_IP "192.168.1.4"
+#define SERVER_IP "10.112.0.188"
+//#define SERVER_IP "192.168.1.4"
 //#define SERVER_IP "136.30.15.215"
 //#define SERVER_IP "192.168.50.2"
 //#define SERVER_IP "192.168.50.100"
