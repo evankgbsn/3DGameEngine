@@ -232,10 +232,7 @@ void FPSPlayer::GameUpdate()
 
 			if (camUpdateTime >= 0.001f)
 			{
-				if (cam->GetTarget() != lastPosition)
-				{
-					ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
-				}
+				ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
 				camUpdateTime = 0.0f;
 			}
 
