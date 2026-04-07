@@ -37,6 +37,7 @@ void SpawnPoint::Initialize()
 			{
 				if (!sphere->IsVisible())
 				{
+					arrow->SetRenderGraphics(true);
 					sphere->ToggleVisibility();
 				}
 			});
@@ -45,6 +46,7 @@ void SpawnPoint::Initialize()
 			{
 				if (sphere->IsVisible())
 				{
+					arrow->SetRenderGraphics(false);
 					sphere->ToggleVisibility();
 				}
 			});
@@ -65,6 +67,10 @@ void SpawnPoint::Terminate()
 	RemoveComponent("BoundingSphere");
 
 	delete sphere;
+
+	RemoveComponent("ArrowGraphics");
+
+	delete arrow;
 }
 
 void SpawnPoint::GameUpdate()
@@ -89,6 +95,8 @@ void SpawnPoint::Unload()
 
 void SpawnPoint::Start()
 {
+	arrow->SetRenderGraphics(false);
+
 	if (sphere->IsVisible())
 	{
 		sphere->ToggleVisibility();

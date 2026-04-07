@@ -135,6 +135,7 @@ void BoundingSphereComponent::Deserialize()
 	SetOffset(savedVec3s["Offset"]);
 	SetRadius(savedFloats["Radius"]);
 	sphere->Transform(savedMat4s["Transform"]);
+	sphere->Update(sphere->GetTransform());
 }
 
 void BoundingSphereComponent::Update()
