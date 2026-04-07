@@ -65,6 +65,8 @@ void FPSPlayer::Initialize()
 		characterGraphics->SetClip("Idle");
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
+		characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
@@ -80,6 +82,8 @@ void FPSPlayer::Initialize()
 		characterArmsGraphics->SetClip("Idle");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookUp");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 		characterArmsGraphics->SetShine(32.0f);
 		characterArmsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterArmsGraphics->SetSpeed(1.0f);
@@ -1296,7 +1300,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		}
 		else if (updateType == "InitialSpawnTarget")
 		{
-			targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+			cam->SetTarget(NetworkManager::ConvertDataToVec3(updateData));
 		}
 	}
 	else
