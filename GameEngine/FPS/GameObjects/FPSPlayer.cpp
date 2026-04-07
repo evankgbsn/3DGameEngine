@@ -144,6 +144,11 @@ void FPSPlayer::Initialize()
 	cam->SetFOV(20.0f);
 	cam->SetNear(0.01f);
 
+	if (NetworkManager::IsServer())
+	{
+		cam->SetTarget(cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2])));
+	}
+
 	AddComponent(cam, "Camera");
 
 	if (SpawnedFromLocalSpawnRequest())
@@ -1383,7 +1388,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		}
 		else if (updateType == "InitialSpawnTarget")
 		{
-			ServerSend(GetSpawnerIP(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
+			ServerSend(GetSpawnerIP(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(spawnTarget), false);
 		}
 	}
 }

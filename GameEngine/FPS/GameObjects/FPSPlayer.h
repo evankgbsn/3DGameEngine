@@ -233,7 +233,7 @@ private:
 
 	bool walking = false;
 
-	bool firstTargetSet = false;
+	glm::vec3 spawnTarget;
 
 };
 
