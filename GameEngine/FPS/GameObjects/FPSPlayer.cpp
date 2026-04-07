@@ -146,7 +146,8 @@ void FPSPlayer::Initialize()
 
 	if (NetworkManager::IsServer())
 	{
-		cam->SetTarget(cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2])));
+		spawnTarget = cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2]));
+		cam->SetTarget(spawnTarget);
 	}
 
 	AddComponent(cam, "Camera");
