@@ -108,6 +108,8 @@ void FPSPlayer::Initialize()
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
+		characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
 
