@@ -45,7 +45,7 @@ public:
 
 	static void ServerSend(const std::string& ip, const std::string& data, const std::string& receiveFunction);
 
-	static void ServerSendUDP(const std::string& ip, const std::string& data, const std::string& receiveFunction);
+	static void ServerSendUDP(const std::string& clientID, const std::string& data, const std::string& receiveFunction);
 
 	static void ClientSend(const std::string& data, const std::string& receiveFunction);
 
@@ -63,7 +63,7 @@ public:
 
 	static void DeregisterOnDisconnectFunction(const std::string& key);
 
-	static std::string GetIPFromData(const std::string& data);
+	static std::string GetIDFromData(const std::string& data);
 
 	static std::string GetFunctionFromData(const std::string& data);
 
@@ -77,7 +77,7 @@ public:
 
 	static std::string ConvertMat4ToData(const glm::mat4& mat4);
 
-	static std::string GetIP();
+	static std::string GetID();
 
 	static unsigned long long GenerateNetworkObjectID();
 
@@ -163,7 +163,7 @@ private:
 
 	static NetworkManager* instance;
 
-	std::string clientIP;
+	std::string clientID;
 
 	bool isServer;
 
@@ -185,9 +185,9 @@ private:
 
 	std::unordered_map<std::string, SOCKET> connectedClients;
 
-	std::mutex udpPortsMutex;
+	std::mutex udpRoutesMutex;
 
-	std::unordered_map<std::string, unsigned short> connectedClientUDPPorts;
+	std::unordered_map<std::string, sockaddr_in> connectedClientUDPRoutes;
 
 	std::mutex connectedClientsReceiveThreadsMutex;
 

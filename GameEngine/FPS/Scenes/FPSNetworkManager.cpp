@@ -20,13 +20,13 @@ void FPSNetworkManager::Initialize()
 			// The function ID is next followed by a space.
 			// Then there is the data block formatted in any way but since it is a string no '\0' characters are allowed.
 
-			std::string IP = NetworkManager::GetIPFromData(data);
+			std::string ID = NetworkManager::GetIDFromData(data);
 
 			std::string functionID = NetworkManager::GetFunctionFromData(data);
 
 			std::string response = "Login Success";
 
-			NetworkManager::ServerSend(IP, response, "FPSNetworkManagerClientLogin");
+			NetworkManager::ServerSend(ID, response, "FPSNetworkManagerClientLogin");
 		});
 
 	NetworkManager::RegisterReceiveDataFunction("FPSNetworkManagerServerLogin", receiveLoginInfo);

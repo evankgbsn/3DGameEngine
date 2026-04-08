@@ -446,16 +446,18 @@ void NetworkManager::UDPServerReceive()
 
 
 		unsigned int packetSize = *reinterpret_cast<unsigned int*>(buffer);
+		if (packetSize > static_cast<unsigned int>(recv_len)) continue;
 
-		std::string ip = std::string(buffer + 4);
-		std::string functionID = (buffer + 20);
-		std::string data = ip + " " + functionID + " ";
+		// Extract the unique ID the client packed into the payload
+		std::string clientID = std::string(buffer + 4);
 
-		// SAVE THE EPHEMERAL PORT
-		unsigned short clientPort = ntohs(clientAddr.sin_port);
-		instance->udpPortsMutex.lock();
-		instance->connectedClientUDPPorts[ip] = clientPort;
-		instance->udpPortsMutex.unlock();
+		// Map this specific ID to the NAT-translated gateway address
+		instance->udpRoutesMutex.lock();
+		instance->connectedClientUDPRoutes[clientID] = clientAddr;
+		instance->udpRoutesMutex.unlock();
+
+		std::string functionID = std::string(buffer + 20);
+		std::string data = clientID + " " + functionID + " ";
 
 		unsigned int i = 21 + functionID.size();
 		while (i < packetSize)
@@ -494,7 +496,7 @@ void NetworkManager::ClientReceive()
 				{
 					if (firstMessage)
 					{
-						clientIP = std::string(packetBuf);
+						clientID = std::string(packetBuf);
 
 						latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
 						ClientSend("", "NetworkManagerServerReceiveLatency");
@@ -700,21 +702,22 @@ void NetworkManager::ListenForConnections()
 			return;
 		}
 
-		char clientIP[INET_ADDRSTRLEN];
-		inet_ntop(AF_INET, &clientAddr.sin_addr, clientIP, INET_ADDRSTRLEN);
+		// Generate a unique ID instead of using the IP
+		static unsigned int clientCounter = 1;
+		std::string uniqueID = "Client_" + std::to_string(clientCounter++);
 
-		
 		connectedClientsMutex.lock();
-		connectedClients[clientIP] = clientSocket;
+		connectedClients[uniqueID] = clientSocket;
 		connectedClientsMutex.unlock();
 
 		connectedClientsReceiveThreadsMutex.lock();
-		connectedClientsReceiveThreads[clientIP] = std::thread(&NetworkManager::ServerReceive, this, clientIP);
+		connectedClientsReceiveThreads[uniqueID] = std::thread(&NetworkManager::ServerReceive, this, uniqueID);
 		connectedClientsReceiveThreadsMutex.unlock();
 
-		Logger::Log("Client Connected: " + std::string(clientIP), Logger::Category::Info);
-		
-		ServerSend(clientIP, "", "");
+		Logger::Log("Client Connected: " + uniqueID, Logger::Category::Info);
+
+		// The client receives this and saves it as its identity payload
+		ServerSend(uniqueID, "", "");
 	}
 }
 
@@ -814,19 +817,19 @@ void NetworkManager::SetupServerReceiveSpawnRequestCallback()
 
 				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 
-				std::string targetIP = GetIPFromData(data);
-				newNetworkObject->spawnerIP = targetIP;
+				std::string targetID = GetIDFromData(data);
+				newNetworkObject->spawnerIP = targetID;
 
 				newNetworkObject->OnSpawn();
 
-				ServerSend(targetIP, std::to_string(newNetworkObjectID), clientResponseFunctionName);
-				ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", { targetIP });
+				ServerSend(targetID, std::to_string(newNetworkObjectID), clientResponseFunctionName);
+				ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", { targetID });
 			}
 			else
 			{
-				std::string targetIP = GetIPFromData(data);
+				std::string targetID = GetIDFromData(data);
 
-				ServerSend(targetIP, "Failure", clientResponseFunctionName);
+				ServerSend(targetID, "Failure", clientResponseFunctionName);
 			}
 		});
 
@@ -891,7 +894,7 @@ void NetworkManager::SetupServerReceiveDespawnRequestCallback()
 
 				spawnedNetworkObjects.erase(networkObject);
 
-				std::string targetIP = GetIPFromData(data);
+				std::string targetID = GetIDFromData(data);
 
 				ServerSendAll(networkObjectID, "NetworkManagerClientReceiveDespawnFromServer");
 			}
@@ -1101,7 +1104,7 @@ void NetworkManager::SetupSpawnConfirmationCallbacks()
 {
 	static std::function<void(const std::string&)> serverSpawnConfirmation = [this](const std::string& data)
 		{
-			std::string IP = GetIPFromData(data);
+			std::string ID = GetIDFromData(data);
 			std::string dataBlock = GetDataBlockFromData(data);
 
 			unsigned long long id = std::stoull(dataBlock);
@@ -1110,8 +1113,8 @@ void NetworkManager::SetupSpawnConfirmationCallbacks()
 
 			if (object != spawnedNetworkObjects.end())
 			{
-				object->second->OnServerSpawnConfirmation(IP);
-				ServerSend(IP, dataBlock, "ClientSpawnConfirmation");
+				object->second->OnServerSpawnConfirmation(ID);
+				ServerSend(ID, dataBlock, "ClientSpawnConfirmation");
 			}
 		};
 
@@ -1119,7 +1122,7 @@ void NetworkManager::SetupSpawnConfirmationCallbacks()
 
 	static std::function<void(const std::string&)> clientSpawnConfirmation = [this](const std::string& data)
 		{
-			std::string IP = GetIPFromData(data);
+			std::string ID= GetIDFromData(data);
 			std::string dataBlock = GetDataBlockFromData(data);
 
 			unsigned long long id = std::stoull(dataBlock);
@@ -1140,7 +1143,7 @@ void NetworkManager::SetupSyncCallbacks()
 {
 	static std::function<void(const std::string&)> serverReceiveSyncRequest = [this](const std::string& data)
 		{
-			std::string IP = GetIPFromData(data);
+			std::string ID = GetIDFromData(data);
 
 			std::vector<std::string> sceneNames;
 
@@ -1208,7 +1211,7 @@ void NetworkManager::SetupSyncCallbacks()
 				netObjectDataToSend.append(netObject->nameOfType + " " + std::to_string(netObject->GetNetworkObjectID()) + " " + gameObject->GetOwningScene()->GetName());
 			}
 
-			ServerSend(IP, netObjectDataToSend, "ClientReceiveSync");
+			ServerSend(ID, netObjectDataToSend, "ClientReceiveSync");
 		};
 
 	RegisterReceiveDataFunction("ServerReceiveSyncRequest", &serverReceiveSyncRequest);
@@ -1286,7 +1289,7 @@ void NetworkManager::SetupLatencyCallbacks()
 {
 	static std::function<void(const std::string&)> serverReceiveLatency = [this](const std::string& data)
 		{
-			ServerSend(GetIPFromData(data), "", "NetworkManagerClientReceiveLatency");
+			ServerSend(GetIDFromData(data), "", "NetworkManagerClientReceiveLatency");
 		};
 
 	static std::function<void(const std::string&)> clientReceiveLatency = [this](const std::string& data)
@@ -1349,9 +1352,9 @@ void NetworkManager::ServerSendAll(const std::string& data, const std::string& r
 				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
 
 				unsigned int i = 4;
-				for (i; i < instance->clientIP.size(); i++)
+				for (i; i < instance->clientID.size(); i++)
 				{
-					*(sendbuf + i) = instance->clientIP[i];
+					*(sendbuf + i) = instance->clientID[i];
 				}
 
 				i = 20;
@@ -1404,9 +1407,9 @@ void NetworkManager::ServerSendAllUDP(const std::string& data, const std::string
 				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
 
 				unsigned int i = 4;
-				for (i; i < instance->clientIP.size(); i++)
+				for (i; i < instance->clientID.size() + 4; i++)
 				{
-					*(sendbuf + i) = instance->clientIP[i];
+					*(sendbuf + i) = instance->clientID[i - 4];
 				}
 
 				i = 20;
@@ -1423,48 +1426,29 @@ void NetworkManager::ServerSendAllUDP(const std::string& data, const std::string
 					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 				}
 
-				sockaddr_in destination;
-				destination.sin_family = AF_INET;
+				// Look up the pre - packaged destination struct using the unique ID
+				instance->udpRoutesMutex.lock();
+				if (instance->connectedClientUDPRoutes.find(instance->clientID) != instance->connectedClientUDPRoutes.end())
+				{
+					// Grab the exact IP and Port combo we saved when they sent us data
+					sockaddr_in destination = instance->connectedClientUDPRoutes[instance->clientID];
 
-				// GRAB THE PORT INSTEAD OF HARDCODING 54001
-				instance->udpPortsMutex.lock();
-				unsigned short targetPort = instance->connectedClientUDPPorts[clientSocket.first];
-				instance->udpPortsMutex.unlock();
+					// Fire the packet directly back
+					int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0,
+						(SOCKADDR*)&destination, sizeof(destination));
 
-				destination.sin_port = htons(54001);
-
-				// Ptr to the storage for the binary IP (in_addr structure)
-				PVOID addrPtr = &destination.sin_addr;
-
-				// The modern, robust conversion function
-				int result = InetPtonA(
-					AF_INET,        // Address family (IPv4)
-					clientSocket.first.c_str(),      // Narrow string containing the IP address
-					addrPtr         // Destination where the binary address is stored
-				);
-
-				if (result == 1) {
-					// Conversion succeeded
-					// destination.sin_addr now holds the IP address in network byte order
-					//Logger::Log("IP successfully converted.");
+					if (bytesSent == SOCKET_ERROR) {
+						Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+					}
 				}
-				else if (result == 0) {
-					// Conversion failed: The string was not a valid IP address format
-					//Logger::Log("Error: Invalid IP address format.");
+				else
+				{
+					// This catches issues if you try to send to a client before they've sent you a UDP packet
+					Logger::Log("Attempted to send UDP to unknown clientID: " + instance->clientID, Logger::Category::Warning);
 				}
-				else { // result == -1
-					// A system error occurred (check WSAGetLastError())
-					//Logger::Log("Error: InetPton failed with system error: ");
-				}
-
-				int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0, (SOCKADDR*)&destination, sizeof(destination));
-
-				if (bytesSent == SOCKET_ERROR) {
-					Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-				}
+				instance->udpRoutesMutex.unlock();
 
 				delete[] sendbuf;
-				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket.first, Logger::Category::Success);
 			}
 			instance->connectedClientsMutex.unlock();
 		}
@@ -1530,14 +1514,14 @@ void NetworkManager::ServerSend(const std::string& ip, const std::string& data, 
 	}
 }
 
-void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& data, const std::string& receiveFunction)
+void NetworkManager::ServerSendUDP(const std::string& clientID, const std::string& data, const std::string& receiveFunction)
 {
 	if (instance != nullptr)
 	{
 		if (IsServer())
 		{
 			instance->connectedClientsMutex.lock();
-			const auto& clientSocket = instance->connectedClients.find(ip);
+			const auto& clientSocket = instance->connectedClients.find(clientID);
 
 			if (clientSocket != instance->connectedClients.end())
 			{
@@ -1549,9 +1533,9 @@ void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& dat
 				*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
 
 				unsigned int i = 4;
-				for (i; i < ip.size() + 4; i++)
+				for (i; i < clientID.size() + 4; i++)
 				{
-					*(sendbuf + i) = ip[i - 4];
+					*(sendbuf + i) = clientID[i - 4];
 				}
 
 				i = 20;
@@ -1568,49 +1552,29 @@ void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& dat
 					*(sendbuf + i) = data[i - (21 + receiveFunction.size())];
 				}
 
-				sockaddr_in destination;
-				destination.sin_family = AF_INET;
+				// Look up the pre - packaged destination struct using the unique ID
+				instance->udpRoutesMutex.lock();
+				if (instance->connectedClientUDPRoutes.find(clientID) != instance->connectedClientUDPRoutes.end())
+				{
+					// Grab the exact IP and Port combo we saved when they sent us data
+					sockaddr_in destination = instance->connectedClientUDPRoutes[clientID];
 
-				// GRAB THE PORT INSTEAD OF HARDCODING 54001
-				instance->udpPortsMutex.lock();
-				unsigned short targetPort = instance->connectedClientUDPPorts[ip];
-				instance->udpPortsMutex.unlock();
+					// Fire the packet directly back
+					int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0,
+						(SOCKADDR*)&destination, sizeof(destination));
 
-				destination.sin_port = htons(targetPort);
-
-				// Ptr to the storage for the binary IP (in_addr structure)
-				PVOID addrPtr = &destination.sin_addr;
-
-				// The modern, robust conversion function
-				int result = InetPtonA(
-					AF_INET,        // Address family (IPv4)
-					ip.c_str(),      // Narrow string containing the IP address
-					addrPtr         // Destination where the binary address is stored
-				);
-
-				if (result == 1) {
-					// Conversion succeeded
-					// destination.sin_addr now holds the IP address in network byte order
-					//Logger::Log("IP successfully converted.");
+					if (bytesSent == SOCKET_ERROR) {
+						Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
+					}
 				}
-				else if (result == 0) {
-					// Conversion failed: The string was not a valid IP address format
-					//Logger::Log("Error: Invalid IP address format.");
+				else
+				{
+					// This catches issues if you try to send to a client before they've sent you a UDP packet
+					Logger::Log("Attempted to send UDP to unknown clientID: " + clientID, Logger::Category::Warning);
 				}
-				else { // result == -1
-					// A system error occurred (check WSAGetLastError())
-					//Logger::Log("Error: InetPton failed with system error: ");
-				}
-
-				int bytesSent = sendto(instance->UDPSocket, sendbuf, packetSize, 0, (SOCKADDR*)&destination, sizeof(destination));
-
-				if (bytesSent == SOCKET_ERROR) {
-					Logger::Log("sendto failed: " + std::to_string(WSAGetLastError()), Logger::Category::Error);
-				}
+				instance->udpRoutesMutex.unlock();
 
 				delete[] sendbuf;
-
-				//Logger::Log("Bytes sent: " + std::to_string(iSendResult) + " to: " + clientSocket->first, Logger::Category::Success);
 			}
 
 
@@ -1634,9 +1598,9 @@ void NetworkManager::ClientSend(const std::string& data, const std::string& rece
 			*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
 
 			unsigned int i = 4;
-			for (i; i < instance->clientIP.size() + 4; i++)
+			for (i; i < instance->clientID.size() + 4; i++)
 			{
-				*(sendbuf + i) = instance->clientIP[i - 4];
+				*(sendbuf + i) = instance->clientID[i - 4];
 			}
 
 			i = 20;
@@ -1679,9 +1643,9 @@ void NetworkManager::ClientSendUDP(const std::string& data, const std::string& r
 			*reinterpret_cast<unsigned int*>(sendbuf) = packetSize;
 
 			unsigned int i = 4;
-			for (i; i < instance->clientIP.size() + 4; i++)
+			for (i; i < instance->clientID.size() + 4; i++)
 			{
-				*(sendbuf + i) = instance->clientIP[i - 4];
+				*(sendbuf + i) = instance->clientID[i - 4];
 			}
 
 			i = 20;
@@ -1791,9 +1755,9 @@ void NetworkManager::DeregisterOnDisconnectFunction(const std::string& key)
 	}
 }
 
-std::string NetworkManager::GetIPFromData(const std::string& data)
+std::string NetworkManager::GetIDFromData(const std::string& data)
 {
-	std::string IP;
+	std::string ID;
 
 	unsigned int i = 0;
 	for (i; i < data.size(); i++)
@@ -1803,10 +1767,10 @@ std::string NetworkManager::GetIPFromData(const std::string& data)
 			break;
 		}
 
-		IP += data[i];
+		ID += data[i];
 	}
 
-	return IP;
+	return ID;
 }
 
 std::string NetworkManager::GetFunctionFromData(const std::string& data)
@@ -1971,7 +1935,7 @@ std::string NetworkManager::ConvertMat4ToData(const glm::mat4& mat4)
 	return data;
 }
 
-std::string NetworkManager::GetIP()
+std::string NetworkManager::GetID()
 {
 	if (instance != nullptr)
 	{
@@ -1981,7 +1945,7 @@ std::string NetworkManager::GetIP()
 		}
 		else
 		{
-			return instance->clientIP;
+			return instance->clientID;
 		}
 	}
 
