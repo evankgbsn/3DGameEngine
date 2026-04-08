@@ -185,6 +185,10 @@ private:
 
 	std::unordered_map<std::string, SOCKET> connectedClients;
 
+	std::mutex udpPortsMutex;
+
+	std::unordered_map<std::string, unsigned short> connectedClientUDPPorts;
+
 	std::mutex connectedClientsReceiveThreadsMutex;
 
 	std::unordered_map<std::string, std::thread> connectedClientsReceiveThreads;

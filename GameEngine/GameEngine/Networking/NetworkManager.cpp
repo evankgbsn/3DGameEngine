@@ -10,8 +10,9 @@
 
 #define DEFAULT_PORT "27015"
 #define DEFAULT_UDP_PORT "54001"
-#define SERVER_IP "10.112.0.188"
-//#define SERVER_IP "192.168.1.4"
+//#define SERVER_IP "10.112.0.188"
+//#define SERVER_IP "50.223.50.163"
+#define SERVER_IP "136.30.14.121"
 //#define SERVER_IP "136.30.15.215"
 //#define SERVER_IP "192.168.50.2"
 //#define SERVER_IP "192.168.50.100"
@@ -454,6 +455,12 @@ void NetworkManager::UDPServerReceive()
 		std::string ip = std::string(buffer + 4);
 		std::string functionID = (buffer + 20);
 		std::string data = ip + " " + functionID + " ";
+
+		// SAVE THE EPHEMERAL PORT
+		unsigned short clientPort = ntohs(clientAddr.sin_port);
+		instance->udpPortsMutex.lock();
+		instance->connectedClientUDPPorts[ip] = clientPort;
+		instance->udpPortsMutex.unlock();
 
 		unsigned int i = 21 + functionID.size();
 		while (i < packetSize)
@@ -1423,6 +1430,12 @@ void NetworkManager::ServerSendAllUDP(const std::string& data, const std::string
 
 				sockaddr_in destination;
 				destination.sin_family = AF_INET;
+
+				// GRAB THE PORT INSTEAD OF HARDCODING 54001
+				instance->udpPortsMutex.lock();
+				unsigned short targetPort = instance->connectedClientUDPPorts[clientSocket.first];
+				instance->udpPortsMutex.unlock();
+
 				destination.sin_port = htons(54001);
 
 				// Ptr to the storage for the binary IP (in_addr structure)
@@ -1562,7 +1575,13 @@ void NetworkManager::ServerSendUDP(const std::string& ip, const std::string& dat
 
 				sockaddr_in destination;
 				destination.sin_family = AF_INET;
-				destination.sin_port = htons(54001);
+
+				// GRAB THE PORT INSTEAD OF HARDCODING 54001
+				instance->udpPortsMutex.lock();
+				unsigned short targetPort = instance->connectedClientUDPPorts[ip];
+				instance->udpPortsMutex.unlock();
+
+				destination.sin_port = htons(targetPort);
 
 				// Ptr to the storage for the binary IP (in_addr structure)
 				PVOID addrPtr = &destination.sin_addr;
