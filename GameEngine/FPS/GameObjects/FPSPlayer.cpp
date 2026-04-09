@@ -1325,7 +1325,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(1.0f);
+				controller->Jump(jumpPower);
 			}
 		}
 		else if (updateType == "Target")
