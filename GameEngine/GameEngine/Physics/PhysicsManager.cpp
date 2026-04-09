@@ -32,19 +32,20 @@ void PhysicsManager::Update()
 	if (instance != nullptr)
 	{
 		instance->accumulator += TimeManager::DeltaTime();
-		if (instance->accumulator < instance->stepSize)
-			return;
 
-		instance->accumulator -= instance->stepSize;
-
-		for (auto& controller : instance->controllers)
+		// Process as many fixed steps as needed to catch up
+		while (instance->accumulator >= instance->stepSize)
 		{
-			controller.second->Move();
+			for (auto& controller : instance->controllers)
+			{
+				controller.second->Move();
+			}
+
+			instance->scene->simulate(instance->stepSize);
+			instance->scene->fetchResults(true);
+
+			instance->accumulator -= instance->stepSize;
 		}
-
-		instance->scene->simulate(instance->stepSize);
-
-		instance->scene->fetchResults(true);
 	}
 }
 
