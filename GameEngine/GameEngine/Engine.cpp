@@ -149,6 +149,13 @@ Engine::Engine()
 	glm::vec2 primaryMonitorDimensions = Renderer::GetPrimaryMonitorDimensions();
 
 	Renderer::CreateMainWindow(static_cast<unsigned int>(primaryMonitorDimensions.x / 2), static_cast<unsigned int>(primaryMonitorDimensions.y / 2), "Engine");
+
+#ifdef GAME
+#ifndef _SERVER
+	WindowManager::GetWindow("Engine")->ToggleFullScreen();
+#endif
+#endif
+
 	SceneManager::Initialize();
 
 #ifndef GAME

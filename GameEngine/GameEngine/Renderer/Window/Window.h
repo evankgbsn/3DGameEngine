@@ -53,6 +53,8 @@ public:
 
 	static glm::vec2 GetPrimaryMonitorDimensions();
 
+	void ToggleFullScreen();
+
 private:
 
 	friend class WindowManager;
@@ -82,6 +84,14 @@ private:
 	GLFWwindow* glfwWindow;
 
 	std::atomic<bool> shouldClose;
+
+	bool isFullScreen = false;
+
+	glm::ivec2 position;
+
+	glm::ivec2 dimensions;
+
+	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
 	
 };
 

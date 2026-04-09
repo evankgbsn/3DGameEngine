@@ -465,6 +465,8 @@ void FPSPlayer::RegisterInput()
 {
 	static std::function<void(int)> escapeCursor = [](int keyCode)
 		{
+			WindowManager::GetWindow("Engine")->ToggleFullScreen();
+
 			static bool enabled = false;
 
 			if (!enabled)

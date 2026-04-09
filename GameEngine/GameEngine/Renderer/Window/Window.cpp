@@ -8,6 +8,7 @@
 #include "../Texture/TextureManager.h"
 #include "../../Input/InputManager.h"
 #include "../../Editor/Editor.h"
+#include "../Renderer.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -34,21 +35,19 @@ void WindowResizeCallback(GLFWwindow* window, int width, int height)
 
 unsigned int Window::GetWidth() const
 {
-	int width, height;
-	glfwGetWindowSize(glfwWindow, &width, &height);
-	return width;
+	return dimensions.x;
 }
 
 unsigned int Window::GetHeight() const
 {
-	int width, height;
-	glfwGetWindowSize(glfwWindow, &width, &height);
-	return height;
+	return dimensions.y;
 }
 
 Window::Window(unsigned int width, unsigned int height, const std::string& name) :
 	glfwWindow(nullptr),
-	shouldClose(false)
+	shouldClose(false),
+	dimensions({width, height}),
+	windowResizeCallback(nullptr)
 {
 	int monitorCount;
 	GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
@@ -58,6 +57,7 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 	glfwWindow = glfwCreateWindow(static_cast<int>(width), static_cast<int>(height), name.c_str(), nullptr, nullptr);
+	glfwGetWindowPos(glfwWindow, &position.x, &position.y);
 
 	if (glfwWindow == nullptr)
 	{
@@ -65,6 +65,13 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 	}
 	else
 	{
+		 windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int width, unsigned int height)
+			{
+				 dimensions = { width, height };
+			});
+
+		RegisterCallbackForWindowResize("WindowResizeDimensionsUpdate", windowResizeCallback);
+
 		glfwMakeContextCurrent(glfwWindow);
 		glfwSwapInterval(0);
 		InitializeGLEW();
@@ -75,6 +82,11 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 
 Window::~Window()
 {
+	if (windowResizeCallback != nullptr)
+	{
+		delete windowResizeCallback;
+	}
+
 	glfwDestroyWindow(glfwWindow);
 }
 
@@ -379,4 +391,33 @@ glm::vec2 Window::GetPrimaryMonitorDimensions()
 	}
 
 	return dimensions;
+}
+
+void Window::ToggleFullScreen()
+{
+	// If glfwGetWindowMonitor returns a non-null pointer, the window is currently full screen
+	if (glfwGetWindowMonitor(glfwWindow))
+	{
+		// Switch back to windowed mode using the saved position and size
+		glm::vec2 primaryMonitorDimensions = Renderer::GetPrimaryMonitorDimensions();
+
+		glfwSetWindowMonitor(glfwWindow, NULL, position.x, position.y, static_cast<unsigned int>(primaryMonitorDimensions.x / 2), static_cast<unsigned int>(primaryMonitorDimensions.y / 2), 0);
+		isFullScreen = false;
+	}
+	else
+	{
+		// Window is currently windowed. Save the current position and size!
+		glfwGetWindowPos(glfwWindow, &position.x, &position.y);
+		glfwGetWindowSize(glfwWindow, &dimensions.x, &dimensions.y);
+
+		// Get the primary monitor and its video mode
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+		// Switch to full screen
+		// Note: Passing mode->refreshRate attempts to set exclusive full screen. 
+		// Passing GLFW_DONT_CARE for refresh rate usually gives borderless windowed.
+		glfwSetWindowMonitor(glfwWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		isFullScreen = true;
+	}
 }
