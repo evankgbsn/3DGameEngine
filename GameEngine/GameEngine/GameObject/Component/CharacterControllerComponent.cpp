@@ -93,17 +93,20 @@ void CharacterControllerComponent::Update()
 {
 	float dt = TimeManager::DeltaTime();
 
-	// 1. Apply acceleration (gravity/deceleration) to Velocity
-	// Velocity changes by (Acceleration * Time)
-	if (jumpForce > 0.0f) {
-		jumpForce -= 150.0f * dt;
+	// If we are in the air, apply constant downward acceleration (gravity)
+	if (IsFalling()) {
+		// A gravity of -40.0f to -60.0f usually feels much punchier in an FPS
+		jumpForce += -40.0f * dt;
 	}
 	else {
-		jumpForce = 0.0f;
+		// If we are grounded, keep a small downward force to stick to the floor
+		// This prevents bouncing down slopes
+		if (jumpForce < 0.0f) {
+			jumpForce = -2.0f;
+		}
 	}
 
-	// 2. Apply Velocity to Position
-	// Displacement changes by (Velocity * Time)
+	// Apply Velocity to Position (Displacement = Velocity * Time)
 	float verticalDisplacement = jumpForce * dt;
 
 	controller->AddDisp(glm::vec3(0.0f, verticalDisplacement, 0.0f));
