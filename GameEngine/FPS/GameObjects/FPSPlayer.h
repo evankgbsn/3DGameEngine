@@ -235,7 +235,7 @@ private:
 
 	glm::vec3 spawnTarget;
 
-	float jumpPower = 30.0f;
+	float jumpPower = 10.0f;
 
 };
 

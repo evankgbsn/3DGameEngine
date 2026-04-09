@@ -96,7 +96,7 @@ void CharacterControllerComponent::Update()
 	// If we are in the air, apply constant downward acceleration (gravity)
 	if (IsFalling()) {
 		// A gravity of -40.0f to -60.0f usually feels much punchier in an FPS
-		jumpForce += -40.0f * dt;
+		jumpForce += -60.0f * dt;
 	}
 	else {
 		// If we are grounded, keep a small downward force to stick to the floor
