@@ -235,6 +235,8 @@ private:
 
 	glm::vec3 spawnTarget;
 
+	float jumpPower = 20.0f;
+
 };
 
 #endif // FPSPLAYER_H

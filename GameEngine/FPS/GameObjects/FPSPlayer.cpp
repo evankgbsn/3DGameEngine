@@ -696,7 +696,7 @@ void FPSPlayer::RegisterInput()
 
 			if (!controller->IsFalling())
 			{
-				controller->Jump(75.0f);
+				controller->Jump(jumpPower);
 			}
 		});
 
@@ -768,7 +768,7 @@ void FPSPlayer::RegisterInput()
 			
 			if (!controller->IsFalling())
 			{
-				controller->Jump(75.0f);
+				controller->Jump(jumpPower);
 			}
 		});
 
@@ -1325,7 +1325,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (!controller->IsFalling())
 			{
-				controller->Jump(75.0f);
+				controller->Jump(1.0f);
 			}
 		}
 		else if (updateType == "Target")
