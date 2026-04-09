@@ -1016,7 +1016,7 @@ void FPSPlayer::Shoot()
 		{
 			FPSPlayer* player = dynamic_cast<FPSPlayer*>(object.second);
 
-			if (player != nullptr)
+			if (player != nullptr && player != this)
 			{
 				LineSegment3D line(origin, origin + direction * 1000.0f);
 				std::string outBoxName;
