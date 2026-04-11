@@ -662,6 +662,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="GameObject\Component\CharacterControllerComponent.cpp" />
     <ClCompile Include="GameObject\Component\Component.cpp" />
     <ClCompile Include="GameObject\Component\DirectionalLightComponent.cpp" />
+    <ClCompile Include="GameObject\Component\EmptyComponent.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObject3DComponent.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectColored.cpp" />
     <ClCompile Include="GameObject\Component\GraphicsObjectColoredAnimated.cpp" />
@@ -781,6 +782,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="GameObject\Component\CharacterControllerComponent.h" />
     <ClInclude Include="GameObject\Component\Component.h" />
     <ClInclude Include="GameObject\Component\DirectionalLightComponent.h" />
+    <ClInclude Include="GameObject\Component\EmptyComponent.h" />
     <ClInclude Include="GameObject\Component\GraphicsObject3DComponent.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectColored.h" />
     <ClInclude Include="GameObject\Component\GraphicsObjectColoredAnimated.h" />

@@ -121,15 +121,12 @@ void GOTexturedLitInstanced::Update()
 	glActiveTexture(GL_TEXTURE31);
 	glBindTexture(GL_TEXTURE_2D, ShaderManager::GetShadowMapTexture());
 
-	float near_plane = -100.0f, far_plane = 100.0f;
-	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
-
-	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
-	position.y = 10.0f;
-	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
+	float near_plane = 0.10f, far_plane = 150.0f;
+	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
 
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f) + -lightDirection * (far_plane / 2.0f);
 
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
@@ -176,6 +173,8 @@ unsigned int GOTexturedLitInstanced::AddInstance()
 		ups.push_back(idMatrix[1]);
 		forwards.push_back(idMatrix[2]);
 
+		FinalizeTransforms();
+
 		return translations.size() - 1;
 	}
 
@@ -191,6 +190,8 @@ unsigned int GOTexturedLitInstanced::AddInstance()
 	rights[newInstanceID] = idMatrix[0];
 	ups[newInstanceID] = idMatrix[1];
 	forwards[newInstanceID] = idMatrix[2];
+
+	FinalizeTransforms();
 
 	return newInstanceID;
 }
@@ -213,7 +214,7 @@ void GOTexturedLitInstanced::RemoveInstanceByID(unsigned int instanceID)
 
 unsigned int GOTexturedLitInstanced::GetInstanceCount()
 {
-	return static_cast<unsigned int>(transforms.size());
+	return static_cast<unsigned int>(transforms.size() - removedInstances.size());
 }
 
 void GOTexturedLitInstanced::FinalizeTransforms()
@@ -271,15 +272,12 @@ void GOTexturedLitInstanced::RenderToShadowMap()
 
 	ShaderManager::StartShaderUsage("ShadowMapInstanced");
 
-	float near_plane = -100.0f, far_plane = 100.0f;
-	glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, near_plane, far_plane);
-
-	glm::vec3 position = CameraManager::GetActiveCamera().GetPosition();
-	position.y = 10.0f;
-	glm::vec3 zero = glm::vec3(0.0f, 0.0f, 0.0f);
+	float near_plane = 0.10f, far_plane = 150.0f;
+	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
 
 	std::vector<DirectionalLight*> directionalLights = LightManager::GetDirectionalLights(1);
 	glm::vec3 lightDirection = (!directionalLights.empty()) ? directionalLights[0]->GetDirection() : glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f) + -lightDirection * (far_plane / 2.0f);
 
 	glm::mat4 lightView = glm::lookAt(position,
 		position + lightDirection,
@@ -317,19 +315,19 @@ Texture* GOTexturedLitInstanced::GetNormalTexture() const
 void GOTexturedLitInstanced::BindVertexArrayBuffers()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
 	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
 	glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
 	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

@@ -24,12 +24,11 @@ layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec2 inUV;
 layout(location = 3) in vec4 inWeights;
 layout(location = 4) in ivec4 inJoints;
-layout(location = 5) in vec4 translation;
-layout(location = 6) in vec4 right;
-layout(location = 7) in vec4 up;
-layout(location = 8) in vec4 forward;
-layout(location = 9) in vec4 color;
-layout(location = 10) in vec4 inTangent;
+layout(location = 5) in vec4 inTangent;
+layout(location = 6) in vec4 translation;
+layout(location = 7) in vec4 right;
+layout(location = 8) in vec4 up;
+layout(location = 9) in vec4 forward;
 
 //--------------------------------------------------
 // Data Sent to Fragment Shader
@@ -52,8 +51,8 @@ void main(void)
 	gl_Position = vp.projection * vp.view * worldPosition;
 
     // Transform Normal and Tangent to World Space
-    vec3 T = normalize(vec3(mvp.model * vec4(inTangent.xyz, 0.0f)));
-    vec3 N = normalize(vec3(mvp.model * vec4(inNormal, 0.0f)));
+    vec3 T = normalize(vec3(transformMatrix * vec4(inTangent.xyz, 0.0f)));
+    vec3 N = normalize(vec3(transformMatrix * vec4(inNormal, 0.0f)));
 
     // Re-orthogonalize T with respect to N
     T = normalize(T - dot(T, N) * N);

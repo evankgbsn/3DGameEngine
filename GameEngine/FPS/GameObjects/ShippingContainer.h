@@ -3,8 +3,9 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class GraphicsObjectTexturedLit;
+class GraphicsObjectTexturedLitInstanced;
 class RigidBodyComponent;
+class EmptyComponent;
 
 class ShippingContainer : public GameObject
 {
@@ -50,9 +51,13 @@ private:
 
 	void Deserialize() override;
 
-	GraphicsObjectTexturedLit* graphics;
+	static GraphicsObjectTexturedLitInstanced* graphics;
+
+	unsigned int instanceID = 0;
 
 	RigidBodyComponent* body;
+
+	EmptyComponent* empty;
 
 };
 

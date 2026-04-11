@@ -51,8 +51,8 @@ void main(void)
 	gl_Position = vp.projection * vp.view * worldPosition;
 
     // Transform Normal and Tangent to World Space
-    vec3 T = normalize(vec3(mvp.model * vec4(inTangent.xyz, 0.0f)));
-    vec3 N = normalize(vec3(mvp.model * vec4(inNormal, 0.0f)));
+    vec3 T = normalize(vec3(transformMatrix * vec4(inTangent.xyz, 0.0f)));
+    vec3 N = normalize(vec3(transformMatrix * vec4(inNormal, 0.0f)));
 
     // Re-orthogonalize T with respect to N
     T = normalize(T - dot(T, N) * N);

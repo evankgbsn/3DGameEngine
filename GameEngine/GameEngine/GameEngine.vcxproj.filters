@@ -462,6 +462,9 @@
     <ClCompile Include="GameObject\Component\GraphicsObjectLine.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Component\EmptyComponent.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -825,6 +828,9 @@
       <Filter>Source Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Component\GraphicsObjectLine.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\EmptyComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>

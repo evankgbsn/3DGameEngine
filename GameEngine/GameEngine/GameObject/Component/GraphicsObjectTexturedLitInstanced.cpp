@@ -37,6 +37,7 @@ void GraphicsObjectTexturedLitInstanced::Translate(const glm::vec3& t, unsigned 
 	if (graphics != nullptr)
 	{
 		graphics->Translate(t, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 }
 
@@ -45,6 +46,7 @@ void GraphicsObjectTexturedLitInstanced::Rotate(float angle, const glm::vec3& ax
 	if (graphics != nullptr)
 	{
 		graphics->Rotate(angle, axis, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -53,6 +55,7 @@ void GraphicsObjectTexturedLitInstanced::Scale(const glm::vec3& s, unsigned int 
 	if (graphics != nullptr)
 	{
 		graphics->Scale(s, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -61,6 +64,7 @@ void GraphicsObjectTexturedLitInstanced::SetTranslation(const glm::vec3& t, unsi
 	if (graphics != nullptr)
 	{
 		graphics->SetTranslation(t, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -69,6 +73,7 @@ void GraphicsObjectTexturedLitInstanced::SetRotation(const glm::mat4& newRotatio
 	if (graphics != nullptr)
 	{
 		graphics->SetRotation(newRotation, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -77,6 +82,7 @@ void GraphicsObjectTexturedLitInstanced::SetScale(const glm::vec3& s, unsigned i
 	if (graphics != nullptr)
 	{
 		graphics->SetScale(s, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -115,6 +121,7 @@ void GraphicsObjectTexturedLitInstanced::SetTransform(const glm::mat4& newTransf
 	if (graphics != nullptr)
 	{
 		graphics->SetTransform(newTransform, instanceID);
+		graphics->UpdateInstanceByID(instanceID);
 	}
 };
 
@@ -180,11 +187,10 @@ void GraphicsObjectTexturedLitInstanced::Deserialize()
 	for (unsigned int i = 0; i < graphics->GetInstanceCount(); i++)
 	{
 		graphics->SetTransform(savedMat4s[std::to_string(i)], i);
+		graphics->UpdateInstanceByID(i);
 	}
 
 	SetShine(savedFloats["Shine"]);
-
-	graphics->FinalizeTransforms();
 }
 
 void GraphicsObjectTexturedLitInstanced::SetShine(float shine)
