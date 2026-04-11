@@ -32,11 +32,11 @@ int main(int argc, const char** argv)
 	Scene* fpsNetworkManager = new FPSNetworkManager();
 	SceneManager::RegisterScene(fpsNetworkManager, "FPSNetworkManager");
 
-	//SceneManager::LoadScene("JoinScene");
-	//SceneManager::InitializeScene("JoinScene");
+	SceneManager::LoadScene("JoinScene");
+	SceneManager::InitializeScene("JoinScene");
 
-	SceneManager::LoadScene("Test");
-	SceneManager::InitializeScene("Test");
+	//SceneManager::LoadScene("Test");
+	//SceneManager::InitializeScene("Test");
 
 	if (!Engine::IsEditorBuild())
 	{

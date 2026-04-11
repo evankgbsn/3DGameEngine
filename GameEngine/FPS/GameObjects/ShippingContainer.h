@@ -3,7 +3,7 @@
 
 #include "GameEngine/GameObject/GameObject.h"
 
-class GraphicsObjectTexturedLitInstanced;
+class GraphicsObjectTexturedLit;
 class RigidBodyComponent;
 class EmptyComponent;
 
@@ -51,13 +51,9 @@ private:
 
 	void Deserialize() override;
 
-	static GraphicsObjectTexturedLitInstanced* graphics;
-
-	unsigned int instanceID = 0;
+	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* body;
-
-	EmptyComponent* empty;
 
 };
 

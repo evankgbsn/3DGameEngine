@@ -2,12 +2,9 @@
 
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
-#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLitInstanced.h"
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 #include "GameEngine/Scene/Scene.h"
-#include "GameEngine/GameObject/Component/EmptyComponent.h"
-
-GraphicsObjectTexturedLitInstanced* ShippingContainer::graphics = nullptr;
 
 ShippingContainer::ShippingContainer() :
 	GameObject("ShippingContainer"),
@@ -22,68 +19,29 @@ ShippingContainer::~ShippingContainer()
 
 void ShippingContainer::Initialize()
 {
-	empty = new EmptyComponent();
+	graphics = new GraphicsObjectTexturedLit(
+		ModelManager::GetModel("ShippingContainer"),
+		"ShippingContainerRed",
+		"ShippingContainerSpec",
+		"ShippingContainerNormal");
 
-	AddComponent(empty, "Empty");
+	graphics->SetShine(4.0f);
 
-	if (graphics == nullptr)
-	{
-		graphics = new GraphicsObjectTexturedLitInstanced(
-			"ShippingContainer",
-			"ShippingContainerRed",
-			"ShippingContainerSpec",
-			"ShippingContainerNormal", 1);
-
-		graphics->SetShine(4.0f);
-
-		AddComponent(graphics, "Graphics");
-
-		instanceID = 0;
-	}
-	else
-	{
-		unsigned int i = 0;
-		for (const auto& obj : GetOwningScene()->GetGameObjects())
-		{
-			if (dynamic_cast<ShippingContainer*>(obj.second) != nullptr && obj.second != this)
-			{
-				i++;
-			}
-		}
-
-		if (graphics->GetInstanceCount() <= i)
-		{
-			instanceID = graphics->AddInstance();
-		}
-	}
-	
+	AddComponent(graphics, "Graphics");
 
 	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	body->SyncPhysics();
 
 	AddComponent(body, "RigidBody");
-
-	empty->SetInt("InstanceID", instanceID);
 }
 
 void ShippingContainer::Terminate()
 {
-	RemoveComponent("Empty");
-	delete empty;
-
 	RemoveComponent("RigidBody");
 	delete body;
 
-	if (graphics->GetInstanceCount() == 1)
-	{
-		RemoveComponent("Graphics");
-		delete graphics;
-		graphics = nullptr;
-	}
-	else
-	{
-		graphics->RemoveInstanceByID(instanceID);
-	}
+	RemoveComponent("Graphics");
+	delete graphics;
 }
 
 void ShippingContainer::GameUpdate()
@@ -125,29 +83,29 @@ void ShippingContainer::Unload()
 
 void ShippingContainer::SetPosition(const glm::vec3& pos)
 {
-	graphics->SetTranslation(pos, instanceID);
-	body->SetPosition(graphics->GetTranslation(instanceID));
+	graphics->SetPosition(pos);
+	body->SetPosition(pos);
 }
 
 glm::vec3 ShippingContainer::GetPosition() const
 {
-	return graphics->GetTranslation(instanceID);
+	return graphics->GetPosition();
 }
 
 void ShippingContainer::SetRotation(const glm::mat4& rot)
 {
-	graphics->SetRotation(rot, instanceID);
-	body->SetRotation(graphics->GetRotation(instanceID));
+	graphics->SetRotation(rot);
+	body->SetRotation(graphics->GetRotation());
 }
 
 glm::mat4 ShippingContainer::GetRotation() const
 {
-	return graphics->GetRotation(instanceID);
+	return graphics->GetRotation();
 }
 
 glm::mat4 ShippingContainer::GetTransform() const
 {
-	return graphics->GetTransform(instanceID);
+	return graphics->GetTransform();
 }
 
 bool ShippingContainer::Hovered() const
@@ -158,18 +116,6 @@ bool ShippingContainer::Hovered() const
 void ShippingContainer::Deserialize()
 {
 	GameObject::Deserialize();
-
-	if (dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("Graphics")) != nullptr)
-	{
-		if (graphics != nullptr)
-		{
-			delete graphics;
-		}
-
-		graphics = dynamic_cast<GraphicsObjectTexturedLitInstanced*>(GetComponent("Graphics"));
-	}
-
-	instanceID = static_cast<EmptyComponent*>(GetComponent("Empty"))->GetInt("InstanceID");
 
 	body->SetOwner(this);
 	body->SyncPhysics();
