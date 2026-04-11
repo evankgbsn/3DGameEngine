@@ -20,6 +20,8 @@ private:
 
 	friend class SingletonHelpers;
 
+	friend class Scene;
+
 	friend class Engine;
 
 	static void Initialize();

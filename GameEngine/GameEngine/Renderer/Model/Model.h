@@ -114,6 +114,8 @@ private:
 
 	static std::mutex loadMutex;
 
+	bool vaoCreated = false;
+
 };
 
 #endif // MODEL_H

@@ -393,7 +393,8 @@ GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, co
 
 	if (instance != nullptr)
 	{
-		instance->graphicsObjects2D.push_back(result = new GOGlyph(glyph, color, position, scale));
+		result = new GOGlyph(glyph, color, position, scale);
+		instance->graphicsObjects2D.push_back(result);
 	}
 	else
 	{

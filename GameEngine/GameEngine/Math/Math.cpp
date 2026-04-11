@@ -92,6 +92,12 @@ float Math::ChangeRange(float currentBegin, float currentEnd, float newBegin, fl
 	float oldRange = (currentEnd - currentBegin);
 	float newRange = (newEnd - newBegin);
 
+	// Protect against division by zero
+	if (oldRange == 0.0f)
+	{
+		return newBegin;
+	}
+
 	return (((value - currentBegin) * newRange) / oldRange) + newBegin;
 }
 

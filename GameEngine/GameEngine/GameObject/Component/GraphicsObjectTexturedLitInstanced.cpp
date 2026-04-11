@@ -218,6 +218,11 @@ GOTexturedLitInstanced* GraphicsObjectTexturedLitInstanced::GetGraphics() const
 	return graphics;
 }
 
+const Model* const GraphicsObjectTexturedLitInstanced::GetModel() const
+{
+	return graphics->GetModel();
+}
+
 unsigned int GraphicsObjectTexturedLitInstanced::GetInstanceCount() const
 {
 	if (graphics != nullptr)

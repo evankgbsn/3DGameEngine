@@ -6,6 +6,7 @@
 #include <string>
 
 class GOTexturedLitInstanced;
+class Model;
 
 class GraphicsObjectTexturedLitInstanced : public Component
 {
@@ -55,6 +56,8 @@ public:
 	void SetShine(float shine);
 
 	GOTexturedLitInstanced* GetGraphics() const;
+
+	const Model* const GetModel() const;
 
 private:
 

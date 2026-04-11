@@ -3,6 +3,8 @@
 #include "../GameObject/GameObject.h"
 #include "../GameObject/Component/Component.h"
 #include "../Editor/Editor.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/Model/ModelManager.h"
 
 #include <filesystem>
 #include <fstream>
@@ -784,6 +786,19 @@ bool Scene::IsDeserializing() const
 	return deserializing;
 }
 
+void Scene::RegisterObjectLoadedCallback(std::function<void(const std::string&)>* callback)
+{
+	objectLoadedCallbacks.insert(callback);
+}
+
+void Scene::DeregisterObjectLoadedCallback(std::function<void(const std::string&)>* callback)
+{
+	if (objectLoadedCallbacks.find(callback) != objectLoadedCallbacks.end())
+	{
+		objectLoadedCallbacks.erase(objectLoadedCallbacks.find(callback));
+	}
+}
+
 void Scene::Save(const std::string& saveFileName)
 {
 	std::vector<std::string> temp;
@@ -1195,9 +1210,18 @@ void Scene::TerminateObjects()
 
 void Scene::LoadObjects()
 {
+	float i = objects.size();
 	for (auto& object : objects)
 	{
 		object.second->Load();
+
+		for (auto& objectCallback : objectLoadedCallbacks)
+		{
+			(*objectCallback)(std::format("{:.0f}",((1.0f - (i-- / objects.size())) * 100.0f)) + "%");
+		}
+
+		ModelManager::Update();
+		Renderer::Update();
 	}
 }
 

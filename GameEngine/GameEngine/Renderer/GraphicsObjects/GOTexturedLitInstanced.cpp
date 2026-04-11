@@ -70,29 +70,29 @@ GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diff
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * forwards.size(), &forwards[0], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glEnableVertexAttribArray(5);
-	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glVertexAttribDivisor(5, 1);
-
 	glEnableVertexAttribArray(6);
-	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, translationsBuffer);
 	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glVertexAttribDivisor(6, 1);
 
 	glEnableVertexAttribArray(7);
-	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, rightBuffer);
 	glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glVertexAttribDivisor(7, 1);
 
 	glEnableVertexAttribArray(8);
-	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, upBuffer);
 	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glVertexAttribDivisor(8, 1);
+
+	glEnableVertexAttribArray(9);
+	glBindBuffer(GL_ARRAY_BUFFER, forwardBuffer);
+	glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glVertexAttribDivisor(9, 1);
 
 	FinalizeTransforms();
 

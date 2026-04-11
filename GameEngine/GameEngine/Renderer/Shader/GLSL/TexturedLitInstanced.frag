@@ -70,16 +70,18 @@ layout(std140, binding = 11) uniform FogUBO { float fogDensity; float fogGradien
 
 layout(binding = 0) uniform sampler2D diffuseSampler;
 layout(binding = 1) uniform sampler2D specularSampler;
+layout(binding = 2) uniform sampler2D normalSampler;
 layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
 // Data Sent from Vertex Shader
 //--------------------------------------------------
 
-layout(location = 10) in vec2 inUV;
-layout(location = 11) in vec4 inNormal;
-layout(location = 12) in vec4 inPosition;
-layout(location = 13) in vec4 inLightSpacePosition;
+layout(location = 11) in vec2 inUV;
+layout(location = 12) in vec4 inNormal;
+layout(location = 13) in vec4 inPosition;
+layout(location = 14) in vec4 inLightSpacePosition;
+layout(location = 15) in mat3 inTBN;
 
 //--------------------------------------------------
 // Final Color Sent to Rasterizer
@@ -88,29 +90,43 @@ layout(location = 13) in vec4 inLightSpacePosition;
 out vec4 color;
 
 vec4 CalcAmbientLight(Ambient light);
-vec4 CalcDirectionalLight(DirectionalLight light);
-vec4 CalcPointLight(PointLight light);
-vec4 CalcSpotLight(SpotLight light);
-float CalcShadow();
+vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal, float shadow);
+vec4 CalcPointLight(PointLight light, vec4 normalMapNormal);
+vec4 CalcSpotLight(SpotLight light, vec4 normalMapNormal);
+float CalcShadow(vec4 normalMapNormal);
 float CalcPointShadow();
 
 void main(void)
 {
+	// 1. Sample the normal map 
+    vec3 normal = texture(normalSampler, inUV).rgb;
+    
+    // 2. Transform from [0,1] to [-1,1] 
+    normal = normalize(normal * 2.0 - 1.0); 
+    
+    // 3. Transform to World Space using TBN matrix 
+    // Use this 'worldNormal' instead of 'inNormal' in all CalcLight functions
+    vec3 worldNormal = normalize(inTBN * normal);
+
+	float shadow = CalcShadow(vec4(worldNormal, 0.0f)); 
+
 	for(int i = 0; i < 20; ++i)
 	{
-		if(directionalLight.light[i].lightOn)
+		if(directionalLight.light[i].lightOn) 
 		{
-			color += CalcDirectionalLight(directionalLight.light[i]);
+			// Only apply the shadow to the first light (the one that generated the map)
+			float s = (i == 0) ? shadow : 0.0; 
+			color += CalcDirectionalLight(directionalLight.light[i], vec4(worldNormal, 0.0f), s);
 		}
 
 		if(pointLight.light[i].lightOn)
 		{
-			color += CalcPointLight(pointLight.light[i]);
+			color += CalcPointLight(pointLight.light[i], vec4(worldNormal, 0.0f));
 		}
 
 		if(spotLight.light[i].lightOn)
 		{
-			color += CalcSpotLight(spotLight.light[i]);
+			color += CalcSpotLight(spotLight.light[i], vec4(worldNormal, 0.0f));
 		}
 	}
 
@@ -128,30 +144,30 @@ vec4 CalcAmbientLight(Ambient light)
 	return light.color * texture(diffuseSampler, inUV);
 }
 
-vec4 CalcDirectionalLight(DirectionalLight light)
+vec4 CalcDirectionalLight(DirectionalLight light, vec4 normalMapNormal, float shadow)
 {
-	float diff = max(dot(inNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
+	float diff = max(dot(normalMapNormal.xyz, normalize(-light.direction.xyz)), 0.0f);
 	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
 
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
-	vec3 reflectDir = reflect(light.direction.xyz, inNormal.xyz);
+	vec3 reflectDir = reflect(light.direction.xyz, normalMapNormal.xyz);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.mat.shine);
 	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
-	return (1.0f - CalcShadow()) * (diffuseLight + vec4(specularLight, 1.0f));
+	return (1.0f - shadow) * (diffuseLight + vec4(specularLight, 0.0f)); // Use 0.0 alpha here
 }
 
-vec4 CalcPointLight(PointLight light)
+vec4 CalcPointLight(PointLight light, vec4 normalMapNormal)
 {
 	// Point Light
 	vec3 normal = normalize(light.position - inPosition).xyz;
-	float diff = max(dot(inNormal.xyz, normal), 0.0f);
+	float diff = max(dot(normalMapNormal.xyz, normal), 0.0f);
 	vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
 
 	vec3 lightDir = normalize(light.position - inPosition).xyz;
 	vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 	vec3 halfwayDir = normalize(lightDir + viewDir);
-	float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
+	float spec = pow(max(dot(normalMapNormal.xyz, halfwayDir), 0.0), material.mat.shine);
 	vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
 	float distance = length(light.position - inPosition);
@@ -163,7 +179,7 @@ vec4 CalcPointLight(PointLight light)
 	return diffuseLight + vec4(specularLight, 1.0f);
 }
 
-vec4 CalcSpotLight(SpotLight light)
+vec4 CalcSpotLight(SpotLight light, vec4 normalMapNormal)
 {
 	float theta = dot(normalize(light.position - inPosition), -light.direction);
 	float epsilon = light.cutoff - light.outerCutoff;
@@ -174,13 +190,13 @@ vec4 CalcSpotLight(SpotLight light)
 	if (theta > light.outerCutoff)
 	{
 		vec3 normal = normalize(light.position - inPosition).xyz;
-		float diff = max(dot(inNormal.xyz, normalize(light.position - inPosition).xyz), 0.0f);
+		float diff = max(dot(normalMapNormal.xyz, normalize(light.position - inPosition).xyz), 0.0f);
 		vec4 diffuseLight = light.color * (diff * texture(diffuseSampler, inUV));
 
 		vec3 lightDir = normalize(light.position - inPosition).xyz;
 		vec3 viewDir = normalize(viewPosition.pos.position - inPosition).xyz;
 		vec3 halfwayDir = normalize(lightDir + viewDir);
-		float spec = pow(max(dot(inNormal.xyz, halfwayDir), 0.0), material.mat.shine);
+		float spec = pow(max(dot(normalMapNormal.xyz, halfwayDir), 0.0), material.mat.shine);
 		vec3 specularLight = texture(specularSampler, inUV).xyz * spec * light.color.xyz;
 
 		float distance = length(light.position - inPosition);
@@ -198,7 +214,7 @@ vec4 CalcSpotLight(SpotLight light)
 	return lightColor;
 }
 
-float CalcShadow()
+float CalcShadow(vec4 normalMapNormal)
 {
 	// perform perspective divide
 	vec3 projCoords = inLightSpacePosition.xyz / inLightSpacePosition.w;
@@ -218,7 +234,7 @@ float CalcShadow()
 	float currentDepth = projCoords.z;
 
 	// check whether current frag pos is in shadow
-	float bias =0.000005f; //max(0.05 * (1.0 - dot(inNormal, directionalLight.light[0].direction)), 0.005); 
+	float bias = max(0.0005 * (1.0 - dot(normalMapNormal.xyz, normalize(-directionalLight.light[0].direction.xyz))), 0.00005);
 	//float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 
 

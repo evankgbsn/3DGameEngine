@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <list>
 #include <functional>
+#include <unordered_set>
 
 class GameObject;
 
@@ -48,6 +49,10 @@ public:
 	void ClearCreatedObjects();
 
 	bool IsDeserializing() const;
+
+	void RegisterObjectLoadedCallback(std::function<void(const std::string&)>* callback);
+
+	void DeregisterObjectLoadedCallback(std::function<void(const std::string&)>* callback);
 
 protected:
 
@@ -102,6 +107,7 @@ private:
 
 	bool deserializing;
 
+	std::unordered_set<std::function<void(const std::string& object)>*> objectLoadedCallbacks;
 };
 
 #endif // SCENE_H

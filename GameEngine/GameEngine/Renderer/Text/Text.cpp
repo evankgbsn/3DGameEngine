@@ -181,9 +181,9 @@ void Text::SetText(const std::string& string)
 		{
 			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
 			glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(glyph, glm::vec4(color, 1.0f), { x, position.y }, scale));
-
+			
 			x += (glyph.advance >> 6) * scale.x;
-
+			
 			glyphs.back()->SetZ(z);
 		}
 	}

@@ -573,13 +573,20 @@ void Model::CreateVertexArrayBuffer()
 		glCreateBuffers(1, &indexArrayBuffer);
 		
 		glNamedBufferStorage(indexArrayBuffer, sizeof(int) * (int)indices.size(), indices.data(), GL_DYNAMIC_STORAGE_BIT);
+
+		vaoCreated = true;
 	}
 }
 
 void Model::DestroyVertexArrayBuffer()
 {
-	glDeleteBuffers(1, &vertexArrayBuffer);
-	glDeleteBuffers(1, &indexArrayBuffer);
+	if (vaoCreated)
+	{
+		glDeleteBuffers(1, &vertexArrayBuffer);
+		glDeleteBuffers(1, &indexArrayBuffer);
+
+		vaoCreated = false;
+	}
 }
 
 void Model::CreateTerrain(const std::string& heightMapPath, float terrainWidth, float terrainHeight, unsigned int tileX, unsigned int tileY, float maxHeight, float yOffset, unsigned int UVTiling, const std::string& name)

@@ -8,6 +8,7 @@
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../Renderer/Model/ModelManager.h"
 #include "../Renderer/Model/Model.h"
+#include "../Utils/Logger.h"
 
 static unsigned int spriteId = 0;
 
@@ -83,20 +84,30 @@ Sprite::Sprite(const std::string& modelName, const std::string& imageTexture, co
 
 	windowResizeCallback = new std::function<void(unsigned int, unsigned int)>([this](unsigned int w, unsigned int h)
 		{
+			// Ignore minimize events to prevent zeroing out the UI state
+			if (w == 0 || h == 0)
+			{
+				return;
+			}
+
 			float width = static_cast<float>(w);
 			float height = static_cast<float>(h);
 
 			glm::vec2 currentPos = sprite->GetPosition();
 
-			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, currentPos.x / prevWindowWidth);
-			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, currentPos.y / prevWindowHeight);
+			float xPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, (currentPos.x != 0.0f) ? currentPos.x / prevWindowWidth : 0.0f);
+			float yPos = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, (currentPos.y != 0.0f) ? currentPos.y / prevWindowHeight : 0.0f);
 
 			sprite->SetPosition({ xPos, yPos });
 
+
 			glm::vec2 currentScale = sprite->GetScale();
 
-			float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, currentScale.x / prevWindowWidth);
-			float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, currentScale.y / prevWindowHeight);
+			float xScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, width, (currentScale.x != 0.0f) ? currentScale.x / prevWindowWidth : 0.0f);
+			float yScale = Math::ChangeRange(0.0f, 1.0f, 0.0f, height, (currentScale.y != 0.0f) ? currentScale.y / prevWindowHeight : 0.0f);
+			
+			Logger::Log(std::to_string(xScale));
+			Logger::Log(std::to_string(yScale));
 
 			if (stretch)
 			{

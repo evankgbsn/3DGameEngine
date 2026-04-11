@@ -70,6 +70,7 @@ layout(std140, binding = 11) uniform FogUBO { float fogDensity; float fogGradien
 
 layout(binding = 0) uniform sampler2D diffuseSampler;
 layout(binding = 1) uniform sampler2D specularSampler;
+layout(binding = 2) uniform sampler2D normalSampler;
 layout(binding = 31) uniform sampler2D shadowMap;
 
 //--------------------------------------------------
