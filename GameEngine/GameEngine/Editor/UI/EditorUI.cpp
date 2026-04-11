@@ -187,34 +187,34 @@ void EditorUI::CreateSceneManagementInterface()
 	float titleXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.065f * width);
 	float titleYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.7f * height);
 
-	sceneManagementWindowTitle = new TextField("Scene Management", "exo2", { titleXPos, titleYPos }, { 25.0f, 25.0f }, { 0.0f, 0.0f, 0.0f, 1.0f });
+	sceneManagementWindowTitle = new TextField("Scene Management", "exo2", { titleXPos, titleYPos }, { 4.0f, 4.0f }, { 0.0f, 0.0f, 0.0f, 1.0f });
 	sceneManagementWindowTitle->SetZ(0.5f);
 
 	// Create input field titles.
 	float sceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
 	float sceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.5f * height);
 
-	sceneName = new TextField("Scene Name:", "exo2", { sceneNameXPos, sceneNameYPos }, {12.5f, 12.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	sceneName = new TextField("Scene Name:", "exo2", { sceneNameXPos, sceneNameYPos }, {2.5f, 2.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneName->SetZ(0.5f);
 
 	float sceneFileXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
 	float sceneFileYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.42f * height);
 
-	sceneFileName = new TextField("Scene File:", "exo2", { sceneFileXPos, sceneFileYPos }, {12.5f, 12.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	sceneFileName = new TextField("Scene File:", "exo2", { sceneFileXPos, sceneFileYPos }, {2.5f, 2.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneFileName->SetZ(0.5f);
 
 	// Create load scene title.
 	float loadSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
 	float loadSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.53f * height);
 
-	sceneLoadingTitle = new TextField("Load Scene:", "exo2", { loadSceneXPos, loadSceneYPos }, {15.0f, 15.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	sceneLoadingTitle = new TextField("Load Scene:", "exo2", { loadSceneXPos, loadSceneYPos }, {3.0f, 3.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneLoadingTitle->SetZ(0.5f);
 
 	// Create unload scene title.
 	float unloadingSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
 	float unloadingSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.65f * height);
 
-	sceneUnloadingTitle = new TextField("Unload Scene:", "exo2", { unloadingSceneXPos, unloadingSceneYPos }, {15.0f, 15.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	sceneUnloadingTitle = new TextField("Unload Scene:", "exo2", { unloadingSceneXPos, unloadingSceneYPos }, {3.0f, 3.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	sceneUnloadingTitle->SetZ(0.5f);
 
 
@@ -222,28 +222,28 @@ void EditorUI::CreateSceneManagementInterface()
 	float unloadingSceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
 	float unloadingSceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.62f * height);
 
-	unloadSceneName = new TextField("SceneName:", "exo2", { unloadingSceneNameXPos, unloadingSceneNameYPos }, {12.5f, 12.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	unloadSceneName = new TextField("SceneName:", "exo2", { unloadingSceneNameXPos, unloadingSceneNameYPos }, {2.5f, 2.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	unloadSceneName->SetZ(0.5f);
 
 	// Create save scene title.
 	float saveSceneXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.07f * width);
 	float saveSceneYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.32f * height);
 
-	saveSceneTitle = new TextField("Save Scene:", "exo2", { saveSceneXPos, saveSceneYPos }, {15.0f, 15.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	saveSceneTitle = new TextField("Save Scene:", "exo2", { saveSceneXPos, saveSceneYPos }, {3.0f, 3.0f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneTitle->SetZ(0.5f);
 
 	// Create save scene name.
 	float saveSceneNameXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
 	float saveSceneNameYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.29f * height);
 
-	saveSceneName = new TextField("SceneName:", "exo2", { saveSceneNameXPos, saveSceneNameYPos }, {12.5f, 12.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	saveSceneName = new TextField("SceneName:", "exo2", { saveSceneNameXPos, saveSceneNameYPos }, {2.5f, 2.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneName->SetZ(0.5f);
 
 	// Create save scene file.
 	float saveSceneFileXPos = Math::ChangeRange(0.0f, width, 0.0f, 1.0f, 0.1f * width);
 	float saveSceneFileYPos = Math::ChangeRange(0.0f, height, 0.0f, 1.0f, 0.21f * height);
 
-	saveSceneFile = new TextField("SceneFile:", "exo2", { saveSceneFileXPos, saveSceneFileYPos }, {12.5f, 12.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
+	saveSceneFile = new TextField("SceneFile:", "exo2", { saveSceneFileXPos, saveSceneFileYPos }, {2.5f, 2.5f}, { 1.0f, 1.0f, 1.0f, 1.0f });
 	saveSceneFile->SetZ(0.5f);
 
 
@@ -643,15 +643,15 @@ void EditorUI::CreateObjectManagementInterface()
 	objectManagementBackground->SetZ(0.02f);
 
 	// Create the title
-	objectManagementTitle = new TextField("Object Management", "exo2", { 0.675f, 0.7f }, { 25.0f, 25.0f }, {0.0f, 0.0f, 0.0f, 1.0f});
+	objectManagementTitle = new TextField("Object Management", "exo2", { 0.675f, 0.7f }, { 4.0f, 4.0f }, {0.0f, 0.0f, 0.0f, 1.0f});
 	objectManagementTitle->SetZ(0.5f);
 
 	// Create the create object section
-	objectManagementCreateTitle = new TextField("Create:", "exo2", { 0.69f, 0.65f }, { 15.0f, 15.0f }, glm::vec4(1.0f));
+	objectManagementCreateTitle = new TextField("Create:", "exo2", { 0.69f, 0.65f }, { 3.0f, 3.0f }, glm::vec4(1.0f));
 	objectManagementCreateTitle->SetZ(0.5f);
 
 	// Create the create object name title for input field.
-	objectManagementCreateObjectName = new TextField("Object Class Name:", "exo2", { 0.72f, 0.608f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementCreateObjectName = new TextField("Object Class Name:", "exo2", { 0.72f, 0.608f }, { 2.5f, 2.5f }, glm::vec4(1.0f));
 	objectManagementCreateObjectName->SetZ(0.5f);
 
 	// Create the create object name input field.
@@ -739,7 +739,7 @@ void EditorUI::CreateObjectManagementInterface()
 	objectManagementCreateObjectNameInput->SetZ(0.5f);
 
 	// Create the create object parent scene name title.
-	objectManagementCreateObjectParentSceneName = new TextField("Object Parent Scene:", "exo2", { 0.72f, 0.53f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementCreateObjectParentSceneName = new TextField("Object Parent Scene:", "exo2", { 0.72f, 0.53f }, { 2.5f, 2.5f }, glm::vec4(1.0f));
 	objectManagementCreateObjectParentSceneName->SetZ(0.5f);
 
 	// Create the create object parent scene name input field
@@ -757,14 +757,14 @@ void EditorUI::CreateObjectManagementInterface()
 	objectManagementCreateObjectParentSceneNameInput->SetZ(0.5f);
 
 	// Create selected object text
-	objectManagementSelectedObject = new TextField("Selection: ", "exo2", { 0.72f, 0.45f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementSelectedObject = new TextField("Selection: ", "exo2", { 0.72f, 0.45f }, { 2.5f, 2.5f }, glm::vec4(1.0f));
 	objectManagementSelectedObject->SetZ(0.5f);
 
 	// Crete the delete object title text
-	objectManagementDeleteTitle = new TextField("Delete:", "exo2", { 0.69f, 0.4f }, { 15.0f, 15.0f }, glm::vec4(1.0f));
+	objectManagementDeleteTitle = new TextField("Delete:", "exo2", { 0.69f, 0.4f }, { 3.0f, 3.0f }, glm::vec4(1.0f));
 	objectManagementDeleteTitle->SetZ(0.5f);
 
-	objectManagementDeleteNameTitle = new TextField("Object Name:", "exo2", { 0.72f, 0.37f }, { 12.5f, 12.5f }, glm::vec4(1.0f));
+	objectManagementDeleteNameTitle = new TextField("Object Name:", "exo2", { 0.72f, 0.37f }, { 2.5f, 2.5f }, glm::vec4(1.0f));
 	objectManagementDeleteNameTitle->SetZ(0.5f);
 
 	objectManagementDeleteObjectOnEnter = new std::function<void()>([this]()

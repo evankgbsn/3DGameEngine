@@ -114,7 +114,10 @@ void FontManager::TerminateFreetype()
 
 void FontManager::LoadDefaultFonts()
 {
-	LoadFont("arial", "Assets/Font/arial.ttf");
+	//LoadFont("arial", "Assets/Font/arial.ttf");
+	LoadFont("arial", "Assets/Font/AlfaSlabOne-Regular.ttf");
 	LoadFont("times", "Assets/Font/times.ttf");
-	LoadFont("exo2", "Assets/Font/Exo2-VariableFont_wght.ttf");
+	//LoadFont("exo2", "Assets/Font/Exo2-VariableFont_wght.ttf");
+	LoadFont("exo2", "Assets/Font/AlfaSlabOne-Regular.ttf");
+	
 }

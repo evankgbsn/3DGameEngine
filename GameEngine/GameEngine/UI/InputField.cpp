@@ -42,7 +42,7 @@ InputField::InputField(const std::string& baseTextureName, const std::string& ho
 
 	glm::vec2 textBackgroundOffset = {-dimensions.x / 2.1, -dimensions.y / 3.8};
 
-	text = new TextField("", "exo2", background->GetPosition() + textBackgroundOffset, glm::vec2(background->GetScale().y, background->GetScale().y) * 350.0f);
+	text = new TextField("", "exo2", background->GetPosition() + textBackgroundOffset, glm::vec2(background->GetScale().y, background->GetScale().y) * 60.0f);
 	text->SetZ(0.5f);
 
 	cursor = new Sprite(TextureManager::LoadTexture("Assets/Texture/White.png", "White")->GetName(), { text->GetCursorPosition(),relativePosition.y }, { 0.001f, dimensions.y });

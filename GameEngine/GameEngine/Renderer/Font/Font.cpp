@@ -14,7 +14,7 @@ Font::Font(const std::string& path)
 	}
 	else
 	{
-		FT_Set_Pixel_Sizes(face, 0, 48);
+		FT_Set_Pixel_Sizes(face, 0, 256);
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction.
 
