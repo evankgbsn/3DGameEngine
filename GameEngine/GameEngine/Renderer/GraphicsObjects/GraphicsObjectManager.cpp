@@ -26,6 +26,8 @@
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
+bool GraphicsObjectManager::terminated = true;
+
 GOGlyph* glyph = nullptr;
 
 void GraphicsObjectManager::Update()
@@ -556,13 +558,21 @@ bool GraphicsObjectManager::RenderingGraphics()
 	return false;
 }
 
+bool GraphicsObjectManager::Terminating()
+{
+	return terminated;
+}
+
 GraphicsObjectManager::GraphicsObjectManager() :
 	graphicsObjects3D(std::vector<GraphicsObject*>())
 {
+	terminated = false;
 }
 
 GraphicsObjectManager::~GraphicsObjectManager()
 {
+	terminated = true;
+
 	for (GraphicsObject* graphicsObject : graphicsObjects3D)
 	{
 		if (IsValid(graphicsObject))

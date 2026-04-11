@@ -26,6 +26,11 @@ GOTexturedLitInstanced::GOTexturedLitInstanced(Model* const model, Texture* diff
 	spec(specularTexture),
 	normal(normalTexture)
 {
+	if (instanceCount == 0)
+	{
+		translations.push_back(glm::mat4());
+	}
+
 	for (unsigned int i = 0; i < transforms.size(); ++i)
 	{
 		glm::mat4 idMatrix = glm::mat4(1.0f);

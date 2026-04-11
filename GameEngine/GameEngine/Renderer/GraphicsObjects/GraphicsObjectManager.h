@@ -78,6 +78,8 @@ public:
 
 	static bool RenderingGraphics();
 
+	static bool Terminating();
+
 
 private:
 
@@ -118,6 +120,8 @@ private:
 	bool renderingGraphics = false;
 
 	bool renderingReflections = false;
+
+	static bool terminated;
 };
 
 #endif // GRAPHICSOBJECTMANAGER_H
