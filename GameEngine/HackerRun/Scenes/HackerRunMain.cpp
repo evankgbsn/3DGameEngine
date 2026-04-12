@@ -4,13 +4,15 @@
 
 #include "../GameObjects/HackerRunner.h"
 #include "../GameObjects/Corruption.h"
+#include "../GameObjects/Spawner.h"
 
 HackerRunMain::HackerRunMain() :
 	player(new HackerRunner()),
-	corruption(new Corruption())
+	corruption(new Corruption()),
+	spawner(new Spawner())
 {
 	RegisterGameObject(player, "Player");
-	RegisterGameObject(corruption, "Corruption");
+	RegisterGameObject(spawner, "Spawner");
 }
 
 HackerRunMain::~HackerRunMain()

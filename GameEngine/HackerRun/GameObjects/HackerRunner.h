@@ -7,6 +7,7 @@
 
 class CameraComponent;
 class GraphicsObjectColored;
+class RigidBodyComponent;
 
 class HackerRunner : public GameObject
 {
@@ -49,7 +50,11 @@ private:
 
 	void DeregisterInput();
 
+	void Die();
+
 	std::function<void(int)>* keyPress;
+
+	std::function<void(GameObject*)>* corruptionCollisionCallback;
 
 	GraphicsObjectColored* graphics;
 
@@ -58,6 +63,12 @@ private:
 	glm::vec3 camOffset;
 
 	float speed;
+
+	float strafeSpeed;
+
+	float strafeSpeedIncreaseInterval;
+
+	RigidBodyComponent* body;
 
 };
 

@@ -5,6 +5,7 @@
 
 class HackerRunner;
 class Corruption;
+class Spawner;
 
 class HackerRunMain : public Scene
 {
@@ -40,6 +41,8 @@ private:
 	HackerRunner* player;
 
 	Corruption* corruption;
+
+	Spawner* spawner;
 };
 
 #endif

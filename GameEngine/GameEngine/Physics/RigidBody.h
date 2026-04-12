@@ -62,6 +62,16 @@ public:
 
 	void SetMass(float newMass);
 
+	void DisableGravity();
+
+	void SetLinearVelocity(const glm::vec3& newVelocity);
+
+	void SetAngularVelocity(const glm::vec3& newVelocity);
+
+	void SetIsTrigger(bool isTrigger);
+
+	bool IsTrigger() const;
+
 private:
 
 	RigidBody() = delete;
@@ -81,6 +91,8 @@ private:
 	PxRigidDynamic* dynamicBody;
 
 	PxRigidStatic* staticBody;
+
+	PxShape* shape;
 };
 
 #endif // RIGIDBODY_H

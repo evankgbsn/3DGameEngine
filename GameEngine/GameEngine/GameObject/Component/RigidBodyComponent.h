@@ -83,6 +83,16 @@ public:
 
 	void Update() override;
 
+	void DisableGravity();
+
+	void SetIsTrigger(bool isTrigger);
+
+	bool IsTrigger() const;
+
+	void SetLinearVelocity(const glm::vec3& newVelocity);
+
+	void SetAngularVelocity(const glm::vec3& newVelocity);
+
 private:
 
 	RigidBodyComponent(const RigidBodyComponent&) = delete;

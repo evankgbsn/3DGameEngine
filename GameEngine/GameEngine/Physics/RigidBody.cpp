@@ -7,7 +7,8 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
 	type(t),
     material(nullptr),
     staticBody(nullptr),
-    dynamicBody(nullptr)
+    dynamicBody(nullptr),
+    shape(nullptr)
 {
     material = PhysicsManager::GetPhysics()->createMaterial(1.0f, 1.0f, 0.0f);
 
@@ -19,8 +20,6 @@ RigidBody::RigidBody(Type t, PxGeometry* geometry, const glm::vec3& initialPosit
         PxVec3(initialRotation[1][0], initialRotation[1][1], initialRotation[1][2]),
         PxVec3(initialRotation[2][0], initialRotation[2][1], initialRotation[2][2])
     );
-
-    PxShape* shape = nullptr;
 
     switch (type)
     {
@@ -284,4 +283,52 @@ void RigidBody::SetMass(float newMass)
     {
         PxRigidBodyExt::setMassAndUpdateInertia(*dynamicBody, newMass);
     }
+}
+
+void RigidBody::DisableGravity()
+{
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+    }
+}
+
+void RigidBody::SetLinearVelocity(const glm::vec3& newVelocity)
+{
+    PxVec3 vel(newVelocity.x, newVelocity.y, newVelocity.z);
+
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setLinearVelocity(vel);
+    }
+
+}
+
+void RigidBody::SetAngularVelocity(const glm::vec3& newVelocity)
+{
+    PxVec3 vel(newVelocity.x, newVelocity.y, newVelocity.z);
+
+    if (dynamicBody != nullptr)
+    {
+        dynamicBody->setAngularVelocity(vel);
+    }
+}
+
+void RigidBody::SetIsTrigger(bool isTrigger)
+{
+    if (shape != nullptr)
+    {
+        if (isTrigger)
+        {
+
+        }
+
+       shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+       shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+    }
+}
+
+bool RigidBody::IsTrigger() const
+{
+    return shape->getFlags().isSet(PxShapeFlag::eTRIGGER_SHAPE);
 }

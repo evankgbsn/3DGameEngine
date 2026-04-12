@@ -453,6 +453,31 @@ void RigidBodyComponent::Update()
 	ProcessContacts();
 }
 
+void RigidBodyComponent::DisableGravity()
+{
+	body->DisableGravity();
+}
+
+void RigidBodyComponent::SetIsTrigger(bool isTrigger)
+{
+	body->SetIsTrigger(isTrigger);
+}
+
+bool RigidBodyComponent::IsTrigger() const
+{
+	return body->IsTrigger();
+}
+
+void RigidBodyComponent::SetLinearVelocity(const glm::vec3& newVelocity)
+{
+	body->SetLinearVelocity(newVelocity);
+}
+
+void RigidBodyComponent::SetAngularVelocity(const glm::vec3& newVelocity)
+{
+	body->SetAngularVelocity(newVelocity);
+}
+
 void RigidBodyComponent::RegisterEditorCallbacks()
 {
 	onEditorEnable = new std::function<void()>([this]()

@@ -7,6 +7,7 @@
 
 class CameraComponent;
 class GraphicsObjectColored;
+class RigidBodyComponent;
 
 class Corruption : public GameObject
 {
@@ -46,6 +47,10 @@ private:
 	void SetPosition(const glm::vec3& newPos) override;
 
 	GraphicsObjectColored* graphics;
+
+	RigidBodyComponent* body;
+
+	float range;
 };
 
 #endif
