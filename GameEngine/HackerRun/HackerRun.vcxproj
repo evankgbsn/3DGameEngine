@@ -193,7 +193,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObjects\Corruption.cpp" />
+    <ClCompile Include="GameObjects\HackerRunner.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scenes\HackerRunMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjects\Corruption.h" />
+    <ClInclude Include="GameObjects\HackerRunner.h" />
+    <ClInclude Include="Scenes\HackerRunMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

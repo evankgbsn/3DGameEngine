@@ -99,6 +99,16 @@ glm::vec3 GraphicsObject3DComponent::GetForward() const
 	return glm::normalize(GetTransform()[2]);
 }
 
+glm::vec3 GraphicsObject3DComponent::GetRight() const
+{
+	return glm::normalize(GetTransform()[0]);
+}
+
+glm::vec3 GraphicsObject3DComponent::GetUp() const
+{
+	return glm::normalize(GetTransform()[1]);
+}
+
 void GraphicsObject3DComponent::SetTransform(const glm::mat4& newTransform)
 {
 	graphics->SetTransform(newTransform);
