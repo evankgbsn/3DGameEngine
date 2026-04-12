@@ -109,6 +109,24 @@ void Renderer::TerminateGLFW()
 	Logger::Log("Terminated GLFW", Logger::Category::Success);
 }
 
+glm::vec3 Renderer::GetClearColor()
+{
+	if (instance != nullptr)
+	{
+		return instance->clearColor;
+	}
+
+	return glm::vec3(0.0f);
+}
+
+void Renderer::SetClearColor(const glm::vec3& color)
+{
+	if (instance != nullptr)
+	{
+		instance->clearColor = color;
+	}
+}
+
 Renderer::Renderer() :
 	draw(true)
 {

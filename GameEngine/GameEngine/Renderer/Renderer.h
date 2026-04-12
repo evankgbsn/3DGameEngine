@@ -16,6 +16,10 @@ public:
 
 	static glm::vec2 GetPrimaryMonitorDimensions();
 
+	static glm::vec3 GetClearColor();
+
+	static void SetClearColor(const glm::vec3& color);
+
 private:
 
 	friend class SingletonHelpers;
@@ -49,6 +53,8 @@ private:
 	std::string mainWindowName;
 
 	bool draw;
+
+	glm::vec3 clearColor;
 };
 
 #endif // RENDERER_H

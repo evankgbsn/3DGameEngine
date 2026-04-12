@@ -311,4 +311,29 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugClientEditor_Win32.props" Condition="'$(Configuration)|$(Platform)'=='DebugClientEditor|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugClientEditor_x64.props" Condition="'$(Configuration)|$(Platform)'=='DebugClientEditor|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugClientGame_Win32.props" Condition="'$(Configuration)|$(Platform)'=='DebugClientGame|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugClientGame_x64.props" Condition="'$(Configuration)|$(Platform)'=='DebugClientGame|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugServerEditor_Win32.props" Condition="'$(Configuration)|$(Platform)'=='DebugServerEditor|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugServerEditor_x64.props" Condition="'$(Configuration)|$(Platform)'=='DebugServerEditor|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugServerGame_Win32.props" Condition="'$(Configuration)|$(Platform)'=='DebugServerGame|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\DebugServerGame_x64.props" Condition="'$(Configuration)|$(Platform)'=='DebugServerGame|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseClientEditor_Win32.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseClientEditor|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseClientEditor_x64.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseClientEditor|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseClientGame_Win32.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseClientGame|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseClientGame_x64.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseClientGame|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseServerEditor_Win32.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseServerEditor|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseServerEditor_x64.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseServerEditor|x64'" />
+
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseServerGame_Win32.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseServerGame|Win32'" />
+		<Import Project="$(SolutionDir)\GameProjectProperties\ReleaseServerGame_x64.props" Condition="'$(Configuration)|$(Platform)'=='ReleaseServerGame|x64'" />
+	</ImportGroup>
 </Project>

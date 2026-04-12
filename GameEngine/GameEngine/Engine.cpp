@@ -40,6 +40,8 @@
 #include "Windows.h"
 #endif
 
+#define _SINGLE_PLAYER
+
 Engine* Engine::instance = nullptr;
 
 void Engine::Initialize()
@@ -48,6 +50,8 @@ void Engine::Initialize()
 
 	instance->editorState = Editor::IsEnabled();
 
+
+#ifndef _SINGLE_PLAYER
 #ifdef _SERVER
 	NetworkManager::Start(true);
 #endif
@@ -56,6 +60,7 @@ void Engine::Initialize()
 	NetworkManager::Start(false);
 #ifdef _WIN32
 	FreeConsole();
+#endif
 #endif
 #endif
 
@@ -91,7 +96,11 @@ void Engine::Run()
 			Editor::Update();
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
+
+#ifndef _SINGLE_PLAYER
 			NetworkManager::EditorUpdate();
+#endif
+
 			AudioManager::EditorUpdate();
 		}
 		else
@@ -103,7 +112,11 @@ void Engine::Run()
 			Renderer::Update();
 			InputManager::Update();
 			SceneManager::Update();
+
+#ifndef _SINGLE_PLAYER
 			NetworkManager::Update();
+#endif
+
 			AudioManager::GameUpdate();
 		}
 
@@ -166,14 +179,22 @@ Engine::Engine()
 #endif
 
 	PhysicsManager::Initialize();
+
+#ifndef _SINGLE_PLAYER
 	NetworkManager::Initialize();
+#endif
+
 	AudioManager::Initialize();
 }
 
 Engine::~Engine()
 {
 	AudioManager::Terminate();
+
+#ifndef _SINGLE_PLAYER
 	NetworkManager::Terminate();
+#endif
+
 	PhysicsManager::Terminate();
 	SceneManager::Terminate();
 	InputManager::Terminate();

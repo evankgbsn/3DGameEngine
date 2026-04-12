@@ -100,14 +100,10 @@ void Window::Update()
 	shouldClose.store(glfwWindowShouldClose(glfwWindow));
 	if (!shouldClose.load())
 	{
-		if (Editor::IsEnabled())
-		{
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		}
-		else
-		{
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		}
+		glm::vec3 color = Renderer::GetClearColor();
+
+		glClearColor(color.x, color.y, color.z, 1.0f);
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		GraphicsObjectManager::Update();

@@ -14,6 +14,7 @@
 #include "UI/EditorUI.h"
 #include "../Scene/SceneManager.h"
 #include "../Scene/Scene.h"
+#include "../Renderer/Renderer.h"
 
 Editor* Editor::instance = nullptr;
 
@@ -137,6 +138,7 @@ void Editor::Enable()
 {
 	if (instance != nullptr)
 	{
+		Renderer::SetClearColor({ 0.0f, 0.0f, 0.0f });
 		InputManager::EnableCursor("Engine");
 		instance->enabled = true;
 		CameraManager::SetActiveCamera("Editor");
