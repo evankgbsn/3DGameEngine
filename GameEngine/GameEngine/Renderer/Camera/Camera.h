@@ -83,6 +83,8 @@ public:
 	void SetWindow(Window* const newWindow);
 
 	static LineSegment3D CastLineFromCursorWithActiveCamera(float distance = 500000.0f);
+
+	void SetUpVector(const glm::vec3& newUp);
 	
 private:
 
@@ -137,6 +139,8 @@ protected:
 	std::function<void(unsigned int, unsigned int)>* windowResizeCallback;
 
 	std::string name;
+
+	glm::vec3 worldUp;
 
 };
 

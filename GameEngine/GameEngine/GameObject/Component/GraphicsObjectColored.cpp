@@ -13,7 +13,7 @@ GraphicsObjectColored::GraphicsObjectColored(Model* const model, const glm::vec4
 
 GraphicsObjectColored::~GraphicsObjectColored()
 {
-	
+	GraphicsObjectManager::Delete(graphics);
 }
 
 void GraphicsObjectColored::SetColor(const glm::vec4& newColor)

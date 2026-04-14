@@ -39,7 +39,7 @@ glm::vec3 Camera::GetForwardVector() const
 
 glm::vec3 Camera::GetRightVector() const
 {
-	return -glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), GetForwardVector()));
+	return -glm::normalize(glm::cross(worldUp, GetForwardVector()));
 }
 
 glm::vec3 Camera::GetUpVector() const
@@ -202,6 +202,12 @@ LineSegment3D Camera::CastLineFromCursorWithActiveCamera(float distance)
 	return LineSegment3D(cam.GetPosition(), cam.GetPosition() + direction * distance);
 }
 
+void Camera::SetUpVector(const glm::vec3& newUp)
+{
+	worldUp = newUp;
+	UpdateView();
+}
+
 void Camera::UpdateProjection()
 {
 	switch (type)
@@ -236,7 +242,8 @@ Camera::Camera(const Camera::Type& t, Window* const w, const std::string& n) :
 	bottom(-10.0f),
 	position(glm::vec3(0.0f,0.0f,0.0f)),
 	target(glm::vec3(0.0f, 0.0f, 1.0f)),
-	name(n)
+	name(n),
+	worldUp(glm::vec3(0.0f, 1.0f, 0.0f))
 {
 	SetWindow(w);
 	UpdateProjection();

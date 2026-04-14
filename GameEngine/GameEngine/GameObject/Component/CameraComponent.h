@@ -62,6 +62,8 @@ public:
 
 	void SetFar(const float& newFar);
 
+	void SetUpVector(const glm::vec3& newUp);
+
 private:
 
 

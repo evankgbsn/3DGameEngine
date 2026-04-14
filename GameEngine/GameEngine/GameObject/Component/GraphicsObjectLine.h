@@ -32,6 +32,8 @@ public:
 
 	glm::vec3 GetEnd() const;
 
+	glm::vec3 GetDirection() const;
+
 private:
 
 	GraphicsObjectLine(const GraphicsObjectLine&) = delete;

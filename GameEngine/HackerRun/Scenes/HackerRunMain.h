@@ -6,6 +6,7 @@
 class HackerRunner;
 class Corruption;
 class Spawner;
+class MemoryBlock;
 
 class HackerRunMain : public Scene
 {
@@ -43,6 +44,8 @@ private:
 	Corruption* corruption;
 
 	Spawner* spawner;
+
+	MemoryBlock* memBlock;
 };
 
 #endif

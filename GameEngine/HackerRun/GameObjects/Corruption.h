@@ -46,11 +46,19 @@ private:
 
 	void SetPosition(const glm::vec3& newPos) override;
 
+	glm::mat4 GetRotation() const override;
+
+	void SetRotation(const glm::mat4& newRot) override;
+
 	GraphicsObjectColored* graphics;
 
 	RigidBodyComponent* body;
 
 	float range;
+
+	float speed;
+
+	bool shrink;
 };
 
 #endif

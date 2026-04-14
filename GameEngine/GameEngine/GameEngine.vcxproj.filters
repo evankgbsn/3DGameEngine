@@ -465,6 +465,12 @@
     <ClCompile Include="GameObject\Component\EmptyComponent.cpp">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\GraphicsObjects\GO3DGlyph.cpp">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Text\Text3D.cpp">
+      <Filter>Source Files\Renderer\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -833,6 +839,12 @@
     <ClInclude Include="GameObject\Component\EmptyComponent.h">
       <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\GraphicsObjects\GO3DGlyph.h">
+      <Filter>Source Files\Renderer\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Text\Text3D.h">
+      <Filter>Source Files\Renderer\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\GLSL\AnimatedShadowMap.frag">
@@ -956,6 +968,12 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="..\Assets\GLSL\ShadowMapInstanced.vert">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Font3D.frag">
+      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
+    </None>
+    <None Include="Renderer\Shader\GLSL\Font3D.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

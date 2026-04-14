@@ -26,6 +26,7 @@ class GOColoredInstanced;
 class GOSprite;
 class GOWater;
 class GOTexturedLitInstanced;
+class GO3DGlyph;
 
 
 class GraphicsObjectManager
@@ -53,6 +54,8 @@ public:
 	static GOLineColored* const CreateGOLineColored(const glm::vec3& start, const glm::vec3& end, const glm::vec4& color);
 
 	static GOGlyph* const CreateGOGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec2& position, const glm::vec2& scale);
+
+	static GO3DGlyph* const CreateGO3DGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec3& position, const glm::vec2& scale);
 
 	static GOSprite* const CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position);
 
@@ -114,6 +117,8 @@ private:
 	std::vector<GraphicsObject*> graphicsObjectsWater;
 
 	std::vector<GraphicsObject*> graphicsObjects2D;
+
+	std::vector<GraphicsObject*> graphicsObjects2DWorldSpace;
 
 	bool renderingShadows = false;
 

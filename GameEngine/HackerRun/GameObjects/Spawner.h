@@ -7,6 +7,8 @@
 
 class Corruption;
 class HackerRunner;
+class MemoryBlock;
+class GraphicsObjectLine;
 
 class Spawner : public GameObject
 {
@@ -39,6 +41,8 @@ private:
 
 	void Unload() override;
 
+	void Start() override;
+
 	std::list<Corruption*> corruptionObjects;
 
 	float corruptionSpawnInterval;
@@ -46,6 +50,18 @@ private:
 	float lastCorruptionSpawnTime;
 
 	unsigned int maxCorruptionCount;
+
+	std::vector<std::vector<MemoryBlock*>> blocks;
+
+	std::list<GraphicsObjectLine*> dataLines;
+
+	glm::ivec2 blockPos;
+
+	float spaceBetweenBlocks;
+
+	int radius;
+
+	float lineDataSpeed;
 };
 
 #endif

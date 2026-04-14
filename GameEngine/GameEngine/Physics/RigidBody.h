@@ -50,7 +50,11 @@ public:
 
 	void AddForce(const glm::vec3& direction, const ForceMode& forceMode = ForceMode::FORCE);
 
-	glm::vec3 GetVelocity() const;
+	void AddTorque(const glm::vec3& axis, const ForceMode& forceMode = ForceMode::FORCE);
+
+	glm::vec3 GetLinearVelocity() const;
+
+	glm::vec3 GetAngularVelocity() const;
 
 	void SetPosition(const glm::vec3& newPosition);
 
@@ -71,6 +75,8 @@ public:
 	void SetIsTrigger(bool isTrigger);
 
 	bool IsTrigger() const;
+
+
 
 private:
 

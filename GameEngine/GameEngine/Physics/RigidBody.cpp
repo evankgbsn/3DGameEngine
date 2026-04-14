@@ -184,7 +184,31 @@ void RigidBody::AddForce(const glm::vec3& direction, const ForceMode& forceMode)
     }
 }
 
-glm::vec3 RigidBody::GetVelocity() const
+void RigidBody::AddTorque(const glm::vec3& axis, const ForceMode& forceMode)
+{
+    if (dynamicBody != nullptr)
+    {
+        switch (forceMode)
+        {
+        case ForceMode::FORCE:
+            dynamicBody->addTorque(PxVec3(axis.x, axis.y, axis.z), PxForceMode::eFORCE);
+            break;
+        case ForceMode::ACCELERATION:
+            dynamicBody->addTorque(PxVec3(axis.x, axis.y, axis.z), PxForceMode::eACCELERATION);
+            break;
+        case ForceMode::VELOCITY_CHANGE:
+            dynamicBody->addTorque(PxVec3(axis.x, axis.y, axis.z), PxForceMode::eVELOCITY_CHANGE);
+            break;
+        case ForceMode::IMPULSE:
+            dynamicBody->addTorque(PxVec3(axis.x, axis.y, axis.z), PxForceMode::eIMPULSE);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+glm::vec3 RigidBody::GetLinearVelocity() const
 {
     if (dynamicBody != nullptr)
     {
@@ -192,6 +216,17 @@ glm::vec3 RigidBody::GetVelocity() const
         return glm::vec3(vel.x, vel.y, vel.z);
     }
     
+    return {};
+}
+
+glm::vec3 RigidBody::GetAngularVelocity() const
+{
+    if (dynamicBody != nullptr)
+    {
+        PxVec3 vel = dynamicBody->getAngularVelocity();
+        return glm::vec3(vel.x, vel.y, vel.z);
+    }
+
     return {};
 }
 
@@ -320,11 +355,14 @@ void RigidBody::SetIsTrigger(bool isTrigger)
     {
         if (isTrigger)
         {
-
+            shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+            shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
         }
-
-       shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-       shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+        else
+        {
+            shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+            shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+        }
     }
 }
 

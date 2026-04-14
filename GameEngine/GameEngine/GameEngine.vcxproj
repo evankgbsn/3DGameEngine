@@ -719,6 +719,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="Renderer\Font\FontManager.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GO3D.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GO3DAnimated.cpp" />
+    <ClCompile Include="Renderer\GraphicsObjects\GO3DGlyph.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColored.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredAnimated.cpp" />
     <ClCompile Include="Renderer\GraphicsObjects\GOColoredInstanced.cpp" />
@@ -749,6 +750,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
     <ClCompile Include="Renderer\Texture\TextureManager.cpp" />
     <ClCompile Include="Renderer\Text\Text.cpp" />
+    <ClCompile Include="Renderer\Text\Text3D.cpp" />
     <ClCompile Include="Renderer\Window\Window.cpp" />
     <ClCompile Include="Renderer\Window\WindowManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -841,6 +843,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="Renderer\Font\FontManager.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GO3D.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GO3DAnimated.h" />
+    <ClInclude Include="Renderer\GraphicsObjects\GO3DGlyph.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColored.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredAnimated.h" />
     <ClInclude Include="Renderer\GraphicsObjects\GOColoredInstanced.h" />
@@ -871,6 +874,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\TextureManager.h" />
     <ClInclude Include="Renderer\Text\Text.h" />
+    <ClInclude Include="Renderer\Text\Text3D.h" />
     <ClInclude Include="Renderer\Window\Window.h" />
     <ClInclude Include="Renderer\Window\WindowManager.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -927,6 +931,8 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
     <None Include="..\Assets\GLSL\TexturedStatic.vert" />
     <None Include="..\Assets\GLSL\Water.frag" />
     <None Include="..\Assets\GLSL\Water.vert" />
+    <None Include="Renderer\Shader\GLSL\Font3D.frag" />
+    <None Include="Renderer\Shader\GLSL\Font3D.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,9 +14,12 @@ std::mt19937 gen(rd());
 std::uniform_real_distribution<float> dis(-20.0f, 20.0f);
 
 Corruption::Corruption() :
-	GameObject("Corruption")
+	GameObject("Corruption"),
+	speed(20.0f),
+	range(20.0f),
+	shrink(true)
 {
-	
+	RegisterGameObjectClassType<Corruption>(this);
 }
 
 Corruption::~Corruption()
@@ -36,11 +39,22 @@ void Corruption::Initialize()
 	body->SetPosition(graphics->GetPosition());
 	body->SyncPhysics();
 
+	AddComponent(body, "RigidBody");
+
 	for (const auto& object : GetOwningScene()->GetGameObjects())
 	{
 		if (dynamic_cast<HackerRunner*>(object.second) != nullptr)
 		{
-			SetPosition(object.second->GetPosition() + glm::vec3(dis(gen), 0.0f, 30.0f + abs(dis(gen))));
+			glm::mat4 rotation = object.second->GetRotation();
+			glm::vec3 right = glm::normalize(glm::vec3(rotation[0]));
+			glm::vec3 up = glm::normalize(glm::vec3(rotation[1]));
+			glm::vec3 forward = glm::normalize(glm::vec3(rotation[2]));
+
+			glm::vec3 offset(0.0f);
+			offset += right * dis(gen);
+			offset += forward * 30.0f + abs(dis(gen));
+
+			SetPosition(object.second->GetPosition() + offset);
 		}
 	}
 
@@ -59,15 +73,56 @@ void Corruption::GameUpdate()
 
 	dis = std::uniform_real_distribution<float>(-range, range);
 
+	HackerRunner* runner = nullptr;
+
 	for (const auto& object : GetOwningScene()->GetGameObjects())
 	{
 		if (dynamic_cast<HackerRunner*>(object.second) != nullptr)
 		{
-			if (glm::length(object.second->GetPosition() - GetPosition()) > 40.0f)
+			runner = dynamic_cast<HackerRunner*>(object.second);
+			if (glm::length(object.second->GetPosition() - GetPosition()) > 100.0f)
 			{
-				SetPosition(object.second->GetPosition() + glm::vec3(dis(gen), 0.0f, 30.0f + abs(dis(gen))));
+				glm::mat4 rotation = object.second->GetRotation();
+				glm::vec3 right = glm::normalize(glm::vec3(rotation[0]));
+				glm::vec3 up = glm::normalize(glm::vec3(rotation[1]));
+				glm::vec3 forward = glm::normalize(glm::vec3(rotation[2]));
+
+				glm::vec3 offset(0.0f);
+				offset += right * dis(gen);
+				offset += forward * 30.0f + abs(dis(gen));
+				offset += up * abs(dis(gen));
+
+				SetPosition(object.second->GetPosition() + offset);
 			}
 		}
+	}
+
+	if (runner != nullptr)
+	{
+		body->SetLinearVelocity(glm::normalize(runner->GetPosition() - GetPosition()) * speed);
+	}
+
+	glm::vec3 shrinkSpeed(5.0f, 4.0f, 4.50f);
+
+	shrinkSpeed *= TimeManager::DeltaTime();
+
+	if (shrink == false && graphics->GetScale().x >= 1.0f)
+	{
+		shrink = true;
+	}
+
+	if (shrink == true && graphics->GetScale().x <= 0.5f)
+	{
+		shrink = false;
+	}
+
+	if (shrink)
+	{
+		graphics->SetScale(graphics->GetScale() - shrinkSpeed);
+	}
+	else
+	{
+		graphics->SetScale(graphics->GetScale() + shrinkSpeed);
 	}
 
 	body->SyncPhysics();
@@ -103,4 +158,15 @@ void Corruption::SetPosition(const glm::vec3& newPos)
 {
 	body->SetPosition(newPos);
 	graphics->SetPosition(newPos);
+}
+
+glm::mat4 Corruption::GetRotation() const
+{
+	return graphics->GetRotation();
+}
+
+void Corruption::SetRotation(const glm::mat4& newRot)
+{
+	graphics->SetRotation(newRot);
+	body->SetRotation(newRot);
 }

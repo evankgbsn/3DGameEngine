@@ -53,6 +53,11 @@ glm::vec3 GraphicsObjectLine::GetEnd() const
 	return line->GetEnd();
 }
 
+glm::vec3 GraphicsObjectLine::GetDirection() const
+{
+	return glm::normalize(line->GetEnd() - line->GetStart());
+}
+
 void GraphicsObjectLine::Serialize()
 {
 	savedVec3s["Point0"] = GetStart();

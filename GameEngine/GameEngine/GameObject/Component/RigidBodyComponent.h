@@ -63,9 +63,13 @@ public:
 
 	void AddForce(const glm::vec3& direction, const ForceMode& forceMode = ForceMode::FORCE);
 
+	void AddTorque(const glm::vec3& axis, const ForceMode& forceMode = ForceMode::FORCE);
+
 	void SetMass(float newMass);
 
-	glm::vec3 GetVelocity() const;
+	glm::vec3 GetLinearVelocity() const;
+
+	glm::vec3 GetAngularVelocity() const;
 
 	void SetPosition(const glm::vec3& newPosition);
 
@@ -80,6 +84,12 @@ public:
 	void RegisterContactCallback(const std::string& objTypeName, std::function<void(GameObject*)>* callback);
 
 	void DeregisterContactCallback(const std::string& objTypeName);
+
+	void RegisterTrigger(RigidBodyComponent* other);
+
+	void RegisterTriggerCallback(const std::string& objTypeName, std::function<void(GameObject*)>* callback);
+
+	void DeregisterTriggerCallback(const std::string& objTypeName);
 
 	void Update() override;
 
@@ -104,6 +114,8 @@ private:
 	RigidBodyComponent& operator=(RigidBodyComponent&&) = delete;
 
 	void ProcessContacts();
+
+	void ProcessTriggers();
 
 	void CreateShapeFromModel();
 
@@ -146,7 +158,10 @@ private:
 	std::vector<RigidBodyComponent*> contacts;
 
 	std::unordered_map<std::string, std::function<void(GameObject*)>*> contactCallbacks;
+
+	std::vector<RigidBodyComponent*> triggers;
 	
+	std::unordered_map<std::string, std::function<void(GameObject*)>*> triggerCallbacks;
 };
 
 #endif // RIGIDBODYCOMPONENT_H

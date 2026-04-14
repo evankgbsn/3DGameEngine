@@ -195,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="GameObjects\Corruption.cpp" />
     <ClCompile Include="GameObjects\HackerRunner.cpp" />
+    <ClCompile Include="GameObjects\MemoryBlock.cpp" />
     <ClCompile Include="GameObjects\Spawner.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\HackerRunMain.cpp" />
@@ -202,6 +203,7 @@
   <ItemGroup>
     <ClInclude Include="GameObjects\Corruption.h" />
     <ClInclude Include="GameObjects\HackerRunner.h" />
+    <ClInclude Include="GameObjects\MemoryBlock.h" />
     <ClInclude Include="GameObjects\Spawner.h" />
     <ClInclude Include="Scenes\HackerRunMain.h" />
   </ItemGroup>

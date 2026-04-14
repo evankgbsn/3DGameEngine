@@ -5,19 +5,24 @@
 #include "../GameObjects/HackerRunner.h"
 #include "../GameObjects/Corruption.h"
 #include "../GameObjects/Spawner.h"
+#include "../GameObjects/MemoryBlock.h"
 
 HackerRunMain::HackerRunMain() :
 	player(new HackerRunner()),
 	corruption(new Corruption()),
-	spawner(new Spawner())
+	spawner(new Spawner()),
+	memBlock(new MemoryBlock())
 {
 	RegisterGameObject(player, "Player");
 	RegisterGameObject(spawner, "Spawner");
+	RegisterGameObject(memBlock, "MemoryBlock");
 }
 
 HackerRunMain::~HackerRunMain()
 {
 	delete player;
+	delete spawner;
+	delete memBlock;
 }
 
 void HackerRunMain::Initialize()

@@ -1,10 +1,12 @@
+#include <mimalloc.h>
+#include <mimalloc-new-delete.h>
+
 #include "GameEngine/Engine.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "Scenes/Test.h"
 #include "Scenes/FPSNetworkManager.h"
 #include "Scenes/JoinScene.h"
 
-#include <mimalloc.h>
 
 class HeapProfile
 {

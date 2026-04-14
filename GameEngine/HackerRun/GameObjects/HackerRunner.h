@@ -8,6 +8,7 @@
 class CameraComponent;
 class GraphicsObjectColored;
 class RigidBodyComponent;
+class Text3D;
 
 class HackerRunner : public GameObject
 {
@@ -17,6 +18,14 @@ public:
 	HackerRunner();
 
 	~HackerRunner();
+
+	glm::vec3 GetPosition() const override;
+
+	void SetPosition(const glm::vec3& newPos) override;
+
+	glm::mat4 GetRotation() const override;
+
+	void SetRotation(const glm::mat4& newRot) override;
 
 private:
 
@@ -42,9 +51,7 @@ private:
 
 	void Start() override;
 
-	glm::vec3 GetPosition() const override;
-
-	void SetPosition(const glm::vec3& newPos) override;
+	void End() override;
 
 	void RegisterInput();
 
@@ -53,6 +60,10 @@ private:
 	void Die();
 
 	std::function<void(int)>* keyPress;
+
+	std::function<void(int)>* keyRelease;
+
+	std::function<void(const glm::vec2&)>* mouseMove;
 
 	std::function<void(GameObject*)>* corruptionCollisionCallback;
 
@@ -64,11 +75,19 @@ private:
 
 	float speed;
 
-	float strafeSpeed;
-
-	float strafeSpeedIncreaseInterval;
-
 	RigidBodyComponent* body;
+
+	bool rotateRight = true;
+
+	bool rotateUp = true;
+
+	float mouseSense;
+
+	float yaw;
+
+	float pitch;
+
+	Text3D* binary;
 
 };
 

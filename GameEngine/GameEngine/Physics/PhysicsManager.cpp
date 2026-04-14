@@ -287,7 +287,8 @@ void PhysicsManager::CreateCharacterControllerMaterial()
 	characterControllerMaterial = physics->createMaterial(staticFriction, dynamicFriction, restitution);
 }
 
-void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) {
+void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) 
+{
 	for (PxU32 i = 0; i < nbPairs; i++) {
 		const PxContactPair& cp = pairs[i];
 
@@ -310,7 +311,7 @@ void MyContactCallback::onContact(const PxContactPairHeader& pairHeader, const P
 					rbcB->RegisterContact(rbcA);
 				}
 
-				Logger::Log(goA->GetName() + " : " + goB->GetName());
+				Logger::Log(std::string("Contact: ") + goA->GetName() + " : " + goB->GetName());
 			}
 		}
 	}
@@ -330,6 +331,37 @@ void MyContactCallback::onSleep(PxActor** actors, PxU32 count)
 
 void MyContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
+	for (PxU32 i = 0; i < count; i++) {
+		const PxTriggerPair& tp = pairs[i];
+
+		// Best Practice: Ignore pairs where one of the shapes was removed to avoid crashes
+		if (tp.flags & (PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER | PxTriggerPairFlag::eREMOVED_SHAPE_OTHER)) {
+			continue;
+		}
+
+		if (tp.status & PxPairFlag::eNOTIFY_TOUCH_FOUND) {
+			// Objects just started touching
+			PxActor* actorA = tp.triggerActor;
+			PxActor* actorB = tp.otherActor;
+
+			GameObject* goA = static_cast<GameObject*>(actorA->userData);
+			GameObject* goB = static_cast<GameObject*>(actorB->userData);
+
+			if (goA != nullptr && goB != nullptr)
+			{
+				RigidBodyComponent* rbcA = dynamic_cast<RigidBodyComponent*>(goA->GetComponent("RigidBody"));
+				RigidBodyComponent* rbcB = dynamic_cast<RigidBodyComponent*>(goB->GetComponent("RigidBody"));
+
+				if (rbcA != nullptr && rbcB != nullptr)
+				{
+					rbcA->RegisterTrigger(rbcB);
+					rbcB->RegisterTrigger(rbcA);
+				}
+
+				Logger::Log(std::string("Trigger: ") + goA->GetName() + " : " + goB->GetName());
+			}
+		}
+	}
 }
 
 void MyContactCallback::onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count)

@@ -12,6 +12,7 @@
 #include "GOTexturedAnimatedLit.h"
 #include "GOLineColored.h"
 #include "GOGlyph.h"
+#include "GO3DGlyph.h"
 #include "GOTerrain.h"
 #include "GOSprite.h"
 #include "GOWater.h"
@@ -23,6 +24,8 @@
 #include "../Camera/Camera.h"
 #include "../Time/TimeManager.h"
 #include "../Light/LightManager.h"
+
+#include <algorithm>
 
 GraphicsObjectManager* GraphicsObjectManager::instance = nullptr;
 
@@ -52,6 +55,21 @@ void GraphicsObjectManager::Update()
 				sortedObjects2D[graphicsObject->GetShaderName()].push_back(graphicsObject);
 			}
 		}
+
+		std::sort(instance->graphicsObjects2DWorldSpace.begin(), instance->graphicsObjects2DWorldSpace.end(), [](GraphicsObject* go1, GraphicsObject* go2)
+			{
+				glm::vec3 camPos = CameraManager::GetActiveCamera().GetPosition();
+
+				if (IsValid(go1) && IsValid(go2))
+				{
+					float distance1 = glm::length(camPos - static_cast<GO3D*>(go1)->GetTranslation());
+					float distance2 = glm::length(camPos - static_cast<GO3D*>(go2)->GetTranslation());
+
+					return distance1 > distance2;
+				}
+
+				return false;
+			});
 
 		GLint maxTextureSize;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
@@ -165,6 +183,18 @@ void GraphicsObjectManager::Update()
 		}
 
 		ShaderManager::EndShaderUsage("Water");
+
+		ShaderManager::StartShaderUsage("Font3D");
+
+		for (const auto& graphicsObject : instance->graphicsObjects2DWorldSpace)
+		{
+			if (IsValid(graphicsObject) && graphicsObject->RenderGraphics())
+			{
+				graphicsObject->Update();
+			}
+		}
+
+		ShaderManager::EndShaderUsage("Font3D");
 
 		for (const auto& shader : sortedObjects2D)
 		{
@@ -406,6 +436,23 @@ GOGlyph* const GraphicsObjectManager::CreateGOGlyph(const Font::Glyph& glyph, co
 	return result;
 }
 
+GO3DGlyph* const GraphicsObjectManager::CreateGO3DGlyph(const Font::Glyph& glyph, const glm::vec4& color, const glm::vec3& position, const glm::vec2& scale)
+{
+	GO3DGlyph* result = nullptr;
+
+	if (instance != nullptr)
+	{
+		result = new GO3DGlyph(glyph, color, position, scale);
+		instance->graphicsObjects2DWorldSpace.push_back(result);
+	}
+	else
+	{
+		Logger::Log("Calling GraphicsObjectManager::CreateGOGlyph() before GraphicsObjectManager::Initialize()", Logger::Category::Error);
+	}
+
+	return result;
+}
+
 GOSprite* const GraphicsObjectManager::CreateGOSprite(Model* const model2D, Texture* const imageTexture, const glm::vec2& position)
 {
 	GOSprite* result = nullptr;
@@ -479,6 +526,19 @@ void GraphicsObjectManager::Delete(GraphicsObject* const go)
 				{
 					delete go;
 					instance->graphicsObjects2D[i] = (GraphicsObject*)ULLONG_MAX;
+					break;
+				}
+			}
+		}
+
+		for (unsigned int i = 0; i < instance->graphicsObjects2DWorldSpace.size(); ++i)
+		{
+			if (instance->graphicsObjects2DWorldSpace[i] == go)
+			{
+				if (go != nullptr)
+				{
+					delete go;
+					instance->graphicsObjects2DWorldSpace[i] = (GraphicsObject*)ULLONG_MAX;
 					break;
 				}
 			}

@@ -29,7 +29,6 @@
 
 
 #include <GLFW/glfw3.h>
-#include <mimalloc-new-delete.h>
 
 #include <iostream>
 
@@ -39,8 +38,6 @@
 #endif
 #include "Windows.h"
 #endif
-
-#define _SINGLE_PLAYER
 
 Engine* Engine::instance = nullptr;
 

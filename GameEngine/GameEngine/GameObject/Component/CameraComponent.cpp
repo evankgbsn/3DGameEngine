@@ -152,6 +152,11 @@ void CameraComponent::SetFar(const float& newFar)
 	CameraManager::GetCamera(name).SetFar(newFar);
 }
 
+void CameraComponent::SetUpVector(const glm::vec3& newUp)
+{
+	CameraManager::GetCamera(name).SetUpVector(newUp);
+}
+
 void CameraComponent::Serialize()
 {
 	savedStrings["Name"] = name;

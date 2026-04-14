@@ -154,14 +154,40 @@ void RigidBodyComponent::AddForce(const glm::vec3& direction, const ForceMode& f
 	}
 }
 
+void RigidBodyComponent::AddTorque(const glm::vec3& axis, const ForceMode& forceMode)
+{
+	switch (forceMode)
+	{
+	case ForceMode::FORCE:
+		body->AddTorque(axis, RigidBody::ForceMode::FORCE);
+		break;
+	case ForceMode::ACCELERATION:
+		body->AddTorque(axis, RigidBody::ForceMode::ACCELERATION);
+		break;
+	case ForceMode::VELOCITY_CHANGE:
+		body->AddTorque(axis, RigidBody::ForceMode::VELOCITY_CHANGE);
+		break;
+	case ForceMode::IMPULSE:
+		body->AddTorque(axis, RigidBody::ForceMode::IMPULSE);
+		break;
+	default:
+		break;
+	}
+}
+
 void RigidBodyComponent::SetMass(float newMass)
 {
 	body->SetMass(newMass);
 }
 
-glm::vec3 RigidBodyComponent::GetVelocity() const
+glm::vec3 RigidBodyComponent::GetLinearVelocity() const
 {
-	return body->GetVelocity();
+	return body->GetLinearVelocity();
+}
+
+glm::vec3 RigidBodyComponent::GetAngularVelocity() const
+{
+	return body->GetAngularVelocity();
 }
 
 void RigidBodyComponent::SetPosition(const glm::vec3& newPosition)
@@ -197,6 +223,21 @@ void RigidBodyComponent::RegisterContactCallback(const std::string& objTypeName,
 	contactCallbacks[objTypeName] = callback;
 }
 
+void RigidBodyComponent::RegisterTrigger(RigidBodyComponent* other)
+{
+	triggers.push_back(other);
+}
+
+void RigidBodyComponent::RegisterTriggerCallback(const std::string& objTypeName, std::function<void(GameObject*)>* callback)
+{
+	triggerCallbacks[objTypeName] = callback;
+}
+
+void RigidBodyComponent::DeregisterTriggerCallback(const std::string& objTypeName)
+{
+	triggerCallbacks.erase(triggerCallbacks.find(objTypeName));
+}
+
 void RigidBodyComponent::DeregisterContactCallback(const std::string& objTypeName)
 {
 	contactCallbacks.erase(contactCallbacks.find(objTypeName));
@@ -214,6 +255,20 @@ void RigidBodyComponent::ProcessContacts()
 	}
 
 	contacts.clear();
+}
+
+void RigidBodyComponent::ProcessTriggers()
+{
+	for (const auto& trigger : triggers)
+	{
+		auto callback = triggerCallbacks.find(trigger->owner->GetNameOfType());
+		if (callback != triggerCallbacks.end())
+		{
+			(*callback->second)(trigger->owner);
+		}
+	}
+
+	triggers.clear();
 }
 
 void RigidBodyComponent::CreateShapeFromModel()
@@ -451,6 +506,7 @@ void RigidBodyComponent::Deserialize()
 void RigidBodyComponent::Update()
 {
 	ProcessContacts();
+	ProcessTriggers();
 }
 
 void RigidBodyComponent::DisableGravity()
