@@ -18,6 +18,8 @@ public:
 
 	const Font::Glyph& GetGlyph() const;
 
+	void UpdateGlyphData(const Font::Glyph& newGlyph);
+
 private:
 
 	GO3DGlyph(const GO3DGlyph&) = delete;
@@ -33,6 +35,8 @@ private:
 	unsigned int colorBuffer;
 
 	glm::vec4 color;
+
+	glm::vec2 size;
 
 };
 

@@ -26,6 +26,8 @@ public:
 
 	const Font::Glyph& GetGlyph() const;
 
+	void UpdateGlyphData(const Font::Glyph& newGlyph);
+
 private:
 
 	GOGlyph(const GOGlyph&) = delete;

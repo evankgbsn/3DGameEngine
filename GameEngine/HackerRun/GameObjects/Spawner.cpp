@@ -13,7 +13,7 @@ Spawner::Spawner() :
 	corruptionSpawnInterval(3.0f),
 	maxCorruptionCount(15U),
 	spaceBetweenBlocks(150.0f),
-    radius(5),
+    radius(3),
     lineDataSpeed(1000.0f)
 {
 	RegisterGameObjectClassType<Spawner>(this);

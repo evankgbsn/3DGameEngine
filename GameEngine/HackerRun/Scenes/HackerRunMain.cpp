@@ -15,7 +15,6 @@ HackerRunMain::HackerRunMain() :
 {
 	RegisterGameObject(player, "Player");
 	RegisterGameObject(spawner, "Spawner");
-	RegisterGameObject(memBlock, "MemoryBlock");
 }
 
 HackerRunMain::~HackerRunMain()

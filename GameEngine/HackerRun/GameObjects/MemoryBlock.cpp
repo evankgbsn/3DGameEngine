@@ -69,27 +69,26 @@ void MemoryBlock::Terminate()
 
 void MemoryBlock::GameUpdate()
 { 
-	if (TimeManager::SecondsSinceStart() - lastUpdateTime > 0.50f)
-	{
-		lastUpdateTime = TimeManager::SecondsSinceStart();
-
-		if (binary != nullptr)
-		{
-			std::string s = binary->GetString();
-			std::string newS = s;
-
-			unsigned int i = 0;
-			for (i; i < s.size() - 1; ++i)
-			{
-				newS[i + 1] = s[i];
-			}
-
-			newS[0] = ((int)dis(gen) % 3 == 0) ? '0' : '1';
-
-			binary->SetText3D(newS);
-		}
-		
-	}
+	//if (TimeManager::SecondsSinceStart() - lastUpdateTime > 0.050f)
+	//{
+	//	lastUpdateTime = TimeManager::SecondsSinceStart();
+	//
+	//	if (binary != nullptr)
+	//	{
+	//		std::string s = binary->GetString();
+	//		std::string newS = s;
+	//
+	//		unsigned int i = 0;
+	//		for (i; i < s.size() - 1; ++i)
+	//		{
+	//			newS[i + 1] = s[i];
+	//		}
+	//
+	//		newS[0] = ((int)(TimeManager::DeltaTime() * 1000.0f) % 2 == 0) ? '0' : '1';
+	//
+	//		binary->SetText3D(newS);
+	//	}
+	//}
 }
 
 void MemoryBlock::EditorUpdate()
@@ -112,8 +111,50 @@ void MemoryBlock::Start()
 {
 	GameObject::Start();
 
-	binary = new Text3D("010101010101010101010101", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, graphics->GetPosition() + glm::vec3(37.25f, 0.0f, 3.0f), { .010f, .010f });
-	binary->SetRotation(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	CreateBinaryEffect();
+}
 
-	
+void MemoryBlock::End()
+{
+	delete binary;
+}
+
+void MemoryBlock::CreateBinaryEffect()
+{
+	//binaryEffect = std::vector<std::vector<Text3D*>>();
+	//binaryEffect.resize(4);
+	//
+	//glm::vec3 sideOffsets[4] =
+	//{
+	//	glm::vec3(37.25f, 0.0f, 0.0f),
+	//	glm::vec3(-37.25f, 0.0f, 0.0f),
+	//	glm::vec3(0.0f, 0.0f, -37.25f),
+	//	glm::vec3(0.0f, 0.0f, 37.25f)
+	//};
+	//
+	//float rotations[4]
+	//{
+	//	90.0f,
+	//	270.0f,
+	//	180.0f,
+	//	0.0f
+	//};
+	//
+	//unsigned int i = 0;
+	//for (auto& text : binaryEffect)
+	//{
+	//	float j = 0.0f;
+	//	text.resize(10);
+	//	for (Text3D* ptr : text)
+	//	{
+	//		ptr = new Text3D("010101010101010101010101", "arial", { 1.0f, 1.0f, 1.0f, 1.0f }, graphics->GetPosition() + sideOffsets[i] + glm::vec3(0.0f, 1.0f, 0.0f) * j++ * 10.0f, {.010f, .010f});
+	//		ptr->SetRotation(rotations[i], glm::vec3(0.0f, 1.0f, 0.0f));
+	//	}
+	//
+	//	i++;
+	//}
+}
+
+void MemoryBlock::UpdateBinaryEffects()
+{
 }

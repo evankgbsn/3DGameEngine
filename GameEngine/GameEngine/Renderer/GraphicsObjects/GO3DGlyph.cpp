@@ -23,7 +23,8 @@ GO3DGlyph::GO3DGlyph(const Font::Glyph& g, const glm::vec4& c, const glm::vec2& 
 		false
 	), "Font3D"),
 	glyph(g),
-	color(c)
+	color(c),
+	size(s)
 {
 	glCreateBuffers(1, &colorBuffer);
 	glNamedBufferStorage(colorBuffer, sizeof(glm::vec4), &color, GL_DYNAMIC_STORAGE_BIT);
@@ -52,4 +53,23 @@ void GO3DGlyph::Update()
 const Font::Glyph& GO3DGlyph::GetGlyph() const
 {
 	return glyph;
+}
+
+void GO3DGlyph::UpdateGlyphData(const Font::Glyph& newGlyph)
+{
+	this->glyph = newGlyph;
+
+	model = ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(glyph.size.x * size.x) + "H" + std::to_string(glyph.size.y * size.y),
+		{
+			Vertex(glm::vec3(glyph.bearing.x * size.x, (0.0f - (glyph.size.y - glyph.bearing.y) * size.y) + glyph.size.y * size.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3(glyph.bearing.x * size.x, 0.0f - (glyph.size.y - glyph.bearing.y) * size.y, 0.0f), {}, {0.0f, 1.0f}),
+			Vertex(glm::vec3((0.0f + glyph.bearing.x * size.x) + glyph.size.x * size.x, 0.0f - (glyph.size.y - glyph.bearing.y) * size.y, 0.0f), {}, {1.0f, 1.0f}),
+	
+			Vertex(glm::vec3(glyph.bearing.x * size.x, (0.0f - (glyph.size.y - glyph.bearing.y) * size.y) + glyph.size.y * size.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3((glyph.bearing.x * size.x) + glyph.size.x * size.x, 0.0f - (glyph.size.y - glyph.bearing.y) * size.y, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3((glyph.bearing.x * size.x) + glyph.size.x * size.x, (0.0f - (glyph.size.y - glyph.bearing.y) * size.y) + glyph.size.y * size.y, 0.0f), {}, {1.0f, 0.0f})
+		},
+		{ 0,1,2,3,4,5 },
+		false
+	);
 }

@@ -116,3 +116,22 @@ const Font::Glyph& GOGlyph::GetGlyph() const
 {
 	return glyph;
 }
+
+void GOGlyph::UpdateGlyphData(const Font::Glyph& newGlyph)
+{
+	this->glyph = newGlyph;
+
+	model = ModelManager::LoadModel(std::string("Glyph_W") + std::to_string(glyph.size.x * scale.x) + "H" + std::to_string(glyph.size.y * scale.y),
+		{
+			Vertex(glm::vec3(glyph.bearing.x * scale.x, (0.0f - (glyph.size.y - glyph.bearing.y) * scale.y) + glyph.size.y * scale.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3(glyph.bearing.x * scale.x, 0.0f - (glyph.size.y - glyph.bearing.y) * scale.y, 0.0f), {}, {0.0f, 1.0f}),
+			Vertex(glm::vec3((0.0f + glyph.bearing.x * scale.x) + glyph.size.x * scale.x, 0.0f - (glyph.size.y - glyph.bearing.y) * scale.y, 0.0f), {}, {1.0f, 1.0f}),
+
+			Vertex(glm::vec3(glyph.bearing.x * scale.x, (0.0f - (glyph.size.y - glyph.bearing.y) * scale.y) + glyph.size.y * scale.y, 0.0f), {}, {0.0f, 0.0f}),
+			Vertex(glm::vec3((glyph.bearing.x * scale.x) + glyph.size.x * scale.x, 0.0f - (glyph.size.y - glyph.bearing.y) * scale.y, 0.0f), {}, {1.0f, 1.0f}),
+			Vertex(glm::vec3((glyph.bearing.x * scale.x) + glyph.size.x * scale.x, (0.0f - (glyph.size.y - glyph.bearing.y) * scale.y) + glyph.size.y * scale.y, 0.0f), {}, {1.0f, 0.0f})
+		},
+		{ 0,1,2,3,4,5 },
+		false
+	);
+}

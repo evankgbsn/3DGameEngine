@@ -156,37 +156,38 @@ void Text::PopFront()
 	}
 }
 
-void Text::SetText(const std::string& string)
-{
-	if (text == string)
-	{
-		return;
-	}
-
-	for (GOGlyph* glyph : glyphs)
-	{
-		GraphicsObjectManager::Delete(glyph);
-	}
-
-	glyphs.clear();
-
-	text = string;
+void Text::SetText(const std::string& string) {
+	if (text == string) return;
 
 	Font* font = FontManager::GetFont(fontName);
+	if (!font) return;
 
-	if (font != nullptr)
-	{
-		float x = position.x;
-		for (const char& character : text)
-		{
-			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
-			glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(glyph, glm::vec4(color, 1.0f), { x, position.y }, scale));
-			
-			x += (glyph.advance >> 6) * scale.x;
-			
-			glyphs.back()->SetZ(z);
+	// 1. Reuse existing glyph objects
+	size_t i = 0;
+	float x = position.x;
+
+	for (; i < string.length(); ++i) {
+		const Font::Glyph& g = font->GetCharacterGlyph(string[i]);
+
+		if (i < glyphs.size()) {
+			// REUSE: Just update the glyph data of the existing object
+			glyphs[i]->UpdateGlyphData(g);
+			glyphs[i]->SetPosition({ x, position.y });
 		}
+		else {
+			// CREATE: Only if the new string is longer than the old one
+			glyphs.push_back(GraphicsObjectManager::CreateGOGlyph(g, glm::vec4(color, 1.0f), { x, position.y }, scale));
+		}
+		x += (g.advance >> 6) * scale.x;
 	}
+
+	// 2. Hide/Disable extra glyphs if the new string is shorter
+	while (glyphs.size() > string.length()) {
+		GraphicsObjectManager::Delete(glyphs.back());
+		glyphs.pop_back();
+	}
+
+	text = string;
 }
 
 float Text::GetCursorPosition() const

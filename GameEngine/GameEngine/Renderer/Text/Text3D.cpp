@@ -188,34 +188,49 @@ void Text3D::PopFront()
 
 void Text3D::SetText3D(const std::string& string)
 {
+	// 1. Quick exit if nothing changed
 	if (text == string) return;
 
-	for (GO3DGlyph* glyph : glyphs)
-	{
-		GraphicsObjectManager::Delete(glyph);
-	}
-	glyphs.clear();
-	text = string;
-
 	Font* font = FontManager::GetFont(fontName);
+	if (font == nullptr) return;
 
-	if (font != nullptr)
+	glm::vec3 rightVector = glm::normalize(glm::vec3(rotation[0]));
+	glm::vec3 currentPos = position;
+
+	// 2. Reuse existing glyph objects where possible
+	size_t i = 0;
+	for (; i < string.length(); ++i)
 	{
-		glm::vec3 rightVector = glm::normalize(glm::vec3(rotation[0]));
-		glm::vec3 currentPos = position;
+		const Font::Glyph& glyph = font->GetCharacterGlyph(string[i]);
 
-		for (const char& character : text)
+		if (i < glyphs.size())
 		{
-			const Font::Glyph& glyph = font->GetCharacterGlyph(character);
-
+			// REUSE: Update properties of the existing GraphicsObject
+			// Note: You'll need to implement UpdateGlyphData in GO3DGlyph
+			glyphs[i]->UpdateGlyphData(glyph);
+			glyphs[i]->SetRotation(rotation);
+			glyphs[i]->SetTranslation(currentPos);
+		}
+		else
+		{
+			// CREATE: Only instantiate if the new string is longer
 			GO3DGlyph* newGlyph = GraphicsObjectManager::CreateGO3DGlyph(glyph, glm::vec4(color, 1.0f), currentPos, scale);
 			newGlyph->SetRotation(rotation);
 			newGlyph->SetTranslation(currentPos);
 			glyphs.push_back(newGlyph);
-
-			currentPos += rightVector * ((glyph.advance >> 6) * scale.x);
 		}
+
+		currentPos += rightVector * ((glyph.advance >> 6) * scale.x);
 	}
+
+	// 3. Cleanup: If the new string is shorter, remove the excess objects
+	while (glyphs.size() > string.length())
+	{
+		GraphicsObjectManager::Delete(glyphs.back());
+		glyphs.pop_back();
+	}
+
+	text = string;
 }
 
 float Text3D::GetCursorPosition() const

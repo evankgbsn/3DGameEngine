@@ -344,7 +344,6 @@ void ModelManager::LoadDefaultModels()
 	models.insert(std::make_pair(std::string("Rectangle"), new Model()));
 	models["Rectangle"]->CreateVertexArrayBuffer();
 
-
 	// Default rectangle.
 	std::vector<Vertex> rectangleVertices = {
 		Vertex(glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)),

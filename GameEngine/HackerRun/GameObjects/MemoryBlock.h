@@ -49,6 +49,12 @@ private:
 
 	void Start() override;
 
+	void End() override;
+
+	void CreateBinaryEffect();
+
+	void UpdateBinaryEffects();
+
 	GraphicsObjectColored* graphics;
 
 	RigidBodyComponent* body;
