@@ -164,7 +164,7 @@ Engine::Engine()
 
 #ifdef GAME
 #ifndef _SERVER
-	WindowManager::GetWindow("Engine")->ToggleFullScreen();
+	//WindowManager::GetWindow("Engine")->ToggleFullScreen();
 #endif
 #endif
 

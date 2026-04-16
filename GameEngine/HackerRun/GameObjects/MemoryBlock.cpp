@@ -13,7 +13,8 @@ extern std::mt19937 gen;
 
 MemoryBlock::MemoryBlock() :
 	GameObject("MemoryBlock"),
-	binary(nullptr)
+	binary(nullptr),
+	active(true)
 {
 	RegisterGameObjectClassType<MemoryBlock>(this);
 }
@@ -47,6 +48,22 @@ void MemoryBlock::SetRotation(const glm::mat4& rot)
 glm::mat4 MemoryBlock::GetTransform() const
 {
 	return graphics->GetTransform();
+}
+
+void MemoryBlock::RandomActivate()
+{
+	active = (rand() % 2 == 0);
+
+	if (!active)
+	{
+		graphics->SetRenderGraphics(false);
+		body->DisableCollision();
+	}
+	else
+	{
+		graphics->SetRenderGraphics(true);
+		body->EnableCollision();
+	}
 }
 
 void MemoryBlock::Initialize()

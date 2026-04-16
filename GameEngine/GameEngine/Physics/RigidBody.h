@@ -76,6 +76,10 @@ public:
 
 	bool IsTrigger() const;
 
+	void DisableCollision();
+
+	void EnableCollision();
+
 
 
 private:

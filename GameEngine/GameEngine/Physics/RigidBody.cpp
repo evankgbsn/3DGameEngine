@@ -370,3 +370,16 @@ bool RigidBody::IsTrigger() const
 {
     return shape->getFlags().isSet(PxShapeFlag::eTRIGGER_SHAPE);
 }
+
+void RigidBody::DisableCollision()
+{
+    if (shape != nullptr)
+    {
+        shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+    }
+}
+
+void RigidBody::EnableCollision()
+{
+    SetIsTrigger(false);
+}

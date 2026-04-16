@@ -95,6 +95,10 @@ public:
 
 	void DisableGravity();
 
+	void EnableCollision();
+
+	void DisableCollision();
+
 	void SetIsTrigger(bool isTrigger);
 
 	bool IsTrigger() const;

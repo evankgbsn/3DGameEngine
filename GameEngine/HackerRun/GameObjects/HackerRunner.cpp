@@ -15,7 +15,7 @@
 HackerRunner::HackerRunner() :
 	GameObject("HackerRunner"),
 	graphics(nullptr),
-	speed(50000.0f),
+	speed(50.0f),
 	camOffset(glm::vec3(0.0f, 3.0f, -5.0f)),
 	mouseSense(0.02f),
 	yaw(0.0f),
@@ -125,7 +125,39 @@ void HackerRunner::GameUpdate()
 	cam->SetTarget(graphics->GetPosition());
 	cam->SetUpVector(graphics->GetUp());
 
-	
+
+	glm::vec3 forwardDir = graphics->GetForward();
+	glm::vec3 currentPos = graphics->GetPosition();
+
+	// 1. Check if at the floor AND looking down
+	if (currentPos.y <= 0.5f && forwardDir.y < 0.0f)
+	{
+		forwardDir.y = 0.0f; // Flatten the trajectory
+		body->SetPosition({ currentPos.x, 0.5f, currentPos.z }); // Clamp EXACTLY to the limit
+	}
+	// 2. Check if at the ceiling AND looking up
+	else if (currentPos.y >= 140.2f && forwardDir.y > 0.0f)
+	{
+		forwardDir.y = 0.0f; // Flatten the trajectory
+		body->SetPosition({ currentPos.x, 140.2f, currentPos.z }); // Clamp EXACTLY to the limit
+	}
+
+	// 3. Re-normalize to ensure we don't lose speed when flattening the vector
+	// (The length check prevents a crash if looking perfectly straight down/up)
+	if (glm::length(forwardDir) > 0.001f)
+	{
+		forwardDir = glm::normalize(forwardDir);
+	}
+	else
+	{
+		// Fallback: If pointing straight down, use your cross product method
+		forwardDir = glm::normalize(glm::cross(graphics->GetRight(), glm::vec3(0.0f, 1.0f, 0.0f)));
+	}
+
+	// 4. Apply the final calculated velocity
+	glm::vec3 linearVel = forwardDir * (speed += TimeManager::DeltaTime() * 100.0f);
+	body->SetLinearVelocity(linearVel);
+
 }
 
 void HackerRunner::EditorUpdate()
@@ -192,14 +224,14 @@ void HackerRunner::RegisterInput()
 			{
 			case KEY_W:
 				//direction = graphics->GetForward();
-				body->SetLinearVelocity(graphics->GetForward() * speed * TimeManager::DeltaTime());
+				
 				break;
 			case KEY_A:
 				axis = -graphics->GetForward();
 				break;
 			case KEY_S:
 				//direction = -graphics->GetForward();
-				body->SetLinearVelocity(-graphics->GetForward() * speed * TimeManager::DeltaTime());
+				//body->SetLinearVelocity(-graphics->GetForward() * speed * 100000.0f * TimeManager::DeltaTime());
 				break;
 			case KEY_D:
 				axis = graphics->GetForward();

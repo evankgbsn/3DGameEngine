@@ -514,6 +514,16 @@ void RigidBodyComponent::DisableGravity()
 	body->DisableGravity();
 }
 
+void RigidBodyComponent::EnableCollision()
+{
+	body->EnableCollision();
+}
+
+void RigidBodyComponent::DisableCollision()
+{
+	body->DisableCollision();
+}
+
 void RigidBodyComponent::SetIsTrigger(bool isTrigger)
 {
 	body->SetIsTrigger(isTrigger);

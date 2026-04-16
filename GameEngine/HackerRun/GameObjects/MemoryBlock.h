@@ -25,6 +25,8 @@ public:
 
 	glm::mat4 GetTransform() const override;
 
+	void RandomActivate();
+
 private:
 
 	MemoryBlock(const MemoryBlock&) = delete;
@@ -64,6 +66,8 @@ private:
 	Text3D* binary;
 
 	float lastUpdateTime;
+
+	bool active;
 };
 
 #endif

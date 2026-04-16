@@ -43,6 +43,8 @@ private:
 
 	void Start() override;
 
+	void CreateInitialMemoryBlocks();
+
 	std::list<Corruption*> corruptionObjects;
 
 	float corruptionSpawnInterval;
@@ -62,6 +64,10 @@ private:
 	int radius;
 
 	float lineDataSpeed;
+
+	int forwardSpawnOffset;
+
+	bool hasReachedGrid;
 };
 
 #endif
