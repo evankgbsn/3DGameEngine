@@ -175,11 +175,11 @@ void AnimatedCollider::Update()
 
 			if (obbBuffer.size() < 1000.0f)
 			{
-				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), *obb.first, i));
+				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), OrientedBoundingBox(*obb.first), i));
 			}
 			else
 			{
-				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), *obb.first, i));
+				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), OrientedBoundingBox(*obb.first), i));
 				obbBuffer.pop_back();
 			}
 		}
