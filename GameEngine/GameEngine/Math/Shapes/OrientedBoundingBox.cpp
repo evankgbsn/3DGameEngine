@@ -21,6 +21,42 @@ OrientedBoundingBox::OrientedBoundingBox(const std::vector<Vertex>& vertices, co
     SizeToMesh(vertices);
 }
 
+OrientedBoundingBox::OrientedBoundingBox(const OrientedBoundingBox& other)
+{
+    origin = other.origin;
+    size = other.size;
+    orientation = other.orientation;
+    offset = other.offset;
+}
+
+OrientedBoundingBox& OrientedBoundingBox::operator=(const OrientedBoundingBox& other)
+{
+    origin = other.origin;
+    size = other.size;
+    orientation = other.orientation;
+    offset = other.offset;
+
+    return *this;
+}
+
+OrientedBoundingBox::OrientedBoundingBox(OrientedBoundingBox&& other)
+{
+    origin = other.origin;
+    size = other.size;
+    orientation = other.orientation;
+    offset = other.offset;
+}
+
+OrientedBoundingBox& OrientedBoundingBox::operator=(OrientedBoundingBox&& other)
+{
+    origin = other.origin;
+    size = other.size;
+    orientation = other.orientation;
+    offset = other.offset;
+
+    return *this;
+}
+
 OrientedBoundingBox::~OrientedBoundingBox()
 {
 }

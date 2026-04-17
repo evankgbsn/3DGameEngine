@@ -18,6 +18,14 @@ public:
 
 	OrientedBoundingBox(const std::vector<Vertex>& vertices, const glm::mat4& initialOrientation = glm::mat4(1.0f));
 
+	OrientedBoundingBox(const OrientedBoundingBox& other);
+
+	OrientedBoundingBox& operator=(const OrientedBoundingBox& other);
+
+	OrientedBoundingBox(OrientedBoundingBox&& other);
+
+	OrientedBoundingBox& operator=(OrientedBoundingBox&& other);
+
 	~OrientedBoundingBox();
 
 	void SetOffset(const glm::vec3& os);
@@ -53,14 +61,6 @@ public:
 	void UpdateOrigin(const glm::mat4& mat);
 
 private:
-
-	OrientedBoundingBox(const OrientedBoundingBox&) = delete;
-
-	OrientedBoundingBox& operator=(const OrientedBoundingBox&) = delete;
-
-	OrientedBoundingBox(OrientedBoundingBox&&) = delete;
-
-	OrientedBoundingBox& operator=(OrientedBoundingBox&&) = delete;
 
 	bool OverlapOnAxis(const OrientedBoundingBox& other, glm::vec3& axis) const;
 

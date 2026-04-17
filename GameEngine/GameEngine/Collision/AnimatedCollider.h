@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <list>
 
 class GO3DAnimated;
 class GOColoredAnimated;
@@ -73,6 +74,8 @@ private:
 	SphereWithVisualization* sphere;
 
 	std::vector<std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>> obbs;
+
+	std::list<std::tuple<float, OrientedBoundingBox, unsigned int>> obbBuffer;
 
 	GOColoredAnimated* meshColliderVisualization;
 

@@ -15,6 +15,7 @@
 #include "../Renderer/Model/Model.h"
 #include "../Collision/StaticCollider.h"
 #include "../Utils/Logger.h"
+#include "../Time/TimeManager.h"
 
 #include <execution>
 #include <mutex>
@@ -168,8 +169,20 @@ void AnimatedCollider::Update()
 	unsigned int i = 0;
 	for (const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb : obbs)
 	{
-		if(obb. first != nullptr)
+		if (obb.first != nullptr)
+		{
 			obb.first->Update(wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i]);
+
+			if (obbBuffer.size() < 1000.0f)
+			{
+				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), *obb.first, i));
+			}
+			else
+			{
+				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), *obb.first, i));
+				obbBuffer.pop_back();
+			}
+		}
 		i++;
 	}
 
@@ -528,4 +541,9 @@ bool AnimatedCollider::Intersect(const Ray& other) const
 bool AnimatedCollider::Intersect(const SphereWithVisualization& other) const
 {
 	return sphere->SphereIntersect(other);
+}
+
+const SphereWithVisualization* const AnimatedCollider::GetSphere() const
+{
+	return sphere;
 }
