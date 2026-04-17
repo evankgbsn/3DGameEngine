@@ -27,6 +27,8 @@ public:
 
 	void SetRotation(const glm::mat4& newRot) override;
 
+	float GetSpeed() const;
+
 private:
 
 	HackerRunner(const HackerRunner&) = delete;
@@ -61,6 +63,8 @@ private:
 
 	std::function<void(int)>* keyPress;
 
+	std::function<void(int)>* mouseClick;
+
 	std::function<void(int)>* keyRelease;
 
 	std::function<void(const glm::vec2&)>* mouseMove;
@@ -74,6 +78,8 @@ private:
 	glm::vec3 camOffset;
 
 	float speed;
+
+	float speedCap;
 
 	RigidBodyComponent* body;
 

@@ -16,6 +16,7 @@ HackerRunner::HackerRunner() :
 	GameObject("HackerRunner"),
 	graphics(nullptr),
 	speed(50.0f),
+	speedCap(800.0f),
 	camOffset(glm::vec3(0.0f, 3.0f, -5.0f)),
 	mouseSense(0.02f),
 	yaw(0.0f),
@@ -79,43 +80,6 @@ void HackerRunner::Terminate()
 
 void HackerRunner::GameUpdate()
 {
-	//// NOTE: In a real engine, these should be member variables in your class/component 
-	//// rather than static variables, so each object can tumble independently!
-	//static glm::vec3 currentAngularVel = glm::vec3(0.0f);
-	//static glm::vec3 targetAngularVel = glm::vec3(0.0f);
-	//static float changeTimer = 0.0f;
-	//
-	//// 1. Decrease the timer by the time passed since the last frame
-	//changeTimer -= TimeManager::DeltaTime();
-	//
-	//// 2. Pick a new random rotation axis when the timer hits zero
-	//if (changeTimer <= 0.0f)
-	//{
-	//	// Generate random values between -1.0 and 1.0 for all three axes
-	//	float rX = ((std::rand() % 200) / 100.0f) - 1.0f;
-	//	float rY = ((std::rand() % 200) / 100.0f) - 1.0f;
-	//	float rZ = ((std::rand() % 200) / 100.0f) - 1.0f;
-	//
-	//	// Normalize to get a pure directional vector, then scale by your rotation speed
-	//	glm::vec3 randomAxis = glm::normalize(glm::vec3(rX, rY, rZ));
-	//	targetAngularVel = randomAxis * rotationSpeed;
-	//
-	//	// Reset the timer to pick a new direction in the future (e.g., 2 to 4 seconds)
-	//	changeTimer = 2.0f + ((std::rand() % 200) / 100.0f);
-	//}
-	//
-	//// 3. Smoothly interpolate (Lerp) the current velocity toward the target velocity
-	//// glm::mix(start, end, percentage) moves the vector a percentage of the way there.
-	//// Multiplying by deltaTime ensures the smoothing is frame-rate independent.
-	//float smoothingRate = 1.5f * TimeManager::DeltaTime();
-	//currentAngularVel = glm::mix(currentAngularVel, targetAngularVel, smoothingRate);
-	//
-	//// 4. Wake the physics body up (PhysX specific safeguard to prevent sleeping)
-	//// body->GetPxRigidDynamic()->wakeUp(); 
-	//
-	//// 5. Apply the smoothed velocity
-	//body->SetAngularVelocity(currentAngularVel);
-
 	InputManager::WhenCursorMoved(*mouseMove);
 
 	body->SyncPhysics();
@@ -155,7 +119,14 @@ void HackerRunner::GameUpdate()
 	}
 
 	// 4. Apply the final calculated velocity
-	glm::vec3 linearVel = forwardDir * (speed += TimeManager::DeltaTime() * 100.0f);
+
+	if (speed < speedCap)
+	{
+		speed += TimeManager::DeltaTime() * 50.0f;
+	}
+
+	glm::vec3 linearVel = forwardDir * speed;
+	
 	body->SetLinearVelocity(linearVel);
 
 }
@@ -212,6 +183,11 @@ void HackerRunner::SetRotation(const glm::mat4& newRot)
 {
 	graphics->SetRotation(newRot);
 	body->SetRotation(newRot);
+}
+
+float HackerRunner::GetSpeed() const
+{
+	return speed;
 }
 
 void HackerRunner::RegisterInput()
@@ -292,6 +268,11 @@ void HackerRunner::RegisterInput()
 			// 5. Apply to the physics body directly (Kinematic approach)
 			// If your object is a character or camera, it should likely be a Kinematic Actor in PhysX.
 			body->SetRotation(newRotMat); // Replace with your engine's equivalent method
+		});
+
+	mouseClick = new std::function<void(int)>([this](int keyCode)
+		{
+
 		});
 
 }

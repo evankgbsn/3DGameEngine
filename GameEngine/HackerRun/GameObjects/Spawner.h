@@ -19,6 +19,10 @@ public:
 
 	~Spawner();
 
+	const std::vector<std::vector<MemoryBlock*>>& GetBlocks() const;
+
+	float GetSpaceBetweenBlocks() const;
+
 private:
 
 	Spawner(const Spawner&) = delete;

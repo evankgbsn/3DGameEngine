@@ -56,5 +56,8 @@
     <ClInclude Include="GameObjects\MemoryBlock.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjects\HackShot.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

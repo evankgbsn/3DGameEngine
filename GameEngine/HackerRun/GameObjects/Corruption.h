@@ -8,6 +8,8 @@
 class CameraComponent;
 class GraphicsObjectColored;
 class RigidBodyComponent;
+class Spawner;
+class HackerRunner;
 
 class Corruption : public GameObject
 {
@@ -42,6 +44,18 @@ private:
 
 	void Start() override;
 
+	void SetSpawnPosition();
+
+	void Respawn();
+
+	void Animate();
+
+	HackerRunner* FindPlayer() const;
+
+	Spawner* FindSpawner() const;
+
+	void UpdateVelocity();
+
 	glm::vec3 GetPosition() const override;
 
 	void SetPosition(const glm::vec3& newPos) override;
@@ -59,6 +73,8 @@ private:
 	float speed;
 
 	bool shrink;
+
+	float respawnDistance;
 };
 
 #endif

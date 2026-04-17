@@ -29,6 +29,16 @@ Spawner::~Spawner()
 	}
 }
 
+const std::vector<std::vector<MemoryBlock*>>& Spawner::GetBlocks() const
+{
+    return blocks;
+}
+
+float Spawner::GetSpaceBetweenBlocks() const
+{
+    return spaceBetweenBlocks;
+}
+
 void Spawner::Initialize()
 {
     

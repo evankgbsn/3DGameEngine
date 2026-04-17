@@ -203,6 +203,7 @@
   <ItemGroup>
     <ClInclude Include="GameObjects\Corruption.h" />
     <ClInclude Include="GameObjects\HackerRunner.h" />
+    <ClInclude Include="GameObjects\HackShot.h" />
     <ClInclude Include="GameObjects\MemoryBlock.h" />
     <ClInclude Include="GameObjects\Spawner.h" />
     <ClInclude Include="Scenes\HackerRunMain.h" />
