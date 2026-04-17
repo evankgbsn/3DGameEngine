@@ -39,8 +39,6 @@
 #include "Windows.h"
 #endif
 
-#define _SINGLE_PLAYER
-
 Engine* Engine::instance = nullptr;
 
 void Engine::Initialize()

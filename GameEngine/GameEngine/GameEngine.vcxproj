@@ -374,9 +374,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugClientGame|x64'">
@@ -409,9 +407,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugServerEditor|x64'">
@@ -444,9 +440,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugServerGame|x64'">
@@ -479,9 +473,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseClientEditor|x64'">
@@ -518,9 +510,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseClientGame|x64'">
@@ -557,9 +547,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseServerEditor|x64'">
@@ -596,9 +584,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseServerGame|x64'">
@@ -635,9 +621,7 @@ Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)$(Platform)\$(Configuration)\Assets\GLSL
-Xcopy /E /I /y $(SolutionDir)Assets  $(SolutionDir)$(Platform)\$(Configuration)\Assets</Command>
+      <Command>Xcopy /E /I /y $(SolutionDir)GameEngine\Renderer\Shader\GLSL  $(SolutionDir)\Assets\EngineRequired\GLSL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -155,7 +155,6 @@ TextureManager::~TextureManager()
 void TextureManager::LoadDefaultTextures()
 {
 	ShaderManager::CreateWaterTexturesFromIDs();
-	LoadTexture("Assets/Texture/Woman.png", "Woman");
 	LoadTexture("Assets/Texture/DuDvMap.png", "DuDv");
-	LoadTexture("Assets/Texutre/Default.png", "Default");
+	LoadTexture("Assets/Texture/Default.png", "Default");
 }
