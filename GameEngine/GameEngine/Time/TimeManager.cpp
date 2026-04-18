@@ -111,7 +111,12 @@ unsigned long long TimeManager::GetFrameID()
 
 float TimeManager::GetTime()
 {
-	return std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	auto now = std::chrono::high_resolution_clock::now();
+
+	// Explicitly cast the duration to seconds (as a float)
+	auto durationInSeconds = std::chrono::duration<float>(now.time_since_epoch());
+
+	return durationInSeconds.count();
 }
 
 TimeManager::TimeManager() :
