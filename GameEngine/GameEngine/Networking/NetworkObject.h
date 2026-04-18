@@ -36,6 +36,14 @@ public:
 
 	std::string GetSpawnerID() const;
 
+	void AddServerDataReceivedCallback(const std::string& type, std::function<void(const std::string&)>*);
+
+	void RemoveServerDataReceivedCallback(const std::string& type);
+
+	void AddClientDataReceivedCallback(const std::string& type, std::function<void(const std::string&)>*);
+
+	void RemoveClientDataReceivedCallback(const std::string& type);
+
 protected:
 
 	NetworkObject();
@@ -57,6 +65,8 @@ private:
 
 	NetworkObject& operator=(NetworkObject&&) = delete;
 
+	void ProcessReceivedData(const std::string& data, std::string& updateType, std::string& packetID, std::string& updateData);
+
 	static std::function<void(NetworkObject**)> GetConstructor(const std::string& name);
 
 	static std::unordered_map<std::string, std::function<void(NetworkObject**)>> newFunctions;
@@ -73,7 +83,16 @@ private:
 
 	std::string spawnerID;
 
-	std::unordered_set<std::string> serverConfirmedIPs;
+	std::unordered_set<std::string> serverConfirmedIDs;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> serverDataReceivedFunctions;
+
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> clientDataReceivedFunctions;
+
+	std::unordered_map<std::string, unsigned long long> serverLastPacketIDs;
+
+	std::unordered_map<std::string, unsigned long long> clientLastPacketIDs;
+
 };
 
 template<typename T>

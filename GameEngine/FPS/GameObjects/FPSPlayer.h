@@ -51,6 +51,16 @@ private:
 
 	void Initialize() override;
 
+	void InitializeLocalPlayer();
+
+	void InitializeRemotePlayer();
+
+	void InitializeServerPlayer();
+
+	void AddClientDataReceivedCallbacks();
+
+	void AddServerDataReceivedCallbacks();
+
 	void Terminate() override;
 
 	void GameUpdate() override;
@@ -163,25 +173,13 @@ private:
 
 	unsigned int animationClipPacketNumber = 0;
 
-	unsigned int lastPositionPacketNumber = 0;
-
-	unsigned int lastFootPositionPacketNumber = 0;
-
 	unsigned int targetPacketNumber = 0;
 
-	unsigned int lastTargetPacketNumber = 0;
-
 	unsigned int dispPacketNumber = 0;
-
-	unsigned int lastDispPacketNumber = 0;
 
 	unsigned int jumpPacketNumber = 0;
 
 	unsigned int shootPacketNumber = 0;
-
-	unsigned int lastJumpPacketNumber = 0;
-
-	unsigned int lastShootPacketNumber = 0;
 
 	unsigned int weaponPositionPacketNumber = 0;
 
@@ -195,15 +193,7 @@ private:
 
 	unsigned int damagePacketNumber = 0;
 
-	unsigned int lastWeaponPositionPacketNumber = 0;
-
-	unsigned int lastAdditiveAnimationUpPacketNumber = 0;
-
-	unsigned int lastAdditiveAnimationDownPacketNumber = 0;
-
-	unsigned int lastAnimationClipPacketNumber = 0;
-
-	unsigned int lastDamagePacketNumber = 0;
+	unsigned int initialSpawnTargetPacketNumber = 0;
 
 	float lastShotTime = 0.0f;
 
@@ -244,6 +234,25 @@ private:
 	float timeBetweenShots;
 
 	float recoilTime;
+
+	std::function<void(const std::string&)>* positionClientDataCallback;
+
+	std::function<void(const std::string&)>* weaponPositionClientDataCallback;
+
+	std::function<void(const std::string&)>* footPositionClientDataCallback;
+
+	std::function<void(const std::string&)>* targetClientDataCallback;
+
+	std::function<void(const std::string&)>* additiveAnimationUpClientDataCallback;
+
+	std::function<void(const std::string&)>* additiveAnimationDownClientDataCallback;
+
+	std::function<void(const std::string&)>* animationClipClientDataCallback;
+
+	std::function<void(const std::string&)>* damageClientDataCallback;
+
+	std::function<void(const std::string&)>* initialSpawnTargetClientDataCallback;
+
 
 };
 

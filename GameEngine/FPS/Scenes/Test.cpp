@@ -32,7 +32,6 @@ Test::Test() :
 	bullet(new AK12Bullet()),
 	plane(new PlaneObj()),
 	shippingContainer(new ShippingContainer()),
-	pointLight(new PointLightObject()),
 	warehouseDoorway(new WarehouseDoorway()),
 	warehouseBrickWall(new WarehouseBrickWall()),
 	warehouseWindowWall(new WarehouseWindowWall()),
@@ -50,7 +49,6 @@ Test::Test() :
 	RegisterGameObject(crate, "Crate");
 	RegisterGameObject(plane, "Plane");
 	RegisterGameObject(shippingContainer, "ShippingContainer");
-	RegisterGameObject(pointLight, "PointLight");
 	RegisterGameObject(warehouseDoorway, "WarehouseDoorway");
 	RegisterGameObject(warehouseBrickWall, "WarehouseBrickWall");
 	RegisterGameObject(warehouseWindowWall, "WarehouseWindowWall");
@@ -90,11 +88,6 @@ Test::~Test()
 	if (shippingContainer != nullptr)
 	{
 		delete shippingContainer;
-	}
-
-	if (pointLight != nullptr)
-	{
-		delete pointLight;
 	}
 
 	if (warehouseDoorway != nullptr)

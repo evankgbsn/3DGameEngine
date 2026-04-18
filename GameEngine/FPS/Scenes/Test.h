@@ -72,8 +72,6 @@ private:
 
 	ShippingContainer* shippingContainer;
 
-	PointLightObject* pointLight;
-
 	WarehouseDoorway* warehouseDoorway;
 
 	WarehouseBrickWall* warehouseBrickWall;

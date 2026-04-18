@@ -858,29 +858,6 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="PointLightObject" name="PointLight">
-		<Component type="PointLightComponent" name="Light">
-			<Variable type="float" name="Linear">
-				<float val="0.090000"/>
-			</Variable>
-			<Variable type="float" name="Constant">
-				<float val="1.000000"/>
-			</Variable>
-			<Variable type="float" name="Quadratic">
-				<float val="0.032000"/>
-			</Variable>
-			<Variable type="vec3" name="ColorIntensity">
-				<float X="1.500000"/>
-				<float Y="3.000000"/>
-				<float Z="3.000000"/>
-			</Variable>
-			<Variable type="vec3" name="Position">
-				<float X="10.832769"/>
-				<float Y="-0.000002"/>
-				<float Z="4.804914"/>
-			</Variable>
-		</Component>
-	</Object>
 	<Object type="WarehouseDoorway" name="WarehouseDoorway">
 		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
 			<Variable type="float" name="Shine">
