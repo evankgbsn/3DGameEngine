@@ -344,6 +344,8 @@ void FPSPlayer::GameUpdate()
 		InputManager::WhenCursorMoved(*whenCursorMove);
 	}
 
+	cam->Update();
+
 }
 
 void FPSPlayer::EditorUpdate()

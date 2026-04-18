@@ -65,8 +65,9 @@ public:
 
 	void SetUpVector(const glm::vec3& newUp);
 
-private:
+	void Update() override;
 
+private:
 
 	CameraComponent(const CameraComponent&) = delete;
 
@@ -79,8 +80,6 @@ private:
 	void Serialize() override;
 
 	void Deserialize() override;
-
-	void Update() override;
 
 	std::string name;
 
