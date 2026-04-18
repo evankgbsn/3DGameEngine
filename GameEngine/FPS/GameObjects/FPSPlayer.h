@@ -141,6 +141,8 @@ private:
 
 	bool dPressed = false;
 
+	bool ignoreServerPos = false;
+
 	glm::vec3 disp;
 
 	glm::vec3 positionToSet = { 0.0f, 20.0f, 0.0f };
