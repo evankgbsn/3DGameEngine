@@ -44,6 +44,12 @@ public:
 
 	void RemoveClientDataReceivedCallback(const std::string& type);
 
+	bool IsServer() const;
+
+	bool IsClient() const;
+
+	bool IsLocalClient() const;
+
 protected:
 
 	NetworkObject();

@@ -103,6 +103,21 @@ void NetworkObject::RemoveClientDataReceivedCallback(const std::string& type)
 	}
 }
 
+bool NetworkObject::IsServer() const
+{
+	return NetworkManager::IsServer();
+}
+
+bool NetworkObject::IsClient() const
+{
+	return !IsServer();
+}
+
+bool NetworkObject::IsLocalClient() const
+{
+	return SpawnedFromLocalSpawnRequest() && IsClient();
+}
+
 void NetworkObject::OnDataReceived(const std::string& data)
 {
 	std::string packetIDstr;

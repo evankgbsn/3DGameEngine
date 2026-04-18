@@ -45,7 +45,7 @@ FPSPlayer::~FPSPlayer()
 
 bool FPSPlayer::IsLocal() const
 {
-	return SpawnedFromLocalSpawnRequest();
+	return IsLocalClient();
 }
 
 glm::mat4 FPSPlayer::GetWeaponTransform()
@@ -61,9 +61,7 @@ glm::mat4 FPSPlayer::GetWeaponTransform()
 void FPSPlayer::Initialize()
 {
 	InitializeLocalPlayer();
-
 	InitializeRemotePlayer();
-
 	InitializeServerPlayer();
 
 	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "CharacterNormal");
@@ -85,8 +83,10 @@ void FPSPlayer::Initialize()
 
 void FPSPlayer::InitializeLocalPlayer()
 {
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
+		AddClientDataReceivedCallbacks();
+
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
@@ -141,7 +141,7 @@ void FPSPlayer::InitializeLocalPlayer()
 
 void FPSPlayer::InitializeRemotePlayer()
 {
-	if (!SpawnedFromLocalSpawnRequest() && !NetworkManager::IsServer())
+	if (!IsLocalClient() && !NetworkManager::IsServer())
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
@@ -170,6 +170,8 @@ void FPSPlayer::InitializeServerPlayer()
 {
 	if (NetworkManager::IsServer())
 	{
+		AddServerDataReceivedCallbacks();
+
 		spawnTarget = cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2]));
 		cam->SetTarget(spawnTarget);
 
@@ -267,14 +269,90 @@ void FPSPlayer::AddClientDataReceivedCallbacks()
 
 void FPSPlayer::AddServerDataReceivedCallbacks()
 {
+	AddServerDataReceivedCallback("DispX", serverDataReceivedCallbacks["DispX"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
+		}));
+
+	AddServerDataReceivedCallback("DispY", serverDataReceivedCallbacks["DispY"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
+		}));
+
+	AddServerDataReceivedCallback("Jump", serverDataReceivedCallbacks["Jump"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			if (!controller->IsFalling())
+			{
+				controller->Jump(jumpPower);
+			}
+		}));
+
+	AddServerDataReceivedCallback("Target", serverDataReceivedCallbacks["Target"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+		}));
+
+	AddServerDataReceivedCallback("Shoot", serverDataReceivedCallbacks["Shoot"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			Shoot(NetworkManager::GetLatency(GetSpawnerID()) / 2.0f);
+		}));
+
+	AddServerDataReceivedCallback("WeaponPosition", serverDataReceivedCallbacks["WeaponPosition"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
+
+			ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerID() }, false);
+		}));
+
+	AddServerDataReceivedCallback("AdditiveAnimationUp", serverDataReceivedCallbacks["AdditiveAnimationUp"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			additiveUpToSet = std::stof(updateData);
+
+			ServerSendAll("AdditiveAnimationUp " + std::to_string(additiveAnimationUpPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
+		}));
+
+	AddServerDataReceivedCallback("AdditiveAnimationDown", serverDataReceivedCallbacks["AdditiveAnimationDown"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			additiveDownToSet = std::stof(updateData);
+
+			ServerSendAll("AdditiveAnimationDown " + std::to_string(additiveAnimationDownPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
+		}));
+
+	AddServerDataReceivedCallback("AnimationClip", serverDataReceivedCallbacks["AnimationClip"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
+			{
+				characterGraphics->SetClip(updateData);
+
+				ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
+			}
+		}));
+
+	AddServerDataReceivedCallback("InitialSpawnTarget", serverDataReceivedCallbacks["InitialSpawnTarget"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			ServerSend(GetSpawnerID(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(spawnTarget), false);
+		}));
 }
 
 void FPSPlayer::Terminate()
 {
 	DeregisterEditorToggleCallbacks();
 
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsServer())
 	{
+		for (const auto& callback : serverDataReceivedCallbacks)
+		{
+			delete callback.second;
+		}
+	}
+
+	if (IsLocalClient())
+	{
+		for (const auto& callback : clientDataReceivedCallbacks)
+		{
+			delete callback.second;
+		}
+
 		RemoveComponent("ArmsGraphics");
 
 		delete characterArmsGraphics;
@@ -307,7 +385,7 @@ void FPSPlayer::Terminate()
 
 void FPSPlayer::GameUpdate()
 {
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
 		if (!NetworkManager::IsServer())
 		{
@@ -353,7 +431,7 @@ void FPSPlayer::GameUpdate()
 
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
-	if (!SpawnedFromLocalSpawnRequest())
+	if (!IsLocalClient())
 	{
 		cam->SetTarget(targetToSet);
 
@@ -375,7 +453,7 @@ void FPSPlayer::GameUpdate()
 	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
 	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
 
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
 		controller->Update();
 
@@ -445,7 +523,7 @@ void FPSPlayer::GameUpdate()
 
 		lastPosition = characterGraphics->GetPosition();
 	}
-	else if(SpawnedFromLocalSpawnRequest())
+	else if(IsLocalClient())
 	{
 		updateTime += TimeManager::DeltaTime();
 
@@ -458,7 +536,7 @@ void FPSPlayer::GameUpdate()
 		}
 	}
 
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
 		InputManager::WhenCursorMoved(*whenCursorMove);
 	}
@@ -502,7 +580,7 @@ void FPSPlayer::Load()
 		TextureManager::LoadTexture("Assets/Texture/Normal.png", "CharacterNormal");
 	}
 
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
 		if (!ModelManager::ModelLoaded("CharacterArms"))
 		{
@@ -571,7 +649,7 @@ bool FPSPlayer::Hovered() const
 
 void FPSPlayer::Start()
 {
-	if (SpawnedFromLocalSpawnRequest())
+	if (IsLocalClient())
 	{
 		cam->SetActive();
 	}
@@ -1253,100 +1331,6 @@ void FPSPlayer::OnDespawn()
 void FPSPlayer::OnDataReceived(const std::string& data)
 {
 	NetworkObject::OnDataReceived(data);
-
-	else
-	{
-		if (updateType == "DispX")
-		{
-			//if (characterGraphics->GetCurrentAnimation() != "AimRun")
-			//{
-			//	characterGraphics->FadeAnimationTo("AimRun", 0.5f);
-			//}
-			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
-		}
-		else if (updateType == "DispY")
-		{
-			controller->AddDisp(NetworkManager::ConvertDataToVec3(updateData));
-		}
-		else if (updateType == "Jump")
-		{
-			if (!controller->IsFalling())
-			{
-				controller->Jump(jumpPower);
-			}
-		}
-		else if (updateType == "Target")
-		{
-			if (std::stoi(packetID) >= lastTargetPacketNumber)
-				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
-
-			lastTargetPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "Shoot")
-		{
-			if (std::stoi(packetID) >= lastShootPacketNumber)
-			{
-				Shoot(NetworkManager::GetLatency(GetSpawnerID()) / 2.0f);
-			}
-
-			lastShootPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "WeaponPosition")
-		{
-			if (std::stoi(packetID) >= lastWeaponPositionPacketNumber)
-			{
-				weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
-
-				ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerID() }, false);
-			}
-
-			lastWeaponPositionPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AdditiveAnimationUp")
-		{
-			if (std::stoi(packetID) >= lastAdditiveAnimationUpPacketNumber)
-			{
-				additiveUpToSet = std::stof(updateData);
-
-				ServerSendAll("AdditiveAnimationUp " + std::to_string(additiveAnimationUpPacketNumber++) + " " + updateData, {GetSpawnerID()}, false);
-			}
-
-			lastAdditiveAnimationUpPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AdditiveAnimationDown")
-		{
-			if (std::stoi(packetID) >= lastAdditiveAnimationDownPacketNumber)
-			{
-				additiveDownToSet = std::stof(updateData);
-
-				ServerSendAll("AdditiveAnimationDown " + std::to_string(additiveAnimationDownPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
-			}
-
-			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AnimationClip")
-		{
-			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
-			{
-				if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
-				{
-					characterGraphics->SetClip(updateData);
-
-					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
-				}
-			}
-			else
-			{
-				Logger::Log("Lost animation clip packet");
-			}
-
-			lastAnimationClipPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "InitialSpawnTarget")
-		{
-			ServerSend(GetSpawnerID(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(spawnTarget), false);
-		}
-	}
 }
 
 void FPSPlayer::OnServerSpawnConfirmation(const std::string& IP)
