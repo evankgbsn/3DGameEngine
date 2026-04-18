@@ -87,7 +87,7 @@ public:
 
 	static void SyncClientWithServer();
 
-	static float GetLatency();
+	static float GetLatency(const std::string& clientID);
 
 private:
 
@@ -227,13 +227,13 @@ private:
 
 	unsigned long long networkObjectIDGenerator;
 
-	std::chrono::steady_clock::time_point latencyPacketReceiveTime;
+	std::unordered_map<std::string, std::chrono::steady_clock::time_point> latencyPacketReceiveTime;
 
-	std::atomic<float> latency;
+	std::unordered_map<std::string, std::atomic<float>> latency;
 
-	std::mutex recentLatencyRecordingsMutex;
+	std::unordered_map<std::string, std::mutex> recentLatencyRecordingsMutex;
 
-	std::list<float> recentLatencyRecordings;
+	std::unordered_map<std::string, std::list<float>> recentLatencyRecordings;
 	
 };
 

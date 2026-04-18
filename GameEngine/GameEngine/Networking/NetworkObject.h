@@ -34,7 +34,7 @@ public:
 
 	bool SpawnedFromLocalSpawnRequest() const;
 
-	std::string GetSpawnerIP() const;
+	std::string GetSpawnerID() const;
 
 protected:
 
@@ -71,7 +71,7 @@ private:
 
 	bool spawnedFromLocalSpawnRequest;
 
-	std::string spawnerIP;
+	std::string spawnerID;
 
 	std::unordered_set<std::string> serverConfirmedIPs;
 };

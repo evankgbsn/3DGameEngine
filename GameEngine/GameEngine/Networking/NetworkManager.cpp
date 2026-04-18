@@ -818,7 +818,7 @@ void NetworkManager::SetupServerReceiveSpawnRequestCallback()
 				instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
 
 				std::string targetID = GetIDFromData(data);
-				newNetworkObject->spawnerIP = targetID;
+				newNetworkObject->spawnerID = targetID;
 
 				newNetworkObject->OnSpawn();
 
@@ -1289,20 +1289,33 @@ void NetworkManager::SetupLatencyCallbacks()
 {
 	static std::function<void(const std::string&)> serverReceiveLatency = [this](const std::string& data)
 		{
-			ServerSend(GetIDFromData(data), "", "NetworkManagerClientReceiveLatency");
+			std::string ID = GetIDFromData(data);
+
+			latency[ID].store(std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime[ID]).count());
+			latencyPacketReceiveTime[ID] = std::chrono::high_resolution_clock::now();
+
+			std::lock_guard<std::mutex> guard(recentLatencyRecordingsMutex[ID]);
+			recentLatencyRecordings[ID].push_back(latency[ID].load());
+
+			if (recentLatencyRecordings[ID].size() > 5)
+			{
+				recentLatencyRecordings[ID].pop_front();
+			}
+
+			ServerSend(ID, "", "NetworkManagerClientReceiveLatency");
 		};
 
 	static std::function<void(const std::string&)> clientReceiveLatency = [this](const std::string& data)
 		{
-			latency.store(std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime).count());
-			latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
+			latency[GetID()].store(std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime[GetID()]).count());
+			latencyPacketReceiveTime[GetID()] = std::chrono::high_resolution_clock::now();
 
-			std::lock_guard<std::mutex> guard(recentLatencyRecordingsMutex);
-			recentLatencyRecordings.push_back(latency.load());
+			std::lock_guard<std::mutex> guard(recentLatencyRecordingsMutex[GetID()]);
+			recentLatencyRecordings[GetID()].push_back(latency[GetID()].load());
 
-			if (recentLatencyRecordings.size() > 5)
+			if (recentLatencyRecordings[GetID()].size() > 5)
 			{
-				recentLatencyRecordings.pop_front();
+				recentLatencyRecordings[GetID()].pop_front();
 			}
 		};
 
@@ -1312,10 +1325,13 @@ void NetworkManager::SetupLatencyCallbacks()
 
 void NetworkManager::CheckLatency()
 {
-	if (std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime).count() > 3.0f)
+	if (!IsServer())
 	{
-		latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
-		ClientSend("", "NetworkManagerServerReceiveLatency");
+		if (std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime[GetID()]).count() > 3.0f)
+		{
+			latencyPacketReceiveTime[GetID()] = std::chrono::high_resolution_clock::now();
+			ClientSend("", "NetworkManagerServerReceiveLatency");
+		}
 	}
 }
 
@@ -2086,19 +2102,19 @@ void NetworkManager::SyncClientWithServer()
 	ClientSend(dataToSend, "ServerReceiveSyncRequest");
 }
 
-float NetworkManager::GetLatency()
+float NetworkManager::GetLatency(const std::string& clientID)
 {
 	if (instance != nullptr)
 	{
-		std::lock_guard<std::mutex> guard(instance->recentLatencyRecordingsMutex);
+		std::lock_guard<std::mutex> guard(instance->recentLatencyRecordingsMutex[clientID]);
 		float averageLatency = 0.0f;
 
-		for (const auto& latency : instance->recentLatencyRecordings)
+		for (const auto& latency : instance->recentLatencyRecordings[clientID])
 		{
 			averageLatency += latency;
 		}
 
-		averageLatency /= instance->recentLatencyRecordings.size();
+		averageLatency /= instance->recentLatencyRecordings[clientID].size();
 
 		return (averageLatency == 0.0f) ? 0.0f : averageLatency * 1000;
 	}

@@ -68,9 +68,9 @@ bool NetworkObject::SpawnedFromLocalSpawnRequest() const
 	return spawnedFromLocalSpawnRequest;
 }
 
-std::string NetworkObject::GetSpawnerIP() const
+std::string NetworkObject::GetSpawnerID() const
 {
-	return spawnerIP;
+	return spawnerID;
 }
 
 void NetworkObject::OnDataReceived(const std::string& Data)

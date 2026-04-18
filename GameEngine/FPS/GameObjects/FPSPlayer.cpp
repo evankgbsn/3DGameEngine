@@ -677,7 +677,7 @@ void FPSPlayer::RegisterInput()
 					//lastShotTime = TimeManager::SecondsSinceStart();
 
 					// Hit-Scan.
-					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " " + std::to_string(TimeManager::GetTime()));
+					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 
 					lastShotTime = TimeManager::SecondsSinceStart();
 				}
@@ -786,7 +786,7 @@ void FPSPlayer::RegisterInput()
 				//lastShotTime = TimeManager::SecondsSinceStart();
 
 				// Hit-Scan.
-				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " " + std::to_string(TimeManager::GetTime()));
+				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
 
 				lastShotTime = TimeManager::SecondsSinceStart();
 			}
@@ -1339,7 +1339,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastShootPacketNumber)
 			{
-				Shoot(TimeManager::GetTime() - std::stof(updateData));
+				Shoot(NetworkManager::GetLatency(GetSpawnerID()) / 2.0f);
 			}
 
 			lastShootPacketNumber = std::stoi(packetID);
