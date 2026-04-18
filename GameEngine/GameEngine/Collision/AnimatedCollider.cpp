@@ -194,8 +194,6 @@ void AnimatedCollider::Update()
 		i++;
 	}
 
-	Logger::Log(std::to_string(get<0>(obbBuffer.front()) - get<0>(obbBuffer.back())));
-
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
 	//meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
 

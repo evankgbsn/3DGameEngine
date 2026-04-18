@@ -580,9 +580,12 @@ void NetworkManager::ServerReceive(const std::string& IP)
 				{
 					if (packetBuf[packetSize - 4 - 1] == '\0')
 					{
-						std::string ip = std::string(packetBuf);
+
+						std::string id = std::string(packetBuf);
 						std::string functionID = (packetBuf + 16);
-						std::string data = ip + " " + functionID + " ";
+						std::string data = id + " " + functionID + " ";
+
+						latencyPacketReceiveTime[id] = std::chrono::high_resolution_clock::now();
 
 						unsigned int i = 17 + functionID.size();
 						while (i < packetSize - 4)
