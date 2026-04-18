@@ -32,7 +32,8 @@
 FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer"),
 	controller(nullptr),
-	shotCast(nullptr)
+	shotCast(nullptr),
+	timeBetweenShots(0.1f)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
@@ -665,7 +666,7 @@ void FPSPlayer::RegisterInput()
 
 			if (value > 0.0f && !shooting)
 			{
-				if (TimeManager::SecondsSinceStart() - lastShotTime > 0.01f)
+				if (TimeManager::SecondsSinceStart() - lastShotTime > timeBetweenShots)
 				{
 					characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
 					characterArmsGraphics->SetSpeed(5.0f);
@@ -776,7 +777,7 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
 		{
-			if (TimeManager::SecondsSinceStart() - lastShotTime > 0.01f)
+			if (TimeManager::SecondsSinceStart() - lastShotTime > timeBetweenShots)
 			{
 				characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
 				characterArmsGraphics->SetSpeed(5.0f);

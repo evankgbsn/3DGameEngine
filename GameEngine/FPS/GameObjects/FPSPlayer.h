@@ -237,6 +237,8 @@ private:
 
 	float jumpPower = 15.0f;
 
+	float timeBetweenShots;
+
 };
 
 #endif // FPSPLAYER_H
