@@ -235,11 +235,15 @@ private:
 
 	bool walking = false;
 
+	bool shot = false;
+
 	glm::vec3 spawnTarget;
 
 	float jumpPower = 15.0f;
 
 	float timeBetweenShots;
+
+	float recoilTime;
 
 };
 

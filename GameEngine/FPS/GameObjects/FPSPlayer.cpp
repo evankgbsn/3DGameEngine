@@ -66,8 +66,10 @@ void FPSPlayer::Initialize()
 		characterGraphics->SetClip("Idle");
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
+		characterGraphics->InitializeAdditiveAnimation("RifleRecoil");
 		characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 		characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
@@ -83,8 +85,10 @@ void FPSPlayer::Initialize()
 		characterArmsGraphics->SetClip("Idle");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookUp");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterArmsGraphics->InitializeAdditiveAnimation("RifleRecoil");
 		characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 		characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
 		characterArmsGraphics->SetShine(32.0f);
 		characterArmsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterArmsGraphics->SetSpeed(1.0f);
@@ -101,6 +105,8 @@ void FPSPlayer::Initialize()
 		AddComponent(controller, "Controller");
 
 		healthBar = new Sprite("HealthBar", glm::vec2( 0.05f, 0.1f ), glm::vec2( 0.0001f * dimensions.x, 0.000025f * dimensions.y ), glm::vec2(-1.0f, 0.0f));
+
+		recoilTime = timeBetweenShots;
 	}
 	else
 	{
@@ -109,8 +115,10 @@ void FPSPlayer::Initialize()
 		characterGraphics->SetShine(32.0f);
 		characterGraphics->InitializeAdditiveAnimation("LookUp");
 		characterGraphics->InitializeAdditiveAnimation("LookDown");
+		characterGraphics->InitializeAdditiveAnimation("RifleRecoil");
 		characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 		characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
 		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
 		characterGraphics->SetSpeed(1.0f);
 
@@ -218,6 +226,24 @@ void FPSPlayer::GameUpdate()
 		{
 			characterGraphics->SetPosition(controller->GetFootPosition());
 		}
+
+		if (shot && characterArmsGraphics->GetAdditiveAnimationTime("RifleRecoil") < 1.0f)
+		{
+			characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", Math::ChangeRange(0.0f, timeBetweenShots, 0.0f, 1.0f, timeBetweenShots - recoilTime));
+		}
+		else
+		{
+			characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		}
+
+		recoilTime = recoilTime - TimeManager::DeltaTime();
+		if (recoilTime <= 0.0f)
+		{
+			recoilTime = timeBetweenShots;
+			shot = false;
+		}
+
+
 	}
 	else
 	{
@@ -667,16 +693,11 @@ void FPSPlayer::RegisterInput()
 
 	gamepadShoot = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			static bool shooting = false;
-
-			if (value > 0.0f && !shooting)
+			if (value > 0.0f && !shot)
 			{
 				if (TimeManager::SecondsSinceStart() - lastShotTime > timeBetweenShots)
 				{
-					characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
-					characterArmsGraphics->SetSpeed(5.0f);
-
-					shooting = true;
+					shot = true;
 
 					// Projectile.
 					//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
@@ -689,12 +710,6 @@ void FPSPlayer::RegisterInput()
 
 					lastShotTime = TimeManager::SecondsSinceStart();
 				}
-			}
-			else if(shooting)
-			{
-				shooting = false;
-				characterArmsGraphics->FadeAnimationTo("Idle", 0.1f);
-				characterArmsGraphics->SetSpeed(1.0f);
 			}
 		});
 
@@ -780,8 +795,7 @@ void FPSPlayer::RegisterInput()
 		{
 			if (TimeManager::SecondsSinceStart() - lastShotTime > timeBetweenShots)
 			{
-				characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
-				characterArmsGraphics->SetSpeed(5.0f);
+				shot = true;
 
 				// Projectile.
 				//static std::function<void(NetworkObject* obj)> callback = [](NetworkObject* obj) {};
@@ -798,8 +812,7 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShootRelease = new std::function<void(int button)>([this](int button)
 		{
-			characterArmsGraphics->FadeAnimationTo("Idle", 0.1f);
-			characterArmsGraphics->SetSpeed(1.0f);
+			
 		});
 
 	keyboardMovePress = new std::function<void(int key)>([this](int key)
