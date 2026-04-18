@@ -1330,7 +1330,7 @@ void NetworkManager::CheckLatency()
 {
 	if (!IsServer())
 	{
-		if (std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime[GetID()]).count() > 3.0f)
+		if (std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - latencyPacketReceiveTime[GetID()]).count() > 0.50f)
 		{
 			latencyPacketReceiveTime[GetID()] = std::chrono::high_resolution_clock::now();
 			ClientSend("", "NetworkManagerServerReceiveLatency");
