@@ -2116,7 +2116,7 @@ float NetworkManager::GetLatency(const std::string& clientID)
 
 		averageLatency /= instance->recentLatencyRecordings[clientID].size();
 
-		return (averageLatency == 0.0f) ? 0.0f : averageLatency * 1000;
+		return (averageLatency == 0.0f) ? 0.0f : averageLatency;
 	}
 	return 0.0f;
 }
