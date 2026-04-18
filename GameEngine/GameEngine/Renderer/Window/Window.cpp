@@ -417,3 +417,8 @@ void Window::ToggleFullScreen()
 		isFullScreen = true;
 	}
 }
+
+bool Window::CursorEnabled() const
+{
+	return GLFW_CURSOR_NORMAL == glfwGetInputMode(glfwWindow, GLFW_CURSOR);
+}

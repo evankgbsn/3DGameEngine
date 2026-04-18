@@ -62,6 +62,8 @@ public:
 
 	static void EnableCursor(const std::string& window);
 
+	static bool CursorEnabled(const std::string& window);
+
 	static bool IsGamepadConnected();
 
 private:

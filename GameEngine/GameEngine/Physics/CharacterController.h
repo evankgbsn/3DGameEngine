@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include <functional>
+
 class GameObject;
 class GOColored;
 
@@ -59,6 +61,10 @@ private:
 	PxControllerCollisionFlags collisionFlags;
 
 	glm::vec3 disp;
+
+	std::function<void()>* onEditorEnable;
+
+	std::function<void()>* onEditorDisable;
 
 	GOColored* capsule;
 

@@ -4,8 +4,11 @@
 #include "../Renderer/GraphicsObjects/GraphicsObjectManager.h"
 #include "../Renderer/GraphicsObjects/GOColored.h"
 #include "../Renderer/Model/ModelManager.h"
+#include "../Editor/Editor.h"
+#include "../Engine.h"
 
-CharacterController::CharacterController(float radius, float height, const glm::vec3& position)
+CharacterController::CharacterController(float radius, float height, const glm::vec3& position) :
+	capsule(nullptr)
 {
 	PxCapsuleControllerDesc desc;
 
@@ -84,7 +87,10 @@ void CharacterController::Move()
 
 	disp = glm::vec3(0.0f);
 
-	capsule->SetTranslation(GetPosition());
+	if (capsule != nullptr)
+	{
+		capsule->SetTranslation(GetPosition());
+	}
 }
 
 PxControllerCollisionFlags CharacterController::GetCollisionFlags() const
@@ -102,12 +108,20 @@ void CharacterController::SetPosition(const glm::vec3& newPosition)
 {
 	PxExtendedVec3 newPos(newPosition.x, newPosition.y, newPosition.z);
 	controller->setPosition(newPos);
-	capsule->SetTranslation(newPosition);
+
+	if (capsule != nullptr)
+	{
+		capsule->SetTranslation(newPosition);
+	}
 }
 
 CharacterController::~CharacterController()
 {
-	GraphicsObjectManager::Delete(capsule);
+	if (capsule != nullptr)
+	{
+		GraphicsObjectManager::Delete(capsule);
+	}
+
 	controller->release();
 }
 
@@ -123,24 +137,51 @@ GameObject* CharacterController::GetOwner() const
 
 void CharacterController::InitializeCapsule()
 {
-	if (!ModelManager::ModelLoaded("Capsule"))
+	if (Engine::IsEditorBuild())
 	{
-		ModelManager::LoadModel("Capsule", "Assets/Model/Capsule.gltf", false);
+		if (!ModelManager::ModelLoaded("Capsule"))
+		{
+			ModelManager::LoadModel("Capsule", "Assets/Model/Capsule.gltf", false);
+		}
+
+		capsule = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Capsule"), { 1.0f, 0.5f, 0.0f, 1.0f });
+		capsule->SetDrawMode(GO3D::Mode::LINE);
+
+		// Get dimensions from PhysX
+		float r = GetRadius();
+		float h = GetHeight(); // Distance between centers
+
+		// Calculate total height
+		float totalHeight = h + (2.0f * r);
+
+		// Apply to your Transform component
+		// Assuming your Unit Capsule is 2.0 units tall total in Blender
+		capsule->SetScale(glm::vec3(r * 2, totalHeight / 2.0f, r * 2));
+
+		onEditorEnable = new std::function<void()>([this]()
+			{
+				if (capsule->IsDisabled())
+				{
+					GraphicsObjectManager::Enable(capsule);
+				}
+			});
+
+		onEditorDisable = new std::function<void()>([this]()
+			{
+				if (!capsule->IsDisabled())
+				{
+					GraphicsObjectManager::Disable(capsule);
+				}
+			});
+
+		Editor::RegisterOnEditorEnable(onEditorEnable);
+		Editor::RegisterOnEditorDisable(onEditorDisable);
+
+		if (!Editor::IsEnabled())
+		{
+			GraphicsObjectManager::Disable(capsule);
+		}
 	}
-
-	capsule = GraphicsObjectManager::CreateGO3DColored(ModelManager::GetModel("Capsule"), { 1.0f, 0.5f, 0.0f, 1.0f });
-	capsule->SetDrawMode(GO3D::Mode::LINE);
-
-	// Get dimensions from PhysX
-	float r = GetRadius();
-	float h = GetHeight(); // Distance between centers
-
-	// Calculate total height
-	float totalHeight = h + (2.0f * r);
-
-	// Apply to your Transform component
-	// Assuming your Unit Capsule is 2.0 units tall total in Blender
-	capsule->SetScale(glm::vec3(r * 2, totalHeight / 2.0f, r * 2));
 }
 
 glm::vec3 CharacterController::GetFootPosition() const

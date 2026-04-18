@@ -1058,6 +1058,18 @@ void InputManager::EnableCursor(const std::string& window)
 	}
 }
 
+bool InputManager::CursorEnabled(const std::string& window)
+{
+	Window* windowPtr = WindowManager::GetWindow(window);
+
+	if (windowPtr != nullptr)
+	{
+		return windowPtr->CursorEnabled();
+	}
+
+	return true;
+}
+
 bool InputManager::IsGamepadConnected()
 {
 	if (instance != nullptr)

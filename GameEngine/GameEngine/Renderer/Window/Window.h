@@ -55,6 +55,8 @@ public:
 
 	void ToggleFullScreen();
 
+	bool CursorEnabled() const;
+
 private:
 
 	friend class WindowManager;

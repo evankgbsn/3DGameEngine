@@ -317,7 +317,7 @@ void FPSPlayer::GameUpdate()
 
 		updateTime += TimeManager::DeltaTime();
 		
-		if (updateTime >= 0.015f)
+		if (updateTime >= 0.001f)
 		{
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
 			ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
@@ -509,6 +509,11 @@ void FPSPlayer::RegisterInput()
 
 	whenCursorMove = new std::function<void(const glm::vec2&)>([this](const glm::vec2& cursorPos)
 		{
+			if (InputManager::CursorEnabled("Engine"))
+			{
+				return;
+			}
+
 			static glm::vec2 prevPos = cursorPos;
 			
 			float xspeed = 1.0f;
@@ -695,7 +700,10 @@ void FPSPlayer::RegisterInput()
 
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
-			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
+			if (!controller->IsFalling())
+			{
+				ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
+			}
 		});
 
 	keyboardMove = new std::function<void(int)>([this](int key)
@@ -762,7 +770,10 @@ void FPSPlayer::RegisterInput()
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
 		{
-			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
+			if (!controller->IsFalling())
+			{
+				ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
+			}
 		});
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
