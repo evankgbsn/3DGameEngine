@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include <functional>
+#include <set>
 
 class GameObject;
 class GOColored;
@@ -30,8 +31,6 @@ public:
 
 	void SetPosition(const glm::vec3& newPosition);
 
-	void Move();
-
 	PxControllerCollisionFlags GetCollisionFlags() const;
 
 	~CharacterController();
@@ -44,7 +43,13 @@ public:
 
 	glm::vec3 GetFootPosition() const;
 
+	void RegisterCallbackForFixedPhysicsUpdate(std::function<void()>* fixedUpdate);
+
+	void DeregisterCallbackForFixedPhysicsUpdate(std::function<void()>* fixedUpdate);
+
 private:
+
+	friend class PhysicsManager;
 
 	CharacterController() = delete;
 
@@ -56,6 +61,10 @@ private:
 
 	CharacterController& operator=(CharacterController&&) = delete;
 
+	void FixedUpdate();
+
+	void Move();
+	
 	PxController* controller;
 
 	PxControllerCollisionFlags collisionFlags;
@@ -67,6 +76,8 @@ private:
 	std::function<void()>* onEditorDisable;
 
 	GOColored* capsule;
+
+	std::set<std::function<void()>*> fixedUpdates;
 
 };
 

@@ -38,7 +38,7 @@ void PhysicsManager::Update()
 		{
 			for (auto& controller : instance->controllers)
 			{
-				controller.second->Move();
+				controller.second->FixedUpdate();
 			}
 
 			instance->scene->simulate(instance->stepSize);

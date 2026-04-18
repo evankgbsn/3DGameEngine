@@ -2,7 +2,9 @@
 #define CHARACTERCONTROLLERCOMPONENT_H
 
 #include "Component.h"
+
 #include <string>
+#include <functional>
 
 class CharacterController;
 
@@ -54,6 +56,8 @@ private:
 
 	void Deserialize() override;
 
+	void InitializeFixedUpdate();
+
 	CharacterController* controller;
 
 	std::string controllerName;
@@ -61,6 +65,8 @@ private:
 	float jumpForce;
 
 	float airTime;
+
+	std::function<void()>* fixedUpdate;
 
 };
 

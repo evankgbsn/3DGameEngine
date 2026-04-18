@@ -93,6 +93,16 @@ void CharacterController::Move()
 	}
 }
 
+void CharacterController::FixedUpdate()
+{
+	Move();
+
+	for (const auto& updates : fixedUpdates)
+	{
+		(*updates)();
+	}
+}
+
 PxControllerCollisionFlags CharacterController::GetCollisionFlags() const
 {
 	return collisionFlags;
@@ -188,4 +198,14 @@ glm::vec3 CharacterController::GetFootPosition() const
 {
 	PxExtendedVec3 pos = controller->getFootPosition();
 	return { pos.x, pos.y, pos.z };
+}
+
+void CharacterController::RegisterCallbackForFixedPhysicsUpdate(std::function<void()>* fixedUpdate)
+{
+	fixedUpdates.insert(fixedUpdate);
+}
+
+void CharacterController::DeregisterCallbackForFixedPhysicsUpdate(std::function<void()>* fixedUpdate)
+{
+	fixedUpdates.erase(fixedUpdates.find(fixedUpdate));
 }

@@ -5,24 +5,31 @@
 #include "../Time/TimeManager.h"
 
 CharacterControllerComponent::CharacterControllerComponent() :
-	jumpForce(0.0f)
+	jumpForce(0.0f),
+	fixedUpdate(nullptr)
 {
 	RegisterComponentClassType<CharacterControllerComponent>(this);
+
+	InitializeFixedUpdate();
 }
 
 CharacterControllerComponent::CharacterControllerComponent(const std::string& name, float radius, float height, const glm::vec3& position) :
 	controllerName(name),
 	jumpForce(0.0f),
-	airTime(0.0f)
+	airTime(0.0f),
+	fixedUpdate(nullptr)
 {
 	RegisterComponentClassType<CharacterControllerComponent>(this);
 
 	controller = PhysicsManager::CreateCharacterController(controllerName, radius, height, position);
 
+	InitializeFixedUpdate();
 }
 
 CharacterControllerComponent::~CharacterControllerComponent()
 {
+	controller->DeregisterCallbackForFixedPhysicsUpdate(fixedUpdate);
+
 	PhysicsManager::DestroyCharacterController(controllerName);
 }
 
@@ -89,19 +96,29 @@ void CharacterControllerComponent::Deserialize()
 {
 }
 
+void CharacterControllerComponent::InitializeFixedUpdate()
+{
+	fixedUpdate = new std::function<void()>([this]()
+		{
+			float fixedDt = 1.0f / 240.0f; // Match PhysicsManager::stepSize
+
+			if (IsFalling()) {
+				jumpForce += -80.0f * fixedDt;
+			}
+			else if (jumpForce < 0.0f) {
+				jumpForce = -2.0f;
+			}
+
+			// Apply Velocity to Position (Displacement = Velocity * Time)
+			float verticalDisplacement = jumpForce * fixedDt;
+
+			controller->AddDisp(glm::vec3(0.0f, verticalDisplacement, 0.0f));
+		});
+
+	controller->RegisterCallbackForFixedPhysicsUpdate(fixedUpdate);
+}
+
 void CharacterControllerComponent::Update()
 {
-	float fixedDt = 1.0f / 240.0f; // Match PhysicsManager::stepSize
-
-	if (IsFalling()) {
-		jumpForce += -80.0f * fixedDt;
-	}
-	else if (jumpForce < 0.0f) {
-		jumpForce = -2.0f;
-	}
-
-	// Apply Velocity to Position (Displacement = Velocity * Time)
-	float verticalDisplacement = jumpForce * fixedDt;
-
-	controller->AddDisp(glm::vec3(0.0f, verticalDisplacement, 0.0f));
+	
 }
