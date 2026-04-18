@@ -60,6 +60,13 @@ glm::mat4 FPSPlayer::GetWeaponTransform()
 
 void FPSPlayer::Initialize()
 {
+	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
+	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
+	cam->SetFOV(20.0f);
+	cam->SetNear(0.01f);
+
+	AddComponent(cam, "Camera");
+
 	InitializeLocalPlayer();
 	InitializeRemotePlayer();
 	InitializeServerPlayer();
@@ -69,14 +76,7 @@ void FPSPlayer::Initialize()
 
 	AddComponent(ak12Graphics, "WeaponGraphics");
 
-	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
-
 	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
-	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
-	cam->SetFOV(20.0f);
-	cam->SetNear(0.01f);
-
-	AddComponent(cam, "Camera");
 
 	RegisterEditorToggleCallbacks();
 }
