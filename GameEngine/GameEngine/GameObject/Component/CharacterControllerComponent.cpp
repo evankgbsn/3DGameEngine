@@ -91,23 +91,17 @@ void CharacterControllerComponent::Deserialize()
 
 void CharacterControllerComponent::Update()
 {
-	float dt = TimeManager::DeltaTime();
+	float fixedDt = 1.0f / 240.0f; // Match PhysicsManager::stepSize
 
-	// If we are in the air, apply constant downward acceleration (gravity)
 	if (IsFalling()) {
-		// A gravity of -40.0f to -60.0f usually feels much punchier in an FPS
-		jumpForce += -60.0f * dt;
+		jumpForce += -60.0f * fixedDt;
 	}
-	else {
-		// If we are grounded, keep a small downward force to stick to the floor
-		// This prevents bouncing down slopes
-		if (jumpForce < 0.0f) {
-			jumpForce = -2.0f;
-		}
+	else if (jumpForce < 0.0f) {
+		jumpForce = -2.0f;
 	}
 
 	// Apply Velocity to Position (Displacement = Velocity * Time)
-	float verticalDisplacement = jumpForce * dt;
+	float verticalDisplacement = jumpForce * fixedDt;
 
 	controller->AddDisp(glm::vec3(0.0f, verticalDisplacement, 0.0f));
 }

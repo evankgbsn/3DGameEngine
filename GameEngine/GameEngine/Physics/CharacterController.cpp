@@ -80,8 +80,7 @@ void CharacterController::AddDisp(const glm::vec3& newDisp)
 
 void CharacterController::Move()
 {
-	// Remove the gravity vector entirely, just use the built-up 'disp'
-	collisionFlags = controller->move(PxVec3(disp.x, disp.y, disp.z), 0.00001f, TimeManager::DeltaTime(), nullptr, nullptr);
+	collisionFlags = controller->move(PxVec3(disp.x, disp.y, disp.z), 0.00001f, 1.0f / 240.0f, nullptr, nullptr);
 
 	disp = glm::vec3(0.0f);
 

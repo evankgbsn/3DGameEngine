@@ -33,7 +33,7 @@ FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer"),
 	controller(nullptr),
 	shotCast(nullptr),
-	timeBetweenShots(0.1f)
+	timeBetweenShots(0.05f)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
