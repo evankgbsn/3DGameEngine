@@ -245,7 +245,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other, float rewindTime, s
 			}
 		}
 
-		const std::vector<std::pair<OrientedBoundingBox, unsigned int>>& pastObbs = it->second;
+		std::vector<std::pair<OrientedBoundingBox, unsigned int>> pastObbs = it->second;
 
 		std::for_each(std::execution::par, pastObbs.begin(), pastObbs.end(),
 			[this, &other, &intersect, &outBoxName, &outHit](const std::pair<OrientedBoundingBox, unsigned int>& obb)
