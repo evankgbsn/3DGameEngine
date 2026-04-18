@@ -60,6 +60,31 @@ glm::mat4 FPSPlayer::GetWeaponTransform()
 
 void FPSPlayer::Initialize()
 {
+	InitializeLocalPlayer();
+
+	InitializeRemotePlayer();
+
+	InitializeServerPlayer();
+
+	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "CharacterNormal");
+	ak12Graphics->SetShine(32.0f);
+
+	AddComponent(ak12Graphics, "WeaponGraphics");
+
+	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
+
+	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
+	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
+	cam->SetFOV(20.0f);
+	cam->SetNear(0.01f);
+
+	AddComponent(cam, "Camera");
+
+	RegisterEditorToggleCallbacks();
+}
+
+void FPSPlayer::InitializeLocalPlayer()
+{
 	if (SpawnedFromLocalSpawnRequest())
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
@@ -98,17 +123,25 @@ void FPSPlayer::Initialize()
 
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
 
-		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x});
+		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x });
 
 		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
 
-		healthBar = new Sprite("HealthBar", glm::vec2( 0.05f, 0.1f ), glm::vec2( 0.0001f * dimensions.x, 0.000025f * dimensions.y ), glm::vec2(-1.0f, 0.0f));
+		healthBar = new Sprite("HealthBar", glm::vec2(0.05f, 0.1f), glm::vec2(0.0001f * dimensions.x, 0.000025f * dimensions.y), glm::vec2(-1.0f, 0.0f));
 
 		recoilTime = timeBetweenShots;
+
+		RegisterInput();
+
+		InputManager::DisableCursor("Engine");
 	}
-	else
+}
+
+void FPSPlayer::InitializeRemotePlayer()
+{
+	if (!SpawnedFromLocalSpawnRequest() && !NetworkManager::IsServer())
 	{
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
@@ -130,51 +163,110 @@ void FPSPlayer::Initialize()
 		hitBox->Update();
 
 		AddComponent(hitBox, "AnimatedCollider");
-
-		if (NetworkManager::IsServer())
-		{
-			glm::vec3 position;
-			glm::mat4 rotation;
-
-			GetSpawnPositionAndRotation(position, rotation);
-
-			characterGraphics->SetPosition(position);
-			characterGraphics->SetRotation(rotation);
-
-			controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
-			controller->SetOwner(this);
-			AddComponent(controller, "Controller");
-		}
 	}
+}
 
-	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "CharacterNormal");
-	ak12Graphics->SetShine(32.0f);
-
-	AddComponent(ak12Graphics, "WeaponGraphics");
-
-	cam = new CameraComponent("FPSCharacter:" + std::to_string(GetNetworkObjectID()));
-
-	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
-	cam->SetTarget({ 0.0f, 0.0f, 30.0f });
-	cam->SetFOV(20.0f);
-	cam->SetNear(0.01f);
-
+void FPSPlayer::InitializeServerPlayer()
+{
 	if (NetworkManager::IsServer())
 	{
 		spawnTarget = cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2]));
 		cam->SetTarget(spawnTarget);
+
+		glm::vec3 position;
+		glm::mat4 rotation;
+
+		GetSpawnPositionAndRotation(position, rotation);
+
+		characterGraphics->SetPosition(position);
+		characterGraphics->SetRotation(rotation);
+
+		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
+		controller->SetOwner(this);
+		AddComponent(controller, "Controller");
 	}
+}
 
-	AddComponent(cam, "Camera");
+void FPSPlayer::AddClientDataReceivedCallbacks()
+{
+	AddClientDataReceivedCallback("Position", clientDataReceivedCallbacks["Position"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			positionToSet = NetworkManager::ConvertDataToVec3(updateData);
+			newPositionFromServer = true;
+		}));
 
-	if (SpawnedFromLocalSpawnRequest())
-	{
-		RegisterInput();
-	}
+	AddClientDataReceivedCallback("WeaponPosition", clientDataReceivedCallbacks["WeaponPosition"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
+		}));
 
-	RegisterEditorToggleCallbacks();
+	AddClientDataReceivedCallback("FootPosition", clientDataReceivedCallbacks["FootPosition"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			footPositionToSet = NetworkManager::ConvertDataToVec3(updateData);
+			newFootPositionFromServer = true;
+		}));
 
-	InputManager::DisableCursor("Engine");
+	AddClientDataReceivedCallback("Target", clientDataReceivedCallbacks["Target"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			targetToSet = NetworkManager::ConvertDataToVec3(updateData);
+		}));
+
+	AddClientDataReceivedCallback("AdditiveAnimationUp", clientDataReceivedCallbacks["AdditiveAnimationUp"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			additiveUpToSet = std::stof(updateData);
+		}));
+
+	AddClientDataReceivedCallback("AdditiveAnimationDown", clientDataReceivedCallbacks["AdditiveAnimationDown"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			additiveDownToSet = std::stof(updateData);
+		}));
+
+	AddClientDataReceivedCallback("AnimationClip", clientDataReceivedCallbacks["AnimationClip"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
+			{
+				characterGraphics->SetClip(updateData);
+			}
+		}));
+
+	AddClientDataReceivedCallback("Damage", clientDataReceivedCallbacks["Damage"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			health -= std::stof(updateData);
+
+			if (health < 0.0f)
+			{
+				health = 0.0f;
+			}
+
+			healthBar->SetScale(healthBar->GetScale().x * (health * 0.01f), healthBar->GetScale().y);
+
+			if (healthBar->GetScale().x <= 0.01f && shouldDie == false)
+			{
+				shouldDie = true;
+
+				NetworkManager::Despawn(GetNetworkObjectID());
+
+				static std::function<void(NetworkObject*)> callback = [this](NetworkObject* spawnedObject)
+					{
+					};
+
+				NetworkManager::Spawn("FPSPlayer", &callback);
+				//SceneManager::EndScene("Test");
+				//SceneManager::TerminateScene("Test");
+				//SceneManager::InitializeScene("Test");
+				//SceneManager::GetRegisteredScene("Test")->Deserialize("Assets/Scenes/FPS.xml");
+				//SceneManager::StartScene("Test");
+			}
+		}));
+
+	AddClientDataReceivedCallback("InitialSpawnTarget", clientDataReceivedCallbacks["InitialSpawnTarget"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
+		{
+			cam->SetTarget(NetworkManager::ConvertDataToVec3(updateData));
+		}));
+}
+
+void FPSPlayer::AddServerDataReceivedCallbacks()
+{
 }
 
 void FPSPlayer::Terminate()
@@ -1162,170 +1254,6 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 {
 	NetworkObject::OnDataReceived(data);
 
-	std::string updateType;
-
-	unsigned int i = 0;
-	for (i; i < data.size(); i++)
-	{
-		if (data[i] == ' ')
-		{
-			i++;
-			break;
-		}
-		updateType += data[i];
-	}
-
-	std::string packetID;
-
-	for (i; i < data.size(); i++)
-	{
-		if (data[i] == ' ')
-		{
-			i++;
-			break;
-		}
-		packetID += data[i];
-	}
-
-	std::string updateData;
-
-	for (const auto& character : std::string(data.begin() + updateType.size() + packetID.size() + 2, data.end()))
-	{
-		updateData += character;
-	}
-
-	if (!NetworkManager::IsServer())
-	{
-		if (updateType == "Position")
-		{
-			if (std::stoi(packetID) >= lastPositionPacketNumber)
-			{
-				positionToSet = NetworkManager::ConvertDataToVec3(updateData);
-				newPositionFromServer = true;
-			}
-			else
-			{
-				Logger::Log("Lost position packet");
-			}
-
-			lastPositionPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "WeaponPosition")
-		{
-			weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
-		}
-		else if (updateType == "FootPosition")
-		{
-			if (std::stoi(packetID) >= lastFootPositionPacketNumber)
-			{
-				footPositionToSet = NetworkManager::ConvertDataToVec3(updateData);
-				newFootPositionFromServer = true;
-			}
-			else
-			{
-				Logger::Log("Lost foot position packet");
-			}
-
-			lastFootPositionPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "Target")
-		{
-			if (std::stoi(packetID) >= lastTargetPacketNumber)
-			{
-				targetToSet = NetworkManager::ConvertDataToVec3(updateData);
-			}
-			else
-			{
-				Logger::Log("Lost target packet");
-			}
-
-			lastTargetPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AdditiveAnimationUp")
-		{
-			if (std::stoi(packetID) >= lastAdditiveAnimationUpPacketNumber)
-			{
-				additiveUpToSet = std::stof(updateData);
-			}
-			else
-			{
-				Logger::Log("Lost additiveAnimationUp packet");
-			}
-
-			lastAdditiveAnimationUpPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AdditiveAnimationDown")
-		{
-			if (std::stoi(packetID) >= lastAdditiveAnimationDownPacketNumber)
-			{
-				additiveDownToSet = std::stof(updateData);
-			}
-			else
-			{
-				Logger::Log("Lost additiveAnimationDown packet");
-			}
-
-			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "AnimationClip")
-		{
-			if (std::stoi(packetID) >= lastAnimationClipPacketNumber)
-			{
-				if (characterGraphics->GetCurrentAnimation() != updateData && characterGraphics->GetFadeToClipName() != updateData)
-				{
-					characterGraphics->SetClip(updateData);
-				}
-			}
-			else
-			{
-				Logger::Log("Lost animation clip packet");
-			}
-
-			lastAnimationClipPacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "Damage")
-		{
-			if (std::stoi(packetID) >= lastDamagePacketNumber)
-			{
-				health -= std::stof(updateData);
-
-				if (health < 0.0f)
-				{
-					health = 0.0f;
-				}
-
-				healthBar->SetScale(healthBar->GetScale().x * (health * 0.01f), healthBar->GetScale().y);
-
-				if (healthBar->GetScale().x <= 0.01f && shouldDie == false)
-				{
-					shouldDie = true;
-
-					NetworkManager::Despawn(GetNetworkObjectID());
-
-					static std::function<void(NetworkObject*)> callback = [this](NetworkObject* spawnedObject)
-						{
-						};
-
-					NetworkManager::Spawn("FPSPlayer", &callback);
-					//SceneManager::EndScene("Test");
-					//SceneManager::TerminateScene("Test");
-					//SceneManager::InitializeScene("Test");
-					//SceneManager::GetRegisteredScene("Test")->Deserialize("Assets/Scenes/FPS.xml");
-					//SceneManager::StartScene("Test");
-				}
-			}
-			else
-			{
-				Logger::Log("Lost damage packet");
-			}
-
-			lastDamagePacketNumber = std::stoi(packetID);
-		}
-		else if (updateType == "InitialSpawnTarget")
-		{
-			cam->SetTarget(NetworkManager::ConvertDataToVec3(updateData));
-		}
-	}
 	else
 	{
 		if (updateType == "DispX")

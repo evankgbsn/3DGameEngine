@@ -235,25 +235,9 @@ private:
 
 	float recoilTime;
 
-	std::function<void(const std::string&)>* positionClientDataCallback;
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> clientDataReceivedCallbacks;
 
-	std::function<void(const std::string&)>* weaponPositionClientDataCallback;
-
-	std::function<void(const std::string&)>* footPositionClientDataCallback;
-
-	std::function<void(const std::string&)>* targetClientDataCallback;
-
-	std::function<void(const std::string&)>* additiveAnimationUpClientDataCallback;
-
-	std::function<void(const std::string&)>* additiveAnimationDownClientDataCallback;
-
-	std::function<void(const std::string&)>* animationClipClientDataCallback;
-
-	std::function<void(const std::string&)>* damageClientDataCallback;
-
-	std::function<void(const std::string&)>* initialSpawnTargetClientDataCallback;
-
-
+	std::unordered_map<std::string, std::function<void(const std::string&)>*> serverDataReceivedCallbacks;
 };
 
 #endif // FPSPLAYER_H
