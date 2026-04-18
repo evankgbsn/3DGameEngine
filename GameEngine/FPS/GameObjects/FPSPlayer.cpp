@@ -172,6 +172,27 @@ void FPSPlayer::InitializeServerPlayer()
 	{
 		AddServerDataReceivedCallbacks();
 
+		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
+		characterGraphics->SetClip("Idle");
+		characterGraphics->SetShine(32.0f);
+		characterGraphics->InitializeAdditiveAnimation("LookUp");
+		characterGraphics->InitializeAdditiveAnimation("LookDown");
+		characterGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterGraphics->SetSpeed(1.0f);
+
+		AddComponent(characterGraphics, "Graphics");
+
+		positionToSet = characterGraphics->GetPosition();
+
+		hitBox = new AnimatedColliderComponent(characterGraphics);
+		hitBox->Update();
+
+		AddComponent(hitBox, "AnimatedCollider");
+
 		glm::vec3 position;
 		glm::mat4 rotation;
 
