@@ -172,9 +172,6 @@ void FPSPlayer::InitializeServerPlayer()
 	{
 		AddServerDataReceivedCallbacks();
 
-		spawnTarget = cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2]));
-		cam->SetTarget(spawnTarget);
-
 		glm::vec3 position;
 		glm::mat4 rotation;
 
@@ -186,6 +183,9 @@ void FPSPlayer::InitializeServerPlayer()
 		controller = new CharacterControllerComponent("FPSPlayer" + std::to_string(GetNetworkObjectID()), .60f, 1.40f, characterGraphics->GetPosition());
 		controller->SetOwner(this);
 		AddComponent(controller, "Controller");
+
+		spawnTarget = cam->GetPosition() + glm::normalize(glm::vec3(characterGraphics->GetRotation()[2]));
+		cam->SetTarget(spawnTarget);
 	}
 }
 
