@@ -128,7 +128,7 @@ void NetworkObject::OnDataReceived(const std::string& data)
 
 	unsigned long long packetID = std::stoull(packetIDstr);
 
-	if (!NetworkManager::IsServer())
+	if (NetworkManager::IsServer())
 	{
 		if (serverDataReceivedFunctions.find(type) != serverDataReceivedFunctions.end())
 		{
