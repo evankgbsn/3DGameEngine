@@ -85,7 +85,7 @@ private:
 
 	glm::mat4 ConvertRightHandTransformToWeaponTransform() const;
 
-	void Shoot();
+	void Shoot(float rewindTime);
 
 	void GetSpawnPositionAndRotation(glm::vec3& position, glm::mat4& rotation);
 

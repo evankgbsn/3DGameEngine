@@ -166,6 +166,22 @@ void AnimatedCollider::ToggleVisibility()
 
 void AnimatedCollider::Update()
 {
+	float time = TimeManager::SecondsSinceStart();
+
+	if (obbBuffer.size() < 2)
+	{
+		obbBuffer.push_front(std::make_pair(time, std::vector<std::pair<OrientedBoundingBox, unsigned int>>()));
+	}
+	else if (obbBuffer.front().first - obbBuffer.back().first < 0.5f)
+	{
+		obbBuffer.push_front(std::make_pair(time, std::vector<std::pair<OrientedBoundingBox, unsigned int>>()));
+	}
+	else
+	{
+		obbBuffer.push_front(std::make_pair(time, std::vector<std::pair<OrientedBoundingBox, unsigned int>>()));
+		obbBuffer.pop_back();
+	}
+
 	unsigned int i = 0;
 	for (const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb : obbs)
 	{
@@ -173,18 +189,12 @@ void AnimatedCollider::Update()
 		{
 			obb.first->Update(wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i]);
 
-			if (obbBuffer.size() < 1000.0f)
-			{
-				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), OrientedBoundingBox(*obb.first), i));
-			}
-			else
-			{
-				obbBuffer.push_front(std::make_tuple(TimeManager::SecondsSinceStart(), OrientedBoundingBox(*obb.first), i));
-				obbBuffer.pop_back();
-			}
+			obbBuffer.front().second.push_back(std::make_pair((*obb.first), i));
 		}
 		i++;
 	}
+
+	Logger::Log(std::to_string(get<0>(obbBuffer.front()) - get<0>(obbBuffer.back())));
 
 	meshColliderVisualization->SetTransform(wrapedGraphics->GetTransform());
 	//meshColliderVisualization->SetSampleTime(wrapedGraphics->GetSampleTime());
@@ -219,56 +229,122 @@ bool AnimatedCollider::Intersect(const OrientedBoundingBox& other) const
 	return intersect;
 }
 
-bool AnimatedCollider::Intersect(const LineSegment3D& other, std::string& outBoxName, glm::vec3& outHit) const
+bool AnimatedCollider::Intersect(const LineSegment3D& other, float rewindTime, std::string& outBoxName, glm::vec3& outHit) const
 {
 	bool intersect = false;
 
-	std::for_each(std::execution::par, obbs.begin(), obbs.end(),
-		[this, &other, &intersect, &outBoxName, &outHit](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+	if (rewindTime > 0.0f && rewindTime < 0.5f && obbBuffer.front().first - obbBuffer.back().first >= 0.5f)
+	{
+		float time = TimeManager::SecondsSinceStart() - rewindTime;
+
+		std::list<std::pair<float, std::vector<std::pair<OrientedBoundingBox, unsigned int>>>>::const_iterator it = obbBuffer.begin();
+
+		for (it; it != obbBuffer.end(); it++)
 		{
-			if (obb.first != nullptr)
+			if (it->first <= rewindTime)
 			{
-				if (obb.first->LineIntersect(other))
-				{
-					const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
-
-					std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect, &obb, &outBoxName, &outHit](const std::vector<Vertex>& triangleVerts)
-						{
-							auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
-								{
-									const glm::ivec4& influences = vert.GetInfluences();
-
-									const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
-									glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
-									glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
-									glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
-									glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
-
-									const glm::vec4& weights = vert.GetWeights();
-
-									glm::mat4 skin = animPoseJoint0 * weights[0];
-									skin += animPoseJoint1 * weights[1];
-									skin += animPoseJoint2 * weights[2];
-									skin += animPoseJoint3 * weights[3];
-
-									return skin;
-								};
-
-							Triangle t1(
-								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
-								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
-								wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
-
-							if (t1.LineIntersect(other, outHit))
-							{
-								intersect = true;
-								outBoxName = (*jointNames)[obb.second];
-							}
-
-						});
-				}
+				break;
 			}
-		});
+		}
+
+		const std::vector<std::pair<OrientedBoundingBox, unsigned int>>& pastObbs = it->second;
+
+		std::for_each(std::execution::par, pastObbs.begin(), pastObbs.end(),
+			[this, &other, &intersect, &outBoxName, &outHit](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+			{
+				if (obb.first != nullptr)
+				{
+					if (obb.first->LineIntersect(other))
+					{
+						const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
+
+						std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect, &obb, &outBoxName, &outHit](const std::vector<Vertex>& triangleVerts)
+							{
+								auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
+									{
+										const glm::ivec4& influences = vert.GetInfluences();
+
+										const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
+										glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
+										glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
+										glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
+										glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
+
+										const glm::vec4& weights = vert.GetWeights();
+
+										glm::mat4 skin = animPoseJoint0 * weights[0];
+										skin += animPoseJoint1 * weights[1];
+										skin += animPoseJoint2 * weights[2];
+										skin += animPoseJoint3 * weights[3];
+
+										return skin;
+									};
+
+								Triangle t1(
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+
+								if (t1.LineIntersect(other, outHit))
+								{
+									intersect = true;
+									outBoxName = (*jointNames)[obb.second];
+								}
+
+							});
+					}
+				}
+			});
+	}
+	else
+	{
+		std::for_each(std::execution::par, obbs.begin(), obbs.end(),
+			[this, &other, &intersect, &outBoxName, &outHit](const std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>& obb)
+			{
+				if (obb.first != nullptr)
+				{
+					if (obb.first->LineIntersect(other))
+					{
+						const std::vector<std::vector<Vertex>>& obbTriangles = jointsTriangles.find(jointNames->at(obb.second))->second;
+
+						std::for_each(std::execution::par, obbTriangles.begin(), obbTriangles.end(), [this, &other, &intersect, &obb, &outBoxName, &outHit](const std::vector<Vertex>& triangleVerts)
+							{
+								auto skinVertexForTriangleCollider = [this, &other, &intersect](const Vertex& vert, GO3DAnimated* animatedVisualization) -> glm::mat4
+									{
+										const glm::ivec4& influences = vert.GetInfluences();
+
+										const glm::mat4* const animPoseMatArray = animatedVisualization->GetAnimPoseArray();
+										glm::mat4 animPoseJoint0 = animPoseMatArray[influences[0]];
+										glm::mat4 animPoseJoint1 = animPoseMatArray[influences[1]];
+										glm::mat4 animPoseJoint2 = animPoseMatArray[influences[2]];
+										glm::mat4 animPoseJoint3 = animPoseMatArray[influences[3]];
+
+										const glm::vec4& weights = vert.GetWeights();
+
+										glm::mat4 skin = animPoseJoint0 * weights[0];
+										skin += animPoseJoint1 * weights[1];
+										skin += animPoseJoint2 * weights[2];
+										skin += animPoseJoint3 * weights[3];
+
+										return skin;
+									};
+
+								Triangle t1(
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[0], wrapedGraphics) * glm::vec4(triangleVerts[0].GetPosition(), 1.0f),
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[1], wrapedGraphics) * glm::vec4(triangleVerts[1].GetPosition(), 1.0f),
+									wrapedGraphics->GetTransform() * skinVertexForTriangleCollider(triangleVerts[2], wrapedGraphics) * glm::vec4(triangleVerts[2].GetPosition(), 1.0f));
+
+								if (t1.LineIntersect(other, outHit))
+								{
+									intersect = true;
+									outBoxName = (*jointNames)[obb.second];
+								}
+
+							});
+					}
+				}
+			});
+	}
 
 	if (intersect)
 	{

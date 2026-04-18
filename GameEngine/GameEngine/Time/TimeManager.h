@@ -23,6 +23,8 @@ public:
 
 	static unsigned long long GetFrameID();
 
+	static float GetTime();
+
 private:
 
 	TimeManager();

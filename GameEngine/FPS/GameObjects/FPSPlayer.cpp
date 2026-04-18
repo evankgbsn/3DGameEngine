@@ -677,7 +677,7 @@ void FPSPlayer::RegisterInput()
 					//lastShotTime = TimeManager::SecondsSinceStart();
 
 					// Hit-Scan.
-					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+					ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " " + std::to_string(TimeManager::GetTime()));
 
 					lastShotTime = TimeManager::SecondsSinceStart();
 				}
@@ -786,7 +786,7 @@ void FPSPlayer::RegisterInput()
 				//lastShotTime = TimeManager::SecondsSinceStart();
 
 				// Hit-Scan.
-				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " ");
+				ClientSend("Shoot " + std::to_string(shootPacketNumber++) + " " + std::to_string(TimeManager::GetTime()));
 
 				lastShotTime = TimeManager::SecondsSinceStart();
 			}
@@ -992,7 +992,7 @@ glm::mat4 FPSPlayer::ConvertRightHandTransformToWeaponTransform() const
 	return glm::mat4(weaponright, weaponup, weaponforward, glm::vec4(glm::vec3(handTransform[3]), 1.0f));
 }
 
-void FPSPlayer::Shoot()
+void FPSPlayer::Shoot(float rewindTime)
 {
 	glm::vec3 origin = cam->GetPosition();
 	glm::vec3 target = origin + cam->GetForwardVector() * 100.0f;
@@ -1030,7 +1030,7 @@ void FPSPlayer::Shoot()
 
 				bool status = PhysicsManager::Raycast(origin, direction, 1000.0f, outHits);
 
-				bool hit = player->hitBox->Intersect(line, outBoxName, outHit);
+				bool hit = player->hitBox->Intersect(line, rewindTime, outBoxName, outHit);
 
 				auto dealDamage = [this, player, outBoxName]()
 					{
@@ -1339,7 +1339,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		{
 			if (std::stoi(packetID) >= lastShootPacketNumber)
 			{
-				Shoot();
+				Shoot(TimeManager::GetTime() - std::stof(updateData));
 			}
 
 			lastShootPacketNumber = std::stoi(packetID);

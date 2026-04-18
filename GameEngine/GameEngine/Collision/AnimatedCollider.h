@@ -37,7 +37,7 @@ public:
 
 	bool Intersect(const OrientedBoundingBox& other) const;
 
-	bool Intersect(const LineSegment3D& other, std::string& outJointName, glm::vec3& outHit) const;
+	bool Intersect(const LineSegment3D& other, float rewindTime, std::string& outJointName, glm::vec3& outHit) const;
 
 	bool Intersect(const AnimatedCollider& other) const;
 
@@ -75,7 +75,7 @@ private:
 
 	std::vector<std::pair<OrientedBoundingBoxWithVisualization*, unsigned int>> obbs;
 
-	std::list<std::tuple<float, OrientedBoundingBox, unsigned int>> obbBuffer;
+	std::list<std::pair<float,std::vector<std::pair<OrientedBoundingBox, unsigned int>>>> obbBuffer;
 
 	GOColoredAnimated* meshColliderVisualization;
 

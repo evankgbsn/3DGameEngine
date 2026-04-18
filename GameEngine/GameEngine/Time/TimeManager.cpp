@@ -109,6 +109,11 @@ unsigned long long TimeManager::GetFrameID()
 	};
 }
 
+float TimeManager::GetTime()
+{
+	return std::chrono::high_resolution_clock::now().time_since_epoch().count();
+}
+
 TimeManager::TimeManager() :
 	startTime(std::chrono::high_resolution_clock::now()),
 	lastUpdateTime(startTime),
