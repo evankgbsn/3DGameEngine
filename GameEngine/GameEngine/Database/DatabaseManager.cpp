@@ -151,7 +151,7 @@ DatabaseManager::~DatabaseManager()
 
 void DatabaseManager::Test()
 {
-	OpenDatabase("NewDatabase", "password");
+	//OpenDatabase("NewDatabase", "password");
 
 	TableColumn column0;
 	column0.name = "ID";

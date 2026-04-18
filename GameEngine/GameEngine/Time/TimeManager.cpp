@@ -114,7 +114,7 @@ float TimeManager::GetTime()
 	auto now = std::chrono::high_resolution_clock::now();
 
 	// Explicitly cast the duration to seconds (as a float)
-	auto durationInSeconds = std::chrono::duration<float>(now.time_since_epoch());
+	auto durationInSeconds = std::chrono::duration<float, std::chrono::seconds::period>(now.time_since_epoch());
 
 	return durationInSeconds.count();
 }
