@@ -665,7 +665,7 @@ void FPSPlayer::RegisterInput()
 
 			if (value > 0.0f && !shooting)
 			{
-				if (TimeManager::SecondsSinceStart() - lastShotTime > 0.5f)
+				if (TimeManager::SecondsSinceStart() - lastShotTime > 0.01f)
 				{
 					characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
 					characterArmsGraphics->SetSpeed(5.0f);
@@ -776,7 +776,7 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
 		{
-			if (TimeManager::SecondsSinceStart() - lastShotTime > 0.5f)
+			if (TimeManager::SecondsSinceStart() - lastShotTime > 0.01f)
 			{
 				characterArmsGraphics->FadeAnimationTo("RifleRecoil", 0.1f);
 				characterArmsGraphics->SetSpeed(5.0f);
