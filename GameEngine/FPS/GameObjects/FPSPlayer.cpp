@@ -695,7 +695,7 @@ void FPSPlayer::RegisterInput()
 
 	gamepadJump = new std::function<void(int)>([this](int button)
 		{
-			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
+			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", true);
 
 			if (!controller->IsFalling())
 			{
@@ -767,7 +767,7 @@ void FPSPlayer::RegisterInput()
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
 		{
-			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ");
+			ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", true);
 			
 			if (!controller->IsFalling())
 			{
