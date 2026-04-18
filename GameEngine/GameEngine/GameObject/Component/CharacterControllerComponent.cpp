@@ -94,7 +94,7 @@ void CharacterControllerComponent::Update()
 	float fixedDt = 1.0f / 240.0f; // Match PhysicsManager::stepSize
 
 	if (IsFalling()) {
-		jumpForce += -60.0f * fixedDt;
+		jumpForce += -80.0f * fixedDt;
 	}
 	else if (jumpForce < 0.0f) {
 		jumpForce = -2.0f;
