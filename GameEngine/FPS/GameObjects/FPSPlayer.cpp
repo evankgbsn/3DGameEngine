@@ -994,9 +994,11 @@ glm::mat4 FPSPlayer::ConvertRightHandTransformToWeaponTransform() const
 
 void FPSPlayer::Shoot(float rewindTime)
 {
+	glm::vec3 camForward = cam->GetForwardVector(rewindTime);
+
 	glm::vec3 origin = cam->GetPosition();
-	glm::vec3 target = origin + cam->GetForwardVector() * 100.0f;
-	glm::vec3 direction = cam->GetForwardVector();
+	glm::vec3 target = origin + camForward * 100.0f;
+	glm::vec3 direction = camForward;
 
 	if (shotCast == nullptr)
 	{

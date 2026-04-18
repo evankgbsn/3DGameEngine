@@ -3,6 +3,7 @@
 #include "../../Renderer/Camera/CameraManager.h"
 #include "../../Renderer/Window/WindowManager.h"
 #include "../../Engine.h"
+#include "../../Time/TimeManager.h"
 
 CameraComponent::CameraComponent()
 {
@@ -36,8 +37,25 @@ void CameraComponent::Translate(const glm::vec3& translation)
 	CameraManager::GetCamera(name).Translate(translation);
 }
 
-glm::vec3 CameraComponent::GetForwardVector() const
+glm::vec3 CameraComponent::GetForwardVector(float rewindTime) const
 {
+	if (rewindTime > 0.0f && rewindTime < 0.5f && forwardBuffer.front().first - forwardBuffer.back().first >= 0.5f)
+	{
+		float time = TimeManager::SecondsSinceStart() - rewindTime;
+
+		std::list<std::pair<float, glm::vec3>>::const_iterator it = forwardBuffer.begin();
+
+		for (it; it != forwardBuffer.end(); it++)
+		{
+			if (it->first <= time)
+			{
+				break;
+			}
+		}
+
+		return it->second;
+	}
+
 	return CameraManager::GetCamera(name).GetForwardVector();
 }
 
@@ -176,6 +194,24 @@ void CameraComponent::Deserialize()
 
 void CameraComponent::Update()
 {
+	glm::vec3 currentForward = CameraManager::GetCamera(name).GetForwardVector();
+
+	float time = TimeManager::SecondsSinceStart();
+
+	if (forwardBuffer.size() < 2)
+	{
+		forwardBuffer.push_front(std::make_pair(time, currentForward));
+	}
+	else if (forwardBuffer.front().first - forwardBuffer.back().first < 0.5f)
+	{
+		forwardBuffer.push_front(std::make_pair(time, currentForward));
+	}
+	else
+	{
+		forwardBuffer.push_front(std::make_pair(time, currentForward));
+		forwardBuffer.pop_back();
+	}
+
 	Camera& cam = CameraManager::GetCamera(name);
 	cam.SetWindow(WindowManager::GetWindow("Engine"));
 }

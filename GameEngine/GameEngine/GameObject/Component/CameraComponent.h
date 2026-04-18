@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include <string>
+#include <list>
 
 class CameraComponent : public Component
 {
@@ -24,7 +25,7 @@ public:
 
 	void Translate(const glm::vec3& translation);
 
-	glm::vec3 GetForwardVector() const;
+	glm::vec3 GetForwardVector(float rewindTime = 0.0f) const;
 
 	glm::vec3 GetRightVector() const;
 
@@ -82,6 +83,8 @@ private:
 	void Update() override;
 
 	std::string name;
+
+	std::list<std::pair<float, glm::vec3>> forwardBuffer;
 
 };
 
