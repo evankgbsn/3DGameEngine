@@ -239,7 +239,7 @@ bool AnimatedCollider::Intersect(const LineSegment3D& other, float rewindTime, s
 
 		for (it; it != obbBuffer.end(); it++)
 		{
-			if (it->first <= rewindTime)
+			if (it->first <= time)
 			{
 				break;
 			}
