@@ -189,7 +189,7 @@ void AnimatedCollider::Update()
 		{
 			obb.first->Update(wrapedGraphics->GetTransform() * wrapedGraphics->GetAnimPoseArray()[i]);
 
-			obbBuffer.front().second.push_back(std::make_pair((*obb.first), i));
+			obbBuffer.front().second.push_back(std::make_pair(OrientedBoundingBox(*obb.first), i));
 		}
 		i++;
 	}
