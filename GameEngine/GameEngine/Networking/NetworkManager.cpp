@@ -498,7 +498,7 @@ void NetworkManager::ClientReceive()
 					{
 						clientID = std::string(packetBuf);
 
-						latencyPacketReceiveTime = std::chrono::high_resolution_clock::now();
+						latencyPacketReceiveTime[GetID()] = std::chrono::high_resolution_clock::now();
 						ClientSend("", "NetworkManagerServerReceiveLatency");
 
 						firstMessage = false;

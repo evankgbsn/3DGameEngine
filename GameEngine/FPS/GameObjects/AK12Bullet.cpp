@@ -50,7 +50,7 @@ void AK12Bullet::Initialize()
 
 			if (player != nullptr)
 			{
-				if (GetSpawnerIP() == player->GetSpawnerIP())
+				if (GetSpawnerID() == player->GetSpawnerID())
 				{
 					transform = player->GetWeaponTransform();
 				}

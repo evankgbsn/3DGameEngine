@@ -1059,7 +1059,7 @@ void FPSPlayer::Shoot(float rewindTime)
 
 						Logger::Log(GetName() + " hit " + player->GetName() + " : " + outBoxName);
 
-						player->ServerSend(player->GetSpawnerIP(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(damage));
+						player->ServerSend(player->GetSpawnerID(), "Damage " + std::to_string(damagePacketNumber++) + " " + std::to_string(damage));
 					};
 
 				if (hit)
@@ -1120,9 +1120,9 @@ void FPSPlayer::OnSpawn()
 
 	if (NetworkManager::IsServer())
 	{
-		onClientDisconnect = new std::function<void(const std::string&)>([this](const std::string& IP)
+		onClientDisconnect = new std::function<void(const std::string&)>([this](const std::string& ID)
 			{
-				if (GetSpawnerIP() == IP)
+				if (GetSpawnerID() == ID)
 				{
 					NetworkManager::Despawn(GetNetworkObjectID());
 				}
@@ -1350,7 +1350,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			{
 				weaponPositionToSet = NetworkManager::ConvertDataToMat4(updateData);
 
-				ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerIP() }, false);
+				ServerSendAll("WeaponPosition " + std::to_string(weaponPositionPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(GetWeaponTransform()), { GetSpawnerID() }, false);
 			}
 
 			lastWeaponPositionPacketNumber = std::stoi(packetID);
@@ -1361,7 +1361,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			{
 				additiveUpToSet = std::stof(updateData);
 
-				ServerSendAll("AdditiveAnimationUp " + std::to_string(additiveAnimationUpPacketNumber++) + " " + updateData, {GetSpawnerIP()}, false);
+				ServerSendAll("AdditiveAnimationUp " + std::to_string(additiveAnimationUpPacketNumber++) + " " + updateData, {GetSpawnerID()}, false);
 			}
 
 			lastAdditiveAnimationUpPacketNumber = std::stoi(packetID);
@@ -1372,7 +1372,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 			{
 				additiveDownToSet = std::stof(updateData);
 
-				ServerSendAll("AdditiveAnimationDown " + std::to_string(additiveAnimationDownPacketNumber++) + " " + updateData, { GetSpawnerIP() }, false);
+				ServerSendAll("AdditiveAnimationDown " + std::to_string(additiveAnimationDownPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
 			}
 
 			lastAdditiveAnimationDownPacketNumber = std::stoi(packetID);
@@ -1385,7 +1385,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 				{
 					characterGraphics->SetClip(updateData);
 
-					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerIP() }, false);
+					ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
 				}
 			}
 			else
@@ -1397,7 +1397,7 @@ void FPSPlayer::OnDataReceived(const std::string& data)
 		}
 		else if (updateType == "InitialSpawnTarget")
 		{
-			ServerSend(GetSpawnerIP(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(spawnTarget), false);
+			ServerSend(GetSpawnerID(), "InitialSpawnTarget " + std::to_string(animationClipPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(spawnTarget), false);
 		}
 	}
 }

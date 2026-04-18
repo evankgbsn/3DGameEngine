@@ -117,7 +117,7 @@ void Engine::Run()
 			AudioManager::GameUpdate();
 		}
 
-		WindowManager::SetWindowTitle("Engine", std::string("Engine ") + "FPS: " + std::to_string(TimeManager::GetAverageFPS()) + " Network Latency: " + std::to_string(NetworkManager::GetLatency()) + "ms");
+		WindowManager::SetWindowTitle("Engine", std::string("Engine ") + "FPS: " + std::to_string(TimeManager::GetAverageFPS()) + " Network Latency: " + std::to_string(NetworkManager::GetLatency(NetworkManager::GetID())) + "ms");
 
 		managePlay();
 	}
