@@ -567,7 +567,7 @@ void PlayerShip::Move()
 		body->SetLinearVelocity(movementForce * TimeManager::DeltaTime());
 		body->SetAngularVelocity((torque + gamepadTorqueX + gamepadTorqueY) * TimeManager::DeltaTime());
 
-		if (TimeManager::SecondsSinceStart() - lastLookPacketTime > .10f)
+		if (TimeManager::SecondsSinceStart() - lastLookPacketTime > 1.0f)
 		{
 			torque = glm::vec3(0.0f);
 			gamepadTorqueX = glm::vec3(0.0f);
