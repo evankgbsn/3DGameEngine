@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="AsteroidField.xml" type="class AsteroidField">
+	<Object type="Asteroid" name="Asteroid">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="0.118815"/>
+				<float Y="-0.992841"/>
+				<float Z="-6.038054"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.118815"/>
+				<float WY="-0.992841"/>
+				<float WZ="-6.038054"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="AsteroidSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="AsteroidNorm"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Asteroid" name="Asteroid4">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-22.065506"/>
+				<float Y="-8.345325"/>
+				<float Z="-12.362199"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-22.065506"/>
+				<float WY="-8.345325"/>
+				<float WZ="-12.362199"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="AsteroidSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="AsteroidNorm"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="" name="MainLight">
+		<Component type="DirectionalLightComponent" name="DirectionalLight">
+			<Variable type="vec3" name="ColorIntensity">
+				<float X="0.000000"/>
+				<float Y="1.000000"/>
+				<float Z="1.000000"/>
+			</Variable>
+			<Variable type="vec3" name="Direction">
+				<float X="0.330000"/>
+				<float Y="0.330000"/>
+				<float Z="0.330000"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Asteroid" name="Asteroid5">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-21.517464"/>
+				<float Y="1.858974"/>
+				<float Z="9.846535"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-21.517464"/>
+				<float WY="1.858974"/>
+				<float WZ="9.846535"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="AsteroidSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="AsteroidNorm"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Asteroid" name="Asteroid6">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-0.309624"/>
+				<float Y="5.600594"/>
+				<float Z="8.482030"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-0.309624"/>
+				<float WY="5.600594"/>
+				<float WZ="8.482030"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="AsteroidSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="AsteroidNorm"/>
+			</Variable>
+		</Component>
+	</Object>
+	<Object type="Asteroid" name="Asteroid7">
+		<Component type="RigidBodyComponent" name="RigidBody">
+			<Variable type="bool" name="IsDynamic">
+				<bool val="0"/>
+			</Variable>
+			<Variable type="vec3" name="Position">
+				<float X="-26.139990"/>
+				<float Y="0.481094"/>
+				<float Z="-26.123997"/>
+			</Variable>
+			<Variable type="mat4" name="Rotation">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="0.000000"/>
+				<float WY="0.000000"/>
+				<float WZ="0.000000"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+		</Component>
+		<Component type="GraphicsObjectTexturedLit" name="Graphics">
+			<Variable type="float" name="Shine">
+				<float val="4.000000"/>
+			</Variable>
+			<Variable type="mat4" name="Transform">
+				<float XX="1.000000"/>
+				<float XY="0.000000"/>
+				<float XZ="0.000000"/>
+				<float XW="0.000000"/>
+				<float YX="0.000000"/>
+				<float YY="1.000000"/>
+				<float YZ="0.000000"/>
+				<float YW="0.000000"/>
+				<float ZX="0.000000"/>
+				<float ZY="0.000000"/>
+				<float ZZ="1.000000"/>
+				<float ZW="0.000000"/>
+				<float WX="-26.139990"/>
+				<float WY="0.481094"/>
+				<float WZ="-26.123997"/>
+				<float WW="1.000000"/>
+			</Variable>
+			<Variable type="string" name="ModelName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="DiffuseTextureName">
+				<string val="Asteroid"/>
+			</Variable>
+			<Variable type="string" name="SpecularTextureName">
+				<string val="AsteroidSpec"/>
+			</Variable>
+			<Variable type="string" name="NormalTextureName">
+				<string val="AsteroidNorm"/>
+			</Variable>
+		</Component>
+	</Object>
+</Scene>
+
