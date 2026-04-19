@@ -18,7 +18,7 @@ PlayerShip::PlayerShip() :
 	body(nullptr),
 	move(nullptr),
 	look(nullptr),
-	speed(0.000001f),
+	speed(5.0f),
 	positionUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
 {
@@ -275,13 +275,7 @@ void PlayerShip::RegisterInput()
 {
 	move = new std::function<void(int)>([this](int keyCode)
 		{
-			static float lastSendTime = TimeManager::SecondsSinceStart();
-
-			if (TimeManager::SecondsSinceStart() - lastSendTime > 0.5f)
-			{
-				ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
-				lastSendTime = TimeManager::SecondsSinceStart();
-			}
+			ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, move, "Move");
@@ -355,8 +349,6 @@ void PlayerShip::UpdatePhysics()
 {
 	if (IsServer())
 	{
-		body->AddForce(glm::vec3(0.0f, 0.0f, -1.0f) * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
-
 		body->Update();
 		body->SyncPhysics();
 	}
