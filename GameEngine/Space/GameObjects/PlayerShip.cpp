@@ -18,7 +18,7 @@ PlayerShip::PlayerShip() :
 	body(nullptr),
 	move(nullptr),
 	look(nullptr),
-	speed(1000.0f),
+	speed(3.0f),
 	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
@@ -425,7 +425,7 @@ void PlayerShip::Move()
 {
 	if (IsServer())
 	{
-		body->AddForce(movementForce * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
+		body->SetLinearVelocity(movementForce * speed * TimeManager::DeltaTime());
 		body->SetAngularVelocity(tourque * rotationSpeed * TimeManager::DeltaTime());
 	}
 }
