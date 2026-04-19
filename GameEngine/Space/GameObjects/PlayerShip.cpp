@@ -24,13 +24,16 @@ PlayerShip::PlayerShip() :
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f}),
+<<<<<<< Updated upstream
 	positionToSet({0.0f, 0.0f, 0.0f}),
 	rotationToSet(glm::mat4(1.0f))
+=======
 	movementForce({0.0f, 0.0f, 0.0f}),
 	torque({ 0.0f, 0.0f, 0.0f }),
 	gamepadTorqueX({ 0.0f, 0.0f, 0.0f }),
 	gamepadTorqueY({ 0.0f, 0.0f, 0.0f })
 
+>>>>>>> Stashed changes
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
@@ -531,7 +534,8 @@ void PlayerShip::SendServerPositionUpdates()
 
 		if (TimeManager::SecondsSinceStart() - lastSendTime > positionUpdateInterval)
 		{
-			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
+			glm::vec3 positionToSend = graphics->GetPosition();
+			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(positionToSend), {}, false);
 
 			lastSendTime = TimeManager::SecondsSinceStart();
 		}
