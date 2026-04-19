@@ -10,6 +10,7 @@
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Scene/SceneManager.h"
 #include "GameEngine/Scene/Scene.h"
+#include "GameEngine/Renderer/Window/WindowManager.h"
 
 PlayerShip::PlayerShip() :
 	GameObject("PlayerShip"),
@@ -18,7 +19,7 @@ PlayerShip::PlayerShip() :
 	body(nullptr),
 	move(nullptr),
 	look(nullptr),
-	speed(10000.0f),
+	speed(100000.0f),
 	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
@@ -278,6 +279,26 @@ void PlayerShip::OrientCamera()
 
 void PlayerShip::RegisterInput()
 {
+	static std::function<void(int)> escapeCursor = [](int keyCode)
+		{
+			WindowManager::GetWindow("Engine")->ToggleFullScreen();
+
+			static bool enabled = false;
+
+			if (!enabled)
+			{
+				InputManager::EnableCursor("Engine");
+				enabled = true;
+			}
+			else
+			{
+				InputManager::DisableCursor("Engine");
+				enabled = false;
+			}
+		};
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESS, KEY_ESCAPE, &escapeCursor, "FreeCursor");
+
 	move = new std::function<void(int)>([this](int keyCode)
 		{
 			ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
@@ -308,6 +329,53 @@ void PlayerShip::RegisterInput()
 		});
 
 	InputManager::DisableCursor("Engine");
+
+	gamepadMoveX = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.5f)
+			{
+				ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string((value < 0.0f) ? KEY_A : KEY_D), false);
+			}
+			else
+			{
+				ClientSend("StopMove " + std::to_string(stopMovePacketNumber++) + " ", false);
+			}
+		});
+
+	gamepadMoveY = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.5f)
+			{
+				ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string((value < 0.0f) ? KEY_W : KEY_S), false);
+			}
+			else
+			{
+				ClientSend("StopMove " + std::to_string(stopMovePacketNumber++) + " ", false);
+			}
+		});
+
+	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.05f)
+			{
+				glm::vec3 dif = glm::vec3(10000.0f, 0.0, 0.0f);
+				ClientSend("GamepadLookX " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData((value > 0.0f) ? dif : -dif), false);
+			}
+		});
+
+	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
+		{
+			if (abs(value) > 0.05f)
+			{
+				glm::vec3 dif = glm::vec3(0.0f, 10000.0f, 0.0f);
+				ClientSend("GamepadLookY " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData((value > 0.0f) ? dif : -dif), false);
+			}
+		});
+
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, gamepadMoveX, "MoveX");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, gamepadMoveY, "MoveY");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_X, gamepadLookX, "LookX");
+	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_Y, gamepadLookY, "LookY");
 }
 
 void PlayerShip::DeregisterInput()
@@ -378,7 +446,19 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 	AddServerDataReceivedCallback("Look", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
-			tourque = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
+			torque = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
+		}));
+
+	AddServerDataReceivedCallback("GamepadLookX", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
+			gamepadTorqueX = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
+		}));
+
+	AddServerDataReceivedCallback("GamepadLookY", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
+			gamepadTorqueY = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
 		}));
 }
 
@@ -426,7 +506,7 @@ void PlayerShip::Move()
 	if (IsServer())
 	{
 		body->SetLinearVelocity(movementForce * TimeManager::DeltaTime());
-		body->SetAngularVelocity(tourque * TimeManager::DeltaTime());
+		body->SetAngularVelocity((torque + gamepadTorqueX + gamepadTorqueY) * TimeManager::DeltaTime());
 	}
 }
 

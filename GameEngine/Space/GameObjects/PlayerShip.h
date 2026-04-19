@@ -108,8 +108,16 @@ private:
 	std::function<void(int)>* move;
 
 	std::function<void(int)>* stopMove;
+	
+	std::function<void(int, float)>* gamepadMoveX;
+
+	std::function<void(int, float)>* gamepadMoveY;
 
 	std::function<void(const glm::vec2&)>* look;
+
+	std::function<void(int, float)>* gamepadLookX;
+
+	std::function<void(int, float)>* gamepadLookY;
 
 	unsigned long long movePacketNumber = 0;
 
@@ -133,7 +141,11 @@ private:
 
 	glm::vec3 movementForce;
 
-	glm::vec3 tourque;
+	glm::vec3 torque;
+
+	glm::vec3 gamepadTorqueX;
+
+	glm::vec3 gamepadTorqueY;
 
 };
 
