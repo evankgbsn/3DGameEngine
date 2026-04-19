@@ -8,6 +8,8 @@
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
 #include "GameEngine/Time/TimeManager.h"
+#include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Scene/Scene.h"
 
 PlayerShip::PlayerShip() :
 	GameObject("PlayerShip"),
@@ -173,10 +175,32 @@ void PlayerShip::Unload()
 void PlayerShip::OnSpawn()
 {
 	NetworkObject::OnSpawn();
+
+	Scene* scene = SceneManager::GetRegisteredScene("AsteroidField");
+
+	if (scene != nullptr)
+	{
+		scene->RegisterGameObject(this, "Player:" + std::to_string(GetNetworkObjectID()));
+	}
+
+	if (NetworkManager::IsServer())
+	{
+		onClientDisconnect = new std::function<void(const std::string&)>([this](const std::string& ID)
+			{
+				if (GetSpawnerID() == ID)
+				{
+					NetworkManager::Despawn(GetNetworkObjectID());
+				}
+			});
+
+		NetworkManager::RegisterOnClientDisconnectFunction("Player:" + std::to_string(GetNetworkObjectID()), onClientDisconnect);
+	}
 }
 
 void PlayerShip::OnDespawn()
 {
+	NetworkManager::DeregisterOnClientDisconnectFunction("Player:" + std::to_string(GetNetworkObjectID()));
+
 	NetworkObject::OnDespawn();
 }
 

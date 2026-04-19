@@ -101,6 +101,8 @@ private:
 
 	float positionUpdateInterval;
 
+	std::function<void(const std::string&)>* onClientDisconnect;
+
 };
 
 #endif // PLAYERSHIP_H
