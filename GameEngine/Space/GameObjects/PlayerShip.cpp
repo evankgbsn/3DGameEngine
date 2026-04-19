@@ -26,6 +26,11 @@ PlayerShip::PlayerShip() :
 	camOffset({0.0f, 5.5f, -8.0f}),
 	positionToSet({0.0f, 0.0f, 0.0f}),
 	rotationToSet(glm::mat4(1.0f))
+	movementForce({0.0f, 0.0f, 0.0f}),
+	torque({ 0.0f, 0.0f, 0.0f }),
+	gamepadTorqueX({ 0.0f, 0.0f, 0.0f }),
+	gamepadTorqueY({ 0.0f, 0.0f, 0.0f })
+
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
