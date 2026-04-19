@@ -430,5 +430,8 @@ void PlayerShip::Move()
 
 void PlayerShip::Look()
 {
-	InputManager::WhenCursorMoved(*look);
+	if (IsLocalClient())
+	{
+		InputManager::WhenCursorMoved(*look);
+	}
 }
