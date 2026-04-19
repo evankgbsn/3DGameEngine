@@ -148,12 +148,14 @@ void PlayerShip::TerminateRemotePlayer()
 
 void PlayerShip::GameUpdate()
 {
+	SetPosition(positionToSet);
+	SetRotation(rotationToSet);
+	UpdatePhysics();
 	Look();
 	Move();
 	OrientCamera();
 	SendServerPositionUpdates();
 	SendServerRotationUpdates();
-	UpdatePhysics();
 }
 
 void PlayerShip::EditorUpdate()
@@ -301,11 +303,19 @@ void PlayerShip::RegisterInput()
 
 	move = new std::function<void(int)>([this](int keyCode)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
 			ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
 		});
 
 	stopMove = new std::function<void(int)>([this](int keyCode)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
 			ClientSend("StopMove " + std::to_string(stopMovePacketNumber++) + " ", false);
 		});
 
@@ -321,6 +331,11 @@ void PlayerShip::RegisterInput()
 
 	look = new std::function<void(const glm::vec2&)>([this](const glm::vec2& pos)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			static glm::vec2 lastPos = pos;
 
 			glm::vec2 dif = pos - lastPos;
@@ -332,6 +347,11 @@ void PlayerShip::RegisterInput()
 
 	gamepadMoveX = new std::function<void(int, float)>([this](int axis, float value)
 		{
+			if (!InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (abs(value) > 0.5f)
 			{
 				ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string((value < 0.0f) ? KEY_A : KEY_D), false);
@@ -344,6 +364,11 @@ void PlayerShip::RegisterInput()
 
 	gamepadMoveY = new std::function<void(int, float)>([this](int axis, float value)
 		{
+			if (!InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (abs(value) > 0.5f)
 			{
 				ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string((value < 0.0f) ? KEY_W : KEY_S), false);
@@ -356,19 +381,37 @@ void PlayerShip::RegisterInput()
 
 	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
 		{
+			if (!InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (abs(value) > 0.05f)
 			{
-				glm::vec3 dif = glm::vec3(10000.0f, 0.0, 0.0f);
-				ClientSend("GamepadLookX " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData((value > 0.0f) ? dif : -dif), false);
+				glm::vec3 dif = glm::vec3(10000.0f * value, 0.0, 0.0f);
+				ClientSend("GamepadLookX " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(dif), false);
+			}
+			else
+			{
+				ClientSend("GamepadLookX " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::vec3(0.0f)), false);
 			}
 		});
 
 	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
 		{
+			if (!InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (abs(value) > 0.05f)
 			{
-				glm::vec3 dif = glm::vec3(0.0f, 10000.0f, 0.0f);
-				ClientSend("GamepadLookY " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData((value > 0.0f) ? dif : -dif), false);
+				glm::vec3 dif = glm::vec3(0.0f, 10000.0f * value, 0.0f);
+				ClientSend("GamepadLookY " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(dif), false);
+			}
+			else
+			{
+				ClientSend("GamepadLookY " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::vec3(0.0f)), false);
 			}
 		});
 
@@ -402,12 +445,12 @@ void PlayerShip::AddClientDataReceivedCallbacks()
 {
 	AddClientDataReceivedCallback("Position", clientDataReceivedCallbacks["Position"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
-			SetPosition(NetworkManager::ConvertDataToVec3(data));
+			positionToSet = NetworkManager::ConvertDataToVec3(data);
 		}));
 
 	AddClientDataReceivedCallback("Rotation", clientDataReceivedCallbacks["Rotation"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
-			SetRotation(NetworkManager::ConvertDataToMat4(data));
+			rotationToSet = NetworkManager::ConvertDataToMat4(data);
 		}));
 }
 

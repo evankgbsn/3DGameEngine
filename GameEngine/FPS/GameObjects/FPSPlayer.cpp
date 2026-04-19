@@ -726,6 +726,7 @@ void FPSPlayer::RegisterInput()
 
 	whenCursorMove = new std::function<void(const glm::vec2&)>([this](const glm::vec2& cursorPos)
 		{
+
 			if (InputManager::CursorEnabled("Engine"))
 			{
 				return;

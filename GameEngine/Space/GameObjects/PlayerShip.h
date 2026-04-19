@@ -147,6 +147,10 @@ private:
 
 	glm::vec3 gamepadTorqueY;
 
+	glm::vec3 positionToSet;
+
+	glm::mat4 rotationToSet;
+
 };
 
 #endif // PLAYERSHIP_H
