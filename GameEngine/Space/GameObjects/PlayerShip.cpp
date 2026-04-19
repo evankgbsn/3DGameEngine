@@ -24,16 +24,12 @@ PlayerShip::PlayerShip() :
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f}),
-<<<<<<< Updated upstream
 	positionToSet({0.0f, 0.0f, 0.0f}),
-	rotationToSet(glm::mat4(1.0f))
-=======
+	rotationToSet(glm::mat4(1.0f)),
 	movementForce({0.0f, 0.0f, 0.0f}),
 	torque({ 0.0f, 0.0f, 0.0f }),
 	gamepadTorqueX({ 0.0f, 0.0f, 0.0f }),
 	gamepadTorqueY({ 0.0f, 0.0f, 0.0f })
-
->>>>>>> Stashed changes
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
