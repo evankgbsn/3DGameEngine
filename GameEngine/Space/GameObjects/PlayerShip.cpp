@@ -148,8 +148,12 @@ void PlayerShip::TerminateRemotePlayer()
 
 void PlayerShip::GameUpdate()
 {
-	SetPosition(positionToSet);
-	SetRotation(rotationToSet);
+	if (IsClient())
+	{
+		SetPosition(positionToSet);
+		SetRotation(rotationToSet);
+	}
+	
 	UpdatePhysics();
 	Look();
 	Move();

@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FPS", "FPS\FPS.vcxproj", "{B92335CD-A7B5-466F-B9B8-EC78479E4010}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HackerRun", "HackerRun\HackerRun.vcxproj", "{880ED81D-9396-4D9A-B42F-55CEA35932BC}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Space", "Space\Space.vcxproj", "{B57FE5FF-4632-4574-AB39-31C44A1036D1}"
 EndProject
 Global
@@ -125,38 +123,6 @@ Global
 		{B92335CD-A7B5-466F-B9B8-EC78479E4010}.ReleaseServerGame|x64.Build.0 = ReleaseServerGame|x64
 		{B92335CD-A7B5-466F-B9B8-EC78479E4010}.ReleaseServerGame|x86.ActiveCfg = ReleaseServerGame|Win32
 		{B92335CD-A7B5-466F-B9B8-EC78479E4010}.ReleaseServerGame|x86.Build.0 = ReleaseServerGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientEditor|x64.ActiveCfg = DebugClientEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientEditor|x64.Build.0 = DebugClientEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientEditor|x86.ActiveCfg = DebugClientEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientEditor|x86.Build.0 = DebugClientEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientGame|x64.ActiveCfg = DebugClientGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientGame|x64.Build.0 = DebugClientGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientGame|x86.ActiveCfg = DebugClientGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugClientGame|x86.Build.0 = DebugClientGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerEditor|x64.ActiveCfg = DebugServerEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerEditor|x64.Build.0 = DebugServerEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerEditor|x86.ActiveCfg = DebugServerEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerEditor|x86.Build.0 = DebugServerEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerGame|x64.ActiveCfg = DebugServerGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerGame|x64.Build.0 = DebugServerGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerGame|x86.ActiveCfg = DebugServerGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.DebugServerGame|x86.Build.0 = DebugServerGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientEditor|x64.ActiveCfg = ReleaseClientEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientEditor|x64.Build.0 = ReleaseClientEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientEditor|x86.ActiveCfg = ReleaseClientEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientEditor|x86.Build.0 = ReleaseClientEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientGame|x64.ActiveCfg = ReleaseClientGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientGame|x64.Build.0 = ReleaseClientGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientGame|x86.ActiveCfg = ReleaseClientGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseClientGame|x86.Build.0 = ReleaseClientGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerEditor|x64.ActiveCfg = ReleaseServerEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerEditor|x64.Build.0 = ReleaseServerEditor|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerEditor|x86.ActiveCfg = ReleaseServerEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerEditor|x86.Build.0 = ReleaseServerEditor|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerGame|x64.ActiveCfg = ReleaseServerGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerGame|x64.Build.0 = ReleaseServerGame|x64
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerGame|x86.ActiveCfg = ReleaseServerGame|Win32
-		{880ED81D-9396-4D9A-B42F-55CEA35932BC}.ReleaseServerGame|x86.Build.0 = ReleaseServerGame|Win32
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.DebugClientEditor|x64.ActiveCfg = DebugClientEditor|x64
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.DebugClientEditor|x64.Build.0 = DebugClientEditor|x64
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.DebugClientEditor|x86.ActiveCfg = DebugClientEditor|Win32
