@@ -123,6 +123,8 @@ private:
 
 	float speed;
 
+	float rotationSpeed;
+
 	float positionUpdateInterval;
 
 	float rotationUpdateInterval;

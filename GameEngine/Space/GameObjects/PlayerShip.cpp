@@ -19,6 +19,7 @@ PlayerShip::PlayerShip() :
 	move(nullptr),
 	look(nullptr),
 	speed(1000.0f),
+	rotationSpeed(10.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
@@ -305,6 +306,8 @@ void PlayerShip::RegisterInput()
 
 			ClientSend("Look " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::vec3(dif, 0.0f)), false);
 		});
+
+	InputManager::DisableCursor("Engine");
 }
 
 void PlayerShip::DeregisterInput()
@@ -376,8 +379,8 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
 
-			body->AddTorque(graphics->GetRight() * speed * dif.x);
-			body->AddTorque(graphics->GetForward() * speed * dif.y);
+			body->AddTorque(graphics->GetRight() * rotationSpeed * dif.x);
+			body->AddTorque(graphics->GetForward() * rotationSpeed * dif.y);
 		}));
 }
 
