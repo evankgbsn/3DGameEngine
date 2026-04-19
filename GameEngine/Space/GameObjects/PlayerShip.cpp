@@ -20,7 +20,7 @@ PlayerShip::PlayerShip() :
 	look(nullptr),
 	speed(10.0f),
 	positionUpdateInterval(0.05f),
-	camOffset({0.0f, 3.5f, -5.0f})
+	camOffset({0.0f, 5.5f, -8.0f})
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
