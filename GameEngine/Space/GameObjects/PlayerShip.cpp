@@ -19,7 +19,7 @@ PlayerShip::PlayerShip() :
 	move(nullptr),
 	look(nullptr),
 	speed(1000.0f),
-	rotationSpeed(100.0f),
+	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
