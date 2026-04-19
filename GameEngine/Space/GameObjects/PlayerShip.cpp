@@ -23,7 +23,9 @@ PlayerShip::PlayerShip() :
 	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
-	camOffset({0.0f, 5.5f, -8.0f})
+	camOffset({0.0f, 5.5f, -8.0f}),
+	positionToSet({0.0f, 0.0f, 0.0f}),
+	rotationToSet(glm::mat4(1.0f))
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
@@ -510,9 +512,9 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 
 	AddServerDataReceivedCallback("StopLook", serverDataReceivedCallbacks["StopLook"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
-			gamepadTorqueX = glm::vec3(0.0f);
-			gamepadTorqueY = glm::vec3(0.0f);
-			torque = glm::vec3(0.0f);
+			gamepadTorqueX = glm::vec3(0.0f, 0.0f, 0.0f);
+			gamepadTorqueY = glm::vec3(0.0f, 0.0f, 0.0f);
+			torque = glm::vec3(0.0f, 0.0f, 0.0f);
 		}));
 }
 
@@ -580,7 +582,7 @@ void PlayerShip::Look()
 					lastFrameSamePos = true;
 					ClientSend("StopLook " + std::to_string(stopLookPacketNumber++) + " ", false);
 				}
-				else
+				else if(pos != lastCursorPos)
 				{
 					lastFrameSamePos = false;
 				}
