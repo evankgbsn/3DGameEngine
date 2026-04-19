@@ -133,6 +133,8 @@ private:
 
 	glm::vec3 movementForce;
 
+	glm::vec3 tourque;
+
 };
 
 #endif // PLAYERSHIP_H

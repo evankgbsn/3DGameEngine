@@ -378,9 +378,7 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 	AddServerDataReceivedCallback("Look", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
-
-			body->AddTorque(graphics->GetRight() * rotationSpeed * dif.x);
-			body->AddTorque(graphics->GetForward() * rotationSpeed * dif.y);
+			tourque = (graphics->GetRight() * rotationSpeed * dif.x) + (graphics->GetForward() * rotationSpeed * dif.y);
 		}));
 }
 
@@ -428,6 +426,7 @@ void PlayerShip::Move()
 	if (IsServer())
 	{
 		body->AddForce(movementForce * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
+		body->AddTorque(tourque * rotationSpeed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
 	}
 }
 
