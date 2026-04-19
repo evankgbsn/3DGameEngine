@@ -1,7 +1,23 @@
 #include "PlayerShip.h"
 
+#include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
+#include "GameEngine/GameObject/Component/CameraComponent.h"
+#include "GameEngine/Renderer/Model/ModelManager.h"
+#include "GameEngine/Renderer/Texture/TextureManager.h"
+#include "GameEngine/GameObject/Component/RigidBodyComponent.h"
+#include "GameEngine/Input/InputManager.h"
+#include "GameEngine/Networking/NetworkManager.h"
+#include "GameEngine/Time/TimeManager.h"
+
 PlayerShip::PlayerShip() :
-	GameObject("PlayerShip")
+	GameObject("PlayerShip"),
+	graphics(nullptr),
+	cam(nullptr),
+	body(nullptr),
+	move(nullptr),
+	look(nullptr),
+	speed(10.0f),
+	positionUpdateInterval(0.05f)
 {
 }
 
@@ -11,14 +27,114 @@ PlayerShip::~PlayerShip()
 
 void PlayerShip::Initialize()
 {
+	InitializeLocalPlayer();
+
+	InitializeServer();
+
+	InitializeRemotePlayer();
+}
+
+void PlayerShip::InitializeLocalPlayer()
+{
+	if (IsLocalClient())
+	{
+		graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("DefaultShip"), "DefaultShip", "DefaultShipSpec", "DefaultShipNorm");
+		graphics->SetShine(4.0f);
+		graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+		AddComponent(graphics, "Graphics");
+
+		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		AddComponent(cam, "Camera");
+
+		RegisterInput();
+	}
+}
+
+void PlayerShip::InitializeServer()
+{
+	if (IsServer())
+	{
+		graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("DefaultShip"), "DefaultShip", "DefaultShipSpec", "DefaultShipNorm");
+		graphics->SetShine(4.0f);
+		graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+		AddComponent(graphics, "Graphics");
+
+		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		AddComponent(cam, "Camera");
+
+		body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
+		AddComponent(body, "RigidBody");
+	}
+}
+
+void PlayerShip::InitializeRemotePlayer()
+{
+	if (IsClient() && !IsLocalClient())
+	{
+		graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("DefaultShip"), "DefaultShip", "DefaultShipSpec", "DefaultShipNorm");
+		graphics->SetShine(4.0f);
+		graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+		AddComponent(graphics, "Graphics");
+
+		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		AddComponent(cam, "Camera");
+	}
 }
 
 void PlayerShip::Terminate()
 {
+	TerminateLocalPlayer();
+
+	TerminateServer();
+
+	TerminateRemotePlayer();
+}
+
+void PlayerShip::TerminateLocalPlayer()
+{
+	if (IsLocalClient())
+	{
+		RemoveComponent("Graphics");
+		delete graphics;
+
+		RemoveComponent("Camera");
+		delete cam;
+
+		DeregisterInput();
+	}
+}
+
+void PlayerShip::TerminateServer()
+{
+	if (IsServer())
+	{
+		RemoveComponent("Graphics");
+		delete graphics;
+
+		RemoveComponent("Camera");
+		delete cam;
+
+		RemoveComponent("RigidBody");
+		delete body;
+	}
+}
+
+void PlayerShip::TerminateRemotePlayer()
+{
+	if (IsClient() && !IsLocalClient())
+	{
+		RemoveComponent("Graphics");
+		delete graphics;
+
+		RemoveComponent("Camera");
+		delete cam;
+	}
 }
 
 void PlayerShip::GameUpdate()
 {
+	OrientCamera();
+	SendServerPositionUpdates();
 }
 
 void PlayerShip::EditorUpdate()
@@ -27,6 +143,25 @@ void PlayerShip::EditorUpdate()
 
 void PlayerShip::Load()
 {
+	if (!ModelManager::ModelLoaded("DefaultShip"))
+	{
+		ModelManager::LoadModel("DefaultShip", "Assets/Model/DefaultShip.gltf", false);
+	}
+
+	if (!TextureManager::TextureLoaded("DefaultShip"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Grey.png", "DefaultShip");
+	}
+
+	if (!TextureManager::TextureLoaded("DefaultShipSpec"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Grey.png", "DefaultShipSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("DefaultShipNorm"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Normal.png", "DefaultShipNorm");
+	}
 }
 
 void PlayerShip::Unload()
@@ -35,20 +170,107 @@ void PlayerShip::Unload()
 
 void PlayerShip::OnSpawn()
 {
+	NetworkObject::OnSpawn();
 }
 
 void PlayerShip::OnDespawn()
 {
+	NetworkObject::OnDespawn();
 }
 
 void PlayerShip::OnDataReceived(const std::string& data)
 {
+	NetworkObject::OnDataReceived(data);
 }
 
-void PlayerShip::OnServerSpawnConfirmation(const std::string& IP)
+void PlayerShip::OnServerSpawnConfirmation(const std::string& ID)
 {
+	NetworkObject::OnServerSpawnConfirmation(ID);
 }
 
 void PlayerShip::OnClientSpawnConfirmation()
 {
+	NetworkObject::OnClientSpawnConfirmation();
+}
+
+void PlayerShip::OrientCamera()
+{
+	glm::vec3 camPosition = graphics->GetPosition() + (camOffset.x * graphics->GetRight()) + (camOffset.y * graphics->GetUp()) + (camOffset.z * graphics->GetForward());
+	cam->SetPosition(camPosition);
+	cam->SetUpVector(graphics->GetUp());
+	cam->SetTarget(graphics->GetPosition());
+}
+
+void PlayerShip::RegisterInput()
+{
+	move = new std::function<void(int)>([this](int keyCode)
+		{
+			ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
+		});
+
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, move, "Move");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, move, "Move");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, move, "Move");
+	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, move, "Move");
+}
+
+void PlayerShip::DeregisterInput()
+{
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "Move");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "Move");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "Move");
+	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "Move");
+
+	delete move;
+}
+
+void PlayerShip::AddClientDataReceivedCallbacks()
+{
+	AddClientDataReceivedCallback("Position", clientDataReceivedCallbacks["Position"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			SetPosition(NetworkManager::ConvertDataToVec3(data));
+		}));
+}
+
+void PlayerShip::AddServerDataReceivedCallbacks()
+{
+	AddServerDataReceivedCallback("Move", serverDataReceivedCallbacks["Move"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			glm::vec3 disp;
+
+			switch (std::stoi(data))
+			{
+			case KEY_W:
+				disp = graphics->GetForward();
+				break;
+			case KEY_A:
+				disp = graphics->GetRight();
+				break;
+			case KEY_S:
+				disp = -graphics->GetForward();
+				break;
+			case KEY_D:
+				disp = -graphics->GetRight();
+				break;
+			default:
+				break;
+			}
+
+			body->AddForce(disp * speed, RigidBodyComponent::ForceMode::IMPULSE);
+		}));
+}
+
+void PlayerShip::SendServerPositionUpdates()
+{
+	if (IsServer())
+	{
+		static float lastSendTime = TimeManager::SecondsSinceStart();
+
+		if (TimeManager::SecondsSinceStart() - lastSendTime > positionUpdateInterval)
+		{
+			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
+
+			lastSendTime = TimeManager::SecondsSinceStart();
+		}
+	}
 }
