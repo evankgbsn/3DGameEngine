@@ -87,6 +87,8 @@ private:
 
 	void UpdatePhysics();
 
+	void Move();
+
 	GraphicsObjectTexturedLit* graphics;
 
 	CameraComponent* cam;
@@ -101,6 +103,8 @@ private:
 
 	std::function<void(int)>* move;
 
+	std::function<void(int)>* stopMove;
+
 	std::function<void(const glm::vec2&)>* look;
 
 	unsigned long long movePacketNumber = 0;
@@ -114,6 +118,8 @@ private:
 	float positionUpdateInterval;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
+
+	glm::vec3 movementForce;
 
 };
 

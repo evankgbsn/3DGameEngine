@@ -18,7 +18,7 @@ PlayerShip::PlayerShip() :
 	body(nullptr),
 	move(nullptr),
 	look(nullptr),
-	speed(5.0f),
+	speed(30.0f),
 	positionUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
 {
@@ -278,10 +278,20 @@ void PlayerShip::RegisterInput()
 			ClientSend("Move " + std::to_string(movePacketNumber++) + " " + std::to_string(keyCode), false);
 		});
 
+	stopMove = new std::function<void(int)>([this](int keyCode)
+		{
+			ClientSend("StopMove " + std::to_string(movePacketNumber++) + " ", false);
+		});
+
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, move, "Move");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_A, move, "Move");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_S, move, "Move");
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_D, move, "Move");
+
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_W, stopMove, "StopMove");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_A, stopMove, "StopMove");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_S, stopMove, "StopMove");
+	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_D, stopMove, "StopMove");
 }
 
 void PlayerShip::DeregisterInput()
@@ -290,6 +300,11 @@ void PlayerShip::DeregisterInput()
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_A, "Move");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "Move");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "Move");
+
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_W, "StopMove");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_A, "StopMove");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_S, "StopMove");
+	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_D, "StopMove");
 
 	delete move;
 }
@@ -326,7 +341,12 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 				break;
 			}
 
-			body->AddForce(disp * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
+			movementForce = disp;
+		}));
+
+	AddServerDataReceivedCallback("StopMove", serverDataReceivedCallbacks["StopMove"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			movementForce = glm::vec3(0.0f);
 		}));
 }
 
@@ -351,5 +371,13 @@ void PlayerShip::UpdatePhysics()
 	{
 		body->Update();
 		body->SyncPhysics();
+	}
+}
+
+void PlayerShip::Move()
+{
+	if (IsServer())
+	{
+		body->AddForce(movementForce * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
 	}
 }
