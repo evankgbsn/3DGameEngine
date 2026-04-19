@@ -85,9 +85,13 @@ private:
 
 	void SendServerPositionUpdates();
 
+	void SendServerRotationUpdates();
+
 	void UpdatePhysics();
 
 	void Move();
+
+	void Look();
 
 	GraphicsObjectTexturedLit* graphics;
 
@@ -109,13 +113,19 @@ private:
 
 	unsigned long long movePacketNumber = 0;
 
+	unsigned long long stopMovePacketNumber = 0;
+
 	unsigned long long lookPacketNumber = 0;
 
 	unsigned long long positionPacketNumber = 0;
 
+	unsigned long long rotationPacketNumber = 0;
+
 	float speed;
 
 	float positionUpdateInterval;
+
+	float rotationUpdateInterval;
 
 	std::function<void(const std::string&)>* onClientDisconnect;
 

@@ -20,6 +20,7 @@ PlayerShip::PlayerShip() :
 	look(nullptr),
 	speed(1000.0f),
 	positionUpdateInterval(0.05f),
+	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
@@ -145,9 +146,11 @@ void PlayerShip::TerminateRemotePlayer()
 
 void PlayerShip::GameUpdate()
 {
+	Look();
 	Move();
 	OrientCamera();
 	SendServerPositionUpdates();
+	SendServerRotationUpdates();
 	UpdatePhysics();
 }
 
@@ -281,7 +284,7 @@ void PlayerShip::RegisterInput()
 
 	stopMove = new std::function<void(int)>([this](int keyCode)
 		{
-			ClientSend("StopMove " + std::to_string(movePacketNumber++) + " ", false);
+			ClientSend("StopMove " + std::to_string(stopMovePacketNumber++) + " ", false);
 		});
 
 	InputManager::RegisterCallbackForKeyState(KEY_PRESSED, KEY_W, move, "Move");
@@ -293,6 +296,15 @@ void PlayerShip::RegisterInput()
 	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_A, stopMove, "StopMove");
 	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_S, stopMove, "StopMove");
 	InputManager::RegisterCallbackForKeyState(KEY_RELEASE, KEY_D, stopMove, "StopMove");
+
+	look = new std::function<void(const glm::vec2&)>([this](const glm::vec2& pos)
+		{
+			static glm::vec2 lastPos = pos;
+
+			glm::vec2 dif = pos - lastPos;
+
+			ClientSend("Look " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::vec3(dif, 0.0f)), false);
+		});
 }
 
 void PlayerShip::DeregisterInput()
@@ -302,12 +314,17 @@ void PlayerShip::DeregisterInput()
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_S, "Move");
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_D, "Move");
 
+	delete move;
+
 	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_W, "StopMove");
 	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_A, "StopMove");
 	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_S, "StopMove");
 	InputManager::DeregisterCallbackForKeyState(KEY_RELEASE, KEY_D, "StopMove");
 
-	delete move;
+	delete stopMove;
+
+	delete look;
+
 }
 
 void PlayerShip::AddClientDataReceivedCallbacks()
@@ -315,6 +332,11 @@ void PlayerShip::AddClientDataReceivedCallbacks()
 	AddClientDataReceivedCallback("Position", clientDataReceivedCallbacks["Position"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			SetPosition(NetworkManager::ConvertDataToVec3(data));
+		}));
+
+	AddClientDataReceivedCallback("Rotation", clientDataReceivedCallbacks["Rotation"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			SetRotation(NetworkManager::ConvertDataToMat4(data));
 		}));
 }
 
@@ -349,6 +371,14 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 		{
 			movementForce = glm::vec3(0.0f);
 		}));
+
+	AddServerDataReceivedCallback("Look", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
+
+			body->AddTorque(graphics->GetRight() * speed * dif.x);
+			body->AddTorque(graphics->GetForward() * speed * dif.y);
+		}));
 }
 
 void PlayerShip::SendServerPositionUpdates()
@@ -360,6 +390,21 @@ void PlayerShip::SendServerPositionUpdates()
 		if (TimeManager::SecondsSinceStart() - lastSendTime > positionUpdateInterval)
 		{
 			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(graphics->GetPosition()), {}, false);
+
+			lastSendTime = TimeManager::SecondsSinceStart();
+		}
+	}
+}
+
+void PlayerShip::SendServerRotationUpdates()
+{
+	if (IsServer())
+	{
+		static float lastSendTime = TimeManager::SecondsSinceStart();
+
+		if (TimeManager::SecondsSinceStart() - lastSendTime > rotationUpdateInterval)
+		{
+			ServerSendAll("Rotation " + std::to_string(rotationPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(graphics->GetRotation()), {}, false);
 
 			lastSendTime = TimeManager::SecondsSinceStart();
 		}
@@ -381,4 +426,9 @@ void PlayerShip::Move()
 	{
 		body->AddForce(movementForce * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
 	}
+}
+
+void PlayerShip::Look()
+{
+	InputManager::WhenCursorMoved(*look);
 }
