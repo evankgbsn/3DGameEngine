@@ -10,7 +10,8 @@
 AsteroidField::AsteroidField() :
 	asteroid(new Asteroid()),
 	player(new PlayerShip()),
-	mainLight(new MainDirectionalLight())
+	mainLight(new MainDirectionalLight()),
+	serverFreeCam(nullptr)
 {
 	RegisterGameObject(asteroid, "Asteroid");
 	RegisterGameObject(mainLight, "MainLight");
