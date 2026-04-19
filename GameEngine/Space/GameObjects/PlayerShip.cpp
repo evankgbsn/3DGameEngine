@@ -19,7 +19,7 @@ PlayerShip::PlayerShip() :
 	move(nullptr),
 	look(nullptr),
 	speed(1000.0f),
-	rotationSpeed(0.01f),
+	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f})
@@ -378,7 +378,7 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 	AddServerDataReceivedCallback("Look", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
-			tourque = (graphics->GetRight() * rotationSpeed * dif.x) + (graphics->GetForward() * rotationSpeed * dif.y);
+			tourque = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
 		}));
 }
 
