@@ -145,6 +145,7 @@ void PlayerShip::TerminateRemotePlayer()
 
 void PlayerShip::GameUpdate()
 {
+	Move();
 	OrientCamera();
 	SendServerPositionUpdates();
 	UpdatePhysics();
