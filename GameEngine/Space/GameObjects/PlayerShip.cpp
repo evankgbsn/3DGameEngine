@@ -351,6 +351,8 @@ void PlayerShip::RegisterInput()
 			glm::vec2 dif = pos - lastPos;
 
 			ClientSend("Look " + std::to_string(lookPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(glm::vec3(dif, 0.0f)), false);
+
+			lastPos = pos;
 		});
 
 	InputManager::DisableCursor("Engine");
