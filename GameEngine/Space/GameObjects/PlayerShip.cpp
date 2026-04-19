@@ -331,7 +331,7 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 				break;
 			}
 
-			body->AddForce(disp * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::IMPULSE);
+			body->AddForce(disp * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
 		}));
 }
 
@@ -354,6 +354,8 @@ void PlayerShip::UpdatePhysics()
 {
 	if (IsServer())
 	{
+		body->AddForce(glm::vec3(0.0f, 0.0f, -.0000001f) * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
+
 		body->Update();
 		body->SyncPhysics();
 	}
