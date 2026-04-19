@@ -500,25 +500,21 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
 			torque = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
+			lastLookPacketTime = TimeManager::SecondsSinceStart();
 		}));
 
-	AddServerDataReceivedCallback("GamepadLookX", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
+	AddServerDataReceivedCallback("GamepadLookX", serverDataReceivedCallbacks["GamepadLookX"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
 			gamepadTorqueX = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
+			lastLookPacketTime = TimeManager::SecondsSinceStart();
 		}));
 
-	AddServerDataReceivedCallback("GamepadLookY", serverDataReceivedCallbacks["Look"] = new std::function<void(const std::string&)>([this](const std::string& data)
+	AddServerDataReceivedCallback("GamepadLookY", serverDataReceivedCallbacks["GamepadLookY"] = new std::function<void(const std::string&)>([this](const std::string& data)
 		{
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
 			gamepadTorqueY = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
-		}));
-
-	AddServerDataReceivedCallback("StopLook", serverDataReceivedCallbacks["StopLook"] = new std::function<void(const std::string&)>([this](const std::string& data)
-		{
-			gamepadTorqueX = glm::vec3(0.0f, 0.0f, 0.0f);
-			gamepadTorqueY = glm::vec3(0.0f, 0.0f, 0.0f);
-			torque = glm::vec3(0.0f, 0.0f, 0.0f);
+			lastLookPacketTime = TimeManager::SecondsSinceStart();
 		}));
 }
 
@@ -568,6 +564,13 @@ void PlayerShip::Move()
 	{
 		body->SetLinearVelocity(movementForce * TimeManager::DeltaTime());
 		body->SetAngularVelocity((torque + gamepadTorqueX + gamepadTorqueY) * TimeManager::DeltaTime());
+
+		if (TimeManager::SecondsSinceStart() - lastLookPacketTime > 0.1f)
+		{
+			torque = glm::vec3(0.0f);
+			gamepadTorqueX = glm::vec3(0.0f);
+			gamepadTorqueY = glm::vec3(0.0f);
+		}
 	}
 }
 
@@ -576,23 +579,5 @@ void PlayerShip::Look()
 	if (IsLocalClient())
 	{
 		InputManager::WhenCursorMoved(*look);
-
-		static glm::vec2 lastCursorPos(0.0f);
-		static bool lastFrameSamePos = false;
-
-		InputManager::GetCursorPosition([this](const glm::vec2& pos)
-			{
-				if (pos == lastCursorPos && lastFrameSamePos != true)
-				{
-					lastFrameSamePos = true;
-					ClientSend("StopLook " + std::to_string(stopLookPacketNumber++) + " ", false);
-				}
-				else if(pos != lastCursorPos)
-				{
-					lastFrameSamePos = false;
-				}
-
-				lastCursorPos = pos;
-			});
 	}
 }

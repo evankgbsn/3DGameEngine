@@ -139,6 +139,8 @@ private:
 
 	float rotationUpdateInterval;
 
+	float lastLookPacketTime;
+
 	std::function<void(const std::string&)>* onClientDisconnect;
 
 	glm::vec3 movementForce;
