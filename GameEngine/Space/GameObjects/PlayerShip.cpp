@@ -355,7 +355,7 @@ void PlayerShip::UpdatePhysics()
 {
 	if (IsServer())
 	{
-		body->AddForce(glm::vec3(0.0f, 0.0f, -.0000001f) * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
+		body->AddForce(glm::vec3(0.0f, 0.0f, -1.0f) * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::FORCE);
 
 		body->Update();
 		body->SyncPhysics();
