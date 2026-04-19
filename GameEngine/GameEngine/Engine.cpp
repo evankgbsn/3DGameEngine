@@ -93,12 +93,12 @@ void Engine::Run()
 			Editor::Update();
 			InputManager::EditorUpdate();
 			SceneManager::EditorUpdate();
+			//AudioManager::EditorUpdate();
 
 #ifndef _SINGLE_PLAYER
 			NetworkManager::EditorUpdate();
 #endif
 
-			AudioManager::EditorUpdate();
 		}
 		else
 #endif
@@ -114,7 +114,7 @@ void Engine::Run()
 			NetworkManager::Update();
 #endif
 
-			AudioManager::GameUpdate();
+			//AudioManager::GameUpdate();
 		}
 
 		WindowManager::SetWindowTitle("Engine", std::string("Engine ") + "FPS: " + std::to_string(TimeManager::GetAverageFPS()) + " Network Latency: " + std::to_string(NetworkManager::GetLatency(NetworkManager::GetID()) * 1000.0f) + "ms");
@@ -181,12 +181,12 @@ Engine::Engine()
 	NetworkManager::Initialize();
 #endif
 
-	AudioManager::Initialize();
+	//AudioManager::Initialize();
 }
 
 Engine::~Engine()
 {
-	AudioManager::Terminate();
+	//AudioManager::Terminate();
 
 #ifndef _SINGLE_PLAYER
 	NetworkManager::Terminate();
