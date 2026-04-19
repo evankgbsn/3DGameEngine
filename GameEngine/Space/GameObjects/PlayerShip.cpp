@@ -48,6 +48,7 @@ void PlayerShip::InitializeLocalPlayer()
 		AddComponent(graphics, "Graphics");
 
 		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		cam->SetActive();
 		AddComponent(cam, "Camera");
 
 		RegisterInput();
