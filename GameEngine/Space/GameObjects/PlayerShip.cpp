@@ -18,7 +18,7 @@ PlayerShip::PlayerShip() :
 	body(nullptr),
 	move(nullptr),
 	look(nullptr),
-	speed(3.0f),
+	speed(100.0f),
 	rotationSpeed(1.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
