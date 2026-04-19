@@ -59,6 +59,7 @@ void PlayerShip::InitializeLocalPlayer()
 
 		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
 		cam->SetActive();
+		cam->SetFOV(8.0f);
 		AddComponent(cam, "Camera");
 
 		RegisterInput();
@@ -76,6 +77,7 @@ void PlayerShip::InitializeServer()
 		AddComponent(graphics, "Graphics");
 
 		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		cam->SetFOV(8.0f);
 		AddComponent(cam, "Camera");
 
 		body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
@@ -96,6 +98,7 @@ void PlayerShip::InitializeRemotePlayer()
 		AddComponent(graphics, "Graphics");
 
 		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
+		cam->SetFOV(8.0f);
 		AddComponent(cam, "Camera");
 
 		AddClientDataReceivedCallbacks();

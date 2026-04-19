@@ -6,6 +6,7 @@
 MainDirectionalLight::MainDirectionalLight() :
 	GameObject("MainDirectionalLight")
 {
+	RegisterGameObjectClassType<MainDirectionalLight>(this);
 }
 
 MainDirectionalLight::~MainDirectionalLight()
