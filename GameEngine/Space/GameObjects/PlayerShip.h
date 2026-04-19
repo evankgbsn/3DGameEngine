@@ -85,6 +85,8 @@ private:
 
 	void SendServerPositionUpdates();
 
+	void UpdatePhysics();
+
 	GraphicsObjectTexturedLit* graphics;
 
 	CameraComponent* cam;

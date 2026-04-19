@@ -146,6 +146,7 @@ void PlayerShip::GameUpdate()
 {
 	OrientCamera();
 	SendServerPositionUpdates();
+	UpdatePhysics();
 }
 
 void PlayerShip::EditorUpdate()
@@ -340,5 +341,14 @@ void PlayerShip::SendServerPositionUpdates()
 
 			lastSendTime = TimeManager::SecondsSinceStart();
 		}
+	}
+}
+
+void PlayerShip::UpdatePhysics()
+{
+	if (IsServer())
+	{
+		body->Update();
+		body->SyncPhysics();
 	}
 }
