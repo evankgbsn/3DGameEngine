@@ -20,7 +20,7 @@ PlayerShip::PlayerShip() :
 	move(nullptr),
 	look(nullptr),
 	speed(100000.0f),
-	rotationSpeed(1.0f),
+	rotationSpeed(100.0f),
 	positionUpdateInterval(0.05f),
 	rotationUpdateInterval(0.05f),
 	camOffset({0.0f, 5.5f, -8.0f}),
@@ -567,7 +567,7 @@ void PlayerShip::Move()
 		body->SetLinearVelocity(movementForce * TimeManager::DeltaTime());
 		body->SetAngularVelocity((torque + gamepadTorqueX + gamepadTorqueY) * TimeManager::DeltaTime());
 
-		if (TimeManager::SecondsSinceStart() - lastLookPacketTime > 0.1f)
+		if (TimeManager::SecondsSinceStart() - lastLookPacketTime > .10f)
 		{
 			torque = glm::vec3(0.0f);
 			gamepadTorqueX = glm::vec3(0.0f);
