@@ -70,6 +70,7 @@ void PlayerShip::InitializeServer()
 		AddComponent(cam, "Camera");
 
 		body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
+		body->DisableGravity();
 		AddComponent(body, "RigidBody");
 
 		AddServerDataReceivedCallbacks();
