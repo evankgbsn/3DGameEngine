@@ -19,7 +19,8 @@ PlayerShip::PlayerShip() :
 	move(nullptr),
 	look(nullptr),
 	speed(10.0f),
-	positionUpdateInterval(0.05f)
+	positionUpdateInterval(0.05f),
+	camOffset({0.0f, 3.5f, -5.0f})
 {
 	RegisterGameObjectClassType<PlayerShip>(this);
 	RegisterNetworkObjectClassType<PlayerShip>(this);
@@ -208,6 +209,41 @@ void PlayerShip::OnDespawn()
 	NetworkManager::DeregisterOnClientDisconnectFunction("Player:" + std::to_string(GetNetworkObjectID()));
 
 	NetworkObject::OnDespawn();
+}
+
+glm::vec3 PlayerShip::GetPosition() const
+{
+	return graphics->GetPosition();
+}
+
+void PlayerShip::SetPosition(const glm::vec3& pos)
+{
+	if (body != nullptr)
+	{
+		body->SetPosition(pos);
+	}
+
+	graphics->SetPosition(pos);
+}
+
+glm::mat4 PlayerShip::GetRotation() const
+{
+	return graphics->GetRotation();
+}
+
+void PlayerShip::SetRotation(const glm::mat4& rot)
+{
+	if (body != nullptr)
+	{
+		body->SetRotation(rot);
+	}
+
+	graphics->SetRotation(rot);
+}
+
+glm::mat4 PlayerShip::GetTransform() const
+{
+	return graphics->GetTransform();
 }
 
 void PlayerShip::OnDataReceived(const std::string& data)

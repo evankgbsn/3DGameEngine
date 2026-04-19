@@ -57,6 +57,16 @@ private:
 
 	void OnDespawn() override;
 
+	glm::vec3 GetPosition() const override;
+
+	void SetPosition(const glm::vec3& pos) override;
+
+	glm::mat4 GetRotation() const override;
+	
+	void SetRotation(const glm::mat4& rot) override;
+
+	glm::mat4 GetTransform() const override;
+
 	void OnDataReceived(const std::string& data) override;
 
 	void OnServerSpawnConfirmation(const std::string& IP) override;
