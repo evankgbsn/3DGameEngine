@@ -19,6 +19,8 @@ PlayerShip::PlayerShip() :
 	speed(10.0f),
 	positionUpdateInterval(0.05f)
 {
+	RegisterGameObjectClassType<PlayerShip>(this);
+	RegisterNetworkObjectClassType<PlayerShip>(this);
 }
 
 PlayerShip::~PlayerShip()
