@@ -325,7 +325,7 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 				break;
 			}
 
-			body->AddForce(disp * speed, RigidBodyComponent::ForceMode::IMPULSE);
+			body->AddForce(disp * speed * TimeManager::DeltaTime(), RigidBodyComponent::ForceMode::IMPULSE);
 		}));
 }
 
