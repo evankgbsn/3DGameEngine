@@ -52,6 +52,7 @@ void PlayerShip::InitializeLocalPlayer()
 		AddComponent(cam, "Camera");
 
 		RegisterInput();
+		AddClientDataReceivedCallbacks();
 	}
 }
 
@@ -69,6 +70,8 @@ void PlayerShip::InitializeServer()
 
 		body = new RigidBodyComponent(RigidBodyComponent::Type::DYNAMIC, this, graphics->GetModel());
 		AddComponent(body, "RigidBody");
+
+		AddServerDataReceivedCallbacks();
 	}
 }
 
@@ -83,6 +86,8 @@ void PlayerShip::InitializeRemotePlayer()
 
 		cam = new CameraComponent("Player:" + std::to_string(GetNetworkObjectID()));
 		AddComponent(cam, "Camera");
+
+		AddClientDataReceivedCallbacks();
 	}
 }
 
