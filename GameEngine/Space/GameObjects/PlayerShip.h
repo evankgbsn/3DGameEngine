@@ -123,6 +123,8 @@ private:
 
 	unsigned long long stopMovePacketNumber = 0;
 
+	unsigned long long stopLookPacketNumber = 0;
+
 	unsigned long long lookPacketNumber = 0;
 
 	unsigned long long positionPacketNumber = 0;

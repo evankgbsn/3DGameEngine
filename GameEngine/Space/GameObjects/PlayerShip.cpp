@@ -507,6 +507,13 @@ void PlayerShip::AddServerDataReceivedCallbacks()
 			glm::vec2 dif = NetworkManager::ConvertDataToVec3(data);
 			gamepadTorqueY = (graphics->GetForward() * rotationSpeed * dif.x) + (graphics->GetRight() * rotationSpeed * dif.y);
 		}));
+
+	AddServerDataReceivedCallback("StopLook", serverDataReceivedCallbacks["StopLook"] = new std::function<void(const std::string&)>([this](const std::string& data)
+		{
+			gamepadTorqueX = glm::vec3(0.0f);
+			gamepadTorqueY = glm::vec3(0.0f);
+			torque = glm::vec3(0.0f);
+		}));
 }
 
 void PlayerShip::SendServerPositionUpdates()
@@ -562,5 +569,23 @@ void PlayerShip::Look()
 	if (IsLocalClient())
 	{
 		InputManager::WhenCursorMoved(*look);
+
+		static glm::vec2 lastCursorPos(0.0f);
+		static bool lastFrameSamePos = false;
+
+		InputManager::GetCursorPosition([this](const glm::vec2& pos)
+			{
+				if (pos == lastCursorPos && lastFrameSamePos != true)
+				{
+					lastFrameSamePos = true;
+					ClientSend("StopLook " + std::to_string(stopLookPacketNumber++) + " ", false);
+				}
+				else
+				{
+					lastFrameSamePos = false;
+				}
+
+				lastCursorPos = pos;
+			});
 	}
 }
