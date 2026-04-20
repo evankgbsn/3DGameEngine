@@ -77,8 +77,8 @@ void FPSPlayer::Initialize()
 	InitializeRemotePlayer();
 	InitializeServerPlayer();
 
-	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "Character", "CharacterSpec", "CharacterNormal");
-	ak12Graphics->SetShine(32.0f);
+	ak12Graphics = new GraphicsObjectTexturedLit(ModelManager::GetModel("AK12"), "AK12", "CharacterSpec", "CharacterNormal");
+	ak12Graphics->SetShine(1.0f);
 
 	AddComponent(ak12Graphics, "WeaponGraphics");
 
@@ -586,21 +586,23 @@ void FPSPlayer::GameUpdateLocalPlayer()
 			characterGraphics->SetPosition(controller->GetFootPosition());
 		}
 
-		if (shot && characterArmsGraphics->GetAdditiveAnimationTime("RifleRecoil") < 1.0f)
+		if (shot && characterArmsGraphics->GetAdditiveAnimationTime("RifleRecoil") < 9.8f)
 		{
+			recoilTime = recoilTime - TimeManager::DeltaTime();
+			if (recoilTime <= 0.0f)
+			{
+				recoilTime = timeBetweenShots;
+				shot = false;
+			}
+
 			characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", Math::ChangeRange(0.0f, timeBetweenShots, 0.0f, 1.0f, timeBetweenShots - recoilTime));
-		}
+		} 
 		else
 		{
 			characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
 		}
 
-		recoilTime = recoilTime - TimeManager::DeltaTime();
-		if (recoilTime <= 0.0f)
-		{
-			recoilTime = timeBetweenShots;
-			shot = false;
-		}
+		
 
 		hitBox->Update();
 		cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
@@ -792,7 +794,12 @@ void FPSPlayer::Load()
 
 	if (!TextureManager::TextureLoaded("Character"))
 	{
-		TextureManager::LoadTexture("Assets/Texture/Black.png", "Character");
+		TextureManager::LoadTexture("Assets/Texture/CharacterSkin.png", "Character");
+	}
+
+	if (!TextureManager::TextureLoaded("AK12"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Black.png", "AK12");
 	}
 
 	if (!TextureManager::TextureLoaded("CharacterSpec"))
