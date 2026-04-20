@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FPS", "FPS\FPS.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Space", "Space\Space.vcxproj", "{B57FE5FF-4632-4574-AB39-31C44A1036D1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetCopy", "AssetCopy\AssetCopy.vcxproj", "{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		DebugClientEditor|x64 = DebugClientEditor|x64
@@ -155,6 +157,38 @@ Global
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.ReleaseServerGame|x64.Build.0 = ReleaseServerGame|x64
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.ReleaseServerGame|x86.ActiveCfg = ReleaseServerGame|Win32
 		{B57FE5FF-4632-4574-AB39-31C44A1036D1}.ReleaseServerGame|x86.Build.0 = ReleaseServerGame|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientEditor|x64.ActiveCfg = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientEditor|x64.Build.0 = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientEditor|x86.ActiveCfg = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientEditor|x86.Build.0 = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientGame|x64.ActiveCfg = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientGame|x64.Build.0 = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientGame|x86.ActiveCfg = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugClientGame|x86.Build.0 = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerEditor|x64.ActiveCfg = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerEditor|x64.Build.0 = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerEditor|x86.ActiveCfg = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerEditor|x86.Build.0 = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerGame|x64.ActiveCfg = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerGame|x64.Build.0 = Debug|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerGame|x86.ActiveCfg = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.DebugServerGame|x86.Build.0 = Debug|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientEditor|x64.ActiveCfg = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientEditor|x64.Build.0 = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientEditor|x86.ActiveCfg = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientEditor|x86.Build.0 = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientGame|x64.ActiveCfg = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientGame|x64.Build.0 = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientGame|x86.ActiveCfg = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseClientGame|x86.Build.0 = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerEditor|x64.ActiveCfg = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerEditor|x64.Build.0 = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerEditor|x86.ActiveCfg = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerEditor|x86.Build.0 = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerGame|x64.ActiveCfg = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerGame|x64.Build.0 = Release|x64
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerGame|x86.ActiveCfg = Release|Win32
+		{B4AB7DEB-1A19-4140-9B13-3F94B682EC87}.ReleaseServerGame|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
