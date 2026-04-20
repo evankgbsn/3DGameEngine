@@ -115,7 +115,9 @@ private:
 
 	GraphicsObjectTexturedAnimatedLit* characterArmsGraphics;
 
-	GraphicsObjectTexturedAnimatedLit* characterLegsGraphics;
+	GraphicsObjectTexturedAnimatedLit* characterPantsGraphics;
+
+	GraphicsObjectTexturedAnimatedLit* characterShirtGraphics;
 
 	GraphicsObjectTexturedLit* ak12Graphics;
 

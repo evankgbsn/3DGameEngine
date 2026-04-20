@@ -35,8 +35,9 @@ FPSPlayer::FPSPlayer() :
 	shotCast(nullptr),
 	timeBetweenShots(0.15f),
 	characterGraphics(nullptr),
-	characterLegsGraphics(nullptr),
-	characterArmsGraphics(nullptr)
+	characterPantsGraphics(nullptr),
+	characterArmsGraphics(nullptr),
+	characterShirtGraphics(nullptr)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
@@ -124,20 +125,35 @@ void FPSPlayer::InitializeLocalPlayer()
 		characterArmsGraphics->SetRenderReflection(false);
 		AddComponent(characterArmsGraphics, "ArmsGraphics");
 
-		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
-		characterLegsGraphics->SetClip("Idle");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
-		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
-		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
-		characterLegsGraphics->SetShine(32.0f);
-		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterLegsGraphics->SetSpeed(1.0f);
-		characterLegsGraphics->SetRenderShadow(false);
-		characterLegsGraphics->SetRenderReflection(false);
-		AddComponent(characterLegsGraphics, "LegsGraphics");
+		characterPantsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterPants"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterPantsGraphics->SetClip("Idle");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterPantsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterPantsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterPantsGraphics->SetShine(32.0f);
+		characterPantsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterPantsGraphics->SetSpeed(1.0f);
+		characterPantsGraphics->SetRenderShadow(false);
+		characterPantsGraphics->SetRenderReflection(false);
+		AddComponent(characterPantsGraphics, "LegsGraphics");
+
+		characterShirtGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterShirt"), "CharacterShirt", "CharacterShirtSpec", "CharacterShirtNormal");
+		characterShirtGraphics->SetClip("Idle");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookUp");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookDown");
+		characterShirtGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterShirtGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterShirtGraphics->SetShine(32.0f);
+		characterShirtGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterShirtGraphics->SetSpeed(1.0f);
+		characterShirtGraphics->SetRenderShadow(false);
+		characterShirtGraphics->SetRenderReflection(false);
+		AddComponent(characterShirtGraphics, "ShirtGraphics");
 
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
 
@@ -175,23 +191,39 @@ void FPSPlayer::InitializeRemotePlayer()
 
 		AddComponent(characterGraphics, "Graphics");
 
-		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
-		characterLegsGraphics->SetClip("Idle");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
-		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
-		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
-		characterLegsGraphics->SetShine(32.0f);
-		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterLegsGraphics->SetSpeed(1.0f);
-		characterLegsGraphics->SetRenderShadow(false);
-		characterLegsGraphics->SetRenderReflection(false);
-		AddComponent(characterLegsGraphics, "LegsGraphics");
+		characterPantsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterPants"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterPantsGraphics->SetClip("Idle");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterPantsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterPantsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterPantsGraphics->SetShine(32.0f);
+		characterPantsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterPantsGraphics->SetSpeed(1.0f);
+		characterPantsGraphics->SetRenderShadow(false);
+		characterPantsGraphics->SetRenderReflection(false);
+		AddComponent(characterPantsGraphics, "PantsGraphics");
+
+		characterShirtGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterShirt"), "CharacterShirt", "CharacterShirtSpec", "CharacterShirtNormal");
+		characterShirtGraphics->SetClip("Idle");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookUp");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookDown");
+		characterShirtGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterShirtGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterShirtGraphics->SetShine(32.0f);
+		characterShirtGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterShirtGraphics->SetSpeed(1.0f);
+		characterShirtGraphics->SetRenderShadow(false);
+		characterShirtGraphics->SetRenderReflection(false);
+		AddComponent(characterShirtGraphics, "ShirtGraphics");
 
 		positionToSet = characterGraphics->GetPosition();
-		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterPantsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterShirtGraphics->SetPosition(characterGraphics->GetPosition());
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
@@ -222,21 +254,35 @@ void FPSPlayer::InitializeServerPlayer()
 
 		positionToSet = characterGraphics->GetPosition();
 
-		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
-		characterLegsGraphics->SetClip("Idle");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
-		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
-		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
-		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
-		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
-		characterLegsGraphics->SetShine(32.0f);
-		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
-		characterLegsGraphics->SetSpeed(1.0f);
-		characterLegsGraphics->SetRenderShadow(false);
-		characterLegsGraphics->SetRenderReflection(false);
-		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
-		AddComponent(characterLegsGraphics, "LegsGraphics");
+		characterPantsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterPants"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterPantsGraphics->SetClip("Idle");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterPantsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterPantsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterPantsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterPantsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterPantsGraphics->SetShine(32.0f);
+		characterPantsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterPantsGraphics->SetSpeed(1.0f);
+		characterPantsGraphics->SetRenderShadow(false);
+		characterPantsGraphics->SetRenderReflection(false);
+		AddComponent(characterPantsGraphics, "PantsGraphics");
+
+		characterShirtGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterShirt"), "CharacterShirt", "CharacterShirtSpec", "CharacterShirtNormal");
+		characterShirtGraphics->SetClip("Idle");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookUp");
+		characterShirtGraphics->InitializeAdditiveAnimation("LookDown");
+		characterShirtGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterShirtGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterShirtGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterShirtGraphics->SetShine(32.0f);
+		characterShirtGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterShirtGraphics->SetSpeed(1.0f);
+		characterShirtGraphics->SetRenderShadow(false);
+		characterShirtGraphics->SetRenderReflection(false);
+		AddComponent(characterShirtGraphics, "ShirtGraphics");
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
@@ -440,8 +486,11 @@ void FPSPlayer::TerminateLocalPlayer()
 		RemoveComponent("Graphics");
 		delete characterGraphics;
 
-		RemoveComponent("LegsGraphics");
-		delete characterLegsGraphics;
+		RemoveComponent("PantsGraphics");
+		delete characterPantsGraphics;
+
+		RemoveComponent("ShirtGraphics");
+		delete characterShirtGraphics;
 
 		RemoveComponent("Camera");
 		delete cam;
@@ -461,14 +510,17 @@ void FPSPlayer::TerminateRemotePlayer()
 		RemoveComponent("Graphics");
 		delete characterGraphics;
 
-		RemoveComponent("LegsGraphics");
-		delete characterLegsGraphics;
+		RemoveComponent("PantsGraphics");
+		delete characterPantsGraphics;
 
 		RemoveComponent("Camera");
 		delete cam;
 
 		RemoveComponent("WeaponGraphics");
 		delete ak12Graphics;
+
+		RemoveComponent("ShirtGraphics");
+		delete characterShirtGraphics;
 	}
 }
 
@@ -491,8 +543,11 @@ void FPSPlayer::TerminateServer()
 		RemoveComponent("Graphics");
 		delete characterGraphics;
 
-		RemoveComponent("LegsGraphics");
-		delete characterLegsGraphics;
+		RemoveComponent("PantsGraphics");
+		delete characterPantsGraphics;
+
+		RemoveComponent("ShirtGraphics");
+		delete characterShirtGraphics;
 
 		RemoveComponent("Camera");
 		delete cam;
@@ -513,7 +568,7 @@ void FPSPlayer::GameUpdateLocalPlayer()
 {
 	if (IsLocalClient())
 	{
-		characterLegsGraphics->SetTransform(characterGraphics->GetTransform());
+		characterPantsGraphics->SetTransform(characterGraphics->GetTransform());
 
 		if (!NetworkManager::IsServer())
 		{
@@ -614,7 +669,10 @@ void FPSPlayer::GameUpdateRemotePlayer()
 	if (!IsLocalClient() && !IsServer())
 	{
 		SetPosition(footPositionToSet);
-		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterPantsGraphics->SetTransform(characterGraphics->GetTransform());
+		characterPantsGraphics->SetSampleTime(characterGraphics->GetSampleTime());
+		characterShirtGraphics->SetTransform(characterGraphics->GetTransform());
+		characterShirtGraphics->SetSampleTime(characterGraphics->GetSampleTime());
 		newFootPositionFromServer.store(false);
 
 		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
@@ -681,7 +739,10 @@ void FPSPlayer::GameUpdateServer()
 		}
 
 		lastPosition = characterGraphics->GetPosition();
-		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterPantsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterPantsGraphics->SetSampleTime(characterGraphics->GetSampleTime());
+		characterShirtGraphics->SetTransform(characterGraphics->GetTransform());
+		characterShirtGraphics->SetSampleTime(characterGraphics->GetSampleTime());
 
 		cam->Update();
 	}
@@ -707,9 +768,14 @@ void FPSPlayer::Load()
 		ModelManager::LoadModel("Character", "Assets/Model/FPSCharacter.gltf", false);
 	}
 
-	if (!ModelManager::ModelLoaded("CharacterLegs"))
+	if (!ModelManager::ModelLoaded("CharacterPants"))
 	{
-		ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterPants.gltf", false);
+		ModelManager::LoadModel("CharacterPants", "Assets/Model/FPSCharacterPants.gltf", false);
+	}
+
+	if (!ModelManager::ModelLoaded("CharacterShirt"))
+	{
+		ModelManager::LoadModel("CharacterShirt", "Assets/Model/FPSCharacterShirt.gltf", false);
 	}
 
 	if (!TextureManager::TextureLoaded("Character"))
@@ -741,6 +807,22 @@ void FPSPlayer::Load()
 	{
 		TextureManager::LoadTexture("Assets/Texture/PantsNormal.png", "CharacterPantsNormal");
 	}
+
+	if (!TextureManager::TextureLoaded("CharacterShirt"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Shirt.png", "CharacterShirt");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterShirtSpec"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Black.png", "CharacterShirtSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterShirtNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/ShirtNormal.png", "CharacterShirtNormal");
+	}
+
 
 	if (IsLocalClient())
 	{
@@ -1004,9 +1086,14 @@ void FPSPlayer::RegisterInput()
 						characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
 					}
 
-					if (characterLegsGraphics->GetCurrentAnimation() != "AimRun" && characterLegsGraphics->GetFadeToClipName() != "AimRun")
+					if (characterPantsGraphics->GetCurrentAnimation() != "AimRun" && characterPantsGraphics->GetFadeToClipName() != "AimRun")
 					{
-						characterLegsGraphics->FadeAnimationTo("AimRun", 0.05f);
+						characterPantsGraphics->FadeAnimationTo("AimRun", 0.05f);
+					}
+
+					if (characterShirtGraphics->GetCurrentAnimation() != "AimRun" && characterShirtGraphics->GetFadeToClipName() != "AimRun")
+					{
+						characterShirtGraphics->FadeAnimationTo("AimRun", 0.05f);
 					}
 				}
 
@@ -1020,6 +1107,8 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->FadeAnimationTo("Idle", 0.05f);
 					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterPantsGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterShirtGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
 			}
 		});
@@ -1163,10 +1252,16 @@ void FPSPlayer::RegisterInput()
 					characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
 				}
 
-				if (characterLegsGraphics->GetCurrentAnimation() != "AimRun" && characterLegsGraphics->GetFadeToClipName() != "AimRun")
+				if (characterPantsGraphics->GetCurrentAnimation() != "AimRun" && characterPantsGraphics->GetFadeToClipName() != "AimRun")
 				{
-					characterLegsGraphics->FadeAnimationTo("AimRun", 0.05f);
+					characterPantsGraphics->FadeAnimationTo("AimRun", 0.05f);
 				}
+
+				if (characterShirtGraphics->GetCurrentAnimation() != "AimRun" && characterShirtGraphics->GetFadeToClipName() != "AimRun")
+				{
+					characterShirtGraphics->FadeAnimationTo("AimRun", 0.05f);
+				}
+
 				wPressed = true;
 				break;
 			case KEY_A:
@@ -1212,7 +1307,8 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->FadeAnimationTo("Idle", 0.05f);
 					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
-					characterLegsGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterPantsGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterShirtGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
 				
 				log += std::string("Fading");
