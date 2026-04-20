@@ -453,20 +453,23 @@ void FPSPlayer::TerminateLocalPlayer()
 
 void FPSPlayer::TerminateRemotePlayer()
 {
-	RemoveComponent("AnimatedCollider");
-	delete hitBox;
+	if (!IsLocalClient() && !IsServer())
+	{
+		RemoveComponent("AnimatedCollider");
+		delete hitBox;
 
-	RemoveComponent("Graphics");
-	delete characterGraphics;
+		RemoveComponent("Graphics");
+		delete characterGraphics;
 
-	RemoveComponent("LegsGraphics");
-	delete characterLegsGraphics;
+		RemoveComponent("LegsGraphics");
+		delete characterLegsGraphics;
 
-	RemoveComponent("Camera");
-	delete cam;
+		RemoveComponent("Camera");
+		delete cam;
 
-	RemoveComponent("WeaponGraphics");
-	delete ak12Graphics;
+		RemoveComponent("WeaponGraphics");
+		delete ak12Graphics;
+	}
 }
 
 void FPSPlayer::TerminateServer()
