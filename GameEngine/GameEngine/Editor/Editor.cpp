@@ -32,6 +32,7 @@ Editor::Editor() :
 	cam.SetPosition(glm::vec3(25.0f, 25.0f, 25.0f));
 	cam.SetTarget(glm::vec3(0.0f));
 	cam.SetNear(0.001f);
+	cam.SetFar(100000.0f);
 	SetupEditorInput();
 	InitializeGrid();
 }

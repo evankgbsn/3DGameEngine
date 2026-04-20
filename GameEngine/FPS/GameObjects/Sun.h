@@ -4,6 +4,7 @@
 #include "GameEngine/GameObject/GameObject.h"
 
 class DirectionalLightComponent;
+class GraphicsObjectTextured;
 
 class Sun : public GameObject
 {
@@ -58,6 +59,8 @@ private:
 	std::function<void()>* onEditorEnable;
 
 	std::function<void()>* onEditorDisable;
+
+	GraphicsObjectTextured* sky;
 };
 
 #endif // SUN_H

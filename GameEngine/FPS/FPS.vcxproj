@@ -295,6 +295,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     <ClCompile Include="GameObjects\PointLightObject.cpp" />
     <ClCompile Include="GameObjects\ServerFreeCamera.cpp" />
     <ClCompile Include="GameObjects\ShippingContainer.cpp" />
+    <ClCompile Include="GameObjects\SkySphere.cpp" />
     <ClCompile Include="GameObjects\SpawnPoint.cpp" />
     <ClCompile Include="GameObjects\SpotLightObject.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
@@ -323,6 +324,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     <ClInclude Include="GameObjects\PointLightObject.h" />
     <ClInclude Include="GameObjects\ServerFreeCamera.h" />
     <ClInclude Include="GameObjects\ShippingContainer.h" />
+    <ClInclude Include="GameObjects\SkySphere.h" />
     <ClInclude Include="GameObjects\SpawnPoint.h" />
     <ClInclude Include="GameObjects\SpotLightObject.h" />
     <ClInclude Include="GameObjects\Sun.h" />

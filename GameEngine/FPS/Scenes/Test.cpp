@@ -22,6 +22,7 @@
 #include "../GameObjects/WarehouseRoofPannel.h"
 #include "../GameObjects/SpotLightObject.h"
 #include "../GameObjects/SpawnPoint.h"
+#include "../GameObjects/SkySphere.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -43,7 +44,8 @@ Test::Test() :
 	warehouseVerticalBeamHalf(new WarehouseVerticalBeamHalf()),
 	warehouseRoofPannel(new WarehouseRoofPannel()),
 	spotLight(new SpotLightObject()),
-	spawnPoint(new SpawnPoint())
+	spawnPoint(new SpawnPoint()),
+	sky(new SkySphere())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -61,6 +63,7 @@ Test::Test() :
 	RegisterGameObject(warehouseRoofPannel, "WarehouseRoofPannel");
 	RegisterGameObject(spotLight, "SpotLight");
 	RegisterGameObject(spawnPoint, "SpawnPoint");
+	RegisterGameObject(sky, "Sky");
 }
 
 Test::~Test()
@@ -73,6 +76,11 @@ Test::~Test()
 	if (sun != nullptr)
 	{
 		delete sun;
+	}
+
+	if (sky != nullptr)
+	{
+		delete sky;
 	}
 
 	if (crate != nullptr)
