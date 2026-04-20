@@ -43,6 +43,10 @@ public:
 
 	float GetFadeToTime() const;
 
+	void SetSampleTime(float time);
+
+	float GetSampleTime() const;
+
 	const std::string& GetFadeToClipName() const;
 
 	void RegisterAnimationStartCallback(const std::string& name, std::function<void(const std::string&)>* callback);

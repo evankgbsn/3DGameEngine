@@ -100,6 +100,20 @@ float GraphicsObjectTexturedAnimatedLit::GetFadeToTime() const
 	return go->GetFadeToTime();
 }
 
+void GraphicsObjectTexturedAnimatedLit::SetSampleTime(float time)
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	go->SetSampleTime(time);
+}
+
+float GraphicsObjectTexturedAnimatedLit::GetSampleTime() const
+{
+	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
+
+	return go->GetSampleTime();
+}
+
 const std::string& GraphicsObjectTexturedAnimatedLit::GetFadeToClipName() const
 {
 	GOTexturedAnimatedLit* go = static_cast<GOTexturedAnimatedLit*>(graphics);
