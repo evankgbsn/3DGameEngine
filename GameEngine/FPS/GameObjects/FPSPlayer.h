@@ -103,6 +103,8 @@ private:
 
 	GraphicsObjectTexturedAnimatedLit* characterArmsGraphics;
 
+	GraphicsObjectTexturedAnimatedLit* characterLegsGraphics;
+
 	GraphicsObjectTexturedLit* ak12Graphics;
 
 	CameraComponent* cam;

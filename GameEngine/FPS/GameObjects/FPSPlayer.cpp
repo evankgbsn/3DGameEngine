@@ -121,6 +121,21 @@ void FPSPlayer::InitializeLocalPlayer()
 		characterArmsGraphics->SetRenderReflection(false);
 		AddComponent(characterArmsGraphics, "ArmsGraphics");
 
+		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterLegsGraphics->SetClip("Idle");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterLegsGraphics->SetShine(32.0f);
+		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterLegsGraphics->SetSpeed(1.0f);
+		characterLegsGraphics->SetRenderShadow(false);
+		characterLegsGraphics->SetRenderReflection(false);
+		AddComponent(characterLegsGraphics, "LegsGraphics");
+
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
 
 		crosshair = new Sprite("Crosshair", { 0.5f, 0.5f }, { 0.000005f * dimensions.y , 0.000005f * dimensions.x });
@@ -408,6 +423,8 @@ void FPSPlayer::GameUpdate()
 {
 	if (IsLocalClient())
 	{
+		characterLegsGraphics->SetTransform(characterGraphics->GetTransform());
+
 		if (!NetworkManager::IsServer())
 		{
 			SetPosition(positionToSet);
@@ -601,6 +618,21 @@ void FPSPlayer::Load()
 		TextureManager::LoadTexture("Assets/Texture/Normal.png", "CharacterNormal");
 	}
 
+	if (!TextureManager::TextureLoaded("CharacterPants"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Pants.png", "CharacterPants");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterPantsSpec"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/Black.png", "CharacterPantsSpec");
+	}
+
+	if (!TextureManager::TextureLoaded("CharacterPantsNormal"))
+	{
+		TextureManager::LoadTexture("Assets/Texture/PantsNormal.png", "CharacterPantsNormal");
+	}
+
 	if (IsLocalClient())
 	{
 		if (!ModelManager::ModelLoaded("CharacterArms"))
@@ -610,7 +642,7 @@ void FPSPlayer::Load()
 
 		if (!ModelManager::ModelLoaded("CharacterLegs"))
 		{
-			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterLegs.gltf", false);
+			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterPants.gltf", false);
 		}
 
 		if (!TextureManager::TextureLoaded("Crosshair"))
@@ -867,6 +899,11 @@ void FPSPlayer::RegisterInput()
 					{
 						characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
 					}
+
+					if (characterLegsGraphics->GetCurrentAnimation() != "AimRun" && characterLegsGraphics->GetFadeToClipName() != "AimRun")
+					{
+						characterLegsGraphics->FadeAnimationTo("AimRun", 0.05f);
+					}
 				}
 
 				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[2]) * value * xspeed * TimeManager::DeltaTime());
@@ -1021,6 +1058,11 @@ void FPSPlayer::RegisterInput()
 				{
 					characterArmsGraphics->FadeAnimationTo("AimRun", 0.05f);
 				}
+
+				if (characterLegsGraphics->GetCurrentAnimation() != "AimRun" && characterLegsGraphics->GetFadeToClipName() != "AimRun")
+				{
+					characterLegsGraphics->FadeAnimationTo("AimRun", 0.05f);
+				}
 				wPressed = true;
 				break;
 			case KEY_A:
@@ -1066,6 +1108,7 @@ void FPSPlayer::RegisterInput()
 				{
 					characterGraphics->FadeAnimationTo("Idle", 0.05f);
 					characterArmsGraphics->FadeAnimationTo("Idle", 0.05f);
+					characterLegsGraphics->FadeAnimationTo("Idle", 0.05f);
 				}
 				
 				log += std::string("Fading");
