@@ -33,7 +33,10 @@ FPSPlayer::FPSPlayer() :
 	GameObject("FPSPlayer"),
 	controller(nullptr),
 	shotCast(nullptr),
-	timeBetweenShots(0.15f)
+	timeBetweenShots(0.15f),
+	characterGraphics(nullptr),
+	characterLegsGraphics(nullptr),
+	characterArmsGraphics(nullptr)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
@@ -172,7 +175,23 @@ void FPSPlayer::InitializeRemotePlayer()
 
 		AddComponent(characterGraphics, "Graphics");
 
+		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterLegsGraphics->SetClip("Idle");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterLegsGraphics->SetShine(32.0f);
+		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterLegsGraphics->SetSpeed(1.0f);
+		characterLegsGraphics->SetRenderShadow(false);
+		characterLegsGraphics->SetRenderReflection(false);
+		AddComponent(characterLegsGraphics, "LegsGraphics");
+
 		positionToSet = characterGraphics->GetPosition();
+		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
@@ -202,6 +221,22 @@ void FPSPlayer::InitializeServerPlayer()
 		AddComponent(characterGraphics, "Graphics");
 
 		positionToSet = characterGraphics->GetPosition();
+
+		characterLegsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterLegs"), "CharacterPants", "CharacterPantsSpec", "CharacterPantsNormal");
+		characterLegsGraphics->SetClip("Idle");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookUp");
+		characterLegsGraphics->InitializeAdditiveAnimation("LookDown");
+		characterLegsGraphics->InitializeAdditiveAnimation("RifleRecoil");
+		characterLegsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+		characterLegsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
+		characterLegsGraphics->SetShine(32.0f);
+		characterLegsGraphics->SetPosition({ 0.0f, 20.0f, 0.0f });
+		characterLegsGraphics->SetSpeed(1.0f);
+		characterLegsGraphics->SetRenderShadow(false);
+		characterLegsGraphics->SetRenderReflection(false);
+		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+		AddComponent(characterLegsGraphics, "LegsGraphics");
 
 		hitBox = new AnimatedColliderComponent(characterGraphics);
 		hitBox->Update();
@@ -374,14 +409,15 @@ void FPSPlayer::Terminate()
 {
 	DeregisterEditorToggleCallbacks();
 
-	if (IsServer())
-	{
-		for (const auto& callback : serverDataReceivedCallbacks)
-		{
-			delete callback.second;
-		}
-	}
+	TerminateLocalPlayer();
 
+	TerminateRemotePlayer();
+
+	TerminateServer();
+}
+
+void FPSPlayer::TerminateLocalPlayer()
+{
 	if (IsLocalClient())
 	{
 		for (const auto& callback : clientDataReceivedCallbacks)
@@ -397,20 +433,34 @@ void FPSPlayer::Terminate()
 		delete controller;
 		delete healthBar;
 		DeregisterInput();
-	}
 
+		RemoveComponent("AnimatedCollider");
+		delete hitBox;
+
+		RemoveComponent("Graphics");
+		delete characterGraphics;
+
+		RemoveComponent("LegsGraphics");
+		delete characterLegsGraphics;
+
+		RemoveComponent("Camera");
+		delete cam;
+
+		RemoveComponent("WeaponGraphics");
+		delete ak12Graphics;
+	}
+}
+
+void FPSPlayer::TerminateRemotePlayer()
+{
 	RemoveComponent("AnimatedCollider");
 	delete hitBox;
 
 	RemoveComponent("Graphics");
 	delete characterGraphics;
 
-	if (NetworkManager::IsServer())
-	{
-		RemoveComponent("Controller");
-		delete controller;
-		delete onClientDisconnect;
-	}
+	RemoveComponent("LegsGraphics");
+	delete characterLegsGraphics;
 
 	RemoveComponent("Camera");
 	delete cam;
@@ -419,7 +469,44 @@ void FPSPlayer::Terminate()
 	delete ak12Graphics;
 }
 
+void FPSPlayer::TerminateServer()
+{
+	if (IsServer())
+	{
+		for (const auto& callback : serverDataReceivedCallbacks)
+		{
+			delete callback.second;
+		}
+
+		RemoveComponent("Controller");
+		delete controller;
+		delete onClientDisconnect;
+
+		RemoveComponent("AnimatedCollider");
+		delete hitBox;
+
+		RemoveComponent("Graphics");
+		delete characterGraphics;
+
+		RemoveComponent("LegsGraphics");
+		delete characterLegsGraphics;
+
+		RemoveComponent("Camera");
+		delete cam;
+
+		RemoveComponent("WeaponGraphics");
+		delete ak12Graphics;
+	}
+}
+
 void FPSPlayer::GameUpdate()
+{
+	GameUpdateLocalPlayer();
+	GameUpdateRemotePlayer();
+	GameUpdateServer();
+}
+
+void FPSPlayer::GameUpdateLocalPlayer()
 {
 	if (IsLocalClient())
 	{
@@ -451,51 +538,16 @@ void FPSPlayer::GameUpdate()
 			shot = false;
 		}
 
+		hitBox->Update();
+		cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
-	}
-	else
-	{
-		if (!NetworkManager::IsServer())
-		{
-			SetPosition(footPositionToSet);
-			newFootPositionFromServer.store(false);
-		}
-
-		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
-		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
-	}
-	
-	hitBox->Update();
-
-	cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
-
-	if (!IsLocalClient())
-	{
-		cam->SetTarget(targetToSet);
-
-		if (NetworkManager::IsServer())
-		{
-			camUpdateTime += TimeManager::DeltaTime();
-
-			if (camUpdateTime >= 0.001f)
-			{
-				ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
-				camUpdateTime = 0.0f;
-			}
-
-			lastTarget = cam->GetTarget();
-		}
-	}
-
-	glm::vec3 camRight = cam->GetRightVector();
-	glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
-	glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
-
-	if (IsLocalClient())
-	{
 		controller->Update();
 
 		characterArmsGraphics->SetTransform(characterGraphics->GetTransform());
+
+		glm::vec3 camRight = cam->GetRightVector();
+		glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
+		glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
 
 		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 
@@ -533,36 +585,11 @@ void FPSPlayer::GameUpdate()
 			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
 			};
 		}
-		
+
 
 		ak12Graphics->SetRotation(weaponRot);
 		ak12Graphics->SetPosition(glm::vec3(rightHandTransform[3]));
-	}
-	else
-	{
-		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-		ak12Graphics->SetTransform(weaponPositionToSet);
-	}
 
-	if (NetworkManager::IsServer())
-	{
-		controller->Update();
-		characterGraphics->SetPosition(controller->GetFootPosition());
-
-		updateTime += TimeManager::DeltaTime();
-		
-		if (updateTime >= 0.001f)
-		{
-			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
-			ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
-
-			updateTime = 0.0f;
-		}
-
-		lastPosition = characterGraphics->GetPosition();
-	}
-	else if(IsLocalClient())
-	{
 		updateTime += TimeManager::DeltaTime();
 
 		if (updateTime >= 0.001f)
@@ -572,15 +599,89 @@ void FPSPlayer::GameUpdate()
 			ClientSend("AdditiveAnimationDown " + std::to_string(lookDownPacketNumber++) + " " + std::to_string(characterGraphics->GetAdditiveAnimationTime("LookDown")), false);
 			updateTime = 0.0f;
 		}
-	}
 
-	if (IsLocalClient())
-	{
 		InputManager::WhenCursorMoved(*whenCursorMove);
+
+		cam->Update();
 	}
+}
 
-	cam->Update();
+void FPSPlayer::GameUpdateRemotePlayer()
+{
+	if (!IsLocalClient() && !IsServer())
+	{
+		SetPosition(footPositionToSet);
+		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+		newFootPositionFromServer.store(false);
 
+		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
+
+		hitBox->Update();
+
+		cam->SetTarget(targetToSet);
+
+		cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
+
+		glm::vec3 camRight = cam->GetRightVector();
+		glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
+		glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
+
+		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+		ak12Graphics->SetTransform(weaponPositionToSet);
+
+		cam->Update();
+	}
+}
+
+void FPSPlayer::GameUpdateServer()
+{
+	if (IsServer())
+	{
+		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
+
+		hitBox->Update();
+
+		cam->SetTarget(targetToSet);
+
+		camUpdateTime += TimeManager::DeltaTime();
+
+		if (camUpdateTime >= 0.001f)
+		{
+			ServerSendAll("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), {}, false);
+			camUpdateTime = 0.0f;
+		}
+
+		lastTarget = cam->GetTarget();
+
+		cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
+
+		glm::vec3 camRight = cam->GetRightVector();
+		glm::vec3 newForward = glm::normalize(glm::cross(camRight, glm::vec3(0.0f, 1.0f, 0.0f)));
+		glm::vec3 newUp = glm::normalize(glm::cross(newForward, camRight));
+
+		characterGraphics->SetRotation(glm::mat4(glm::vec4(-camRight, 0.0f), glm::vec4(newUp, 0.0f), glm::vec4(-newForward, 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+		ak12Graphics->SetTransform(weaponPositionToSet);
+
+		controller->Update();
+		characterGraphics->SetPosition(controller->GetFootPosition());
+
+		updateTime += TimeManager::DeltaTime();
+
+		if (updateTime >= 0.001f)
+		{
+			ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetPosition()), {}, false);
+			ServerSendAll("FootPosition " + std::to_string(footPositionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(controller->GetFootPosition()), {}, false);
+
+			updateTime = 0.0f;
+		}
+
+		lastPosition = characterGraphics->GetPosition();
+		characterLegsGraphics->SetPosition(characterGraphics->GetPosition());
+
+		cam->Update();
+	}
 }
 
 void FPSPlayer::EditorUpdate()

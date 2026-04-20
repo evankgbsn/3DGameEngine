@@ -63,7 +63,19 @@ private:
 
 	void Terminate() override;
 
+	void TerminateLocalPlayer();
+
+	void TerminateRemotePlayer();
+
+	void TerminateServer();
+
 	void GameUpdate() override;
+
+	void GameUpdateLocalPlayer();
+
+	void GameUpdateRemotePlayer();
+
+	void GameUpdateServer();
 
 	void EditorUpdate() override;
 
