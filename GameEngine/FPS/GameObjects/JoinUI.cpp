@@ -28,7 +28,7 @@ void JoinUI::Initialize()
 	button = new Button("StartIdle", "Start", "StartPress", "Start", { 0.5f, 0.5f }, buttonFunc);
 	button->SetScale(button->GetScale() / 2.0f);
 
-	text = new TextField("Press The Button To Join", "arial", glm::vec2(0.33f, 0.6f), glm::vec2(4.0f, 4.0f), {1.0f, 1.0f, 1.0f, 1.0f});
+	text = new TextField("Press The Button To Join", "arial", glm::vec2(0.23f, 0.6f), glm::vec2(4.0f, 4.0f), {1.0f, 1.0f, 1.0f, 1.0f});
 
 	Scene* testScene = SceneManager::GetRegisteredScene("Test");
 
@@ -37,7 +37,7 @@ void JoinUI::Initialize()
 		static std::function<void(const std::string&)> loadedCallback([this](const std::string& loadedObject)
 			{
 				text->SetText(std::string("Loading: ") + loadedObject);
-				text->SetPosition(glm::vec2(0.42f, 0.6f));
+				text->SetPosition(glm::vec2(0.35f, 0.6f));
 			});
 
 		testScene->RegisterObjectLoadedCallback(&loadedCallback);

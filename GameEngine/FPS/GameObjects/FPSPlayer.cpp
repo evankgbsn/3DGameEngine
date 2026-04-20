@@ -112,7 +112,7 @@ void FPSPlayer::InitializeLocalPlayer()
 
 		AddComponent(characterGraphics, "Graphics");
 
-		characterArmsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterArms"), "Character", "CharacterSpec", "CharacterNormal");
+		characterArmsGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("CharacterArms"), "ArmsSkin", "CharacterSpec", "CharacterNormal");
 		characterArmsGraphics->SetClip("Idle");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookUp");
 		characterArmsGraphics->InitializeAdditiveAnimation("LookDown");
@@ -843,6 +843,11 @@ void FPSPlayer::Load()
 			ModelManager::LoadModel("CharacterArms", "Assets/Model/FPSCharacterArms.gltf", false);
 		}
 
+		if (!TextureManager::TextureLoaded("ArmsSkin"))
+		{
+			TextureManager::LoadTexture("Assets/Texture/ArmsSkin.png", "ArmsSkin");
+		}
+
 		if (!TextureManager::TextureLoaded("Crosshair"))
 		{
 			TextureManager::LoadTexture("Assets/Texture/Crosshair.png", "Crosshair");
@@ -957,6 +962,11 @@ void FPSPlayer::RegisterInput()
 	whenCursorMove = new std::function<void(const glm::vec2&)>([this](const glm::vec2& cursorPos)
 		{
 
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (InputManager::CursorEnabled("Engine"))
 			{
 				return;
@@ -1024,7 +1034,7 @@ void FPSPlayer::RegisterInput()
 
 	gamepadLookX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.15f)
 			{
 				float xspeed = -10.0f;
 				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
@@ -1037,7 +1047,7 @@ void FPSPlayer::RegisterInput()
 
 	gamepadLookY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.05f)
+			if (abs(value) > 0.15f)
 			{
 				float yspeed = -10.0f;
 				float angle = yspeed * value * TimeManager::DeltaTime();
@@ -1083,7 +1093,7 @@ void FPSPlayer::RegisterInput()
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.01f)
+			if (abs(value) > 0.15f)
 			{
 				float xspeed = -10.0f;
 				controller->AddDisp(glm::normalize(characterGraphics->GetTransform()[0]) * value * xspeed * TimeManager::DeltaTime());
@@ -1093,7 +1103,7 @@ void FPSPlayer::RegisterInput()
 
 	gamepadWalkY = new std::function<void(int, float)>([this](int axis, float value)
 		{
-			if (abs(value) > 0.01f)
+			if (abs(value) > 0.15f)
 			{
 				float xspeed = -10.0f;
 
@@ -1169,6 +1179,11 @@ void FPSPlayer::RegisterInput()
 
 	keyboardMove = new std::function<void(int)>([this](int key)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			float xspeed = 10.0f;
 			glm::vec3 disp(0.0f);
 
@@ -1231,6 +1246,12 @@ void FPSPlayer::RegisterInput()
 
 	keyboardJump = new std::function<void(int key)>([this](int key)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
+
 			if (!controller->IsFalling())
 			{
 				ClientSend("Jump " + std::to_string(jumpPacketNumber++) + " ", false);
@@ -1239,6 +1260,11 @@ void FPSPlayer::RegisterInput()
 
 	keyboardShoot = new std::function<void(int button)>([this](int button)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			if (TimeManager::SecondsSinceStart() - lastShotTime > timeBetweenShots)
 			{
 				shot = true;
@@ -1263,6 +1289,12 @@ void FPSPlayer::RegisterInput()
 
 	keyboardMovePress = new std::function<void(int key)>([this](int key)
 		{
+
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			switch (key)
 			{
 			case KEY_W:
@@ -1304,6 +1336,11 @@ void FPSPlayer::RegisterInput()
 
 	keyboardMoveRelease = new std::function<void(int key)>([this](int key)
 		{
+			if (InputManager::IsGamepadConnected())
+			{
+				return;
+			}
+
 			switch (key)
 			{
 			case KEY_W:
