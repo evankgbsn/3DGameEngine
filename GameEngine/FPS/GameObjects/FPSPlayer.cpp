@@ -569,6 +569,7 @@ void FPSPlayer::GameUpdateLocalPlayer()
 	if (IsLocalClient())
 	{
 		characterPantsGraphics->SetTransform(characterGraphics->GetTransform());
+		characterShirtGraphics->SetTransform(characterGraphics->GetTransform());
 
 		if (!NetworkManager::IsServer())
 		{
@@ -739,7 +740,7 @@ void FPSPlayer::GameUpdateServer()
 		}
 
 		lastPosition = characterGraphics->GetPosition();
-		characterPantsGraphics->SetPosition(characterGraphics->GetPosition());
+		characterPantsGraphics->SetTransform(characterGraphics->GetTransform());
 		characterPantsGraphics->SetSampleTime(characterGraphics->GetSampleTime());
 		characterShirtGraphics->SetTransform(characterGraphics->GetTransform());
 		characterShirtGraphics->SetSampleTime(characterGraphics->GetSampleTime());
