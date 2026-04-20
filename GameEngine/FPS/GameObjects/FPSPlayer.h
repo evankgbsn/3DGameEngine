@@ -179,9 +179,9 @@ private:
 
 	glm::mat4 weaponPositionToSet;
 
-	float additiveUpToSet;
+	float additiveUpToSet = 0.0f;
 
-	float additiveDownToSet;
+	float additiveDownToSet = 0.0f;
 
 	unsigned int positionPacketNumber = 0;
 

@@ -153,6 +153,7 @@ void FPSPlayer::InitializeLocalPlayer()
 		characterShirtGraphics->SetSpeed(1.0f);
 		characterShirtGraphics->SetRenderShadow(false);
 		characterShirtGraphics->SetRenderReflection(false);
+		characterShirtGraphics->SetRenderGraphics(false);
 		AddComponent(characterShirtGraphics, "ShirtGraphics");
 
 		glm::vec2 dimensions = Window::GetPrimaryMonitorDimensions();
