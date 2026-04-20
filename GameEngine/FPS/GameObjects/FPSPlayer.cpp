@@ -177,6 +177,8 @@ void FPSPlayer::InitializeRemotePlayer()
 {
 	if (!IsLocalClient() && !NetworkManager::IsServer())
 	{
+		AddClientDataReceivedCallbacks();
+
 		characterGraphics = new GraphicsObjectTexturedAnimatedLit(ModelManager::GetModel("Character"), "Character", "CharacterSpec", "CharacterNormal");
 		characterGraphics->SetClip("Idle");
 		characterGraphics->SetShine(32.0f);
