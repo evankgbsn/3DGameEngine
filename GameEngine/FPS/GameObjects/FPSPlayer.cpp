@@ -679,6 +679,9 @@ void FPSPlayer::GameUpdateRemotePlayer()
 		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
 		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
 
+		characterShirtGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+		characterShirtGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
+
 		hitBox->Update();
 
 		cam->SetTarget(targetToSet);
@@ -702,6 +705,9 @@ void FPSPlayer::GameUpdateServer()
 	{
 		characterGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
 		characterGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
+
+		characterShirtGraphics->SetAdditiveAnimationTime("LookUp", additiveUpToSet);
+		characterShirtGraphics->SetAdditiveAnimationTime("LookDown", additiveDownToSet);
 
 		hitBox->Update();
 
@@ -989,6 +995,9 @@ void FPSPlayer::RegisterInput()
 
 					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+
+					characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterShirtGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
 				}
 				else
 				{
@@ -997,6 +1006,9 @@ void FPSPlayer::RegisterInput()
 
 					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
+
+					characterShirtGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
 				}
 
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
@@ -1044,6 +1056,9 @@ void FPSPlayer::RegisterInput()
 
 					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
 					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
+
+					characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 0.0f);
+					characterShirtGraphics->SetAdditiveAnimationTime("LookUp", Math::ChangeRange(0.0f, 0.90f, 0.0f, 1.0f, dot));
 				}
 				else
 				{
@@ -1052,6 +1067,9 @@ void FPSPlayer::RegisterInput()
 
 					characterArmsGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
 					characterArmsGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
+
+					characterShirtGraphics->SetAdditiveAnimationTime("LookUp", 0.0f);
+					characterShirtGraphics->SetAdditiveAnimationTime("LookDown", 1.0f - Math::ChangeRange(-0.90f, 0.0f, 0.0f, 1.0f, dot));
 				}
 
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
