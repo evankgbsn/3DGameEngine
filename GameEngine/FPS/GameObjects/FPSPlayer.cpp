@@ -37,7 +37,9 @@ FPSPlayer::FPSPlayer() :
 	characterGraphics(nullptr),
 	characterPantsGraphics(nullptr),
 	characterArmsGraphics(nullptr),
-	characterShirtGraphics(nullptr)
+	characterShirtGraphics(nullptr),
+	additiveUpToSet(0.0f),
+	additiveDownToSet(0.0f)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
