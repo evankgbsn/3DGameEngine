@@ -60,8 +60,6 @@
 !*ispckernels.pdb
 !*phonon.lib
 !*phonon.pdb
-!*AssetCopy.exe
-!*AssetCopy.pdb
 
 
 #Ignore .vs folder and other generated folders
