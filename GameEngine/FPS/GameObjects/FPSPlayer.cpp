@@ -704,6 +704,11 @@ void FPSPlayer::Load()
 		ModelManager::LoadModel("Character", "Assets/Model/FPSCharacter.gltf", false);
 	}
 
+	if (!ModelManager::ModelLoaded("CharacterLegs"))
+	{
+		ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterPants.gltf", false);
+	}
+
 	if (!TextureManager::TextureLoaded("Character"))
 	{
 		TextureManager::LoadTexture("Assets/Texture/Black.png", "Character");
@@ -739,11 +744,6 @@ void FPSPlayer::Load()
 		if (!ModelManager::ModelLoaded("CharacterArms"))
 		{
 			ModelManager::LoadModel("CharacterArms", "Assets/Model/FPSCharacterArms.gltf", false);
-		}
-
-		if (!ModelManager::ModelLoaded("CharacterLegs"))
-		{
-			ModelManager::LoadModel("CharacterLegs", "Assets/Model/FPSCharacterPants.gltf", false);
 		}
 
 		if (!TextureManager::TextureLoaded("Crosshair"))
