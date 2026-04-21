@@ -211,6 +211,8 @@ void Scene::Deserialize(const std::string& path)
 		{
 			if (netType == "Server")
 			{
+				// Go to the next object.
+				n = n->next_sibling("Object");
 				continue;
 			}
 		}
