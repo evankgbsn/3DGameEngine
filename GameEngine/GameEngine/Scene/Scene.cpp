@@ -5,6 +5,8 @@
 #include "../Editor/Editor.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Model/ModelManager.h"
+#include "../Networking/NetworkObject.h"
+#include "../Networking/NetworkManager.h"
 
 #include <filesystem>
 #include <fstream>
@@ -212,9 +214,30 @@ void Scene::Deserialize(const std::string& path)
 			GameObject* newObj;
 			constructor(&newObj);
 
-			createdObjects[name] = newObj;
+			if (dynamic_cast<NetworkObject*>(newObj) != nullptr && NetworkManager::IsServer())
+			{
+				NetworkObject* netObject = nullptr;
+				std::function<void(NetworkObject*)> callback = [&netObject](NetworkObject* netObj)
+					{
+						netObject = netObj;
+					};
 
-			RegisterGameObject(newObj, name);
+				NetworkManager::Spawn(type, &callback);
+
+				newObj = reinterpret_cast<GameObject*>(netObject);
+
+				createdObjects[name] = newObj;
+
+				RegisterGameObject(newObj, name);
+			}
+			else
+			{
+				createdObjects[name] = newObj;
+
+				RegisterGameObject(newObj, name);
+			}
+
+			
 
 			// Update all its components.
 			rapidxml::xml_node<>* componentNode = n->first_node();
