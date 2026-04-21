@@ -1558,7 +1558,7 @@ void FPSPlayer::Shoot(float rewindTime)
 			if (crate != nullptr)
 			{
 				glm::vec3 hitPos(hitInfo.block.position.x, hitInfo.block.position.y, hitInfo.block.position.z);
-				crate->Hit(direction, hitPos, 100.0f);
+				crate->Hit(direction, hitPos, 5.0f);
 			}
 		}
 	}
