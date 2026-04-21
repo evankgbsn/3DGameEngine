@@ -13,6 +13,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <filesystem>
+#include <fstream>
+
 std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>> Window::mouseScrollCallbacks = std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(double, double)>*>>();
 
 std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(unsigned int, unsigned int)>*>> Window::windowResizeCallbacks = std::unordered_map<GLFWwindow*, std::unordered_map<std::string, std::function<void(unsigned int, unsigned int)>*>>();
@@ -49,6 +52,28 @@ Window::Window(unsigned int width, unsigned int height, const std::string& name)
 	dimensions({width, height}),
 	windowResizeCallback(nullptr)
 {
+	std::filesystem::path controllerDB = "Assets/ControllerMappings/gamecontrollerdb.txt";
+
+	std::ifstream file(controllerDB.string(), std::ios::ate | std::ios::binary);
+
+	if (!file.is_open())
+	{
+		Logger::Log(std::string("Failed to load controller mappings"), Logger::Category::Error);
+	}
+
+	std::vector<char> buffer;
+
+	size_t fileSize = (size_t)file.tellg();
+	buffer.resize(fileSize);
+	file.seekg(0);
+	file.read(buffer.data(), fileSize);
+	file.close();
+
+	if (GLFW_TRUE != glfwUpdateGamepadMappings(std::string(buffer.begin(), buffer.end()).c_str()))
+	{
+		Logger::Log(std::string("Failed to load controller mappings"), Logger::Category::Error);
+	}
+
 	int monitorCount;
 	GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
 
@@ -242,7 +267,7 @@ int Window::GetGamepadButton(int button, bool clearFrameKeyStates) const
 
 		if (glfwGetGamepadState(GLFW_JOYSTICK_1, &state))
 		{
-			int getKeyResult = state.buttons[GLFW_GAMEPAD_BUTTON_A];
+			int getKeyResult = state.buttons[button];
 
 			if (getKeyResult == KEY_PRESS)
 			{

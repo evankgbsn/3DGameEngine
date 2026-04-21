@@ -137,6 +137,12 @@ private:
 
 	std::function<void(int axis, float value)>* gamepadLookY;
 
+	float gamepadLookSense;
+
+	std::function<void(int)>* gamepadUpSense;
+
+	std::function<void(int)>* gamepadDownSense;
+
 	std::function<void(int axis, float value)>* gamepadWalkX;
 
 	std::function<void(int axis, float value)>* gamepadWalkY;

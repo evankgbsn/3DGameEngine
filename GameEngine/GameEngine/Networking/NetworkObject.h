@@ -14,6 +14,8 @@ class NetworkObject
 
 public:
 
+	virtual const std::string& FormatPacket(const std::string& type, unsigned long long packetNumber, const std::string& data);
+
 	virtual void OnServerSpawnConfirmation(const std::string& IP);
 
 	virtual void OnClientSpawnConfirmation();

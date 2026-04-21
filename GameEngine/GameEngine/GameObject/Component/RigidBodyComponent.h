@@ -65,6 +65,8 @@ public:
 
 	void AddTorque(const glm::vec3& axis, const ForceMode& forceMode = ForceMode::FORCE);
 
+	void AddForceAtPosition(const glm::vec3& direction, const glm::vec3& position, const ForceMode& forceMode = ForceMode::IMPULSE);
+
 	void SetMass(float newMass);
 
 	glm::vec3 GetLinearVelocity() const;
@@ -74,6 +76,10 @@ public:
 	void SetPosition(const glm::vec3& newPosition);
 
 	void SetRotation(const glm::mat4& newRot);
+
+	glm::vec3 GetPosition() const;
+
+	glm::mat4 GetRotation() const;
 
 	bool Hovered() const;
 

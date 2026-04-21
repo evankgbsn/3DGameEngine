@@ -24,6 +24,7 @@
 #include "GameEngine/Physics/PhysicsManager.h"
 #include "GameEngine/Math/Shapes/LineSegment3D.h"
 #include "SpawnPoint.h"
+#include "Crate.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -39,7 +40,8 @@ FPSPlayer::FPSPlayer() :
 	characterArmsGraphics(nullptr),
 	characterShirtGraphics(nullptr),
 	additiveUpToSet(0.0f),
-	additiveDownToSet(0.0f)
+	additiveDownToSet(0.0f),
+	gamepadLookSense(7.0f)
 {
 	RegisterGameObjectClassType<FPSPlayer>(this);
 	RegisterNetworkObjectClassType<FPSPlayer>(this);
@@ -602,8 +604,6 @@ void FPSPlayer::GameUpdateLocalPlayer()
 			characterArmsGraphics->SetAdditiveAnimationTime("RifleRecoil", 0.0f);
 		}
 
-		
-
 		hitBox->Update();
 		cam->SetPosition(hitBox->GetJointTransform("head.x")[3]);
 
@@ -1043,8 +1043,7 @@ void FPSPlayer::RegisterInput()
 		{
 			if (abs(value) > 0.15f)
 			{
-				float xspeed = -10.0f;
-				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * value * TimeManager::DeltaTime());
+				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), -gamepadLookSense * value * TimeManager::DeltaTime());
 
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 			}
@@ -1056,8 +1055,7 @@ void FPSPlayer::RegisterInput()
 		{
 			if (abs(value) > 0.15f)
 			{
-				float yspeed = -10.0f;
-				float angle = yspeed * value * TimeManager::DeltaTime();
+				float angle = -gamepadLookSense * value * TimeManager::DeltaTime();
 
 				float dot = glm::dot(cam->GetForwardVector(), { 0.0f, 1.0f, 0.0f });
 
@@ -1096,6 +1094,16 @@ void FPSPlayer::RegisterInput()
 
 				ClientSend("Target " + std::to_string(targetPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(cam->GetTarget()), false);
 			}
+		});
+
+	gamepadUpSense = new std::function<void(int)>([this](int button)
+		{
+			gamepadLookSense += 10.0f * TimeManager::DeltaTime();
+		});
+
+	gamepadDownSense = new std::function<void(int)>([this](int button)
+		{
+			gamepadLookSense -= 10.0f * TimeManager::DeltaTime();
 		});
 
 	gamepadWalkX = new std::function<void(int, float)>([this](int axis, float value)
@@ -1405,7 +1413,9 @@ void FPSPlayer::RegisterInput()
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, gamepadWalkX, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, gamepadWalkY, "FPSCharacterWalk");
 	InputManager::RegisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_TRIGGER, gamepadShoot, "FPSCharacterShoot");
-	InputManager::RegisterCallbackForGamepadButton(KEY_PRESS, GAMEPAD_BUTTON_A, gamepadJump, "FPSCharacterJump");
+	InputManager::RegisterCallbackForGamepadButton(KEY_PRESSED, GAMEPAD_BUTTON_A, gamepadJump, "FPSCharacterJump");
+	InputManager::RegisterCallbackForGamepadButton(KEY_PRESSED, GAMEPAD_BUTTON_DPAD_DOWN, gamepadDownSense, "FPSCharacterChangeSense");
+	InputManager::RegisterCallbackForGamepadButton(KEY_PRESSED, GAMEPAD_BUTTON_DPAD_UP, gamepadUpSense, "FPSCharacterChangeSense");
 	
 }
 
@@ -1436,6 +1446,9 @@ void FPSPlayer::DeregisterInput()
 	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_X, "FPSCharacterWalk");
 	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_LEFT_Y, "FPSCharacterWalk");
 
+	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESSED, GAMEPAD_BUTTON_DPAD_DOWN, "FPSCharacterChangeSense");
+	InputManager::DeregisterCallbackForGamepadButton(KEY_PRESSED, GAMEPAD_BUTTON_DPAD_UP, "FPSCharacterChangeSense");
+
 	InputManager::DeregisterCallbackForGamepadAxis(GAMEPAD_AXIS_RIGHT_TRIGGER, "FPSCharacterShoot");
 
 	InputManager::DeregisterCallbackForKeyState(KEY_PRESSED, KEY_W, "FPSCharacterWalk");
@@ -1454,7 +1467,8 @@ void FPSPlayer::DeregisterInput()
 	delete gamepadLookY;
 	delete gamepadWalkX;
 	delete gamepadWalkY;
-
+	delete gamepadUpSense;
+	delete gamepadDownSense;
 	delete gamepadShoot;
 
 	delete whenCursorMove;
@@ -1532,6 +1546,23 @@ void FPSPlayer::Shoot(float rewindTime)
 
 	Scene* scene = SceneManager::GetRegisteredScene("Test");
 
+	const unsigned int maxHits = 10;
+	physx::PxRaycastHit hits[maxHits];
+	physx::PxRaycastBuffer outHits(hits, maxHits);
+
+	bool status = PhysicsManager::Raycast(origin, direction, 1000.0f, outHits);
+
+	if (outHits.hasBlock)
+	{
+		Crate* crate = dynamic_cast<Crate*>(static_cast<GameObject*>(outHits.block.actor->userData));
+
+		if (crate != nullptr)
+		{
+			glm::vec3 hitPos(outHits.block.position.x, outHits.block.position.y, outHits.block.position.z);
+			crate->Hit(direction, hitPos, 100.0f);
+		}
+	}
+
 	if (scene != nullptr)
 	{
 		const std::unordered_map<std::string, GameObject*> objects = scene->GetGameObjects();
@@ -1600,6 +1631,7 @@ void FPSPlayer::Shoot(float rewindTime)
 					
 				}
 			}
+
 		}
 	}
 }

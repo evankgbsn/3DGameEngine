@@ -4,15 +4,31 @@
 #include "GameEngine/Renderer/Model/ModelManager.h"
 #include "GameEngine/Renderer/Texture/TextureManager.h"
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
+#include "GameEngine/Time/TimeManager.h"
+#include "GameEngine/Networking/NetworkManager.h"
 
 Crate::Crate() :
-    GameObject("Crate")
+    GameObject("Crate"),
+    rotationToSet(glm::mat4(1.0f)),
+    positionToSet(glm::vec3(1.0f)),
+    positionPacketNumber(0ULL),
+    rotationPacketNumber(0ULL),
+    updateTime(0.0f),
+    updateInterval(0.001f),
+    body(nullptr),
+    graphics(nullptr)
 {
     RegisterGameObjectClassType<Crate>(this);
+    RegisterNetworkObjectClassType<Crate>(this);
 }
 
 Crate::~Crate()
 {
+}
+
+void Crate::Hit(const glm::vec3& position, const glm::vec3& direction, float strength)
+{
+    body->AddForceAtPosition(direction * strength, position);
 }
 
 void Crate::Initialize()
@@ -27,10 +43,26 @@ void Crate::Initialize()
     body->SyncPhysics();
 
     AddComponent(body, "RigidBody");
+
+    AddClientDataReceivedCallback("Position", positionReceivedCallback = new std::function<void(const std::string&)>([this](const std::string& data)
+        {
+            positionToSet = NetworkManager::ConvertDataToVec3(data);
+        }));
+
+    AddClientDataReceivedCallback("Rotation", positionReceivedCallback = new std::function<void(const std::string&)>([this](const std::string& data)
+        {
+            rotationToSet = NetworkManager::ConvertDataToMat4(data);
+        }));
 }
 
 void Crate::Terminate()
 {
+    RemoveClientDataReceivedCallback("Position");
+    RemoveClientDataReceivedCallback("Rotation");
+
+    delete positionReceivedCallback;
+    delete rotationReceivedCallback;
+
     RemoveComponent("Graphics");
     RemoveComponent("RigidBody");
 
@@ -40,8 +72,26 @@ void Crate::Terminate()
 
 void Crate::GameUpdate()
 {
-    body->SyncPhysics();
-    body->Update();
+    if (IsServer())
+    {
+        body->SyncPhysics();
+        body->Update();
+
+        updateTime += TimeManager::DeltaTime();
+
+        if (updateTime >= updateInterval)
+        {
+            ServerSendAll(FormatPacket("Position", positionPacketNumber++, NetworkManager::ConvertVec3ToData(body->GetPosition())), {}, false);
+            ServerSendAll(FormatPacket("Rotation", rotationPacketNumber++, NetworkManager::ConvertMat4ToData(body->GetRotation())), {}, false);
+
+            updateTime = 0.0f;
+        }
+    }
+    else
+    {
+        SetPosition(positionToSet);
+        SetRotation(rotationToSet);
+    }
 }
 
 void Crate::EditorUpdate()
@@ -112,4 +162,31 @@ void Crate::Deserialize()
 {
     GameObject::Deserialize();
     body->SetOwner(this);
+    positionToSet = body->GetPosition();
+    rotationToSet = body->GetRotation();
+}
+
+void Crate::OnServerSpawnConfirmation(const std::string& IP)
+{
+    NetworkObject::OnServerSpawnConfirmation(IP);
+}
+
+void Crate::OnClientSpawnConfirmation()
+{
+    NetworkObject::OnClientSpawnConfirmation();
+}
+
+void Crate::OnSpawn()
+{
+    NetworkObject::OnSpawn();
+}
+
+void Crate::OnDespawn()
+{
+    NetworkObject::OnDespawn();
+}
+
+void Crate::OnDataReceived(const std::string& data)
+{
+    NetworkObject::OnDataReceived(data);
 }

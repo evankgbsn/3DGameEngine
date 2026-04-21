@@ -4,6 +4,11 @@
 
 std::unordered_map<std::string, std::function<void(NetworkObject**)>> NetworkObject::newFunctions = std::unordered_map<std::string, std::function<void(NetworkObject**)>>();
 
+const std::string& NetworkObject::FormatPacket(const std::string& type, unsigned long long packetNumber, const std::string& data)
+{
+	return type + " " + std::to_string(packetNumber) + " " + data;
+}
+
 void NetworkObject::OnServerSpawnConfirmation(const std::string& IP)
 {
 	serverConfirmedIDs.insert(IP);

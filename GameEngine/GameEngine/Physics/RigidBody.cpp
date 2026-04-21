@@ -184,6 +184,30 @@ void RigidBody::AddForce(const glm::vec3& direction, const ForceMode& forceMode)
     }
 }
 
+void RigidBody::AddForceAtPosition(const glm::vec3& direction, const glm::vec3& position, const ForceMode& forceMode)
+{
+    if (dynamicBody != nullptr)
+    {
+        switch (forceMode)
+        {
+        case ForceMode::FORCE:
+            PxRigidBodyExt::addForceAtPos(*dynamicBody, PxVec3(direction.x, direction.y, direction.z), PxVec3(position.x, position.y, position.z), PxForceMode::eFORCE);
+            break;
+        case ForceMode::ACCELERATION:
+            PxRigidBodyExt::addForceAtPos(*dynamicBody, PxVec3(direction.x, direction.y, direction.z), PxVec3(position.x, position.y, position.z), PxForceMode::eACCELERATION);
+            break;
+        case ForceMode::VELOCITY_CHANGE:
+            PxRigidBodyExt::addForceAtPos(*dynamicBody, PxVec3(direction.x, direction.y, direction.z), PxVec3(position.x, position.y, position.z), PxForceMode::eVELOCITY_CHANGE);
+            break;
+        case ForceMode::IMPULSE:
+            PxRigidBodyExt::addForceAtPos(*dynamicBody, PxVec3(direction.x, direction.y, direction.z), PxVec3(position.x, position.y, position.z), PxForceMode::eIMPULSE);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 void RigidBody::AddTorque(const glm::vec3& axis, const ForceMode& forceMode)
 {
     if (dynamicBody != nullptr)

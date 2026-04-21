@@ -2,11 +2,14 @@
 #define CRATE_H
 
 #include "GameEngine/GameObject/GameObject.h"
+#include "GameEngine/Networking/NetworkObject.h"
+
+#include <functional>
 
 class GraphicsObjectTexturedLit;
 class RigidBodyComponent;
 
-class Crate : public GameObject
+class Crate : public GameObject, public NetworkObject
 {
 
 public:
@@ -14,6 +17,8 @@ public:
 	Crate();
 
 	~Crate();
+
+	void Hit(const glm::vec3& position, const glm::vec3& direction, float strength);
 
 private:
 
@@ -24,6 +29,17 @@ private:
 	Crate(Crate&&) = delete;
 
 	Crate& operator=(Crate&&) = delete;
+
+	// Inherited via GameObject
+	void OnServerSpawnConfirmation(const std::string& IP) override;
+
+	void OnClientSpawnConfirmation() override;
+
+	void OnSpawn() override;
+
+	void OnDespawn() override;
+
+	void OnDataReceived(const std::string& data) override;
 
 	// Inherited via GameObject
 	void Initialize() override;
@@ -55,6 +71,22 @@ private:
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* body;
+
+	glm::mat4 rotationToSet;
+
+	glm::vec3 positionToSet;
+
+	float updateTime;
+
+	float updateInterval;
+
+	unsigned long long positionPacketNumber;
+
+	unsigned long long rotationPacketNumber;
+
+	std::function<void(const std::string&)>* positionReceivedCallback;
+
+	std::function<void(const std::string&)>* rotationReceivedCallback;
 };
 
 #endif // CRATE_H

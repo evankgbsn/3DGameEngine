@@ -50,6 +50,8 @@ public:
 
 	void AddForce(const glm::vec3& direction, const ForceMode& forceMode = ForceMode::FORCE);
 
+	void AddForceAtPosition(const glm::vec3& direction, const glm::vec3& position, const ForceMode& forceMode = ForceMode::IMPULSE);
+
 	void AddTorque(const glm::vec3& axis, const ForceMode& forceMode = ForceMode::FORCE);
 
 	glm::vec3 GetLinearVelocity() const;

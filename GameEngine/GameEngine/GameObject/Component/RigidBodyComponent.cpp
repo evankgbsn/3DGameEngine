@@ -175,6 +175,27 @@ void RigidBodyComponent::AddTorque(const glm::vec3& axis, const ForceMode& force
 	}
 }
 
+void RigidBodyComponent::AddForceAtPosition(const glm::vec3& direction, const glm::vec3& position, const ForceMode& forceMode)
+{
+	switch (forceMode)
+	{
+	case ForceMode::FORCE:
+		body->AddForceAtPosition(direction, position, RigidBody::ForceMode::FORCE);
+		break;
+	case ForceMode::ACCELERATION:
+		body->AddForceAtPosition(direction, position, RigidBody::ForceMode::ACCELERATION);
+		break;
+	case ForceMode::VELOCITY_CHANGE:
+		body->AddForceAtPosition(direction, position, RigidBody::ForceMode::VELOCITY_CHANGE);
+		break;
+	case ForceMode::IMPULSE:
+		body->AddForceAtPosition(direction, position, RigidBody::ForceMode::IMPULSE);
+		break;
+	default:
+		break;
+	}
+}
+
 void RigidBodyComponent::SetMass(float newMass)
 {
 	body->SetMass(newMass);
@@ -200,6 +221,16 @@ void RigidBodyComponent::SetRotation(const glm::mat4& newRot)
 {
 	body->SetRotation(newRot);
 	shapeVisuals->SetRotation(newRot);
+}
+
+glm::vec3 RigidBodyComponent::GetPosition() const
+{
+	return body->GetPosition();
+}
+
+glm::mat4 RigidBodyComponent::GetRotation() const
+{
+	return body->GetRotation();
 }
 
 bool RigidBodyComponent::Hovered() const
