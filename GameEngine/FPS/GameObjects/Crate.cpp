@@ -53,10 +53,14 @@ void Crate::Initialize()
         {
             rotationToSet = NetworkManager::ConvertDataToMat4(data);
         }));
+
+    OnSpawn();
 }
 
 void Crate::Terminate()
 {
+    OnDespawn();
+
     RemoveClientDataReceivedCallback("Position");
     RemoveClientDataReceivedCallback("Rotation");
 
