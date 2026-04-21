@@ -82,7 +82,7 @@ public:
 
 	void SetWindow(Window* const newWindow);
 
-	static LineSegment3D CastLineFromCursorWithActiveCamera(float distance = 500000.0f);
+	static LineSegment3D CastLineFromCursorWithActiveCamera(float distance = 5000.0f);
 
 	void SetUpVector(const glm::vec3& newUp);
 	

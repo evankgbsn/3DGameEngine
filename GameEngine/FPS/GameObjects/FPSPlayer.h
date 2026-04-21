@@ -181,7 +181,7 @@ private:
 
 	glm::vec3 footPositionToSet = { 0.0f, 20.0f, 0.0f };
 
-	glm::vec3 targetToSet;
+	glm::vec3 targetToSet = {0.0f, 0.0f, 0.0f};
 
 	glm::mat4 weaponPositionToSet;
 
