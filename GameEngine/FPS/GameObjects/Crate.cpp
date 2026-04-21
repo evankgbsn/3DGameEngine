@@ -16,7 +16,7 @@ Crate::Crate() :
     positionPacketNumber(0ULL),
     rotationPacketNumber(0ULL),
     updateTime(0.0f),
-    updateInterval(0.001f),
+    updateInterval(0.05f),
     body(nullptr),
     graphics(nullptr)
 {
