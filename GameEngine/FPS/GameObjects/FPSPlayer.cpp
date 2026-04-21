@@ -351,6 +351,21 @@ void FPSPlayer::AddClientDataReceivedCallbacks()
 			{
 				characterGraphics->SetClip(updateData);
 			}
+
+			if (characterPantsGraphics->GetCurrentAnimation() != updateData && characterPantsGraphics->GetFadeToClipName() != updateData)
+			{
+				characterPantsGraphics->SetClip(updateData);
+			}
+
+			if (characterShirtGraphics->GetCurrentAnimation() != updateData && characterShirtGraphics->GetFadeToClipName() != updateData)
+			{
+				characterShirtGraphics->SetClip(updateData);
+			}
+
+			if (characterArmsGraphics->GetCurrentAnimation() != updateData && characterArmsGraphics->GetFadeToClipName() != updateData)
+			{
+				characterArmsGraphics->SetClip(updateData);
+			}
 		}));
 
 	AddClientDataReceivedCallback("Damage", clientDataReceivedCallbacks["Damage"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
@@ -447,6 +462,21 @@ void FPSPlayer::AddServerDataReceivedCallbacks()
 				characterGraphics->SetClip(updateData);
 
 				ServerSendAll("AnimationClip " + std::to_string(animationClipPacketNumber++) + " " + updateData, { GetSpawnerID() }, false);
+			}
+
+			if (characterPantsGraphics->GetCurrentAnimation() != updateData && characterPantsGraphics->GetFadeToClipName() != updateData)
+			{
+				characterPantsGraphics->SetClip(updateData);
+			}
+
+			if (characterShirtGraphics->GetCurrentAnimation() != updateData && characterShirtGraphics->GetFadeToClipName() != updateData)
+			{
+				characterShirtGraphics->SetClip(updateData);
+			}
+
+			if (characterArmsGraphics->GetCurrentAnimation() != updateData && characterArmsGraphics->GetFadeToClipName() != updateData)
+			{
+				characterArmsGraphics->SetClip(updateData);
 			}
 		}));
 
