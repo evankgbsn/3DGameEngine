@@ -203,9 +203,9 @@ void Scene::Deserialize(const std::string& path)
 	n = n->first_node();
 	while (n != nullptr)
 	{
+		std::string netType = n->first_attribute("NetType")->value();
 		std::string name = n->first_attribute("name")->value();
 		std::string type = n->first_attribute("type")->value();
-		std::string netType = n->first_attribute("NetType")->value();
 
 		if (!NetworkManager::IsServer())
 		{
@@ -876,7 +876,8 @@ void Scene::Save(const std::string& saveFileName)
 		rapidxml::xml_node<>* object = doc->allocate_node(rapidxml::node_element, "Object");
 		rapidxml::xml_attribute<>* objectType = doc->allocate_attribute("type", obj.second->nameOfType.c_str());
 		rapidxml::xml_attribute<>* objectName = doc->allocate_attribute("name", obj.first.c_str());
-		rapidxml::xml_attribute<>* objectName = doc->allocate_attribute("NetType", obj.second->netType.c_str());
+		rapidxml::xml_attribute<>* objectNetType = doc->allocate_attribute("NetType", obj.second->netType.c_str());
+		object->append_attribute(objectNetType);
 		object->append_attribute(objectType);
 		object->append_attribute(objectName);
 
