@@ -1546,20 +1546,22 @@ void FPSPlayer::Shoot(float rewindTime)
 
 	Scene* scene = SceneManager::GetRegisteredScene("Test");
 
-	const unsigned int maxHits = 10;
-	physx::PxRaycastHit hits[maxHits];
-	physx::PxRaycastBuffer outHits(hits, maxHits);
-
-	bool status = PhysicsManager::Raycast(origin, direction, 1000.0f, outHits);
-
-	if (outHits.hasBlock)
 	{
-		Crate* crate = dynamic_cast<Crate*>(static_cast<GameObject*>(outHits.block.actor->userData));
+		const unsigned int maxHits = 10;
+		physx::PxRaycastHit hits[maxHits];
+		physx::PxRaycastBuffer outHits(hits, maxHits);
 
-		if (crate != nullptr)
+		bool status = PhysicsManager::Raycast(origin, direction, 1000.0f, outHits);
+
+		if (outHits.hasBlock)
 		{
-			glm::vec3 hitPos(outHits.block.position.x, outHits.block.position.y, outHits.block.position.z);
-			crate->Hit(direction, hitPos, 100.0f);
+			Crate* crate = dynamic_cast<Crate*>(static_cast<GameObject*>(outHits.block.actor->userData));
+
+			if (crate != nullptr)
+			{
+				glm::vec3 hitPos(outHits.block.position.x, outHits.block.position.y, outHits.block.position.z);
+				crate->Hit(direction, hitPos, 100.0f);
+			}
 		}
 	}
 
