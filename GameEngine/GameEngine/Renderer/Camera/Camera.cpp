@@ -234,7 +234,7 @@ Camera::Camera(const Camera::Type& t, Window* const w, const std::string& n) :
 	view(glm::mat4(1.0f)),
 	projection(glm::mat4(1.0f)),
 	near(1.0f),
-	far(100000.0f),
+	far(2000.0f),
 	fov(45.0f),
 	left(-10.0f),
 	right(10.0f),

@@ -375,19 +375,19 @@ void RigidBody::SetAngularVelocity(const glm::vec3& newVelocity)
 
 void RigidBody::SetIsTrigger(bool isTrigger)
 {
-    if (shape != nullptr)
-    {
-        if (isTrigger)
-        {
-            shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-            shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
-        }
-        else
-        {
-            shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
-            shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
-        }
-    }
+    //if (shape != nullptr)
+    //{
+    //    if (isTrigger)
+    //    {
+    //        shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+    //        shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+    //    }
+    //    else
+    //    {
+    //        shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, isTrigger);
+    //        shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !isTrigger);
+    //    }
+    //}
 }
 
 bool RigidBody::IsTrigger() const
@@ -397,13 +397,13 @@ bool RigidBody::IsTrigger() const
 
 void RigidBody::DisableCollision()
 {
-    if (shape != nullptr)
-    {
-        shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
-    }
+    //if (shape != nullptr)
+    //{
+    //    shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+    //}
 }
 
 void RigidBody::EnableCollision()
 {
-    SetIsTrigger(false);
+    //SetIsTrigger(false);
 }

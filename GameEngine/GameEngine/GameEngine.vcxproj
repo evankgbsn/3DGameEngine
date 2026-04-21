@@ -788,6 +788,7 @@
     <ClInclude Include="GameObject\Component\TextComponent.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Managers.h" />
     <ClInclude Include="Math\BezierSpline.h" />
     <ClInclude Include="Math\HermiteSpline.h" />
     <ClInclude Include="Math\Math.h" />

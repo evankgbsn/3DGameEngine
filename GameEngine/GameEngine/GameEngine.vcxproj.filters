@@ -845,6 +845,9 @@
     <ClInclude Include="Renderer\Text\Text3D.h">
       <Filter>Source Files\Renderer\Text</Filter>
     </ClInclude>
+    <ClInclude Include="Managers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\GLSL\AnimatedShadowMap.frag">
