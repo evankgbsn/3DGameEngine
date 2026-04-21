@@ -41,10 +41,6 @@ void Sun::Terminate()
 
     delete light;
 
-	RemoveComponent("Graphics");
-
-	delete sky;
-
 	TerminateEditorCallbacks();
 }
 

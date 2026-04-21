@@ -49,7 +49,7 @@ void Crate::Initialize()
             positionToSet = NetworkManager::ConvertDataToVec3(data);
         }));
 
-    AddClientDataReceivedCallback("Rotation", positionReceivedCallback = new std::function<void(const std::string&)>([this](const std::string& data)
+    AddClientDataReceivedCallback("Rotation", rotationReceivedCallback = new std::function<void(const std::string&)>([this](const std::string& data)
         {
             rotationToSet = NetworkManager::ConvertDataToMat4(data);
         }));
