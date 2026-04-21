@@ -5,6 +5,8 @@
 #include "../Editor/Editor.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Model/ModelManager.h"
+#include "../Networking/NetworkObject.h"
+#include "../Networking/NetworkManager.h"
 
 #include <filesystem>
 #include <fstream>
@@ -211,6 +213,18 @@ void Scene::Deserialize(const std::string& path)
 
 			GameObject* newObj;
 			constructor(&newObj);
+
+			if (dynamic_cast<NetworkObject*>(newObj) && NetworkManager::IsServer())
+			{
+				delete newObj;
+
+				static std::function<void(NetworkObject*)> callback([&newObj](NetworkObject* netObject)
+					{
+						newObj = reinterpret_cast<GameObject*>(netObject);
+					});
+
+				NetworkManager::Spawn(type, &callback);
+			}
 
 			createdObjects[name] = newObj;
 
@@ -470,6 +484,20 @@ void Scene::Deserialize(const std::string& path)
 			GameObject* go = objects.find(name)->second;
 
 			GameObject* newObj = go;
+
+			if (dynamic_cast<NetworkObject*>(newObj) && NetworkManager::IsServer())
+			{
+				delete newObj;
+
+				static std::function<void(NetworkObject*)> callback([&newObj](NetworkObject* netObject)
+					{
+						newObj = reinterpret_cast<GameObject*>(netObject);
+					});
+
+				NetworkManager::Spawn(type, &callback);
+			}
+
+			objects[name] = newObj;
 
 			newObj->Terminate();
 			newObj->Initialize();
