@@ -493,6 +493,24 @@ void Scene::Deserialize(const std::string& path)
 
 			GameObject* newObj = go;
 
+			NetworkObject* netObj = dynamic_cast<NetworkObject*>(newObj);
+			if (netObj != nullptr && NetworkManager::IsServer())
+			{
+				// 1. Manually generate the ID for this "pre-placed" object
+				unsigned long long newID = NetworkManager::GenerateNetworkObjectID();
+				netObj->networkObjectID = newID;
+
+				// 2. Add it to the manager's tracking map so clients can find it
+				// Note: You may need to make spawnedNetworkObjects public or add a Register method
+				NetworkManager::AddExistingToSpawnedMap(newID, netObj);
+
+				// 3. Initialize the networking callbacks
+				netObj->OnSpawn();
+
+				// 4. Tell all currently connected clients to spawn this object
+				NetworkManager::ServerSendAll(type + " " + std::to_string(newID), "NetworkManagerClientReceiveSpawnFromServer");
+			}
+
 			newObj->Terminate();
 			newObj->Initialize();
 
