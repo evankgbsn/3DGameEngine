@@ -89,6 +89,8 @@ public:
 
 	static float GetLatency(const std::string& clientID);
 
+	static void AddExistingToSpawnedMap(unsigned long long ID, NetworkObject* obj);
+
 private:
 
 	friend class SingletonHelpers;

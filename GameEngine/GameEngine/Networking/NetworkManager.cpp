@@ -2140,3 +2140,8 @@ float NetworkManager::GetLatency(const std::string& clientID)
 	}
 	return 0.0f;
 }
+
+void NetworkManager::AddExistingToSpawnedMap(unsigned long long ID, NetworkObject* obj)
+{
+	instance->spawnedNetworkObjects[ID] = obj;
+}

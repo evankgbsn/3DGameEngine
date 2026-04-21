@@ -214,30 +214,29 @@ void Scene::Deserialize(const std::string& path)
 			GameObject* newObj;
 			constructor(&newObj);
 
-			if (dynamic_cast<NetworkObject*>(newObj) != nullptr && NetworkManager::IsServer())
+			NetworkObject* netObj = dynamic_cast<NetworkObject*>(newObj);
+			if (netObj != nullptr && NetworkManager::IsServer())
 			{
-				NetworkObject* netObject = nullptr;
-				std::function<void(NetworkObject*)> callback = [&netObject](NetworkObject* netObj)
-					{
-						netObject = netObj;
-					};
+				// 1. Manually generate the ID for this "pre-placed" object
+				unsigned long long newID = NetworkManager::GenerateNetworkObjectID();
+				netObj->networkObjectID = newID;
 
-				NetworkManager::Spawn(type, &callback);
+				// 2. Add it to the manager's tracking map so clients can find it
+				// Note: You may need to make spawnedNetworkObjects public or add a Register method
+				NetworkManager::AddExistingToSpawnedMap(newID, netObj);
 
-				newObj = reinterpret_cast<GameObject*>(netObject);
+				// 3. Initialize the networking callbacks
+				netObj->OnSpawn();
 
-				createdObjects[name] = newObj;
-
-				RegisterGameObject(newObj, name);
+				// 4. Tell all currently connected clients to spawn this object
+				NetworkManager::ServerSendAll(type + " " + std::to_string(newID), "NetworkManagerClientReceiveSpawnFromServer");
 			}
 			else
 			{
 				createdObjects[name] = newObj;
-
-				RegisterGameObject(newObj, name);
 			}
 
-			
+			RegisterGameObject(newObj, name); // Now newObj is guaranteed valid!
 
 			// Update all its components.
 			rapidxml::xml_node<>* componentNode = n->first_node();
