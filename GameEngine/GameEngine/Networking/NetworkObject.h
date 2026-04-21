@@ -65,6 +65,8 @@ private:
 
 	friend class NetworkManager;
 
+	friend class Scene;
+
 	NetworkObject(const NetworkObject&) = delete;
 
 	NetworkObject& operator=(const NetworkObject&) = delete;
