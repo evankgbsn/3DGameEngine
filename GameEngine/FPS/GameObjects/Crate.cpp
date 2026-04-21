@@ -85,8 +85,8 @@ void Crate::GameUpdate()
 
         if (updateTime >= updateInterval)
         {
-            ServerSendAll(FormatPacket("Position", positionPacketNumber++, NetworkManager::ConvertVec3ToData(body->GetPosition())), {}, false);
-            ServerSendAll(FormatPacket("Rotation", rotationPacketNumber++, NetworkManager::ConvertMat4ToData(body->GetRotation())), {}, false);
+            ServerSendAll("Position " + std::to_string(positionPacketNumber++) + " " + NetworkManager::ConvertVec3ToData(body->GetPosition()), {}, false);
+            ServerSendAll("Rotation " + std::to_string(rotationPacketNumber++) + " " + NetworkManager::ConvertMat4ToData(body->GetRotation()), {}, false);
 
             updateTime = 0.0f;
         }
