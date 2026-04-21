@@ -1998,26 +1998,10 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 		return;
 	}
 
+
 	if (IsServer())
 	{
-		NetworkObject* newNetworkObject = nullptr;
-		NetworkObject::GetConstructor(networkObjectClassName)(&newNetworkObject);
-
-		if (newNetworkObject != nullptr)
-		{
-			unsigned long long newNetworkObjectID = GenerateNetworkObjectID();
-			newNetworkObject->networkObjectID = newNetworkObjectID;
-
-			instance->spawnedNetworkObjects[newNetworkObject->networkObjectID] = newNetworkObject;
-
-			newNetworkObject->spawnerID = "SERVER";
-
-			newNetworkObject->OnSpawn();
-
-			ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", {});
-
-			(*callback)(newNetworkObject);
-		}
+		
 	}
 	else
 	{
