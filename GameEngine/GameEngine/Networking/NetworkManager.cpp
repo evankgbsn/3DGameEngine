@@ -2018,6 +2018,7 @@ void NetworkManager::Spawn(const std::string& networkObjectClassName, std::funct
 			ServerSendAll(networkObjectClassName + " " + std::to_string(newNetworkObjectID), "NetworkManagerClientReceiveSpawnFromServer", {});
 
 			(*callback)(newNetworkObject);
+		}
 	}
 	else
 	{
