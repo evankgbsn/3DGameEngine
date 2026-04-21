@@ -51,6 +51,10 @@ public:
 
 	bool HasComponent(const std::string& name) const;
 
+	void MakeNetTypeServer();
+
+	void MakeNetTypeClient();
+
 protected:
 
 	friend class Scene;
@@ -105,6 +109,8 @@ private:
 	Scene* owningScene;
 
 	unsigned int ID;
+
+	std::string netType;
 
 };
 

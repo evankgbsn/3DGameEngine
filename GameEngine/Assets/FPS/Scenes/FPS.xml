@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene name="FPS.xml" type="class Test">
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall79">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall79">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -68,7 +68,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -136,7 +136,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam51">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam51">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -204,7 +204,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer16">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer16">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -272,7 +272,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Sun" name="Sun">
+	<Object NetType="Client" type="Sun" name="Sun">
 		<Component type="DirectionalLightComponent" name="Light">
 			<Variable type="vec3" name="Direction">
 				<float X="-0.330000"/>
@@ -286,7 +286,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf">
+	<Object NetType="Client" type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -354,7 +354,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate">
+	<Object NetType="Server" type="Crate"name="Crate">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -422,7 +422,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer30">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer30">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -490,7 +490,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="PlaneObj" name="Plane">
+	<Object NetType="Client" type="PlaneObj" name="Plane">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -523,7 +523,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer17">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer17">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -591,7 +591,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint">
 		<Component type="GraphicsObjectColored" name="ArrowGraphics">
 			<Variable type="vec3" name="Color">
 				<float X="0.000000"/>
@@ -654,7 +654,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall64">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall64">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -722,7 +722,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -790,7 +790,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -858,7 +858,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseDoorway" name="WarehouseDoorway">
+	<Object NetType="Client" type="WarehouseDoorway" name="WarehouseDoorway">
 		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
 			<Variable type="float" name="Shine">
 				<float val="4.000000"/>
@@ -926,7 +926,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer20">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer20">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -994,7 +994,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1062,7 +1062,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall57">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall57">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1130,7 +1130,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1198,7 +1198,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner">
+	<Object NetType="Client" type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1266,7 +1266,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1334,7 +1334,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam">
+	<Object NetType="Client" type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1402,7 +1402,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer28">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer28">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1470,7 +1470,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel">
+	<Object NetType="Client" type="WarehouseRoofPannel" name="WarehouseRoofPannel">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1538,7 +1538,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint201">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint201">
 		<Component type="BoundingSphereComponent" name="BoundingSphere">
 			<Variable type="float" name="Radius">
 				<float val="1.000000"/>
@@ -1601,7 +1601,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpotLightObject" name="SpotLight">
+	<Object NetType="Client" type="SpotLightObject" name="SpotLight">
 		<Component type="SpotLightComponent" name="Light">
 			<Variable type="float" name="Linear">
 				<float val="0.090000"/>
@@ -1635,7 +1635,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall71">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall71">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1703,7 +1703,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Sun" name="Sun1">
+	<Object NetType="Client" type="Sun" name="Sun1">
 		<Component type="DirectionalLightComponent" name="Light">
 			<Variable type="vec3" name="Direction">
 				<float X="0.330000"/>
@@ -1717,7 +1717,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer15">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer15">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1785,7 +1785,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer18">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer18">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1853,7 +1853,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall75">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall75">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1921,7 +1921,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam58">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam58">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -1989,7 +1989,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer19">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer19">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2057,7 +2057,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner56">
+	<Object NetType="Client" type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner56">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2125,7 +2125,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer21">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer21">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2193,7 +2193,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer22">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer22">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2261,7 +2261,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer23">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer23">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2329,7 +2329,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer253">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer253">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2397,7 +2397,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam72">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam72">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2465,7 +2465,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer24">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer24">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2533,7 +2533,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer25">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer25">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2601,7 +2601,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer26">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer26">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2669,7 +2669,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam70">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam70">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2737,7 +2737,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer27">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer27">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2805,7 +2805,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer29">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer29">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2873,7 +2873,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer31">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer31">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -2941,7 +2941,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall77">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall77">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3009,7 +3009,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer32">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer32">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3077,7 +3077,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate284">
+	<Object NetType="Server" type="Crate"name="Crate284">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -3145,7 +3145,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall46">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall46">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3213,7 +3213,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam68">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam68">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3281,7 +3281,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall54">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall54">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3349,7 +3349,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner76">
+	<Object NetType="Client" type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner76">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3417,7 +3417,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall71">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall71">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3485,7 +3485,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall50">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall50">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3553,7 +3553,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam52">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam52">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3621,7 +3621,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall53">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall53">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3689,7 +3689,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam55">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam55">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3757,7 +3757,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseDoorway" name="WarehouseDoorway65">
+	<Object NetType="Client" type="WarehouseDoorway" name="WarehouseDoorway65">
 		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
 			<Variable type="float" name="Shine">
 				<float val="4.000000"/>
@@ -3825,7 +3825,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall59">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall59">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3893,7 +3893,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam60">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam60">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -3961,7 +3961,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall62">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall62">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4029,7 +4029,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate299">
+	<Object NetType="Server" type="Crate"name="Crate299">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -4097,7 +4097,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam63">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam63">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4165,7 +4165,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall121">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall121">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4233,7 +4233,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam74">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam74">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4301,7 +4301,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer266">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer266">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4369,7 +4369,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam65">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam65">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4437,7 +4437,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam66">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam66">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4505,7 +4505,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall67">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall67">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4573,7 +4573,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam68">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam68">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4641,7 +4641,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall69">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall69">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4709,7 +4709,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam85">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam85">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4777,7 +4777,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam70">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam70">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4845,7 +4845,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall73">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall73">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4913,7 +4913,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer259">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer259">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -4981,7 +4981,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam78">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam78">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5049,7 +5049,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam80">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam80">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5117,7 +5117,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall81">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall81">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5185,7 +5185,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam82">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam82">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5253,7 +5253,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseDoorway" name="WarehouseDoorway83">
+	<Object NetType="Client" type="WarehouseDoorway" name="WarehouseDoorway83">
 		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
 			<Variable type="float" name="Shine">
 				<float val="4.000000"/>
@@ -5321,7 +5321,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam84">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam84">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5389,7 +5389,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam86">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam86">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5457,7 +5457,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam87">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam87">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5525,7 +5525,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall88">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall88">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5593,7 +5593,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer292">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer292">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5661,7 +5661,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall89">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall89">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5729,7 +5729,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint203">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint203">
 		<Component type="BoundingSphereComponent" name="BoundingSphere">
 			<Variable type="float" name="Radius">
 				<float val="1.000000"/>
@@ -5792,7 +5792,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall90">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall90">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5860,7 +5860,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall117">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall117">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -5928,7 +5928,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint202">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint202">
 		<Component type="BoundingSphereComponent" name="BoundingSphere">
 			<Variable type="float" name="Radius">
 				<float val="1.000000"/>
@@ -5991,7 +5991,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall91">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall91">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6059,7 +6059,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint199">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint199">
 		<Component type="BoundingSphereComponent" name="BoundingSphere">
 			<Variable type="float" name="Radius">
 				<float val="1.000000"/>
@@ -6122,7 +6122,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner92">
+	<Object NetType="Client" type="WarehouseVerticalBeamCorner" name="WarehouseVerticalBeamCorner92">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6190,7 +6190,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall93">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall93">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6258,7 +6258,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer275">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer275">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6326,7 +6326,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam94">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam94">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6394,7 +6394,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall95">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall95">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6462,7 +6462,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall96">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall96">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6530,7 +6530,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseBrickWall" name="WarehouseBrickWall97">
+	<Object NetType="Client" type="WarehouseBrickWall" name="WarehouseBrickWall97">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6598,7 +6598,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseDoorway" name="WarehouseDoorway98">
+	<Object NetType="Client" type="WarehouseDoorway" name="WarehouseDoorway98">
 		<Component type="GraphicsObjectTexturedLit" name="DoorwayGraphics">
 			<Variable type="float" name="Shine">
 				<float val="4.000000"/>
@@ -6666,7 +6666,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer278">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer278">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6734,7 +6734,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam101">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam101">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6802,7 +6802,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam99">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam99">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6870,7 +6870,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer279">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer279">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -6938,7 +6938,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam100">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam100">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7006,7 +7006,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam102">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam102">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7074,7 +7074,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam103">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam103">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7142,7 +7142,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam104">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam104">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7210,7 +7210,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam105">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam105">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7278,7 +7278,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam106">
+	<Object NetType="Client" type="WarehouseHorizontalBeam" name="WarehouseHorizontalBeam106">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7346,7 +7346,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall107">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall107">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7414,7 +7414,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall108">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall108">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7482,7 +7482,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam116">
+	<Object NetType="Client" type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam116">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7550,7 +7550,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall109">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall109">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7618,7 +7618,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall110">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall110">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7686,7 +7686,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseWindowWall" name="WarehouseWindowWall111">
+	<Object NetType="Client" type="WarehouseWindowWall" name="WarehouseWindowWall111">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7754,7 +7754,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall118">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall118">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7822,7 +7822,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall119">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall119">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7890,7 +7890,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall120">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall120">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -7958,7 +7958,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall122">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall122">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8026,7 +8026,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofWall" name="WarehouseRoofWall123">
+	<Object NetType="Client" type="WarehouseRoofWall" name="WarehouseRoofWall123">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8094,7 +8094,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf126">
+	<Object NetType="Client" type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf126">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8162,7 +8162,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf127">
+	<Object NetType="Client" type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf127">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8230,7 +8230,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf128">
+	<Object NetType="Client" type="WarehouseVerticalBeamHalf" name="WarehouseVerticalBeamHalf128">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8298,7 +8298,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam129">
+	<Object NetType="Client" type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam129">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8366,7 +8366,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam130">
+	<Object NetType="Client" type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam130">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8434,7 +8434,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam131">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam131">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8502,7 +8502,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseVerticalBeam" name="WarehouseVerticalBeam132">
+	<Object NetType="Client" type="WarehouseVerticalBeam" name="WarehouseVerticalBeam132">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8570,7 +8570,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer285">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer285">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8638,7 +8638,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel140">
+	<Object NetType="Client" type="WarehouseRoofPannel" name="WarehouseRoofPannel140">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8706,7 +8706,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel141">
+	<Object NetType="Client" type="WarehouseRoofPannel" name="WarehouseRoofPannel141">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8774,7 +8774,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam142">
+	<Object NetType="Client" type="WarehouseRoofHorizontalBeam" name="WarehouseRoofHorizontalBeam142">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8842,7 +8842,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer286">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer286">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8910,7 +8910,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="WarehouseRoofPannel" name="WarehouseRoofPannel143">
+	<Object NetType="Client" type="WarehouseRoofPannel" name="WarehouseRoofPannel143">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -8978,7 +8978,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpotLightObject" name="SpotLightObject661">
+	<Object NetType="Client" type="SpotLightObject" name="SpotLightObject661">
 		<Component type="SpotLightComponent" name="Light">
 			<Variable type="float" name="Linear">
 				<float val="0.090000"/>
@@ -9012,7 +9012,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpotLightObject" name="SpotLightObject662">
+	<Object NetType="Client" type="SpotLightObject" name="SpotLightObject662">
 		<Component type="SpotLightComponent" name="Light">
 			<Variable type="float" name="Linear">
 				<float val="0.090000"/>
@@ -9046,7 +9046,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpotLightObject" name="SpotLightObject663">
+	<Object NetType="Client" type="SpotLightObject" name="SpotLightObject663">
 		<Component type="SpotLightComponent" name="Light">
 			<Variable type="float" name="Linear">
 				<float val="0.090000"/>
@@ -9080,7 +9080,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate251">
+	<Object NetType="Server" type="Crate"name="Crate251">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -9148,7 +9148,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer254">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer254">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9216,7 +9216,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer255">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer255">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9284,7 +9284,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer256">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer256">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9352,7 +9352,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer257">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer257">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9420,7 +9420,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer258">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer258">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9488,7 +9488,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate260">
+	<Object NetType="Server" type="Crate"name="Crate260">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -9556,7 +9556,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate261">
+	<Object NetType="Server" type="Crate"name="Crate261">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -9624,7 +9624,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer262">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer262">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9692,7 +9692,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer263">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer263">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9760,7 +9760,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer264">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer264">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9828,7 +9828,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer265">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer265">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9896,7 +9896,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer267">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer267">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -9964,7 +9964,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer268">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer268">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10032,7 +10032,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer269">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer269">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10100,7 +10100,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer270">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer270">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10168,7 +10168,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer271">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer271">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10236,7 +10236,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer272">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer272">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10304,7 +10304,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer273">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer273">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10372,7 +10372,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer274">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer274">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10440,7 +10440,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer276">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer276">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10508,7 +10508,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer277">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer277">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10576,7 +10576,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer280">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer280">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10644,7 +10644,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate281">
+	<Object NetType="Server" type="Crate"name="Crate281">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -10712,7 +10712,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate282">
+	<Object NetType="Server" type="Crate"name="Crate282">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -10780,7 +10780,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate283">
+	<Object NetType="Server" type="Crate"name="Crate283">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -10848,7 +10848,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer287">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer287">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10916,7 +10916,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer288">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer288">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -10984,7 +10984,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer289">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer289">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -11052,7 +11052,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer290">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer290">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -11120,7 +11120,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="ShippingContainer" name="ShippingContainer291">
+	<Object NetType="Client" type="ShippingContainer" name="ShippingContainer291">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="0"/>
@@ -11188,7 +11188,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate293">
+	<Object NetType="Server" type="Crate"name="Crate293">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11256,7 +11256,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate294">
+	<Object NetType="Server" type="Crate"name="Crate294">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11324,7 +11324,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate295">
+	<Object NetType="Server" type="Crate"name="Crate295">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11392,7 +11392,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate297">
+	<Object NetType="Server" type="Crate"name="Crate297">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11460,7 +11460,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate298">
+	<Object NetType="Server" type="Crate"name="Crate298">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11528,7 +11528,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate300">
+	<Object NetType="Server" type="Crate"name="Crate300">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11596,7 +11596,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate301">
+	<Object NetType="Server" type="Crate"name="Crate301">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11664,7 +11664,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate302">
+	<Object NetType="Server" type="Crate"name="Crate302">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11732,7 +11732,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate303">
+	<Object NetType="Server" type="Crate"name="Crate303">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11800,7 +11800,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate304">
+	<Object NetType="Server" type="Crate"name="Crate304">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11868,7 +11868,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="Crate" name="Crate305">
+	<Object NetType="Server" type="Crate"name="Crate305">
 		<Component type="RigidBodyComponent" name="RigidBody">
 			<Variable type="bool" name="IsDynamic">
 				<bool val="1"/>
@@ -11936,7 +11936,7 @@
 			</Variable>
 		</Component>
 	</Object>
-	<Object type="SpawnPoint" name="SpawnPoint200">
+	<Object NetType="Client" type="SpawnPoint" name="SpawnPoint200">
 		<Component type="BoundingSphereComponent" name="BoundingSphere">
 			<Variable type="float" name="Radius">
 				<float val="1.000000"/>

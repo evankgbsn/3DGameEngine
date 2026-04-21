@@ -6,6 +6,8 @@
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Networking/NetworkManager.h"
+#include "GameEngine/Scene/SceneManager.h"
+#include "GameEngine/Scene/Scene.h"
 
 Crate::Crate() :
     GameObject("Crate"),
@@ -20,6 +22,7 @@ Crate::Crate() :
 {
     RegisterGameObjectClassType<Crate>(this);
     RegisterNetworkObjectClassType<Crate>(this);
+    MakeNetTypeServer();
 }
 
 Crate::~Crate()
@@ -54,13 +57,10 @@ void Crate::Initialize()
             rotationToSet = NetworkManager::ConvertDataToMat4(data);
         }));
 
-    OnSpawn();
 }
 
 void Crate::Terminate()
 {
-    OnDespawn();
-
     RemoveClientDataReceivedCallback("Position");
     RemoveClientDataReceivedCallback("Rotation");
 
@@ -183,6 +183,13 @@ void Crate::OnClientSpawnConfirmation()
 void Crate::OnSpawn()
 {
     NetworkObject::OnSpawn();
+
+    Scene* scene = SceneManager::GetRegisteredScene("Test");
+
+    if (scene != nullptr)
+    {
+        scene->RegisterGameObject(this, "Crate:" + std::to_string(GetNetworkObjectID()));
+    }
 }
 
 void Crate::OnDespawn()

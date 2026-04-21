@@ -48,7 +48,8 @@ void GameObject::SetName(const std::string& n)
 
 GameObject::GameObject(const std::string& n) :
 	name(n),
-	owningScene(nullptr)
+	owningScene(nullptr),
+	netType("Client")
 {
 	static unsigned int IDGenerator = 0U;
 
@@ -108,6 +109,16 @@ bool GameObject::HasComponent(const std::string& name) const
 	}
 
 	return false;
+}
+
+void GameObject::MakeNetTypeServer()
+{
+	netType = "Server";
+}
+
+void GameObject::MakeNetTypeClient()
+{
+	netType = "Client";
 }
 
 std::function<void(GameObject**)> GameObject::GetConstructor(const std::string& name)
