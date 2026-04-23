@@ -11,6 +11,8 @@
 #include <unordered_map>
 
 class Model;
+class Listener;
+class Source;
 
 class AudioManager
 {
@@ -30,11 +32,23 @@ public:
 
 	static AudioObject* GetAudioObject(const std::string& name);
 
+	static Listener* CreateListener(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
+
+	static Listener* GetListener(const std::string& name);
+
+	static Listener* CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
+
+	static Listener* GetSource(const std::string& name);
+
+	static void Delete(Listener* const listener);
+
 	static void Delete(AudioObject* const object);
 
 	static void Delete(const std::string& name);
 
 	static void InitializeSteamAudioScene();
+
+	static void SetActiveListener(const std::string& name);
 
 private:
 
@@ -79,6 +93,8 @@ private:
 
 	static const IPLContext& GetSteamAudioContext();
 
+	void UpdateListener();
+
 	static AudioManager* instance;
 
 	IPLAudioSettings iplSettings = { 48000, 1024 };
@@ -102,6 +118,14 @@ private:
 	std::unordered_map<std::string, AudioObject*> objects;
 
 	std::unordered_map<std::string, IPLInstancedMesh> steamStaticMeshes;
+
+	std::unordered_map<std::string, Listener*> listeners;
+
+	std::string activeListener;
+
+	std::unordered_map<std::string, Source*> sources;
+
+	std::unordered_map<std::string, IPLSource> steamSources;
 };
 
 #endif // AUDIOMANAGER_H

@@ -5,6 +5,8 @@
 #include "GameEngine/GameObject/Component/GraphicsObjectTexturedLit.h"
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 Asteroid::Asteroid() :
 	GameObject("Asteroid"),
 	graphics(nullptr),

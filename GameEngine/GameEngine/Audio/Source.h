@@ -1,17 +1,17 @@
-#ifndef LISTENER_H
-#define LISTENER_H
+#ifndef SOURCE_H
+#define SOURCE_H
 
 #include <glm/glm.hpp>
 
-class Listener
+struct IPLSourceSettings;
+
+class Source
 {
 public:
 
-	Listener();
+	Source();
 
-	Listener(const glm::vec3& initialPos, const glm::mat4& initialRot);
-
-	~Listener();
+	~Source();
 
 	void SetPosition(const glm::vec3& pos);
 
@@ -29,18 +29,17 @@ public:
 
 private:
 
-	Listener(const Listener&) = delete;
+	Source(const Source&) = delete;
 
-	Listener& operator=(const Listener&) = delete;
+	Source& operator=(const Source&) = delete;
 
-	Listener(Listener&&) = delete;
+	Source(Source&&) = delete;
 
-	Listener& operator=(Listener&&) = delete;
+	Source& operator=(Source&&) = delete;
 
 	glm::vec3 position;
 
 	glm::mat4 rotation;
-
 };
 
-#endif // LISTENER_H
+#endif // SOURCE_H
