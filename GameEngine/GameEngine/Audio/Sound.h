@@ -21,8 +21,6 @@ public:
 
 	const std::string& GetPath() const;
 
-	ma_sound* const GetMiniAudioSound() const;
-
 private:
 
 	friend class AudioManager;

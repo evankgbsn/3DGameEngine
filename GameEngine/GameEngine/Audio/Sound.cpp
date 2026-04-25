@@ -4,9 +4,7 @@
 
 #include "miniaudio.h"
 
-Sound::Sound(const std::string& n, const std::string& p) :
-    name(n),
-    path(p),
+Sound::Sound(const std::string& name, const std::string& path) :
     sound(new ma_sound())
 {
 }
@@ -44,9 +42,4 @@ const std::string& Sound::GetName() const
 const std::string& Sound::GetPath() const
 {
     return path;
-}
-
-ma_sound* const Sound::GetMiniAudioSound() const
-{
-    return sound;
 }

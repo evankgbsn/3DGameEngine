@@ -23,7 +23,6 @@
 #include "../GameObjects/SpotLightObject.h"
 #include "../GameObjects/SpawnPoint.h"
 #include "../GameObjects/SkySphere.h"
-#include "GameEngine/Audio/AudioManager.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -160,8 +159,6 @@ void Test::Initialize()
 	}
 
 	Scene::Initialize();
-
-	AudioManager::InitializeSteamAudioScene();
 }
 
 void Test::Terminate()
