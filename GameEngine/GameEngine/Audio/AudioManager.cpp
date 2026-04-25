@@ -498,6 +498,11 @@ AudioManager::~AudioManager()
     // 3. Miniaudio cleanup
     ma_engine_uninit(miniAudioEngine);
     delete miniAudioEngine;
+
+    for (const auto& sound : sounds)
+    {
+        delete sound.second;
+    }
 }
 
 void AudioManager::InitializeMiniAudio()
@@ -510,6 +515,8 @@ void AudioManager::InitializeMiniAudio()
 	{
 		Logger::Log(std::string("Failed to initialize MiniAudioEngine"), Logger::Category::Error);
 	}
+
+    ma_engine_set_volume(AudioManager::GetMiniAudioEngine(), 1.0f);
 }
 
 void AudioManager::InitializeSteamAudio()

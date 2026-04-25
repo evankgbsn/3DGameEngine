@@ -162,6 +162,12 @@
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -178,6 +184,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -194,6 +206,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -210,6 +228,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -223,9 +247,16 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
       <PreprocessorDefinitions>NDEBUG</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -242,6 +273,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -258,6 +295,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -274,6 +317,12 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
+tasking.lib;
+math.lib;
+simd.lib;
+lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>Xcopy /E /I /y $(SolutionDir)Assets\EngineRequired  $(OutDir)Assets
@@ -299,6 +348,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     <ClCompile Include="GameObjects\SpawnPoint.cpp" />
     <ClCompile Include="GameObjects\SpotLightObject.cpp" />
     <ClCompile Include="GameObjects\Sun.cpp" />
+    <ClCompile Include="GameObjects\TestSoundObj.cpp" />
     <ClCompile Include="GameObjects\WarehouseBrickWall.cpp" />
     <ClCompile Include="GameObjects\WarehouseDoorway.cpp" />
     <ClCompile Include="GameObjects\WarehouseHorizontalBeam.cpp" />
@@ -328,6 +378,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     <ClInclude Include="GameObjects\SpawnPoint.h" />
     <ClInclude Include="GameObjects\SpotLightObject.h" />
     <ClInclude Include="GameObjects\Sun.h" />
+    <ClInclude Include="GameObjects\TestSoundObj.h" />
     <ClInclude Include="GameObjects\WarehouseBrickWall.h" />
     <ClInclude Include="GameObjects\WarehouseDoorway.h" />
     <ClInclude Include="GameObjects\WarehouseHorizontalBeam.h" />

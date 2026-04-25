@@ -24,6 +24,7 @@
 #include "../GameObjects/SpawnPoint.h"
 #include "../GameObjects/SkySphere.h"
 #include "GameEngine/Audio/AudioManager.h"
+#include "../GameObjects/TestSoundObj.h"
 
 Test::Test() :
 	player(new FPSPlayer()),
@@ -46,7 +47,8 @@ Test::Test() :
 	warehouseRoofPannel(new WarehouseRoofPannel()),
 	spotLight(new SpotLightObject()),
 	spawnPoint(new SpawnPoint()),
-	sky(new SkySphere())
+	sky(new SkySphere()),
+	sound(new TestSoundObj())
 {
 	RegisterGameObject(sun, "Sun");
 	RegisterGameObject(crate, "Crate");
@@ -65,10 +67,16 @@ Test::Test() :
 	RegisterGameObject(spotLight, "SpotLight");
 	RegisterGameObject(spawnPoint, "SpawnPoint");
 	RegisterGameObject(sky, "Sky");
+	RegisterGameObject(sound, "Sound");
 }
 
 Test::~Test()
 {
+	if (sound != nullptr)
+	{
+		delete sound;
+	}
+
 	if (serverFreeCam != nullptr)
 	{
 		delete serverFreeCam;
