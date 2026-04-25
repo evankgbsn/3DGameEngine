@@ -626,11 +626,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio\AudioManager.cpp" />
-    <ClCompile Include="Audio\AudioObject.cpp" />
-    <ClCompile Include="Audio\Listener.cpp" />
     <ClCompile Include="Audio\miniaudio.c" />
     <ClCompile Include="Audio\Sound.cpp" />
-    <ClCompile Include="Audio\Source.cpp" />
     <ClCompile Include="Collision\AnimatedCollider.cpp" />
     <ClCompile Include="Collision\AxisAlignedBoundingBoxWithVisualization.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
@@ -752,10 +749,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio\AudioManager.h" />
-    <ClInclude Include="Audio\AudioObject.h" />
-    <ClInclude Include="Audio\Listener.h" />
     <ClInclude Include="Audio\Sound.h" />
-    <ClInclude Include="Audio\Source.h" />
     <ClInclude Include="Collision\AnimatedCollider.h" />
     <ClInclude Include="Collision\AxisAlignedBoundingBoxWithVisualization.h" />
     <ClInclude Include="Collision\Collider.h" />

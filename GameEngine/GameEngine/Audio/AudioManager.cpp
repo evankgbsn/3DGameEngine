@@ -2,7 +2,6 @@
 
 #include "../Utils/Logger.h"
 #include "AudioObject.h"
-#include "Listener.h"
 
 AudioManager* AudioManager::instance = nullptr;
 
@@ -20,28 +19,8 @@ void AudioManager::EditorUpdate()
 {
 }
 
-void AudioManager::UpdateListener()
-{
-    glm::vec3 listenerPos = listeners[activeListener]->GetPosition();
-    glm::vec3 listenerForward = listeners[activeListener]->GetForward();
-    glm::vec3 listenerRight = listeners[activeListener]->GetRight();
-    glm::vec3 listenerUp = listeners[activeListener]->GetUp();
-
-    IPLSimulationSharedInputs sharedInputs = { 0 };
-    sharedInputs.listener.origin = {listenerPos.x, listenerPos.y, listenerPos.z};
-    sharedInputs.listener.ahead = {listenerForward.x, listenerForward.y, listenerForward.z};
-    sharedInputs.listener.up = {listenerUp.x, listenerUp.y, listenerUp.z};
-    sharedInputs.listener.right = {listenerRight.x, listenerRight.y, listenerRight.z};
-
-    iplSimulatorSetSharedInputs(simulator, IPL_SIMULATIONFLAGS_DIRECT, &sharedInputs);
-}
-
 void AudioManager::GameUpdate()
 {
-    if (instance != nullptr)
-    {
-        instance->UpdateListener();
-    }
 }
 
 ma_engine* AudioManager::GetMiniAudioEngine()
@@ -107,84 +86,6 @@ AudioObject* AudioManager::GetAudioObject(const std::string& name)
     return ret;
 }
 
-Listener* AudioManager::CreateListener(const std::string& name, const glm::vec3& position, const glm::mat4& rotation)
-{
-    Listener* ret = nullptr;
-
-    if (instance != nullptr)
-    {
-        if (instance->listeners.find(name) == instance->listeners.end())
-        {
-            ret = instance->listeners[name] = new Listener(position, rotation);
-        }
-        else
-        {
-            Logger::Log("Listener with the name " + name + " already exsists.", Logger::Category::Warning);
-            ret = instance->listeners[name];
-        }
-    }
-    else
-    {
-        Logger::Log("Calling AudioManager::CreateListener before AudioManager::Initialize()", Logger::Category::Warning);
-    }
-
-    return ret;
-}
-
-Listener* AudioManager::GetListener(const std::string& name)
-{
-    Listener* ret = nullptr;
-
-    if (instance != nullptr)
-    {
-        if (instance->listeners.find(name) != instance->listeners.end())
-        {
-            ret = instance->listeners[name];
-        }
-        else
-        {
-            Logger::Log("Could not find Listener with name: " + name + " AudioManager::GetListener()", Logger::Category::Warning);
-        }
-    }
-    else
-    {
-        Logger::Log("Calling AudioManager::GetListener before AudioManager::Initialize()", Logger::Category::Warning);
-    }
-
-    return ret;
-}
-
-Listener* AudioManager::CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation)
-{
-    return nullptr;
-}
-
-Listener* AudioManager::GetSource(const std::string& name)
-{
-    return nullptr;
-}
-
-void AudioManager::Delete(Listener* const l)
-{
-    if (instance != nullptr)
-    {
-        for (auto& listener : instance->listeners)
-        {
-            if (listener.second == l)
-            {
-                if (listener.first == instance->activeListener)
-                {
-                    Logger::Log("Atempting to delete active listener. You cannot delete the active listener. There always needs to be an active listener.", Logger::Category::Error);
-                    return;
-                }
-                delete l;
-                instance->objects.erase(instance->objects.find(listener.first));
-                return;
-            }
-        }
-    }
-}
-
 void AudioManager::Delete(AudioObject* const obj)
 {
     if (instance != nullptr)
@@ -205,35 +106,12 @@ void AudioManager::Delete(const std::string& name)
 {
     if (instance != nullptr)
     {
-        bool audioObjectDeleted = false;
         if (instance->objects.find(name) != instance->objects.end())
         {
             delete instance->objects[name];
-            audioObjectDeleted = true;
         }
 
-        if (audioObjectDeleted)
-        {
-            instance->objects.erase(instance->objects.find(name));
-        }
-
-        bool listenerDeleted = false;
-        if (instance->listeners.find(name) != instance->listeners.end())
-        {
-            if (name == instance->activeListener)
-            {
-                Logger::Log("Atempting to delete active listener. You cannot delete the active listener. There always needs to be an active listener.", Logger::Category::Error);
-                return;
-            }
-
-            delete instance->objects[name];
-            listenerDeleted = true;
-        }
-
-        if (listenerDeleted)
-        {
-            instance->objects.erase(instance->objects.find(name));
-        }
+        instance->objects.erase(instance->objects.find(name));
     }
 }
 

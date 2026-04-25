@@ -23,8 +23,6 @@ public:
 
 private:
 
-	friend class AudioManager;
-
 	Sound() = delete;
 
 	Sound(const Sound&) = delete;
