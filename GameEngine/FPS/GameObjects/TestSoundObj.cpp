@@ -20,28 +20,38 @@ TestSoundObj::~TestSoundObj()
 void TestSoundObj::Initialize()
 {
 	graphics = new GraphicsObjectColored(ModelManager::GetModel("Sphere"), { 1.0f, 0.0f, 0.0f, 1.0f });
-	graphics->SetPosition({ 0.0f, 0.0f, 0.0f });
+	graphics->SetPosition({ 0.0f, 3.0f, 0.0f });
 
 	AddComponent(graphics, "Graphics");
+
+	audioSource = AudioManager::CreateSource("Beep", graphics->GetPosition(), graphics->GetRotation());
+	audioSource->AddSound("Beep");
 
 	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	body->SyncPhysics();
 	body->Update();
 
 	AddComponent(body, "RigidBody");
-
-	audioSource = AudioManager::CreateSource("Beep", graphics->GetPosition(), graphics->GetRotation());
-	audioSource->AddSound("Beep");
 }
 
 void TestSoundObj::Terminate()
 {
 	RemoveComponent("Graphics");
 	RemoveComponent("RigidBody");
+
+	delete graphics;
+	delete body;
 }
 
 void TestSoundObj::GameUpdate()
 {
+	static float time = TimeManager::SecondsSinceStart();
+
+	if (TimeManager::SecondsSinceStart() - time > 2.0f)
+	{
+		audioSource->Play("Beep");
+		time = TimeManager::SecondsSinceStart();
+	}
 }
 
 void TestSoundObj::EditorUpdate()
@@ -67,7 +77,7 @@ bool TestSoundObj::Hovered() const
 
 void TestSoundObj::Start()
 {
-	audioSource->Play("Beep");
+	
 }
 
 glm::vec3 TestSoundObj::GetPosition() const
@@ -79,6 +89,7 @@ void TestSoundObj::SetPosition(const glm::vec3& newPos)
 {
 	body->SetPosition(newPos);
 	graphics->SetPosition(newPos);
+	audioSource->SetPosition(newPos);
 }
 
 glm::mat4 TestSoundObj::GetRotation() const
@@ -90,6 +101,7 @@ void TestSoundObj::SetRotation(const glm::mat4& newRot)
 {
 	body->SetRotation(newRot);
 	graphics->SetRotation(newRot);
+	audioSource->SetRotation(newRot);
 }
 
 glm::mat4 TestSoundObj::GetTransform() const

@@ -169,7 +169,7 @@ void Test::Initialize()
 
 	Scene::Initialize();
 
-	AudioManager::InitializeSteamAudioScene();
+	
 }
 
 void Test::Terminate()
@@ -190,6 +190,8 @@ void Test::Unload()
 void Test::Start()
 {
 	Scene::Start();
+
+	AudioManager::InitializeSteamAudioScene();
 
 	if (!NetworkManager::IsServer() && localPlayer == nullptr)
 	{
