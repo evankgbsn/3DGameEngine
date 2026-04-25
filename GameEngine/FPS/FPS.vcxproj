@@ -162,11 +162,7 @@
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -184,11 +180,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -206,11 +198,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -228,11 +216,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -251,11 +235,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -273,11 +253,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -295,11 +271,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -317,11 +289,7 @@ Xcopy /E /I /y $(SolutionDir)Assets\$(ProjectName)  $(OutDir)Assets</Command>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
-      <AdditionalDependencies>core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;
-tasking.lib;
-math.lib;
-simd.lib;
-lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>

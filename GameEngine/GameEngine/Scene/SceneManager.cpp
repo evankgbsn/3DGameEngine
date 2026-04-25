@@ -2,6 +2,7 @@
 
 #include "../Utils/SingletonHelpers.h"
 #include "Scene.h"
+#include "../Audio/AudioManager.h"
 
 #include <list>
 
@@ -444,4 +445,9 @@ void SceneManager::UnloadScenes()
 	}
 
 	scenesToUnload.clear();
+}
+
+void SceneManager::InitializeAudioScene()
+{
+	AudioManager::InitializeSteamAudioScene();
 }

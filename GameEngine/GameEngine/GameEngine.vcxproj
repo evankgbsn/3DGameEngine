@@ -362,7 +362,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -395,7 +395,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -428,7 +428,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -461,7 +461,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -498,7 +498,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -535,7 +535,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -573,7 +573,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -610,7 +610,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;phonon.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -645,6 +645,9 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject\Component\AmbientLight.cpp" />
     <ClCompile Include="GameObject\Component\AnimatedColliderComponent.cpp" />
+    <ClCompile Include="GameObject\Component\AudioListener.cpp" />
+    <ClCompile Include="GameObject\Component\AudioOcclusionVolume.cpp" />
+    <ClCompile Include="GameObject\Component\AudioSource.cpp" />
     <ClCompile Include="GameObject\Component\BoundingSphereComponent.cpp" />
     <ClCompile Include="GameObject\Component\CameraComponent.cpp" />
     <ClCompile Include="GameObject\Component\CharacterControllerComponent.cpp" />
@@ -770,6 +773,9 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject\Component\AmbientLight.h" />
     <ClInclude Include="GameObject\Component\AnimatedColliderComponent.h" />
+    <ClInclude Include="GameObject\Component\AudioListener.h" />
+    <ClInclude Include="GameObject\Component\AudioOcclusionVolume.h" />
+    <ClInclude Include="GameObject\Component\AudioSource.h" />
     <ClInclude Include="GameObject\Component\BoundingSphereComponent.h" />
     <ClInclude Include="GameObject\Component\CameraComponent.h" />
     <ClInclude Include="GameObject\Component\CharacterControllerComponent.h" />

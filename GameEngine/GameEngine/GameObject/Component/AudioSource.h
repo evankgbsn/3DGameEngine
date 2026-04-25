@@ -1,22 +1,25 @@
-#ifndef SOURCE_H
-#define SOURCE_H
+#ifndef AUDIOSOURCE_H
+#define AUDIOSOURCE_H
+
+#include "Component.h"
 
 #include <glm/glm.hpp>
 
 #include <string>
 #include <set>
 
+class Source;
 class Sound;
 
-class Source
+class AudioSource : public Component
 {
 public:
 
-	Source();
+	AudioSource(const glm::vec3& position, const glm::mat4& rotation);
 
-	Source(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
+	AudioSource();
 
-	~Source();
+	~AudioSource();
 
 	static Sound* LoadSound(const std::string& name, const std::string& path);
 
@@ -58,21 +61,22 @@ public:
 
 private:
 
-	Source(const Source&) = delete;
+	AudioSource(const AudioSource&) = delete;
 
-	Source& operator=(const Source&) = delete;
+	AudioSource& operator=(const AudioSource&) = delete;
 
-	Source(Source&&) = delete;
+	AudioSource(AudioSource&&) = delete;
 
-	Source& operator=(Source&&) = delete;
+	AudioSource& operator=(AudioSource&&) = delete;
 
-	glm::vec3 position;
+	void Serialize() override;
 
-	glm::mat4 rotation;
+	void Deserialize() override;
 
-	std::set<std::string> sounds;
+	void Update() override;
 
-	const std::string name;
+	Source* source;
+
 };
 
-#endif // SOURCE_H
+#endif //AUDIOSOURCE_H

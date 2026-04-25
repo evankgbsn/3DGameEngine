@@ -23,7 +23,6 @@
 #include "../GameObjects/SpotLightObject.h"
 #include "../GameObjects/SpawnPoint.h"
 #include "../GameObjects/SkySphere.h"
-#include "GameEngine/Audio/AudioManager.h"
 #include "../GameObjects/TestSoundObj.h"
 
 Test::Test() :
@@ -191,7 +190,7 @@ void Test::Start()
 {
 	Scene::Start();
 
-	AudioManager::InitializeSteamAudioScene();
+	SceneManager::InitializeAudioScene();
 
 	if (!NetworkManager::IsServer() && localPlayer == nullptr)
 	{

@@ -1,12 +1,10 @@
 #include "ServerFreeCamera.h"
 
 #include "GameEngine/GameObject/Component/CameraComponent.h"
+#include "GameEngine/GameObject/Component/AudioListener.h"
 #include "GameEngine/Input/InputManager.h"
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
-
-#include "GameEngine/Managers.h"
-#include "GameEngine/Audio/Listener.h"
 
 ServerFreeCamera::ServerFreeCamera() :
 	GameObject("ServerFreeCamera"),
@@ -52,8 +50,8 @@ void ServerFreeCamera::Initialize()
 	cam->SetPosition({ 0.0f, 50.0f, -50.0f });
 	cam->SetTarget({ 0.0f, 0.0f, 0.0f });
 
-	listener = AudioManager::CreateListener("Main", cam->GetPosition(), glm::mat4(glm::vec4(cam->GetRightVector(), 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-	AudioManager::SetActiveListener("Main");
+	listener = new AudioListener(cam->GetPosition(), glm::mat4(glm::vec4(cam->GetRightVector(), 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
+	listener->SetActive();
 }
 
 void ServerFreeCamera::Terminate()

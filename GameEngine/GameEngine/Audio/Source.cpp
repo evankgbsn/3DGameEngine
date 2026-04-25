@@ -21,6 +21,26 @@ Source::~Source()
 {
 }
 
+Sound* Source::LoadSound(const std::string& name, const std::string& path)
+{
+    return AudioManager::LoadSound(name, path);
+}
+
+Sound* Source::GetSound(const std::string& name)
+{
+    return AudioManager::GetSound(name);
+}
+
+bool Source::SoundLoaded(const std::string& name)
+{
+    return AudioManager::SoundLoaded(name);
+}
+
+void Source::UnloadSound(const std::string& name)
+{
+    AudioManager::UnloadSound(name);
+}
+
 void Source::SetPosition(const glm::vec3& pos)
 {
     position = pos;

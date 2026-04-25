@@ -4,8 +4,7 @@
 
 #include "GameEngine/GameObject/Component/RigidBodyComponent.h"
 #include "GameEngine/GameObject/Component/GraphicsObjectColored.h"
-#include "GameEngine/Audio/AudioManager.h"
-#include "GameEngine/Audio/Source.h"
+#include "GameEngine/GameObject/Component/AudioSource.h"
 
 TestSoundObj::TestSoundObj() :
 	GameObject("TestSoundObj")
@@ -24,7 +23,7 @@ void TestSoundObj::Initialize()
 
 	AddComponent(graphics, "Graphics");
 
-	audioSource = AudioManager::CreateSource("Beep", graphics->GetPosition(), graphics->GetRotation());
+	audioSource = new AudioSource(graphics->GetPosition(), graphics->GetRotation());
 	audioSource->AddSound("Beep");
 
 	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
@@ -36,6 +35,8 @@ void TestSoundObj::Initialize()
 
 void TestSoundObj::Terminate()
 {
+	delete audioSource;
+
 	RemoveComponent("Graphics");
 	RemoveComponent("RigidBody");
 
@@ -60,9 +61,9 @@ void TestSoundObj::EditorUpdate()
 
 void TestSoundObj::Load()
 {
-	if (!AudioManager::SoundLoaded("Beep"))
+	if (!AudioSource::SoundLoaded("Beep"))
 	{
-		AudioManager::LoadSound("Beep", "Assets/Sound/Beep.wav");
+		AudioSource::LoadSound("Beep", "Assets/Sound/Beep.wav");
 	}
 }
 

@@ -480,6 +480,15 @@
     <ClCompile Include="Audio\Source.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Component\AudioOcclusionVolume.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\AudioSource.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Component\AudioListener.cpp">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -865,6 +874,15 @@
     </ClInclude>
     <ClInclude Include="Audio\Source.h">
       <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\AudioOcclusionVolume.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\AudioSource.h">
+      <Filter>Source Files\GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Component\AudioListener.h">
+      <Filter>Source Files\GameObject\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

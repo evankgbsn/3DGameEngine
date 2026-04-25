@@ -57,6 +57,8 @@ public:
 
 	static Scene* const GetRegisteredScene(const std::string& name);
 
+	static void InitializeAudioScene();
+
 private:
 
 	friend class SingletonHelpers;

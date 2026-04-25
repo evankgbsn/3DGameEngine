@@ -5,6 +5,7 @@
 
 class RigidBodyComponent;
 class GraphicsObjectColored;
+class AudioSource;
 
 class Source;
 
@@ -56,7 +57,7 @@ private:
 
 	GraphicsObjectColored* graphics;
 
-	Source* audioSource;
+	AudioSource* audioSource;
 
 };
 

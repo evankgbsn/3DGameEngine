@@ -6,7 +6,7 @@
 #include <functional>
 
 class CameraComponent;
-class Listener;
+class AudioListener;
 
 class ServerFreeCamera : public GameObject
 {
@@ -70,7 +70,7 @@ private:
 
 	std::function<void(int keyCode)>* escPress;
 
-	Listener* listener;
+	AudioListener* listener;
 };
 
 #endif // SURVIVALSERVERFREECAMERA_H
