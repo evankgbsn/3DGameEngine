@@ -5,6 +5,7 @@
 
 class GraphicsObjectTexturedLit;
 class RigidBodyComponent;
+class AudioObject;
 
 class WarehouseBrickWall : public GameObject
 {
@@ -54,6 +55,8 @@ private:
 	GraphicsObjectTexturedLit* graphics;
 
 	RigidBodyComponent* body;
+
+	AudioObject* audio;
 };
 
 #endif // WAREHOUSEBRICKWALL_H
