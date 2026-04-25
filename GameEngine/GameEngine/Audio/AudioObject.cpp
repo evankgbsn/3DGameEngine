@@ -5,33 +5,26 @@
 
 #include <phonon.h>
 
-AudioObject::AudioObject(const Model* const m, const glm::vec3& pos, const glm::mat4& rot, const Material& material) :
+AudioObject::AudioObject(Model* const m, const glm::vec3& pos, const glm::mat4& rot, const Material& material) :
     mat(material),
     model(m),
     position(pos),
     rotation(rot)
 {
-    for (const Vertex& vert : model->GetVertices())
+    for (Vertex& vert : model->GetVertices())
     {
         vertices.push_back({ vert.GetPosition().x, vert.GetPosition().y, vert.GetPosition().z });
     }
 
-    for (unsigned int i = 0; i < model->GetIndices().size(); i += 3)
+    for (int i : model->GetIndices())
     {
-        IPLTriangle newTri = { model->GetIndices()[0 + i],
-                model->GetIndices()[1 + i],
-                model->GetIndices()[2 + i] };
-
-        triangles.push_back(newTri);
-        materialIndices.push_back(0);
+        indices.push_back(i);
     }
-
-
     steamStaticMeshSettings.numVertices = vertices.size();
-    steamStaticMeshSettings.numTriangles = triangles.size();
+    steamStaticMeshSettings.numTriangles = indices.size() / 3;
     steamStaticMeshSettings.vertices = vertices.data();
-    steamStaticMeshSettings.triangles = triangles.data();
-    steamStaticMeshSettings.materialIndices = materialIndices.data(); // Use a single material for the whole mesh
+    steamStaticMeshSettings.triangles = (IPLTriangle*)indices.data();
+    steamStaticMeshSettings.materialIndices = NULL; // Use a single material for the whole mesh
 
     steamMaterial.absorption[0] = material.lowFrequencyAbsorption;
     steamMaterial.absorption[1] = material.midFrequencyAbsorption;
@@ -109,7 +102,28 @@ glm::mat4 AudioObject::GetRotation() const
     return rotation;
 }
 
-const Model* const AudioObject::GetModel() const
+void AudioObject::SetModel(Model* const m)
+{
+    model = m;
+
+    for (Vertex& vert : model->GetVertices())
+    {
+        vertices.push_back({ vert.GetPosition().x, vert.GetPosition().y, vert.GetPosition().z });
+    }
+
+    for (int i : model->GetIndices())
+    {
+        indices.push_back(i);
+    }
+    steamStaticMeshSettings.numVertices = vertices.size();
+    steamStaticMeshSettings.numTriangles = indices.size() / 3;
+    steamStaticMeshSettings.vertices = vertices.data();
+    steamStaticMeshSettings.triangles = (IPLTriangle*)indices.data();
+    steamStaticMeshSettings.materialIndices = NULL; // Use a single material for the whole mesh
+
+}
+
+Model* const AudioObject::GetModel() const
 {
     return model;
 }

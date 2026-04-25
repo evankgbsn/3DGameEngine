@@ -1,7 +1,8 @@
 #include "Sound.h"
+
 #include "AudioManager.h"
+
 #include "miniaudio.h"
-#include "../Utils/Logger.h" 
 
 Sound::Sound(const std::string& n, const std::string& p) :
     name(n),
@@ -17,19 +18,11 @@ Sound::~Sound()
 
 void Sound::Load()
 {
-    ma_sound_config soundConfig = ma_sound_config_init();
-    soundConfig.pFilePath = path.c_str();
-
-    // MA_SOUND_FLAG_NO_DEFAULT_ATTACHMENT prevents miniaudio from automatically 
-    // plugging this Mono sound into the Stereo engine output, avoiding Error -3.
-    soundConfig.flags = MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_NO_DEFAULT_ATTACHMENT;
-    soundConfig.channelsOut = 1;
-
-    ma_result result = ma_sound_init_ex(AudioManager::GetMiniAudioEngine(), &soundConfig, sound);
+    ma_result result = ma_sound_init_from_file(AudioManager::GetMiniAudioEngine(), path.c_str(), 0, nullptr, nullptr, sound);
 
     if (result != MA_SUCCESS)
     {
-        Logger::Log(std::string("Failed to load sound: ") + name + " from path: " + path + " (Error: " + std::to_string(result) + ")", Logger::Category::Error);
+        Logger::Log(std::string("Failed to load sound: ") + name + " from path: " + path, Logger::Category::Error);
     }
     else
     {

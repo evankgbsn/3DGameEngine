@@ -25,7 +25,7 @@ public:
 		float highFrequencyTransmission;
 	};
 
-	AudioObject(const Model* const model, const glm::vec3& position, const glm::mat4& rotation, const Material& material);
+	AudioObject(Model* const model, const glm::vec3& position, const glm::mat4& rotation, const Material& material);
 
 	void SetPosition(const glm::vec3& position);
 
@@ -35,7 +35,9 @@ public:
 
 	glm::mat4 GetRotation() const;
 
-	const Model* const GetModel() const;
+	void SetModel(Model* const model);
+
+	Model* const GetModel() const;
 
 	void UpdateMaterial(const Material& newMat);
 
@@ -57,7 +59,7 @@ private:
 
 	AudioObject& operator=(AudioObject&&) = delete;
 
-	const Model* const model;
+	Model* model;
 
 	Material mat;
 
@@ -67,9 +69,7 @@ private:
 
 	std::vector<IPLVector3> vertices;
 
-	std::vector<IPLTriangle> triangles;
-
-	std::vector<int> materialIndices;
+	std::vector<int> indices;
 
 	IPLStaticMeshSettings steamStaticMeshSettings;
 
