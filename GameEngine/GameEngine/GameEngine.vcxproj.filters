@@ -471,6 +471,15 @@
     <ClCompile Include="Renderer\Text\Text3D.cpp">
       <Filter>Source Files\Renderer\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Audio\AudioObject.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Listener.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Source.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -847,6 +856,15 @@
     </ClInclude>
     <ClInclude Include="Managers.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\AudioObject.h">
+      <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Listener.h">
+      <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Source.h">
+      <Filter>Source Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
