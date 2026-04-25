@@ -82,8 +82,8 @@ private:
 		float constant = 0.0f;
 		float linear = 0.0f;
 		float quadratic = 0.0f;
-		bool lightOn = false;
-		glm::vec2 pad; // Needed for padding. Otherwise multiples lights wont show because opengl will be 16 byte aligned.
+		int lightOn = 0; // Changed to int for 4-byte alignment
+		glm::vec2 pad;   // Pad to 16-byte boundary (6 floats/ints total in this block)
 	} spotLight[20];
 
 	struct ViewPositionUBO

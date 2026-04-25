@@ -125,13 +125,15 @@ void GOLit::UpdateLighting()
 			spotLight[i].constant = sLight->GetConstant();
 			spotLight[i].linear = sLight->GetLinear();
 			spotLight[i].quadratic = sLight->GetQuadratic();
+
+			// Cosine of the angles: Inner cutoff must be > Outer cutoff (in cosine space)
 			spotLight[i].cutoff = glm::cos(glm::radians(sLight->GetCutoff()));
-			spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
-			spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
-			spotLight[i].lightOn = true;
+				spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
+
+				spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
+				spotLight[i].lightOn = 1; // Integer 1 for true
 			i++;
 		}
-
 		glNamedBufferSubData(spotLightBuffer, 0, sizeof(spotLight), &spotLight);
 	}
 
