@@ -12,6 +12,10 @@ Listener::Listener(const glm::vec3& initialPos, const glm::mat4& initialRot) :
 {
 }
 
+Listener::~Listener()
+{
+}
+
 void Listener::SetPosition(const glm::vec3& pos)
 {
     position = pos;
@@ -34,7 +38,7 @@ glm::mat4 Listener::GetRotation() const
 
 glm::vec3 Listener::GetForward() const
 {
-    return glm::normalize(glm::vec3(rotation[2]));
+    return -glm::normalize(glm::vec3(rotation[2]));
 }
 
 glm::vec3 Listener::GetRight() const

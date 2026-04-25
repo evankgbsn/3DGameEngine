@@ -4,10 +4,9 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+#include <phonon.h>
+
 class Model;
-struct IPLStaticMeshSettings;
-struct IPLVector3;
-struct IPLMaterial;
 
 class AudioObject
 {
@@ -74,9 +73,11 @@ private:
 
 	IPLStaticMeshSettings steamStaticMeshSettings;
 
+	IPLStaticMesh steamStaticMesh;
+
 	IPLMaterial steamMaterial;
 
-	IPLScene* steamSubscene; // All dynaimc moveable objects need a subscene. This includes objects that are added and removed from the scene at runtime.
+	IPLScene steamSubscene; // All dynaimc moveable objects need a subscene. This includes objects that are added and removed from the scene at runtime.
 };
 
 #endif //AUDIOOBJECT_H

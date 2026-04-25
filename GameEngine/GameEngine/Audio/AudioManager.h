@@ -13,6 +13,7 @@
 class Model;
 class Listener;
 class Source;
+class Sound;
 
 class AudioManager
 {
@@ -36,19 +37,35 @@ public:
 
 	static Listener* GetListener(const std::string& name);
 
-	static Listener* CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
+	static Source* CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
 
-	static Listener* GetSource(const std::string& name);
+	static Source* GetSource(const std::string& name);
+
+	static Sound* LoadSound(const std::string& name, const std::string& path);
+
+	static Sound* GetSound(const std::string& name);
+
+	static bool SoundLoaded(const std::string& name);
+
+	static void UnloadSound(const std::string& name);
 
 	static void Delete(Listener* const listener);
 
 	static void Delete(AudioObject* const object);
+
+	static void Delete(Source* const source);
 
 	static void Delete(const std::string& name);
 
 	static void InitializeSteamAudioScene();
 
 	static void SetActiveListener(const std::string& name);
+
+	static void SteamAudioNodeProcessPCMFrames(ma_node* pNode, const float** ppFramesIn, ma_uint32* pFrameCountIn, float** ppFramesOut, ma_uint32* ppFrameCountOut);
+
+	static void ClearAll();
+
+	static ma_node* GetSteamAudioNodeBase(const std::string& name);
 
 private:
 
@@ -59,14 +76,15 @@ private:
 	typedef struct {
 		ma_node_base base;
 		IPLHRTF hrtf;
-		IPLBinauralEffect effect;
+		IPLBinauralEffect binauralEffect; // For Panning
+		IPLDirectEffect directEffect;     // For Occlusion/Muffling
 
-		// Direction vector updated by the main thread/game loop
-		IPLVector3 direction;
+		// These hold the "polled" data from the Game Loop
+		IPLVector3 direction;             // Matches outputs.direction
+		IPLDirectEffectParams directParams; // Matches outputs.direct
 
-		// Planar buffers for Steam Audio
-		float* inputPlane;          // Mono input
-		float* outputPlanes[2];     // Stereo (L/R) output
+		float* inputPlane;
+		float* outputPlanes[2];
 	} SteamAudioNode;
 
 	AudioManager();
@@ -85,8 +103,6 @@ private:
 
 	void InitializeSteamAudio();
 
-	void SteamAudioNodeProcessPCMFrames(ma_node* pNode, const float** ppFramesIn, ma_uint32* pFrameCountIn, float** ppFramesOut, ma_uint32* ppFrameCountOut);
-
 	static IPLMatrix4x4 ConvertGlmToIpl(const glm::vec3& position, const glm::mat4& rotation);
 
 	static void UpdateObjectTransform(AudioObject* obj);
@@ -95,9 +111,17 @@ private:
 
 	void UpdateListener();
 
+	void UpdateSources();
+
+	void ProccessUpdatedSounds();
+
+	void InitializeSteamAudioNode(const std::string& name);
+
+	void CleanupSource(const std::string& name);
+
 	static AudioManager* instance;
 
-	IPLAudioSettings iplSettings = { 48000, 1024 };
+	IPLAudioSettings iplSettings;
 
 	IPLContext context;
 
@@ -107,9 +131,9 @@ private:
 
 	IPLScene scene;
 
-	IPLContextSettings contextSettings = { STEAMAUDIO_VERSION };
+	IPLContextSettings contextSettings;
 
-	IPLHRTFSettings hrtfSettings = { IPL_HRTFTYPE_DEFAULT, NULL, 0, 1.0f };
+	IPLHRTFSettings hrtfSettings;
 
 	IPLSimulationSettings simulatorSettings;
 
@@ -126,6 +150,10 @@ private:
 	std::unordered_map<std::string, Source*> sources;
 
 	std::unordered_map<std::string, IPLSource> steamSources;
+
+	std::unordered_map<std::string, SteamAudioNode> steamAudioNodes;
+
+	std::unordered_map<std::string, Sound*> sounds;
 };
 
 #endif // AUDIOMANAGER_H

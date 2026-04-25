@@ -3,13 +3,16 @@
 
 #include <glm/glm.hpp>
 
-struct IPLSourceSettings;
+#include <string>
+#include <set>
 
 class Source
 {
 public:
 
 	Source();
+
+	Source(const std::string& name, const glm::vec3& position, const glm::mat4& rotation);
 
 	~Source();
 
@@ -27,6 +30,22 @@ public:
 
 	glm::vec3 GetUp() const;
 
+	void AddSound(const std::string& sound);
+
+	void RemoveSound(const std::string& sound);
+
+	const std::set<std::string>& GetSounds() const;
+
+	void ClearSounds();
+
+	void Play(const std::string& sound);
+
+	void Stop(const std::string& sound);
+
+	void PlayAll();
+
+	void StopAll();
+
 private:
 
 	Source(const Source&) = delete;
@@ -40,6 +59,10 @@ private:
 	glm::vec3 position;
 
 	glm::mat4 rotation;
+
+	std::set<std::string> sounds;
+
+	const std::string name;
 };
 
 #endif // SOURCE_H

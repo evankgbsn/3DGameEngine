@@ -3,6 +3,21 @@
 #include "../Utils/Logger.h"
 #include "AudioObject.h"
 #include "Listener.h"
+#include "Source.h"
+#include "Sound.h"
+
+// This is the "Blueprint" for your custom node.
+// It must be static or global so the pointer remains valid.
+static ma_node_vtable g_SteamAudioNodeVTable = {
+    // 1. Point to your processing function
+    // Note: We use a static wrapper to call your class member if needed
+    AudioManager::SteamAudioNodeProcessPCMFrames,
+
+    nullptr, // onGetInertia (Not needed for this)
+    1,       // 1 Input Bus (Mono)
+    1,       // 1 Output Bus (Stereo)
+    MA_NODE_FLAG_CONTINUOUS_PROCESSING
+};
 
 AudioManager* AudioManager::instance = nullptr;
 
@@ -13,6 +28,7 @@ void AudioManager::Initialize()
 
 void AudioManager::Terminate()
 {
+    instance->ClearAll();
 	SingletonHelpers::TerminateSingleton(&instance, "Terminated AudioManager");
 }
 
@@ -36,11 +52,60 @@ void AudioManager::UpdateListener()
     iplSimulatorSetSharedInputs(simulator, IPL_SIMULATIONFLAGS_DIRECT, &sharedInputs);
 }
 
+void AudioManager::UpdateSources()
+{
+    for (const auto& source : sources)
+    {
+        IPLSimulationInputs inputs = { };
+        inputs.flags = IPL_SIMULATIONFLAGS_DIRECT;
+        inputs.directFlags = static_cast<IPLDirectSimulationFlags>(
+            IPL_DIRECTSIMULATIONFLAGS_OCCLUSION |
+            IPL_DIRECTSIMULATIONFLAGS_TRANSMISSION
+            );
+        inputs.source.origin = { source.second->GetPosition().x, source.second->GetPosition().y, source.second->GetPosition().z };
+        inputs.source.ahead = { source.second->GetForward().x, source.second->GetForward().y, source.second->GetForward().z }; // Optional for directional sources
+
+        iplSourceSetInputs(steamSources[source.first], IPL_SIMULATIONFLAGS_DIRECT, &inputs);
+    }
+}
+
+void AudioManager::ProccessUpdatedSounds()
+{
+    glm::vec3 L = instance->listeners[instance->activeListener]->GetPosition();
+
+    // Loop through every active source to poll results
+    for (auto& sourcePair : instance->sources)
+    {
+        const std::string& name = sourcePair.first;
+        Source* src = sourcePair.second;
+
+        IPLSimulationOutputs outputs = { };
+        iplSourceGetOutputs(instance->steamSources[name], IPL_SIMULATIONFLAGS_DIRECT, &outputs);
+
+        // 2. Calculate Relative Direction Vector
+                // Vector from Listener to Source
+        glm::vec3 S = src->GetPosition();
+        glm::vec3 relativeDir = glm::normalize(S - L);
+
+        // Access the node from your map and push the results
+        // Note: Ensure you check if the node exists in the map first
+        if (steamAudioNodes.count(name)) {
+            steamAudioNodes[name].directParams = outputs.direct;
+            steamAudioNodes[name].direction = { relativeDir.x, relativeDir.y, relativeDir.z };
+        }
+    }
+}
+
 void AudioManager::GameUpdate()
 {
     if (instance != nullptr)
     {
         instance->UpdateListener();
+        instance->UpdateSources();
+        
+        iplSimulatorRunDirect(instance->simulator);
+
+        instance->ProccessUpdatedSounds();
     }
 }
 
@@ -154,14 +219,139 @@ Listener* AudioManager::GetListener(const std::string& name)
     return ret;
 }
 
-Listener* AudioManager::CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation)
+Source* AudioManager::CreateSource(const std::string& name, const glm::vec3& position, const glm::mat4& rotation)
 {
-    return nullptr;
+    Source* ret = nullptr;
+
+    if (instance != nullptr)
+    {
+        if (instance->sources.find(name) == instance->sources.end())
+        {
+            ret = instance->sources[name] = new Source(name, position, rotation);
+
+            IPLSourceSettings sourceSettings = { };
+            sourceSettings.flags = IPL_SIMULATIONFLAGS_DIRECT; // Enables Occlusion/Transmission
+            iplSourceCreate(instance->simulator, &sourceSettings, &instance->steamSources[name]);
+            instance->steamAudioNodes[name];
+            instance->InitializeSteamAudioNode(name);
+        }
+        else
+        {
+            Logger::Log("Source with the name " + name + " already exsists.", Logger::Category::Warning);
+            ret = instance->sources[name];
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::CreateSource before AudioManager::Initialize()", Logger::Category::Warning);
+    }
+
+    return ret;
 }
 
-Listener* AudioManager::GetSource(const std::string& name)
+Source* AudioManager::GetSource(const std::string& name)
 {
-    return nullptr;
+    Source* ret = nullptr;
+
+    if (instance != nullptr)
+    {
+        if (instance->sources.find(name) != instance->sources.end())
+        {
+            ret = instance->sources[name];
+        }
+        else
+        {
+            Logger::Log("Could not find Source with name: " + name + " AudioManager::GetSource()", Logger::Category::Warning);
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::GetSource before AudioManager::Initialize()", Logger::Category::Warning);
+    }
+
+    return ret;
+}
+
+Sound* AudioManager::LoadSound(const std::string& name, const std::string& path)
+{
+    Sound* ret = nullptr;
+
+    if (instance != nullptr)
+    {
+        if (instance->sounds.find(name) == instance->sounds.end())
+        {
+            instance->sounds[name] = ret = new Sound(name, path);
+        }
+        else
+        {
+            ret = instance->sounds[name];
+            Logger::Log("Sound: " + name + " has already been loaded.", Logger::Category::Warning);
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::LoadSound() before AudioManager::Initialize()", Logger::Category::Error);
+    }
+
+    return ret;
+}
+
+Sound* AudioManager::GetSound(const std::string& name)
+{
+    Sound* ret = nullptr;
+
+    if (instance != nullptr)
+    {
+        if (instance->sounds.find(name) != instance->sounds.end())
+        {
+            ret = instance->sounds[name];
+        }
+        else
+        {
+            Logger::Log("Sound: " + name + " has not been loaded. Cannot get sound", Logger::Category::Warning);
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::GetSound() before AudioManager::Initialize()", Logger::Category::Error);
+    }
+
+    return ret;
+}
+
+bool AudioManager::SoundLoaded(const std::string& name)
+{
+    if (instance != nullptr)
+    {
+        return instance->sounds.find(name) != instance->sounds.end();
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::SoundLoaded() before AudioManager::Initialize()", Logger::Category::Error);
+    }
+
+    return false;
+}
+
+void AudioManager::UnloadSound(const std::string& name)
+{
+    if (instance != nullptr)
+    {
+        if (instance->sounds.find(name) != instance->sounds.end())
+        {
+            delete instance->sounds[name];
+            instance->sounds.erase(instance->sounds.find(name));
+            Logger::Log("Unloaded Sound: " + name, Logger::Category::Success);
+        }
+        else
+        {
+            Logger::Log("Sound: " + name + " has not been loaded. You cannot unload a sound that has not been loaded.", Logger::Category::Warning);
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::UnloadSound() before AudioManager::Initialize()", Logger::Category::Error);
+    }
 }
 
 void AudioManager::Delete(Listener* const l)
@@ -178,7 +368,7 @@ void AudioManager::Delete(Listener* const l)
                     return;
                 }
                 delete l;
-                instance->objects.erase(instance->objects.find(listener.first));
+                instance->listeners.erase(instance->listeners.find(listener.first));
                 return;
             }
         }
@@ -189,12 +379,42 @@ void AudioManager::Delete(AudioObject* const obj)
 {
     if (instance != nullptr)
     {
-        for (auto& object : instance->objects)
+        for (auto it = instance->objects.begin(); it != instance->objects.end(); ++it)
         {
-            if (object.second == obj)
+            if (it->second == obj)
             {
-                delete obj;
-                instance->objects.erase(instance->objects.find(object.first));
+                const std::string& name = it->first;
+
+                // 1. Release the Instance Handle from the World Scene
+                if (instance->steamStaticMeshes.count(name)) {
+                    iplInstancedMeshRelease(&instance->steamStaticMeshes[name]);
+                    instance->steamStaticMeshes.erase(name);
+                }
+
+                // 2. Delete the object (triggers AudioObject destructor)
+                delete obj; // cleans up Sub-Scene & Static Mesh
+
+                // 3. Commit the Main Scene change
+                iplSceneCommit(instance->scene);
+
+                instance->objects.erase(it);
+                return;
+            }
+        }
+    }
+}
+
+void AudioManager::Delete(Source* const source)
+{
+    if (instance != nullptr)
+    {
+        for (auto& src : instance->sources)
+        {
+            if (src.second == source)
+            {
+                delete source;
+                instance->CleanupSource(src.first);
+                instance->sources.erase(instance->sources.find(src.first));
                 return;
             }
         }
@@ -203,37 +423,54 @@ void AudioManager::Delete(AudioObject* const obj)
 
 void AudioManager::Delete(const std::string& name)
 {
-    if (instance != nullptr)
+    if (instance == nullptr) return;
+
+    bool sceneChanged = false;
+
+    // 1. Handle AudioObject Deletion
+    if (instance->objects.count(name))
     {
-        bool audioObjectDeleted = false;
-        if (instance->objects.find(name) != instance->objects.end())
+        // First, remove the Instance from the Main Scene
+        if (instance->steamStaticMeshes.count(name))
         {
-            delete instance->objects[name];
-            audioObjectDeleted = true;
+            iplInstancedMeshRelease(&instance->steamStaticMeshes[name]);
+            instance->steamStaticMeshes.erase(name);
+            sceneChanged = true;
         }
 
-        if (audioObjectDeleted)
-        {
-            instance->objects.erase(instance->objects.find(name));
-        }
+        // Delete calls the AudioObject destructor (Releases Sub-scene & Mesh)
+        delete instance->objects[name];
+        instance->objects.erase(name);
+    }
 
-        bool listenerDeleted = false;
-        if (instance->listeners.find(name) != instance->listeners.end())
-        {
-            if (name == instance->activeListener)
-            {
-                Logger::Log("Atempting to delete active listener. You cannot delete the active listener. There always needs to be an active listener.", Logger::Category::Error);
-                return;
-            }
+    // 2. Handle Source Deletion
+    if (instance->sources.count(name))
+    {
+        // CleanupSource handles iplSourceRelease and Node memory
+        instance->CleanupSource(name);
 
-            delete instance->objects[name];
-            listenerDeleted = true;
-        }
+        delete instance->sources[name];
+        instance->sources.erase(name);
+    }
 
-        if (listenerDeleted)
+    // 3. Handle Listener Deletion
+    if (instance->listeners.count(name))
+    {
+        if (name == instance->activeListener)
         {
-            instance->objects.erase(instance->objects.find(name));
+            Logger::Log("Cannot delete the active listener: " + name, Logger::Category::Error);
         }
+        else
+        {
+            delete instance->listeners[name];
+            instance->listeners.erase(name);
+        }
+    }
+
+    // 4. Commit changes to the World Scene if any geometry was removed
+    if (sceneChanged)
+    {
+        iplSceneCommit(instance->scene);
     }
 }
 
@@ -246,7 +483,21 @@ AudioManager::AudioManager() :
 
 AudioManager::~AudioManager()
 {
-	delete miniAudioEngine;
+    // 1. Clean up all active sources/objects/listeners first
+    for (const auto& source : sources)
+    {
+        CleanupSource(source.first);
+    }
+
+    // 2. Release Steam Audio Global handles
+    iplSimulatorRelease(&simulator);
+    iplSceneRelease(&scene);
+    iplHRTFRelease(&hrtf);
+    iplContextRelease(&context);
+
+    // 3. Miniaudio cleanup
+    ma_engine_uninit(miniAudioEngine);
+    delete miniAudioEngine;
 }
 
 void AudioManager::InitializeMiniAudio()
@@ -264,6 +515,21 @@ void AudioManager::InitializeMiniAudio()
 void AudioManager::InitializeSteamAudio()
 {
     iplContextCreate(&contextSettings, &context);
+
+    // 1. Setup Context Settings
+    contextSettings.version = STEAMAUDIO_VERSION;
+
+    // 2. Setup Global Audio Settings
+    iplSettings.samplingRate = 48000;
+    iplSettings.frameSize = 1024;
+
+    iplContextCreate(&contextSettings, &context);
+
+    // 3. Setup HRTF Settings
+    hrtfSettings.type = IPL_HRTFTYPE_DEFAULT;
+    hrtfSettings.sofaFileName = nullptr;
+    // Remove numSpeakers and ambisonicsOrder
+    hrtfSettings.volume = 1.0f;
 
     iplHRTFCreate(context, &iplSettings, &hrtfSettings, &hrtf);
 
@@ -285,7 +551,7 @@ void AudioManager::InitializeSteamAudioScene()
         for (auto& object : instance->objects)
         {
             IPLInstancedMeshSettings instSettings{};
-            instSettings.subScene = *object.second->steamSubscene;
+            instSettings.subScene = object.second->steamSubscene;
             instSettings.transform = ConvertGlmToIpl(object.second->GetPosition(), object.second->GetRotation());
 
             iplInstancedMeshCreate(instance->scene, &instSettings, &instance->steamStaticMeshes[object.first]);
@@ -294,6 +560,25 @@ void AudioManager::InitializeSteamAudioScene()
         // 3. Commit the Scene (Builds the BVH)
         iplSceneCommit(instance->scene);
         iplSimulatorSetScene(instance->simulator, instance->scene);
+    }
+}
+
+void AudioManager::SetActiveListener(const std::string& name)
+{
+    if (instance != nullptr)
+    {
+        if (instance->listeners.find(name) != instance->listeners.end())
+        {
+            instance->activeListener = name;
+        }
+        else
+        {
+            Logger::Log("Cannot set active listener, Listener: " + name + " does not exsist.", Logger::Category::Error);
+        }
+    }
+    else
+    {
+        Logger::Log("Calling AudioManager::SetActiveListener() before AudioManager::Initialize()", Logger::Category::Error);
     }
 }
 
@@ -330,9 +615,18 @@ void AudioManager::SteamAudioNodeProcessPCMFrames(ma_node* pNode, const float** 
         (void**)&pSteamNode->inputPlane
     );
 
+    // 1. Apply Occlusion/Transmission/Distance Attenuation first
+    // This uses the directParams you polled in the GameUpdate
+    iplDirectEffectApply(pSteamNode->directEffect, &pSteamNode->directParams, &inBuffer, &inBuffer);
+
+    // 2. Then apply the Binaural HRTF to the already-muffled sound
+    IPLBinauralEffectParams binParams = { 0 };
+    binParams.direction = pSteamNode->direction; // Unit vector
+    binParams.hrtf = pSteamNode->hrtf;
+
     // 4. Apply the Steam Audio spatialization
     // This transforms the mono inputPlane into the stereo outputPlanes
-    iplBinauralEffectApply(pSteamNode->effect, &params, &inBuffer, &outBuffer);
+    iplBinauralEffectApply(pSteamNode->binauralEffect, &params, &inBuffer, &outBuffer);
 
     // 5. Interleave Steam Audio's stereo output back into miniaudio's output buffer
     ma_interleave_pcm_frames(
@@ -402,4 +696,154 @@ void AudioManager::UpdateObjectTransform(AudioObject* obj)
         }
 
     }
+}
+
+void AudioManager::InitializeSteamAudioNode(const std::string& name)
+{
+    SteamAudioNode& node = steamAudioNodes[name];
+
+    ma_uint32 inputChannels[1] = { 1 };  // Mono
+    ma_uint32 outputChannels[1] = { 2 }; // Stereo
+
+    ma_node_config nodeConfig = ma_node_config_init();
+    nodeConfig.vtable = &g_SteamAudioNodeVTable;
+    nodeConfig.pInputChannels = inputChannels;   // Pointing to the array
+    nodeConfig.pOutputChannels = outputChannels; // Pointing to the array
+
+    ma_result result = ma_node_init(ma_engine_get_node_graph(miniAudioEngine), &nodeConfig, NULL, &node.base);
+    if (result != MA_SUCCESS) {
+        Logger::Log("Failed to init miniaudio node for: " + name, Logger::Category::Error);
+        return;
+    }
+
+    // 2. Assign Global Handles
+    node.hrtf = hrtf;
+
+    // 3. Create Steam Audio Effects
+    IPLBinauralEffectSettings binSettings{ hrtf };
+    iplBinauralEffectCreate(context, &iplSettings, &binSettings, &node.binauralEffect);
+
+    IPLDirectEffectSettings dirSettings{};
+    dirSettings.numChannels = 1; // Direct effect processes the mono source
+    iplDirectEffectCreate(context, &iplSettings, &dirSettings, &node.directEffect);
+
+    // 4. Allocate Planar Memory (Aligning for SIMD is recommended)
+    // iplSettings.frameSize (usually 1024) is the number of floats per channel
+    node.inputPlane = (float*)ma_malloc(iplSettings.frameSize * sizeof(float), NULL);
+    node.outputPlanes[0] = (float*)ma_malloc(iplSettings.frameSize * sizeof(float), NULL);
+    node.outputPlanes[1] = (float*)ma_malloc(iplSettings.frameSize * sizeof(float), NULL);
+
+    // Initialize planes to silence
+    memset(node.inputPlane, 0, iplSettings.frameSize * sizeof(float));
+    memset(node.outputPlanes[0], 0, iplSettings.frameSize * sizeof(float));
+    memset(node.outputPlanes[1], 0, iplSettings.frameSize * sizeof(float));
+}
+
+void AudioManager::CleanupSource(const std::string& name) {
+    // 1. Release Steam Audio Source handle
+    if (steamSources.count(name)) {
+        iplSourceRelease(&steamSources[name]);
+        steamSources.erase(name);
+    }
+
+    // 2. Cleanup the Custom Node
+    if (steamAudioNodes.count(name)) {
+        SteamAudioNode& node = steamAudioNodes[name];
+
+        // Release Effect handles
+        iplBinauralEffectRelease(&node.binauralEffect);
+        iplDirectEffectRelease(&node.directEffect);
+
+        // Free the manual planar memory
+        ma_free(node.inputPlane, NULL);
+        ma_free(node.outputPlanes[0], NULL);
+        ma_free(node.outputPlanes[1], NULL);
+
+        // Uninitialize the miniaudio node base
+        ma_node_uninit(&node.base, NULL);
+
+        steamAudioNodes.erase(name);
+    }
+}
+
+void AudioManager::ClearAll()
+{
+    if (instance == nullptr) return;
+
+    // 1. Clear Sources and their associated SteamAudioNodes
+    // We use a while loop because CleanupSource removes items from the map
+    auto sourceIt = instance->sources.begin();
+    while (sourceIt != instance->sources.end())
+    {
+        std::string name = sourceIt->first;
+        Source* src = sourceIt->second;
+
+        instance->CleanupSource(name);
+        delete src;
+
+        sourceIt = instance->sources.erase(sourceIt);
+    }
+
+    // 2. Clear AudioObjects and their World Instances
+    auto objIt = instance->objects.begin();
+    while (objIt != instance->objects.end())
+    {
+        std::string name = objIt->first;
+        AudioObject* obj = objIt->second;
+
+        // Release the Instance from the Main Scene
+        if (instance->steamStaticMeshes.count(name))
+        {
+            iplInstancedMeshRelease(&instance->steamStaticMeshes[name]);
+            instance->steamStaticMeshes.erase(name);
+        }
+
+        // Delete triggers AudioObject destructor (Releases Sub-scene/Mesh)
+        delete obj;
+
+        objIt = instance->objects.erase(objIt);
+    }
+
+    // 3. Clear Listeners (except the active one if you want to keep a camera)
+    auto listIt = instance->listeners.begin();
+    while (listIt != instance->listeners.end())
+    {
+        if (listIt->first != instance->activeListener)
+        {
+            delete listIt->second;
+            listIt = instance->listeners.erase(listIt);
+        }
+        else
+        {
+            ++listIt;
+        }
+    }
+
+    // 4. Final Scene Update
+    // Re-committing an empty scene tells the simulator the world is now empty
+    if (instance->scene)
+    {
+        iplSceneCommit(instance->scene);
+    }
+
+    Logger::Log("AudioManager: All audio assets cleared for level transition.", Logger::Category::Info);
+}
+
+ma_node* AudioManager::GetSteamAudioNodeBase(const std::string& name)
+{
+    if (instance != nullptr)
+    {
+        // Check if the node actually exists for this source
+        auto it = instance->steamAudioNodes.find(name);
+        if (it != instance->steamAudioNodes.end())
+        {
+            // Return the address of the miniaudio-compatible base struct
+            return &it->second.base;
+        }
+        else
+        {
+            Logger::Log("Could not find SteamAudioNode for: " + name, Logger::Category::Warning);
+        }
+    }
+    return nullptr;
 }

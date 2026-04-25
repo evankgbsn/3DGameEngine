@@ -9,8 +9,7 @@ AudioObject::AudioObject(Model* const m, const glm::vec3& pos, const glm::mat4& 
     mat(material),
     model(m),
     position(pos),
-    rotation(rot),
-    steamSubscene(nullptr)
+    rotation(rot)
 {
     for (Vertex& vert : model->GetVertices())
     {
@@ -29,13 +28,13 @@ AudioObject::AudioObject(Model* const m, const glm::vec3& pos, const glm::mat4& 
 
     steamMaterial.absorption[0] = material.lowFrequencyAbsorption;
     steamMaterial.absorption[1] = material.midFrequencyAbsorption;
-    steamMaterial.absorption[1] = material.highFrequencyAbsorption;
+    steamMaterial.absorption[2] = material.highFrequencyAbsorption;
 
     steamMaterial.scattering = material.scattering;
 
     steamMaterial.transmission[0] = material.lowFrequencyTransmission;
     steamMaterial.transmission[1] = material.midFrequencyTransmission;
-    steamMaterial.transmission[1] = material.highFrequencyTransmission;
+    steamMaterial.transmission[2] = material.highFrequencyTransmission;
 
     steamStaticMeshSettings.numMaterials = 1;
     steamStaticMeshSettings.materials = &steamMaterial;
@@ -57,17 +56,28 @@ AudioObject::AudioObject(Model* const m, const glm::vec3& pos, const glm::mat4& 
     subSceneSettings.embreeDevice = nullptr; // Steam Audio can often manage this internally
 
     // 1. ASSET LOAD TIME
-    iplSceneCreate(AudioManager::GetSteamAudioContext(), &subSceneSettings, steamSubscene);
+    iplSceneCreate(AudioManager::GetSteamAudioContext(), &subSceneSettings, &steamSubscene);
 
-    IPLStaticMesh staticMesh;
     // ... fill meshSettings ...
-    iplStaticMeshCreate(*steamSubscene, &steamStaticMeshSettings, &staticMesh);
+    iplStaticMeshCreate(steamSubscene, &steamStaticMeshSettings, &steamStaticMesh);
 
-    iplSceneCommit(*steamSubscene); // <--- MANDATORY BEFORE INSTANCING
+    iplSceneCommit(steamSubscene); // <--- MANDATORY BEFORE INSTANCING
 }
 
 AudioObject::~AudioObject()
 {
+    // Release the mesh handle first
+    // Note: You need to store 'staticMesh' as a member in the header to do this
+    if (steamStaticMesh) {
+        iplStaticMeshRelease(&steamStaticMesh);
+    }
+
+    // Release the subscene handle
+    if (steamSubscene) {
+        iplSceneRelease(&steamSubscene);
+    }
+
+    iplSceneRelease(&steamSubscene);
 }
 
 void AudioObject::SetPosition(const glm::vec3& pos)
@@ -124,13 +134,13 @@ void AudioObject::UpdateMaterial(const Material& newMat)
 
     steamMaterial.absorption[0] = mat.lowFrequencyAbsorption;
     steamMaterial.absorption[1] = mat.midFrequencyAbsorption;
-    steamMaterial.absorption[1] = mat.highFrequencyAbsorption;
+    steamMaterial.absorption[2] = mat.highFrequencyAbsorption;
 
     steamMaterial.scattering = mat.scattering;
 
     steamMaterial.transmission[0] = mat.lowFrequencyTransmission;
     steamMaterial.transmission[1] = mat.midFrequencyTransmission;
-    steamMaterial.transmission[1] = mat.highFrequencyTransmission;
+    steamMaterial.transmission[2] = mat.highFrequencyTransmission;
 
     steamStaticMeshSettings.numMaterials = 1;
     steamStaticMeshSettings.materials = &steamMaterial;
@@ -140,3 +150,4 @@ const AudioObject::Material& AudioObject::GetMaterial() const
 {
     return mat;
 }
+
