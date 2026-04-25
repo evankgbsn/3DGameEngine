@@ -108,9 +108,9 @@ protected:
 
 	Window* window;
 
-	float nearPlane;
+	float near;
 
-	float farPlane;
+	float far;
 
 	// PERSPECTIVE BEGIN: Field of view and aspect ratio is only relevant to perspective cameras.
 	float fov;

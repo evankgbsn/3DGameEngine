@@ -25,7 +25,6 @@ class WarehouseRoofPannel;
 class SpotLightObject;
 class SpawnPoint;
 class SkySphere;
-class TestSoundObj;
 
 class Test : public Scene
 {
@@ -99,8 +98,6 @@ private:
 	SpawnPoint* spawnPoint;
 
 	SkySphere* sky;
-
-	TestSoundObj* sound;
 };
 
 #endif // TEST_H

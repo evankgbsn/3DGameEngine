@@ -62,23 +62,6 @@
 !*phonon.pdb
 !*AssetCopy.exe
 !*AssetCopy.pdb
-!*core.lib
-!*hrtf.lib
-!*phonon.lib
-!*pffft.lib
-!*mysofa.lib
-!*zlibstatic.lib
-!*embree.lib
-!*embree_sse42.lib
-!*embree_avx2.lib
-!*embree_avx.lib
-!*sys.lib
-!*tasking.lib
-!*math.lib
-!*simd.lib
-!*lexers.lib
-!*legacy_stdio_definitions.lib
-!*ispckernels.lib
 
 
 #Ignore .vs folder and other generated folders

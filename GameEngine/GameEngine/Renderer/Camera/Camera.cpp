@@ -54,12 +54,12 @@ const float& Camera::GetFOV() const
 
 const float& Camera::GetNear() const
 {
-	return nearPlane;
+	return near;
 }
 
 const float& Camera::GetFar() const
 {
-	return farPlane;
+	return far;
 }
 
 const glm::vec3& Camera::GetPosition() const
@@ -123,13 +123,13 @@ void Camera::SetAspectRatio(const float& newAspectRatio)
 
 void Camera::SetNear(const float& newNear)
 {
-	nearPlane = newNear;
+	near = newNear;
 	UpdateProjection();
 }
 
 void Camera::SetFar(const float& newFar)
 {
-	farPlane = newFar;
+	far = newFar;
 	UpdateProjection();
 }
 
@@ -213,10 +213,10 @@ void Camera::UpdateProjection()
 	switch (type)
 	{
 	case Camera::Type::PERSPECTIVE:
-		projection = glm::perspective(fov, aspect, nearPlane, farPlane);
+		projection = glm::perspective(fov, aspect, near, far);
 		break;
 	case Camera::Type::ORTHOGRAPHIC:
-		projection = glm::ortho(left, right, bottom, top, nearPlane, farPlane);
+		projection = glm::ortho(left, right, bottom, top, near, far);
 		break;
 	default:
 		break;
@@ -233,8 +233,8 @@ Camera::Camera(const Camera::Type& t, Window* const w, const std::string& n) :
 	window(w),
 	view(glm::mat4(1.0f)),
 	projection(glm::mat4(1.0f)),
-	nearPlane(1.0f),
-	farPlane(3000.0f),
+	near(1.0f),
+	far(3000.0f),
 	fov(45.0f),
 	left(-10.0f),
 	right(10.0f),

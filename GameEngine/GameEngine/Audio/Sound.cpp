@@ -26,8 +26,6 @@ void Sound::Load()
     }
     else
     {
-        ma_sound_set_looping(sound, MA_TRUE);
-        ma_sound_set_volume(sound, 1.0f);
         Logger::Log(std::string("Loaded sound: ") + name + " from path: " + path, Logger::Category::Success);
     }
 }

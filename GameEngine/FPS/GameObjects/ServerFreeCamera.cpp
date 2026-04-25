@@ -5,9 +5,6 @@
 #include "GameEngine/Time/TimeManager.h"
 #include "GameEngine/Renderer/Window/WindowManager.h"
 
-#include "GameEngine/Managers.h"
-#include "GameEngine/Audio/Listener.h"
-
 ServerFreeCamera::ServerFreeCamera() :
 	GameObject("ServerFreeCamera"),
 	cam(nullptr),
@@ -51,9 +48,6 @@ void ServerFreeCamera::Initialize()
 
 	cam->SetPosition({ 0.0f, 50.0f, -50.0f });
 	cam->SetTarget({ 0.0f, 0.0f, 0.0f });
-
-	listener = AudioManager::CreateListener("Main", cam->GetPosition(), glm::mat4(glm::vec4(cam->GetRightVector(), 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-	AudioManager::SetActiveListener("Main");
 }
 
 void ServerFreeCamera::Terminate()
@@ -74,12 +68,10 @@ void ServerFreeCamera::GameUpdate()
 			if (cursorPos.x != prevPos.x)
 			{
 				cam->Rotate(glm::vec3(0.0f, 1.0f, 0.0f), xspeed * (float)-(cursorPos.x - prevPos.x));
-				listener->SetRotation(glm::mat4(glm::vec4(cam->GetRightVector(), 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 			}
 			if (cursorPos.y != prevPos.y)
 			{
 				cam->Rotate(cam->GetRightVector(), yspeed * (float)-(cursorPos.y - prevPos.y));
-				listener->SetRotation(glm::mat4(glm::vec4(cam->GetRightVector(), 0.0f), glm::vec4(cam->GetUpVector(), 0.0f), glm::vec4(cam->GetForwardVector(), 0.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
 			}
 
 			prevPos = cursorPos;
@@ -143,24 +135,20 @@ void ServerFreeCamera::CreateInputFunctions()
 	wPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
 			cam->Translate(cam->GetForwardVector() * cameraSpeed * TimeManager::DeltaTime());
-			listener->SetPosition(cam->GetPosition());
 		});
 
 	aPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
 			cam->Translate(cam->GetRightVector() * -cameraSpeed * TimeManager::DeltaTime());
-			listener->SetPosition(cam->GetPosition());
 		});
 	sPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
 			cam->Translate(cam->GetForwardVector() * -cameraSpeed * TimeManager::DeltaTime());
-			listener->SetPosition(cam->GetPosition());
 		});
 
 	dPress = new std::function<void(int)>([this, cameraSpeed](int keycode)
 		{
 			cam->Translate(cam->GetRightVector() * cameraSpeed * TimeManager::DeltaTime());
-			listener->SetPosition(cam->GetPosition());
 		});
 
 	float rotSpeed = 0.001f;

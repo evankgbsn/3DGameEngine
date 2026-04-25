@@ -102,9 +102,6 @@
     <ClCompile Include="GameObjects\SkySphere.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\TestSoundObj.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scenes\Test.h">
@@ -183,9 +180,6 @@
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\SkySphere.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\TestSoundObj.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
