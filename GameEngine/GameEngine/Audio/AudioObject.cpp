@@ -19,8 +19,8 @@ AudioObject::AudioObject(const Model* const m, const glm::vec3& pos, const glm::
     for (unsigned int i = 0; i < model->GetIndices().size(); i += 3)
     {
         IPLTriangle newTri = { model->GetIndices()[0 + i],
-                model->GetIndices()[2 + i],
-                model->GetIndices()[1 + i] };
+                model->GetIndices()[1 + i],
+                model->GetIndices()[2 + i] };
 
         triangles.push_back(newTri);
         materialIndices.push_back(0);
@@ -33,18 +33,18 @@ AudioObject::AudioObject(const Model* const m, const glm::vec3& pos, const glm::
     steamStaticMeshSettings.triangles = triangles.data();
     steamStaticMeshSettings.materialIndices = materialIndices.data(); // Use a single material for the whole mesh
 
-    steamMaterial[0].absorption[0] = material.lowFrequencyAbsorption;
-    steamMaterial[0].absorption[1] = material.midFrequencyAbsorption;
-    steamMaterial[0].absorption[2] = material.highFrequencyAbsorption;
+    steamMaterial.absorption[0] = material.lowFrequencyAbsorption;
+    steamMaterial.absorption[1] = material.midFrequencyAbsorption;
+    steamMaterial.absorption[2] = material.highFrequencyAbsorption;
 
-    steamMaterial[0].scattering = material.scattering;
+    steamMaterial.scattering = material.scattering;
 
-    steamMaterial[0].transmission[0] = material.lowFrequencyTransmission;
-    steamMaterial[0].transmission[1] = material.midFrequencyTransmission;
-    steamMaterial[0].transmission[2] = material.highFrequencyTransmission;
+    steamMaterial.transmission[0] = material.lowFrequencyTransmission;
+    steamMaterial.transmission[1] = material.midFrequencyTransmission;
+    steamMaterial.transmission[2] = material.highFrequencyTransmission;
 
     steamStaticMeshSettings.numMaterials = 1;
-    steamStaticMeshSettings.materials = steamMaterial;
+    steamStaticMeshSettings.materials = &steamMaterial;
 
     IPLSceneSettings subSceneSettings{};
 
@@ -60,16 +60,13 @@ AudioObject::AudioObject(const Model* const m, const glm::vec3& pos, const glm::
     subSceneSettings.userData = nullptr;
 
     // If you chose Embree, you may need to provide the Embree device
-    subSceneSettings.embreeDevice = AudioManager::GetEmbreeDevice(); // Steam Audio can often manage this internally
+    subSceneSettings.embreeDevice = nullptr; // Steam Audio can often manage this internally
 
     // 1. ASSET LOAD TIME
     iplSceneCreate(AudioManager::GetSteamAudioContext(), &subSceneSettings, &steamSubscene);
 
     // ... fill meshSettings ...
     iplStaticMeshCreate(steamSubscene, &steamStaticMeshSettings, &steamStaticMesh);
-
-    // FIX: You must explicitly add the mesh to the subscene!
-    iplStaticMeshAdd(steamStaticMesh, steamSubscene);
 
     iplSceneCommit(steamSubscene); // <--- MANDATORY BEFORE INSTANCING
 }
@@ -86,6 +83,8 @@ AudioObject::~AudioObject()
     if (steamSubscene) {
         iplSceneRelease(&steamSubscene);
     }
+
+    iplSceneRelease(&steamSubscene);
 }
 
 void AudioObject::SetPosition(const glm::vec3& pos)
@@ -119,18 +118,18 @@ void AudioObject::UpdateMaterial(const Material& newMat)
 {
     mat = newMat;
 
-    steamMaterial[0].absorption[0] = mat.lowFrequencyAbsorption;
-    steamMaterial[0].absorption[1] = mat.midFrequencyAbsorption;
-    steamMaterial[0].absorption[2] = mat.highFrequencyAbsorption;
+    steamMaterial.absorption[0] = mat.lowFrequencyAbsorption;
+    steamMaterial.absorption[1] = mat.midFrequencyAbsorption;
+    steamMaterial.absorption[2] = mat.highFrequencyAbsorption;
 
-    steamMaterial[0].scattering = mat.scattering;
+    steamMaterial.scattering = mat.scattering;
 
-    steamMaterial[0].transmission[0] = mat.lowFrequencyTransmission;
-    steamMaterial[0].transmission[1] = mat.midFrequencyTransmission;
-    steamMaterial[0].transmission[2] = mat.highFrequencyTransmission;
+    steamMaterial.transmission[0] = mat.lowFrequencyTransmission;
+    steamMaterial.transmission[1] = mat.midFrequencyTransmission;
+    steamMaterial.transmission[2] = mat.highFrequencyTransmission;
 
     steamStaticMeshSettings.numMaterials = 1;
-    steamStaticMeshSettings.materials = steamMaterial;
+    steamStaticMeshSettings.materials = &steamMaterial;
 }
 
 const AudioObject::Material& AudioObject::GetMaterial() const

@@ -33,8 +33,7 @@ void WarehouseBrickWall::Initialize()
 		0.01f, 0.01f, 0.01f
 	};
 
-	static unsigned long long id = 0;
-	audio = AudioManager::CreateAudioObject(GetName() + std::to_string(id++), graphics->GetModel(), graphics->GetPosition(), graphics->GetRotation(), mat);
+	audio = AudioManager::CreateAudioObject(GetName(), graphics->GetModel(), graphics->GetPosition(), graphics->GetRotation(), mat);
 
 	body = new RigidBodyComponent(RigidBodyComponent::Type::STATIC, this, graphics->GetModel());
 	body->SyncPhysics();
@@ -94,14 +93,12 @@ void WarehouseBrickWall::SetPosition(const glm::vec3& pos)
 {
 	graphics->SetPosition(pos);
 	body->SetPosition(pos);audio->SetPosition(pos);
-	audio->SetPosition(pos);
 }
 
 void WarehouseBrickWall::SetRotation(const glm::mat4& rot)
 {
 	graphics->SetRotation(rot);
 	body->SetRotation(rot);audio->SetRotation(rot);
-	audio->SetRotation(rot);
 }
 
 glm::vec3 WarehouseBrickWall::GetPosition() const
@@ -128,7 +125,4 @@ void WarehouseBrickWall::Deserialize()
 {
 	GameObject::Deserialize();
 	body->SetOwner(this);
-
-	SetPosition(GetPosition());
-	SetRotation(GetRotation());
 }

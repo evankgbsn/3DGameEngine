@@ -50,19 +50,3 @@ glm::vec3 Listener::GetUp() const
 {
     return glm::normalize(glm::vec3(rotation[1]));
 }
-
-IPLCoordinateSpace3 Listener::GetIPLCoordinateSystem() const
-{
-    IPLCoordinateSpace3 coords;
-    glm::vec3 pos = GetPosition();
-    glm::vec3 ahead = GetForward();
-    glm::vec3 up = GetUp();
-    glm::vec3 right = GetRight();
-
-    coords.origin = { pos.x, pos.y, pos.z };
-    coords.ahead = { ahead.x, ahead.y, ahead.z };
-    coords.up = { up.x, up.y, up.z };
-    coords.right = { right.x, right.y, right.z };
-
-    return coords;
-}

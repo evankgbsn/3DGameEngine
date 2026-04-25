@@ -2,8 +2,6 @@
 #define LISTENER_H
 
 #include <glm/glm.hpp>
-#include <phonon.h>
-
 
 class Listener
 {
@@ -28,8 +26,6 @@ public:
 	glm::vec3 GetRight() const;
 
 	glm::vec3 GetUp() const;
-
-	IPLCoordinateSpace3 GetIPLCoordinateSystem() const;
 
 private:
 

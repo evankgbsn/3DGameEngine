@@ -69,13 +69,13 @@ private:
 
 	std::vector<IPLTriangle> triangles;
 
-	std::vector<IPLint32> materialIndices;
+	std::vector<int> materialIndices;
 
 	IPLStaticMeshSettings steamStaticMeshSettings;
 
 	IPLStaticMesh steamStaticMesh;
 
-	IPLMaterial steamMaterial[1];
+	IPLMaterial steamMaterial;
 
 	IPLScene steamSubscene; // All dynaimc moveable objects need a subscene. This includes objects that are added and removed from the scene at runtime.
 };

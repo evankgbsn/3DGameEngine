@@ -18,13 +18,13 @@ AudioManager* AudioManager::instance = nullptr;
 
 void AudioManager::Initialize()
 {
-    SingletonHelpers::InitializeSingleton(&instance, "AudioManager");
+    SingletonHelpers::InitializeSingleton(&instance, "Initialized AudioManager");
 }
 
 void AudioManager::Terminate()
 {
     instance->ClearAll();
-    SingletonHelpers::TerminateSingleton(&instance, "AudioManager");
+    SingletonHelpers::TerminateSingleton(&instance, "Terminated AudioManager");
 }
 
 void AudioManager::EditorUpdate()
@@ -56,29 +56,16 @@ void AudioManager::UpdateSources()
         inputs.directFlags = static_cast<IPLDirectSimulationFlags>(
             IPL_DIRECTSIMULATIONFLAGS_OCCLUSION |
             IPL_DIRECTSIMULATIONFLAGS_TRANSMISSION |
-            IPL_DIRECTSIMULATIONFLAGS_AIRABSORPTION |
             IPL_DIRECTSIMULATIONFLAGS_DISTANCEATTENUATION
             );
-
         inputs.source.origin = { source.second->GetPosition().x, source.second->GetPosition().y, source.second->GetPosition().z };
         inputs.source.ahead = { source.second->GetForward().x, source.second->GetForward().y, source.second->GetForward().z };
 
-        inputs.occlusionType = IPL_OCCLUSIONTYPE_VOLUMETRIC;
-        inputs.numOcclusionSamples = 64;
+        // FIX: Explicitly set occlusion type so Raycasting actually executes
+        inputs.occlusionType = IPL_OCCLUSIONTYPE_RAYCAST;
 
-        // FIX: If the sound is blocked, this tells the simulator to fire a ray 
-        // to find the material's 'transmission' value (muffling).
-        inputs.occlusionRadius = 1.2f;
-
-        inputs.numTransmissionRays = 64;
-
-        // Ensure distance model is set so the simulator stays 'awake' for this source
         inputs.distanceAttenuationModel.type = IPL_DISTANCEATTENUATIONTYPE_DEFAULT;
         inputs.distanceAttenuationModel.minDistance = 1.0f;
-
-        IPLSimulationSharedInputs sharedInputs = {};
-        sharedInputs.listener = listeners[activeListener]->GetIPLCoordinateSystem(); // Ensure this returns an IPLCoordinateSystem
-        iplSimulatorSetSharedInputs(simulator, IPL_SIMULATIONFLAGS_DIRECT, &sharedInputs);
 
         iplSourceSetInputs(steamSources[source.first], IPL_SIMULATIONFLAGS_DIRECT, &inputs);
     }
@@ -88,6 +75,9 @@ void AudioManager::ProccessUpdatedSounds()
 {
     glm::vec3 L = instance->listeners[instance->activeListener]->GetPosition();
     glm::mat4 listenerInvRot = glm::inverse(instance->listeners[instance->activeListener]->GetRotation());
+
+    static int simLogThrottle = 0;
+    bool shouldLogSim = (simLogThrottle++ % 120 == 0);
 
     for (auto& sourcePair : instance->sources)
     {
@@ -99,6 +89,7 @@ void AudioManager::ProccessUpdatedSounds()
 
         glm::vec3 S = src->GetPosition();
         glm::vec3 diff = S - L;
+
         glm::vec3 localDir = glm::vec3(listenerInvRot * glm::vec4(diff, 0.0f));
 
         float distance = glm::length(localDir);
@@ -108,11 +99,9 @@ void AudioManager::ProccessUpdatedSounds()
             relativeDir = localDir / distance;
         }
 
-        // If the simulator is working, it will now return a value < 1.0 here
+        // Mathematical Fallback: If Steam Audio's simulator refuses to calculate distance attenuation, calculate Inverse Distance manually
         float distAtten = outputs.direct.distanceAttenuation;
-
-        // Safety Fallback (Keep this for now to ensure volume isn't 0)
-        if (distAtten >= 0.999f && distance > 1.1f) {
+        if (distAtten >= 0.999f && distance > 1.0f) {
             distAtten = 1.0f / distance;
         }
 
@@ -121,7 +110,10 @@ void AudioManager::ProccessUpdatedSounds()
             steamAudioNodes[name].directParams.transmission[0] = outputs.direct.transmission[0];
             steamAudioNodes[name].directParams.transmission[1] = outputs.direct.transmission[1];
             steamAudioNodes[name].directParams.transmission[2] = outputs.direct.transmission[2];
+
+            // Apply our guaranteed distance attenuation
             steamAudioNodes[name].directParams.distanceAttenuation = distAtten;
+
             steamAudioNodes[name].direction = { relativeDir.x, relativeDir.y, relativeDir.z };
         }
     }
@@ -163,20 +155,15 @@ AudioObject* AudioManager::CreateAudioObject(const std::string& name, const Mode
         {
             ret = instance->objects[name] = new AudioObject(model, position, rotation, material);
 
+            // FIX: If the main scene is already active, dynamically add this new object's mesh!
             if (instance->scene) {
                 IPLInstancedMeshSettings instSettings = { 0 };
                 instSettings.subScene = ret->steamSubscene;
                 instSettings.transform = ConvertGlmToIpl(ret->GetPosition(), ret->GetRotation());
 
                 iplInstancedMeshCreate(instance->scene, &instSettings, &instance->steamStaticMeshes[name]);
-
-                // FIX: Add dynamically spawned meshes to the main scene!
-                iplInstancedMeshAdd(instance->steamStaticMeshes[name], instance->scene);
-
-                // DEBUG: Track the hierarchy update
                 iplSceneCommit(instance->scene);
-                iplSimulatorSetScene(instance->simulator, instance->scene);
-                iplSimulatorCommit(instance->simulator);
+                iplSimulatorCommit(instance->simulator); // Rebuild Raycast Trees
             }
         }
         else
@@ -235,11 +222,6 @@ Source* AudioManager::CreateSource(const std::string& name, const glm::vec3& pos
             IPLSourceSettings sourceSettings = { };
             sourceSettings.flags = IPL_SIMULATIONFLAGS_DIRECT;
             iplSourceCreate(instance->simulator, &sourceSettings, &instance->steamSources[name]);
-
-            // FIX: Explicitly add the newly created source to the raycast simulator!
-            iplSourceAdd(instance->steamSources[name], instance->simulator);
-            iplSimulatorCommit(instance->simulator);
-
             instance->InitializeSteamAudioNode(name);
         }
         else
@@ -335,20 +317,13 @@ void AudioManager::Delete(AudioObject* const obj)
             if (it->second == obj)
             {
                 const std::string& name = it->first;
-
                 if (instance->steamStaticMeshes.count(name)) {
-                    // FIX: Remove the mesh from the scene before releasing memory
-                    iplInstancedMeshRemove(instance->steamStaticMeshes[name], instance->scene);
                     iplInstancedMeshRelease(&instance->steamStaticMeshes[name]);
                     instance->steamStaticMeshes.erase(name);
                 }
 
                 delete obj;
-
-                // FIX: Commit both the Scene and the Simulator to rebuild the raycast BVH
                 iplSceneCommit(instance->scene);
-                iplSimulatorCommit(instance->simulator);
-
                 instance->objects.erase(it);
                 return;
             }
@@ -383,8 +358,6 @@ void AudioManager::Delete(const std::string& name)
     {
         if (instance->steamStaticMeshes.count(name))
         {
-            // FIX: Remove the mesh from the physics engine before destroying it to prevent Access Violations
-            iplInstancedMeshRemove(instance->steamStaticMeshes[name], instance->scene);
             iplInstancedMeshRelease(&instance->steamStaticMeshes[name]);
             instance->steamStaticMeshes.erase(name);
             sceneChanged = true;
@@ -417,7 +390,6 @@ void AudioManager::Delete(const std::string& name)
     if (sceneChanged)
     {
         iplSceneCommit(instance->scene);
-        iplSimulatorCommit(instance->simulator); // FIX: Committing the simulator ensures the BVH is rebuilt without the destroyed wall
     }
 }
 
@@ -447,10 +419,6 @@ AudioManager::~AudioManager()
     {
         delete sound.second;
     }
-
-    if (embreeDevice) {
-        iplEmbreeDeviceRelease(&embreeDevice);
-    }
 }
 
 void AudioManager::InitializeMiniAudio()
@@ -472,7 +440,7 @@ void AudioManager::InitializeMiniAudio()
         Logger::Log("MiniAudioEngine Initialized. Sample Rate: " + std::to_string(ma_engine_get_sample_rate(miniAudioEngine)), Logger::Category::Success);
     }
 
-    ma_engine_set_volume(miniAudioEngine, 1.0f);
+    ma_engine_set_volume(AudioManager::GetMiniAudioEngine(), 1.0f);
 }
 
 void AudioManager::InitializeSteamAudio()
@@ -481,17 +449,6 @@ void AudioManager::InitializeSteamAudio()
     contextSettings.version = STEAMAUDIO_VERSION;
 
     iplContextCreate(&contextSettings, &context);
-
-    // 1. Setup Embree Settings
-    IPLEmbreeDeviceSettings embreeSettings{};
-    // Leave as default for now; Steam Audio will handle the internal Intel setup.
-
-    // 2. Create the Device
-    IPLerror result = iplEmbreeDeviceCreate(context, &embreeSettings, &embreeDevice);
-
-    if (result != IPL_STATUS_SUCCESS) {
-        Logger::Log("Failed to create Steam Audio Embree Device!", Logger::Category::Error);
-    }
 
     iplSettings.samplingRate = 48000;
     iplSettings.frameSize = 1024;
@@ -505,13 +462,6 @@ void AudioManager::InitializeSteamAudio()
     simulatorSettings = {};
     simulatorSettings.maxNumSources = 64;
     simulatorSettings.numThreads = 2;
-    simulatorSettings.maxNumOcclusionSamples = 64;
-
-    // FIX: You MUST tell the simulator to enable Direct simulation (Occlusion/Transmission/Distance)
-    simulatorSettings.flags = static_cast<IPLSimulationFlags>(
-        IPL_SIMULATIONFLAGS_DIRECT
-        );
-
     iplSimulatorCreate(context, &simulatorSettings, &simulator);
 }
 
@@ -519,23 +469,9 @@ void AudioManager::InitializeSteamAudioScene()
 {
     if (instance != nullptr)
     {
-
-        for (auto& meshPair : instance->steamStaticMeshes) {
-            iplInstancedMeshRemove(meshPair.second, instance->scene);
-            iplInstancedMeshRelease(&meshPair.second);
-        }
-        instance->steamStaticMeshes.clear();
-
-        if (instance->scene) {
-            iplSceneRelease(&instance->scene);
-            instance->scene = nullptr;
-        }
-
         IPLSceneSettings sceneSettings = { IPL_SCENETYPE_DEFAULT };
-        sceneSettings.embreeDevice = GetEmbreeDevice();
         iplSceneCreate(AudioManager::GetSteamAudioContext(), &sceneSettings, &instance->scene);
 
-        int objectCounter = 0;
         for (auto& object : instance->objects)
         {
             IPLInstancedMeshSettings instSettings = { 0 };
@@ -543,13 +479,15 @@ void AudioManager::InitializeSteamAudioScene()
             instSettings.transform = ConvertGlmToIpl(object.second->GetPosition(), object.second->GetRotation());
 
             iplInstancedMeshCreate(instance->scene, &instSettings, &instance->steamStaticMeshes[object.first]);
-            iplInstancedMeshAdd(instance->steamStaticMeshes[object.first], instance->scene);
         }
 
         iplSceneCommit(instance->scene);
-        iplSimulatorSetScene(instance->simulator, nullptr);
         iplSimulatorSetScene(instance->simulator, instance->scene);
+
+        // FIX: You MUST commit the simulator after setting the scene for occlusion to update!
         iplSimulatorCommit(instance->simulator);
+
+        Logger::Log("Steam Audio Scene Initialized with " + std::to_string(instance->objects.size()) + " objects", Logger::Category::Success);
     }
 }
 
@@ -622,6 +560,27 @@ void AudioManager::SteamAudioNodeProcessPCMFrames(ma_node* pNode, const float** 
         ppFramesOut[0]
     );
 
+    // Calculate the Output Signal to prove audio is reaching the speakers
+    static int cbLogThrottle = 0;
+    if (cbLogThrottle++ % 10 == 0)
+    {
+        float inSignalSum = 0.0f;
+        float outSignalSum = 0.0f;
+
+        for (ma_uint32 i = 0; i < framesToProcess; ++i) {
+            inSignalSum += std::abs(pSteamNode->inputPlane[i]);
+        }
+
+        for (ma_uint32 i = 0; i < framesToProcess * 2; ++i) {
+            outSignalSum += std::abs(ppFramesOut[0][i]);
+        }
+
+        Logger::Log("AUDIO CALLBACK - In Sum: " + std::to_string(inSignalSum) +
+            " | Out Sum: " + std::to_string(outSignalSum) +
+            " | Atten: " + std::to_string(pSteamNode->directParams.distanceAttenuation),
+            Logger::Category::Info);
+    }
+
     *pFrameCountOut = framesToProcess;
 }
 
@@ -689,12 +648,12 @@ void AudioManager::InitializeSteamAudioNode(const std::string& name)
     node.direction = { 0.0f, 0.0f, 1.0f };
 
     node.directParams.distanceAttenuation = 1.0f;
-    node.directParams.occlusion = 0.0f;
+    node.directParams.occlusion = 1.0f;
     node.directParams.transmission[0] = 1.0f;
     node.directParams.transmission[1] = 1.0f;
     node.directParams.transmission[2] = 1.0f;
 
-    // FIX 2: Add APPLYTRANSMISSION so the node actually uses your wall's material properties!
+    // FIX: Added APPLYTRANSMISSION so the direct effect actually applies your AudioObject's material muffling profile
     node.directParams.flags = static_cast<IPLDirectEffectFlags>(
         IPL_DIRECTEFFECTFLAGS_APPLYDISTANCEATTENUATION |
         IPL_DIRECTEFFECTFLAGS_APPLYOCCLUSION |
@@ -723,10 +682,6 @@ void AudioManager::InitializeSteamAudioNode(const std::string& name)
 
 void AudioManager::CleanupSource(const std::string& name) {
     if (steamSources.count(name)) {
-        // FIX: Safely remove the source from the simulator before destroying it
-        iplSourceRemove(steamSources[name], simulator);
-        iplSimulatorCommit(simulator);
-
         iplSourceRelease(&steamSources[name]);
         steamSources.erase(name);
     }
@@ -812,9 +767,4 @@ ma_node* AudioManager::GetSteamAudioNodeBase(const std::string& name)
         }
     }
     return nullptr;
-}
-
-IPLEmbreeDevice AudioManager::GetEmbreeDevice()
-{
-    return instance->embreeDevice;
 }
