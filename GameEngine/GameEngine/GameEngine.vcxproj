@@ -890,16 +890,12 @@
     <None Include="Renderer\Shader\GLSL\ColoredAnimated.vert" />
     <None Include="Renderer\Shader\GLSL\ColoredInstanced.frag" />
     <None Include="Renderer\Shader\GLSL\ColoredInstanced.vert" />
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.frag" />
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.vert" />
     <None Include="Renderer\Shader\GLSL\Font.frag" />
     <None Include="Renderer\Shader\GLSL\Font.vert" />
     <None Include="Renderer\Shader\GLSL\Font3D.frag" />
     <None Include="Renderer\Shader\GLSL\Font3D.vert" />
     <None Include="Renderer\Shader\GLSL\Gooch.frag" />
     <None Include="Renderer\Shader\GLSL\Gooch.vert" />
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.frag" />
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.vert" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.frag" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.geo" />
     <None Include="Renderer\Shader\GLSL\PointLightShadow.vert" />

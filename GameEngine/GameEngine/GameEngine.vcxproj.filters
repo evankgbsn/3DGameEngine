@@ -31,9 +31,6 @@
     <Filter Include="Source Files\Renderer\GraphicsObject">
       <UniqueIdentifier>{c87d2fe1-2d03-4359-bf3c-bda031f726ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Renderer\Model">
-      <UniqueIdentifier>{634b4da7-3220-4220-abea-e1507891345e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Renderer\Animation">
       <UniqueIdentifier>{963214e2-5aba-477c-903b-96c890cc4109}</UniqueIdentifier>
     </Filter>
@@ -106,6 +103,9 @@
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{ec6b416b-418a-40df-820d-af62eafe34f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Renderer\Light\Model">
+      <UniqueIdentifier>{634b4da7-3220-4220-abea-e1507891345e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -133,13 +133,13 @@
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Model\Model.cpp">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Model\ModelManager.cpp">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Model\Vertex.cpp">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Animation\Animation.cpp">
       <Filter>Source Files\Renderer\Animation</Filter>
@@ -516,13 +516,13 @@
       <Filter>Source Files\Renderer\GraphicsObject</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Model\Model.h">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Model\ModelManager.h">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Model\Vertex.h">
-      <Filter>Source Files\Renderer\Model</Filter>
+      <Filter>Source Files\Renderer\Light\Model</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Animation\Animation.h">
       <Filter>Source Files\Renderer\Animation</Filter>
@@ -928,9 +928,6 @@
     <None Include="Renderer\Shader\GLSL\ColoredInstanced.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
     <None Include="Renderer\Shader\GLSL\Colored.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
@@ -940,12 +937,6 @@
     <None Include="Renderer\Shader\GLSL\Textured.vert">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.vert">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\LitTexturedStatic.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
     <None Include="Renderer\Shader\GLSL\Colored.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
@@ -953,9 +944,6 @@
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\ColoredInstanced.frag">
-      <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
-    </None>
-    <None Include="Renderer\Shader\GLSL\ColoredStatic.frag">
       <Filter>Source Files\Renderer\Shaders\GLSL</Filter>
     </None>
     <None Include="Renderer\Shader\GLSL\Water.vert">

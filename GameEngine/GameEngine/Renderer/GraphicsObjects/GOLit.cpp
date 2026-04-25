@@ -89,7 +89,7 @@ void GOLit::UpdateLighting()
 		{
 			directionalLight[i].direction = dLight->GetDirection();
 			directionalLight[i].color = dLight->GetColor();
-			directionalLight[i].lightOn = true;
+			directionalLight[i].lightOn = 1;
 			i++;
 		}
 
@@ -108,7 +108,7 @@ void GOLit::UpdateLighting()
 			pointLight[i].constant = pLight->GetConstant();
 			pointLight[i].linear = pLight->GetLinear();
 			pointLight[i].quadratic = pLight->GetQuadratic();
-			pointLight[i].lightOn = true;
+			pointLight[i].lightOn = 1;
 			i++;
 		}
 
@@ -126,12 +126,18 @@ void GOLit::UpdateLighting()
 			spotLight[i].linear = sLight->GetLinear();
 			spotLight[i].quadratic = sLight->GetQuadratic();
 
-			// Cosine of the angles: Inner cutoff must be > Outer cutoff (in cosine space)
-			spotLight[i].cutoff = glm::cos(glm::radians(sLight->GetCutoff()));
-				spotLight[i].outerCutoff = glm::cos(glm::radians(sLight->GetOuterCuttoff()));
+			// Calculate cosines only once here
+			float innerDegrees = sLight->GetCutoff();
+			float outerDegrees = sLight->GetOuterCuttoff();
 
-				spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
-				spotLight[i].lightOn = 1; // Integer 1 for true
+			// Ensure inner is smaller than outer in degrees 
+			// so that inner is LARGER than outer in cosine space
+			spotLight[i].cutoff = glm::cos(glm::radians(innerDegrees));
+			spotLight[i].outerCutoff = glm::cos(glm::radians(outerDegrees));
+
+			spotLight[i].direction = glm::vec4(sLight->GetDirection(), 0.0f);
+			spotLight[i].lightOn = 1; // Integer 1 for true
+
 			i++;
 		}
 		glNamedBufferSubData(spotLightBuffer, 0, sizeof(spotLight), &spotLight);

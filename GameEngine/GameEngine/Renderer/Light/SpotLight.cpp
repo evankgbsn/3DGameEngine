@@ -40,24 +40,24 @@ const glm::vec3& SpotLight::GetDirection() const
 
 const float& SpotLight::GetCutoff() const
 {
-	return glm::degrees(glm::acos(cutoff));
+	return cutoff;
 }
 
 void SpotLight::SetCutoff(float newCutoff)
 {
-	cutoff = glm::cos(glm::radians(newCutoff));
+	cutoff = newCutoff;
 
 	LightManager::SetSpotLightUpdated(true);
 }
 
 const float& SpotLight::GetOuterCuttoff() const
 {
-	return glm::degrees(glm::acos(outerCutoff));
+	return outerCutoff;
 }
 
 void SpotLight::SetOuterCutoff(float newOuterCutoff)
 {
-	outerCutoff = glm::cos(glm::radians(newOuterCutoff));
+	outerCutoff = newOuterCutoff;
 
 	LightManager::SetSpotLightUpdated(true);
 }

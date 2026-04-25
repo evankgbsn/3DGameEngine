@@ -8,7 +8,7 @@ struct DirectionalLight
 {
 	vec4 color;
 	vec4 direction;
-	bool lightOn;
+	int lightOn;
 };
 
 struct Ambient
@@ -23,7 +23,7 @@ struct PointLight
 	float constant;
 	float linear;
 	float quadratic;
-	bool lightOn;
+	int lightOn;
 };
 
 struct SpotLight
@@ -36,7 +36,7 @@ struct SpotLight
 	float constant;
 	float linear;
 	float quadratic;
-	bool lightOn;
+	int lightOn;
 };
 
 struct Material
@@ -112,19 +112,19 @@ void main(void)
 
 	for(int i = 0; i < 20; ++i)
 	{
-		if(directionalLight.light[i].lightOn) 
+		if(directionalLight.light[i].lightOn == 1) 
 		{
 			// Only apply the shadow to the first light (the one that generated the map)
 			float s = (i == 0) ? shadow : 0.0; 
 			color += CalcDirectionalLight(directionalLight.light[i], vec4(worldNormal, 0.0f), s);
 		}
 
-		if(pointLight.light[i].lightOn)
+		if(pointLight.light[i].lightOn == 1)
 		{
 			color += CalcPointLight(pointLight.light[i], vec4(worldNormal, 0.0f));
 		}
 
-		if(spotLight.light[i].lightOn)
+		if(spotLight.light[i].lightOn == 1)
 		{
 			color += CalcSpotLight(spotLight.light[i], vec4(worldNormal, 0.0f));
 		}
@@ -204,7 +204,7 @@ vec4 CalcSpotLight(SpotLight light, vec4 normalMapNormal)
         
         return (diffuseLight + vec4(specularLight, 0.0f));
     }
-    return vec4(0.0f, 0.0f, 0.0f, 1.0f); // Fallback return [cite: 193]
+    return vec4(0.0f, 0.0f, 0.0f, 0.0f); // Fallback return [cite: 193]
 }
 
 float CalcShadow(vec4 normalMapNormal)
