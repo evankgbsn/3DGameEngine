@@ -473,6 +473,11 @@ void FPSPlayer::AddServerDataReceivedCallbacks()
 			{
 				characterShirtGraphics->SetClip(updateData);
 			}
+
+			if (characterArmsGraphics->GetCurrentAnimation() != updateData && characterArmsGraphics->GetFadeToClipName() != updateData)
+			{
+				characterArmsGraphics->SetClip(updateData);
+			}
 		}));
 
 	AddServerDataReceivedCallback("InitialSpawnTarget", serverDataReceivedCallbacks["InitialSpawnTarget"] = new std::function<void(const std::string&)>([this](const std::string& updateData)
