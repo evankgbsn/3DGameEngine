@@ -447,10 +447,6 @@ AudioManager::~AudioManager()
     {
         delete sound.second;
     }
-
-    if (embreeDevice) {
-        iplEmbreeDeviceRelease(&embreeDevice);
-    }
 }
 
 void AudioManager::InitializeMiniAudio()
@@ -481,17 +477,6 @@ void AudioManager::InitializeSteamAudio()
     contextSettings.version = STEAMAUDIO_VERSION;
 
     iplContextCreate(&contextSettings, &context);
-
-    // 1. Setup Embree Settings
-    IPLEmbreeDeviceSettings embreeSettings{};
-    // Leave as default for now; Steam Audio will handle the internal Intel setup.
-
-    // 2. Create the Device
-    IPLerror result = iplEmbreeDeviceCreate(context, &embreeSettings, &embreeDevice);
-
-    if (result != IPL_STATUS_SUCCESS) {
-        Logger::Log("Failed to create Steam Audio Embree Device!", Logger::Category::Error);
-    }
 
     iplSettings.samplingRate = 48000;
     iplSettings.frameSize = 1024;
@@ -532,7 +517,6 @@ void AudioManager::InitializeSteamAudioScene()
         }
 
         IPLSceneSettings sceneSettings = { IPL_SCENETYPE_DEFAULT };
-        sceneSettings.embreeDevice = GetEmbreeDevice();
         iplSceneCreate(AudioManager::GetSteamAudioContext(), &sceneSettings, &instance->scene);
 
         int objectCounter = 0;
@@ -812,9 +796,4 @@ ma_node* AudioManager::GetSteamAudioNodeBase(const std::string& name)
         }
     }
     return nullptr;
-}
-
-IPLEmbreeDevice AudioManager::GetEmbreeDevice()
-{
-    return instance->embreeDevice;
 }

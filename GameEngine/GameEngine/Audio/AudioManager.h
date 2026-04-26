@@ -43,7 +43,6 @@ public:
 	static void SteamAudioNodeProcessPCMFrames(ma_node* pNode, const float** ppFramesIn, ma_uint32* pFrameCountIn, float** ppFramesOut, ma_uint32* ppFrameCountOut);
 	static void ClearAll();
 	static ma_node* GetSteamAudioNodeBase(const std::string& name);
-	static IPLEmbreeDevice GetEmbreeDevice();
 
 private:
 
@@ -84,7 +83,6 @@ private:
 
 	static AudioManager* instance;
 
-	IPLEmbreeDevice embreeDevice;
 	IPLAudioSettings iplSettings;
 	IPLContext context;
 	IPLHRTF hrtf;

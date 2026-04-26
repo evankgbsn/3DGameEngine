@@ -59,9 +59,6 @@ AudioObject::AudioObject(const Model* const m, const glm::vec3& pos, const glm::
     subSceneSettings.batchedAnyHitCallback = nullptr;
     subSceneSettings.userData = nullptr;
 
-    // If you chose Embree, you may need to provide the Embree device
-    subSceneSettings.embreeDevice = AudioManager::GetEmbreeDevice(); // Steam Audio can often manage this internally
-
     // 1. ASSET LOAD TIME
     iplSceneCreate(AudioManager::GetSteamAudioContext(), &subSceneSettings, &steamSubscene);
 
