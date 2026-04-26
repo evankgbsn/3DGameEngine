@@ -348,7 +348,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -362,7 +362,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -381,7 +381,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;GAME</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;GAME;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -395,7 +395,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -414,12 +414,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;PX__GPU_STATIC_LIB</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;PX__GPU_STATIC_LIB;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -428,7 +429,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -447,7 +448,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;PX__GPU_STATIC_LIB;GAME</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;PX__GPU_STATIC_LIB;GAME;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -461,7 +462,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;freetyped.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib;PhysXCharacterKinematic_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -482,7 +483,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -498,7 +499,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -519,7 +520,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;GAME</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_CLIENT;PX_SUPPORT_GPU_PHYSX;GAME;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -535,7 +536,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -556,13 +557,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -573,7 +575,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -594,7 +596,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;GAME</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;PX_PHYSX_STATIC_LIB;_SERVER;PX_SUPPORT_GPU_PHYSX;GAME;MYSOFA_STATIC;IPL_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)sqlite/;$(SolutionDir)Dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -610,7 +612,7 @@
       <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;core.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;Ws2_32.lib;sqlcipher.lib;SQLiteCpp.lib;crypt32.lib;libssl.lib;libcrypto.lib;mimalloc.lib;hrtf.lib;phonon.lib;pffft.lib;mysofa.lib;zlibstatic.lib;embree.lib;embree_sse42.lib;embree_avx2.lib;embree_avx.lib;sys.lib;tasking.lib;math.lib;simd.lib;lexers.lib;legacy_stdio_definitions.lib;ispckernels.lib;PhysXCharacterKinematic_static_64.lib;freetype.lib;PhysX_static_64.lib;PhysXFoundation_static_64.lib;PhysXExtensions_static_64.lib;PhysXCommon_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXCooking_static_64.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/lib/Release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

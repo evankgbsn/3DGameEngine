@@ -7,7 +7,6 @@
 #include "Scenes/FPSNetworkManager.h"
 #include "Scenes/JoinScene.h"
 
-
 class HeapProfile
 {
 public:
